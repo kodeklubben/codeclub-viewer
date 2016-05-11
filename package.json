@@ -1,0 +1,31 @@
+{
+  "name": "codeclub-viewer",
+  "version": "1.0.0",
+  "description": "A viewer to display codeclub lessons",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NorwegianKiwi/codeclub-viewer.git"
+  },
+  "keywords": [
+    "codeclub",
+    "lesson",
+    "viewer"
+  ],
+  "author": "Lance Olav Eastgate",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NorwegianKiwi/codeclub-viewer/issues"
+  },
+  "homepage": "https://github.com/NorwegianKiwi/codeclub-viewer#readme",
+  "dependencies": {
+    "markdown-it": "6.0.1"
+  },
+  "devDependencies": {
+    "webpack": "1.13.0",
+    "webpack-dev-server": "1.14.0"
+  }
+}
