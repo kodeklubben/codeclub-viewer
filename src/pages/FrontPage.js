@@ -1,6 +1,7 @@
 import React from 'react';
 
-const scratchPage = require('../../../oppgaver/src/scratch/forskyvning/forskyvning.md');
+//const scratchPage = require('lessons/scratch/forskyvning/forskyvning.md');
+const scratchPage = require('lessons/scratch/straffespark/straffespark.md');
 
 console.log(scratchPage.frontmatter);
 

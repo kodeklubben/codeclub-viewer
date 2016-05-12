@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import path from 'path';
 
 import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
@@ -26,6 +27,10 @@ const config = {
         })
       },
       {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        loader: 'url-loader?limit=5000&name=img/[path][name].[hash:6].[ext]'
+      },
+      {
         // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
         test: /\.json$/,
         loader: 'json'
@@ -33,10 +38,13 @@ const config = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
+    alias: {
+      lessons: path.resolve(__dirname + '/../oppgaver/src')
+    }
   },
   resolveLoader: {
-    root: [__dirname+'/node_modules']
+    root: [__dirname + '/node_modules']
   },
   output: {
     path: __dirname + '/dist',
