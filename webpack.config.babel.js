@@ -1,10 +1,15 @@
 import webpack from 'webpack';
 import path from 'path';
 
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
+
 import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
+
+const buildDir = 'dist';
 
 const config = {
   entry: [
@@ -40,23 +45,32 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      lessons: path.resolve(__dirname + '/../oppgaver/src')
+      lessons: path.resolve(__dirname, '../oppgaver/src')
     }
   },
   resolveLoader: {
-    root: [__dirname + '/node_modules']
+    root: [path.resolve(__dirname, 'node_modules')]
   },
   output: {
-    path: __dirname + '/dist',
+    path: path.resolve(__dirname, buildDir),
     publicPath: '/',
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: './dist',
+    contentBase: './' + buildDir,
     hot: true
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Kodeklubben',
+      template: 'index-template.ejs',
+      inject: 'body'
+    }),
+    new CleanWebpackPlugin([buildDir], {
+      root: path.resolve(__dirname),
+      dry: false
+    })
   ],
   'markdown-it': {
     preset: 'commonmark',
