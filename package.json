@@ -4,8 +4,9 @@
   "description": "A viewer to display codeclub lessons",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack",
+    "start": "webpack-dev-server --progress",
+    "build": "webpack -d --progress",
+    "buildprod": "webpack -p",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",
     "eslint": "eslint src/ test/ --ext .js,.jsx"
