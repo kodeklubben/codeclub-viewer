@@ -45,7 +45,7 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      lessons: path.resolve(__dirname, '../oppgaver/src')
+      lessonSrc: path.resolve(__dirname, '../oppgaver/src/')
     }
   },
   resolveLoader: {

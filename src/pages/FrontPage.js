@@ -1,21 +1,17 @@
 import React from 'react';
+import LessonPage from './LessonPage';
+import CourseList from './CourseList';
 
-//const scratchPage = require('lessons/scratch/forskyvning/forskyvning.md');
-const scratchPage = require('lessons/scratch/straffespark/straffespark.md');
-
-console.log(scratchPage.frontmatter);
+const lessonContext = require.context('lessonSrc/', true, /^\.\/.*\.md/);
+//  console.log(lessonContext.keys());
 
 const FrontPage = React.createClass({
-  createMarkup(){
-    return {
-      __html: scratchPage.content
-    };
-  },
   render() {
+    const scratchPage = lessonContext('./scratch/straffespark/straffespark.md');
     return (
       <div>
-        <h1>Hello World!</h1>
-        <div dangerouslySetInnerHTML={this.createMarkup()} />
+        <CourseList/>
+        <LessonPage lesson={scratchPage}/>
       </div>
     );
   }
