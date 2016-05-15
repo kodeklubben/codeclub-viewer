@@ -64,7 +64,7 @@ const config = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: 'Kodeklubben',
-      template: 'index-template.ejs',
+      template: 'src/index-template.ejs',
       inject: 'body'
     }),
     new CleanWebpackPlugin([buildDir], {
