@@ -1,6 +1,7 @@
 import React from 'react';
 import LessonPage from './LessonPage';
-import CourseList from './CourseList';
+import CoursePage from './CoursePage';
+import CourseList from '../components/CourseList';
 
 const lessonContext = require.context('lessonSrc/', true, /^\.\/.*\.md/);
 //  console.log(lessonContext.keys());
@@ -11,6 +12,7 @@ const FrontPage = React.createClass({
     return (
       <div>
         <CourseList/>
+        <CoursePage/>
         <LessonPage lesson={scratchPage}/>
       </div>
     );
