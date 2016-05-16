@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
+import autoprefixer from 'autoprefixer';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
@@ -12,10 +13,13 @@ import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 const buildDir = 'dist';
 const publicPath = '/';
 
+const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
+
 const config = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
+    'bootstrap-loader',
     './src/index.js'
   ],
   module: {
@@ -24,6 +28,13 @@ const config = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         loader: 'react-hot!babel'
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style', cssModuleLoaderStr, 'postcss']
+      }, {
+        test: /\.scss$/,
+        loaders: ['style', cssModuleLoaderStr, 'postcss', 'sass']
       },
       {
         test: /\.md$/,
@@ -35,6 +46,14 @@ const config = {
       {
         test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'url-loader?limit=5000&name=img/[path][name].[hash:6].[ext]'
+      },
+      {
+        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url?limit=10000'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+        loader: 'file'
       },
       {
         // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
@@ -77,6 +96,7 @@ const config = {
       dry: false
     })
   ],
+  postcss: [autoprefixer],
   'markdown-it': {
     preset: 'commonmark',
     //typographer: true,
