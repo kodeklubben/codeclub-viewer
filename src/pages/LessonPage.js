@@ -1,36 +1,28 @@
 import React, {PropTypes} from 'react';
+import Lesson from '../components/Lesson';
+
+const lessonContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/[^\/]*\/[^\/]*\.md/);
+
 
 const LessonPage = React.createClass({
-  getTitle() {
-    return this.props.lesson.frontmatter.title;
-  },
-  getLevel() {
-    return this.props.lesson.frontmatter.level;
-  },
-  getAuthor() {
-    return this.props.lesson.frontmatter.author;
-  },
-  createMarkup(){
-    return {
-      __html: this.props.lesson.content
-    };
-  },
   render() {
     //console.log(this.props.lesson.frontmatter);
+    const params = this.props.params;
+    const lessonPath = lessonContext.keys().find(path => {
+      const regexp = new RegExp(`\.\/${params.course}\/${params.lesson}`);
+      return regexp.exec(path);
+    });
+    const lesson = lessonContext(lessonPath);
     return (
-      <div>
-        <h1>{this.getTitle()} - Level {this.getLevel()}</h1>
-        <p><i>av {this.getAuthor()}</i></p>
-        <div dangerouslySetInnerHTML={this.createMarkup()}/>
-      </div>
+      <Lesson lesson={lesson}/>
     );
   }
 });
 
 LessonPage.PropTypes = {
-  lesson: PropTypes.shape({
-    frontmatter: PropTypes.object,
-    content: PropTypes.string
+  params: PropTypes.shape({
+    course: PropTypes.string.isRequired,
+    lesson: PropTypes.string.isRequired
   })
 };
 

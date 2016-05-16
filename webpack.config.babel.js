@@ -10,6 +10,7 @@ import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 
 const buildDir = 'dist';
+const publicPath = '/';
 
 const config = {
   entry: [
@@ -53,12 +54,16 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, buildDir),
-    publicPath: '/',
+    publicPath: publicPath,
     filename: 'bundle.js'
   },
   devServer: {
     contentBase: './' + buildDir,
-    hot: true
+    hot: true,
+    historyApiFallback: true // needed when using browserHistory (instead of hashHistory)
+  },
+  historyApiFallback: {
+    index: publicPath
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
