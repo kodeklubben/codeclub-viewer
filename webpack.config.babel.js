@@ -1,4 +1,6 @@
 /**
+ *  The webpack config file
+ *  -----------------------
  *
  *  BOOTSTRAP:
  *  To adjust which parts of bootstrap to include in the build, adjust options in .bootstraprc.
@@ -18,8 +20,23 @@
  *
  */
 
+// TODO:
+// See if it is possible to build the md-files in separate chunks. How? Perhaps separate entries?
+// Or perhaps CommonsChunkPlugin manages that by itself?
+// Preferrably we want each course in a separate chunk.
+// Btw, Should the courses be listed in a specific order? What is done on website today?
+// I guess it would be ok to list the courses manually...
+
+
+////////////////////////////////////////
+// DEFINE GLOBAL VARIABLES FOR ESLINT //
+////////////////////////////////////////
 /* global process __dirname */
 
+
+//////////////////////
+// IMPORT / REQUIRE //
+//////////////////////
 const webpack = require('webpack');
 
 import path from 'path';
@@ -35,6 +52,10 @@ import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 
+
+///////////////
+// CONSTANTS //
+///////////////
 const buildDir = 'dist';
 const publicPath = '/';
 
@@ -48,18 +69,10 @@ console.log(`isProduction=${isProduction}`);
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 
-// TODO:
-//  1) Comment out bootstrap-loader and build and see how small the build is
-//  2) Comment it in and see again
-//  3) Try to put stuff in .bootstraprc to false and see if that makes it smaller
-//  4) Make a separate production-build wihtout hot reloading but with css extraction (bootstrap/extractStyles)
-//     Also add the OccuranceOrderPlugin, DedupePlugin and UglifyPlugin
-//
-//  After that: See if it is possible to build the md-files in separate chunks. How? Perhaps separate entries?
-//              Or perhaps CommonsChunkPlugin manages that by itself?
-//              Preferrably we want each course in a separate chunk.
-//              Btw, Should the courses be listed in a specific order? What is done on website today?
-//              I guess it would be ok to list the courses manually...
+
+///////////////
+// FUNCTIONS //
+///////////////
 
 function getEntry(){
   const appEntry = './src/index.js';
@@ -138,6 +151,11 @@ function getPlugins(){
 
   return plugins;
 }
+
+
+///////////////////////
+// THE ACTUAL CONFIG //
+///////////////////////
 
 const config = {
   entry: getEntry(),
