@@ -9,3 +9,26 @@ cd codeclub-viewer
 npm install
 npm start
 ```
+
+## Building with sourcemaps (and serving)
+```
+npm run build
+npm serve
+```
+
+## Building for production (and serving)
+```
+npm run build:prod
+npm serve
+```
+
+## Running tests
+```
+npm run test
+```
+
+## Running eslint
+To check that the code is formatted correctly, run
+```
+npm run eslint
+```
