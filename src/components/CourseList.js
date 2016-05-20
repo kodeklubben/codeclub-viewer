@@ -1,6 +1,7 @@
 import React from 'react';
-import {courseIconContext as iconContext} from '../utils/contexts';
 
+// The icons for the courses, i.e. all ./*/logo-black.png under lessonSrc, e.g. ./scratch/logo-black.png
+const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 //console.log(iconContext.keys());
 
 const CourseList = React.createClass({

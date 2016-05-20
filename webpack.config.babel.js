@@ -61,6 +61,10 @@ const publicPath = '/';
 
 const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
 
+// Loaders for lesson files written in markdown (.md)
+const frontmatterLoaders = ['json', 'front-matter?onlyAttributes'];
+const contentLoaders = ['html', 'markdown-it', 'front-matter?onlyBody'];
+
 const isHot = process.argv.indexOf('--hot') >= 0;
 console.log(`isHot=${isHot}`);
 
@@ -123,7 +127,7 @@ function getPlugins(){
     }),
     new ForceCaseSensitivityPlugin(),
 
-    // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallell.
+    // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
     // See https://github.com/webpack/docs/wiki/list-of-plugins#4-extra-async-commons-chunk
     new webpack.optimize.CommonsChunkPlugin({
       children: true,
@@ -182,13 +186,6 @@ const config = {
         loaders: ['style', cssModuleLoaderStr, 'postcss', 'sass']
       },
       {
-        test: /\.md$/,
-        loader: 'combine-loader?' + JSON.stringify({
-          frontmatter: ['json-loader', 'front-matter-loader?onlyAttributes'],
-          content: ['html-loader', 'markdown-it-loader', 'front-matter?onlyBody']
-        })
-      },
-      {
         test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'url-loader?limit=5000&name=img/[path][name].[hash:6].[ext]'
       },
@@ -214,7 +211,21 @@ const config = {
     }
   },
   resolveLoader: {
-    root: [path.resolve(__dirname, 'node_modules')]
+    root: [path.resolve(__dirname, 'node_modules')],
+    alias: {
+      // Markdown-files are parsed only through one of these three aliases, and are
+      // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
+      // 1) We don't want to use '!!' in the requires in the modules, and
+      // 2) Since the lessons create a lot of data, we want to be sure that we only load
+      //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
+      //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
+      'onlyFrontmatter': 'combine?' + JSON.stringify({frontmatter: frontmatterLoaders}),
+      'onlyContent': 'combine?' + JSON.stringify({content: contentLoaders}),
+      'frontAndContent': 'combine?' + JSON.stringify({
+        frontmatter: frontmatterLoaders,
+        content: contentLoaders
+      })
+    }
   },
   output: {
     path: path.resolve(__dirname, buildDir),

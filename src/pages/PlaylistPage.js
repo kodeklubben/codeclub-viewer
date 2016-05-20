@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import NavLink from '../components/NavLink';
-import {lessonContext} from '../utils/contexts';
+
+// Get all ./*/*/*.md under lessonSrc, e.g. ./scratch/straffespark/straffespark.md
+const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/[^\/]*\/[^\/]*\.md/);
 
 const PlaylistPage = React.createClass({
   getLessonPath(path) {

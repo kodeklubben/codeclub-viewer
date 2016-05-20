@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import Lesson from '../components/Lesson';
-import {lessonContext} from '../utils/contexts';
+
+// Get all ./*/*/*.md under lessonSrc, e.g. ./scratch/straffespark/straffespark.md
+const lessonContext = require.context('frontAndContent!lessonSrc/', true, /^\.\/[^\/]*\/[^\/]*\/[^\/]*\.md/);
 
 const LessonPage = React.createClass({
   render() {
