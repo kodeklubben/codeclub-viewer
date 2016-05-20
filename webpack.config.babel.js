@@ -114,13 +114,21 @@ function getPlugins(){
     new HtmlWebpackPlugin({
       title: 'Kodeklubben',
       template: 'src/index-template.ejs',
-      inject: 'body'
+      inject: 'body',
+      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
     }),
     new CleanWebpackPlugin([buildDir], {
       root: path.resolve(__dirname),
       dry: false
     }),
-    new ForceCaseSensitivityPlugin()
+    new ForceCaseSensitivityPlugin(),
+
+    // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallell.
+    // See https://github.com/webpack/docs/wiki/list-of-plugins#4-extra-async-commons-chunk
+    new webpack.optimize.CommonsChunkPlugin({
+      children: true,
+      async: true
+    })
   ];
 
   if (isProduction) {
@@ -131,7 +139,7 @@ function getPlugins(){
         }
       }),
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurrenceOrderPlugin(true),
+      new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
           warnings: false
@@ -211,7 +219,8 @@ const config = {
   output: {
     path: path.resolve(__dirname, buildDir),
     publicPath: publicPath,
-    filename: `${filenameBase}.js`
+    filename: `${filenameBase}.js`,
+    chunkFilename: `${filenameBase}.js`
   },
   devServer: {
     historyApiFallback: true // needed when using browserHistory (instead of hashHistory)

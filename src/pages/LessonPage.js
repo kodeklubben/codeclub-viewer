@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
 import Lesson from '../components/Lesson';
-
-const lessonContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/[^\/]*\/[^\/]*\.md/);
-
+import {lessonContext} from '../utils/contexts';
 
 const LessonPage = React.createClass({
   render() {
