@@ -67,9 +67,9 @@ const contentLoaders = ['html', 'markdown-it', 'front-matter?onlyBody'];
 
 const isHot = process.argv.indexOf('--hot') >= 0;
 console.log(`isHot=${isHot}`);
-
 const isProduction = process.env.NODE_ENV === 'production';
 console.log(`isProduction=${isProduction}`);
+console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 
@@ -187,7 +187,7 @@ const config = {
       },
       {
         test: /\.(png|jpg|jpeg|gif)$/,
-        loader: 'url-loader?limit=5000&name=img/[path][name].[hash:6].[ext]'
+        loader: 'url-loader?limit=5000&name=[path][name].[hash:6].[ext]'
       },
       {
         test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

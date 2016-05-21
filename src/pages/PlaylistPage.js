@@ -6,7 +6,7 @@ const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/
 
 const PlaylistPage = React.createClass({
   getLessonPath(path) {
-    const lessonPath = /^\.(\/[^\/]*\/[^\/]*)/.exec(path); // get the '/course/lesson' part of the path
+    const lessonPath = /^\.(.*)\.md/.exec(path); // get the '/course/lesson/file' part of the path
     return lessonPath ? lessonPath[1] : null;
   },
   render() {

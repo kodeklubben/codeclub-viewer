@@ -50,6 +50,7 @@
     "babel-preset-stage-2": "6.5.0",
     "bootstrap-loader": "1.0.10",
     "bootstrap-sass": "3.3.6",
+    "bundle-loader": "0.5.4",
     "chai": "3.5.0",
     "clean-webpack-plugin": "0.1.9",
     "combine-loader": "0.1.0",
