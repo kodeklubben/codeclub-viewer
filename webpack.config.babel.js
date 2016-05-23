@@ -121,10 +121,6 @@ function getPlugins(){
       inject: 'body',
       chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
     }),
-    new CleanWebpackPlugin([buildDir], {
-      root: path.resolve(__dirname),
-      dry: false
-    }),
     new ForceCaseSensitivityPlugin(),
 
     // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
@@ -154,6 +150,10 @@ function getPlugins(){
 
   if (!isHot) {
     plugins = plugins.concat([
+      new CleanWebpackPlugin([buildDir], {
+        root: path.resolve(__dirname),
+        dry: false
+      }),
       new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
