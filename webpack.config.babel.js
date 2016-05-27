@@ -46,6 +46,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ForceCaseSensitivityPlugin from 'force-case-sensitivity-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
+
 
 import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
@@ -77,6 +79,20 @@ const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 ///////////////
 // FUNCTIONS //
 ///////////////
+
+function getStaticSitePaths() {
+  // var glob = require('glob');
+  //
+  // module.exports = function(cwd) {
+  //   return glob.sync('*/', { cwd: cwd }).map(function(subDir) {
+  //     return subDir.replace(/\/$/, '');
+  //   });
+  // };
+  return [
+    '/',
+    '/scratch'
+  ];
+}
 
 function getEntry(){
   const appEntry = './src/index.js';
@@ -155,9 +171,10 @@ function getPlugins(){
         dry: false
       }),
       new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
-      })
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
+      // }),
+      new StaticSiteGeneratorPlugin('main', getStaticSitePaths())
     ]);
   }
 
@@ -231,7 +248,10 @@ const config = {
     path: path.resolve(__dirname, buildDir),
     publicPath: publicPath,
     filename: `${filenameBase}.js`,
-    chunkFilename: `${filenameBase}.js`
+    chunkFilename: `${filenameBase}.js`,
+    // static-site-generator must have files compiled to UMD or CommonJS
+    // so they can be required in a Node context:
+    libraryTarget: 'umd'
   },
   devServer: {
     historyApiFallback: true // needed when using browserHistory (instead of hashHistory)
