@@ -32,3 +32,10 @@ To check that the code is formatted correctly, run
 ```
 npm run eslint
 ```
+
+## TODO
+Prøve følgende kode i routes.js:
+```
+// polyfill webpack require.ensure
+if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require)
+```
