@@ -42,7 +42,7 @@ const webpack = require('webpack');
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+//import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ForceCaseSensitivityPlugin from 'force-case-sensitivity-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -75,6 +75,9 @@ console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 
+const scope = { window: {} };
+const locals = {};
+
 
 ///////////////
 // FUNCTIONS //
@@ -91,6 +94,8 @@ function getStaticSitePaths() {
   return [
     '/',
     '/scratch'
+    //'scratch/3d_flakser',
+    //'scratch/3d_flakser/3d_flakser_1'
   ];
 }
 
@@ -131,12 +136,12 @@ function getEntry(){
 
 function getPlugins(){
   let plugins = [
-    new HtmlWebpackPlugin({
-      title: 'Kodeklubben',
-      template: 'src/index-template.ejs',
-      inject: 'body',
-      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-    }),
+    // new HtmlWebpackPlugin({
+    //   title: 'Kodeklubben',
+    //   template: 'src/index-template.ejs',
+    //   inject: 'body',
+    //   chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+    // }),
     new ForceCaseSensitivityPlugin(),
 
     // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
@@ -174,7 +179,7 @@ function getPlugins(){
       // new webpack.optimize.CommonsChunkPlugin({
       //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
       // }),
-      new StaticSiteGeneratorPlugin('main', getStaticSitePaths())
+      new StaticSiteGeneratorPlugin('main', getStaticSitePaths(), locals, scope)
     ]);
   }
 

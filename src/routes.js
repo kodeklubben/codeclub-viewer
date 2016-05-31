@@ -3,16 +3,24 @@ import {Route, IndexRoute} from 'react-router';
 import App from './pages/App';
 //import Lesson from './components/Lesson';
 
-const getComponentPlaylist = (nextState, cb) =>{
-  //require.ensure([], (require) =>{
+const getComponentPlaylist = (nextState, cb) => {
+  if (typeof document !== 'undefined') {
+    require.ensure([], (require) => {
+      cb(null, require('./pages/PlaylistPage').default);
+    }, 'PlaylistPage');
+  } else {
     cb(null, require('./pages/PlaylistPage').default);
-  //}, 'PlaylistPage');
+  }
 };
 
 const getComponentFrontPage = (nextState, cb) => {
-  //require.ensure([], require => {
+  if (typeof document !== 'undefined') {
+    require.ensure([], require => {
+      cb(null, require('./pages/FrontPage').default);
+    }, 'FrontPage');
+  } else {
     cb(null, require('./pages/FrontPage').default);
-  //}, 'FrontPage');
+  }
 };
 
 // const getComponentLessonPage = (nextState, cb) => {

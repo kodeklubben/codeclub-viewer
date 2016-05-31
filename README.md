@@ -34,8 +34,10 @@ npm run eslint
 ```
 
 ## TODO
-Prøve følgende kode i routes.js:
-```
-// polyfill webpack require.ensure
-if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require)
-```
+Suggestion: See if we can make a template in webpack (with HtmlWebpackPlugin?) that we can serve
+as a template via locals to StaticSiteGeneratorPlugin. The point is that we need to load main.js,
+vendor.js etc in the html-files.
+
+Update: Getting closer. Think I have Frontpage and Playlist ok. Still need to make lessonpage work, since we implicitly
+are doing a require.ensure by using the funky path.
+Also still missing css in assets, but see if PR gets pulled in or what...
