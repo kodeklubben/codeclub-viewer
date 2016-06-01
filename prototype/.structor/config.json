@@ -1,0 +1,16 @@
+{
+  "projectName": "bootstrap-prepack",
+  "projectId": 173,
+  "proxyURL": "http://localhost:3000",
+  "paths": {
+    "exportDirPath": "src/client/routes",
+    "assetsDirPath": "src/client/assets",
+    "controllersDirPath": "src/client/controllers",
+    "viewsDirPath": "src/client/views"
+  },
+  "files": {
+    "assetsIndexFilePath": "src/client/assets/index.js",
+    "rootReducerFilePath": "src/client/redux/reducer.js",
+    "mainSagaFilePath": "src/client/redux/saga.js"
+  }
+}

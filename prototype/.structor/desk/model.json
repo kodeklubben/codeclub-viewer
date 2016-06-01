@@ -1,0 +1,65 @@
+{
+  "pages": [
+    {
+      "pageName": "HomePage",
+      "pagePath": "/home",
+      "children": [
+        {
+          "type": "h3",
+          "props": {
+            "style": {
+              "padding": "1em",
+              "textAlign": "center",
+              "backgroundColor": "#CFC"
+            }
+          },
+          "children": [
+            {
+              "type": "span",
+              "text": "Kodeklubben",
+              "props": {}
+            }
+          ]
+        },
+        {
+          "type": "ButtonGroup",
+          "props": {
+            "style": {}
+          },
+          "children": [
+            {
+              "type": "Button",
+              "children": [
+                {
+                  "type": "span",
+                  "text": "Lær å kode her!",
+                  "props": {}
+                }
+              ],
+              "props": {
+                "style": {
+                  "backgroundColor": "#FAA"
+                }
+              }
+            },
+            {
+              "type": "Button",
+              "children": [
+                {
+                  "type": "span",
+                  "text": "Jeg skal undervise",
+                  "props": {}
+                }
+              ],
+              "props": {
+                "style": {
+                  "backgroundColor": "#AFA"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
