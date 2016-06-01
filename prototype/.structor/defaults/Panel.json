@@ -1,0 +1,501 @@
+[
+  {
+    "type": "Panel",
+    "props": {},
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Basic panel",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      }
+    ]
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": {
+        "type": "h3",
+        "props": {},
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty h3",
+            "props": {}
+          }
+        ]
+      }
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ]
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Panel with header"
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ]
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Panel with header",
+      "bsStyle": "primary"
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Panel with header",
+      "bsStyle": "success"
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Panel with header",
+      "bsStyle": "info"
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Panel with header",
+      "bsStyle": "warning"
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Panel with header",
+      "bsStyle": "danger"
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Header",
+      "footer": "Footer"
+    },
+    "children": [
+      {
+        "type": "p",
+        "children": [
+          {
+            "type": "span",
+            "text": "Empty",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ]
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Header",
+      "footer": "Footer"
+    },
+    "children": [
+      {
+        "type": "ListGroup",
+        "props": {
+          "fill": true
+        },
+        "children": [
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "List item #1",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#",
+              "active": true
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "List item #2",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#",
+              "active": false
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "List item #3",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Header",
+      "footer": "Footer"
+    },
+    "children": [
+      {
+        "type": "ListGroup",
+        "props": {},
+        "children": [
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "List item #1",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#",
+              "active": true
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "List item #2",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#",
+              "active": false
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "List item #3",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": {
+        "type": "h4",
+        "props": {},
+        "children": [
+          {
+            "type": "span",
+            "text": "Recent projects",
+            "props": {}
+          }
+        ]
+      },
+      "style": {
+        "overflow": "auto"
+      }
+    },
+    "children": [
+      {
+        "type": "ListGroup",
+        "props": {
+          "fill": true
+        },
+        "children": [
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Link list item #1  ",
+                "props": {},
+                "componentName": null
+              }
+            ],
+            "componentName": null
+          },
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Link list item #2 ",
+                "props": {},
+                "componentName": null
+              }
+            ],
+            "componentName": null
+          },
+          {
+            "type": "ListGroupItem",
+            "props": {
+              "href": "#"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Link list item #3",
+                "props": {},
+                "componentName": null
+              }
+            ],
+            "componentName": null
+          }
+        ]
+      }
+    ],
+    "text": null
+  },
+  {
+    "type": "Panel",
+    "props": {
+      "header": "Choose what you want to do",
+      "bsStyle": "primary"
+    },
+    "children": [
+      {
+        "type": "Button",
+        "props": {
+          "bsStyle": "default",
+          "block": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Browse published projects",
+            "props": {},
+            "componentName": null
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "props": {
+          "className": "text-center"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "OR",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "Input",
+        "props": {
+          "type": "text",
+          "placeholder": "Local project directory path",
+          "buttonAfter": {
+            "type": "Button",
+            "props": {
+              "bsStyle": "default"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Open",
+                "props": {}
+              }
+            ]
+          }
+        },
+        "children": []
+      },
+      {
+        "type": "Panel",
+        "props": {
+          "header": {
+            "type": "h4",
+            "props": {},
+            "children": [
+              {
+                "type": "span",
+                "text": "Recent local projects",
+                "props": {}
+              }
+            ]
+          }
+        },
+        "children": [
+          {
+            "type": "ListGroup",
+            "props": {
+              "fill": true,
+              "style": {
+                "height": "100px",
+                "overflow": "auto"
+              }
+            },
+            "children": [
+              {
+                "type": "ListGroupItem",
+                "props": {
+                  "href": "#"
+                },
+                "children": [
+                  {
+                    "type": "span",
+                    "text": "Link list item #1  ",
+                    "props": {},
+                    "componentName": null
+                  }
+                ],
+                "componentName": null
+              },
+              {
+                "type": "ListGroupItem",
+                "props": {
+                  "href": "#"
+                },
+                "children": [
+                  {
+                    "type": "span",
+                    "text": "Link list item #2 ",
+                    "props": {},
+                    "componentName": null
+                  }
+                ],
+                "componentName": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "text": null
+  }
+]

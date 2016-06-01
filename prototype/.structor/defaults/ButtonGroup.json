@@ -1,0 +1,474 @@
+[
+  {
+    "type": "ButtonGroup",
+    "props": {},
+    "children": [
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Left",
+            "props": {}
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Middle",
+            "props": {}
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Right",
+            "props": {}
+          }
+        ],
+        "props": {}
+      }
+    ]
+  },
+  {
+    "type": "ButtonGroup",
+    "props": {
+      "bsSize": "large"
+    },
+    "children": [
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Large Left",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Large Middle",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Large Right",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ButtonGroup",
+    "props": {
+      "bsSize": "small"
+    },
+    "children": [
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Small Left",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Small Middle",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Small Right",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ButtonGroup",
+    "props": {},
+    "children": [
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Left",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Middle",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Right",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "DropdownButton",
+        "props": {
+          "title": "Dropdown"
+        },
+        "children": [
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "1"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "2"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "3"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ButtonGroup",
+    "props": {
+      "vertical": true
+    },
+    "children": [
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Button",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Button",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Button",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "DropdownButton",
+        "props": {
+          "title": "Dropdown"
+        },
+        "children": [
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "1"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "2"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "3"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Button",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "Button",
+        "children": [
+          {
+            "type": "span",
+            "text": "Button",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "props": {}
+      },
+      {
+        "type": "DropdownButton",
+        "props": {
+          "title": "Dropdown"
+        },
+        "children": [
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "1"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "2"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "3"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "DropdownButton",
+        "props": {
+          "title": "Dropdown"
+        },
+        "children": [
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "1"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "2"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "3"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "variantName": "justified",
+    "type": "ButtonGroup",
+    "props": {
+      "justified": true
+    },
+    "children": [
+      {
+        "type": "ButtonGroup",
+        "props": {
+          "justified": true
+        },
+        "children": [
+          {
+            "type": "Button",
+            "children": [
+              {
+                "type": "span",
+                "text": "Left"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ButtonGroup",
+        "props": {
+          "justified": true
+        },
+        "children": [
+          {
+            "type": "Button",
+            "children": [
+              {
+                "type": "span",
+                "text": "Left"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

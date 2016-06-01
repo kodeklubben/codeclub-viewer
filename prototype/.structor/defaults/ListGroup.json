@@ -1,0 +1,264 @@
+[
+  {
+    "type": "ListGroup",
+    "props": {},
+    "children": [
+      {
+        "type": "ListGroupItem",
+        "props": {},
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #1",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {},
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #2",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {},
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #3",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      }
+    ]
+  },
+  {
+    "type": "ListGroup",
+    "props": {},
+    "children": [
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Link list item #1  ",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Link list item #2 ",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Link list item #3",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      }
+    ]
+  },
+  {
+    "type": "ListGroup",
+    "props": {},
+    "children": [
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#",
+          "disabled": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Disabled link list item #1  ",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Link list item #2 ",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#",
+          "active": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Active link list item #3",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      }
+    ]
+  },
+  {
+    "type": "ListGroup",
+    "props": {},
+    "children": [
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "bsStyle": "success"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #1",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "bsStyle": "info"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #2",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "bsStyle": "warning"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #3",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "bsStyle": "danger"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #3",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      }
+    ]
+  },
+  {
+    "type": "ListGroup",
+    "props": {},
+    "children": [
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#",
+          "header": "Header of list item"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #1",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#",
+          "header": "Header of list item"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #2",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "ListGroupItem",
+        "props": {
+          "href": "#",
+          "header": "Header of list item"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "List item #3",
+            "props": {},
+            "componentName": null
+          }
+        ],
+        "componentName": null
+      }
+    ]
+  }
+]

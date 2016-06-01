@@ -1,0 +1,760 @@
+[
+  {
+    "variantName": "default style",
+    "type": "DropdownButton",
+    "props": {
+      "title": "Dropdown"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "variantName": "primary",
+    "type": "DropdownButton",
+    "props": {
+      "title": "Primary",
+      "bsStyle": "primary"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "variantName": "succes",
+    "type": "DropdownButton",
+    "props": {
+      "title": "Success",
+      "bsStyle": "success",
+      "id": "1"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Info",
+      "bsStyle": "info"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Danger",
+      "bsStyle": "danger"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Link",
+      "bsStyle": "link"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Large button",
+      "bsSize": "large"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Small button",
+      "bsSize": "small"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Extra small button",
+      "bsSize": "xsmall"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "No caret",
+      "noCaret": true
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Dropup",
+      "dropup": true
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "DropdownButton",
+    "props": {
+      "title": "Pull right",
+      "pullRight": true
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  }
+]

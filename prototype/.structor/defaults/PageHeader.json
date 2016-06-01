@@ -1,0 +1,21 @@
+[
+  {
+    "variantName": "default",
+    "type": "PageHeader",
+    "props": {},
+    "children": [
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "Page Header Text"
+      },
+      {
+        "type": "small",
+        "props": {},
+        "children": [],
+        "text": "  Small text"
+      }
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "variantName": "default",
+    "type": "Pagination",
+    "props": {
+      "bsSize": "medium",
+      "items": 10,
+      "activePage": 3,
+      "prev": false,
+      "next": false,
+      "first": false,
+      "last": false,
+      "ellipsis": false,
+      "maxButtons": 10
+    }
+  },
+  {
+    "variantName": "max button 5",
+    "type": "Pagination",
+    "props": {
+      "bsSize": "medium",
+      "items": 10,
+      "activePage": 3,
+      "prev": true,
+      "next": true,
+      "first": true,
+      "last": true,
+      "ellipsis": true,
+      "maxButtons": 5
+    }
+  },
+  {
+    "variantName": "large",
+    "type": "Pagination",
+    "props": {
+      "bsSize": "large",
+      "items": 10,
+      "activePage": 3,
+      "prev": false,
+      "next": false,
+      "first": false,
+      "last": false,
+      "ellipsis": false,
+      "maxButtons": 10
+    }
+  },
+  {
+    "variantName": "small",
+    "type": "Pagination",
+    "props": {
+      "bsSize": "small",
+      "items": 10,
+      "activePage": 3,
+      "prev": false,
+      "next": false,
+      "first": false,
+      "last": false,
+      "ellipsis": false,
+      "maxButtons": 10
+    }
+  }
+]
