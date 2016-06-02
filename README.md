@@ -37,8 +37,13 @@ npm run eslint
 There is a [structor](https://github.com/ipselon/structor) prototype of the new site in the prototype folder.
 (It was based on [bootstrap-prepack](https://github.com/ipselon/bootstrap-prepack).)
 
-If you want to look at the exported prototype, just go into the prototype folder
-and run
+To look at or modify the prototype, you first have to `cd prototype` and then
+```
+npm install
+```
+The following instructions about the prototype assumes you are in the prototype folder.
+
+If you want to just look at the exported prototype, just type
 ```
 node ./server.js
 ```
@@ -48,15 +53,13 @@ If you want to play with the prototype, and make changes, first install structor
 ```
 npm install -g structor
 ```
-Then
+Then run it by typing
 ```
-cd prototype
 structor
 ```
 Then go to your browser and type `localhost:2222/structor`. Make changes, and preview the site right in the editor.
-Don't forget to save your work before quitting. This will save stuff to the .structor-folder.
-If you want to test it out for real,
-choose `export project` (instead of save), and then go to the commandline and write (from the prototype folder)
+Don't forget to save your work before quitting. If you want to test it out "for real",
+choose `export project` (instead of save), and then go to the commandline and write
 ```
 npm run build
 node ./server.js
