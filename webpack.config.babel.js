@@ -60,6 +60,7 @@ import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 ///////////////
 const buildDir = 'dist';
 const publicPath = '/';
+const lessonSrc = '../oppgaver/src';
 
 const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
 
@@ -75,8 +76,10 @@ console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 
-const scope = { window: {} };
+const scope = {window: {}};
 const locals = {};
+
+
 
 
 ///////////////
@@ -84,22 +87,30 @@ const locals = {};
 ///////////////
 
 function getStaticSitePaths() {
-  // var glob = require('glob');
-  //
-  // module.exports = function(cwd) {
-  //   return glob.sync('*/', { cwd: cwd }).map(function(subDir) {
-  //     return subDir.replace(/\/$/, '');
-  //   });
-  // };
-  return [
-    '/',
-    '/scratch'
-    //'scratch/3d_flakser',
-    //'scratch/3d_flakser/3d_flakser_1'
-  ];
+  var glob = require('glob');
+  const absLessonSrc = path.resolve(__dirname, lessonSrc);
+  const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
+    //.slice(0,1)
+    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2'));
+  const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
+    .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))
+    //.slice(0,1)
+    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2'));
+  const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
+  //const staticPaths = [].concat(lessonPaths);
+
+  console.log('Static paths:');
+  console.log(staticPaths);
+
+  return staticPaths;
+  // return [
+  //   '/',
+  //   '/scratch',
+  //   'scratch/3d_flakser/3d_flakser_1'
+  // ];
 }
 
-function getEntry(){
+function getEntry() {
   const appEntry = './src/index.js';
   if (isHot) {
     return {
@@ -119,7 +130,7 @@ function getEntry(){
 
     return {
       // Include all dependencies from package.json:
-      vendor: Object.keys(pkg.dependencies).filter(function(v){
+      vendor: Object.keys(pkg.dependencies).filter(function(v) {
         const includeVendor = excludeFromVendorEntry.indexOf(v) < 0;
         if (!includeVendor) {
           console.log(`    ---> EXCLUDED from the 'vendor' chunk: ${v}`);
@@ -144,12 +155,24 @@ function getPlugins(){
     // }),
     new ForceCaseSensitivityPlugin(),
 
-    // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
-    // See https://github.com/webpack/docs/wiki/list-of-plugins#4-extra-async-commons-chunk
-    new webpack.optimize.CommonsChunkPlugin({
-      children: true,
-      async: true
-    })
+    //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/)
+    new webpack.IgnorePlugin(/(README|index)\.md$/)
+
+
+    // // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
+    // // See https://github.com/webpack/docs/wiki/list-of-plugins#4-extra-async-commons-chunk
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   children: true,
+    //   async: true
+    // })
+
+
+    // new SplitByPathPlugin([
+    //   {
+    //     name: 'vendor',
+    //     path: path.join(__dirname, 'node_modules')
+    //   }
+    // ])
   ];
 
   if (isProduction) {
@@ -229,7 +252,7 @@ const config = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
-      lessonSrc: path.resolve(__dirname, '../oppgaver/src/')
+      lessonSrc: path.resolve(__dirname, lessonSrc)
     }
   },
   resolveLoader: {

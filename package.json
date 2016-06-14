@@ -7,7 +7,7 @@
     "start": "webpack-dev-server -d --progress --inline --hot",
     "build": "webpack -d --progress",
     "build:prod": "cross-env NODE_ENV=production webpack -p --progress",
-    "serve": "node server.js",
+    "serve": "http-server ./dist",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",
     "eslint": "eslint src/ test/ --ext .js,.jsx"
@@ -64,6 +64,7 @@
     "file-loader": "0.8.5",
     "force-case-sensitivity-webpack-plugin": "0.1.1",
     "front-matter-loader": "0.1.2",
+    "glob": "7.0.3",
     "html-loader": "0.4.3",
     "html-webpack-plugin": "2.19.0",
     "jsdom": "9.2.1",
