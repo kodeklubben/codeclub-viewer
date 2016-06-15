@@ -31,24 +31,22 @@
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////
-/* global process __dirname */
+
+/* global __dirname */
 
 
 //////////////////////
 // IMPORT / REQUIRE //
 //////////////////////
-import baseConfig from './webpack.base.config.babel';
 
+import baseConfig, {lessonSrc} from './webpack.base.config.babel';
 import path from 'path';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
+
 
 ///////////////
 // CONSTANTS //
 ///////////////
-const buildDir = 'dist';
-const publicPath = '/';
-
-const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
 
 const scope = {window: {}};
 const locals = {};
@@ -60,7 +58,6 @@ const locals = {};
 
 function getStaticSitePaths() {
   const glob = require('glob');
-  const lessonSrc = baseConfig.resolve.alias.lessonSrc;
   const absLessonSrc = path.resolve(__dirname, lessonSrc);
   const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
     .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2'));
@@ -89,49 +86,12 @@ const config = {
   entry: {
     staticsite: './src/index-static.js'
   },
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel'
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style', cssModuleLoaderStr, 'postcss']
-      }, {
-        test: /\.scss$/,
-        loaders: ['style', cssModuleLoaderStr, 'postcss', 'sass']
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif)$/,
-        loader: 'url-loader?limit=5000&name=[path][name].[hash:6].[ext]'
-      },
-      {
-        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url?limit=10000'
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-        loader: 'file'
-      },
-      {
-        // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
-        test: /\.json$/,
-        loader: 'json'
-      }
-    ]
-  },
   output: {
-    path: path.resolve(__dirname, buildDir),
-    publicPath: publicPath,
+    ...baseConfig.output,
     filename: 'static-bundle.js',
     // static-site-generator must have files compiled to UMD or CommonJS
     // so they can be required in a Node context:
     libraryTarget: 'umd'
-  },
-  historyApiFallback: {
-    index: publicPath
   },
   plugins: [
     ...baseConfig.plugins,

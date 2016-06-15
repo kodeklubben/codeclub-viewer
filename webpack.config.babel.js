@@ -24,13 +24,15 @@
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////
+
 /* global process __dirname */
 
 
 //////////////////////
 // IMPORT / REQUIRE //
 //////////////////////
-import baseConfig from './webpack.base.config.babel';
+
+import baseConfig, {getValuesAsArray, getLoaders} from './webpack.base.config.babel';
 const webpack = require('webpack');
 
 import path from 'path';
@@ -40,13 +42,13 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
+
 ///////////////
 // CONSTANTS //
 ///////////////
+
 const buildDir = 'dist';
 const publicPath = '/';
-
-const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
 
 const isHot = process.argv.indexOf('--hot') >= 0;
 console.log(`isHot=${isHot}`);
@@ -56,6 +58,9 @@ console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 
+///////////////
+// FUNCTIONS //
+///////////////
 
 function getEntry() {
   const appEntry = './src/index.js';
@@ -92,7 +97,7 @@ function getEntry() {
   }
 }
 
-function getPlugins(){
+function getPlugins() {
   let plugins = [
     // Create the root index.html needed regardless of whether we make the other static index.htmls.
     new HtmlWebpackPlugin({
@@ -154,42 +159,8 @@ function getPlugins(){
 const config = {
   ...baseConfig,
   entry: getEntry(),
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: isHot ? 'react-hot!babel' : 'babel'
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style', cssModuleLoaderStr, 'postcss']
-      }, {
-        test: /\.scss$/,
-        loaders: ['style', cssModuleLoaderStr, 'postcss', 'sass']
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif)$/,
-        loader: 'url-loader?limit=5000&name=[path][name].[hash:6].[ext]'
-      },
-      {
-        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url?limit=10000'
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-        loader: 'file'
-      },
-      {
-        // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
-        test: /\.json$/,
-        loader: 'json'
-      }
-    ]
-  },
   output: {
-    path: path.resolve(__dirname, buildDir),
-    publicPath: publicPath,
+    ...baseConfig.output,
     filename: `${filenameBase}.js`,
     chunkFilename: `${filenameBase}.js`
   },
@@ -202,5 +173,15 @@ const config = {
   plugins: getPlugins(),
   postcss: [autoprefixer]
 };
+
+////////////////////
+// Modify loaders //
+////////////////////
+
+if (isHot) {
+  const loaders = getLoaders();
+  loaders.js.loader = 'react-hot!' + loaders.js.loader;
+  config.module.loaders = getValuesAsArray(loaders);
+}
 
 export default config;

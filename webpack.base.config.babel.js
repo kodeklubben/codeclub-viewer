@@ -19,18 +19,76 @@ import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 ///////////////
 // CONSTANTS //
 ///////////////
-const lessonSrc = '../oppgaver/src';
+const buildDir = 'dist';
+const publicPath = '/';
+export const lessonSrc = '../oppgaver/src';
 
 // Loaders for lesson files written in markdown (.md)
 const frontmatterLoaders = ['json', 'front-matter?onlyAttributes'];
 const contentLoaders = ['html', 'markdown-it', 'front-matter?onlyBody'];
 
+const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
+
+/////////////////////
+// Helper function //
+/////////////////////
+export function getValuesAsArray(obj) {
+  return Object.keys(obj).map(k => obj[k]);
+}
+
+//////////////////////////
+// Loaders as an object //
+//////////////////////////
+
+// Convert to array before using in config.module.loaders, e.g. using getValues()
+// Keeping it in an object with keys, so that parts of it can easily be changed.
+export function getLoaders() {
+  return {
+    js: {
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      loader: 'babel'
+    },
+    css: {
+      test: /\.css$/,
+      loaders: ['style', cssModuleLoaderStr, 'postcss']
+    },
+    scss: {
+      test: /\.scss$/,
+      loaders: ['style', cssModuleLoaderStr, 'postcss', 'sass']
+    },
+    image: {
+      test: /\.(png|jpg|jpeg|gif)$/,
+      loader: 'url-loader?limit=5000&name=[path][name].[hash:6].[ext]'
+    },
+    fonturl: {
+      test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: 'url?limit=10000'
+    },
+    fontfile: {
+      test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+      loader: 'file'
+    },
+    json: {
+      // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
+      test: /\.json$/,
+      loader: 'json'
+    }
+  };
+}
 
 /////////////////////
 // THE BASE CONFIG //
 /////////////////////
 
 const baseConfig = {
+  module: {
+    loaders: getValuesAsArray(getLoaders())
+  },
+  output: {
+    path: path.resolve(__dirname, buildDir),
+    publicPath: publicPath
+  },
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
