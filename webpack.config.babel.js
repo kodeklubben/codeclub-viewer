@@ -58,7 +58,7 @@ const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 
 
 function getEntry() {
-  const appEntry = './src/index-dynamic.js';
+  const appEntry = './src/index.js';
   if (isHot) {
     return {
       main: [
@@ -94,9 +94,17 @@ function getEntry() {
 
 function getPlugins(){
   let plugins = [
+    // Create the root index.html needed regardless of whether we make the other static index.htmls.
+    new HtmlWebpackPlugin({
+      title: 'Kodeklubben',
+      template: 'src/index-template.ejs',
+      inject: 'body',
+      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+    }),
+    // Create template for the static non-root index.html files
     new HtmlWebpackPlugin({
       title: 'Kodeklubben (server)',
-      filename: 'server-template.ejs',
+      filename: 'index-html-template.ejs',
       appcontent: '<%= appHtml %>',
       template: 'src/index-template.ejs',
       inject: 'body',

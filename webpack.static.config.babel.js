@@ -63,21 +63,17 @@ function getStaticSitePaths() {
   const lessonSrc = baseConfig.resolve.alias.lessonSrc;
   const absLessonSrc = path.resolve(__dirname, lessonSrc);
   const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
-  //.slice(0,1)
     .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2'));
   const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))
-    //.slice(0,1)
     .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2'));
-  const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
-  //const staticPaths = [].concat(lessonPaths);
+  const staticPaths = [].concat(coursePaths).concat(lessonPaths);
 
   console.log('Static paths:');
   console.log(staticPaths);
 
   return staticPaths;
   // return [
-  //   '/',
   //   '/scratch',
   //   'scratch/3d_flakser/3d_flakser_1'
   // ];
@@ -133,9 +129,6 @@ const config = {
     // static-site-generator must have files compiled to UMD or CommonJS
     // so they can be required in a Node context:
     libraryTarget: 'umd'
-  },
-  devServer: {
-    historyApiFallback: true // needed when using browserHistory (instead of hashHistory)
   },
   historyApiFallback: {
     index: publicPath

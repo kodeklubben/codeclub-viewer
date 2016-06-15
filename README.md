@@ -18,14 +18,22 @@ npm install -g http-server
 
 ### Building and serving with sourcemaps
 ```
-npm run buildall
-npm serve
+npm run build
+npm run serve
 ```
 
 ### Building and serving for production
 ```
-npm run buildall:prod
-npm serve
+npm run build:prod
+npm run serve
+```
+
+### Building and serving without using static html-files
+No real reason to do this, but possible. Here the files are served using a node express server.
+It should work both when only doing `npm run buildjs` and when doing the full `npm run build`:
+```
+npm run buildjs
+npm run servejs
 ```
 
 ## Running tests
