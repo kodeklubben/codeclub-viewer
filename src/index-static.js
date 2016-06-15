@@ -9,7 +9,7 @@ export default (locals, callback) => {
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     const appHtml = ReactDOMServer.renderToString(<RouterContext {...renderProps} />);
-    const template = require('raw!./../dist/server-template.ejs');
+    const template = require('raw!./../dist/index-html-template.ejs');
     const html = template.replace('<%= appHtml %>', `<div>${appHtml}</div>`);
     callback(null, html);
   });

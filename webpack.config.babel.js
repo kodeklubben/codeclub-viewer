@@ -24,12 +24,15 @@
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////
+
 /* global process __dirname */
 
 
 //////////////////////
 // IMPORT / REQUIRE //
 //////////////////////
+
+import baseConfig, {getValuesAsArray, getLoaders} from './webpack.base.config.babel';
 const webpack = require('webpack');
 
 import path from 'path';
@@ -37,28 +40,15 @@ import autoprefixer from 'autoprefixer';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
-import ForceCaseSensitivityPlugin from 'force-case-sensitivity-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-
-
-import MarkdownItAnchor from 'markdown-it-anchor';
-import MarkdownItAttrs from 'markdown-it-attrs';
-import MarkdownItHeaderSections from 'markdown-it-header-sections';
-import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 
 
 ///////////////
 // CONSTANTS //
 ///////////////
+
 const buildDir = 'dist';
 const publicPath = '/';
-const lessonSrc = '../oppgaver/src';
-
-const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
-
-// Loaders for lesson files written in markdown (.md)
-const frontmatterLoaders = ['json', 'front-matter?onlyAttributes'];
-const contentLoaders = ['html', 'markdown-it', 'front-matter?onlyBody'];
 
 const isHot = process.argv.indexOf('--hot') >= 0;
 console.log(`isHot=${isHot}`);
@@ -68,9 +58,12 @@ console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
 
+///////////////
+// FUNCTIONS //
+///////////////
 
 function getEntry() {
-  const appEntry = './src/index-dynamic.js';
+  const appEntry = './src/index.js';
   if (isHot) {
     return {
       main: [
@@ -104,27 +97,26 @@ function getEntry() {
   }
 }
 
-function getPlugins(){
+function getPlugins() {
   let plugins = [
+    // Create the root index.html needed regardless of whether we make the other static index.htmls.
+    new HtmlWebpackPlugin({
+      title: 'Kodeklubben',
+      template: 'src/index-template.ejs',
+      inject: 'body',
+      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+    }),
+    // Create template for the static non-root index.html files
     new HtmlWebpackPlugin({
       title: 'Kodeklubben (server)',
-      filename: 'server-template.ejs',
+      filename: 'index-html-template.ejs',
       appcontent: '<%= appHtml %>',
       template: 'src/index-template.ejs',
       inject: 'body',
       chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
     }),
-    new ForceCaseSensitivityPlugin(),
-
     //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/)
     new webpack.IgnorePlugin(/(README|index)\.md$/)
-
-    // // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
-    // // See https://github.com/webpack/docs/wiki/list-of-plugins#4-extra-async-commons-chunk
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   children: true,
-    //   async: true
-    // })
   ];
 
   if (isProduction) {
@@ -138,7 +130,8 @@ function getPlugins(){
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
-          warnings: false
+          warnings: false,
+          pure_funcs: 'console.log' // removes these functions from the code
         }
       })
     ]);
@@ -147,8 +140,7 @@ function getPlugins(){
   if (!isHot) {
     plugins = plugins.concat([
       new CleanWebpackPlugin([buildDir], {
-        root: path.resolve(__dirname),
-        dry: false
+        root: path.resolve(__dirname)
       }),
       new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
       new webpack.optimize.CommonsChunkPlugin({
@@ -166,66 +158,10 @@ function getPlugins(){
 ///////////////////////
 
 const config = {
+  ...baseConfig,
   entry: getEntry(),
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: isHot ? 'react-hot!babel' : 'babel'
-      },
-      {
-        test: /\.css$/,
-        loaders: ['style', cssModuleLoaderStr, 'postcss']
-      }, {
-        test: /\.scss$/,
-        loaders: ['style', cssModuleLoaderStr, 'postcss', 'sass']
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif)$/,
-        loader: 'url-loader?limit=5000&name=[path][name].[hash:6].[ext]'
-      },
-      {
-        test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url?limit=10000'
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-        loader: 'file'
-      },
-      {
-        // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
-        test: /\.json$/,
-        loader: 'json'
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx'],
-    alias: {
-      lessonSrc: path.resolve(__dirname, lessonSrc)
-    }
-  },
-  resolveLoader: {
-    root: [path.resolve(__dirname, 'node_modules')],
-    alias: {
-      // Markdown-files are parsed only through one of these three aliases, and are
-      // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
-      // 1) We don't want to use '!!' in the requires in the modules, and
-      // 2) Since the lessons create a lot of data, we want to be sure that we only load
-      //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
-      //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
-      'onlyFrontmatter': 'combine?' + JSON.stringify({frontmatter: frontmatterLoaders}),
-      'onlyContent': 'combine?' + JSON.stringify({content: contentLoaders}),
-      'frontAndContent': 'combine?' + JSON.stringify({
-        frontmatter: frontmatterLoaders,
-        content: contentLoaders
-      })
-    }
-  },
   output: {
-    path: path.resolve(__dirname, buildDir),
-    publicPath: publicPath,
+    ...baseConfig.output,
     filename: `${filenameBase}.js`,
     chunkFilename: `${filenameBase}.js`
   },
@@ -236,17 +172,17 @@ const config = {
     index: publicPath
   },
   plugins: getPlugins(),
-  postcss: [autoprefixer],
-  'markdown-it': {
-    preset: 'commonmark',
-    //typographer: true,
-    use: [
-      MarkdownItAnchor,
-      MarkdownItAttrs,
-      MarkdownItHeaderSections,
-      MarkdownItImplicitFigures
-    ]
-  }
+  postcss: [autoprefixer]
 };
+
+////////////////////
+// Modify loaders //
+////////////////////
+
+if (isHot) {
+  const loaders = getLoaders();
+  loaders.js.loader = 'react-hot!' + loaders.js.loader;
+  config.module.loaders = getValuesAsArray(loaders);
+}
 
 export default config;
