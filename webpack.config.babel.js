@@ -114,9 +114,7 @@ function getPlugins() {
       template: 'src/index-template.ejs',
       inject: 'body',
       chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-    }),
-    //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/)
-    new webpack.IgnorePlugin(/(README|index)\.md$/)
+    })
   ];
 
   if (isProduction) {
