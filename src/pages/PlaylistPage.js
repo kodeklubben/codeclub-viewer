@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
 import NavLink from '../components/NavLink';
 
-// Get all ./*/*/*.md under lessonSrc, e.g. ./scratch/straffespark/straffespark.md
-const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/[^\/]*\/[^\/]*\.md/);
 
 const PlaylistPage = React.createClass({
   getLessonPath(path) {
@@ -10,6 +8,13 @@ const PlaylistPage = React.createClass({
     return lessonPath ? lessonPath[1] : null;
   },
   render() {
+    // Get all ./*/*/*.md under lessonSrc, e.g. ./scratch/straffespark/straffespark.md
+    // Ignorerer alle ./*/*/README.md
+    const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
+      /^\.\/[^\/]*\/[^\/]*\/(?!README\.md$)[^\/]*\.md/);
+    //console.log('PlaylistPage lessonContext keys:');
+    //console.log(lessonContext.keys());
+
     const keys = lessonContext.keys().filter(path =>{
       return path.startsWith('./' + this.props.params.course);
     });
