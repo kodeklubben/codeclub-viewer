@@ -37,36 +37,18 @@
 //////////////////////
 // IMPORT / REQUIRE //
 //////////////////////
+import baseConfig from './webpack.base.config.babel';
+
 import path from 'path';
-import autoprefixer from 'autoprefixer';
-
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
-
-
-import MarkdownItAnchor from 'markdown-it-anchor';
-import MarkdownItAttrs from 'markdown-it-attrs';
-import MarkdownItHeaderSections from 'markdown-it-header-sections';
-import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
-
 
 ///////////////
 // CONSTANTS //
 ///////////////
 const buildDir = 'dist';
 const publicPath = '/';
-const lessonSrc = '../oppgaver/src';
 
 const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
-
-// Loaders for lesson files written in markdown (.md)
-const frontmatterLoaders = ['json', 'front-matter?onlyAttributes'];
-const contentLoaders = ['html', 'markdown-it', 'front-matter?onlyBody'];
-
-const isProduction = process.env.NODE_ENV === 'production';
-console.log(`isProduction=${isProduction}`);
-console.log();
-
-const filenameBase = '[name].static.[chunkhash]';
 
 const scope = {window: {}};
 const locals = {};
@@ -77,7 +59,8 @@ const locals = {};
 ///////////////
 
 function getStaticSitePaths() {
-  var glob = require('glob');
+  const glob = require('glob');
+  const lessonSrc = baseConfig.resolve.alias.lessonSrc;
   const absLessonSrc = path.resolve(__dirname, lessonSrc);
   const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
   //.slice(0,1)
@@ -100,25 +83,16 @@ function getStaticSitePaths() {
   // ];
 }
 
-function getEntry() {
-  return {
-    staticsite: './src/index-static.js'
-  };
-}
-
-function getPlugins() {
-  return [
-    new StaticSiteGeneratorPlugin('staticsite', getStaticSitePaths(), locals, scope)
-  ];
-}
-
 
 ///////////////////////
 // THE ACTUAL CONFIG //
 ///////////////////////
 
 const config = {
-  entry: getEntry(),
+  ...baseConfig,
+  entry: {
+    staticsite: './src/index-static.js'
+  },
   module: {
     loaders: [
       {
@@ -152,34 +126,10 @@ const config = {
       }
     ]
   },
-  resolve: {
-    extensions: ['', '.js', '.jsx'],
-    alias: {
-      lessonSrc: path.resolve(__dirname, lessonSrc)
-    }
-  },
-  resolveLoader: {
-    root: [path.resolve(__dirname, 'node_modules')],
-    alias: {
-      // Markdown-files are parsed only through one of these three aliases, and are
-      // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
-      // 1) We don't want to use '!!' in the requires in the modules, and
-      // 2) Since the lessons create a lot of data, we want to be sure that we only load
-      //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
-      //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
-      'onlyFrontmatter': 'combine?' + JSON.stringify({frontmatter: frontmatterLoaders}),
-      'onlyContent': 'combine?' + JSON.stringify({content: contentLoaders}),
-      'frontAndContent': 'combine?' + JSON.stringify({
-        frontmatter: frontmatterLoaders,
-        content: contentLoaders
-      })
-    }
-  },
   output: {
     path: path.resolve(__dirname, buildDir),
     publicPath: publicPath,
-    filename: `${filenameBase}.js`,
-    chunkFilename: `${filenameBase}.js`,
+    filename: 'static-bundle.js',
     // static-site-generator must have files compiled to UMD or CommonJS
     // so they can be required in a Node context:
     libraryTarget: 'umd'
@@ -190,18 +140,10 @@ const config = {
   historyApiFallback: {
     index: publicPath
   },
-  plugins: getPlugins(),
-  postcss: [autoprefixer],
-  'markdown-it': {
-    preset: 'commonmark',
-    //typographer: true,
-    use: [
-      MarkdownItAnchor,
-      MarkdownItAttrs,
-      MarkdownItHeaderSections,
-      MarkdownItImplicitFigures
-    ]
-  }
+  plugins: [
+    ...baseConfig.plugins,
+    new StaticSiteGeneratorPlugin('staticsite', getStaticSitePaths(), locals, scope)
+  ]
 };
 
 export default config;

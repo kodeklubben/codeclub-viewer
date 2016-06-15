@@ -10,13 +10,19 @@ npm install
 npm start
 ```
 
-## Building with sourcemaps (and serving)
+## Building and serving
+This requires that you install http-server globally:
+```
+npm install -g http-server
+```
+
+### Building and serving with sourcemaps
 ```
 npm run buildall
 npm serve
 ```
 
-## Building for production (and serving)
+### Building and serving for production
 ```
 npm run buildall:prod
 npm serve
