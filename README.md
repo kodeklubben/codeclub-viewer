@@ -47,7 +47,6 @@ To check that the code is formatted correctly, run
 ```
 npm run eslint -s
 ```
-<<<<<<< HEAD
 The `-s` is to remove npm-errors and just show errors from the test.
 
 ## Running both eslint and tests
