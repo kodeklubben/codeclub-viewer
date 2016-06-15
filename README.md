@@ -12,32 +12,44 @@ npm start
 
 ## Building with sourcemaps (and serving)
 ```
-npm run build
+npm run buildall
 npm serve
 ```
 
 ## Building for production (and serving)
 ```
-npm run build:prod
+npm run buildall:prod
 npm serve
 ```
 
 ## Running tests
 ```
-npm run test
+npm run test -s
 ```
+The `-s` is to remove npm-errors and just show errors from the test.
 
 ## Running eslint
 To check that the code is formatted correctly, run
 ```
-npm run eslint
+npm run eslint -s
 ```
+The `-s` is to remove npm-errors and just show errors from the test.
+
+## Running both eslint and tests
+```
+npm run testall -s
+```
+The `-s` is to remove npm-errors and just show errors from the test.
+
 
 ## TODO
-Suggestion: See if we can make a template in webpack (with HtmlWebpackPlugin?) that we can serve
-as a template via locals to StaticSiteGeneratorPlugin. The point is that we need to load main.js,
-vendor.js etc in the html-files.
+We are now generating staticsite.static.[hash].js and all the images one more time during generation
+of html files in `npm run build:static`, which is unnecessary. The js-file is not used, since this code
+already exists in main, vendor, etc., and the images already exist (all of this created during the first
+part of the build, `npm run build`).
+It doesn't matter, but more elegant if we didn't emit/produce these files during static html generation.
 
-Update: Getting closer. Think I have Frontpage and Playlist ok. Still need to make lessonpage work, since we implicitly
-are doing a require.ensure by using the funky path.
-Also still missing css in assets, but see if PR gets pulled in or what...
+Perhaps we could merge this with the serving-lazy-branch, so that it is possible to run this on a node-server as well?
+
+Of course, we still need to create (or transfer) css and functionality from codeclub_lesson_builder, and/or
+create the new design.

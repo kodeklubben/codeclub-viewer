@@ -20,6 +20,13 @@
  *
  */
 
+// TODO:
+// See if it is possible to build the md-files in separate chunks. How? Perhaps separate entries?
+// Or perhaps CommonsChunkPlugin manages that by itself?
+// Preferrably we want each course in a separate chunk.
+// Btw, Should the courses be listed in a specific order? What is done on website today?
+// I guess it would be ok to list the courses manually...
+
 
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
@@ -30,15 +37,10 @@
 //////////////////////
 // IMPORT / REQUIRE //
 //////////////////////
-const webpack = require('webpack');
-
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import CleanWebpackPlugin from 'clean-webpack-plugin';
-import ForceCaseSensitivityPlugin from 'force-case-sensitivity-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 
 
 import MarkdownItAnchor from 'markdown-it-anchor';
@@ -60,104 +62,54 @@ const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[
 const frontmatterLoaders = ['json', 'front-matter?onlyAttributes'];
 const contentLoaders = ['html', 'markdown-it', 'front-matter?onlyBody'];
 
-const isHot = process.argv.indexOf('--hot') >= 0;
-console.log(`isHot=${isHot}`);
 const isProduction = process.env.NODE_ENV === 'production';
 console.log(`isProduction=${isProduction}`);
 console.log();
 
-const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
+const filenameBase = '[name].static.[chunkhash]';
+
+const scope = {window: {}};
+const locals = {};
 
 
-function getEntry() {
-  const appEntry = './src/index-dynamic.js';
-  if (isHot) {
-    return {
-      main: [
-        'bootstrap-loader',
-        appEntry
-      ]
-    };
-  } else {
-    console.log('Splitting out vendors to separate chunks (vendor and vendor2):');
+///////////////
+// FUNCTIONS //
+///////////////
 
-    // Get all packages that exist in package.json's 'dependencies' into config.entry.vendor:
-    const pkg = require('./package.json');
+function getStaticSitePaths() {
+  var glob = require('glob');
+  const absLessonSrc = path.resolve(__dirname, lessonSrc);
+  const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
+  //.slice(0,1)
+    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2'));
+  const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
+    .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))
+    //.slice(0,1)
+    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2'));
+  const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
+  //const staticPaths = [].concat(lessonPaths);
 
-    // Exclude any packages that don't play nice with CommonsChunkPlugin, and add them via vendor2:
-    const excludeFromVendorEntry = ['react-bootstrap'];
+  console.log('Static paths:');
+  console.log(staticPaths);
 
-    return {
-      // Include all dependencies from package.json:
-      vendor: Object.keys(pkg.dependencies).filter(function(v) {
-        const includeVendor = excludeFromVendorEntry.indexOf(v) < 0;
-        if (!includeVendor) {
-          console.log(`    ---> EXCLUDED from the 'vendor' chunk: ${v}`);
-        }
-        return includeVendor;
-      }),
-      vendor2: [  // Include other vendors not in 'vendor'
-        'bootstrap-loader/extractStyles'
-      ],
-      main: appEntry
-    };
-  }
+  return staticPaths;
+  // return [
+  //   '/',
+  //   '/scratch',
+  //   'scratch/3d_flakser/3d_flakser_1'
+  // ];
 }
 
-function getPlugins(){
-  let plugins = [
-    new HtmlWebpackPlugin({
-      title: 'Kodeklubben (server)',
-      filename: 'server-template.ejs',
-      appcontent: '<%= appHtml %>',
-      template: 'src/index-template.ejs',
-      inject: 'body',
-      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-    }),
-    new ForceCaseSensitivityPlugin(),
+function getEntry() {
+  return {
+    staticsite: './src/index-static.js'
+  };
+}
 
-    //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/)
-    new webpack.IgnorePlugin(/(README|index)\.md$/)
-
-    // // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
-    // // See https://github.com/webpack/docs/wiki/list-of-plugins#4-extra-async-commons-chunk
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   children: true,
-    //   async: true
-    // })
+function getPlugins() {
+  return [
+    new StaticSiteGeneratorPlugin('staticsite', getStaticSitePaths(), locals, scope)
   ];
-
-  if (isProduction) {
-    plugins = plugins.concat([
-      new webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify('production')
-        }
-      }),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurrenceOrderPlugin(),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
-      })
-    ]);
-  }
-
-  if (!isHot) {
-    plugins = plugins.concat([
-      new CleanWebpackPlugin([buildDir], {
-        root: path.resolve(__dirname),
-        dry: false
-      }),
-      new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
-      })
-    ]);
-  }
-
-  return plugins;
 }
 
 
@@ -172,7 +124,7 @@ const config = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: isHot ? 'react-hot!babel' : 'babel'
+        loader: 'babel'
       },
       {
         test: /\.css$/,
@@ -227,7 +179,10 @@ const config = {
     path: path.resolve(__dirname, buildDir),
     publicPath: publicPath,
     filename: `${filenameBase}.js`,
-    chunkFilename: `${filenameBase}.js`
+    chunkFilename: `${filenameBase}.js`,
+    // static-site-generator must have files compiled to UMD or CommonJS
+    // so they can be required in a Node context:
+    libraryTarget: 'umd'
   },
   devServer: {
     historyApiFallback: true // needed when using browserHistory (instead of hashHistory)

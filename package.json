@@ -7,10 +7,14 @@
     "start": "webpack-dev-server -d --progress --inline --hot",
     "build": "webpack -d --progress",
     "build:prod": "cross-env NODE_ENV=production webpack -p --progress",
+    "build:static": "webpack --config=webpack.static.config.babel.js --progress",
+    "buildall": "npm run build && npm run build:static",
+    "buildall:prod": "npm run build:prod && npm run build:static",
     "serve": "http-server ./dist",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",
-    "eslint": "eslint src/ test/ --ext .js,.jsx"
+    "eslint": "eslint src/ test/ --ext .js,.jsx",
+    "testall": "npm run eslint && npm run test"
   },
   "repository": {
     "type": "git",
