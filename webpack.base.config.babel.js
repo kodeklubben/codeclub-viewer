@@ -1,3 +1,12 @@
+/**
+ *  The webpack base config file
+ *  ------------------------------
+ *
+ *  Use this file as a base for other config files, with e.g.
+ *  import baseConfig from './webpack.base.config.babel.js'
+ *
+ */
+
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////

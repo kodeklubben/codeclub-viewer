@@ -130,7 +130,8 @@ function getPlugins() {
       new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
-          warnings: false
+          warnings: false,
+          pure_funcs: 'console.log' // removes these functions from the code
         }
       })
     ]);

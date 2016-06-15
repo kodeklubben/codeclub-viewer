@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import { Router, browserHistory} from 'react-router';
 import routes from './routes';
 
-console.log('CLIENT RENDER');
+//console.log('CLIENT RENDER');
 render(
   <Router routes={routes} history={browserHistory}/>,
   document.getElementById('app')

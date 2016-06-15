@@ -104,3 +104,7 @@ Perhaps we could merge this with the serving-lazy-branch, so that it is possible
 
 Of course, we still need to create (or transfer) css and functionality from codeclub_lesson_builder, and/or
 create the new design.
+
+Other things:
+* Make last part of breadcrumb unclickable.
+* See github issues.

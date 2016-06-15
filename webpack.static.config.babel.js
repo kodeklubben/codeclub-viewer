@@ -1,31 +1,18 @@
 /**
- *  The webpack config file
- *  -----------------------
+ *  The webpack static config file
+ *  ------------------------------
  *
- *  BOOTSTRAP:
- *  To adjust which parts of bootstrap to include in the build, adjust options in .bootstraprc.
- *  The more you include, the bigger the final build will be.
- *  Also, to get smaller builds, do
- *    import Button from 'react-bootstrap/lib/Button';  // YES
- *  rather than
- *    import { Button } from 'react-bootstrap'; // NO
- *
- *
- *  Regarding CSS extraction:
- *  CSS is not extracted for hot reloading (i.e. when isHot is true).
- *  We never extract css from the 'main' entry, since we want this CSS to override CSS from vendors,
- *  e.g. override bootstrap. By not extracting it, it will become inline in the <head>.
- *  (i.e. don't use ExtractTextPlugin.extract() in the css and scss loaders.)
- *  Bootstrap has its own extract-methods (activated f.ex. by using bootstrap-loader/extractStyles)
+ *  Writes index.html files for all courses and all lessons, so that search engines can reach them,
+ *  and as an alternative to server side rendering (static html files is possible since we don't
+ *  have data in a database). After the initial index.html is loaded, the scripts take over and
+ *  make it a single page app.
+ *  
+ *  Note that (identical copies of) all images are output again, which isn't really necessary.
+ *  Also the static-bundle.js isn't used for anything.
+ *  If we could find a way of not outputting these files (only the html files) during build,
+ *  that would be good.
  *
  */
-
-// TODO:
-// See if it is possible to build the md-files in separate chunks. How? Perhaps separate entries?
-// Or perhaps CommonsChunkPlugin manages that by itself?
-// Preferrably we want each course in a separate chunk.
-// Btw, Should the courses be listed in a specific order? What is done on website today?
-// I guess it would be ok to list the courses manually...
 
 
 ////////////////////////////////////////
@@ -59,21 +46,27 @@ const locals = {};
 function getStaticSitePaths() {
   const glob = require('glob');
   const absLessonSrc = path.resolve(__dirname, lessonSrc);
+
   const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
     .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2'));
+
   const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))
     .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2'));
+
   const staticPaths = [].concat(coursePaths).concat(lessonPaths);
 
   console.log('Static paths:');
   console.log(staticPaths);
 
-  return staticPaths;
-  // return [
+  // [
   //   '/scratch',
-  //   'scratch/3d_flakser/3d_flakser_1'
-  // ];
+  //    ... (more courses)
+  //   'scratch/3d_flakser/3d_flakser_1',
+  //    ... (more lessons)
+  // ]
+
+  return staticPaths;
 }
 
 
@@ -84,7 +77,7 @@ function getStaticSitePaths() {
 const config = {
   ...baseConfig,
   entry: {
-    staticsite: './src/index-static.js'
+    staticbundle: './src/index-static.js'
   },
   output: {
     ...baseConfig.output,
@@ -95,7 +88,7 @@ const config = {
   },
   plugins: [
     ...baseConfig.plugins,
-    new StaticSiteGeneratorPlugin('staticsite', getStaticSitePaths(), locals, scope)
+    new StaticSiteGeneratorPlugin('staticbundle', getStaticSitePaths(), locals, scope)
   ]
 };
 
