@@ -1,0 +1,235 @@
+[
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "default"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Default",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "primary"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Primary",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "success"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Success",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "info"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Info",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "warning"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Warning",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "danger"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Danger",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "link"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Link",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "primary",
+      "bsSize": "large"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Large button",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "primary",
+      "bsSize": "small"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Small button",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "primary",
+      "bsSize": "xsmall"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Extra small button",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "primary",
+      "block": true
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Block level button",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "primary",
+      "active": true
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Active button",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "default",
+      "active": true
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Active button",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "default",
+      "disabled": true
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Disabled button",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "Button",
+    "props": {
+      "bsStyle": "default",
+      "href": "#"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "Link with href",
+        "props": {},
+        "componentName": null
+      }
+    ],
+    "componentName": null
+  }
+]

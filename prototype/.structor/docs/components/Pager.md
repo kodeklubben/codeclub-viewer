@@ -1,0 +1,1 @@
+<a href="http://react-bootstrap.github.io/components.html#pager" target="_blank">Pager documentation</a>

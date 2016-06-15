@@ -1,0 +1,12 @@
+{
+  "paths":{
+    "assetsDirPath": "../../../src/client/assets",
+    "controllersDirPath": "src/controllers",
+    "viewsDirPath": "src/views"
+  },
+  "files": {
+    "assetsIndexFilePath": "../../../src/client/assets/index.js",
+    "rootReducerFilePath": "src/redux/reducer.js",
+    "mainSagaFilePath": "src/redux/saga.js"
+  }
+}

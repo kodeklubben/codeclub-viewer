@@ -1,0 +1,99 @@
+[
+  {
+    "type": "Alert",
+    "props": {},
+    "children": [
+      {
+        "type": "strong",
+        "props": {},
+        "children": [],
+        "text": "Holy guacamole!"
+      },
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "  Best check yo self, you're not looking too good."
+      }
+    ]
+  },
+  {
+    "type": "Alert",
+    "props": {
+      "bsStyle": "success"
+    },
+    "children": [
+      {
+        "type": "strong",
+        "props": {},
+        "children": [],
+        "text": "Holy guacamole!"
+      },
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "  Best check yo self, you're not looking too good."
+      }
+    ]
+  },
+  {
+    "type": "Alert",
+    "props": {
+      "bsStyle": "warning"
+    },
+    "children": [
+      {
+        "type": "strong",
+        "props": {},
+        "children": [],
+        "text": "Holy guacamole!"
+      },
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "  Best check yo self, you're not looking too good."
+      }
+    ]
+  },
+  {
+    "type": "Alert",
+    "props": {
+      "bsStyle": "danger"
+    },
+    "children": [
+      {
+        "type": "strong",
+        "props": {},
+        "children": [],
+        "text": "Holy guacamole!"
+      },
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "  Best check yo self, you're not looking too good."
+      }
+    ]
+  },
+  {
+    "variantName": "announce",
+    "type": "Alert",
+    "props": {
+      "bsStyle": "warning"
+    },
+    "children": [
+      {
+        "type": "strong",
+        "children": [],
+        "text": "Announce:"
+      },
+      {
+        "type": "span",
+        "children": [],
+        "text": "  Best check yo self, you're not looking too good."
+      }
+    ]
+  }
+]

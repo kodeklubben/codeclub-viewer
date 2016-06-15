@@ -1,0 +1,630 @@
+[
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Dropdown"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Primary",
+      "bsStyle": "primary"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Success",
+      "bsStyle": "success"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Info",
+      "bsStyle": "info"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Danger",
+      "bsStyle": "danger"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Large button",
+      "bsSize": "large"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Small button",
+      "bsSize": "small"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Extra small button",
+      "bsSize": "xsmall"
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Dropup",
+      "dropup": true
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "SplitButton",
+    "props": {
+      "title": "Pull right",
+      "pullRight": true
+    },
+    "children": [
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "1"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "2"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "divider": true
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ],
+        "componentName": null
+      },
+      {
+        "type": "MenuItem",
+        "props": {
+          "eventKey": "3"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Dropdown link",
+            "props": {}
+          }
+        ]
+      }
+    ],
+    "componentName": null
+  }
+]

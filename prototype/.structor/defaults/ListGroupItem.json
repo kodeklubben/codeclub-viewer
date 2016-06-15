@@ -1,0 +1,106 @@
+[
+  {
+    "type": "ListGroupItem",
+    "props": {
+      "href": "#",
+      "active": false
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "List item new",
+        "props": {}
+      }
+    ]
+  },
+  {
+    "type": "ListGroupItem",
+    "props": {
+      "href": "#",
+      "active": true
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "List item new",
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ListGroupItem",
+    "props": {
+      "href": "#",
+      "bsStyle": "success"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "List item new",
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ListGroupItem",
+    "props": {
+      "href": "#",
+      "bsStyle": "info"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "List item new",
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ListGroupItem",
+    "props": {
+      "href": "#",
+      "bsStyle": "warning"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "List item new",
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ListGroupItem",
+    "props": {
+      "href": "#",
+      "bsStyle": "danger"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "List item new",
+        "props": {}
+      }
+    ],
+    "componentName": null
+  },
+  {
+    "type": "ListGroupItem",
+    "props": {
+      "href": "#",
+      "header": "Header of list item"
+    },
+    "children": [
+      {
+        "type": "span",
+        "text": "List item new",
+        "props": {}
+      }
+    ],
+    "componentName": null
+  }
+]
