@@ -112,13 +112,6 @@ function getPlugins(){
     }),
     //new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /de|fr|hu/)
     new webpack.IgnorePlugin(/(README|index)\.md$/)
-
-    // // Extract common chunks due to code splitting (such as lessons) and have them loaded in parallel.
-    // // See https://github.com/webpack/docs/wiki/list-of-plugins#4-extra-async-commons-chunk
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   children: true,
-    //   async: true
-    // })
   ];
 
   if (isProduction) {
@@ -141,8 +134,7 @@ function getPlugins(){
   if (!isHot) {
     plugins = plugins.concat([
       new CleanWebpackPlugin([buildDir], {
-        root: path.resolve(__dirname),
-        dry: false
+        root: path.resolve(__dirname)
       }),
       new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
       new webpack.optimize.CommonsChunkPlugin({
