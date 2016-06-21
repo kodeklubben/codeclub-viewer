@@ -1,6 +1,7 @@
 import React from 'react';
 import CourseList from '../components/CourseList';
 import LessonFilter from '../components/filter/LessonFilter';
+import styles from './FrontPage.scss';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
@@ -202,11 +203,11 @@ const FrontPage = React.createClass({
   },
   render() {
     return (
-      <div style={{marginTop: '75px'}}>
-        <div style={{width: '25%', display: 'inline-block', verticalAlign: 'top'}}>
+      <div className={styles.content}>
+        <div className={styles.leftColumn}>
           <LessonFilter onCheck={this.handleOnCheck} tagGroups={this.state.tagGroups}/>
         </div>
-        <div style={{width: '70%', marginLeft: '5%', display: 'inline-block', verticalAlign: 'top'}}>
+        <div className={styles.rightColumn}>
           <CourseList courses={this.state.filteredCourses}/>
         </div>
       </div>

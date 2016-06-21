@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import capitalize from '../util';
+import styles from './CourseItem.scss';
 
 const CourseItem = React.createClass({
   contextTypes: {
@@ -15,9 +16,8 @@ const CourseItem = React.createClass({
     const course = this.props.course;
     const name = capitalize(course.name).replace('_', ' ');
     return (
-      <div style={{display:'inline-block'}} onClick={this.onClick.bind(null, course.path)}>
-        <img src={course.iconPath}
-             style={{width:'80px', margin:'20px'}}/>
+      <div className={styles.courseItem} onClick={this.onClick.bind(null, course.path)}>
+        <img src={course.iconPath} className={styles.courseLogo}/>
         <p>{name}</p>
         <p>Oppgaver: {course.lessons.length}</p>
       </div>

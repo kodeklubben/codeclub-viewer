@@ -8,7 +8,7 @@ const App = React.createClass({
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <div className="container-fluid" style={{backgroundColor: '#FAFAFA'}}>
+        <div>
           <NavBar params={this.props.params}/>
           {this.props.children}
         </div>
