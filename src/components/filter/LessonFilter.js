@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import FilterGroup from './FilterGroup';
 import Divider from 'material-ui/Divider';
 import {Card, CardText, CardTitle} from 'material-ui/Card';
@@ -25,5 +25,15 @@ const LessonFilter = React.createClass({
     );
   }
 });
+
+LessonFilter.propTypes = {
+  tagGroups: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      tags: PropTypes.arrayOf(PropTypes.string)
+    })
+  ),
+  onCheck: PropTypes.func
+};
 
 export default LessonFilter;

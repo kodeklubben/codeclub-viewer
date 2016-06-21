@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import FilterItem from './FilterItem';
 import capitalize from '../../util';
 
@@ -26,5 +26,13 @@ const FilterGroup = React.createClass({
     );
   }
 });
+
+FilterGroup.propTypes = {
+  tagGroup: PropTypes.shape({
+    name: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string)
+  }),
+  onCheck: PropTypes.func
+};
 
 export default FilterGroup;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import capitalize from '../util';
 
 const CourseItem = React.createClass({
@@ -24,5 +24,14 @@ const CourseItem = React.createClass({
     );
   }
 });
+
+CourseItem.propTypes = {
+  course: PropTypes.shape({
+    name: PropTypes.string,
+    path: PropTypes.string,
+    iconPath: PropTypes.string,
+    lessons: PropTypes.array
+  })
+};
 
 export default CourseItem;

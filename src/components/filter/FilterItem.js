@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import capitalize from '../../util';
 
@@ -25,5 +25,10 @@ const FilterItem = React.createClass({
     );
   }
 });
+
+FilterItem.propTypes = {
+  tag: PropTypes.string,
+  onCheck: PropTypes.func
+};
 
 export default FilterItem;

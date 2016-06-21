@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import CourseItem from './CourseItem';
 
 const CourseList = React.createClass({
@@ -19,5 +19,16 @@ const CourseList = React.createClass({
     );
   }
 });
+
+CourseList.propTypes = {
+  courses: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      path: PropTypes.string,
+      iconPath: PropTypes.string,
+      lessons: PropTypes.array
+    })
+  )
+};
 
 export default CourseList;
