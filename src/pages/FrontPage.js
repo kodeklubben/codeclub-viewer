@@ -59,32 +59,32 @@ const FrontPage = React.createClass({
     });
   },
   getTagGroupsFromLessonTags(lessonTagGroups) {
-    const tagGroups = [];
+    if(lessonTagGroups == null) return [];
     /* Tag structure:
      lessonTagGroups = {
-      TagGroup1: [tagItem1, tagItem2, tagItem3],
-      TagGroup2: [tagItem4, tagItem5],
-      TagGroup3: [tagItem6]
+     TagGroup1: [tagItem1, tagItem2, tagItem3],
+     TagGroup2: [tagItem4, tagItem5],
+     TagGroup3: [tagItem6]
      } */
-    for (let groupName in lessonTagGroups) {
-      let tags = lessonTagGroups[groupName];
-
-      // Ignore tagGroups with no tags
-      if (tags == null) continue;
-
-      // Fix non-array tag lists.
-      // This happens if tags is created as string or numbers (e.g. someTagGroupName: tag1, tag2, 12345)
-      // instead of list (e.g. someTagGroupName: [tag1, tag2, 12345]) in YAML
-      if (typeof  tags === 'number') tags = tags.toString();
-      if (typeof tags === 'string') tags = tags.split(/,\s*/);
-
-      tagGroups.push({
+    return Object.keys(lessonTagGroups).reduce((result, groupName) => {
+      const tags = this.fixNonArrayTagList(lessonTagGroups[groupName]);
+      // Ignore tagGroups with empty tagLists
+      if(tags == null) return result;
+      result.push({
         name: groupName,
         tags: tags
       });
-    }
+      return result;
+    }, []);
 
-    return tagGroups;
+  },
+  fixNonArrayTagList(tags) {
+    // Fix non-array tag lists.
+    // This happens if tags is created as string or numbers (e.g. someTagGroupName: tag1, tag2, 12345)
+    // instead of list (e.g. someTagGroupName: [tag1, tag2, 12345]) in YAML
+    if (typeof  tags === 'number') return this.fixNonArrayTagList(tags.toString());
+    if (typeof tags === 'string') return tags.split(/,\s*/);
+    return tags;
   },
   handleOnCheck(tag, checked) {
     if(checked){
