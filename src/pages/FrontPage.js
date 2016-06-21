@@ -1,7 +1,7 @@
 import React from 'react';
 import CourseList from '../components/CourseList';
 import LessonFilter from '../components/filter/LessonFilter';
-import {clone, getListWithDistinctObjects, getObjNthKeyVal, isSubArray} from '../util';
+import {clone, getListWithDistinctObjects, isSubArray} from '../util';
 import styles from './FrontPage.scss';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -85,37 +85,28 @@ const FrontPage = React.createClass({
     return tagItems;
   },
   handleOnCheck(tag, checked) {
-    if(checked){
-      this.addFilter(tag);
-    }else{
-      this.removeFilter(tag);
-    }
-  },
-  addFilter(tag) {
-    const filter = this.mergeTags(this.state.filter, tag);
+    const filter = checked ? this.addTagToFilter(tag, this.state.filter) : this.removeTagFromFilter(tag, this.state.filter);
     const filteredCourses = this.filterCourses(this.state.allCourses, filter);
+    // Update state
     this.setState({
       filter,
       filteredCourses
     });
   },
-  removeFilter(tag) {
-    const [groupName, tagItems] = getObjNthKeyVal(tag, 0);
-    const tagName = tagItems[0];
-    const filter = this.state.filter;
-    const filterTagItems = filter[groupName];
-    if(filterTagItems.length <= 1) {
-      // Remove the tagGroup if it only has one tag
-      delete filter[groupName];
-    } else if(filterTagItems.indexOf(tagName) >= 0){
-      // Remove tag from tagGroup
-      filter[groupName].splice(filterTagItems.indexOf(tagName), 1);
-    }
+  addTagToFilter(tag, filter) {
+    return this.mergeTags(filter, tag);
+  },
+  removeTagFromFilter(tag, filter) {
+    // Tag has one tagGroup with one tagItem
+    const groupName = Object.keys(tag)[0];
+    const tagName = tag[groupName].toString();
 
-    const filteredCourses = this.filterCourses(this.state.allCourses, filter);
-    this.setState({
-      filteredCourses
-    });
+    return Object.keys(filter).reduce((res, filterGroupName) => {
+      const filterTagItems = filter[filterGroupName];
+      const itemsToAdd = filterTagItems.filter(filterTagName => !(filterGroupName === groupName && filterTagName === tagName));
+      if(itemsToAdd.length === 0) return res;
+      return this.mergeTags(res, {[filterGroupName]: itemsToAdd});
+    }, {});
   },
   filterCourses(courses, filter) {
     // Clone all courses to prevent side-effects
