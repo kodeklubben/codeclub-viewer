@@ -1,7 +1,7 @@
 import React from 'react';
 import CourseList from '../components/CourseList';
 import LessonFilter from '../components/filter/LessonFilter';
-import {clone, getListWithDistinctObjects, isSubArray} from '../util';
+import {clone, isSubArray} from '../util';
 import styles from './FrontPage.scss';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -38,26 +38,27 @@ const FrontPage = React.createClass({
   getCourses(lessonContext) {
     const paths = lessonContext.keys();
 
-    const courses= paths.reduce((res, path) => {
+    return paths.reduce((res, path) => {
       const courseName = path.slice(2, path.indexOf('/', 2));
       const lessonFrontMatter = lessonContext(path).frontmatter;
       const tags = this.getTagsFromLessonTags(lessonFrontMatter.tags);
       const lesson = {name: lessonFrontMatter.title, tags: tags};
-      res.push({
-        lessons: [lesson],
-        name: courseName,
-        iconPath: iconContext('./' + courseName + '/logo-black.png'),
-        path: path
-      });
+      const index = res.findIndex(course => course.name === courseName);
+      
+      // If course already exists, push the new lesson. Else make a new course
+      if(index >= 0) {
+        res[index].lessons.push(lesson);
+      }else{
+        res.push({
+          lessons: [lesson],
+          name: courseName,
+          iconPath: iconContext('./' + courseName + '/logo-black.png'),
+          path: path
+        });
+      }
+      
       return res;
-    }, []);
-
-    // Merge all courses that have the same name by adding all lessons to the course
-    return getListWithDistinctObjects(courses, 'name', function(courseA, courseB){
-      const mergedCourse = clone(courseA);
-      mergedCourse.lessons = mergedCourse.lessons.concat(courseB.lessons);
-      return mergedCourse;
-    }).sort(this.sortCourses);// Sort by number of lessons
+    }, []).sort(this.sortCourses);// Sort by number of lessons;
 
   },
   getTagsFromLessonTags(lessonTags) {
