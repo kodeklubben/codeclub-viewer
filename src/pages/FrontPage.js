@@ -1,7 +1,6 @@
 import React from 'react';
 import CourseList from '../components/CourseList';
 import LessonFilter from '../components/filter/LessonFilter';
-import {clone, isSubArray} from '../util';
 import styles from './FrontPage.scss';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -30,7 +29,7 @@ const FrontPage = React.createClass({
 
     return paths.reduce((res, path) => {
       const lessonFrontMatter = lessonContext(path).frontmatter;
-      const tags = this.getTagsFromLessonTags(lessonFrontMatter.tags);
+      const tags = this.cleanseTagsFromLesson(lessonFrontMatter.tags);
       res = this.mergeTags(tags, res);
       return res;
     }, {});
@@ -41,7 +40,7 @@ const FrontPage = React.createClass({
     return paths.reduce((res, path) => {
       const courseName = path.slice(2, path.indexOf('/', 2));
       const lessonFrontMatter = lessonContext(path).frontmatter;
-      const tags = this.getTagsFromLessonTags(lessonFrontMatter.tags);
+      const tags = this.cleanseTagsFromLesson(lessonFrontMatter.tags);
       const lesson = {name: lessonFrontMatter.title, tags: tags};
       const index = res.findIndex(course => course.name === courseName);
       
@@ -61,7 +60,7 @@ const FrontPage = React.createClass({
     }, []).sort(this.sortCourses);// Sort by number of lessons;
 
   },
-  getTagsFromLessonTags(lessonTags) {
+  cleanseTagsFromLesson(lessonTags) {
     if(lessonTags == null) return {};
     /* Tag structure:
      tags = {
@@ -104,19 +103,21 @@ const FrontPage = React.createClass({
 
     return Object.keys(filter).reduce((res, filterGroupName) => {
       const filterTagItems = filter[filterGroupName];
+      // Add all items except the one to be removed
       const itemsToAdd = filterTagItems.filter(filterTagName => !(filterGroupName === groupName && filterTagName === tagName));
       if(itemsToAdd.length === 0) return res;
       return this.mergeTags(res, {[filterGroupName]: itemsToAdd});
     }, {});
   },
   filterCourses(courses, filter) {
-    // Clone all courses to prevent side-effects
-    courses = clone(courses);
+    const coursesWithFilteredLessons = courses.map(course => {
+      const newCourse = Object.assign({}, course);
+      newCourse.lessons = this.filterLessons(course.lessons, filter);
+      return newCourse;
+    });
 
     // Find and sort courses that have at least one lesson that matches filter
-    return courses.filter((course) => {
-      // Remove lessons from course that doesn't match filter
-      course.lessons = this.filterLessons(course.lessons, filter);
+    return coursesWithFilteredLessons.filter((course) => {
       return course.lessons.length > 0;
     }).sort(this.sortCourses);
 
@@ -136,18 +137,20 @@ const FrontPage = React.createClass({
       if(!lessonTags.hasOwnProperty(groupName))return false;
       const filterTagItems = filter[groupName];
       const lessonTagItems = lessonTags[groupName];
-      if(!isSubArray(filterTagItems, lessonTagItems)) return false;
+      // Check if there exist at least one filterTag that the lesson does not have
+      if(filterTagItems.find(tagItem => lessonTagItems.indexOf(tagItem) < 0)) return false;
     }
     // Lesson contains all tags in the filter
     return true;
   },
   mergeTags(tagA, tagB) {
-    const mergedTags = clone(tagB);
-    Object.keys(tagA).forEach(function(groupName){
-      if(!mergedTags.hasOwnProperty(groupName))mergedTags[groupName] = tagA[groupName];
-      else mergedTags[groupName] = [...new Set(mergedTags[groupName].concat(tagA[groupName]))];
-    });
-    return mergedTags;
+    const allTagGroups = Object.keys(tagA).concat(Object.keys(tagB));
+    return allTagGroups.reduce((res, groupName) => {
+      const tagItemsA = tagA.hasOwnProperty(groupName) ? tagA[groupName] : [];
+      const tagItemsB = tagB.hasOwnProperty(groupName) ? tagB[groupName] : [];
+      res[groupName] = [...new Set(tagItemsA.concat(tagItemsB))];
+      return res;
+    }, {});
   },
   sortCourses(a, b) {
     return b.lessons.length - a.lessons.length;
