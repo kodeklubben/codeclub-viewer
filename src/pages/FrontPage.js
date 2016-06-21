@@ -1,7 +1,7 @@
 import React from 'react';
 import CourseList from '../components/CourseList';
 import LessonFilter from '../components/filter/LessonFilter';
-import {clone, getListWithDistinctObjects, isSubArray} from '../util';
+import {clone, getListWithDistinctObjects, getObjNthKeyVal, isSubArray} from '../util';
 import styles from './FrontPage.scss';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -11,36 +11,29 @@ const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
 const FrontPage = React.createClass({
   getInitialState() {
     return {
-      filter: [],
-      tagGroups: [],
+      filter: {},
       allCourses: [],
       filteredCourses: []
     };
   },
   componentWillMount() {
     const courses = this.getCourses(lessonContext);
-    const tagGroups = this.getTags(lessonContext);
 
     // Update state
     this.setState({
       allCourses: courses,
-      filteredCourses: courses,
-      tagGroups: tagGroups
+      filteredCourses: courses
     });
   },
   getTags(lessonContext) {
     const paths = lessonContext.keys();
 
-    const tags = paths.reduce((res, path) => {
+    return paths.reduce((res, path) => {
       const lessonFrontMatter = lessonContext(path).frontmatter;
-      const tagGroups = this.getTagGroupsFromLessonTags(lessonFrontMatter.tags);
-      return res.concat(tagGroups);
-    }, []);
-
-    // Merge all tags that have same the name
-    // (e.g. platform: [not windows, only iPad] + platform: [not minecraft] =>
-    // platform: [not windows, only iPad, not minecraft])
-    return getListWithDistinctObjects(tags, 'name', this.mergeTagGroups);
+      const tags = this.getTagsFromLessonTags(lessonFrontMatter.tags);
+      res = this.mergeTags(tags, res);
+      return res;
+    }, {});
   },
   getCourses(lessonContext) {
     const paths = lessonContext.keys();
@@ -48,8 +41,8 @@ const FrontPage = React.createClass({
     const courses= paths.reduce((res, path) => {
       const courseName = path.slice(2, path.indexOf('/', 2));
       const lessonFrontMatter = lessonContext(path).frontmatter;
-      const tagGroups = this.getTagGroupsFromLessonTags(lessonFrontMatter.tags);
-      const lesson = {name: lessonFrontMatter.title, tagGroups: tagGroups};
+      const tags = this.getTagsFromLessonTags(lessonFrontMatter.tags);
+      const lesson = {name: lessonFrontMatter.title, tags: tags};
       res.push({
         lessons: [lesson],
         name: courseName,
@@ -67,33 +60,29 @@ const FrontPage = React.createClass({
     }).sort(this.sortCourses);// Sort by number of lessons
 
   },
-  getTagGroupsFromLessonTags(lessonTagGroups) {
-    if(lessonTagGroups == null) return [];
+  getTagsFromLessonTags(lessonTags) {
+    if(lessonTags == null) return {};
     /* Tag structure:
-     lessonTagGroups = {
-     TagGroup1: [tagItem1, tagItem2, tagItem3],
-     TagGroup2: [tagItem4, tagItem5],
-     TagGroup3: [tagItem6]
+     tags = {
+     groupName1: [tagItem1, tagItem2, tagItem3],
+     groupName2: [tagItem4, tagItem5],
+     groupName3: [tagItem6]
      } */
-    return Object.keys(lessonTagGroups).reduce((result, groupName) => {
-      const tags = this.fixNonArrayTagList(lessonTagGroups[groupName]);
-      // Ignore tagGroups with empty tagLists
-      if(tags == null) return result;
-      result.push({
-        name: groupName,
-        tags: tags
-      });
+    return Object.keys(lessonTags).reduce((result, groupName) => {
+      const tagItems = this.fixNonArrayTagList(lessonTags[groupName]);
+      // Ignore tagGroups with no tagItems
+      if(tagItems == null) return result;
+      result[groupName] = tagItems;
       return result;
-    }, []);
-
+    }, {});
   },
-  fixNonArrayTagList(tags) {
-    // Fix non-array tag lists.
-    // This happens if tags is created as string or numbers (e.g. someTagGroupName: tag1, tag2, 12345)
-    // instead of list (e.g. someTagGroupName: [tag1, tag2, 12345]) in YAML
-    if (typeof  tags === 'number') return this.fixNonArrayTagList(tags.toString());
-    if (typeof tags === 'string') return tags.split(/,\s*/);
-    return tags;
+  fixNonArrayTagList(tagItems) {
+    // Fix non-array tagItem lists.
+    // This happens if tags is created as string or numbers (e.g. someGroupName: tag1, tag2, 12345)
+    // instead of list (e.g. someGroupName: [tag1, tag2, 12345]) in YAML
+    if (typeof  tagItems === 'number') return this.fixNonArrayTagList(tagItems.toString());
+    if (typeof tagItems === 'string') return tagItems.split(/,\s*/);
+    return tagItems;
   },
   handleOnCheck(tag, checked) {
     if(checked){
@@ -103,11 +92,7 @@ const FrontPage = React.createClass({
     }
   },
   addFilter(tag) {
-    let filter = this.state.filter;
-    filter.push({name: tag.groupName, tags: [tag.name]});
-    // Merge tagGroups with same name
-    filter = getListWithDistinctObjects(filter, 'name', this.mergeTagGroups);
-
+    const filter = this.mergeTags(this.state.filter, tag);
     const filteredCourses = this.filterCourses(this.state.allCourses, filter);
     this.setState({
       filter,
@@ -115,20 +100,18 @@ const FrontPage = React.createClass({
     });
   },
   removeFilter(tag) {
+    const [groupName, tagItems] = getObjNthKeyVal(tag, 0);
+    const tagName = tagItems[0];
     const filter = this.state.filter;
-
-    // Find the tagGroup and remove tag from it
-    const tagGroupFound = filter.find(tagGroup => tagGroup.name === tag.groupName);
-    if(tagGroupFound) {
-      const tags = tagGroupFound.tags;
-      if(tags.length < 2) {
-        // Remove the tagGroup if it only has one tag
-        filter.splice(filter.indexOf(tagGroupFound), 1);
-      } else if(tags.indexOf(tag.name) >= 0){
-        // Remove tag from tagGroup
-        tags.splice(tags.indexOf(tag.name), 1);
-      }
+    const filterTagItems = filter[groupName];
+    if(filterTagItems.length <= 1) {
+      // Remove the tagGroup if it only has one tag
+      delete filter[groupName];
+    } else if(filterTagItems.indexOf(tagName) >= 0){
+      // Remove tag from tagGroup
+      filter[groupName].splice(filterTagItems.indexOf(tagName), 1);
     }
+
     const filteredCourses = this.filterCourses(this.state.allCourses, filter);
     this.setState({
       filteredCourses
@@ -149,40 +132,40 @@ const FrontPage = React.createClass({
   filterLessons(lessons, filter) {
     // Find lessons that matches filter
     return lessons.filter((lesson) => {
-      for(var i = 0; i < filter.length; i++) {
-        const filterTagGroup = filter[i];
-        if( !this.lessonHasTag(lesson, filterTagGroup) )return false;
-      }
-      return true;
+      return this.lessonHasTags(lesson, filter);
     });
   },
-  lessonHasTag(lesson, filterTagGroup) {
-    const lessonTagGroups = lesson.tagGroups;
-    if(lessonTagGroups.length == 0 && filterTagGroup !== null) return false;
-    for(var i = 0; i < lessonTagGroups.length; i++){
-      const lessonTagGroup = lessonTagGroups[i];
-      
-      const tagGroupNamesMatches = lessonTagGroup.name.toLowerCase() == filterTagGroup.name.toLowerCase();
-      const lessonHasAllFilterTags = isSubArray(filterTagGroup.tags, lessonTagGroup.tags);
-      if(tagGroupNamesMatches && lessonHasAllFilterTags)return true;
+  lessonHasTags(lesson, filter) {
+    // Filter is empty
+    if(Object.keys(filter).length === 0) return true;
+
+    const lessonTags = lesson.tags;
+    for(let groupName in filter){
+      if(!lessonTags.hasOwnProperty(groupName))return false;
+      const filterTagItems = filter[groupName];
+      const lessonTagItems = lessonTags[groupName];
+      if(!isSubArray(filterTagItems, lessonTagItems)) return false;
     }
-    // Lesson does not contain all tags in the filter
-    return false;
+    // Lesson contains all tags in the filter
+    return true;
   },
-  mergeTagGroups(tagGroupA, tagGroupB) {
-    const mergedTagGroup = {name: tagGroupA.name};
-    // Give the mergedTagGroup exactly one of all tags in A and B
-    mergedTagGroup.tags = [...new Set(tagGroupA.tags.concat(tagGroupB.tags))];
-    return mergedTagGroup;
+  mergeTags(tagA, tagB) {
+    const mergedTags = clone(tagB);
+    Object.keys(tagA).forEach(function(groupName){
+      if(!mergedTags.hasOwnProperty(groupName))mergedTags[groupName] = tagA[groupName];
+      else mergedTags[groupName] = [...new Set(mergedTags[groupName].concat(tagA[groupName]))];
+    });
+    return mergedTags;
   },
   sortCourses(a, b) {
     return b.lessons.length - a.lessons.length;
   },
   render() {
+    const tags = this.getTags(lessonContext);
     return (
       <div className={styles.content}>
         <div className={styles.leftColumn}>
-          <LessonFilter onCheck={this.handleOnCheck} tagGroups={this.state.tagGroups}/>
+          <LessonFilter onCheck={this.handleOnCheck} tags={tags}/>
         </div>
         <div className={styles.rightColumn}>
           <CourseList courses={this.state.filteredCourses}/>

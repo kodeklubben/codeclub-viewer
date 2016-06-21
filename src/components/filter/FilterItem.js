@@ -12,13 +12,13 @@ const FilterItem = React.createClass({
   onCheck() {
     const checked = this.state.checked;
     this.setState({checked: !checked});
-    this.props.onCheck(this.props.tag, !checked);
+    this.props.onCheck(this.props.tagItem, !checked);
   },
   render(){
-    const tag = capitalize(this.props.tag);
+    const tagItem = capitalize(this.props.tagItem);
     return (
       <Checkbox
-        label={tag}
+        label={tagItem}
         checked={this.state.checked}
         onCheck={this.onCheck}
       />
@@ -27,7 +27,7 @@ const FilterItem = React.createClass({
 });
 
 FilterItem.propTypes = {
-  tag: PropTypes.string,
+  tagItem: PropTypes.string,
   onCheck: PropTypes.func
 };
 

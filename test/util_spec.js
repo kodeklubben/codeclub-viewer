@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import {capitalize, clone, getListWithDistinctObjects, replaceItemInList} from '../src/util';
+import {capitalize, clone, getListWithDistinctObjects, getObjNthKeyVal, replaceItemInList} from '../src/util';
 
 describe('util.capitalize', () => {
 
@@ -68,6 +68,20 @@ describe('util.getListWithDistinctObjects', () => {
       return mergedObj;
     };
     expect(getListWithDistinctObjects(arr, 'id', mergeObjects )).to.eql(expectedResult);
+  });
+
+});
+
+describe('util.getObjNthKeyVal', () => {
+
+  it('get the nth property and value of object', () => {
+    const obj = {
+      key1: 'val1',
+      key2: 'val2',
+      key3: 'val3',
+      key4: 'val4'
+    };
+    expect(getObjNthKeyVal(obj,2)).to.eql(['key3', 'val3']);
   });
 
 });

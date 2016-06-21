@@ -82,3 +82,10 @@ export function isSubArray(subArr, arr) {
   return true;
 }
 
+export function getObjNthKeyVal(obj, n) {
+  const keys = Object.keys(obj);
+  if(keys.length < n) return [null, null];
+  const key = keys[n];
+  const val = obj[key];
+  return [key, val];
+}

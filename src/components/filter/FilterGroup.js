@@ -3,19 +3,17 @@ import FilterItem from './FilterItem';
 import {capitalize} from '../../util';
 
 const FilterGroup = React.createClass({
-  onCheck(tagName, checked) {
-    const tag = {
-      groupName: this.props.tagGroup.name,
-      name: tagName
-    };
+  onCheck(tagItem, checked) {
+    const tag = {};
+    tag[this.props.groupName] = [tagItem];
     this.props.onCheck(tag, checked);
   },
   render(){
-    const groupName = capitalize(this.props.tagGroup.name);
-    const tags = this.props.tagGroup.tags;
-    const filterItems = tags.map((tag, idx) => {
+    const groupName = capitalize(this.props.groupName);
+    const tags = this.props.tagItems;
+    const filterItems = tags.map((tagItem, idx) => {
       return (
-        <FilterItem key={idx} tag={tag} onCheck={this.onCheck}/>
+        <FilterItem key={idx} tagItem={tagItem} onCheck={this.onCheck}/>
       );
     });
     return (
@@ -28,10 +26,8 @@ const FilterGroup = React.createClass({
 });
 
 FilterGroup.propTypes = {
-  tagGroup: PropTypes.shape({
-    name: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string)
-  }),
+  tagGroup: PropTypes.string,
+  tagItems: PropTypes.arrayOf(PropTypes.string),
   onCheck: PropTypes.func
 };
 

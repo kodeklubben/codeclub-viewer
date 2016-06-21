@@ -5,11 +5,12 @@ import {Card, CardText, CardTitle} from 'material-ui/Card';
 
 const LessonFilter = React.createClass({
   render(){
-    const tagGroups = this.props.tagGroups;
-    const tagGroupNodes = tagGroups.map((tagGroup, idx) => {
+    const tags = this.props.tags;
+    const tagNodes = Object.keys(tags).map((groupName, idx) => {
+      const tagItems = tags[groupName];
       return (
         <div key={idx}>
-          <FilterGroup tagGroup={tagGroup} onCheck={this.props.onCheck}/>
+          <FilterGroup groupName={groupName} tagItems={tagItems} onCheck={this.props.onCheck}/>
           <br/>
           <Divider/>
         </div>
@@ -19,7 +20,7 @@ const LessonFilter = React.createClass({
       <Card>
         <CardTitle title="Filter" />
         <CardText>
-          {tagGroupNodes}
+          {tagNodes}
         </CardText>
       </Card>
     );
@@ -27,12 +28,7 @@ const LessonFilter = React.createClass({
 });
 
 LessonFilter.propTypes = {
-  tagGroups: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      tags: PropTypes.arrayOf(PropTypes.string)
-    })
-  ),
+  tagGroups: PropTypes.object,
   onCheck: PropTypes.func
 };
 
