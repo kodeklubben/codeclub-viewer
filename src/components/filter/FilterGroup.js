@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import FilterItem from './FilterItem';
-import capitalize from '../../util';
+import {capitalize} from '../../util';
 
 const FilterGroup = React.createClass({
   onCheck(tagName, checked) {

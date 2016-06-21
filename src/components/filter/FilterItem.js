@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Checkbox from 'material-ui/Checkbox';
-import capitalize from '../../util';
+import {capitalize} from '../../util';
 
 
 const FilterItem = React.createClass({

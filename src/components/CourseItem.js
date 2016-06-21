@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import capitalize from '../util';
+import {capitalize} from '../util';
 import styles from './CourseItem.scss';
 
 const CourseItem = React.createClass({
