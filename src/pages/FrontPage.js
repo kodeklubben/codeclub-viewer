@@ -18,38 +18,8 @@ const FrontPage = React.createClass({
     };
   },
   componentWillMount() {
-    let allCourses = [];
-    let allTagGroups = [];
-    const paths = lessonContext.keys();
-
-    // Loop over all lessons. Create a list of all courses and a list of all tags.
-    paths.forEach(function (path) {
-      const courseName = path.slice(2, path.indexOf('/', 2));
-      const lessonFrontMatter = lessonContext(path).frontmatter;
-      const tagGroups = this.getTagGroupsFromLessonTags(lessonFrontMatter.tags);
-      const lesson = {name: lessonFrontMatter.title, tagGroups: tagGroups};
-
-      allTagGroups = allTagGroups.concat(tagGroups);
-      allCourses.push({
-        lessons: [lesson],
-        name: courseName,
-        iconPath: iconContext('./' + courseName + '/logo-black.png'),
-        path: path
-      });
-
-    }, this);
-
-    // Merge all tags that have same the name
-    // (e.g. platform: [not windows, only iPad] + platform: [not minecraft] =>
-    // platform: [not windows, only iPad, not minecraft])
-    const tagGroups = getListWithDistinctObjects(allTagGroups, 'name', this.mergeTagGroups);
-
-    // Merge all courses that have the same name by adding all lessons to the course
-    let courses = getListWithDistinctObjects(allCourses, 'name', function(courseA, courseB){
-      courseA = clone(courseA);
-      courseA.lessons = courseA.lessons.concat(courseB.lessons);
-      return courseA;
-    }).sort(this.sortCourses);// Sort by number of lessons
+    const courses = this.getCourses(lessonContext);
+    const tagGroups = this.getTags(lessonContext);
 
     // Update state
     this.setState({
@@ -57,6 +27,45 @@ const FrontPage = React.createClass({
       filteredCourses: courses,
       tagGroups: tagGroups
     });
+  },
+  getTags(lessonContext) {
+    const paths = lessonContext.keys();
+
+    const tags = paths.reduce((res, path) => {
+      const lessonFrontMatter = lessonContext(path).frontmatter;
+      const tagGroups = this.getTagGroupsFromLessonTags(lessonFrontMatter.tags);
+      return res.concat(tagGroups);
+    }, []);
+
+    // Merge all tags that have same the name
+    // (e.g. platform: [not windows, only iPad] + platform: [not minecraft] =>
+    // platform: [not windows, only iPad, not minecraft])
+    return getListWithDistinctObjects(tags, 'name', this.mergeTagGroups);
+  },
+  getCourses(lessonContext) {
+    const paths = lessonContext.keys();
+
+    const courses= paths.reduce((res, path) => {
+      const courseName = path.slice(2, path.indexOf('/', 2));
+      const lessonFrontMatter = lessonContext(path).frontmatter;
+      const tagGroups = this.getTagGroupsFromLessonTags(lessonFrontMatter.tags);
+      const lesson = {name: lessonFrontMatter.title, tagGroups: tagGroups};
+      res.push({
+        lessons: [lesson],
+        name: courseName,
+        iconPath: iconContext('./' + courseName + '/logo-black.png'),
+        path: path
+      });
+      return res;
+    }, []);
+
+    // Merge all courses that have the same name by adding all lessons to the course
+    return getListWithDistinctObjects(courses, 'name', function(courseA, courseB){
+      const mergedCourse = clone(courseA);
+      mergedCourse.lessons = mergedCourse.lessons.concat(courseB.lessons);
+      return mergedCourse;
+    }).sort(this.sortCourses);// Sort by number of lessons
+
   },
   getTagGroupsFromLessonTags(lessonTagGroups) {
     if(lessonTagGroups == null) return [];
