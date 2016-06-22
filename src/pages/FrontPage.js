@@ -128,14 +128,14 @@ const FrontPage = React.createClass({
       return this.lessonHasTags(lesson, filter);
     });
   },
-  lessonHasTags(lesson, filter) {
+  lessonHasTags(lesson, filterTags) {
     // Filter is empty
-    if(Object.keys(filter).length === 0) return true;
+    if(Object.keys(filterTags).length === 0) return true;
 
     const lessonTags = lesson.tags;
-    for(let groupName in filter){
-      if(!lessonTags.hasOwnProperty(groupName))return false;
-      const filterTagItems = filter[groupName];
+    for(let groupName in filterTags){
+      if(!lessonTags.hasOwnProperty(groupName) || !filterTags.hasOwnProperty(groupName))return false;
+      const filterTagItems = filterTags[groupName];
       const lessonTagItems = lessonTags[groupName];
       // Check if there exist at least one filterTag that the lesson does not have
       if(filterTagItems.find(tagItem => lessonTagItems.indexOf(tagItem) < 0)) return false;
