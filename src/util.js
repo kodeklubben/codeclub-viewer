@@ -144,7 +144,7 @@ export function filterLessons(lessons, filter) {
  * @param {Object} tags
  * @returns {Object} valid tags
  */
-function cleanseTags(tags) {
+export function cleanseTags(tags) {
   if(tags == null) return {};
 
   return Object.keys(tags).reduce((result, groupName) => {
@@ -163,7 +163,7 @@ function cleanseTags(tags) {
  * @param tagItems
  * @returns {Array}
  */
-function fixNonArrayTagList(tagItems) {
+export function fixNonArrayTagList(tagItems) {
   if(tagItems == null) return [];
   if (typeof tagItems === 'string') return tagItems.split(/,\s*/);
   if (typeof  !Array.isArray(tagItems) && tagItems !== 'string') return fixNonArrayTagList(tagItems.toString());
@@ -176,7 +176,7 @@ function fixNonArrayTagList(tagItems) {
  * @param {Object} filterTags
  * @returns {boolean} lesson contains all tags required by filter
  */
-function lessonHasTags(lesson, filterTags) {
+export function lessonHasTags(lesson, filterTags) {
   // Filter is empty
   if(Object.keys(filterTags).length === 0) return true;
 
