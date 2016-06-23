@@ -7,7 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 const App = React.createClass({
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <MuiThemeProvider muiTheme={getMuiTheme(null, {userAgent: 'all'})}>
         <div>
           <NavBar params={this.props.params}/>
           {this.props.children}
