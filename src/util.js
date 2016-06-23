@@ -89,9 +89,15 @@ export function addTagToFilter(tag, filter) {
  * @returns {Object} filter without the tag
  */
 export function removeTagFromFilter(tag, filter) {
+  // Check if tag is empty or contains more than one tagGroup
+  if(Object.keys(tag).length !== 1) return filter;
+  
   // Tag has one tagGroup with one tagItem
   const groupName = Object.keys(tag)[0];
   const tagName = tag[groupName].toString();
+  
+  // Check if tag contains none or more than one tagItem
+  if(tag[groupName].length !== 1) return filter;
 
   return Object.keys(filter).reduce((res, filterGroupName) => {
     const filterTagItems = filter[filterGroupName];

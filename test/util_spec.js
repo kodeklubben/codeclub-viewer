@@ -94,6 +94,107 @@ describe('util', () => {
         subject: ['physics']
       });
     });
+    
+    it('it removes nothing if tag is an empty object', () => {
+      const tag = {};
+      const filter = {
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      };
+
+      deepFreeze(tag);
+      deepFreeze(filter);
+      expect(removeTagFromFilter(tag, filter)).to.eql({
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      });
+    });
+
+    it('removes nothing if tagItem does not exist in filter', () => {
+      const tag = {
+        platform: ['mac']
+      };
+      const filter = {
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      };
+
+      deepFreeze(tag);
+      deepFreeze(filter);
+      expect(removeTagFromFilter(tag, filter)).to.eql({
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      });
+    });
+
+    it('removes nothing if tagGroup does not exist in filter', () => {
+      const tag = {
+        group: ['windows']
+      };
+      const filter = {
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      };
+
+      deepFreeze(tag);
+      deepFreeze(filter);
+      expect(removeTagFromFilter(tag, filter)).to.eql({
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      });
+    });
+    
+    it('removes nothing if tag contains more than one tagGroup', () => {
+      const tag = {
+        platform: ['windows'],
+        subject: ['physics']
+      };
+      const filter = {
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      };
+
+      deepFreeze(tag);
+      deepFreeze(filter);
+      expect(removeTagFromFilter(tag, filter)).to.eql({
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      });
+    });
+
+    it('removes nothing if tag contains more than one tagItem', () => {
+      const tag = {
+        platform: ['windows', 'browser']
+      };
+      const filter = {
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      };
+
+      deepFreeze(tag);
+      deepFreeze(filter);
+      expect(removeTagFromFilter(tag, filter)).to.eql({
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      });
+    });
+
+    it('removes nothing if tag contains more than zero tagItems', () => {
+      const tag = {
+        group: []
+      };
+      const filter = {
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      };
+
+      deepFreeze(tag);
+      deepFreeze(filter);
+      expect(removeTagFromFilter(tag, filter)).to.eql({
+        platform: ['windows', 'browser'],
+        subject: ['physics']
+      });
+    });
 
   });
 
