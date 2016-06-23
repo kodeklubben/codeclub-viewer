@@ -51,7 +51,7 @@ extractStyles: false
 styles:
 
   # Mixins
-  mixins: false
+  mixins: true
 
   # Reset and dependencies
   normalize: true
@@ -62,7 +62,7 @@ styles:
   scaffolding: false
   type: false
   code: false
-  grid: false
+  grid: true
   tables: false
   forms: false
   buttons: false
