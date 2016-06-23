@@ -98,7 +98,7 @@ styles:
 
   # Utility classes
   utilities: false
-  responsive-utilities: false
+  responsive-utilities: true
 
 ### Bootstrap scripts, set to false to avoid jQuery
 scripts:
