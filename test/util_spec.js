@@ -8,7 +8,7 @@ import {
   filterCourses,
   filterLessons,
   fixNonArrayTagList,
-  lessonHasTags,
+  lessonHasAllTags,
   mergeObjects,
   removeTagFromFilter
 } from '../src/util';
@@ -299,7 +299,7 @@ describe('util', () => {
     });
   });
 
-  describe('lessonHasTags', () => {
+  describe('lessonHasAllTags', () => {
     it('return true if lesson has tags', () => {
       const tags = {
         platform: ['windows'],
@@ -315,7 +315,7 @@ describe('util', () => {
 
       deepFreeze(tags);
       deepFreeze(lesson);
-      expect(lessonHasTags(lesson, tags)).to.equal(true);
+      expect(lessonHasAllTags(lesson, tags)).to.equal(true);
     });
 
     it('return false if lesson does not have tags', () => {
@@ -333,7 +333,26 @@ describe('util', () => {
 
       deepFreeze(tags);
       deepFreeze(lesson);
-      expect(lessonHasTags(lesson, tags)).to.equal(false);
+      expect(lessonHasAllTags(lesson, tags)).to.equal(false);
+    });
+
+    it('is not affected by object extension', () => {
+      Object.prototype.hi = function(){console.log('muhahaha');};
+      const tags = {
+        platform: ['windows'],
+        category: ['create game']
+      };
+      const lesson = {
+        name: 'task1',
+        tags: {
+          platform: ['no-iPad', 'windows'],
+          category: ['create game']
+        }
+      };
+
+      deepFreeze(tags);
+      deepFreeze(lesson);
+      expect(lessonHasAllTags(lesson, tags)).to.equal(true);
     });
   });
 

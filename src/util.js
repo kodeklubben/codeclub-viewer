@@ -131,7 +131,7 @@ export function filterCourses(courses, filter) {
 export function filterLessons(lessons, filter) {
   // Find lessons that matches filter
   return lessons.filter((lesson) => {
-    return lessonHasTags(lesson, filter);
+    return lessonHasAllTags(lesson, filter);
   });
 }
 
@@ -176,17 +176,18 @@ export function fixNonArrayTagList(tagItems) {
  * @param {Object} filterTags
  * @returns {boolean} lesson contains all tags required by filter
  */
-export function lessonHasTags(lesson, filterTags) {
+export function lessonHasAllTags(lesson, filterTags) {
   // Filter is empty
   if(Object.keys(filterTags).length === 0) return true;
 
   const lessonTags = lesson.tags;
   for(let groupName in filterTags){
-    if(!lessonTags.hasOwnProperty(groupName) || !filterTags.hasOwnProperty(groupName))return false;
-    const filterTagItems = filterTags[groupName];
-    const lessonTagItems = lessonTags[groupName];
-    // Check if there exist at least one filterTag that the lesson does not have
-    if(filterTagItems.find(tagItem => lessonTagItems.indexOf(tagItem) < 0)) return false;
+    if(filterTags.hasOwnProperty(groupName)) {
+      const filterTagItems = filterTags[groupName];
+      const lessonTagItems = lessonTags[groupName] || [];
+      // Check if there exist at least one filterTag that the lesson does not have
+      if (filterTagItems.find(tagItem => lessonTagItems.indexOf(tagItem) < 0)) return false;
+    }
   }
   // Lesson contains all tags in the filter
   return true;
