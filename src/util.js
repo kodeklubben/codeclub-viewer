@@ -116,7 +116,7 @@ export function removeTagFromFilter(tag, filter) {
  */
 export function filterCourses(courses, filter) {
   const coursesWithFilteredLessons = courses.map(course => {
-    const newCourse = Object.assign({}, course);
+    const newCourse = {...course}
     newCourse.lessons = filterLessons(course.lessons, filter);
     return newCourse;
   });
