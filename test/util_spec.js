@@ -457,5 +457,20 @@ describe('util', () => {
     });
   });
 
+  it('return true filterTags is empty', () => {
+    const tags = {};
+    const lesson = {
+      name: 'task1',
+      tags: {
+        platform: ['no-iPad', 'windows'],
+        category: ['create game']
+      }
+    };
+
+    deepFreeze(tags);
+    deepFreeze(lesson);
+    expect(lessonHasAllTags(lesson, tags)).to.equal(true);
+  });
+
 });
 
