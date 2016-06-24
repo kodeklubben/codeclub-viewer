@@ -353,7 +353,8 @@ describe('util', () => {
         platform: 'windows, mac,     browser',
         subject: 'physics, math',
         category: ['create game', 'create app'],
-        created: 2016
+        created: 2016,
+        nothing: []
       };
       deepFreeze(dirtyTags);
       expect(cleanseTags(dirtyTags)).to.eql({

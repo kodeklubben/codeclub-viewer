@@ -172,7 +172,7 @@ export function cleanseTags(tags) {
 export function fixNonArrayTagList(tagItems) {
   if(tagItems == null) return [];
   if (typeof tagItems === 'string') return tagItems.split(/,\s*/);
-  if (typeof  !Array.isArray(tagItems) && tagItems !== 'string') return fixNonArrayTagList(tagItems.toString());
+  if (!Array.isArray(tagItems) && typeof tagItems !== 'string') return fixNonArrayTagList(tagItems.toString());
   return tagItems;
 }
 
