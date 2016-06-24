@@ -28,7 +28,7 @@ const LessonFilter = React.createClass({
 });
 
 LessonFilter.propTypes = {
-  tagGroups: PropTypes.object,
+  tags: PropTypes.object,
   onCheck: PropTypes.func
 };
 

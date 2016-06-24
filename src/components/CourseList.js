@@ -8,7 +8,7 @@ const CourseList = React.createClass({
   render() {
     const sortedCourses = this.props.courses.sort(this.sortCourses);
     const courses = sortedCourses.map((course, idx) => {
-      if (course.lessons.length == 0) return null;
+      if (course.lessons.length === 0) return null;
       return (
         <CourseItem key={idx} course={course}/>
       );

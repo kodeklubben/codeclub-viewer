@@ -26,7 +26,7 @@ const FilterGroup = React.createClass({
 });
 
 FilterGroup.propTypes = {
-  tagGroup: PropTypes.string,
+  groupName: PropTypes.string,
   tagItems: PropTypes.arrayOf(PropTypes.string),
   onCheck: PropTypes.func
 };

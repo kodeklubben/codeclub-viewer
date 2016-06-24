@@ -179,7 +179,7 @@ describe('util', () => {
       });
     });
 
-    it('removes nothing if tag contains more than zero tagItems', () => {
+    it('removes nothing if tag contains zero tagItems', () => {
       const tag = {
         group: []
       };
@@ -455,22 +455,22 @@ describe('util', () => {
       deepFreeze(lesson);
       expect(lessonHasAllTags(lesson, tags)).to.equal(true);
     });
+
+    it('return true filterTags is empty', () => {
+      const tags = {};
+      const lesson = {
+        name: 'task1',
+        tags: {
+          platform: ['no-iPad', 'windows'],
+          category: ['create game']
+        }
+      };
+  
+      deepFreeze(tags);
+      deepFreeze(lesson);
+      expect(lessonHasAllTags(lesson, tags)).to.equal(true);
+    });
+
   });
-
-  it('return true filterTags is empty', () => {
-    const tags = {};
-    const lesson = {
-      name: 'task1',
-      tags: {
-        platform: ['no-iPad', 'windows'],
-        category: ['create game']
-      }
-    };
-
-    deepFreeze(tags);
-    deepFreeze(lesson);
-    expect(lessonHasAllTags(lesson, tags)).to.equal(true);
-  });
-
 });
 
