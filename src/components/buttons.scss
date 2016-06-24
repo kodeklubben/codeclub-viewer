@@ -1,3 +1,30 @@
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900);
+
+.fontButton {
+  font-family: "Roboto", "Verdana";
+  font-weight: 300;
+  font-size: 15pt;
+  color: white;
+}
+
+.fontInfo {
+  font-family: "Roboto", "Verdana";
+  font-weight: 300;
+  font-size: 12pt;
+  color: black;
+}
+
+// Variables
+
+$button-text: #ffffff;
+$button-student: #4be24f;
+$button-teacher: #4bdbe2;
+$button-student-hover: #359e37;
+$button-teacher-hover: #3a9b94;
+$info-background: #f7f7f7;
+$info-border: #d6d6d6;
+
 // FrontPageButton
 
 .container {
@@ -5,35 +32,78 @@
   text-align: center;
 }
 
+.transitionHover {
+  -webkit-transition: all .1s ease-in-out;
+  -moz-transition: all .1s ease-in-out;
+  -ms-transition: all .1s ease-in-out;
+  transition: all .1s ease-in-out;
+}
+
 .button {
-  padding: 0 10px 0 10px;
-  margin: 5px;
+  composes: fontButton transitionHover;
+  margin: 10px 20px;
+  width: 250px;
+  height: 100px;
+  border: none;
   display: inline-block;
 }
 
-.info {
-  background-color: #f7f7f7;
+.buttonTeacher {
+  composes: button;
+  background-color: $button-teacher;
+  &:hover {
+    background-color: $button-teacher-hover;
+  }
+}
+
+.buttonStudent {
+  composes: button;
+  background-color: $button-student;
+  &:hover {
+    background-color: $button-student-hover;
+  }
+}
+
+.sectionButton {
+  max-width: 600px;
   display: inline-block;
+  text-align: center;
+}
+
+.sectionInfo {
+  composes: fontInfo;
+  display: inline-block;
+  border-radius: 20px;
+  border: 1px solid $info-border;
+  background-color: $info-background;
 }
 
 // TeacherPage
 
-.section {
-  padding: 10px;
-  margin: 0 auto;
+.teacherContainer {
+  padding: 0 10px;
+  margin: 0 0 20px 0;
+  text-align: center;
 }
 
-.sectionCol {
-  composes: section;
-  max-width: 500px;
+.sectionTeacher {
+  max-width: 820px;
+  padding: 0 10px;
+}
+
+.sectionTeacherInline {
+  max-width: 400px;
+  padding: 0 10px;
   display: inline-block;
   text-align: justify;
 }
 
 .link {
   text-decoration: none;
+  color: black;
+  border-bottom: 1px black dotted;
 }
 
-.container .section {
-  border: 1px solid green;
+div {
+  border: 1px solid red;
 }

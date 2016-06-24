@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900);
+
+.fontTitle {
+  font-family: "Roboto", "Verdana";
+  font-weight: 300;
+  font-size: 30pt;
+  color: black;
+}
+
+.container {
+  composes: fontTitle;
+  margin: 20px;
+  text-align: center;
+}

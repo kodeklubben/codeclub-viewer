@@ -1,38 +1,41 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 import style from './buttons.scss';
-import Teacher from '../pages/TeacherPage';
-import Student from '../pages/StudentPage';
+import Teacher from './TeacherPage';
 
 export default class FrontPageButton extends React.Component {
 
   constructor() {
     super();
+
     this.state = {
       info: null,
     };
   }
 
-  setContent(info) {
+  displayTeacherContent(info) {
     this.setState({info});
+  }
+
+  navigate() {
+    this.props.history.pushState(null, "/scratch/flagg/README");
   }
 
   render() {
     return (
       <div className={style.container}>
-          <div className={style.sectionCol}>
-            <div className={style.button} onClick={() => this.setContent(<Student />)}>
+          <div className={style.sectionButton}>
+            <button className={style.buttonStudent} onClick={() => this.navigate.bind(this)}>
               Kom i gang!
-            </div>
+            </button>
 
-            <div className={style.button} onClick={() => this.setContent(<Teacher />)}>
+            <button className={style.buttonTeacher} onClick={() => this.displayTeacherContent(<Teacher />).bind(this)}>
               Lærer/Veileder
-            </div>
+            </button>
           </div>
 
-          <div className={style.section}>
-            <div className={style.info}>
+          <div>
+            <div className={style.sectionInfo}>
               {this.state.info}
             </div>
           </div>

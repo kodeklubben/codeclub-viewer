@@ -1,6 +1,6 @@
 import React from 'react';
-import CourseList from '../components/CourseList';
 
+import CourseList from '../components/CourseList';
 import FrontPageButton from '../components/FrontPageButton';
 
 const FrontPage = React.createClass({
