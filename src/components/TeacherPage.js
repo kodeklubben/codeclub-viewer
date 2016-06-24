@@ -38,7 +38,7 @@ export default class TeacherPage extends React.Component {
           </div>
 
           <div className={style.sectionTeacherInline}>
-            <h3>Veildere</h3>
+            <h3>Veiledere</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit,
               sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
