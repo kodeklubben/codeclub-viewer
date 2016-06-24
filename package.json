@@ -40,10 +40,12 @@
     ]
   },
   "dependencies": {
+    "material-ui": "^0.15.0",
     "react": "15.1.0",
     "react-bootstrap": "0.29.4",
     "react-dom": "15.1.0",
-    "react-router": "2.4.1"
+    "react-router": "2.4.1",
+    "react-tap-event-plugin": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "6.3.6",
@@ -62,6 +64,7 @@
     "compression": "1.6.2",
     "cross-env": "1.0.8",
     "css-loader": "0.23.1",
+    "deep-freeze": "0.0.1",
     "eslint": "2.11.0",
     "eslint-plugin-react": "5.1.1",
     "express": "4.13.4",
