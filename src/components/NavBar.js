@@ -13,11 +13,9 @@ export default class NavBar extends React.Component {
 
     return (
       <div className={style.container}>
-        <p>
-          <NavLink to="/" onlyActiveOnIndex>Home</NavLink>
-          {courseLink ? <span> / {courseLink}</span> : null}
-          {lessonLink ? <span> / {lessonLink}</span> : null}
-        </p>
+        <NavLink to="/" onlyActiveOnIndex>Home</NavLink>
+        {courseLink ? <span> / {courseLink}</span> : null}
+        {lessonLink ? <span> / {lessonLink}</span> : null}
       </div>
     );
   }

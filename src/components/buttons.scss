@@ -72,6 +72,7 @@ $info-border: #d6d6d6;
 
 .sectionInfo {
   composes: fontInfo;
+  margin: 20px 0 0 0;
   display: inline-block;
   border-radius: 20px;
   border: 1px solid $info-border;
@@ -81,8 +82,7 @@ $info-border: #d6d6d6;
 // TeacherPage
 
 .teacherContainer {
-  padding: 0 10px;
-  margin: 0 0 20px 0;
+  padding: 10px;
   text-align: center;
 }
 
