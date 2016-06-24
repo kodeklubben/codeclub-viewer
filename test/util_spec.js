@@ -32,177 +32,11 @@ describe('util', () => {
 
   });
 
-  describe('mergeObjects', () => {
-
-    it('merges object by combining lists as a set of all items', () => {
-      const objA = {
-        listA: ['item1', 'item2', 'item3'],
-        listB: ['item4', 'item5'],
-        listC: []
-      };
-      const objB = {
-        listA: ['item2', 'item3', 'item4'],
-        listC: ['item6', 'item7'],
-        listD: ['item8']
-      };
-      
-      deepFreeze(objA);
-      deepFreeze(objB);
-      expect(mergeObjects(objA, objB)).to.eql({
-        listA: ['item1', 'item2', 'item3', 'item4'],
-        listB: ['item4', 'item5'],
-        listC: ['item6', 'item7'],
-        listD: ['item8']
-      });
-    });
-  });
-
-  describe('addTagToFilter', () => {
-
-    it('merges tag into filter', () => {
-      const tag = {
-        platform: ['windows']
-      };
-      const filter = {
-        platform: ['browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(addTagToFilter(tag, filter)).to.eql({
-        platform: ['browser', 'windows'],
-        subject: ['physics']
-      });
-    });
-  });
-
-  describe('removeTagFromFilter', () => {
-    it('removes tag from filter', () => {
-      const tag = {
-        platform: ['browser']
-      };
-      const filter = {
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(removeTagFromFilter(tag, filter)).to.eql({
-        platform: ['windows'],
-        subject: ['physics']
-      });
-    });
-    
-    it('it removes nothing if tag is an empty object', () => {
-      const tag = {};
-      const filter = {
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(removeTagFromFilter(tag, filter)).to.eql({
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      });
-    });
-
-    it('removes nothing if tagItem does not exist in filter', () => {
-      const tag = {
-        platform: ['mac']
-      };
-      const filter = {
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(removeTagFromFilter(tag, filter)).to.eql({
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      });
-    });
-
-    it('removes nothing if tagGroup does not exist in filter', () => {
-      const tag = {
-        group: ['windows']
-      };
-      const filter = {
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(removeTagFromFilter(tag, filter)).to.eql({
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      });
-    });
-    
-    it('removes nothing if tag contains more than one tagGroup', () => {
-      const tag = {
-        platform: ['windows'],
-        subject: ['physics']
-      };
-      const filter = {
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(removeTagFromFilter(tag, filter)).to.eql({
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      });
-    });
-
-    it('removes nothing if tag contains more than one tagItem', () => {
-      const tag = {
-        platform: ['windows', 'browser']
-      };
-      const filter = {
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(removeTagFromFilter(tag, filter)).to.eql({
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      });
-    });
-
-    it('removes nothing if tag contains zero tagItems', () => {
-      const tag = {
-        group: []
-      };
-      const filter = {
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      };
-
-      deepFreeze(tag);
-      deepFreeze(filter);
-      expect(removeTagFromFilter(tag, filter)).to.eql({
-        platform: ['windows', 'browser'],
-        subject: ['physics']
-      });
-    });
-
-  });
-
   describe('filterCourses', () => {
     it('create a list courses with lessons matching filter', () => {
       const filter = {
-        platform: ['windows'],
-        category: ['create game']
+        platform: {'windows': true, 'linux': false},
+        category: {'create game': true}
       };
       const courses = [
         {
@@ -288,8 +122,8 @@ describe('util', () => {
   describe('filterLessons', () => {
     it('finds lessons that have tags matching the filter', () => {
       const filter = {
-        platform: ['windows'],
-        category: ['create game']
+        platform: {'windows': true, 'linux': false},
+        category: {'create game': true}
       };
       const lessons = [
         {
@@ -348,7 +182,7 @@ describe('util', () => {
   ///////////////////////////////////
 
   describe('cleanseTags', () => {
-    it('fixes invalid tag lists', () => {
+    it('fixes invalid tag lists and return array', () => {
       const dirtyTags = {
         platform: 'windows, mac,     browser',
         subject: 'physics, math',
@@ -357,11 +191,40 @@ describe('util', () => {
         nothing: []
       };
       deepFreeze(dirtyTags);
-      expect(cleanseTags(dirtyTags)).to.eql({
+      expect(cleanseTags(dirtyTags, false)).to.eql({
         platform: ['windows', 'mac', 'browser'],
         subject: ['physics', 'math'],
         category: ['create game', 'create app'],
         created: ['2016']
+      });
+    });
+
+    it('fixes invalid tag lists and return object', () => {
+      const dirtyTags = {
+        platform: 'windows, mac,     browser',
+        subject: 'physics, math',
+        category: ['create game', 'create app'],
+        created: 2016,
+        nothing: []
+      };
+      deepFreeze(dirtyTags);
+      expect(cleanseTags(dirtyTags, true)).to.eql({
+        platform: {
+          'windows': false,
+          'mac': false,
+          'browser': false
+        },
+        subject: {
+          'physics': false,
+          'math': false
+        },
+        category: {
+          'create game': false,
+          'create app': false
+        },
+        created: {
+          '2016': false
+        }
       });
     });
 
@@ -373,7 +236,7 @@ describe('util', () => {
         created: ['2016']
       };
       deepFreeze(validTags);
-      expect(cleanseTags(validTags)).to.eql({
+      expect(cleanseTags(validTags, false)).to.eql({
         platform: ['windows', 'mac', 'browser'],
         subject: ['physics', 'math'],
         category: ['create game', 'create app'],
@@ -404,8 +267,8 @@ describe('util', () => {
   describe('lessonHasAllTags', () => {
     it('return true if lesson has tags', () => {
       const tags = {
-        platform: ['windows'],
-        category: ['create game']
+        platform: {'windows': true, 'linux': false},
+        category: {'create game': true}
       };
       const lesson = {
         name: 'task1',
@@ -422,8 +285,8 @@ describe('util', () => {
 
     it('return false if lesson does not have tags', () => {
       const tags = {
-        platform: ['windows', 'ios'],
-        category: ['create game']
+        platform: {'windows': true, 'ios': true, 'linux': false},
+        category: {'create game': true, 'create app': false}
       };
       const lesson = {
         course: 'scratch',
@@ -441,8 +304,8 @@ describe('util', () => {
     it('is not affected by object extension', () => {
       Object.prototype.hi = function(){console.log('muhahaha');};
       const tags = {
-        platform: ['windows'],
-        category: ['create game']
+        platform: {'windows': true, 'linux': false},
+        category: {'create game': true}
       };
       const lesson = {
         name: 'task1',
