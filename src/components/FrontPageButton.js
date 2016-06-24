@@ -20,8 +20,8 @@ export default class FrontPageButton extends React.Component {
 
   render() {
     return (
-      <div className={style.w1}>
-          <div className={style.w2}>
+      <div className={style.container}>
+          <div className={style.sectionCol}>
             <div className={style.button} onClick={() => this.setContent(<Student />)}>
               Kom i gang!
             </div>
@@ -31,7 +31,7 @@ export default class FrontPageButton extends React.Component {
             </div>
           </div>
 
-          <div className={style.w2}>
+          <div className={style.section}>
             <div className={style.info}>
               {this.state.info}
             </div>

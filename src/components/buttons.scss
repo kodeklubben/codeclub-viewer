@@ -1,10 +1,8 @@
-.w1 {
+// FrontPageButton
+
+.container {
   maring: 0 auto;
   text-align: center;
-}
-
-.w2 {
-  paddding: 20px;
 }
 
 .button {
@@ -18,10 +16,24 @@
   display: inline-block;
 }
 
-.teacherList {
-  list-style-position: inside;
+// TeacherPage
+
+.section {
+  padding: 10px;
+  margin: 0 auto;
 }
 
-div {
-  border: 1px solid red;
+.sectionCol {
+  composes: section;
+  max-width: 500px;
+  display: inline-block;
+  text-align: justify;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.container .section {
+  border: 1px solid green;
 }
