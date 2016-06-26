@@ -64,6 +64,7 @@
     "compression": "1.6.2",
     "cross-env": "1.0.8",
     "css-loader": "0.23.1",
+    "deep-freeze": "0.0.1",
     "eslint": "2.11.0",
     "eslint-plugin-react": "5.1.1",
     "express": "4.13.4",
