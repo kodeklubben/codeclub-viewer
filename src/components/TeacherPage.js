@@ -6,8 +6,8 @@ export default class TeacherPage extends React.Component {
 
   constructor() {
     super();
-    this.hrefAssistant = "http://kidsakoder.no/kodeklubben/";
-    this.hrefTeacher = "http://kidsakoder.no/skole/";
+    this.hrefAssistant = 'http://kidsakoder.no/kodeklubben/';
+    this.hrefTeacher = 'http://kidsakoder.no/skole/';
   }
 
   render() {

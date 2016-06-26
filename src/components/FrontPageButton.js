@@ -9,7 +9,7 @@ export default class FrontPageButton extends React.Component {
     super();
 
     this.state = {
-      info: null,
+      info: null
     };
   }
 
@@ -18,7 +18,7 @@ export default class FrontPageButton extends React.Component {
   }
 
   navigate() {
-    this.props.history.pushState(null, "/scratch/flagg/README");
+    this.props.history.pushState(null, '/scratch/flagg/README');
   }
 
   render() {
