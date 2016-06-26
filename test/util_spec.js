@@ -2,15 +2,12 @@ import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
 import {
-  addTagToFilter,
   capitalize,
   cleanseTags,
   filterCourses,
   filterLessons,
   fixNonArrayTagList,
-  lessonHasAllTags,
-  mergeObjects,
-  removeTagFromFilter
+  lessonHasAllTags
 } from '../src/util';
 
 describe('util', () => {

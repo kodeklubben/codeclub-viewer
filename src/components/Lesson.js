@@ -26,7 +26,7 @@ const Lesson = React.createClass({
   }
 });
 
-Lesson.PropTypes = {
+Lesson.propTypes = {
   lesson: PropTypes.shape({
     frontmatter: PropTypes.object,
     content: PropTypes.string

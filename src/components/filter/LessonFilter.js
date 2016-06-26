@@ -1,7 +1,5 @@
 import React, {PropTypes} from 'react';
 import FilterGroup from './FilterGroup';
-import Divider from 'material-ui/Divider';
-import {Card, CardText, CardTitle} from 'material-ui/Card';
 
 const LessonFilter = React.createClass({
   render(){
@@ -11,18 +9,17 @@ const LessonFilter = React.createClass({
       return (
         <div key={idx}>
           <FilterGroup groupName={groupName} tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
-          <br/>
-          <Divider/>
+          <hr/>
         </div>
       );
     });
     return (
-      <Card>
-        <CardTitle title="Filter" />
-        <CardText>
+      <div>
+        <h3>Filter</h3>
+        <div>
           {tagNodes}
-        </CardText>
-      </Card>
+        </div>
+      </div>
     );
   }
 });

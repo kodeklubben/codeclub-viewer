@@ -20,7 +20,7 @@ const NavBar = React.createClass({
   }
 });
 
-NavBar.PropTypes = {
+NavBar.propTypes = {
   params: PropTypes.shape({
     course: PropTypes.string,
     lesson: PropTypes.string,
