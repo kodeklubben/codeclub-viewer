@@ -8,7 +8,7 @@ const FrontPageButton = React.createClass({
   getInitialState() {
     return {
       info: null
-    }
+    };
   },
 
   displayTeacherContent(info) {
