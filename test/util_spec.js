@@ -4,7 +4,6 @@ import deepFreeze from 'deep-freeze';
 import {
   capitalize,
   cleanseTags,
-  filterCourses,
   filterLessons,
   fixNonArrayTagList,
   lessonHasAllTags
@@ -28,94 +27,7 @@ describe('util', () => {
   describe('getCourses', () => {
 
   });
-
-  describe('filterCourses', () => {
-    it('create a list courses with lessons matching filter', () => {
-      const filter = {
-        platform: {'windows': true, 'linux': false},
-        category: {'create game': true}
-      };
-      const courses = [
-        {
-          name: 'scratch',
-          lessons: [
-            {
-              name: 'lesson 1',
-              tags: {
-                platform: ['windows', 'mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        },
-        {
-          name: 'python',
-          lessons: [
-            {
-              name: 'lesson 2',
-              tags: {
-                platform: ['mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 4',
-              tags: {
-                platform: ['windows'],
-                category: ['create game']
-              }
-            }
-          ]
-        },
-        {
-          name: 'web',
-          lessons: [
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        }
-      ];
-
-      deepFreeze(courses);
-      deepFreeze(filter);
-      expect(filterCourses(courses, filter)).to.eql([
-        {
-          name: 'scratch',
-          lessons: [
-            {
-              name: 'lesson 1',
-              tags: {
-                platform: ['windows', 'mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            }
-          ]
-        },
-        {
-          name: 'python',
-          lessons: [
-            {
-              name: 'lesson 4',
-              tags: {
-                platform: ['windows'],
-                category: ['create game']
-              }
-            }
-          ]
-        }
-      ]);
-    });
-  });
-
+  
   describe('filterLessons', () => {
     it('finds lessons that have tags matching the filter', () => {
       const filter = {
