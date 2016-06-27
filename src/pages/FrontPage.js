@@ -32,8 +32,6 @@ const FrontPage = React.createClass({
     return (
       <div>
         <FrontPageButton />
-        <CourseList/>
-
         <div className={styles.content}>
           <div className={styles.leftColumn}>
             <LessonFilter onCheck={this.handleOnCheck} tags={tags}/>

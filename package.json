@@ -40,6 +40,7 @@
     ]
   },
   "dependencies": {
+    "material-ui": "^0.15.1",
     "react": "15.1.0",
     "react-bootstrap": "0.29.4",
     "react-dom": "15.1.0",
