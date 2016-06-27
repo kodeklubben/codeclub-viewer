@@ -3,7 +3,7 @@ import {render} from 'react-dom';
 import { Router, browserHistory} from 'react-router';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
-import reducer from './reducers/reducer';
+import reducer from './reducer';
 import {setAllCourses, setFilter} from './action_creators';
 import routes from './routes';
 import {getCourses, getTags} from './util';

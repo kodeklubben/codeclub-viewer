@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import filter from './filter';
-import allCourses from './course';
+import filter from './reducers/filter';
+import allCourses from './reducers/course';
 
 export default combineReducers({
   allCourses,
