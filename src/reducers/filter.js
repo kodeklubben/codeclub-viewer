@@ -11,7 +11,13 @@ function handleCheckFilter(state, groupName, tagName){
 
   // Create next state
   const checked = state[groupName][tagName];
-  return {...state, ...{[groupName]: {...state[groupName], [tagName]: !checked}}};
+  return {
+    ...state,
+    [groupName]: {
+      ...state[groupName],
+      [tagName]: !checked
+    }
+  };
 
 }
 
