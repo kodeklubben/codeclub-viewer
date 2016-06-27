@@ -9,13 +9,10 @@ function handleCheckFilter(state, groupName, tagName){
   if(!state.hasOwnProperty(groupName) ||
     !state[groupName].hasOwnProperty(tagName))return state;
 
-  // Create next state and get state of checkbox
-  const nextState = {...state};
+  // Create next state
   const checked = state[groupName][tagName];
+  return {...state, ...{[groupName]: {...state[groupName], [tagName]: !checked}}};
 
-  // Update next state
-  nextState[groupName][tagName] = !checked;
-  return nextState;
 }
 
 export default function(state={}, action) {

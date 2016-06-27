@@ -22,18 +22,13 @@ describe('filter reducer', () => {
           filter
         }
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
-      expect(nextState).to.eql({
-        platform: {
-          'windows': false,
-          'mac': false
-        },
-        category: {'create game': false},
-        subject: {'reading': false}
-      });
+      deepFreeze(filter);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql(filter);
     });
 
     it('sets filter in non-empty initialState', () => {
@@ -59,18 +54,13 @@ describe('filter reducer', () => {
           filter
         }
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
-      expect(nextState).to.eql({
-        platform: {
-          'windows': false,
-          'mac': false
-        },
-        category: {'create game': false},
-        subject: {'reading': false}
-      });
+      deepFreeze(filter);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql(filter);
     });
   });
 
@@ -92,10 +82,11 @@ describe('filter reducer', () => {
           tagName: 'mac'
         }
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
+      const nextState = reducer(initialState, action);
+
       expect(nextState).to.eql({
         platform: {
           'windows': true,
@@ -122,18 +113,12 @@ describe('filter reducer', () => {
           tagName: 'mac'
         }
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
-      expect(nextState).to.eql({
-        platform: {
-          'windows': true,
-          'mac': false
-        },
-        category: {'create game': false},
-        subject: {'reading': true}
-      });
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql(initialState);
     });
 
     it('does nothing if tagName does not already exist in filter', () => {
@@ -152,18 +137,12 @@ describe('filter reducer', () => {
           tagName: 'browser'
         }
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
-      expect(nextState).to.eql({
-        platform: {
-          'windows': true,
-          'mac': false
-        },
-        category: {'create game': false},
-        subject: {'reading': true}
-      });
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql(initialState);
     });
 
     it('does nothing if payload is empty', () => {
@@ -179,18 +158,12 @@ describe('filter reducer', () => {
         type: 'FILTER_CHECKED',
         payload: {}
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
-      expect(nextState).to.eql({
-        platform: {
-          'windows': true,
-          'mac': false
-        },
-        category: {'create game': false},
-        subject: {'reading': true}
-      });
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql(initialState);
     });
   });
 

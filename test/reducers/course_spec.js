@@ -63,58 +63,13 @@ describe('course reducer', () => {
           courses
         }
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
-      expect(nextState).to.eql([
-        {
-          name: 'scratch',
-          lessons: [
-            {
-              name: 'lesson 1',
-              tags: {
-                platform: ['windows', 'mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        },
-        {
-          name: 'python',
-          lessons: [
-            {
-              name: 'lesson 2',
-              tags: {
-                platform: ['mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 4',
-              tags: {
-                platform: ['windows'],
-                category: ['create game']
-              }
-            }
-          ]
-        },
-        {
-          name: 'web',
-          lessons: [
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        }
-      ]);
+      deepFreeze(courses);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql(courses);
     });
 
     it('replaces allCourses in non-empty initialState', () => {
@@ -220,58 +175,13 @@ describe('course reducer', () => {
           courses
         }
       };
-      const nextState = reducer(initialState, action);
-
+      
       deepFreeze(initialState);
       deepFreeze(action);
-      expect(nextState).to.eql([
-        {
-          name: 'scratch',
-          lessons: [
-            {
-              name: 'lesson 1',
-              tags: {
-                platform: ['windows', 'mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        },
-        {
-          name: 'python',
-          lessons: [
-            {
-              name: 'lesson 2',
-              tags: {
-                platform: ['mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 4',
-              tags: {
-                platform: ['windows'],
-                category: ['create game']
-              }
-            }
-          ]
-        },
-        {
-          name: 'web',
-          lessons: [
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        }
-      ]);
+      deepFreeze(courses);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql(courses);
     });
   });
 
