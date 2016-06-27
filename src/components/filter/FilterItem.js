@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import Checkbox from 'material-ui/Checkbox';
 import {capitalize} from '../../util';
 
 
@@ -17,11 +16,12 @@ const FilterItem = React.createClass({
   render(){
     const tagItem = capitalize(this.props.tagItem);
     return (
-      <Checkbox
-        label={tagItem}
-        checked={this.state.checked}
-        onCheck={this.onCheck}
-      />
+      <div>
+        <input type="checkbox"
+               checked={this.state.checked}
+               onClick={this.onCheck}
+        />{tagItem}
+      </div>
     );
   }
 });
