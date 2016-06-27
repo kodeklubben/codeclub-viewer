@@ -1,12 +1,3 @@
-export function setCourses(courses) {
-  return {
-    type: 'SET_COURSES',
-    payload: {
-      courses
-    }
-  };
-}
-
 export function setAllCourses(courses) {
   return {
     type: 'SET_ALL_COURSES',

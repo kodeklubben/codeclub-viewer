@@ -4,6 +4,7 @@ import CourseList from '../components/CourseList';
 import LessonFilter from '../components/filter/LessonFilter';
 import styles from './FrontPage.scss';
 import * as actionCreators from '../action_creators';
+import {getFilteredCourses} from '../selectors/course';
 
 export const FrontPage = React.createClass({
   render() {
@@ -28,7 +29,7 @@ FrontPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    courses: state.courses,
+    courses: getFilteredCourses(state),
     filter: state.filter
   };
 }
