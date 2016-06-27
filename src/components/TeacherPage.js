@@ -2,15 +2,12 @@ import React from 'react';
 
 import style from './buttons.scss';
 
-export default class TeacherPage extends React.Component {
-
-  constructor() {
-    super();
-    this.hrefAssistant = 'http://kidsakoder.no/kodeklubben/';
-    this.hrefTeacher = 'http://kidsakoder.no/skole/';
-  }
+const TeacherPage = React.createClass({
 
   render() {
+    const hrefAssistant = 'http://kidsakoder.no/kodeklubben/';
+    const hrefTeacher = 'http://kidsakoder.no/skole/';
+
     return (
       <div>
         <div className={style.teacherContainer}>
@@ -34,7 +31,7 @@ export default class TeacherPage extends React.Component {
               pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
               culpa qui officia deserunt mollit anim id est laborum.
             </p>
-            <a className={style.link} href={this.hrefTeacher}>Lær mer</a>
+            <a className={style.link} href={hrefTeacher}>Lær mer</a>
           </div>
 
           <div className={style.sectionTeacherInline}>
@@ -48,11 +45,13 @@ export default class TeacherPage extends React.Component {
               pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
               culpa qui officia deserunt mollit anim id est laborum.
             </p>
-            <a className={style.link} href={this.hrefAssistant}>Lær mer</a>
+            <a className={style.link} href={hrefAssistant}>Lær mer</a>
           </div>
         </div>
       </div>
     );
   }
 
-}
+});
+
+export default TeacherPage;

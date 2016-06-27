@@ -2,7 +2,7 @@ import React from 'react';
 
 import style from './title.scss';
 
-export default class Title extends React.Component {
+const Title = React.createClass({
 
   render() {
     return (
@@ -10,4 +10,6 @@ export default class Title extends React.Component {
     );
   }
 
-}
+});
+
+export default Title;

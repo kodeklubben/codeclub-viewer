@@ -1,35 +1,33 @@
 import React from 'react';
 
-import style from './buttons.scss';
 import Teacher from './TeacherPage';
+import style from './buttons.scss';
 
-export default class FrontPageButton extends React.Component {
+const FrontPageButton = React.createClass({
 
-  constructor() {
-    super();
-
-    this.state = {
+  getInitialState() {
+    return {
       info: null
-    };
-  }
+    }
+  },
 
   displayTeacherContent(info) {
     this.setState({info});
-  }
+  },
 
   navigate() {
     this.props.history.pushState(null, '/scratch/flagg/README');
-  }
+  },
 
   render() {
     return (
       <div className={style.container}>
           <div className={style.sectionButton}>
-            <button className={style.buttonStudent} onClick={() => this.navigate.bind(this)}>
+            <button className={style.buttonStudent} onClick={() => this.navigate}>
               Kom i gang!
             </button>
 
-            <button className={style.buttonTeacher} onClick={() => this.displayTeacherContent(<Teacher />).bind(this)}>
+            <button className={style.buttonTeacher} onClick={() => this.displayTeacherContent(<Teacher />)}>
               Lærer/Veileder
             </button>
           </div>
@@ -43,4 +41,6 @@ export default class FrontPageButton extends React.Component {
     );
   }
 
-}
+});
+
+export default FrontPageButton;

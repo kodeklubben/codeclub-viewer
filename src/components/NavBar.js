@@ -1,9 +1,9 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
 import NavLink from './NavLink';
 import style from './nav.scss';
 
-export default class NavBar extends React.Component {
+const NavBar = React.createClass({
 
   render() {
     const params = this.props.params;
@@ -20,7 +20,7 @@ export default class NavBar extends React.Component {
     );
   }
 
-}
+});
 
 NavBar.PropTypes = {
   params: PropTypes.shape({
@@ -29,3 +29,5 @@ NavBar.PropTypes = {
     file: PropTypes.string
   })
 };
+
+export default NavBar;
