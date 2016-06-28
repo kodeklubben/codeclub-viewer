@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CourseList from '../components/CourseList';
-import FrontPageButton from '../components/FrontPageButton';
+import ButtonGroup from '../components/ButtonGroup';
 import LessonFilter from '../components/filter/LessonFilter';
 import {getCourses, getTags, addTagToFilter, filterCourses, removeTagFromFilter} from '../util';
 import styles from './FrontPage.scss';
@@ -31,7 +31,7 @@ const FrontPage = React.createClass({
     const tags = getTags(lessonContext);
     return (
       <div>
-        <FrontPageButton />
+        <ButtonGroup />
         <div className={styles.content}>
           <div className={styles.leftColumn}>
             <LessonFilter onCheck={this.handleOnCheck} tags={tags}/>
