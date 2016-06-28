@@ -102,11 +102,11 @@ styles:
 
 ### Bootstrap scripts, set to false to avoid jQuery
 scripts:
-  transition: true
+  transition: false
   alert: false
   button: false
   carousel: false
-  collapse: true
+  collapse: false
   dropdown: false
   modal: false
   tooltip: false
