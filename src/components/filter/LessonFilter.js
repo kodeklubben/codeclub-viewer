@@ -3,12 +3,12 @@ import FilterGroup from './FilterGroup';
 
 const LessonFilter = React.createClass({
   render(){
-    const tags = this.props.tags;
-    const tagNodes = Object.keys(tags).map((groupName, idx) => {
-      const tagItems = tags[groupName];
+    const filter = this.props.filter;
+    const tagNodes = Object.keys(filter).map((groupName, idx) => {
+      const tagItems = filter[groupName];
       return (
         <div key={idx}>
-          <FilterGroup groupName={groupName} tagItems={tagItems} onCheck={this.props.onCheck}/>
+          <FilterGroup groupName={groupName} tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
           <hr/>
         </div>
       );
@@ -25,8 +25,8 @@ const LessonFilter = React.createClass({
 });
 
 LessonFilter.propTypes = {
-  tags: PropTypes.object,
-  onCheck: PropTypes.func
+  filter: PropTypes.object,
+  onFilterCheck: PropTypes.func
 };
 
 export default LessonFilter;
