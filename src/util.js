@@ -18,9 +18,8 @@ export function getTags(lessonContext) {
 
   return paths.reduce((res, path) => {
     const lessonFrontMatter = lessonContext(path).frontmatter;
-    const tags = cleanseTags(lessonFrontMatter.tags);
-    res = mergeObjects(tags, res);
-    return res;
+    const tags = cleanseTags(lessonFrontMatter.tags, true);
+    return {...res, ...tags};
   }, {});
 }
 
@@ -36,14 +35,14 @@ export function getCourses(lessonContext, iconContext) {
   return paths.reduce((res, path) => {
     const courseName = path.slice(2, path.indexOf('/', 2));
     const lessonFrontMatter = lessonContext(path).frontmatter;
-    const tags = cleanseTags(lessonFrontMatter.tags);
+    const tags = cleanseTags(lessonFrontMatter.tags, false);
     const lesson = {name: lessonFrontMatter.title, tags: tags};
     const index = res.findIndex(course => course.name === courseName);
 
     // If course already exists, push the new lesson. Else make a new course
-    if(index >= 0) {
+    if (index >= 0) {
       res[index].lessons.push(lesson);
-    }else{
+    } else {
       res.push({
         lessons: [lesson],
         name: courseName,
@@ -54,78 +53,6 @@ export function getCourses(lessonContext, iconContext) {
 
     return res;
   }, []);
-}
-
-/**
- * Will combine lists in same properties from objA and objB. The lists will be combined as a set of distinct elements
- * @param {Object} objA
- * @param {Object} objB
- * @returns {Object} merged object
- */
-export function mergeObjects(objA, objB) {
-  const allProps = [...new Set(Object.keys(objA).concat(Object.keys(objB)))];
-  return allProps.reduce((res, propName) => {
-    const listItemsA = objA.hasOwnProperty(propName) ? objA[propName] : [];
-    const listItemsB = objB.hasOwnProperty(propName) ? objB[propName] : [];
-    res[propName] = [...new Set(listItemsA.concat(listItemsB))];
-    return res;
-  }, {});
-}
-
-/**
- * Add tag to filter
- * @param {Object} tag
- * @param {Object} filter
- * @returns {Object} filter with tag merged into it
- */
-export function addTagToFilter(tag, filter) {
-  return mergeObjects(filter, tag);
-}
-
-/**
- * Removes tag from filter
- * @param {Object} tag
- * @param {Object} filter
- * @returns {Object} filter without the tag
- */
-export function removeTagFromFilter(tag, filter) {
-  // Check if tag is empty or contains more than one tagGroup
-  if(Object.keys(tag).length !== 1) return filter;
-  
-  // Tag has one tagGroup with one tagItem
-  const groupName = Object.keys(tag)[0];
-  const tagName = tag[groupName].toString();
-  
-  // Check if tag contains none or more than one tagItem
-  if(tag[groupName].length !== 1) return filter;
-
-  return Object.keys(filter).reduce((res, filterGroupName) => {
-    const filterTagItems = filter[filterGroupName];
-    // Add all items except the one to be removed
-    const itemsToAdd = filterTagItems.filter(filterTagName => !(filterGroupName === groupName && filterTagName === tagName));
-    if(itemsToAdd.length === 0) return res;
-    return mergeObjects(res, {[filterGroupName]: itemsToAdd});
-  }, {});
-}
-
-/**
- * Get courses that has at least one lesson that matches filter
- * @param {Array} courses
- * @param {Object} filter
- * @returns {Array} filtered courses
- */
-export function filterCourses(courses, filter) {
-  const coursesWithFilteredLessons = courses.map(course => {
-    const newCourse = {...course};
-    newCourse.lessons = filterLessons(course.lessons, filter);
-    return newCourse;
-  });
-
-  // Find and sort courses that have at least one lesson that matches filter
-  return coursesWithFilteredLessons.filter((course) => {
-    return course.lessons.length > 0;
-  });
-
 }
 
 /**
@@ -148,17 +75,32 @@ export function filterLessons(lessons, filter) {
 /**
  * Fix invalid tags
  * @param {Object} tags
+ * @param {boolean} toObject
  * @returns {Object} valid tags
  */
-export function cleanseTags(tags) {
-  if(tags == null) return {};
+export function cleanseTags(tags, toObject) {
+  if (tags == null) return {};
 
   return Object.keys(tags).reduce((result, groupName) => {
-    const tagItems = fixNonArrayTagList(tags[groupName]);
+    let tagItemsArray = fixNonArrayTagList(tags[groupName]);
+
+    // Make groupName and all tags lowerCase
+    tagItemsArray = tagItemsArray.map(tagItem => tagItem.toLowerCase());
+    groupName = groupName.toLowerCase();
+
     // Ignore tagGroups with no tagItems
-    if(tagItems.length === 0) return result;
-    result[groupName] = tagItems;
+    if (tagItemsArray.length === 0) return result;
+
+    // Add tagItems
+    result[groupName] = toObject ? convertTagItemsArrayToObject(tagItemsArray) : tagItemsArray;
     return result;
+  }, {});
+}
+
+function convertTagItemsArrayToObject(tagItemsArray) {
+  return tagItemsArray.reduce((res, item) => {
+    res[item] = false;
+    return res;
   }, {});
 }
 
@@ -170,7 +112,7 @@ export function cleanseTags(tags) {
  * @returns {Array}
  */
 export function fixNonArrayTagList(tagItems) {
-  if(tagItems == null) return [];
+  if (tagItems == null) return [];
   if (typeof tagItems === 'string') return tagItems.split(/,\s*/);
   if (!Array.isArray(tagItems) && typeof tagItems !== 'string') return fixNonArrayTagList(tagItems.toString());
   return tagItems;
@@ -184,15 +126,19 @@ export function fixNonArrayTagList(tagItems) {
  */
 export function lessonHasAllTags(lesson, filterTags) {
   // Filter is empty
-  if(Object.keys(filterTags).length === 0) return true;
+  if (Object.keys(filterTags).length === 0) return true;
 
   const lessonTags = lesson.tags;
-  for(let groupName in filterTags){
-    if(filterTags.hasOwnProperty(groupName)) {
+  for (let groupName in filterTags) {
+    if (filterTags.hasOwnProperty(groupName)) {
       const filterTagItems = filterTags[groupName];
       const lessonTagItems = lessonTags[groupName] || [];
       // Check if there exist at least one filterTag that the lesson does not have
-      if (filterTagItems.find(tagItem => lessonTagItems.indexOf(tagItem) < 0)) return false;
+      if (Object.keys(filterTagItems).find((tagItemName) => {
+        const tagInFilter = filterTagItems[tagItemName];
+        // FilterTag is checked and lesson does not have tag
+        return tagInFilter && lessonTagItems.indexOf(tagItemName) < 0;
+      })) return false;// Found a filterTag that is NOT in lesson
     }
   }
   // Lesson contains all tags in the filter

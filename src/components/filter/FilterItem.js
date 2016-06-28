@@ -3,23 +3,13 @@ import {capitalize} from '../../util';
 
 
 const FilterItem = React.createClass({
-  getInitialState() {
-    return {
-      checked: false
-    };
-  },
-  onCheck() {
-    const checked = this.state.checked;
-    this.setState({checked: !checked});
-    this.props.onCheck(this.props.tagItem, !checked);
-  },
   render(){
     const tagItem = capitalize(this.props.tagItem);
     return (
       <div>
         <input type="checkbox"
-               checked={this.state.checked}
-               onClick={this.onCheck}
+               checked={this.props.checked}
+               onChange={this.props.onCheck}
         />{tagItem}
       </div>
     );
@@ -28,6 +18,7 @@ const FilterItem = React.createClass({
 
 FilterItem.propTypes = {
   tagItem: PropTypes.string,
+  checked: PropTypes.bool,
   onCheck: PropTypes.func
 };
 

@@ -55,6 +55,8 @@ npm run testall -s
 ```
 The `-s` is to remove npm-errors and just show errors from the test.
 
+## State Tree
+![State Tree](/State Tree.png)
 
 ## Prototyping
 There is a [structor](https://github.com/ipselon/structor) prototype of the new site in the prototype folder.

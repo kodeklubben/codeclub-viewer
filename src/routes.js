@@ -5,8 +5,8 @@ import getRouteObject from './routeObject';
 
 const getComponentFrontPage = (nextState, cb) => {
   require.ensure([], require => {
-    cb(null, require('./pages/FrontPage').default);
-  }, 'FrontPage');
+    cb(null, require('./pages/FrontPage').FrontPageContainer);
+  }, 'FrontPageContainer');
 };
 
 const getComponentPlaylist = (nextState, cb) => {
