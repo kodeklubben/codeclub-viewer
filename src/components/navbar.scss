@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #b1eeaa;
+  height: 60px;
+  padding: 5px;
+  display: flex;
+  .path {
+    align-self: center;
+  }
+}
+
+.languageGroup {
+  align-self: flex-end;
+  padding: 5px;
+  .language {
+    padding: 0 0 0 5px;
+  }
+}
