@@ -1,21 +1,28 @@
 import {createSelector} from 'reselect';
-import {filterLessons} from '../util';
+import {capitalize, lessonHasAllTags} from '../util';
 
-const getAllCourses = (state) => state.allCourses;
+const getLessons = (state) => state.lessons;
 const getFilter = (state) => state.filter;
+const getIconContext = (state) => state.context.iconContext;
 
 // Creates a list of courses with lessons that have tags matching the filter
 export const getFilteredCourses = createSelector(
-  [getFilter, getAllCourses],
-  (filter={}, allCourses=[]) => {
-    const coursesWithFilteredLessons = allCourses.map(course => ({
-      ...course,
-      lessons: filterLessons(course.lessons, filter)
-    }));
+  [getFilter, getLessons, getIconContext],
+  (filter={}, lessons={}, iconContext) => {
 
-    // Find courses that have at least one lesson that matches filter
-    return coursesWithFilteredLessons.filter((course) => {
-      return course.lessons.length > 0;
-    });
+    return Object.keys(lessons).reduce((res, lessonKey) => {
+      const lesson = lessons[lessonKey];
+      const course = lesson.course;
+      if(lessonHasAllTags(lesson, filter)) {
+        if(res.hasOwnProperty(course)) res[course].lessons.push(lesson);
+        else res[course] = {
+          iconPath: iconContext('./' + course + '/logo-black.png'),
+          lessons: [lesson],
+          name: capitalize(course).replace('_', ' '),
+          path: course
+        };
+      }
+      return res;
+    }, {});
   }
 );

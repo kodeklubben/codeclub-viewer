@@ -1,8 +1,8 @@
-export function setAllCourses(courses) {
+export function setLessons(lessons) {
   return {
-    type: 'SET_ALL_COURSES',
+    type: 'SET_LESSONS',
     payload: {
-      courses
+      lessons
     }
   };
 }
@@ -12,6 +12,16 @@ export function setFilter(filter) {
     type: 'SET_FILTER',
     payload: {
       filter
+    }
+  };
+}
+
+export function setContext(contextName, context) {
+  return {
+    type: 'SET_CONTEXT',
+    payload: {
+      contextName,
+      context
     }
   };
 }

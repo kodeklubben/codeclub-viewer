@@ -23,7 +23,7 @@ export const FrontPage = React.createClass({
 });
 
 FrontPage.propTypes = {
-  courses: PropTypes.array,
+  courses: PropTypes.object,
   filter: PropTypes.object,
   onFilterCheck: PropTypes.func
 };
