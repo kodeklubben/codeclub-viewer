@@ -95,16 +95,18 @@ describe('util', () => {
       const dirtyTags = {
         platform: 'windows, mac,     browser',
         subject: 'physics, math',
-        category: ['create game', 'create app'],
+        CAtegOry: ['create game', 'create app'],
         created: 2016,
-        nothing: []
+        nothing: [],
+        someTag: ['Tag1', 'tag2']
       };
       deepFreeze(dirtyTags);
       expect(cleanseTags(dirtyTags, false)).to.eql({
         platform: ['windows', 'mac', 'browser'],
         subject: ['physics', 'math'],
         category: ['create game', 'create app'],
-        created: ['2016']
+        created: ['2016'],
+        sometag: ['tag1', 'tag2']
       });
     });
 
@@ -114,7 +116,8 @@ describe('util', () => {
         subject: 'physics, math',
         category: ['create game', 'create app'],
         created: 2016,
-        nothing: []
+        nothing: [],
+        someTag: ['Tag1', 'tag2']
       };
       deepFreeze(dirtyTags);
       expect(cleanseTags(dirtyTags, true)).to.eql({
@@ -133,10 +136,11 @@ describe('util', () => {
         },
         created: {
           '2016': false
-        }
+        },
+        sometag: {'tag1': false, 'tag2': false}
       });
     });
-
+    
     it('does not change already valid tag lists', () => {
       const validTags = {
         platform: ['windows', 'mac', 'browser'],

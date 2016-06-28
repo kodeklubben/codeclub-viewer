@@ -83,8 +83,10 @@ export function cleanseTags(tags, toObject) {
 
   return Object.keys(tags).reduce((result, groupName) => {
     let tagItemsArray = fixNonArrayTagList(tags[groupName]);
-    // Make all tags lowerCase
+
+    // Make groupName and all tags lowerCase
     tagItemsArray = tagItemsArray.map(tagItem => tagItem.toLowerCase());
+    groupName = groupName.toLowerCase();
 
     // Ignore tagGroups with no tagItems
     if (tagItemsArray.length === 0) return result;
