@@ -7,9 +7,7 @@ describe('course selector', () => {
   describe('getFilteredCourses', () => {
 
     it('should create a list of courses with lessons matching the filter', () => {
-      const state = {};
-
-      state.allCourses = [
+      const allCourses = [
         {
           name: 'scratch',
           lessons: [
@@ -57,8 +55,7 @@ describe('course selector', () => {
           ]
         }
       ];
-
-      state.filter = {
+      const filter = {
         platform: {
           'windows': true,
           'mac': false
@@ -67,8 +64,9 @@ describe('course selector', () => {
         subject: {'reading': false}
       };
 
-      deepFreeze(state);
-      expect(getFilteredCourses(state)).to.eql([
+      deepFreeze(allCourses);
+      deepFreeze(filter);
+      expect(getFilteredCourses.resultFunc(filter, allCourses)).to.eql([
         {
           name: 'scratch',
           lessons: [
@@ -98,9 +96,7 @@ describe('course selector', () => {
     });
 
     it('should create a list of all courses with all lessons if filter is undefined', () => {
-      const state = {};
-
-      state.allCourses = [
+      const allCourses = [
         {
           name: 'scratch',
           lessons: [
@@ -149,60 +145,12 @@ describe('course selector', () => {
         }
       ];
 
-      deepFreeze(state);
-      expect(getFilteredCourses(state)).to.eql([
-        {
-          name: 'scratch',
-          lessons: [
-            {
-              name: 'lesson 1',
-              tags: {
-                platform: ['windows', 'mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        },
-        {
-          name: 'python',
-          lessons: [
-            {
-              name: 'lesson 2',
-              tags: {
-                platform: ['mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 4',
-              tags: {
-                platform: ['windows'],
-                category: ['create game']
-              }
-            }
-          ]
-        },
-        {
-          name: 'web',
-          lessons: [
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        }
-      ]);
+      deepFreeze(allCourses);
+      expect(getFilteredCourses.resultFunc(undefined, allCourses)).to.eql(allCourses);
     });
 
     it('should create a list of all courses with all lessons if filter is an empty object', () => {
-      const state = {};
-      state.allCourses = [
+      const allCourses = [
         {
           name: 'scratch',
           lessons: [
@@ -250,62 +198,15 @@ describe('course selector', () => {
           ]
         }
       ];
-      state.filter = {};
+      const filter = {};
 
-      deepFreeze(state);
-      expect(getFilteredCourses(state)).to.eql([
-        {
-          name: 'scratch',
-          lessons: [
-            {
-              name: 'lesson 1',
-              tags: {
-                platform: ['windows', 'mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        },
-        {
-          name: 'python',
-          lessons: [
-            {
-              name: 'lesson 2',
-              tags: {
-                platform: ['mac'],
-                category: ['create game'],
-                subject: ['reading']
-              }
-            },
-            {
-              name: 'lesson 4',
-              tags: {
-                platform: ['windows'],
-                category: ['create game']
-              }
-            }
-          ]
-        },
-        {
-          name: 'web',
-          lessons: [
-            {
-              name: 'lesson 3',
-              tags: {}
-            }
-          ]
-        }
-      ]);
+      deepFreeze(allCourses);
+      deepFreeze(filter);
+      expect(getFilteredCourses.resultFunc(filter, allCourses)).to.eql(allCourses);
     });
     
     it('should create empty array if no lessons in any course match the filter', () => {
-      const state = {};
-      state.allCourses = [
+      const allCourses = [
         {
           name: 'scratch',
           lessons: [
@@ -353,7 +254,7 @@ describe('course selector', () => {
           ]
         }
       ];
-      state.filter = {
+      const filter = {
         platform: {
           'windows': true,
           'mac': false
@@ -365,13 +266,13 @@ describe('course selector', () => {
         }
       };
 
-      deepFreeze(state);
-      expect(getFilteredCourses(state)).to.eql([]);
+      deepFreeze(allCourses);
+      deepFreeze(filter);
+      expect(getFilteredCourses.resultFunc(filter, allCourses)).to.eql([]);
     });
 
     it('should create empty array if allCourses state is undefined', () => {
-      const state = {};
-      state.filter = {
+      const filter = {
         platform: {
           'windows': true,
           'mac': false
@@ -383,14 +284,13 @@ describe('course selector', () => {
         }
       };
       
-      deepFreeze(state);
-      expect(getFilteredCourses(state)).to.eql([]);
+      deepFreeze(filter);
+      expect(getFilteredCourses.resultFunc(filter)).to.eql([]);
     });
 
     it('should create empty array if allCourses is an empty array', () => {
-      const state = {};
-      state.allCourses = [];
-      state.filter = {
+      const allCourses = [];
+      const filter = {
         platform: {
           'windows': true,
           'mac': false
@@ -402,8 +302,9 @@ describe('course selector', () => {
         }
       };
 
-      deepFreeze(state);
-      expect(getFilteredCourses(state)).to.eql([]);
+      deepFreeze(allCourses);
+      deepFreeze(filter);
+      expect(getFilteredCourses.resultFunc(filter, allCourses)).to.eql([]);
     });
   });
 });
