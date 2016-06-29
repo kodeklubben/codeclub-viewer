@@ -51,7 +51,7 @@ extractStyles: false
 styles:
 
   # Mixins
-  mixins: false
+  mixins: true
 
   # Reset and dependencies
   normalize: true
@@ -62,14 +62,14 @@ styles:
   scaffolding: false
   type: false
   code: false
-  grid: false
+  grid: true
   tables: false
   forms: false
   buttons: false
 
   # Components
-  component-animations: false
-  dropdowns: false
+  component-animations: true
+  dropdowns: true
   button-groups: false
   input-groups: false
   navs: false
@@ -97,8 +97,8 @@ styles:
   carousel: false
 
   # Utility classes
-  utilities: false
-  responsive-utilities: false
+  utilities: true
+  responsive-utilities: true
 
 ### Bootstrap scripts, set to false to avoid jQuery
 scripts:
