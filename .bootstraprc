@@ -78,13 +78,13 @@ styles:
   pagination: false
   pager: false
   labels: false
-  badges: false
+  badges: true
   jumbotron: false
   thumbnails: false
   alerts: false
   progress-bars: false
   media: false
-  list-group: false
+  list-group: true
   panels: true
   wells: false
   responsive-embed: false

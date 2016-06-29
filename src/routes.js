@@ -11,8 +11,8 @@ const getComponentFrontPage = (nextState, cb) => {
 
 const getComponentPlaylist = (nextState, cb) => {
   require.ensure([], (require) => {
-    cb(null, require('./pages/PlaylistPage').default);
-  }, 'PlaylistPage');
+    cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
+  }, 'PlaylistPageContainer');
 };
 
 const getComponentLessonPage = (nextState, cb) => {
