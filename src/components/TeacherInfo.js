@@ -1,6 +1,6 @@
 import React from 'react';
 
-import style from './buttons.scss';
+import styles from './ButtonGroup.scss';
 
 const TeacherPage = React.createClass({
 
@@ -10,8 +10,8 @@ const TeacherPage = React.createClass({
 
     return (
       <div>
-        <div className={style.teacherContainer}>
-          <div className={style.sectionTeacher}>
+        <div className={styles.teacherContainer}>
+          <div className={styles.sectionTeacher}>
             <h3>Modus</h3>
             <p>
               Du er nå i lærermodus! <br /><br />
@@ -20,7 +20,7 @@ const TeacherPage = React.createClass({
             </p>
           </div>
 
-          <div className={style.sectionTeacherInline}>
+          <div className={styles.sectionTeacherInline}>
             <h3>Lærere</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -31,10 +31,10 @@ const TeacherPage = React.createClass({
               pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
               culpa qui officia deserunt mollit anim id est laborum.
             </p>
-            <a className={style.link} href={hrefTeacher}>Lær mer</a>
+            <a className={styles.link} href={hrefTeacher}>Lær mer</a>
           </div>
 
-          <div className={style.sectionTeacherInline}>
+          <div className={styles.sectionTeacherInline}>
             <h3>Veiledere</h3>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit,
@@ -45,7 +45,7 @@ const TeacherPage = React.createClass({
               pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
               culpa qui officia deserunt mollit anim id est laborum.
             </p>
-            <a className={style.link} href={hrefAssistant}>Lær mer</a>
+            <a className={styles.link} href={hrefAssistant}>Lær mer</a>
           </div>
         </div>
       </div>

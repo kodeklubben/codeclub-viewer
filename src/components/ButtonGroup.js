@@ -1,8 +1,8 @@
 import React from 'react';
 
 import TeacherInfo from './TeacherInfo';
-import style from './buttons.scss';
 import { Collapse } from 'react-bootstrap';
+import styles from './ButtonGroup.scss';
 
 const ButtonGroup = React.createClass({
 
@@ -20,20 +20,20 @@ const ButtonGroup = React.createClass({
 
   render() {
     return (
-      <div className={style.container}>
-        <div className={style.sectionButton}>
-          <button className={style.buttonStudent} onClick={() => this.navigate}>
+      <div className={styles.container}>
+        <div className={styles.sectionButton}>
+          <button className={styles.buttonStudent} onClick={() => this.navigate}>
             Kom i gang!
           </button>
           <button
-            className={style.buttonTeacher}
+            className={styles.buttonTeacher}
             onClick={() => this.setState({ show: !this.state.show })}>
               Lærer/Veileder
           </button>
         </div>
         <Collapse in={this.state.show}>
           <div>
-            <div className={style.sectionInfo}>
+            <div className={styles.sectionInfo}>
               <TeacherInfo />
             </div>
           </div>

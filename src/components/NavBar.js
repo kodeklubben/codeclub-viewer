@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 import NavLink from './NavLink';
-import style from './nav.scss';
+import styles from './NavBar.scss';
 
 const NavBar = React.createClass({
 
@@ -12,7 +12,7 @@ const NavBar = React.createClass({
       <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
 
     return (
-      <div className={style.container}>
+      <div className={styles.container}>
         <NavLink to="/" onlyActiveOnIndex>Home</NavLink>
         {courseLink ? <span> / {courseLink}</span> : null}
         {lessonLink ? <span> / {lessonLink}</span> : null}
