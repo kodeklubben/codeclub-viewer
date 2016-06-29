@@ -9,6 +9,8 @@ cd codeclub-viewer
 npm install
 npm start
 ```
+## Redux DevTools
+Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 
 ## Building and serving
 This requires that you install http-server globally:
