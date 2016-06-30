@@ -51,7 +51,7 @@ extractStyles: false
 styles:
 
   # Mixins
-  mixins: false
+  mixins: true
 
   # Reset and dependencies
   normalize: true
@@ -59,17 +59,17 @@ styles:
   glyphicons: false
 
   # Core CSS
-  scaffolding: false
+  scaffolding: true
   type: false
   code: false
-  grid: false
+  grid: true
   tables: false
   forms: false
   buttons: false
 
   # Components
-  component-animations: false
-  dropdowns: false
+  component-animations: true
+  dropdowns: true
   button-groups: false
   input-groups: false
   navs: false
@@ -98,7 +98,7 @@ styles:
 
   # Utility classes
   utilities: false
-  responsive-utilities: false
+  responsive-utilities: true
 
 ### Bootstrap scripts, set to false to avoid jQuery
 scripts:
