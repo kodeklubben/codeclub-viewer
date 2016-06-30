@@ -7,6 +7,7 @@ import styles from './FrontPage.scss';
 import * as actionCreators from '../action_creators';
 import {getFilteredCourses} from '../selectors/course';
 import ButtonGroup from '../components/ButtonGroup';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 export const FrontPage = React.createClass({
   render() {
@@ -42,4 +43,4 @@ function mapStateToProps(state) {
 export const FrontPageContainer = connect(
   mapStateToProps,
   actionCreators
-)(FrontPage);
+)(withStyles(styles)(FrontPage));

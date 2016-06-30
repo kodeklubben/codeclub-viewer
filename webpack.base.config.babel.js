@@ -60,11 +60,13 @@ export function getLoaders() {
     },
     css: {
       test: /\.css$/,
-      loaders: ['style', cssModuleLoaderStr, 'postcss']
+      exclude: /node_modules/,
+      loaders: ['isomorphic-style', cssModuleLoaderStr, 'postcss']
     },
     scss: {
       test: /\.scss$/,
-      loaders: ['style', cssModuleLoaderStr, 'postcss', 'sass']
+      exclude: /node_modules/,
+      loaders: ['isomorphic-style', cssModuleLoaderStr, 'postcss', 'sass']
     },
     image: {
       test: /\.(png|jpg|jpeg|gif)$/,
