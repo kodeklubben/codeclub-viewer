@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 
 import NavLink from './NavLink';
-import style from './navbar.scss';
+import styles from './NavBar.scss';
 
 const NavBar = React.createClass({
 
@@ -18,14 +18,14 @@ const NavBar = React.createClass({
       <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
 
     return (
-      <div className={style.container}>
-        <div className={style.languageGroup}>
-          <a className={style.language} href="#clicked">link</a>
-          <a className={style.language} href="#clicked">link</a>
-          <a className={style.language} href="#clicked">link</a>
+      <div className={styles.container}>
+        <div className={styles.languageGroup}>
+          <a className={styles.flag} href="#clicked">link</a>
+          <a className={styles.flag} href="#clicked">link</a>
+          <a className={styles.flag} href="#clicked">link</a>
         </div>
-        <div className={style.header}>
-          <div className={style.path}>
+        <div className={styles.header}>
+          <div className={styles.path}>
             <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
             {courseLink ? <span> / {courseLink}</span> : null}
             {lessonLink ? <span> / {lessonLink}</span> : null}
