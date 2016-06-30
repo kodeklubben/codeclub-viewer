@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
@@ -30,4 +31,4 @@ NavBar.propTypes = {
   })
 };
 
-export default NavBar;
+export default withStyles(styles)(NavBar);

@@ -1,8 +1,9 @@
 import React from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './ButtonGroup.scss';
 
-const TeacherPage = React.createClass({
+const TeacherInfo = React.createClass({
 
   render() {
     const hrefAssistant = 'http://kidsakoder.no/kodeklubben/';
@@ -54,4 +55,4 @@ const TeacherPage = React.createClass({
 
 });
 
-export default TeacherPage;
+export default withStyles(styles)(TeacherInfo);

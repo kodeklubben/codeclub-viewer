@@ -1,4 +1,5 @@
 import React from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import TeacherInfo from './TeacherInfo';
 import { Collapse } from 'react-bootstrap';
@@ -44,4 +45,4 @@ const ButtonGroup = React.createClass({
 
 });
 
-export default ButtonGroup;
+export default withStyles(styles)(ButtonGroup);
