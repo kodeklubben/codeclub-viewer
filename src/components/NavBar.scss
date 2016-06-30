@@ -1,5 +1,7 @@
+@import 'fonts';
+
 .fontNavBar {
-  font-family: "Verdana";
+  font-family: $default-font;
   font-weight: 300;
   font-size: 30pt;
   color: black;

@@ -1,14 +1,16 @@
 // Fonts
 
+@import 'fonts';
+
 .fontButton {
-  font-family: "Verdana";
+  font-family: $default-font;
   font-weight: 300;
   font-size: 15pt;
   color: white;
 }
 
 .fontInfo {
-  font-family: "Verdana";
+  font-family: $default-font;
   font-weight: 300;
   font-size: 12pt;
   color: black;
