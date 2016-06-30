@@ -9,6 +9,7 @@ import reducer from './reducer';
 import {setAllCourses, setFilter} from './action_creators';
 import routes from './routes';
 import {getCourses, getTags} from './util';
+import WithStylesContext from './WithStylesContext';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
@@ -33,7 +34,9 @@ store.dispatch(setFilter(getTags(lessonContext)));
 
 render(
   <Provider store={store}>
-    <Router routes={routes} history={browserHistory}/>
+    <WithStylesContext onInsertCss={styles => styles._insertCss()}>
+      <Router routes={routes} history={browserHistory}/>
+    </WithStylesContext>
   </Provider>,
   document.getElementById('app')
 );

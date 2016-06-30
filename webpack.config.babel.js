@@ -110,6 +110,7 @@ function getPlugins() {
     new HtmlWebpackPlugin({
       title: 'Kodeklubben (server)',
       filename: 'index-html-template.ejs',
+      appcss: '<%= appCss %>',
       appcontent: '<%= appHtml %>',
       template: 'src/index-template.ejs',
       inject: 'body',
