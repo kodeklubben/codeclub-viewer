@@ -97,7 +97,7 @@ styles:
   carousel: false
 
   # Utility classes
-  utilities: true
+  utilities: false
   responsive-utilities: true
 
 ### Bootstrap scripts, set to false to avoid jQuery
