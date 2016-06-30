@@ -77,6 +77,7 @@
     "glob": "7.0.3",
     "html-loader": "0.4.3",
     "html-webpack-plugin": "2.19.0",
+    "isomorphic-style-loader": "1.0.0",
     "jsdom": "9.2.1",
     "json-loader": "0.5.4",
     "markdown-it-anchor": "2.5.0",
