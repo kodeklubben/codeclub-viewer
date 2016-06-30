@@ -23,49 +23,27 @@ export function getTags(lessonContext) {
   }, {});
 }
 
-/**
- * Get list of all courses in lessonContext
- * @param lessonContext
- * @param iconContext
- * @returns {Array}
- */
-export function getCourses(lessonContext, iconContext) {
+export function getLessons(lessonContext) {
   const paths = lessonContext.keys();
 
-  return paths.reduce((res, path) => {
-    const courseName = path.slice(2, path.indexOf('/', 2));
+  return paths.reduce((res, path, idx) => {
+    // Course name is between './' and second '/'
+    const course = path.slice(2, path.indexOf('/', 2)).toLowerCase();
     const lessonFrontMatter = lessonContext(path).frontmatter;
     const tags = cleanseTags(lessonFrontMatter.tags, false);
-    const lesson = {name: lessonFrontMatter.title, tags: tags};
-    const index = res.findIndex(course => course.name === courseName);
-
-    // If course already exists, push the new lesson. Else make a new course
-    if (index >= 0) {
-      res[index].lessons.push(lesson);
-    } else {
-      res.push({
-        lessons: [lesson],
-        name: courseName,
-        iconPath: iconContext('./' + courseName + '/logo-black.png'),
-        path: path
-      });
-    }
+    
+    res[idx] = {
+      title: lessonFrontMatter.title,
+      author: lessonFrontMatter.author,
+      level: lessonFrontMatter.level,
+      course,
+      tags,
+      // Everything between './' and '.md'
+      path: path.slice(2, path.length-3)
+    };
 
     return res;
-  }, []);
-}
-
-/**
- * Get lessons that have all tags that exist in filter
- * @param {Array} lessons
- * @param {Object} filter
- * @returns {Array} filtered lessons
- */
-export function filterLessons(lessons, filter) {
-  // Find lessons that matches filter
-  return lessons.filter((lesson) => {
-    return lessonHasAllTags(lesson, filter);
-  });
+  }, {});
 }
 
 ///////////////////////////////////
