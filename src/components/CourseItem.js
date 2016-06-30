@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {capitalize} from '../util';
 import styles from './CourseItem.scss';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 const CourseItem = React.createClass({
   contextTypes: {
@@ -34,4 +35,4 @@ CourseItem.propTypes = {
   })
 };
 
-export default CourseItem;
+export default withStyles(styles)(CourseItem);
