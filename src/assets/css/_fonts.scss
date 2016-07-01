@@ -1,16 +1,4 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Mono:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic);
 
-// Add new font properties here.
-// The font property variable should be in the form $font-<type|size|...>-<domain>[-subdomain]
-
 $font-type-default: 'Roboto', 'Verdana', sans-serif;
-$font-type-code: 'Roboto Mono', 'Courier New', monospace;
-
-$font-size-default: 15pt;
-$font-size-code: 13pt;
-$font-size-header: 15pt;
-$font-size-footer: 15pt;
-$font-size-title: 15pt;
-$font-size-activity-title: 20pt;
-$font-size-activity-list: 20pt;
