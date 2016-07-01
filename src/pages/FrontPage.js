@@ -13,6 +13,7 @@ export const FrontPage = React.createClass({
   render() {
     return (
       <div>
+        <div className={styles.title}>Kodeklubben</div>
         <ButtonGroup />
         <div className={styles.content}>
           <div className={styles.leftColumn}>
