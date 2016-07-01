@@ -1,5 +1,5 @@
 import React from 'react';
-import Lesson from './components/Lesson';
+import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
 
 
