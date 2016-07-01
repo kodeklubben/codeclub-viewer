@@ -19,10 +19,10 @@
 // Variables
 
 $button-text: #ffffff;
-$button-student: #4be24f;
-$button-teacher: #4bdbe2;
-$button-student-hover: #359e37;
+$button-teacher: #46cccc;
+$button-student: #46cc46;
 $button-teacher-hover: #3a9b94;
+$button-student-hover: #359e37;
 $info-background: #f7f7f7;
 $info-border: #d6d6d6;
 
@@ -33,20 +33,14 @@ $info-border: #d6d6d6;
   text-align: center;
 }
 
-.transitionHover {
-  -webkit-transition: all .1s ease-in-out;
-  -moz-transition: all .1s ease-in-out;
-  -ms-transition: all .1s ease-in-out;
-  transition: all .1s ease-in-out;
-}
-
 .button {
-  composes: fontButton transitionHover;
+  composes: fontButton;
   margin: 10px 20px;
   width: 250px;
   height: 100px;
   border: none;
   display: inline-block;
+  transition: all .1s ease-in-out;
 }
 
 .buttonTeacher {
