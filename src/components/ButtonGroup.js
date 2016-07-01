@@ -29,10 +29,10 @@ const ButtonGroup = React.createClass({
     return (
       <div className={styles.container}>
         <div className={styles.sectionButton}>
-          <ButtonItem styles={styles.buttonTeacher} handleClick={this.displayExercise}>
+          <ButtonItem color='green' handleClick={this.displayExercise}>
             Kom i gang!
           </ButtonItem>
-          <ButtonItem styles={styles.buttonStudent} handleClick={this.displayInfo}>
+          <ButtonItem color='blue' handleClick={this.displayInfo}>
             Lærer/Veileder
           </ButtonItem>
         </div>
