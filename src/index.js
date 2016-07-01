@@ -6,15 +6,15 @@ import {Router, browserHistory} from 'react-router';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import reducer from './reducer';
-import {setAllCourses, setFilter} from './action_creators';
+import {setContext, setFilter, setLessons} from './action_creators';
 import routes from './routes';
-import {getCourses, getTags} from './util';
 import WithStylesContext from './WithStylesContext';
+import {getTags, getLessons} from './util';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README\.md$)[^\/]*\.md/);
-const allCourses = getCourses(lessonContext, iconContext);
+const lessons = getLessons(lessonContext);
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -28,8 +28,8 @@ if (isProduction) {
 
   store = createStore(reducer, initialState, devTools);
 }
-
-store.dispatch(setAllCourses(allCourses));
+store.dispatch(setContext('iconContext', iconContext));
+store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext)));
 
 render(

@@ -59,7 +59,7 @@ styles:
   glyphicons: false
 
   # Core CSS
-  scaffolding: false
+  scaffolding: true
   type: false
   code: false
   grid: true

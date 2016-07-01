@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react';
-import {capitalize} from '../util';
 import styles from './CourseItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
@@ -8,18 +7,14 @@ const CourseItem = React.createClass({
     router: React.PropTypes.object
   },
   onClick(path) {
-    const basePath = /^\.(\/[^\/]*)/.exec(path);
-    if (basePath) {
-      this.context.router.push(basePath[1]);
-    }
+    this.context.router.push(path);
   },
   render() {
     const course = this.props.course;
-    const name = capitalize(course.name).replace('_', ' ');
     return (
       <div className={styles.courseItem} onClick={this.onClick.bind(null, course.path)}>
         <img src={course.iconPath} className={styles.courseLogo}/>
-        <p>{name}</p>
+        <p>{course.name}</p>
         <p>Oppgaver: {course.lessons.length}</p>
       </div>
     );

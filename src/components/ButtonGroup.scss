@@ -1,16 +1,16 @@
 // Fonts
 
-@import 'fonts';
+@import '../assets/css/fonts';
 
 .fontButton {
-  font-family: $default-font;
+  font-family: $font-default;
   font-weight: 300;
   font-size: 15pt;
   color: white;
 }
 
 .fontInfo {
-  font-family: $default-font;
+  font-family: $font-default;
   font-weight: 300;
   font-size: 12pt;
   color: black;

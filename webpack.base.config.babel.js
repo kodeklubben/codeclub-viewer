@@ -11,6 +11,7 @@
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////
 /* global  __dirname */
+/* global __dirname process */
 
 
 //////////////////////

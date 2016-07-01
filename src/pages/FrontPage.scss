@@ -1,4 +1,4 @@
-@import '../components/fonts';
+@import '../assets/css/fonts';
 
 .content{
   margin-top: 75px;
@@ -21,7 +21,7 @@
 }
 
 .fontTitle {
-  font-family: $default-font;
+  font-family: $font-default;
   font-weight: 400;
   font-size: 30pt;
   color: black;

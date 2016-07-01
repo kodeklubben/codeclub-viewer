@@ -3,11 +3,14 @@ import CourseItem from './CourseItem';
 
 const CourseList = React.createClass({
   sortCourses(a, b) {
-    return b.lessons.length - a.lessons.length;
+    const courses = this.props.courses;
+    return courses[b].lessons.length - courses[a].lessons.length;
   },
   render() {
-    const sortedCourses = this.props.courses.sort(this.sortCourses);
-    const courses = sortedCourses.map((course, idx) => {
+    const courses = this.props.courses;
+    const courseNames = Object.keys(courses).sort(this.sortCourses);
+    const courseNodes = courseNames.map((courseName, idx) => {
+      const course = courses[courseName];
       if (course.lessons.length === 0) return null;
       return (
         <CourseItem key={idx} course={course}/>
@@ -17,21 +20,14 @@ const CourseList = React.createClass({
     return (
       <div>
         <h3>Kurs</h3>
-        {courses}
+        {courseNodes}
       </div>
     );
   }
 });
 
 CourseList.propTypes = {
-  courses: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      path: PropTypes.string,
-      iconPath: PropTypes.string,
-      lessons: PropTypes.array
-    })
-  )
+  courses: PropTypes.object
 };
 
 export default CourseList;

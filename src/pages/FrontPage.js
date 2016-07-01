@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-
-import CourseList from '../components/CourseList';
-import LessonFilter from '../components/filter/LessonFilter';
+import CourseList from '../components/CourseList/CourseList';
+import LessonFilter from '../components/Filter/LessonFilter';
 import styles from './FrontPage.scss';
 import * as actionCreators from '../action_creators';
 import {getFilteredCourses} from '../selectors/course';
@@ -29,7 +28,7 @@ export const FrontPage = React.createClass({
 });
 
 FrontPage.propTypes = {
-  courses: PropTypes.array,
+  courses: PropTypes.object,
   filter: PropTypes.object,
   onFilterCheck: PropTypes.func
 };
