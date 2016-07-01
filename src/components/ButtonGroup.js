@@ -15,10 +15,6 @@ const ButtonGroup = React.createClass({
     };
   },
 
-  displayInfo() {
-    this.setState({show: !this.state.show});
-  },
-
   displayExercise() {
     // TODO (fredaas)
     // This function gets called when the user clicks the 'Get Started' button.
@@ -29,10 +25,10 @@ const ButtonGroup = React.createClass({
     return (
       <div className={styles.container}>
         <div className={styles.sectionButton}>
-          <ButtonItem color='green' handleClick={this.displayExercise}>
+          <ButtonItem color='green' onClick={() => this.displayExercise}>
             Kom i gang!
           </ButtonItem>
-          <ButtonItem color='blue' handleClick={this.displayInfo}>
+          <ButtonItem color='blue' onClick={() => this.setState({show: !this.state.show})}>
             Lærer/Veileder
           </ButtonItem>
         </div>

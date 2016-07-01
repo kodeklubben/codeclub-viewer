@@ -6,21 +6,8 @@ import styles from './ButtonItem.scss';
 const ButtonItem = React.createClass({
 
   render() {
-    var buttonStyle;
-
-    switch(this.props.color) {
-      case 'green':
-        buttonStyle = styles.green;
-        break;
-      case 'blue':
-        buttonStyle = styles.blue;
-        break;
-      default:
-        buttonStyle = styles.green;
-    }
-
     return (
-      <button className={buttonStyle} onClick={this.props.handleClick}>
+      <button className={styles[this.props.color]} onClick={this.props.onClick}>
         {this.props.children}
       </button>
     );
