@@ -29,8 +29,12 @@ const ButtonGroup = React.createClass({
     return (
       <div className={styles.container}>
         <div className={styles.sectionButton}>
-          <ButtonItem styles={styles.buttonTeacher} handleClick={this.displayExercise} text={"Kom i gang!"} />
-          <ButtonItem styles={styles.buttonStudent} handleClick={this.displayInfo} text={"Lærer/Veileder"} />
+          <ButtonItem styles={styles.buttonTeacher} handleClick={this.displayExercise}>
+            Kom i gang!
+          </ButtonItem>
+          <ButtonItem styles={styles.buttonStudent} handleClick={this.displayInfo}>
+            Lærer/Veileder
+          </ButtonItem>
         </div>
         <Collapse in={this.state.show}>
           <div>
