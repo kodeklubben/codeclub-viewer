@@ -5,6 +5,8 @@ import TeacherInfo from './TeacherInfo';
 import { Collapse } from 'react-bootstrap';
 import styles from './ButtonGroup.scss';
 
+import ButtonItem from './ButtonItem';
+
 const ButtonGroup = React.createClass({
 
   getInitialState() {
@@ -13,7 +15,11 @@ const ButtonGroup = React.createClass({
     };
   },
 
-  navigate() {
+  displayInfo() {
+    this.setState({show: !this.state.show});
+  },
+
+  displayExercise() {
     // TODO (fredaas)
     // This function gets called when the user clicks the 'Get Started' button.
     // When the button is clicked the user should be taken to a 'Hello World' Scratch exercise.
@@ -23,14 +29,8 @@ const ButtonGroup = React.createClass({
     return (
       <div className={styles.container}>
         <div className={styles.sectionButton}>
-          <button className={styles.buttonStudent} onClick={() => this.navigate}>
-            Kom i gang!
-          </button>
-          <button
-            className={styles.buttonTeacher}
-            onClick={() => this.setState({ show: !this.state.show })}>
-              Lærer/Veileder
-          </button>
+          <ButtonItem styles={styles.buttonTeacher} handleClick={this.displayExercise} text={"Kom i gang!"} />
+          <ButtonItem styles={styles.buttonStudent} handleClick={this.displayInfo} text={"Lærer/Veileder"} />
         </div>
         <Collapse in={this.state.show}>
           <div>
