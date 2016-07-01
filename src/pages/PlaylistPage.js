@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import NavLink from '../components/NavLink';
+import NavLink from '../components/Navigation/NavLink';
 
 
 const PlaylistPage = React.createClass({
