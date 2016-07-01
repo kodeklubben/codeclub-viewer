@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import FilterItem from './FilterItem';
 import {capitalize} from '../../util';
+import styles from './Filter.scss';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 const FilterGroup = React.createClass({
   render(){
@@ -12,8 +14,8 @@ const FilterGroup = React.createClass({
       );
     });
     return (
-      <div>
-        <p>{groupName}</p>
+      <div className={styles.filterGroup}>
+        <h4>{groupName}</h4>
         {filterItems}
       </div>
     );
@@ -26,4 +28,4 @@ FilterGroup.propTypes = {
   onCheck: PropTypes.func
 };
 
-export default FilterGroup;
+export default withStyles(styles)(FilterGroup);

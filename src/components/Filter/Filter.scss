@@ -1,0 +1,23 @@
+@import '../../assets/css/colors';
+
+$color-green-dark: #265732;
+$color-gray-light: #dadada;
+
+.filterHeading {
+  background-color: $color-green-light !important;
+  color: $color-green-dark !important;
+}
+
+@media (max-width: 768px) {
+  .filterHeading:hover {
+    cursor: pointer;
+  }
+}
+
+.filterGroup {
+  border-bottom: 1px solid $color-gray-light;
+}
+
+.noPaddingTop {
+  padding-top: 0 !important;
+}

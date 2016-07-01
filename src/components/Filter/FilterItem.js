@@ -6,11 +6,14 @@ const FilterItem = React.createClass({
   render(){
     const tagItem = capitalize(this.props.tagItem);
     return (
-      <div>
-        <input type="checkbox"
-               checked={this.props.checked}
-               onChange={this.props.onCheck}
-        />{tagItem}
+      <div className="checkbox">
+        <label>
+          <input type="checkbox"
+                 checked={this.props.checked}
+                 onChange={this.props.onCheck}
+          />
+          {tagItem}
+        </label>
       </div>
     );
   }
