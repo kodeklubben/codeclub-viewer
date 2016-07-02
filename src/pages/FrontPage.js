@@ -6,13 +6,27 @@ import * as actionCreators from '../action_creators';
 import {getFilteredCourses} from '../selectors/course';
 
 export const FrontPage = React.createClass({
+  getInitialState() {
+    return {showMobileFilter: false};
+  },
   render() {
     return (
       <div className='container-fluid'>
         <div className="row">
-          <div className='col-xs-12 col-sm-4 col-md-3 col-lg-2'>
+          
+          {/*Filter desktop*/}
+          <div className='hidden-xs col-sm-4 col-md-3 col-lg-2'>
             <LessonFilter {...this.props}/>
           </div>
+          
+          {/*Filter mobile*/}
+          <div className='visible-xs col-xs-12'>
+            <button onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>Vi/skjul filter</button>
+            <div style={this.state.showMobileFilter ? null : {display: 'none'}}>
+              <LessonFilter {...this.props}/>
+            </div>
+          </div>
+          
           <div className='col-xs-12 col-sm-8 col-md-9 col-lg-10'>
             <CourseList courses={this.props.courses}/>
           </div>
