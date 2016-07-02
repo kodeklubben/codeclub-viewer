@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import FilterGroup from './FilterGroup';
 import styles from './LessonFilter.scss';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 const LessonFilter = React.createClass({
   render(){
@@ -33,4 +34,4 @@ LessonFilter.propTypes = {
   onFilterCheck: PropTypes.func
 };
 
-export default LessonFilter;
+export default withStyles(styles)(LessonFilter);
