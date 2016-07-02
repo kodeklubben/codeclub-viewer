@@ -5,7 +5,6 @@ import LessonFilter from '../components/Filter/LessonFilter';
 import styles from './FrontPage.scss';
 import * as actionCreators from '../action_creators';
 import {getFilteredCourses} from '../selectors/course';
-import ButtonGroup from '../components/ButtonGroup';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {Collapse} from 'react-bootstrap';
 import ButtonItem from '../components/ButtonItem';
@@ -68,7 +67,7 @@ export const FrontPage = React.createClass({
                     text text text text text text text text text text text
                     text text text text text text text text text text text
                     <br /><br />
-                    <a className={styles.link} href={hrefAssistant}>Lær mer</a>
+                    <a className={styles.link} href={hrefTeacher}>Lær mer</a>
                   </div>
                 </div>
               </div>
