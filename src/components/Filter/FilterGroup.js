@@ -1,8 +1,6 @@
 import React, {PropTypes} from 'react';
 import FilterItem from './FilterItem';
 import {capitalize} from '../../util';
-import styles from './Filter.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 const FilterGroup = React.createClass({
   render(){
@@ -28,4 +26,4 @@ FilterGroup.propTypes = {
   onCheck: PropTypes.func
 };
 
-export default withStyles(styles)(FilterGroup);
+export default FilterGroup;

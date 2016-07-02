@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import FilterGroup from './FilterGroup';
-import styles from './Filter.scss';
+import styles from './LessonFilter.scss';
 
 const LessonFilter = React.createClass({
   render(){
