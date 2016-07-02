@@ -7,7 +7,7 @@ const ButtonItem = React.createClass({
 
   render() {
     return (
-      <button className={styles[this.props.color]} onClick={this.props.onClick}>
+      <button className={styles[this.props.color || 'green']} onClick={this.props.onClick}>
         {this.props.children}
       </button>
     );
