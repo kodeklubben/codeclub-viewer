@@ -14,7 +14,7 @@ const FilterGroup = React.createClass({
       );
     });
     return (
-      <div className={styles.filterGroup}>
+      <div>
         <h4>{groupName}</h4>
         {filterItems}
       </div>

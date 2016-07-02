@@ -8,10 +8,10 @@ $color-gray-light: #dadada;
   color: $color-green-dark !important;
 }
 
-.filterGroup {
+.bottomBorder:not(:last-child) {
   border-bottom: 1px solid $color-gray-light;
 }
 
 .noPaddingTop {
-  padding-top: 0 !important;
+  padding-top: 0;
 }

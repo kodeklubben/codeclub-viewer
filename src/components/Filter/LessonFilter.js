@@ -8,7 +8,7 @@ const LessonFilter = React.createClass({
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
       const tagItems = filter[groupName];
       return (
-        <div key={idx}>
+        <div key={idx} className={styles.bottomBorder}>
           <FilterGroup groupName={groupName} tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
         </div>
       );
