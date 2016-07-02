@@ -1,35 +1,43 @@
 @import '../assets/css/fonts';
 
-.content{
+.content {
   margin-top: 75px;
 }
 
-.column{
+.column {
   display: inline-block;
   vertical-align: top;
 }
 
-.leftColumn{
+.leftColumn {
   composes: column;
   width: 25%;
 }
 
-.rightColumn{
+.rightColumn {
   composes: column;
   width: 70%;
   margin-left: 5%;
 }
 
 .fontTitle {
-  font-family: $font-default;
-  font-weight: 400;
-  font-size: 30pt;
-  color: black;
+  font-family: $font-code;
+  font-size: 50pt;
+  font-weight: 300;
 }
 
 .title {
   composes: fontTitle;
   padding: 20px;
   margin: 0 auto;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .t1 {
+    color: #000000;
+  }
+  .t2 {
+    color: #71bf44;
+  }
 }
