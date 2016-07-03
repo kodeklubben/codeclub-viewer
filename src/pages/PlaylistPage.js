@@ -7,7 +7,13 @@ import PlaylistNavigation from '../components/Playlist/PlaylistNavigation';
 import {getFilteredCourses} from '../selectors/course';
 import * as actionCreators from '../action_creators';
 import {capitalize} from '../util';
-
+import {
+  Button,
+  Col,
+  Collapse,
+  Grid,
+  Row
+} from 'react-bootstrap';
 
 export const PlaylistPage = React.createClass({
   getInitialState() {
@@ -52,79 +58,81 @@ export const PlaylistPage = React.createClass({
     const showLevelNavigationMobile = (course.lessons || []).length > 10 && levels.length > 1;
     const showLevelNavigationDesktop = (course.lessons || []).length > 15 && levels.length > 1;
     return (
-      <div className='container-fluid'>
+      <Grid fluid={true}>
 
         {/*Header*/}
-        <div className='row'>
-          <div className='col-xs-12 col-sm-9 col-md-10 col-lg-9 col-sm-offset-3 col-md-offset-2 col-lg-offset-3'>
+        <Row>
+          <Col xs={12} sm={9} md={10} lg={9} smOffset={3} mdOffset={2} lgOffset={3}>
             <h1>{capitalize(this.props.params.course)} Oppgaver &nbsp;
-              <button>Start her!</button>
+              <Button bsSize="large">Start her!</Button>
             </h1>
-          </div>
-        </div>
+          </Col>
+        </Row>
 
         {/*Mobile buttons to show/hide components*/}
-        <div className='row visible-xs'>
-          <div className='col-xs-12'>
-            <button onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>Vis/skjul filter
-            </button>
+        <Row>
+          <Col xs={12} smHidden mdHidden lgHidden>
+            <Button onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>Vis/skjul filter
+            </Button>
 
-            <button onClick={() => this.setState({showMobilePlaylists: !this.state.showMobilePlaylists})}>Vis/skjul
+            <Button onClick={() => this.setState({showMobilePlaylists: !this.state.showMobilePlaylists})}>Vis/skjul
               oppgavesamlinger
-            </button>
+            </Button>
 
             {showLevelNavigationMobile ?
-              <button onClick={() => this.setState({showMobileLevelNavigation: !this.state.showMobileLevelNavigation})}>
+              <Button onClick={() => this.setState({showMobileLevelNavigation: !this.state.showMobileLevelNavigation})}>
                 Oppgavenavigasjon
-              </button> : null}
-          </div>
-        </div>
+              </Button> : null}
+          </Col>
+        </Row>
 
         {/*Filter*/}
-        <div className='row'>
-          <div className='col-xs-12 col-sm-3 col-md-2 col-lg-2'>
-            {/*Filter desktop*/}
-            <div className='hidden-xs'>
-              <LessonFilter {...this.props}/>
-            </div>
-            
-            {/*Filter mobile*/}
-            <div className='visible-xs'>
-              <div style={this.state.showMobileFilter ? null : {display: 'none'}}>
+        <Row>
+          {/*Filter desktop*/}
+          <Col sm={3} md={2} xsHidden>
+            <LessonFilter {...this.props}/>
+          </Col>
+
+          {/*Filter mobile*/}
+          <Col xs={12} smHidden mdHidden lgHidden>
+            <Collapse in={this.state.showMobileFilter}>
+              <div>
                 <LessonFilter {...this.props}/>
               </div>
-            </div>
-          </div>
+            </Collapse>
+          </Col>
 
-          <div className='visible-xs col-xs-12'>
+          <Col xs={12} smHidden mdHidden lgHidden>
             {/*Level navigation mobile*/}
-            <div style={this.state.showMobileLevelNavigation ? null : {display: 'none'}}>
-              {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
-            </div>
-            
+            <Collapse in={this.state.showMobileLevelNavigation}>
+              <div>
+                {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
+              </div>
+            </Collapse>
+
             {/*Playlists mobile*/}
-            <div className='clearfix' style={this.state.showMobilePlaylists ? null : {display: 'none'}}>
-              <PlaylistNavigation playlists={course.playlists}/>
-            </div>
-          </div>
+            <Collapse in={this.state.showMobilePlaylists}>
+              <div>
+                <PlaylistNavigation playlists={course.playlists}/>
+              </div>
+            </Collapse>
+          </Col>
 
           {/*List of lessons grouped by level*/}
-          <div className='col-xs-12 col-sm-6 col-md-6 col-lg-5 col-lg-offset-1'>
+          <Col xs={12} sm={6} lg={5} lgOffset={1}>
             {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
-          </div>
+          </Col>
 
-          <div className='hidden-xs col-sm-3 col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1'>
+          <Col sm={3} mdOffset={1} lgOffset={1}>
             {/*Desktop level navigation*/}
             {(course.lessons || []).length > 15 && levels.length > 1 ? <LevelNavigation levels={levels}/> : null}
-            
-            {/*Desktop playlists*/}
-            <div className='clearfix'>
-              <PlaylistNavigation playlists={course.playlists}/>
-            </div>
-          </div>
 
-        </div>
-      </div>
+            {/*Desktop playlists*/}
+            <PlaylistNavigation playlists={course.playlists}/>
+          </Col>
+
+        </Row>
+      </Grid>
     );
   }
 });
