@@ -25,8 +25,10 @@ export const getFilteredCourses = createSelector(
         path: courseName,
         playlists: Object.keys(playlists).reduce((coursePlaylists, playlistName) => {
           const playlist = playlists[playlistName];
-          // Get playlists that have lessons by course name
-          if(playlist.length > 0 && playlist[0].course.toLowerCase() === name.toLowerCase()) coursePlaylists[playlistName] = playlist;
+          // Get playlists that have at least one lesson by course name
+          if(playlist.length > 0 && playlist[0].course.toLowerCase() === name.toLowerCase()) {
+            coursePlaylists[playlistName] = playlist;
+          }
           return coursePlaylists;
         }, {})
       };

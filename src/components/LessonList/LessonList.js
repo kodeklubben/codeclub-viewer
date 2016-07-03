@@ -17,7 +17,9 @@ const LessonList = React.createClass({
       <div id={this.props.id}>
         <h3>{level + '. ' + getLevelName(level)}</h3>
         <ul className='list-group'>
-          {Object.keys(lessons).map((lessonId, idx) => <LessonItem key={idx} lesson={lessons[lessonId]} constraints={this.generateMockConstraints(idx)}/>)}
+          {Object.keys(lessons).map((lessonId, idx) =>
+            <LessonItem key={idx} lesson={lessons[lessonId]} constraints={this.generateMockConstraints(idx)}/>
+          )}
         </ul>
       </div>
     );
