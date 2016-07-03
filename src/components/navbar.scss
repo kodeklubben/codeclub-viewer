@@ -1,14 +1,9 @@
 $color-header: #96ed8a;
-$color-input-border: #70aa66;
-
-.container {
-  display: flex;
-  flex-direction: column;
-}
+$color-search-border: #70aa66;
 
 .header {
   display: flex;
-  padding: 5px;
+  padding: 10px;
   height: 60px;
   background-color: $color-header;
   justify-content: space-between;
@@ -17,30 +12,42 @@ $color-input-border: #70aa66;
     align-self: center;
   }
   .rhs {
-    display: flex;
+    align-self: center;
 
     input[type=text] {
-      border: 1px solid $color-input-border;
-      outline: none;
       height: 30px;
+      border: 1px solid $color-search-border;
       border-radius: 10px;
-      align-self: center;
+      outline: none;
     }
     input[type=text]:focus {
-      border: 2px solid $color-input-border;
+      border: 2px solid $color-search-border;
     }
   }
+}
+
+::-webkit-input-placeholder {
+  padding-left: 5px;
+}
+::-webkit-input-placeholder {
+  padding-left: 5px;
+}
+::-moz-placeholder {
+  padding-left: 5px;
+}
+:-ms-input-placeholder {
+  padding-left: 5px;
 }
 
 .languageGroup {
-  align-self: flex-end;
+  display: flex;
+  justify-content: flex-end;
   padding: 5px;
 
   .languageItem {
+    align-self: center;
     padding: 0 0 0 5px;
+    width: 30px;
+    height: 20px;
   }
-}
-
-div {
-  border: 1px solid red;
 }

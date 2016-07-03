@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 
 import NavLink from './NavLink';
+import SVGLoader from './SVGLoader';
 import styles from './NavBar.scss';
 
 const NavBar = React.createClass({
@@ -18,22 +19,35 @@ const NavBar = React.createClass({
       <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
 
     return (
-      <div className={styles.container}>
-        <div className={styles.languageGroup}>
-          <a className={styles.languageItem} href="#clicked">link</a>
-          <a className={styles.languageItem} href="#clicked">link</a>
-          <a className={styles.languageItem} href="#clicked">link</a>
-        </div>
-        <div className={styles.header}>
-          <div className={styles.lhs}>
-            <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
-            {courseLink ? <span> / {courseLink}</span> : null}
-            {lessonLink ? <span> / {lessonLink}</span> : null}
+      <div>
+
+        <div className='row'>
+          <div className={styles.languageGroup}>
+            <a className={styles.languageItem} href="#clicked">
+              <SVGLoader />
+            </a>
+            <a className={styles.languageItem} href="#clicked">
+              <SVGLoader />
+            </a>
+            <a className={styles.languageItem} href="#clicked">
+              <SVGLoader />
+            </a>
           </div>
-          <div className={styles.rhs}>
-            <input type='text' placeholder='Søk' />
+        </div>
+
+        <div className='row'>
+          <div className={styles.header}>
+            <div className={styles.lhs}>
+              <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
+              {courseLink ? <span> / {courseLink}</span> : null}
+              {lessonLink ? <span> / {lessonLink}</span> : null}
+            </div>
+            <div className={styles.rhs}>
+              <input type='text' placeholder='Søk' />
+            </div>
           </div>
         </div>
+
       </div>
     );
   }
