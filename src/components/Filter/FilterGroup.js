@@ -13,7 +13,7 @@ const FilterGroup = React.createClass({
     });
     return (
       <div>
-        <p>{groupName}</p>
+        <h4>{groupName}</h4>
         {filterItems}
       </div>
     );

@@ -64,7 +64,7 @@ styles:
   code: false
   grid: true
   tables: false
-  forms: false
+  forms: true
   buttons: false
 
   # Components
@@ -85,7 +85,7 @@ styles:
   progress-bars: false
   media: false
   list-group: false
-  panels: false
+  panels: true
   wells: false
   responsive-embed: false
   close: false
