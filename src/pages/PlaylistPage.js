@@ -62,7 +62,7 @@ export const PlaylistPage = React.createClass({
 
         {/*Header*/}
         <Row>
-          <Col xs={12} sm={9} md={10} lg={9} smOffset={3} mdOffset={2} lgOffset={3}>
+          <Col xs={12} sm={9} smOffset={3}>
             <h1>{capitalize(this.props.params.course)} Oppgaver &nbsp;
               <Button bsSize="large">Start her!</Button>
             </h1>
@@ -86,10 +86,9 @@ export const PlaylistPage = React.createClass({
           </Col>
         </Row>
 
-        {/*Filter*/}
         <Row>
           {/*Filter desktop*/}
-          <Col sm={3} md={2} xsHidden>
+          <Col sm={3} lg={2} xsHidden>
             <LessonFilter {...this.props}/>
           </Col>
 
@@ -123,7 +122,7 @@ export const PlaylistPage = React.createClass({
             {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
           </Col>
 
-          <Col sm={3} mdOffset={1} lgOffset={1}>
+          <Col sm={3} lgOffset={1}>
             {/*Desktop level navigation*/}
             {(course.lessons || []).length > 15 && levels.length > 1 ? <LevelNavigation levels={levels}/> : null}
 
