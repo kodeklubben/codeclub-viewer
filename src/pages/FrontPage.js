@@ -21,7 +21,7 @@ export const FrontPage = React.createClass({
           
           {/*Filter mobile*/}
           <div className='visible-xs col-xs-12'>
-            <button onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>Vi/skjul filter</button>
+            <button onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>Vis/skjul filter</button>
             <div style={this.state.showMobileFilter ? null : {display: 'none'}}>
               <LessonFilter {...this.props}/>
             </div>
