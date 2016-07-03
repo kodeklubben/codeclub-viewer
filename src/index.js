@@ -12,7 +12,7 @@ import WithStylesContext from './WithStylesContext';
 import {getTags, getLessons} from './util';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
-const playlistContext = require.context('onlyContent!lessonSrc//', true, /^\.\/[^\/]*\/playlists\/[^\/]*\.txt$/);
+const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^\/]*\/playlists\/[^\/]*\.txt$/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README\.md$)[^\/]*\.md/);
 const lessons = getLessons(lessonContext);

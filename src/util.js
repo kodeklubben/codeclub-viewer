@@ -66,10 +66,6 @@ export function getLevelName(level) {
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
 
-export function getTextBetweenHTMLTags(text) {
-  return text.slice(text.match(/<[^>]+>/)[0].length, text.lastIndexOf(text.match(/<\/[^>]+>/)[0]));
-}
-
 /**
  * Fix invalid tags
  * @param {Object} tags

@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import {getFilteredLessons} from './lesson';
-import {capitalize, getTextBetweenHTMLTags} from '../util';
+import {capitalize} from '../util';
 
 const getPlaylistContext = (state) => state.context.playlistContext;
 
@@ -17,7 +17,7 @@ export const getPlaylists = createSelector(
       const playlistName = capitalize(path.slice(path.lastIndexOf('/') + 1, path.indexOf('.txt'))).replace(/_/g, ' ');
 
       // Create an array of paths to lessons in playlist
-      const playlistContent = getTextBetweenHTMLTags(playlistContext(path).content);
+      const playlistContent = playlistContext(path);
       const lessonPaths = playlistContent.split('\n').map(path => './' + courseName.toLowerCase() + '/' + path);
 
       // Create an array of references to lessons
