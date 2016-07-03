@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 const LessonFilter = React.createClass({
   render(){
-    const filter = this.props.filter;
+    const filter = this.props.filter || {};
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
       const tagItems = filter[groupName];
       return (
