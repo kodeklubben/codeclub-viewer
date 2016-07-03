@@ -60,6 +60,8 @@ The `-s` is to remove npm-errors and just show errors from the test.
 ## State Tree
 ![State Tree](/State Tree.png)
 
+## Prototyping
+A prototype framework for codeclub-viewer can be found at https://github.com/NorwegianKiwi/codeclub-viewer-prototype.
 
 ## TODO
 We are now generating staticsite.static.[hash].js and all the images one more time during generation
