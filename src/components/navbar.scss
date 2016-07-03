@@ -1,22 +1,46 @@
+$color-header: #96ed8a;
+$color-input-border: #70aa66;
+
 .container {
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  background-color: #b1eeaa;
-  height: 60px;
-  padding: 5px;
   display: flex;
-  .path {
+  padding: 5px;
+  height: 60px;
+  background-color: $color-header;
+  justify-content: space-between;
+
+  .lhs {
     align-self: center;
+  }
+  .rhs {
+    display: flex;
+
+    input[type=text] {
+      border: 1px solid $color-input-border;
+      outline: none;
+      height: 30px;
+      border-radius: 10px;
+      align-self: center;
+    }
+    input[type=text]:focus {
+      border: 2px solid $color-input-border;
+    }
   }
 }
 
 .languageGroup {
   align-self: flex-end;
   padding: 5px;
-  .flag {
+
+  .languageItem {
     padding: 0 0 0 5px;
   }
+}
+
+div {
+  border: 1px solid red;
 }

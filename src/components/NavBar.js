@@ -20,15 +20,18 @@ const NavBar = React.createClass({
     return (
       <div className={styles.container}>
         <div className={styles.languageGroup}>
-          <a className={styles.flag} href="#clicked">link</a>
-          <a className={styles.flag} href="#clicked">link</a>
-          <a className={styles.flag} href="#clicked">link</a>
+          <a className={styles.languageItem} href="#clicked">link</a>
+          <a className={styles.languageItem} href="#clicked">link</a>
+          <a className={styles.languageItem} href="#clicked">link</a>
         </div>
         <div className={styles.header}>
-          <div className={styles.path}>
+          <div className={styles.lhs}>
             <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
             {courseLink ? <span> / {courseLink}</span> : null}
             {lessonLink ? <span> / {lessonLink}</span> : null}
+          </div>
+          <div className={styles.rhs}>
+            <input type='text' placeholder='Søk' />
           </div>
         </div>
       </div>
