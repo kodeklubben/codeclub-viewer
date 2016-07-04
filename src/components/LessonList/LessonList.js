@@ -12,7 +12,6 @@ const LessonList = React.createClass({
   },
   render() {
     const lessons = this.props.lessons;
-    console.log(lessons);
     const level = this.props.level;
     return (
       <div id={this.props.id}>

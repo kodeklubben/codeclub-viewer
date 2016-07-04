@@ -1,9 +1,11 @@
 import React, {PropTypes} from 'react';
-import {Col, Collapse, Row} from 'react-bootstrap';
 import LessonFilter from '../Filter/LessonFilter';
 import LevelNavigation from '../LessonList/LevelNavigation';
 import PlaylistNavigation from '../Playlist/PlaylistNavigation';
 import MobileButtonsRow from './MobileButtonsRow';
+import Col from 'react-bootstrap/lib/Col';
+import Collapse from 'react-bootstrap/lib/Collapse';
+import Row from 'react-bootstrap/lib/Row';
 
 const MobileComponents = React.createClass({
   getInitialState() {

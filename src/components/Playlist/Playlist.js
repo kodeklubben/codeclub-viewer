@@ -2,7 +2,8 @@ import React, {PropTypes} from 'react';
 import LessonItem from '../LessonList/LessonItem';
 import styles from './Playlist.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {Badge, Glyphicon} from 'react-bootstrap';
+import Badge from 'react-bootstrap/lib/Badge';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const Playlist = React.createClass({
   getInitialState() {

@@ -8,7 +8,9 @@ import {getFilteredCourses} from '../selectors/course';
 import * as actionCreators from '../action_creators';
 import HeadRow from '../components/PlaylistPage/HeadRow';
 import MobileComponents from '../components/PlaylistPage/MobileComponents';
-import {Col, Grid, Row} from 'react-bootstrap';
+import Col from 'react-bootstrap/lib/Col';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
 
 export const PlaylistPage = React.createClass({
 

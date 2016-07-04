@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Button, Col, Row} from 'react-bootstrap';
+import Button from 'react-bootstrap/lib/Button';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 const MobileButtonsRow = React.createClass({
   render() {
