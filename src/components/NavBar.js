@@ -3,12 +3,14 @@ import React, {PropTypes} from 'react';
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
 
+import ToggleButton from './ToggleButton';
+
 const NavBar = React.createClass({
 
   getInitialState() {
     return {
-      teacher: false
-    }
+      student: true
+    };
   },
 
   render() {
@@ -16,24 +18,24 @@ const NavBar = React.createClass({
     const courseLink = params.course ? <NavLink to={`/${params.course}`}>{params.course}</NavLink> : null;
     const lessonLink = params.course && params.lesson && params.file ?
       <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
-
     const lang = {
       nor: {
-        s0: { fill: '#ef2b2d' },
-        s1: { fill: '#ffffff' },
-        s2: { fill: '#002868' }
+        s0: {fill: '#ef2b2d'},
+        s1: {fill: '#ffffff'},
+        s2: {fill: '#002868'}
       },
       swe: {
-        s0: { fill: '#006aa7'},
-        s1: { fill: '#fecc00' }
+        s0: {fill: '#006aa7'},
+        s1: {fill: '#fecc00'}
       },
       den: {
-        s0: { fill: '#c60c30' },
-        s1: { fill: '#ffffff' }
+        s0: {fill: '#c60c30'},
+        s1: {fill: '#ffffff'}
       }
     };
 
     return (
+
       <div>
         <div className='row'>
           <div className={styles.languageGroup}>
@@ -71,6 +73,7 @@ const NavBar = React.createClass({
             </div>
             <div className={styles.rhs}>
               <input type='text' placeholder='Søk' />
+              {<ToggleButton from='ELEV' to='LÆRER' onClick={() => this.setState({ student: !this.state.student })} />}
             </div>
           </div>
         </div>
