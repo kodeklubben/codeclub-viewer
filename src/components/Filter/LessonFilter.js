@@ -3,7 +3,7 @@ import FilterGroup from './FilterGroup';
 
 const LessonFilter = React.createClass({
   render(){
-    const filter = this.props.filter;
+    const filter = this.props.filter || {};
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
       const tagItems = filter[groupName];
       return (
