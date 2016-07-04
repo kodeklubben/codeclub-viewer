@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import FilterGroup from './FilterGroup';
+import {Button} from 'react-bootstrap';
 
 const LessonFilter = React.createClass({
   render(){
@@ -17,6 +18,8 @@ const LessonFilter = React.createClass({
         </div>
         <div className='panel-body'>
           {filterGroups}
+          <br/>
+          <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
         </div>
       </div>
     );
