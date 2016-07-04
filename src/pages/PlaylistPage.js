@@ -82,6 +82,9 @@ export const PlaylistPage = React.createClass({
 });
 
 PlaylistPage.propTypes = {
+  courses: PropTypes.object,
+  filter: PropTypes.object,
+  onFilterCheck: PropTypes.func,
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   })

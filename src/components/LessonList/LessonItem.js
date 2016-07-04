@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import NavLink from '../Navigation/NavLink';
 import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -34,5 +34,10 @@ const LessonItem = React.createClass({
     );
   }
 });
+
+LessonItem.propTypes = {
+  constraints: PropTypes.array,
+  lesson: PropTypes.object
+};
 
 export default withStyles(styles)(LessonItem);
