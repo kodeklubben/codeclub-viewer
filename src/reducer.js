@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
+import context from './reducers/context';
 import filter from './reducers/filter';
-import allCourses from './reducers/course';
+import lessons from './reducers/lesson';
 
 export default combineReducers({
-  allCourses,
+  lessons,
+  context,
   filter
 });

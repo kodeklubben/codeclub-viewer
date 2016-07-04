@@ -1,1 +1,0 @@
-<a href="http://react-bootstrap.github.io/components.html#pagination" target="_blank">Pagination documentation</a>

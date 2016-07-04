@@ -4,7 +4,6 @@ import deepFreeze from 'deep-freeze';
 import {
   capitalize,
   cleanseTags,
-  filterLessons,
   fixNonArrayTagList,
   lessonHasAllTags
 } from '../src/util';
@@ -28,64 +27,6 @@ describe('util', () => {
 
   });
   
-  describe('filterLessons', () => {
-    it('finds lessons that have tags matching the filter', () => {
-      const filter = {
-        platform: {'windows': true, 'linux': false},
-        category: {'create game': true}
-      };
-      const lessons = [
-        {
-          name: 'lesson 1',
-          tags: {
-            platform: ['windows', 'mac'],
-            category: ['create game'],
-            subject: ['reading']
-          }
-        },
-        {
-          name: 'lesson 2',
-          tags: {
-            platform: ['mac'],
-            category: ['create game'],
-            subject: ['reading']
-          }
-        },
-        {
-          name: 'lesson 3',
-          tags: {}
-        },
-        {
-          name: 'lesson 4',
-          tags: {
-            platform: ['windows'],
-            category: ['create game']
-          }
-        }
-      ];
-
-      deepFreeze(lessons);
-      deepFreeze(filter);
-      expect(filterLessons(lessons, filter)).to.eql([
-        {
-          name: 'lesson 1',
-          tags: {
-            platform: ['windows', 'mac'],
-            category: ['create game'],
-            subject: ['reading']
-          }
-        },
-        {
-          name: 'lesson 4',
-          tags: {
-            platform: ['windows'],
-            category: ['create game']
-          }
-        }
-      ]);
-    });
-  });
-
   ///////////////////////////////////
   //////// HELPER FUNCTIONS /////////
   ///////////////////////////////////
