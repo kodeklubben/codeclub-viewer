@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './ToggleButton.scss';
@@ -20,7 +20,9 @@ const ToggleButton = React.createClass({
 
   render() {
     return (
-      <button className={this.state.toggle ? styles.from : styles.to} onClick={this.onClick}>{this.state.toggle ? this.state.from : this.state.to}</button>
+      <button className={this.state.toggle ? styles.from : styles.to} onClick={this.onClick}>
+        {this.state.toggle ? this.state.from : this.state.to}
+      </button>
     );
   }
 

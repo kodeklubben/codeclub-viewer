@@ -1,15 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
 const NavLink = React.createClass({
 
   render() {
-    const check =  {
-      color: 'white',
+    const styles =  {
+      color: '#4f7548',
       textDecoration: 'none'
     };
 
-    return <Link {...this.props} style={check} activeClassName="active"/>;
+    return <Link {...this.props} style={styles} activeClassName="active"/>;
   }
 });
 

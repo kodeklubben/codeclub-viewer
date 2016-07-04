@@ -7,13 +7,13 @@ $color-search-border: #70aa66;
   font-family: $font-type-default;
   font-weight: 300;
   font-size: 15pt;
-  color: white;
+  color: $color-search-border;
 }
 
 .header {
   composes: fontHeader;
   display: flex;
-  padding: 10px;
+  padding: 20px;
   height: 60px;
   background-color: $color-header;
   justify-content: space-between;
@@ -31,7 +31,7 @@ $color-search-border: #70aa66;
       padding-left: 10px;
       height: inherit;
       border: 1px solid $color-search-border;
-      border-radius: 10px;
+      border-radius: 5px;
       outline: none;
       color: black;
     }
@@ -48,12 +48,12 @@ $color-search-border: #70aa66;
 
   .languageItem {
     align-self: center;
-    padding: 0 0 0 5px;
+    margin: 0 0 0 5px;
     width: 30px;
     height: 20px;
+    transition: all .075s ease-in-out;
   }
-}
-
-div {
-  border: 1px solid red;
+  .languageItem:hover {
+    transform: scale(1.2);
+  }
 }
