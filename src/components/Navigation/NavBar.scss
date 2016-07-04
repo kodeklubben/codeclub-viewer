@@ -1,7 +1,17 @@
+@import '../../assets/css/fonts';
+
 $color-header: #96ed8a;
 $color-search-border: #70aa66;
 
+.fontHeader {
+  font-family: $font-type-default;
+  font-weight: 300;
+  font-size: 15pt;
+  color: white;
+}
+
 .header {
+  composes: fontHeader;
   display: flex;
   padding: 10px;
   height: 60px;
@@ -12,14 +22,18 @@ $color-search-border: #70aa66;
     align-self: center;
   }
   .rhs {
+    display: flex;
     align-self: center;
+    height: 30px;
 
     input[type=text] {
-      height: 30px;
+      align-self: center;
       padding-left: 10px;
+      height: inherit;
       border: 1px solid $color-search-border;
       border-radius: 10px;
       outline: none;
+      color: black;
     }
     input[type=text]:focus {
       border: 2px solid $color-search-border;
@@ -38,4 +52,8 @@ $color-search-border: #70aa66;
     width: 30px;
     height: 20px;
   }
+}
+
+div {
+  border: 1px solid red;
 }

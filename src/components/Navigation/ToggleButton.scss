@@ -1,22 +1,33 @@
-$color-student: #46cc46;
-$color-teacher: #46cccc;
-$color-search-border: #70aa66;
+$color-from: #46cc46;
+$color-to: #46cccc;
+$color-border: #70aa66;
+
+.fontButton {
+  font-size: 10pt;
+}
 
 .button {
-  padding: 10px;
+  composes: fontButton;
+  align-self: center;
   margin: 0 0 0 30px;
-  width: 100px;
+  width: 60px;
+  height: inherit;
+  border-radius: 5px;
   color: white;
+}
+
+.button:focus {
+  outline: 0;
 }
 
 .from {
   composes: button;
-  background-color: $color-student;
-  border: 1px solid $color-search-border;
+  background-color: $color-from;
+  border: 1px solid $color-border;
 }
 
 .to {
   composes: button;
-  background-color: $color-teacher;
-  border: 1px solid $color-search-border;
+  background-color: $color-to;
+  border: 1px solid $color-border;
 }

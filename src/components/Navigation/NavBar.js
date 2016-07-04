@@ -36,7 +36,6 @@ const NavBar = React.createClass({
     };
 
     return (
-
       <Grid fluid={true}>
         <Row>
           <div className={styles.languageGroup}>
