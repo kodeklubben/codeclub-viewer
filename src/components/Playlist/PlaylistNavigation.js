@@ -3,7 +3,7 @@ import Playlist from './Playlist';
 
 const PlaylistNavigation = React.createClass({
   render() {
-    const playlists = this.props.playlists || [];
+    const playlists = this.props.playlists || {};
     const playlistListItems = Object.keys(playlists).map((playlistName, idx) => (
       playlists[playlistName].length ?
         <Playlist key={idx} name={playlistName} lessons={playlists[playlistName]}/> : null
@@ -20,7 +20,7 @@ const PlaylistNavigation = React.createClass({
 });
 
 PlaylistNavigation.propTypes = {
-  playLists: PropTypes.array
+  playLists: PropTypes.object
 };
 
 export default PlaylistNavigation;

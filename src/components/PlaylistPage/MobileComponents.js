@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Col, Collapse, Row} from 'react-bootstrap';
 import LessonFilter from '../Filter/LessonFilter';
 import LevelNavigation from '../LessonList/LevelNavigation';
@@ -49,5 +49,15 @@ const MobileComponents = React.createClass({
     );
   }
 });
+
+MobileComponents.propTypes = {
+  showFilter: PropTypes.bool,
+  showLevelNavigation: PropTypes.bool,
+  showPlaylists: PropTypes.bool,
+  levels: PropTypes.array,
+  playlists: PropTypes.object,
+  filter: PropTypes.object,
+  onFilterCheck: PropTypes.func
+};
 
 export default MobileComponents;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {capitalize} from '../../util';
 import {Button, Col, Row} from 'react-bootstrap';
 
@@ -15,5 +15,9 @@ const HeadRow = React.createClass({
     );
   }
 });
+
+HeadRow.propTypes = {
+  courseName: PropTypes.string
+};
 
 export default HeadRow;

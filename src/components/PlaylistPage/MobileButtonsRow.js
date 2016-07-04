@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 
 const MobileButtonsRow = React.createClass({
@@ -6,11 +6,12 @@ const MobileButtonsRow = React.createClass({
     return (
       <Row>
         <Col xs={12} smHidden mdHidden lgHidden>
-          <Button onClick={() => this.props.toggle('Filter')}>Vis/skjul filter
+          <Button onClick={() => this.props.toggle('Filter')}>
+            Vis/skjul filter
           </Button>
 
-          <Button onClick={() => this.props.toggle('Playlists')}>Vis/skjul
-            oppgavesamlinger
+          <Button onClick={() => this.props.toggle('Playlists')}>
+            Vis/skjul oppgavesamlinger
           </Button>
 
           {this.props.showLevelNavigation ?
@@ -22,5 +23,10 @@ const MobileButtonsRow = React.createClass({
     );
   }
 });
+
+MobileButtonsRow.propTypes = {
+  toggle: PropTypes.func,
+  showLevelNavigation: PropTypes.bool
+};
 
 export default MobileButtonsRow;
