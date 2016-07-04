@@ -1,1 +1,0 @@
-<a href="http://react-bootstrap.github.io/components.html#images" target="_blank">Image documentation</a>

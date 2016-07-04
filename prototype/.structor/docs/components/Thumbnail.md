@@ -1,1 +1,0 @@
-<a href="http://react-bootstrap.github.io/components.html#thumbnail" target="_blank">Thumbnail documentation</a>
