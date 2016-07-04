@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import FilterGroup from './FilterGroup';
-import {Button} from 'react-bootstrap';
+import Button from 'react-bootstrap/lib/Button';
 
 const LessonFilter = React.createClass({
   render(){
@@ -28,7 +28,8 @@ const LessonFilter = React.createClass({
 
 LessonFilter.propTypes = {
   filter: PropTypes.object,
-  onFilterCheck: PropTypes.func
+  onFilterCheck: PropTypes.func,
+  resetFilter: PropTypes.func
 };
 
 export default LessonFilter;
