@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './ToggleButton.scss';
 
@@ -25,4 +26,4 @@ const ToggleButton = React.createClass({
 
 });
 
-export default ToggleButton;
+export default withStyles(styles)(ToggleButton);

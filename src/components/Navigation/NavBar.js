@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
-
 import ToggleButton from './ToggleButton';
+import {Grid, Row} from 'react-bootstrap';
 
 const NavBar = React.createClass({
 
@@ -36,8 +37,8 @@ const NavBar = React.createClass({
 
     return (
 
-      <div>
-        <div className='row'>
+      <Grid fluid={true}>
+        <Row>
           <div className={styles.languageGroup}>
             <a className={styles.languageItem} href="#clicked">
               <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 500 350">
@@ -63,8 +64,8 @@ const NavBar = React.createClass({
               </svg>
             </a>
           </div>
-        </div>
-        <div className='row'>
+        </Row>
+        <Row>
           <div className={styles.header}>
             <div className={styles.lhs}>
               <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
@@ -76,8 +77,8 @@ const NavBar = React.createClass({
               {<ToggleButton from='ELEV' to='LÆRER' onClick={() => this.setState({ student: !this.state.student })} />}
             </div>
           </div>
-        </div>
-      </div>
+        </Row>
+      </Grid>
     );
   }
 
@@ -91,4 +92,4 @@ NavBar.propTypes = {
   })
 };
 
-export default NavBar;
+export default withStyles(styles)(NavBar);
