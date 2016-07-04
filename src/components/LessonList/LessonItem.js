@@ -19,11 +19,14 @@ const LessonItem = React.createClass({
             
             { // Temporary constraint mocks are used until they are implemented
               constraints.indexOf('internet-explorer') === -1 ? null :
-              <i className='fa fa-internet-explorer' style={{float: 'right', color: 'gray', fontSize: '1.2em', paddingRight: '5px'}}/>}
+              <i className='fa fa-internet-explorer' 
+                 style={{float: 'right', color: 'gray', fontSize: '1.2em', paddingRight: '5px'}}/>}
             {constraints.indexOf('tablet') === -1 ? null :
-            <i className='fa fa-tablet' style={{float: 'right', color: 'gray', fontSize: '1.2em', paddingRight: '5px'}}/>}
+            <i className='fa fa-tablet' 
+               style={{float: 'right', color: 'gray', fontSize: '1.2em', paddingRight: '5px'}}/>}
             {constraints.indexOf('money') === -1 ? null :
-            <i className='fa fa-money' style={{float: 'right', color: 'green', fontSize: '1.2em', paddingRight: '5px'}}/>}
+            <i className='fa fa-money' 
+               style={{float: 'right', color: 'green', fontSize: '1.2em', paddingRight: '5px'}}/>}
             
           </div>
         </NavLink> : null}

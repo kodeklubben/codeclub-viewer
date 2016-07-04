@@ -53,7 +53,8 @@ export const PlaylistPage = React.createClass({
         <HeadRow courseName={this.props.params.course}/>
         
         {/*Components only visible on mobile that can be toggled hidden/visible*/}
-        <MobileComponents {...this.props} playlists={course.playlists} levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
+        <MobileComponents {...this.props} 
+          playlists={course.playlists} levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
 
         <Row>
           {/*Filter desktop*/}

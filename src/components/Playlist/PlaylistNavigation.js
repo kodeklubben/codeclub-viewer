@@ -12,7 +12,8 @@ const PlaylistNavigation = React.createClass({
       <div>
         <h3>Oppgavesamlinger</h3>
         <ul className='list-group'>
-          {playlistListItems.length ? playlistListItems : <li className='list-group-item list-group-item-warning'>Ingen samlinger</li>}
+          {playlistListItems.length ? 
+            playlistListItems : <li className='list-group-item list-group-item-warning'>Ingen samlinger</li>}
         </ul>
       </div>
     );
