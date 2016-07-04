@@ -64,6 +64,48 @@ describe('filter reducer', () => {
     });
   });
 
+  describe('RESET_FILTER', () => {
+    it('should set all tags in filter to false', () => {
+      const initialState = {
+        platform: {
+          'windows': true,
+          'mac': false
+        },
+        category: {'create game': true},
+        subject: {'reading': true}
+      };
+      const action = {
+        type: 'RESET_FILTER'
+      };
+
+      deepFreeze(initialState);
+      deepFreeze(action);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql({
+        platform: {
+          'windows': false,
+          'mac': false
+        },
+        category: {'create game': false},
+        subject: {'reading': false}
+      });
+    });
+
+    it('should return empty object if filter has no tags', () => {
+      const initialState = {};
+      const action = {
+        type: 'RESET_FILTER'
+      };
+
+      deepFreeze(initialState);
+      deepFreeze(action);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.eql({});
+    });
+  });
+
   describe('FILTER_CHECKED', () => {
 
     it('changes state (checked/unchecked) of tagItem in filter', () => {
