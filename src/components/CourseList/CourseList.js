@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import CourseItem from './CourseItem';
-import {Col, Row} from 'react-bootstrap';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 
 const CourseList = React.createClass({
