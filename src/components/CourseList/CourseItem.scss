@@ -1,8 +1,32 @@
+@import '../../assets/css/colors';
+
 .courseItem {
-  display: inline-block;
+  display: flex;
+  align-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  max-width: 150px;
+  margin: 20px;
+  &:hover {
+    cursor: pointer;
+    font-size: 1.1em;
+    .courseLogo {
+      width: 130px;
+      margin: 15px;
+    }
+  }
 }
 
 .courseLogo {
-  width: 80px;
+  width: 125px;
   margin: 20px;
+}
+
+.courseName {
+  font-size: 1.3em;
+}
+
+.lessonCount {
+  font-size: 0.9em;
+  color: $color-gray;
 }

@@ -24,7 +24,9 @@ if (isProduction) {
   store = createStore(reducer, initialState);
 } else {
   //Only use the DevTools extension when in development
-  const devTools = typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f;
+  const devTools = typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ?
+    window.devToolsExtension() :
+    f => f;
 
   store = createStore(reducer, initialState, devTools);
 }

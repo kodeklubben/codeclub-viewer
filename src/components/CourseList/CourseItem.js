@@ -13,9 +13,9 @@ const CourseItem = React.createClass({
     const course = this.props.course;
     return (
       <div className={styles.courseItem} onClick={this.onClick.bind(null, course.path)}>
-        <img src={course.iconPath} className={styles.courseLogo}/>
-        <p>{course.name}</p>
-        <p>Oppgaver: {course.lessons.length}</p>
+        <img className={styles.courseLogo} src={course.iconPath}/>
+        <span className={styles.courseName}>{course.name}</span>
+        <span className={styles.lessonCount}>Oppgaver: {course.lessons.length}</span>
       </div>
     );
   }

@@ -56,7 +56,7 @@ styles:
   # Reset and dependencies
   normalize: true
   print: false
-  glyphicons: false
+  glyphicons: true
 
   # Core CSS
   scaffolding: true
@@ -64,8 +64,8 @@ styles:
   code: false
   grid: true
   tables: false
-  forms: false
-  buttons: false
+  forms: true
+  buttons: true
 
   # Components
   component-animations: true
@@ -85,7 +85,7 @@ styles:
   progress-bars: false
   media: false
   list-group: false
-  panels: false
+  panels: true
   wells: false
   responsive-embed: false
   close: false

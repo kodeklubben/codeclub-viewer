@@ -7,13 +7,14 @@ const FilterGroup = React.createClass({
     const groupName = capitalize(this.props.groupName);
     const filterTags = this.props.tagItems;
     const filterItems = Object.keys(filterTags).map((tagItem, idx) => {
+      const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
       return (
-        <FilterItem key={idx} tagItem={tagItem} checked={filterTags[tagItem]} onCheck={ () => this.props.onFilterCheck(groupName, tagItem)}/>
+        <FilterItem key={idx} tagItem={tagItem} checked={filterTags[tagItem]} onCheck={onCheck}/>
       );
     });
     return (
       <div>
-        <p>{groupName}</p>
+        <h4>{groupName}</h4>
         {filterItems}
       </div>
     );

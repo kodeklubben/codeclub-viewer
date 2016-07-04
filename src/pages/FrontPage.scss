@@ -50,8 +50,8 @@
 
 .fontInfoBox {
   font-family: $font-default;
-  font-size: 15pt;
-  font-weight: 400;
+  font-size: 12pt;
+  font-weight: 300;
 }
 
 .infoBox {
@@ -59,7 +59,7 @@
   padding: 5px;
   margin: 0 auto;
   max-width: 700px;
-  background-color: #f7f7f7;
+  background-color: #f7f7f7 !important;
   border: 1px solid #b2b2b2;
   border-radius: 10px;
 }
