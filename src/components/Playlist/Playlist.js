@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import LessonItem from '../LessonList/LessonItem';
 import styles from './Playlist.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {Badge, Glyphicon} from 'react-bootstrap';
 
 const Playlist = React.createClass({
   getInitialState() {
@@ -18,8 +19,8 @@ const Playlist = React.createClass({
     return (
       <div>
         <li className={styles.playlist + ' list-group-item'} onClick={this.expand}>
-          <i className={this.state.expanded ? 'fa fa-chevron-down' : 'fa fa-chevron-right'}/>
-          &nbsp;<span>{name}</span><span className='badge'>{lessons.length}</span>
+          <Glyphicon glyph={this.state.expanded ? 'chevron-down' : 'chevron-right'}/>
+          &nbsp;<Badge>{lessons.length}</Badge>{name}
         </li>
         <ul className={'list-group'} style={this.state.expanded ? null : {display:'none'}}>
           {lessons.map((lesson, idx) => <LessonItem key={idx} lesson={lesson}/>)}
