@@ -1,0 +1,42 @@
+[
+  {
+    "type": "Well",
+    "props": {},
+    "children": [
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "Text in Well"
+      }
+    ]
+  },
+  {
+    "type": "Well",
+    "props": {
+      "bsSize": "large"
+    },
+    "children": [
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "Text in Well"
+      }
+    ]
+  },
+  {
+    "type": "Well",
+    "props": {
+      "bsSize": "small"
+    },
+    "children": [
+      {
+        "type": "span",
+        "props": {},
+        "children": [],
+        "text": "Text in Well"
+      }
+    ]
+  }
+]

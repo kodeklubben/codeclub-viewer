@@ -1,0 +1,47 @@
+[
+  {
+    "variantName": "default",
+    "type": "BreadcrumbItem",
+    "props": {
+      "href": "#"
+    },
+    "children": [
+      {
+        "variantName": "Unsaved variant",
+        "type": "span",
+        "text": "Home"
+      }
+    ]
+  },
+  {
+    "variantName": "active",
+    "type": "BreadcrumbItem",
+    "props": {
+      "href": "#",
+      "active": true,
+      "target": "_blank"
+    },
+    "children": [
+      {
+        "variantName": "Unsaved variant",
+        "type": "span"
+        "text": "Home"
+      }
+    ]
+  },
+  {
+    "variantName": "target _blank",
+    "type": "BreadcrumbItem",
+    "props": {
+      "href": "#",
+      "target": "_blank"
+    },
+    "children": [
+      {
+        "variantName": "Unsaved variant",
+        "type": "span",
+        "text": "Home"
+      }
+    ]
+  }
+]

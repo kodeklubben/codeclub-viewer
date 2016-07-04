@@ -51,25 +51,25 @@ extractStyles: false
 styles:
 
   # Mixins
-  mixins: true
+  mixins: false
 
   # Reset and dependencies
   normalize: true
   print: false
-  glyphicons: true
+  glyphicons: false
 
   # Core CSS
-  scaffolding: true
+  scaffolding: false
   type: false
   code: false
-  grid: true
+  grid: false
   tables: false
-  forms: true
-  buttons: true
+  forms: false
+  buttons: false
 
   # Components
-  component-animations: true
-  dropdowns: true
+  component-animations: false
+  dropdowns: false
   button-groups: false
   input-groups: false
   navs: false
@@ -85,7 +85,7 @@ styles:
   progress-bars: false
   media: false
   list-group: false
-  panels: true
+  panels: false
   wells: false
   responsive-embed: false
   close: false
@@ -98,7 +98,7 @@ styles:
 
   # Utility classes
   utilities: false
-  responsive-utilities: true
+  responsive-utilities: false
 
 ### Bootstrap scripts, set to false to avoid jQuery
 scripts:

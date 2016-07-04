@@ -1,0 +1,348 @@
+[
+  {
+    "type": "Input",
+    "props": {
+      "type": "text",
+      "hasFeedback": true,
+      "placeholder": "Enter value",
+      "label": "Label for input",
+      "help": "Help for input"
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "text",
+      "hasFeedback": true,
+      "bsStyle": "success",
+      "placeholder": "Enter value",
+      "label": "Label for input",
+      "help": "Help for input"
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "select",
+      "hasFeedback": true,
+      "placeholder": "Enter value",
+      "label": "Label for input",
+      "help": "Help for input"
+    },
+    "children": [
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #1"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #2"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #3"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #4"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #5"
+      }
+    ]
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "select",
+      "hasFeedback": true,
+      "placeholder": "Enter value",
+      "label": "Label for input",
+      "help": "Help for input",
+      "multiple": true
+    },
+    "children": [
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #1"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #2"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #3"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #4"
+      },
+      {
+        "type": "option",
+        "props": {},
+        "children": [],
+        "text": "option #5"
+      }
+    ]
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "textarea",
+      "hasFeedback": true,
+      "placeholder": "Enter value",
+      "label": "Label for input",
+      "help": "Help for input"
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "radio",
+      "hasFeedback": true,
+      "placeholder": "Enter value",
+      "label": "Label for input",
+      "help": "Help for input"
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "checkbox",
+      "placeholder": "Enter value",
+      "label": "Label for input",
+      "help": "Help for input"
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "text",
+      "placeholder": "Enter value",
+      "addonBefore": "$",
+      "addonAfter": ".00"
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "text",
+      "placeholder": "Enter value",
+      "addonBefore": "$",
+      "buttonAfter": {
+        "type": "Button",
+        "props": {
+          "bsStyle": "default"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Default",
+            "props": {}
+          }
+        ]
+      }
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "text",
+      "placeholder": "Enter value",
+      "addonAfter": "$",
+      "buttonBefore": {
+        "type": "Button",
+        "props": {
+          "bsStyle": "default"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Default",
+            "props": {}
+          }
+        ]
+      }
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "text",
+      "placeholder": "Enter value",
+      "addonBefore": "$",
+      "buttonAfter": {
+        "type": "DropdownButton",
+        "props": {
+          "title": "Dropdown",
+          "pullRight": true
+        },
+        "children": [
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "1"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "2"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "divider": true
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "3"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "children": []
+  },
+  {
+    "type": "Input",
+    "props": {
+      "type": "text",
+      "placeholder": "Enter value",
+      "buttonBefore": {
+        "type": "Button",
+        "props": {
+          "bsStyle": "default"
+        },
+        "children": [
+          {
+            "type": "span",
+            "text": "Default",
+            "props": {}
+          }
+        ]
+      },
+      "buttonAfter": {
+        "type": "DropdownButton",
+        "props": {
+          "title": "Dropdown",
+          "pullRight": true
+        },
+        "children": [
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "1"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "2"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "divider": true
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          },
+          {
+            "type": "MenuItem",
+            "props": {
+              "eventKey": "3"
+            },
+            "children": [
+              {
+                "type": "span",
+                "text": "Dropdown link",
+                "props": {}
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "children": []
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "type": "ProgressBar",
+    "props": {
+      "now": 60,
+      "label": "%(percent)s%",
+      "style": {
+        "minWidth": "15em"
+      }
+    }
+  },
+  {
+    "type": "ProgressBar",
+    "props": {
+      "now": 60,
+      "style": {
+        "minWidth": "15em"
+      }
+    }
+  },
+  {
+    "type": "ProgressBar",
+    "props": {
+      "now": 60,
+      "label": "%(percent)s%",
+      "bsStyle": "success",
+      "style": {
+        "minWidth": "15em"
+      }
+    }
+  },
+  {
+    "type": "ProgressBar",
+    "props": {
+      "now": 60,
+      "label": "%(percent)s%",
+      "bsStyle": "info",
+      "style": {
+        "minWidth": "15em"
+      }
+    }
+  },
+  {
+    "type": "ProgressBar",
+    "props": {
+      "now": 60,
+      "label": "%(percent)s%",
+      "bsStyle": "warning",
+      "style": {
+        "minWidth": "15em"
+      }
+    }
+  },
+  {
+    "type": "ProgressBar",
+    "props": {
+      "now": 60,
+      "label": "%(percent)s%",
+      "bsStyle": "danger",
+      "style": {
+        "minWidth": "15em"
+      }
+    }
+  },
+  {
+    "type": "ProgressBar",
+    "props": {
+      "now": 60,
+      "label": "%(percent)s%",
+      "bsStyle": "success",
+      "active": true,
+      "style": {
+        "minWidth": "15em"
+      }
+    }
+  }
+]
