@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import CourseItem from './CourseItem';
-import styles from './CourseList.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {Col, Row} from 'react-bootstrap';
 
 
 const CourseList = React.createClass({
@@ -12,14 +11,15 @@ const CourseList = React.createClass({
   render() {
     const courses = this.props.courses;
     const courseNames = Object.keys(courses).sort(this.sortCourses);
-    const courseNodes = courseNames.map((courseName, idx) => (
-      courses[courseName].length === 0 ? null : <CourseItem key={idx} course={courses[courseName]}/>
-    ));
 
     return (
-      <div className={styles.courseList}>
-        {courseNodes}
-      </div>
+      <Row>
+        {courseNames.map((courseName, idx) => (
+          <Col key={idx} xs={6} sm={4} md={3} lg={2}>
+            <CourseItem course={courses[courseName]}/>
+          </Col>
+        ))}
+      </Row>
     );
   }
 });
@@ -28,4 +28,4 @@ CourseList.propTypes = {
   courses: PropTypes.object
 };
 
-export default withStyles(styles)(CourseList);
+export default CourseList;
