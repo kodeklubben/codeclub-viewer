@@ -1,13 +1,11 @@
 @import '../../assets/css/fonts';
-
-$color-header: #96ed8a;
-$color-search-border: #70aa66;
+@import '../../assets/css/colors';
 
 .fontHeader {
   font-family: $font-type-default;
   font-weight: 300;
   font-size: 15pt;
-  color: $color-search-border;
+  color: $color-green-dark;
 }
 
 .header {
@@ -15,7 +13,7 @@ $color-search-border: #70aa66;
   display: flex;
   padding: 20px 15px 20px 15px;
   height: 60px;
-  background-color: $color-header;
+  background-color: $color-green-light;
   justify-content: space-between;
 
   .left {
@@ -31,13 +29,13 @@ $color-search-border: #70aa66;
       padding-left: 10px;
       width: 175px;
       height: inherit;
-      border: 1px solid $color-search-border;
+      border: 1px solid $color-green-median;
       border-radius: 5px;
       outline: none;
       color: black;
     }
     input[type=text]:focus {
-      border: 2px solid $color-search-border;
+      border: 2px solid $color-green-median;
     }
   }
 }
