@@ -1,0 +1,14 @@
+//TODO: Replace Font Awesome with custom icons?
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
+
+a:hover {
+  text-decoration: none;
+}
+.lessonItem {
+  font-size: 1.3em;
+
+  &:hover {
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
