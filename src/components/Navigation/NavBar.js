@@ -29,12 +29,12 @@ const NavBar = React.createClass({
         </Row>
         <Row>
           <div className={styles.header}>
-            <div className={styles.lhs}>
+            <div className={styles.left}>
               <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
               {courseLink ? <span> / {courseLink}</span> : null}
               {lessonLink ? <span> / {lessonLink}</span> : null}
             </div>
-            <div className={styles.rhs}>
+            <div className={styles.right}>
               <input type='text' placeholder='Søk' />
               {<ToggleButton from='ELEV' to='LÆRER' onClick={() => this.setState({ student: !this.state.student })} />}
             </div>

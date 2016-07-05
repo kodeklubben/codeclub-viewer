@@ -13,15 +13,15 @@ $color-search-border: #70aa66;
 .header {
   composes: fontHeader;
   display: flex;
-  padding: 20px;
+  padding: 20px 15px 20px 15px;
   height: 60px;
   background-color: $color-header;
   justify-content: space-between;
 
-  .lhs {
+  .left {
     align-self: center;
   }
-  .rhs {
+  .right {
     display: flex;
     align-self: center;
     height: 30px;
@@ -29,6 +29,7 @@ $color-search-border: #70aa66;
     input[type=text] {
       align-self: center;
       padding-left: 10px;
+      width: 175px;
       height: inherit;
       border: 1px solid $color-search-border;
       border-radius: 5px;
@@ -38,5 +39,15 @@ $color-search-border: #70aa66;
     input[type=text]:focus {
       border: 2px solid $color-search-border;
     }
+  }
+}
+
+@media (max-width: 450px) {
+  .left {
+    display: none;
+  }
+  .right {
+    width: 100%;
+    justify-content: space-between;
   }
 }
