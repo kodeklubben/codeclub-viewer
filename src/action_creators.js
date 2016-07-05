@@ -16,6 +16,12 @@ export function setFilter(filter) {
   };
 }
 
+export function resetFilter() {
+  return {
+    type: 'RESET_FILTER'
+  };
+}
+
 export function setContext(contextName, context) {
   return {
     type: 'SET_CONTEXT',
