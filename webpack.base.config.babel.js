@@ -18,7 +18,7 @@
 // IMPORT / REQUIRE //
 //////////////////////
 import path from 'path';
-import ForceCaseSensitivityPlugin from 'force-case-sensitivity-webpack-plugin';
+import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 
 import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
@@ -135,7 +135,7 @@ const baseConfig = {
     ]
   },
   plugins: [
-    new ForceCaseSensitivityPlugin()
+    new CaseSensitivePathsPlugin()
   ]
 };
 
