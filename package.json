@@ -60,7 +60,7 @@
     "bootstrap-loader": "1.0.10",
     "bootstrap-sass": "3.3.6",
     "bundle-loader": "0.5.4",
-    "case-sensitive-paths-webpack-plugin": "git@github.com:NorwegianKiwi/case-sensitive-paths-webpack-plugin.git",
+    "case-sensitive-paths-webpack-plugin": "NorwegianKiwi/case-sensitive-paths-webpack-plugin",
     "chai": "3.5.0",
     "clean-webpack-plugin": "0.1.9",
     "combine-loader": "0.1.0",
