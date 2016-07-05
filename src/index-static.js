@@ -11,7 +11,7 @@ export default (locals, callback) => {
   const location = history.createLocation(locals.path);
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
-    const css = [];
+    let css = [];
     const appHtml = ReactDOMServer.renderToString(
       <Provider store={store}>
         <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
@@ -19,6 +19,7 @@ export default (locals, callback) => {
         </WithStylesContext>
       </Provider>
     );
+    css = [...new Set(css)]; // make array unique
     const template = require('raw!./../dist/index-html-template.ejs');
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
     const html = template
