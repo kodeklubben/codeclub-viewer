@@ -1,25 +1,26 @@
 @import '../../assets/css/colors';
 
 .courseItem {
+  margin: 25px auto;
   display: flex;
   align-content: flex-start;
   flex-direction: column;
   align-items: center;
   max-width: 150px;
-  margin: 20px;
   &:hover {
+    font-weight: bold;
     cursor: pointer;
-    font-size: 1.1em;
     .courseLogo {
-      width: 130px;
-      margin: 15px;
+      padding: 0;
     }
   }
 }
 
 .courseLogo {
-  width: 125px;
-  margin: 20px;
+  max-width: 100%;
+  padding: 5px;
+  height: 120px;
+  margin-bottom: 15px;
 }
 
 .courseName {
