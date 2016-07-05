@@ -1,14 +1,20 @@
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
-import {Button, Grid, Row, Col, Collapse, Glyphicon} from 'react-bootstrap';
-
 import * as actionCreators from '../action_creators';
 import {getFilteredCourses} from '../selectors/course';
+
 import CourseList from '../components/CourseList/CourseList';
 import LessonFilter from '../components/Filter/LessonFilter';
 import ButtonItem from '../components/ButtonItem';
 import styles from './FrontPage.scss';
+
+import Button from 'react-bootstrap/lib/Button';
+import Col from 'react-bootstrap/lib/Col';
+import Collapse from 'react-bootstrap/lib/Collapse';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
 
 export const  FrontPage = React.createClass({
 
