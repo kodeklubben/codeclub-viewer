@@ -9,6 +9,8 @@ cd codeclub-viewer
 npm install
 npm start
 ```
+Then open http://localhost:8080
+
 ## Redux DevTools
 Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 
