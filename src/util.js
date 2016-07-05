@@ -26,24 +26,40 @@ export function getTags(lessonContext) {
 export function getLessons(lessonContext) {
   const paths = lessonContext.keys();
 
-  return paths.reduce((res, path, idx) => {
+  return paths.reduce((res, path) => {
     // Course name is between './' and second '/'
     const course = path.slice(2, path.indexOf('/', 2)).toLowerCase();
     const lessonFrontMatter = lessonContext(path).frontmatter;
     const tags = cleanseTags(lessonFrontMatter.tags, false);
-    
-    res[idx] = {
-      title: lessonFrontMatter.title,
-      author: lessonFrontMatter.author,
+
+    res[path] = {
+      title: lessonFrontMatter.title || '',
+      author: lessonFrontMatter.author || '',
       level: lessonFrontMatter.level,
+      indexed: lessonFrontMatter.indexed || true,
+      external: lessonFrontMatter.external || '',
       course,
       tags,
       // Everything between './' and '.md'
-      path: path.slice(2, path.length-3)
+      path: path.slice(2, path.length - 3)
     };
 
     return res;
   }, {});
+}
+
+export function getLevelName(level) {
+  switch (level) {
+    case '1':
+      return 'Introduksjon';
+    case '2':
+      return 'Nybegynner';
+    case '3':
+      return 'Erfaren';
+    case '4':
+      return 'Ekspert';
+  }
+  return level;
 }
 
 ///////////////////////////////////

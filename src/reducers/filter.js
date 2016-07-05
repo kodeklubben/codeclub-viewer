@@ -21,10 +21,22 @@ function handleCheckFilter(state, groupName, tagName){
 
 }
 
+// Set all tags to false
+function resetFilter(state) {
+  const filterGroups = Object.keys(state);
+  return filterGroups.reduce((res, filterGroup) => {
+    const tags = state[filterGroup];
+    res[filterGroup] = Object.keys(tags).reduce((tagsRes, tag) => ({...tagsRes, [tag]: false}), {});
+    return res;
+  },{});
+}
+
 export default function(state={}, action) {
   switch(action.type) {
     case 'SET_FILTER':
       return action.payload.filter;
+    case 'RESET_FILTER':
+      return resetFilter(state);
     case 'FILTER_CHECKED':
       return handleCheckFilter(state, action.payload.groupName, action.payload.tagName);
   }
