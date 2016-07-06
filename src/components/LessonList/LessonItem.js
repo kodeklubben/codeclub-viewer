@@ -7,9 +7,6 @@ const LessonItem = React.createClass({
   render() {
     const lesson = this.props.lesson;
 
-    // Check if indexed is set to false
-    if(lesson.hasOwnProperty('indexed') && lesson.indexed != null && !lesson.indexed) return null;
-
     const constraints = this.props.constraints || [];
     return (
       <li className='list-group-item'>
