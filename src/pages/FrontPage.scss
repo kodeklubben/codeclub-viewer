@@ -1,25 +1,5 @@
 @import '../assets/css/fonts';
 
-.content {
-  margin-top: 75px;
-}
-
-.column {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.leftColumn {
-  composes: column;
-  width: 25%;
-}
-
-.rightColumn {
-  composes: column;
-  width: 70%;
-  margin-left: 5%;
-}
-
 .center {
   text-align: center;
 }
