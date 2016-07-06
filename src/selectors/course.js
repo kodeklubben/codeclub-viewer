@@ -20,6 +20,7 @@ export const getFilteredCourses = createSelector(
         // Or create a new course
       else res[courseName] = {
         iconPath: iconContext('./' + courseName + '/logo-black.png'),
+        externalLink: '',
         lessons: [lesson],
         name,
         path: courseName,
@@ -35,6 +36,29 @@ export const getFilteredCourses = createSelector(
 
       return res;
     }, {});
-    
+
+  }
+);
+
+const getCourseContext = (state) => state.context.courseContext;
+
+export const getExternalCourses = createSelector(
+  [getCourseContext, getIconContext],
+  (courseContext, iconContext) => {
+    return courseContext.keys().reduce((res, path) => {
+      const coursePath = path.slice(0, path.indexOf('/', 2));
+      const fm = courseContext(path).frontmatter;
+      if(fm.external != null){
+        const course = {
+          externalLink: fm.external,
+          iconPath: iconContext(coursePath + '/logo-black.png'),
+          lessons: [],
+          name: fm.title,
+          path: ''
+        };
+        return {...res, [fm.title]: course};
+      }
+      return res;
+    },{});
   }
 );

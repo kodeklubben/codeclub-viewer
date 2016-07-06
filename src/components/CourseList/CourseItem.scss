@@ -1,6 +1,7 @@
 @import '../../assets/css/colors';
 
 .courseItem {
+  color: $color-gray-dark;
   margin: 25px auto;
   display: flex;
   align-content: flex-start;
@@ -8,6 +9,8 @@
   align-items: center;
   max-width: 150px;
   &:hover {
+    color: inherit;
+    text-decoration: none;
     font-weight: bold;
     cursor: pointer;
     .courseLogo {

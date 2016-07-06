@@ -6,6 +6,7 @@ import {setContext, setFilter, setLessons} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
+const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
 const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^\/]*\/playlists\/[^\/]*\.txt$/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README\.md$)[^\/]*\.md/);
@@ -27,6 +28,7 @@ if (isProduction) {
 }
 store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
+store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext)));
 
