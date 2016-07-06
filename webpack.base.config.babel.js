@@ -23,7 +23,7 @@ import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
-
+import highlight from './src/highlighting.js';
 
 ///////////////
 // CONSTANTS //
@@ -131,7 +131,8 @@ const baseConfig = {
       MarkdownItAttrs,
       MarkdownItHeaderSections,
       MarkdownItImplicitFigures
-    ]
+    ],
+    highlight
   },
   plugins: [
     new CaseSensitivePathsPlugin()

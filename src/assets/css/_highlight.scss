@@ -1,0 +1,45 @@
+@import "../../../node_modules/highlight.js/styles/idea";
+
+// scratch code is colored and stands nice by itself
+pre.blocks, code.b {
+  background-color: inherit;
+  border: 0;
+}
+
+// manual colors for scratch code
+// example: Press `motion`{.blockmotion} ...
+code {
+  &.blockmotion { background-color: #505FD7; }
+  &.blocklooks { background-color: #9B33D9; }
+  &.blocksound { background-color: #D000C2; }
+  &.blockpen { background-color: #00A16F; }
+  &.blockdata { background-color: #FF7500; }
+  &.blockevents { background-color: #D38117; }
+  &.blockcontrol { background-color: #E9AA00; }
+  &.blocksensing { background-color: #00A3E6; }
+  &.blockoperators { background-color: #00C114; }
+  &.blockmoreblocks { background-color: #71009A; }
+
+  &.blockmotion,
+  &.blocklooks,
+  &.blocksound,
+  &.blockpen,
+  &.blockdata,
+  &.blockevents,
+  &.blockcontrol,
+  &.blocksensing,
+  &.blockoperators,
+  &.blockmoreblocks {
+    color: #fff !important;
+  }
+}
+
+// horisontal scroll on screens, do not wrap
+// not keyword negate _whole_ media query,
+// making `(not print) and (min-width: @screen-sm)` impossible
+@media aural, braille, handheld, projection, screen, tty, tv, embossed {
+  pre > code {
+    word-wrap: normal;
+    white-space: pre;
+  }
+}
