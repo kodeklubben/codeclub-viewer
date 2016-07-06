@@ -10,7 +10,7 @@ import store from './store';
 render(
   <Provider store={store}>
     <WithStylesContext onInsertCss={styles => styles._insertCss()}>
-      <Router routes={routes} history={browserHistory}/>
+      <Router routes={routes} onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}/>
     </WithStylesContext>
   </Provider>,
   document.getElementById('app')
