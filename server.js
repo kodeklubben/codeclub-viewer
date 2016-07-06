@@ -1,4 +1,4 @@
-/* global __dirname process */
+/* eslint-env node */
 
 var express = require('express');
 var path = require('path');
