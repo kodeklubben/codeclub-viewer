@@ -1,4 +1,4 @@
-/* global process */
+/* eslint-env node */
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
