@@ -15,7 +15,9 @@ const LessonItem = React.createClass({
       <li className='list-group-item'>
         {lesson.path ? <NavLink to={lesson.path}>
           <div className={styles.lessonItem}>
-            {lesson.title}
+            <span className={this.props.showLevelIcon ?  styles['level-'+lesson.level] : ''}>
+              {lesson.title}
+            </span>
             
             { // Temporary constraint mocks are used until they are implemented
               constraints.indexOf('internet-explorer') === -1 ? null :
