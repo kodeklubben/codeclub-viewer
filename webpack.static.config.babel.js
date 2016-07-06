@@ -6,7 +6,7 @@
  *  and as an alternative to server side rendering (static html files is possible since we don't
  *  have data in a database). After the initial index.html is loaded, the scripts take over and
  *  make it a single page app.
- *  
+ *
  *  Note that (identical copies of) all images are output again, which isn't really necessary.
  *  Also the static-bundle.js isn't used for anything.
  *  If we could find a way of not outputting these files (only the html files) during build,
@@ -19,7 +19,7 @@
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////
 
-/* global __dirname */
+/* eslint-env node */
 
 
 //////////////////////

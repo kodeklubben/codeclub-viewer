@@ -25,7 +25,7 @@
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////
 
-/* global process __dirname */
+/* eslint-env node */
 
 
 //////////////////////
