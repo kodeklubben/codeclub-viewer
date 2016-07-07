@@ -1,14 +1,11 @@
-export default function(state={}, action) {
+export default function(state=true, action) {
   switch(action.type) {
     case 'SET_MODE_STUDENT':
-      state = {...state, mode: true};
-      break;
+      return true;
     case 'SET_MODE_TEACHER':
-      state = {...state, mode: false};
-      break;
+      return false;
     case 'CHANGE_MODE':
-      state = {...state , mode: !state.mode};
-      break;
+      return !state;
   }
 
   return state;
