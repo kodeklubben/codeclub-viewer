@@ -1,11 +1,10 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
 import ToggleButton from './ToggleButton';
 import {Grid, Row} from 'react-bootstrap';
-
 import FlagGroup from './FlagGroup';
 
 const NavBar = React.createClass({

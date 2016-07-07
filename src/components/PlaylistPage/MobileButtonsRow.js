@@ -15,11 +15,6 @@ const MobileButtonsRow = React.createClass({
           <Button onClick={() => this.props.toggle('Playlists')}>
             Vis/skjul oppgavesamlinger
           </Button>
-
-          {this.props.showLevelNavigation ?
-            <Button onClick={() => this.props.toggle('LevelNavigation')}>
-              Oppgavenavigasjon
-            </Button> : null}
         </Col>
       </Row>
     );

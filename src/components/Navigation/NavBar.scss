@@ -2,7 +2,7 @@
 @import '../../assets/css/colors';
 
 .fontHeader {
-  font-family: $font-type-default;
+  font-family: $font-default;
   font-weight: 300;
   font-size: 15pt;
   color: $color-green-dark;
@@ -48,4 +48,18 @@
     width: 100%;
     justify-content: space-between;
   }
+}
+
+.fontNavBar {
+  font-family: $font-default;
+  font-weight: 300;
+  font-size: 30pt;
+  color: black;
+}
+
+.container {
+  background-color: #b1daae;
+  height: 40px;
+  width: 100%;
+  vertical-align: middle;
 }
