@@ -5,7 +5,6 @@ import LessonList from '../components/LessonList/LessonList';
 import LevelNavigation from '../components/LessonList/LevelNavigation';
 import PlaylistNavigation from '../components/Playlist/PlaylistNavigation';
 import {getFilteredCourses} from '../selectors/course';
-import * as actionCreators from '../action_creators';
 import HeadRow from '../components/PlaylistPage/HeadRow';
 import MobileComponents from '../components/PlaylistPage/MobileComponents';
 import Col from 'react-bootstrap/lib/Col';
@@ -61,7 +60,7 @@ export const PlaylistPage = React.createClass({
         <Row>
           {/*Filter desktop*/}
           <Col sm={3} lg={2} xsHidden>
-            <LessonFilter {...this.props}/>
+            <LessonFilter/>
           </Col>
 
           {/*List of lessons grouped by level*/}
@@ -85,8 +84,6 @@ export const PlaylistPage = React.createClass({
 
 PlaylistPage.propTypes = {
   courses: PropTypes.object,
-  filter: PropTypes.object,
-  onFilterCheck: PropTypes.func,
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   })
@@ -94,12 +91,10 @@ PlaylistPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    courses: getFilteredCourses(state),
-    filter: state.filter
+    courses: getFilteredCourses(state)
   };
 }
 
 export const PlaylistPageContainer = connect(
-  mapStateToProps,
-  actionCreators
+  mapStateToProps
 )(PlaylistPage);

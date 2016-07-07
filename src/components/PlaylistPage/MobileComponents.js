@@ -28,7 +28,7 @@ const MobileComponents = React.createClass({
 
             <Collapse in={this.state.showFilter}>
               <div>
-                <LessonFilter {...this.props}/>
+                <LessonFilter/>
               </div>
             </Collapse>
 

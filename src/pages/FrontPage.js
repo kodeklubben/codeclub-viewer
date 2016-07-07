@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
-import * as actionCreators from '../action_creators';
 import {getFilteredCourses} from '../selectors/course';
 
 import CourseList from '../components/CourseList/CourseList';
@@ -90,7 +89,7 @@ export const  FrontPage = React.createClass({
           {/*Filter desktop*/}
           <Col xsHidden sm={4} md={3} lg={2}>
             <br/>
-            <LessonFilter {...this.props}/>
+            <LessonFilter/>
           </Col>
 
           {/*Filter mobile*/}
@@ -104,7 +103,7 @@ export const  FrontPage = React.createClass({
             <br/>
             <Collapse in={this.state.showMobileFilter}>
               <div>
-                <LessonFilter {...this.props}/>
+                <LessonFilter/>
               </div>
             </Collapse>
           </Col>
@@ -120,19 +119,15 @@ export const  FrontPage = React.createClass({
 });
 
 FrontPage.propTypes = {
-  courses: PropTypes.object,
-  filter: PropTypes.object,
-  onFilterCheck: PropTypes.func
+  courses: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    courses: getFilteredCourses(state),
-    filter: state.filter
+    courses: getFilteredCourses(state)
   };
 }
 
 export const FrontPageContainer = connect(
-  mapStateToProps,
-  actionCreators
+  mapStateToProps
 )(withStyles(styles)(FrontPage));

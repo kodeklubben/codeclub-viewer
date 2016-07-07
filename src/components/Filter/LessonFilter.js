@@ -1,8 +1,10 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {onFilterCheck, resetFilter} from '../../action_creators';
 import FilterGroup from './FilterGroup';
 import Button from 'react-bootstrap/lib/Button';
 
-const LessonFilter = React.createClass({
+export const LessonFilter = React.createClass({
   render(){
     const filter = this.props.filter || {};
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
@@ -32,4 +34,19 @@ LessonFilter.propTypes = {
   resetFilter: PropTypes.func
 };
 
-export default LessonFilter;
+function mapStateToProps(state) {
+  return {
+    filter: state.filter
+  };
+}
+
+const LessonFilterContainer = connect(
+  mapStateToProps,
+  {
+    onFilterCheck,
+    resetFilter
+  }
+
+)(LessonFilter);
+
+export default LessonFilterContainer;
