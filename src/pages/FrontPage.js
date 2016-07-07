@@ -1,19 +1,19 @@
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
-import {getFilteredCourses} from '../selectors/course';
-
-import CourseList from '../components/CourseList/CourseList';
-import LessonFilter from '../components/Filter/LessonFilter';
-import ButtonItem from '../components/ButtonItem';
-import styles from './FrontPage.scss';
-
 import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+
+import {getFilteredCourses} from '../selectors/course';
+import * as actionCreators from '../action_creators';
+import CourseList from '../components/CourseList/CourseList';
+import LessonFilter from '../components/Filter/LessonFilter';
+import ButtonItem from '../components/ButtonItem';
+import styles from './FrontPage.scss';
 
 export const  FrontPage = React.createClass({
 
@@ -132,13 +132,7 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch
-  };
-}
-
 export const FrontPageContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  actionCreators
 )(withStyles(styles)(FrontPage));
