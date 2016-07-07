@@ -9,20 +9,21 @@
 
 .navBar {
   composes: fontNavBar;
-  background-color: $color-green-light;
-  border-radius: 0;
   padding-top: 10px;
   padding-bottom: 10px;
+  border-radius: 0;
+  background-color: $color-green-light;
+  color: $color-green-dark;
 }
 
 .navIcon {
-  color: $color-green-dark;
-  padding-right: 5px;
+  margin-right: 5px;
   vertical-align: top;
+  color: $color-green-dark;
 }
 
 .navPath {
-  color: $color-green-dark;
   text-decoration: none !important;
   font-size: 17pt;
+  color: $color-green-dark;
 }
