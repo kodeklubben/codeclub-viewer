@@ -1,14 +1,14 @@
 @import '../../assets/css/fonts';
 @import '../../assets/css/colors';
 
-.fontHeader {
+.fontNavBar {
   font-family: $font-default;
   font-weight: 300;
   color: $color-green-dark;
 }
 
 .navBar {
-  composes: fontHeader;
+  composes: fontNavBar;
   background-color: $color-green-light;
   border-radius: 0;
   padding-top: 10px;
@@ -24,4 +24,5 @@
 .navPath {
   color: $color-green-dark;
   text-decoration: none !important;
+  font-size: 17pt;
 }

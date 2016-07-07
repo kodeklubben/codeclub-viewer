@@ -36,9 +36,7 @@ const NavBar = React.createClass({
             <Navbar.Header>
               <Navbar.Brand>
                 <FontAwesome className={styles.navIcon} name='home' size='lg'/>
-                <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}
-                {lessonLink ? <span> / {lessonLink}</span> : null}
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
