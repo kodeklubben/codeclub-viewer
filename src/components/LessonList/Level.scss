@@ -1,10 +1,11 @@
 .level-1, .level-2, .level-3, .level-4 {
+  $iconSize: 20px;
   background-repeat: no-repeat;
-  background-size:20px 20px;
+  background-size:$iconSize $iconSize;
   background-position: 10px;
   display:block;
-  min-height: 20px;
-  min-width: 20px;
+  min-height: $iconSize;
+  min-width: $iconSize;
   padding-left: 40px;
 }
 .level-1 {
