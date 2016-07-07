@@ -11,8 +11,7 @@ const MobileComponents = React.createClass({
   getInitialState() {
     return {
       showFilter: false,
-      showPlaylists: false,
-      showLevelNavigation: false
+      showPlaylists: false
     };
   },
   toggle(componentName) {
@@ -21,21 +20,15 @@ const MobileComponents = React.createClass({
   render() {
     return (
       <div>
-        <MobileButtonsRow showLevelNavigation={this.props.showLevelNavigation} toggle={this.toggle} />
+        <MobileButtonsRow toggle={this.toggle} />
 
         <Row>
           {/*Filter mobile*/}
           <Col smHidden mdHidden lgHidden xs={12}>
+
             <Collapse in={this.state.showFilter}>
               <div>
                 <LessonFilter filter={this.props.filter} onFilterCheck={this.props.onFilterCheck}/>
-              </div>
-            </Collapse>
-
-            {/*Level navigation mobile*/}
-            <Collapse in={this.state.showLevelNavigation}>
-              <div>
-                {this.props.showLevelNavigation ? <LevelNavigation levels={this.props.levels}/> : null}
               </div>
             </Collapse>
 
@@ -45,6 +38,12 @@ const MobileComponents = React.createClass({
                 <PlaylistNavigation playlists={this.props.playlists}/>
               </div>
             </Collapse>
+
+            {/*Level navigation mobile*/}
+            <div>
+              {this.props.showLevelNavigation ? <LevelNavigation levels={this.props.levels}/> : null}
+            </div>
+
           </Col>
         </Row>
       </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 import NavBar from '../components/Navigation/NavBar';
 
-
 const App = React.createClass({
+
   render() {
     return (
       <div>
@@ -11,6 +11,7 @@ const App = React.createClass({
       </div>
     );
   }
+
 });
 
 export default App;

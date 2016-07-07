@@ -1,23 +1,26 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
 import NavLink from './NavLink';
+import styles from './NavBar.scss';
 
 const NavBar = React.createClass({
+
   render() {
     const params = this.props.params;
-    //console.log(this.props.params);
     const courseLink = params.course ? <NavLink to={`/${params.course}`}>{params.course}</NavLink> : null;
     const lessonLink = params.course && params.lesson && params.file ?
       <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
+
     return (
-      <div style={{backgroundColor: '#B1DAAE', borderRadius: '5px', height:'40px', padding:'5px'}}>
-        <p>
-          <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
-          {courseLink ? <span> / {courseLink}</span> : null}
-          {lessonLink ? <span> / {lessonLink}</span> : null}
-        </p>
+      <div className={styles.container}>
+        <NavLink to="/" onlyActiveOnIndex>Home</NavLink>
+        {courseLink ? <span> / {courseLink}</span> : null}
+        {lessonLink ? <span> / {lessonLink}</span> : null}
       </div>
     );
   }
+
 });
 
 NavBar.propTypes = {
@@ -28,4 +31,4 @@ NavBar.propTypes = {
   })
 };
 
-export default NavBar;
+export default withStyles(styles)(NavBar);
