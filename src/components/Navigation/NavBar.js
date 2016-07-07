@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import FontAwesome from 'react-fontawesome';
 
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
@@ -31,9 +32,10 @@ const NavBar = React.createClass({
           <FlagGroup />
         </Row>
         <Row>
-          <Navbar className={styles.navbar} fluid={true}>
+          <Navbar className={styles.navBar} fluid={true}>
             <Navbar.Header>
               <Navbar.Brand>
+                <FontAwesome className={styles.navIcon} name='home' size='lg'/>
                 <NavLink to="/" onlyActiveOnIndex>Front Page</NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}
                 {lessonLink ? <span> / {lessonLink}</span> : null}

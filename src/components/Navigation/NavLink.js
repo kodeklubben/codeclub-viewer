@@ -1,15 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+import styles from './NavBar.scss';
+
 const NavLink = React.createClass({
 
   render() {
-    const styles =  {
-      color: '#4f7548',
-      textDecoration: 'none'
-    };
-
-    return <Link {...this.props} style={styles} activeClassName="active"/>;
+    return <Link {...this.props} className={styles.navPath} activeClassName="active"/>;
   }
 });
 

@@ -4,12 +4,24 @@
 .fontHeader {
   font-family: $font-default;
   font-weight: 300;
-  font-size: 15pt;
   color: $color-green-dark;
 }
 
-.navbar {
+.navBar {
   composes: fontHeader;
   background-color: $color-green-light;
   border-radius: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.navIcon {
+  color: $color-green-dark;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+.navPath {
+  color: $color-green-dark;
+  text-decoration: none !important;
 }
