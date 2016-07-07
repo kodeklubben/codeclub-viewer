@@ -41,3 +41,21 @@ export function onFilterCheck(groupName, tagName) {
     }
   };
 }
+
+export function setModeStudent() {
+  return {
+    type: 'SET_MODE_STUDENT'
+  };
+}
+
+export function setModeTeacher() {
+  return {
+    type: 'SET_MODE_TEACHER'
+  };
+}
+
+export function changeMode() {
+  return {
+    type: 'CHANGE_MODE'
+  };
+}

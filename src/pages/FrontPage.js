@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
-import * as actionCreators from '../action_creators';
 import {getFilteredCourses} from '../selectors/course';
 
 import CourseList from '../components/CourseList/CourseList';
@@ -128,11 +127,18 @@ FrontPage.propTypes = {
 function mapStateToProps(state) {
   return {
     courses: getFilteredCourses(state),
-    filter: state.filter
+    filter: state.filter,
+    student: state.mode
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch
   };
 }
 
 export const FrontPageContainer = connect(
   mapStateToProps,
-  actionCreators
+  mapDispatchToProps
 )(withStyles(styles)(FrontPage));
