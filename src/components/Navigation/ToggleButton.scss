@@ -6,10 +6,9 @@
 
 .button {
   composes: fontButton;
-  align-self: center;
-  margin: 0 0 0 20px;
   width: 60px;
-  height: inherit;
+  padding-top: 5px;
+  padding-bottom: 5px;
   border-radius: 5px;
   color: white;
 }

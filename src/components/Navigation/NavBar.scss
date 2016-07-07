@@ -8,58 +8,8 @@
   color: $color-green-dark;
 }
 
-.header {
+.navbar {
   composes: fontHeader;
-  display: flex;
-  padding: 20px 15px 20px 15px;
-  height: 60px;
   background-color: $color-green-light;
-  justify-content: space-between;
-
-  .left {
-    align-self: center;
-  }
-  .right {
-    display: flex;
-    align-self: center;
-    height: 30px;
-
-    input[type=text] {
-      align-self: center;
-      padding-left: 10px;
-      width: 175px;
-      height: inherit;
-      border: 1px solid $color-green-median;
-      border-radius: 5px;
-      outline: none;
-      color: black;
-    }
-    input[type=text]:focus {
-      border: 2px solid $color-green-median;
-    }
-  }
-}
-
-@media (max-width: 450px) {
-  .left {
-    display: none;
-  }
-  .right {
-    width: 100%;
-    justify-content: space-between;
-  }
-}
-
-.fontNavBar {
-  font-family: $font-default;
-  font-weight: 300;
-  font-size: 30pt;
-  color: black;
-}
-
-.container {
-  background-color: #b1daae;
-  height: 40px;
-  width: 100%;
-  vertical-align: middle;
+  border-radius: 0;
 }
