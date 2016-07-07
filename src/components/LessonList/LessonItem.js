@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import NavLink from '../Navigation/NavLink';
+import Link from 'react-router/lib/Link';
 import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -35,12 +35,12 @@ const LessonItem = React.createClass({
             </div>
           </a>
           :
-          <NavLink to={lesson.path}>
+          <Link to={lesson.path}>
             <div className={styles.lessonItem}>
               {constraints}
               {lesson.title}
             </div>
-          </NavLink>
+          </Link>
         }
       </li>
     );
