@@ -45,7 +45,7 @@ export function getLessons(lessonContext) {
       title: lessonFrontMatter.title || '',
       author: lessonFrontMatter.author || '',
       level: lessonFrontMatter.level,
-      indexed: lessonFrontMatter.indexed || true,
+      indexed: lessonFrontMatter.indexed == null ? true : lessonFrontMatter.indexed,
       external: lessonFrontMatter.external || '',
       course,
       tags,
