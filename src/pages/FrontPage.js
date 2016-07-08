@@ -128,7 +128,7 @@ function mapStateToProps(state) {
   return {
     courses: getFilteredCourses(state),
     filter: state.filter,
-    student: state.isStudentMode
+    isStudentMode: state.isStudentMode
   };
 }
 
