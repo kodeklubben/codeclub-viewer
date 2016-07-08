@@ -8,9 +8,6 @@ const LessonItem = React.createClass({
   render() {
     const lesson = this.props.lesson;
 
-    // Check if indexed is set to false
-    if (lesson.hasOwnProperty('indexed') && lesson.indexed != null && !lesson.indexed) return null;
-
     /*Temporary constraint mocks are used until they are implemented*/
     const constraintStyle = {float: 'right', color: 'gray', fontSize: '1.1em'};
     const constraints = (this.props.constraints || []).map((constraint, idx) => {
