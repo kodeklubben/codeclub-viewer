@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
-import {getFilteredLessons} from '../../src/selectors/lesson';
+import {getFilteredLessons, getFilteredAndIndexedLessons} from '../../src/selectors/lesson';
 
 describe('lesson selector', () => {
   describe('getFilteredLessons', () => {
@@ -327,6 +327,120 @@ describe('lesson selector', () => {
       expect(getFilteredLessons.resultFunc(filter, lessons)).to.eql({});
     });
 
+
+  });
+
+  describe('getFilteredAndIndexedLessons', () => {
+
+    it('should create an object only containing indexed lessons', () => {
+      const lessons = {
+        './scratch/asteroids/asteroids': {
+          author: 'Bill Gates',
+          course: 'scratch',
+          indexed: true,
+          level: 3,
+          path: 'scratch/asteroids/asteroids',
+          tags: {
+            platform: ['windows', 'mac'],
+            category: ['create game'],
+            subject: ['reading']
+          },
+          title: 'Asteroids'
+        },
+        './scratch/hei_verden/hei_verden': {
+          author: 'Bill Gates',
+          course: 'scratch',
+          indexed: false,
+          level: 1,
+          path: 'scratch/hei_verden/hei_verden',
+          tags: {
+            platform: ['windows', 'browser'],
+            category: ['create game', 'get started'],
+            subject: ['physics']
+          },
+          title: 'Hei verden'
+        },
+        './python/hei_verden/hei_verden': {
+          author: 'Ola Nordmann',
+          course: 'python',
+          indexed: true,
+          level: 1,
+          path: 'python/hei_verden/hei_verden',
+          tags: {
+            platform: ['windows', 'ios', 'linux'],
+            category: ['create game', 'get started'],
+            subject: ['math']
+          },
+          title: 'Hei verden'
+        },
+        './web/nettside/nettside': {
+          author: 'Ola Nordmann',
+          course: 'web',
+          indexed: false,
+          level: 2,
+          path: 'web/nettside/nettside',
+          tags: {},
+          title: 'Nettside'
+        }
+      };
+
+      deepFreeze(lessons);
+      expect(getFilteredAndIndexedLessons.resultFunc(lessons)).to.eql({
+        './python/hei_verden/hei_verden': {
+          author: 'Ola Nordmann',
+          course: 'python',
+          indexed: true,
+          level: 1,
+          path: 'python/hei_verden/hei_verden',
+          tags: {
+            category: [
+              'create game',
+              'get started'
+            ],
+            platform: [
+              'windows',
+              'ios',
+              'linux'
+            ],
+            subject: [
+              'math'
+            ]
+          },
+          title: 'Hei verden'
+        },
+        './scratch/asteroids/asteroids': {
+          author: 'Bill Gates',
+          course: 'scratch',
+          indexed: true,
+          level: 3,
+          path: 'scratch/asteroids/asteroids',
+          tags: {
+            category: [
+              'create game'
+            ],
+            platform: [
+              'windows',
+              'mac'
+            ],
+            subject: [
+              'reading'
+            ]
+          },
+          title: 'Asteroids'
+        }
+      });
+    });
+
+    it('should create an empty object if lessons is undefined', () => {
+      expect(getFilteredAndIndexedLessons.resultFunc(undefined)).to.eql({});
+    });
+
+    it('should create an empty array if lessons is an empty array', () => {
+      const lessons = {};
+
+      deepFreeze(lessons);
+      expect(getFilteredAndIndexedLessons.resultFunc(lessons)).to.eql({});
+    });
 
   });
 });

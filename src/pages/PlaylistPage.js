@@ -4,7 +4,7 @@ import {LessonFilterContainer} from '../components/Filter/LessonFilter';
 import LessonList from '../components/LessonList/LessonList';
 import LevelNavigation from '../components/LessonList/LevelNavigation';
 import PlaylistNavigation from '../components/Playlist/PlaylistNavigation';
-import {getFilteredCourses} from '../selectors/course';
+import {getFilteredCourses, getFilteredAndIndexedCourses} from '../selectors/course';
 import HeadRow from '../components/PlaylistPage/HeadRow';
 import MobileComponents from '../components/PlaylistPage/MobileComponents';
 import Col from 'react-bootstrap/lib/Col';
@@ -12,9 +12,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 
 export const PlaylistPage = React.createClass({
-
-  getCourse() {
-    const courses = this.props.courses;
+  getCourse(courses) {
     const courseName = this.props.params.course.toLowerCase();
     return courses[courseName] || {};
   },
@@ -37,16 +35,17 @@ export const PlaylistPage = React.createClass({
     }, {});
   },
   render() {
-    const course = this.getCourse();
-    const lessons = this.getLessons(course);
-    const levels = Object.keys(lessons);
+    const filteredCourse = this.getCourse(this.props.filteredCourses);
+    const filteredAndIndexedCourse = this.getCourse(this.props.filteredAndIndexedCourses);
+    const indexedLessonsByLevel = this.getLessons(filteredAndIndexedCourse);
+    const levels = Object.keys(indexedLessonsByLevel);
     const lessonLists = levels.map((level, idx) => (
       <div key={idx} className='col-xs-12'>
-        <LessonList id={'level-' + level} level={level} lessons={lessons[level]}/>
+        <LessonList id={'level-' + level} level={level} lessons={indexedLessonsByLevel[level]}/>
       </div>
     ));
-    const showLevelNavigationMobile = (course.lessons || []).length > 10 && levels.length > 1;
-    const showLevelNavigationDesktop = (course.lessons || []).length > 15 && levels.length > 1;
+    const showLevelNavigationMobile = (filteredAndIndexedCourse.lessons || []).length > 10 && levels.length > 1;
+    const showLevelNavigationDesktop = (filteredAndIndexedCourse.lessons || []).length > 15 && levels.length > 1;
     return (
       <Grid fluid={true}>
 
@@ -55,7 +54,7 @@ export const PlaylistPage = React.createClass({
         
         {/*Components only visible on mobile that can be toggled hidden/visible*/}
         <MobileComponents {...this.props} 
-          playlists={course.playlists} levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
+          playlists={filteredCourse.playlists} levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
 
         <Row>
           {/*Filter desktop*/}
@@ -73,7 +72,7 @@ export const PlaylistPage = React.createClass({
             {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
 
             {/*Desktop playlists*/}
-            <PlaylistNavigation playlists={course.playlists}/>
+            <PlaylistNavigation playlists={filteredCourse.playlists}/>
           </Col>
 
         </Row>
@@ -83,7 +82,8 @@ export const PlaylistPage = React.createClass({
 });
 
 PlaylistPage.propTypes = {
-  courses: PropTypes.object,
+  filteredCourses: PropTypes.object,
+  filteredAndIndexedCourses: PropTypes.object,
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   })
@@ -91,7 +91,8 @@ PlaylistPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    courses: getFilteredCourses(state)
+    filteredCourses: getFilteredCourses(state),
+    filteredAndIndexedCourses: getFilteredAndIndexedCourses(state)
   };
 }
 
