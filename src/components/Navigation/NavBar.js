@@ -46,7 +46,7 @@ const NavBar = React.createClass({
             <Navbar.Collapse>
               <Navbar.Form pullRight>
                 <FormGroup>
-                  <FormControl type="text" placeholder="Search" />
+                  <FormControl type="text" placeholder="Søk" />
                 </FormGroup>
                 {' '}
                 <ToggleButton from='ELEV' to='LÆRER' onClick={() => this.setState({ student: !this.state.student })} />
