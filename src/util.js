@@ -9,16 +9,25 @@ export function capitalize(str) {
 }
 
 /**
- * Get tags from all lessons in lessonContext
- * @param lessonContext
+ * Get tags from all lessons and external courses
+ * Takes any number of contexts as argument
  * @returns {Object} tags
  */
-export function getTags(lessonContext) {
-  const paths = lessonContext.keys();
+export function getTags() {
+  return [...arguments].reduce((res, context) => (
+    {...res, ...extractTags(context)}
+  ), {});
+}
 
-  return paths.reduce((res, path) => {
-    const lessonFrontMatter = lessonContext(path).frontmatter;
-    const tags = cleanseTags(lessonFrontMatter.tags, true);
+/**
+ * Get all tags from lesson or courses in context
+ * @param context
+ * @returns {Object} tags
+ */
+function extractTags(context) {
+  return (context.keys()).reduce((res, path) => {
+    const fm = context(path).frontmatter;
+    const tags = cleanseTags(fm.tags, true);
     return {...res, ...tags};
   }, {});
 }
@@ -72,7 +81,7 @@ export function getLevelName(level) {
  * @param {boolean} toObject
  * @returns {Object} valid tags
  */
-export function cleanseTags(tags, toObject) {
+export function cleanseTags(tags, toObject = false) {
   if (tags == null) return {};
 
   return Object.keys(tags).reduce((result, groupName) => {

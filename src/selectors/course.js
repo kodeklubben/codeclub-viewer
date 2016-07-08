@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {getFilteredLessons} from './lesson';
 import {getPlaylists} from './playlist';
-import {capitalize, tagsContainAllTagsInFilter} from '../util';
+import {capitalize, tagsContainAllTagsInFilter, cleanseTags} from '../util';
 
 const getIconContext = (state) => state.context.iconContext;
 
@@ -53,7 +53,7 @@ export const getFilteredExternalCourses = createSelector(
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
-          tags: fm.tags == null ? {} : fm.tags
+          tags: fm.tags == null ? {} : cleanseTags(fm.tags)
         };
         return tagsContainAllTagsInFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
       }

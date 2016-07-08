@@ -30,6 +30,6 @@ store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
-store.dispatch(setFilter(getTags(lessonContext)));
+store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 export default store;
