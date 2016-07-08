@@ -6,7 +6,6 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import FontAwesome from 'react-fontawesome';
 
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
