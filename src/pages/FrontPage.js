@@ -130,14 +130,14 @@ export const  FrontPage = React.createClass({
 });
 
 FrontPage.propTypes = {
-  courses: PropTypes.object
+  courses: PropTypes.object,
+  externalCourses: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
     courses: getFilteredCourses(state),
-    externalCourses: getFilteredExternalCourses(state),
-    filter: state.filter
+    externalCourses: getFilteredExternalCourses(state)
   };
 }
 
