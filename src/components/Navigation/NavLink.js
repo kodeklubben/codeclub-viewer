@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import styles from './NavBar.scss';
+import styles from './NavLink.scss';
 
 const NavLink = React.createClass({
 
@@ -10,4 +11,4 @@ const NavLink = React.createClass({
   }
 });
 
-export default NavLink;
+export default withStyles(styles)(NavLink);
