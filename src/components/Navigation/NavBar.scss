@@ -1,5 +1,6 @@
 @import '../../assets/css/fonts';
 @import '../../assets/css/colors';
+@import '../../assets/css/buttons';
 
 .fontNavBar {
   font-family: $font-default;
@@ -13,7 +14,6 @@
   padding-bottom: 10px;
   border-radius: 0;
   background-color: $color-green-light;
-  color: $color-green-dark;
 }
 
 .navIcon {

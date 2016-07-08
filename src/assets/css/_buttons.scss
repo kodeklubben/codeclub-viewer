@@ -1,0 +1,14 @@
+@import './colors';
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: transparent;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: $color-green-dark;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: $color-green-dark;
+    color: $color-green-dark;
+}

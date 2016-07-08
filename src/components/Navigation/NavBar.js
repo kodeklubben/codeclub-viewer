@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -23,8 +24,8 @@ const NavBar = React.createClass({
   render() {
     const params = this.props.params;
     const courseLink = params.course ? <NavLink to={`/${params.course}`}>{params.course}</NavLink> : null;
-    const lessonLink = params.course && params.lesson && params.file ?
-      <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
+    // const lessonLink = params.course && params.lesson && params.file ?
+    //   <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
 
     return (
       <Grid fluid={true}>
@@ -36,7 +37,7 @@ const NavBar = React.createClass({
             <Navbar.Header>
               <Navbar.Brand>
                 <NavLink to="/" onlyActiveOnIndex>
-                  <FontAwesome className={styles.navIcon} name='home' />
+                  <Glyphicon glyph="home" />
                 </NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}
               </Navbar.Brand>
