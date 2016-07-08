@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
-import {getFilteredCourses} from '../selectors/course';
-
+import {getFilteredCourses, getFilteredExternalCourses} from '../selectors/course';
 import CourseList from '../components/CourseList/CourseList';
 import {LessonFilterContainer} from '../components/Filter/LessonFilter';
 import ButtonItem from '../components/ButtonItem';
@@ -109,8 +108,20 @@ export const  FrontPage = React.createClass({
           </Col>
 
           <Col xs={12} sm={8} md={9} lg={10}>
-            <h2>Kurs</h2>
-            <CourseList courses={this.props.courses}/>
+            <Row>
+              <Col xs={12}>
+                <h2>Kurs</h2>
+                <CourseList courses={this.props.courses}/>
+              </Col>
+            </Row>
+            {Object.keys(this.props.externalCourses).length > 0 ?
+              <Row>
+                <Col xs={12}>
+                  <h2>Kurs på andre nettsider</h2>
+                  <CourseList courses={this.props.externalCourses}/>
+                </Col>
+              </Row>
+            :null}
           </Col>
         </Row>
       </Grid>
@@ -124,7 +135,9 @@ FrontPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    courses: getFilteredCourses(state)
+    courses: getFilteredCourses(state),
+    externalCourses: getFilteredExternalCourses(state),
+    filter: state.filter
   };
 }
 
