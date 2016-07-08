@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {getFilteredLessons} from './lesson';
 import {getPlaylists} from './playlist';
-import {capitalize} from '../util';
+import {capitalize, tagsContainAllTagsInFilter} from '../util';
 
 const getIconContext = (state) => state.context.iconContext;
 
@@ -20,7 +20,6 @@ export const getFilteredCourses = createSelector(
         // Or create a new course
       else res[courseName] = {
         iconPath: iconContext('./' + courseName + '/logo-black.png'),
-        externalLink: '',
         lessons: [lesson],
         name,
         path: courseName,
@@ -41,10 +40,11 @@ export const getFilteredCourses = createSelector(
 );
 
 const getCourseContext = (state) => state.context.courseContext;
+const getFilter = (state) => state.filter;
 
-export const getExternalCourses = createSelector(
-  [getCourseContext, getIconContext],
-  (courseContext, iconContext) => {
+export const getFilteredExternalCourses = createSelector(
+  [getCourseContext, getIconContext, getFilter],
+  (courseContext, iconContext, filter = {}) => {
     return courseContext.keys().reduce((res, path) => {
       const coursePath = path.slice(0, path.indexOf('/', 2));
       const fm = courseContext(path).frontmatter;
@@ -52,11 +52,10 @@ export const getExternalCourses = createSelector(
         const course = {
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
-          lessons: [],
           name: fm.title,
-          path: ''
+          tags: fm.tags == null ? {} : fm.tags
         };
-        return {...res, [fm.title]: course};
+        return tagsContainAllTagsInFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
       }
       return res;
     },{});

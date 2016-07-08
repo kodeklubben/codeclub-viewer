@@ -107,7 +107,6 @@ describe('course selector', () => {
       deepFreeze(iconContext);
       expect(getFilteredCourses.resultFunc(lessons, playlists, iconContext)).to.eql({
         python: {
-          externalLink: '',
           iconPath: './python/logo-black.png',
           lessons: [
             {
@@ -150,7 +149,6 @@ describe('course selector', () => {
           ]}
         },
         scratch: {
-          externalLink: '',
           iconPath: './scratch/logo-black.png',
           lessons: [
             {
@@ -215,7 +213,6 @@ describe('course selector', () => {
           ]}
         },
         web: {
-          externalLink: '',
           iconPath: './web/logo-black.png',
           lessons: [
             {
@@ -262,7 +259,7 @@ describe('course selector', () => {
     });
   });
   
-  describe('getExternalCourses', () => {
+  describe('getFilteredExternalCourses', () => {
     //TODO: Create tests when course mock data is created
   });
 });

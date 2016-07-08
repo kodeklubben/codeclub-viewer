@@ -11,7 +11,7 @@ const CourseItem = React.createClass({
   },
   render() {
     const course = this.props.course;
-    const isExternal = course.externalLink.length > 0;
+    const isExternal = course.hasOwnProperty('externalLink');
     return (
       <div>
         {isExternal ?
