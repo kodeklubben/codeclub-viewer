@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import LessonFilter from '../Filter/LessonFilter';
+import {LessonFilterContainer} from '../Filter/LessonFilter';
 import LevelNavigation from '../LessonList/LevelNavigation';
 import PlaylistNavigation from '../Playlist/PlaylistNavigation';
 import MobileButtonsRow from './MobileButtonsRow';
@@ -28,7 +28,7 @@ const MobileComponents = React.createClass({
 
             <Collapse in={this.state.showFilter}>
               <div>
-                <LessonFilter filter={this.props.filter} onFilterCheck={this.props.onFilterCheck}/>
+                <LessonFilterContainer/>
               </div>
             </Collapse>
 
@@ -52,13 +52,9 @@ const MobileComponents = React.createClass({
 });
 
 MobileComponents.propTypes = {
-  showFilter: PropTypes.bool,
   showLevelNavigation: PropTypes.bool,
-  showPlaylists: PropTypes.bool,
   levels: PropTypes.array,
-  playlists: PropTypes.object,
-  filter: PropTypes.object,
-  onFilterCheck: PropTypes.func
+  playlists: PropTypes.object
 };
 
 export default MobileComponents;
