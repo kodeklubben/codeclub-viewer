@@ -52,13 +52,9 @@ const MobileComponents = React.createClass({
 });
 
 MobileComponents.propTypes = {
-  showFilter: PropTypes.bool,
   showLevelNavigation: PropTypes.bool,
-  showPlaylists: PropTypes.bool,
   levels: PropTypes.array,
-  playlists: PropTypes.object,
-  filter: PropTypes.object,
-  onFilterCheck: PropTypes.func
+  playlists: PropTypes.object
 };
 
 export default MobileComponents;
