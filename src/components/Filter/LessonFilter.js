@@ -40,7 +40,7 @@ function mapStateToProps(state) {
   };
 }
 
-const LessonFilterContainer = connect(
+export const LessonFilterContainer = connect(
   mapStateToProps,
   {
     onFilterCheck,
@@ -48,5 +48,3 @@ const LessonFilterContainer = connect(
   }
 
 )(LessonFilter);
-
-export default LessonFilterContainer;

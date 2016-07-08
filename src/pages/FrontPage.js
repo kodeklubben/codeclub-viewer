@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {getFilteredCourses} from '../selectors/course';
 
 import CourseList from '../components/CourseList/CourseList';
-import LessonFilter from '../components/Filter/LessonFilter';
+import {LessonFilterContainer} from '../components/Filter/LessonFilter';
 import ButtonItem from '../components/ButtonItem';
 import styles from './FrontPage.scss';
 
@@ -89,7 +89,7 @@ export const  FrontPage = React.createClass({
           {/*Filter desktop*/}
           <Col xsHidden sm={4} md={3} lg={2}>
             <br/>
-            <LessonFilter/>
+            <LessonFilterContainer/>
           </Col>
 
           {/*Filter mobile*/}
@@ -103,7 +103,7 @@ export const  FrontPage = React.createClass({
             <br/>
             <Collapse in={this.state.showMobileFilter}>
               <div>
-                <LessonFilter/>
+                <LessonFilterContainer/>
               </div>
             </Collapse>
           </Col>
