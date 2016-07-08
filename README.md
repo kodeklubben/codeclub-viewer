@@ -60,7 +60,7 @@ npm run testall -s
 The `-s` is to remove npm-errors and just show errors from the test.
 
 ## State Tree
-![State Tree](/State Tree.png)
+![State Tree](/diagrams/State Tree.png)
 
 ## Prototyping
 A prototype framework for codeclub-viewer can be found at https://github.com/NorwegianKiwi/codeclub-viewer-prototype.
