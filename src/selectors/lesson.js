@@ -1,7 +1,11 @@
 import {createSelector} from 'reselect';
 import {tagsContainAllTagsInFilter} from '../util';
 
-const getLessons = (state) => state.lessons;
+const getLessons = (state, courseName = '') => {
+  return Object.keys(state.lessons).reduce((res, lessonPath) => {
+    return lessonPath.startsWith('./' + courseName) ? {...res, [lessonPath]: state.lessons[lessonPath]} : res;
+  }, {});
+};
 const getFilter = (state) => state.filter;
 
 // Creates an object containing lessons that have tags matching the filter

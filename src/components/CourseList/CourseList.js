@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/lib/Row';
 const CourseList = React.createClass({
   sortCourses(a, b) {
     const courses = this.props.courses;
-    return courses[b].lessons.length - courses[a].lessons.length;
+    return courses[b].lessonCount - courses[a].lessonCount;
   },
   render() {
     const courses = this.props.courses;
