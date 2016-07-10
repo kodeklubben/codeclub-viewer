@@ -11,11 +11,21 @@ const CourseItem = React.createClass({
   },
   render() {
     const course = this.props.course;
+    const isExternal = course.hasOwnProperty('externalLink');
     return (
-      <div className={styles.courseItem} onClick={this.onClick.bind(null, course.path)}>
-        <img className={styles.courseLogo} src={course.iconPath}/>
-        <span className={styles.courseName}>{course.name}</span>
-        <span className={styles.lessonCount}>Oppgaver: {course.lessons.length}</span>
+      <div>
+        {isExternal ?
+          <a className={styles.courseItem} href={course.externalLink}>
+            <img className={styles.courseLogo} src={course.iconPath}/>
+            <span className={styles.courseName}>{course.name}</span>
+          </a>
+          :
+          <div className={styles.courseItem} onClick={this.onClick.bind(null, course.path)}>
+            <img className={styles.courseLogo} src={course.iconPath}/>
+            <span className={styles.courseName}>{course.name}</span>
+            <span className={styles.lessonCount}>Oppgaver: {course.lessons.length}</span>
+          </div>
+        }
       </div>
     );
   }

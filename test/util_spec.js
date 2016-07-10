@@ -5,7 +5,7 @@ import {
   capitalize,
   cleanseTags,
   fixNonArrayTagList,
-  lessonHasAllTags
+  tagsContainAllTagsInFilter
 } from '../src/util';
 
 describe('util', () => {
@@ -118,9 +118,9 @@ describe('util', () => {
     });
   });
 
-  describe('lessonHasAllTags', () => {
-    it('return true if lesson has tags', () => {
-      const tags = {
+  describe('tagsContainAllTagsInFilter', () => {
+    it('return true if all tags contain all tags in filter', () => {
+      const filter = {
         platform: {'windows': true, 'linux': false},
         category: {'create game': true}
       };
@@ -132,13 +132,13 @@ describe('util', () => {
         }
       };
 
-      deepFreeze(tags);
+      deepFreeze(filter);
       deepFreeze(lesson);
-      expect(lessonHasAllTags(lesson, tags)).to.equal(true);
+      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(true);
     });
 
-    it('return false if lesson does not have tags', () => {
-      const tags = {
+    it('return false if all tags do not contain all tags in filter', () => {
+      const filter = {
         platform: {'windows': true, 'ios': true, 'linux': false},
         category: {'create game': true, 'create app': false}
       };
@@ -150,14 +150,14 @@ describe('util', () => {
         }
       };
 
-      deepFreeze(tags);
+      deepFreeze(filter);
       deepFreeze(lesson);
-      expect(lessonHasAllTags(lesson, tags)).to.equal(false);
+      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(false);
     });
 
     it('is not affected by object extension', () => {
       Object.prototype.hi = function(){console.log('muhahaha');};
-      const tags = {
+      const filter = {
         platform: {'windows': true, 'linux': false},
         category: {'create game': true}
       };
@@ -169,13 +169,13 @@ describe('util', () => {
         }
       };
 
-      deepFreeze(tags);
+      deepFreeze(filter);
       deepFreeze(lesson);
-      expect(lessonHasAllTags(lesson, tags)).to.equal(true);
+      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(true);
     });
 
-    it('return true filterTags is empty', () => {
-      const tags = {};
+    it('return true filter is empty', () => {
+      const filter = {};
       const lesson = {
         name: 'task1',
         tags: {
@@ -184,9 +184,9 @@ describe('util', () => {
         }
       };
   
-      deepFreeze(tags);
+      deepFreeze(filter);
       deepFreeze(lesson);
-      expect(lessonHasAllTags(lesson, tags)).to.equal(true);
+      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(true);
     });
 
   });
