@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {getFilteredLessons, getFilteredAndIndexedLessons} from './lesson';
 import {getPlaylists} from './playlist';
-import {capitalize} from '../util';
+import {capitalize, tagsContainAllTagsInFilter, cleanseTags} from '../util';
 
 const getIconContext = (state) => state.context.iconContext;
 
@@ -18,7 +18,7 @@ export const getFilteredAndIndexedCourses = createSelector(
 );
 
 // Create course objects
-export function getCourses(lessons = {}, playlists = {}, iconContext){
+export function getCourses(lessons = {}, playlists = {}, iconContext) {
   return Object.keys(lessons).reduce((res, lessonKey) => {
     const lesson = lessons[lessonKey];
     const courseName = lesson.course;
@@ -35,7 +35,7 @@ export function getCourses(lessons = {}, playlists = {}, iconContext){
       playlists: Object.keys(playlists).reduce((coursePlaylists, playlistName) => {
         const playlist = playlists[playlistName];
         // Get playlists that have at least one lesson by course name
-        if(playlist.length > 0 && playlist[0].course.toLowerCase() === name.toLowerCase()) {
+        if (playlist.length > 0 && playlist[0].course.toLowerCase() === name.toLowerCase()) {
           coursePlaylists[playlistName] = playlist;
         }
         return coursePlaylists;
@@ -45,3 +45,26 @@ export function getCourses(lessons = {}, playlists = {}, iconContext){
     return res;
   }, {});
 }
+
+const getCourseContext = (state) => state.context.courseContext;
+const getFilter = (state) => state.filter;
+
+export const getFilteredExternalCourses = createSelector(
+  [getCourseContext, getIconContext, getFilter],
+  (courseContext, iconContext, filter = {}) => {
+    return courseContext.keys().reduce((res, path) => {
+      const coursePath = path.slice(0, path.indexOf('/', 2));
+      const fm = courseContext(path).frontmatter;
+      if (fm.external != null) {
+        const course = {
+          externalLink: fm.external,
+          iconPath: iconContext(coursePath + '/logo-black.png'),
+          name: fm.title,
+          tags: fm.tags == null ? {} : cleanseTags(fm.tags)
+        };
+        return tagsContainAllTagsInFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
+      }
+      return res;
+    }, {});
+  }
+);

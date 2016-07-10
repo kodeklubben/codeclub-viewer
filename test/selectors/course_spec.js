@@ -421,4 +421,8 @@ describe('course selector', () => {
       expect(getCourses(lessons, playlists, iconContext)).to.eql({});
     });
   });
+  
+  describe('getFilteredExternalCourses', () => {
+    //TODO: Create tests when course mock data is created
+  });
 });

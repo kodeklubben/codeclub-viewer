@@ -9,16 +9,25 @@ export function capitalize(str) {
 }
 
 /**
- * Get tags from all lessons in lessonContext
- * @param lessonContext
+ * Get tags from all lessons and external courses
+ * Takes any number of contexts as argument
  * @returns {Object} tags
  */
-export function getTags(lessonContext) {
-  const paths = lessonContext.keys();
+export function getTags() {
+  return [...arguments].reduce((res, context) => (
+    {...res, ...extractTags(context)}
+  ), {});
+}
 
-  return paths.reduce((res, path) => {
-    const lessonFrontMatter = lessonContext(path).frontmatter;
-    const tags = cleanseTags(lessonFrontMatter.tags, true);
+/**
+ * Get all tags from lesson or courses in context
+ * @param context
+ * @returns {Object} tags
+ */
+function extractTags(context) {
+  return (context.keys()).reduce((res, path) => {
+    const fm = context(path).frontmatter;
+    const tags = cleanseTags(fm.tags, true);
     return {...res, ...tags};
   }, {});
 }
@@ -72,7 +81,7 @@ export function getLevelName(level) {
  * @param {boolean} toObject
  * @returns {Object} valid tags
  */
-export function cleanseTags(tags, toObject) {
+export function cleanseTags(tags, toObject = false) {
   if (tags == null) return {};
 
   return Object.keys(tags).reduce((result, groupName) => {
@@ -113,28 +122,27 @@ export function fixNonArrayTagList(tagItems) {
 }
 
 /**
- * Check if lesson contains all tags in filterTags
- * @param {Object} lesson
- * @param {Object} filterTags
- * @returns {boolean} lesson contains all tags required by filter
+ * Check if tags contain all tags in filter
+ * @param {Object} tags
+ * @param {Object} filter
+ * @returns {boolean} tagsContainAllTagsInFilter
  */
-export function lessonHasAllTags(lesson, filterTags) {
+export function tagsContainAllTagsInFilter(tags, filter) {
   // Filter is empty
-  if (Object.keys(filterTags).length === 0) return true;
+  if (Object.keys(filter).length === 0) return true;
 
-  const lessonTags = lesson.tags;
-  for (let groupName in filterTags) {
-    if (filterTags.hasOwnProperty(groupName)) {
-      const filterTagItems = filterTags[groupName];
-      const lessonTagItems = lessonTags[groupName] || [];
-      // Check if there exist at least one filterTag that the lesson does not have
+  for (let groupName in filter) {
+    if (filter.hasOwnProperty(groupName)) {
+      const filterTagItems = filter[groupName];
+      const tagItems = tags[groupName] || [];
+      // Check if there exist at least one filterTag that the tags does not have
       if (Object.keys(filterTagItems).find((tagItemName) => {
         const tagInFilter = filterTagItems[tagItemName];
-        // FilterTag is checked and lesson does not have tag
-        return tagInFilter && lessonTagItems.indexOf(tagItemName) < 0;
+        // Tag is in filter and tags does not contain the tag
+        return tagInFilter && tagItems.indexOf(tagItemName) < 0;
       })) return false;// Found a filterTag that is NOT in lesson
     }
   }
-  // Lesson contains all tags in the filter
+  // Tags contains all tags in the filter
   return true;
 }
