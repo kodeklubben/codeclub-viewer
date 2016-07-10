@@ -73,7 +73,7 @@ styles:
   button-groups: false
   input-groups: false
   navs: false
-  navbar: false
+  navbar: true
   breadcrumbs: false
   pagination: false
   pager: false

@@ -1,0 +1,47 @@
+@import './fonts';
+@import './colors';
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: transparent;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: $color-green-dark;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: $color-green-dark;
+    color: $color-green-dark;
+}
+
+.navbar-form {
+  border: 0;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.navbar-default {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 0;
+  background-color: $color-green-light;
+  color: $color-green-dark;
+  font-family: $font-default;
+  font-weight: 300;
+}
+
+.navbar-collapse {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media (max-width: 767px) {
+  .navbar-form {
+    margin: 0;
+    padding-bottom: 0;
+  }
+  .form-group {
+    max-width: 200px;
+  }
+}
