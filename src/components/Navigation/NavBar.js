@@ -21,8 +21,8 @@ const NavBar = React.createClass({
   render() {
     const params = this.props.params;
     const courseLink = params.course ? <NavLink to={`/${params.course}`}>{params.course}</NavLink> : null;
-    // const lessonLink = params.course && params.lesson && params.file ?
-    //   <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
+    const lessonLink = params.course && params.lesson && params.file ?
+      <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
 
     return (
       <Grid fluid={true}>
@@ -37,6 +37,7 @@ const NavBar = React.createClass({
                   <Glyphicon glyph="home" />
                 </NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}
+                {lessonLink ? <span className="hidden-xs"> / {lessonLink}</span> : null}
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
