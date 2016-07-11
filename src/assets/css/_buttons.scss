@@ -14,12 +14,14 @@
   @include button-size(0, 0, 1.5em, 1em, 0);
   font-family: $font-default;
   font-weight: 300;
-  margin: 10px 20px;
-  width: 250px;
-  height: 100px;
+  margin: 1em;
+  width: 13em;
+  height: 6em;
+  max-width: 100%;
+  max-height: 100%;
   border: none;
 }
 
-.btn-fixed-width-sm{
+.btn-sm-fixed-width{
   width: 6em;
 }
