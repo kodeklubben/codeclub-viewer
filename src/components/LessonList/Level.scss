@@ -1,22 +1,50 @@
-.level-1, .level-2, .level-3, .level-4 {
-  $iconSize: 20px;
-  background-repeat: no-repeat;
-  background-size:$iconSize $iconSize;
-  background-position: 10px;
-  display:block;
-  min-height: $iconSize;
-  min-width: $iconSize;
-  padding-left: 40px;
+$iconSize: 1em;
+.level {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: $iconSize/2;
 }
+
 .level-1 {
-  background-image: url('../../assets/graphics/level/level1.png');
+  composes: level;
+  width: $iconSize;
+  height: $iconSize;
+  background: #7DC87D;
+  border-radius: $iconSize/2;
 }
+
 .level-2 {
-  background-image: url('../../assets/graphics/level/level2.png');
+  composes: level;
+  background-color: #3F54FF;
+  width: $iconSize;
+  height: $iconSize;
 }
+
 .level-3 {
-  background-image: url('../../assets/graphics/level/level3.png');
+  composes: level;
+  background-color: #FF3535;
+  width: $iconSize;
+  height: $iconSize*0.75;
 }
+
 .level-4 {
-  background-image: url('../../assets/graphics/level/level4.png');
+  margin-right: $iconSize/2;
+  width: 0;
+  height: 0;
+  position: relative;
+  top: -$iconSize;
+  border: $iconSize/2.25 solid transparent;
+  border-top-width: 0;
+  border-bottom: $iconSize/2 solid black;
+
+  &:after {
+    width: 0;
+    height: 0;
+    position: absolute;
+    content: "";
+    top: $iconSize*1.6;
+    left: -$iconSize/2.25;
+    border: $iconSize/2.25 solid transparent;
+    border-top: $iconSize/2 solid black;
+  }
 }

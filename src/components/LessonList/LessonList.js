@@ -18,7 +18,7 @@ const LessonList = React.createClass({
     const level = this.props.level;
     return (
       <div id={this.props.id}>
-        <h3 className={levelStyles['level-'+level]}>{getLevelName(level)}</h3>
+        <h3><span className={levelStyles['level-'+level]}/>{getLevelName(level)}</h3>
         <ul className='list-group'>
           {lessons.map((lesson, idx) =>
             <LessonItem key={idx} lesson={lesson} constraints={this.generateMockConstraints(idx)}/>

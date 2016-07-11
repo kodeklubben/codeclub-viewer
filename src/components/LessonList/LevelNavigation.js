@@ -8,8 +8,8 @@ const LevelNavigation = React.createClass({
     const levels = this.props.levels || [];
     const levelListItems = levels.map((level, idx) => (
       <li key={idx} className='list-group-item'>
-        <a className={levelStyles['level-'+level]} href={'#level-'+level}>
-          {getLevelName(level)}
+        <a href={'#level-'+level}>
+          <span className={levelStyles['level-'+level]}/>{getLevelName(level)}
         </a>
       </li>
     ));
