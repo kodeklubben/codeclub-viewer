@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons} from './action_creators';
+import {setContext, setFilter, setLessons, setModeStudent} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -30,6 +30,7 @@ store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
+store.dispatch(setModeStudent());
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 export default store;

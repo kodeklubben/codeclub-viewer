@@ -6,6 +6,7 @@ import CourseList from '../components/CourseList/CourseList';
 import {LessonFilterContainer} from '../components/Filter/LessonFilter';
 import ButtonItem from '../components/ButtonItem';
 import styles from './FrontPage.scss';
+import {changeMode} from '../action_creators';
 
 import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
@@ -18,7 +19,6 @@ export const  FrontPage = React.createClass({
 
   getInitialState() {
     return {
-      show: false,
       showMobileFilter: false
     };
   },
@@ -42,7 +42,7 @@ export const  FrontPage = React.createClass({
             <ButtonItem color='green' onClick={() => this.displayExercise}>
               Kom i gang!
             </ButtonItem>
-            <ButtonItem color='blue' onClick={() => this.setState({show: !this.state.show})}>
+            <ButtonItem color='blue' onClick={() => this.props.changeMode()}>
               Lærer/Veileder
             </ButtonItem>
           </div>
@@ -50,7 +50,7 @@ export const  FrontPage = React.createClass({
 
         {/* Collapse infobox */}
         <Row>
-          <Collapse in={this.state.show}>
+          <Collapse in={!this.props.isStudentMode}>
             <div className={styles.infoBox}>
               <div className={styles.infoBoxRow}>
                 <div className={styles.infoBoxItem}>
@@ -84,7 +84,7 @@ export const  FrontPage = React.createClass({
           </Collapse>
         </Row>
 
-        <Row>
+         <Row>
           {/*Filter desktop*/}
           <Col xsHidden sm={4} md={3} lg={2}>
             <br/>
@@ -137,10 +137,14 @@ FrontPage.propTypes = {
 function mapStateToProps(state) {
   return {
     courses: getFilteredCourses(state),
+    isStudentMode: state.isStudentMode,
     externalCourses: getFilteredExternalCourses(state)
   };
 }
 
 export const FrontPageContainer = connect(
-  mapStateToProps
+  mapStateToProps,
+  {
+    changeMode
+  }
 )(withStyles(styles)(FrontPage));
