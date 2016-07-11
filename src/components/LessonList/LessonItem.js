@@ -55,7 +55,8 @@ export const LessonItem = React.createClass({
 
 LessonItem.propTypes = {
   constraints: PropTypes.array,
-  lesson: PropTypes.object
+  lesson: PropTypes.object,
+  isStudentMode: PropTypes.bool
 };
 
 function mapStateToProps(state) {
