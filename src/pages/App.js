@@ -1,12 +1,12 @@
 import React from 'react';
-import NavBar from '../components/Navigation/NavBar';
+import {NavBarContainer} from '../components/Navigation/NavBar';
 
 const App = React.createClass({
 
   render() {
     return (
       <div>
-        <NavBar params={this.props.params}/>
+        <NavBarContainer params={this.props.params}/>
         {this.props.children}
       </div>
     );
