@@ -1,10 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
+import styles from './NavLink.scss';
 
 const NavLink = React.createClass({
+
   render() {
-    return <Link {...this.props} activeClassName="active"/>;
+    return <Link {...this.props} className={styles.navPath} activeClassName="active"/>;
   }
 });
 
-export default NavLink;
+export default withStyles(styles)(NavLink);
