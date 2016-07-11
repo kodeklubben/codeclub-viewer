@@ -32,7 +32,7 @@ function extractTags(context) {
   }, {});
 }
 
-export function getLessons(lessonContext) {
+export function getLessons(lessonContext, readmeContext) {
   const paths = lessonContext.keys();
 
   return paths.reduce((res, path) => {
@@ -40,6 +40,8 @@ export function getLessons(lessonContext) {
     const course = path.slice(2, path.indexOf('/', 2)).toLowerCase();
     const lessonFrontMatter = lessonContext(path).frontmatter;
     const tags = cleanseTags(lessonFrontMatter.tags, false);
+    const readmePath = path.slice(0, path.lastIndexOf('/')) + '/README';
+    const hasReadme = readmeContext.keys().indexOf(readmePath+'.md') !== -1;
 
     res[path] = {
       title: lessonFrontMatter.title || '',
@@ -47,6 +49,7 @@ export function getLessons(lessonContext) {
       level: lessonFrontMatter.level,
       indexed: lessonFrontMatter.indexed == null ? true : lessonFrontMatter.indexed,
       external: lessonFrontMatter.external || '',
+      readmePath: hasReadme ? readmePath : '',
       course,
       tags,
       // Everything between './' and '.md'

@@ -1,10 +1,12 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import Link from 'react-router/lib/Link';
 import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-const LessonItem = React.createClass({
+export const LessonItem = React.createClass({
   render() {
     const lesson = this.props.lesson;
 
@@ -32,12 +34,19 @@ const LessonItem = React.createClass({
             </div>
           </a>
           :
-          <Link to={lesson.path}>
-            <div className={styles.lessonItem}>
-              {constraints}
-              {lesson.title}
-            </div>
-          </Link>
+          <div>
+            {!this.props.isStudentMode && (lesson.readmePath || '').length > 0 ?
+              <Link to={lesson.readmePath}>
+                <Button style={{float:'right', marginLeft:'0.5em'}} bsSize="xs">Veiledning</Button>
+              </Link>
+              : null}
+            <Link to={lesson.path}>
+              <div className={styles.lessonItem}>
+                {constraints}
+                {lesson.title}
+              </div>
+            </Link>
+          </div>
         }
       </li>
     );
@@ -49,4 +58,12 @@ LessonItem.propTypes = {
   lesson: PropTypes.object
 };
 
-export default withStyles(styles)(LessonItem);
+function mapStateToProps(state) {
+  return {
+    isStudentMode: state.isStudentMode
+  };
+}
+
+export const LessonItemContainer = connect(
+  mapStateToProps
+)(withStyles(styles)(LessonItem));

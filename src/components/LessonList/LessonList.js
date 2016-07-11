@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import LessonItem from './LessonItem';
+import {LessonItemContainer} from './LessonItem';
 import {getLevelName} from '../../util';
 
 const LessonList = React.createClass({
@@ -19,7 +19,7 @@ const LessonList = React.createClass({
         <ul className='list-group'>
           {lessons.map((lesson, idx) =>
             lesson.indexed ?
-              <LessonItem key={idx} lesson={lesson} constraints={this.generateMockConstraints(idx)}/>
+              <LessonItemContainer key={idx} lesson={lesson} constraints={this.generateMockConstraints(idx)}/>
               : null
           )}
         </ul>
