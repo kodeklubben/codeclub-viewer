@@ -137,7 +137,7 @@ FrontPage.propTypes = {
 function mapStateToProps(state) {
   return {
     courses: getFilteredCourses(state),
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
     externalCourses: getFilteredExternalCourses(state)
   };
 }
