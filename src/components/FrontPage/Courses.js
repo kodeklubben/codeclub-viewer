@@ -32,6 +32,6 @@ const Courses = React.createClass({
 Courses.PropTypes = {
   courses: PropTypes.object,
   externalCourses: PropTypes.object
-}
+};
 
 export default Courses;
