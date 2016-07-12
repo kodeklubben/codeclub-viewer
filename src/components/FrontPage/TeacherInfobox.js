@@ -32,7 +32,7 @@ const TeacherInfobox = React.createClass({
                 text text text text text text text text text text text
                 text text text text text text text text text text text
                 <br /><br />
-                <a className={styles.link} href={url.assistant}>Lær mer</a>
+                <a className={styles.link} href={url.teacher}>Lær mer</a>
               </div>
               <div>
                 <h3>Veileder</h3>
@@ -41,7 +41,7 @@ const TeacherInfobox = React.createClass({
                 text text text text text text text text text text text
                 text text text text text text text text text text text
                 <br /><br />
-                <a className={styles.link} href={url.teacher}>Lær mer</a>
+                <a className={styles.link} href={url.assistant}>Lær mer</a>
               </div>
             </div>
           </div>
