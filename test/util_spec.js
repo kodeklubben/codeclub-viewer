@@ -5,7 +5,8 @@ import {
   capitalize,
   cleanseTags,
   fixNonArrayTagList,
-  tagsContainAllTagsInFilter
+  tagsContainAllTagsInFilter,
+  constraintsNotInConstraintFilter
 } from '../src/util';
 
 describe('util', () => {
@@ -115,6 +116,77 @@ describe('util', () => {
     it('converts null to empty array', () => {
       const tagList = null;
       expect(fixNonArrayTagList(tagList)).to.eql([]);
+    });
+  });
+
+  describe('tagsNotInConstraints', () => {
+    it('should return true if tags are not in constraints', () => {
+      const constraintList = ['not ipad', 'costs money'];
+      const constraintFilter = {
+        'not ipad': false,
+        'costs money': false,
+        'only windows': true,
+        'required flash': true
+      };
+      
+      deepFreeze(constraintList);
+      deepFreeze(constraintFilter);
+      expect(constraintsNotInConstraintFilter(constraintList, constraintFilter)).to.equal(true);
+    });
+
+    it('should return false if at least one tag is in constraints', () => {
+      const constraintList = ['not ipad', 'costs money'];
+      const constraintFilter = {
+        'not ipad': false,
+        'costs money': true,
+        'only windows': true,
+        'required flash': true
+      };
+      deepFreeze(constraintList);
+      deepFreeze(constraintFilter);
+      expect(constraintsNotInConstraintFilter(constraintList, constraintFilter)).to.equal(false);
+    });
+    
+    it('should return true if constraintFilter is empty', () => {
+      const constraintList = ['not ipad', 'costs money'];
+      const constraintFilter = {};
+      
+      deepFreeze(constraintList);
+      deepFreeze(constraintFilter);
+      expect(constraintsNotInConstraintFilter(constraintList, constraintFilter)).to.equal(true);
+    });
+
+    it('should return true if constraintFilter is undefined', () => {
+      const constraintList = ['not ipad', 'costs money'];
+      
+      deepFreeze(constraintList);
+      expect(constraintsNotInConstraintFilter(constraintList, undefined)).to.equal(true);
+    });
+
+    it('should return true if constraintList is empty', () => {
+      const constraintList = [];
+      const constraintFilter = {
+        'not ipad': false,
+        'costs money': true,
+        'only windows': true,
+        'required flash': true
+      };
+      
+      deepFreeze(constraintList);
+      deepFreeze(constraintFilter);
+      expect(constraintsNotInConstraintFilter(constraintList, constraintFilter)).to.equal(true);
+    });
+
+    it('should return true if constraintList is undefined', () => {
+      const constraintFilter = {
+        'not ipad': false,
+        'costs money': true,
+        'only windows': true,
+        'required flash': true
+      };
+
+      deepFreeze(constraintFilter);
+      expect(constraintsNotInConstraintFilter(undefined, constraintFilter)).to.equal(true);
     });
   });
 

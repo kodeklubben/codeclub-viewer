@@ -10,6 +10,7 @@ describe('course selector', () => {
       const lessons = {
         './scratch/asteroids/asteroids': {
           author: 'Bill Gates',
+          constraints: [],
           course: 'scratch',
           level: 3,
           path: 'scratch/asteroids/asteroids',
@@ -22,6 +23,7 @@ describe('course selector', () => {
         },
         './scratch/hei_verden/hei_verden': {
           author: 'Bill Gates',
+          constraints: [],
           course: 'scratch',
           level: 1,
           path: 'scratch/hei_verden/hei_verden',
@@ -34,6 +36,7 @@ describe('course selector', () => {
         },
         './python/hei_verden/hei_verden': {
           author: 'Ola Nordmann',
+          constraints: [],
           course: 'python',
           level: 1,
           path: 'python/hei_verden/hei_verden',
@@ -46,6 +49,7 @@ describe('course selector', () => {
         },
         './web/nettside/nettside': {
           author: 'Ola Nordmann',
+          constraints: [],
           course: 'web',
           level: 2,
           path: 'web/nettside/nettside',
@@ -63,6 +67,7 @@ describe('course selector', () => {
         'intro': [
           {
             author: 'Bill Gates',
+            constraints: [],
             course: 'scratch',
             level: 3,
             path: 'scratch/asteroids/asteroids',
@@ -75,6 +80,7 @@ describe('course selector', () => {
           },
           {
             author: 'Bill Gates',
+            constraints: [],
             course: 'scratch',
             level: 1,
             path: 'scratch/hei_verden/hei_verden',
@@ -89,6 +95,7 @@ describe('course selector', () => {
         'advanced': [
           {
             author: 'Bill Gates',
+            constraints: [],
             course: 'python',
             level: 1,
             path: 'python/adv/adv',
@@ -111,6 +118,7 @@ describe('course selector', () => {
           lessons: [
             {
               author: 'Ola Nordmann',
+              constraints: [],
               course: 'python',
               level: 1,
               path: 'python/hei_verden/hei_verden',
@@ -136,6 +144,7 @@ describe('course selector', () => {
           playlists: {'advanced': [
             {
               author: 'Bill Gates',
+              constraints: [],
               course: 'python',
               level: 1,
               path: 'python/adv/adv',
@@ -153,6 +162,7 @@ describe('course selector', () => {
           lessons: [
             {
               author: 'Bill Gates',
+              constraints: [],
               course: 'scratch',
               level: 3,
               path: 'scratch/asteroids/asteroids',
@@ -172,6 +182,7 @@ describe('course selector', () => {
             },
             {
               author: 'Bill Gates',
+              constraints: [],
               course: 'scratch',
               level: 1,
               path: 'scratch/hei_verden/hei_verden',
@@ -188,6 +199,7 @@ describe('course selector', () => {
           playlists: {'intro': [
             {
               author: 'Bill Gates',
+              constraints: [],
               course: 'scratch',
               level: 3,
               path: 'scratch/asteroids/asteroids',
@@ -200,6 +212,7 @@ describe('course selector', () => {
             },
             {
               author: 'Bill Gates',
+              constraints: [],
               course: 'scratch',
               level: 1,
               path: 'scratch/hei_verden/hei_verden',
@@ -217,6 +230,7 @@ describe('course selector', () => {
           lessons: [
             {
               author: 'Ola Nordmann',
+              constraints: [],
               course: 'web',
               level: 2,
               path: 'web/nettside/nettside',
