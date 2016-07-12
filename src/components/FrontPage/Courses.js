@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
@@ -28,5 +28,10 @@ const Courses = React.createClass({
   }
 
 });
+
+Courses.PropTypes = {
+  courses: PropTypes.object,
+  externalCourses: PropTypes.object
+}
 
 export default Courses;

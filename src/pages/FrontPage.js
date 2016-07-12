@@ -54,7 +54,9 @@ export const  FrontPage = React.createClass({
 
 FrontPage.propTypes = {
   courses: PropTypes.object,
-  externalCourses: PropTypes.object
+  externalCourses: PropTypes.object,
+  isStudentMode: PropTypes.bool,
+  changeMode: PropTypes.func
 };
 
 function mapStateToProps(state) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Collapse from 'react-bootstrap/lib/Collapse';
 
@@ -51,5 +51,9 @@ const TeacherInfobox = React.createClass({
   }
 
 });
+
+TeacherInfobox.PropTypes = {
+  isStudentMode: PropTypes.bool
+};
 
 export default withStyles(styles)(TeacherInfobox);

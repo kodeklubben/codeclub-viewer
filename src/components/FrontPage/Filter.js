@@ -44,4 +44,3 @@ const Filter = React.createClass({
 });
 
 export default Filter;
-
