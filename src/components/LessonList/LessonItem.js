@@ -37,7 +37,7 @@ export const LessonItem = React.createClass({
           <div>
             {!this.props.isStudentMode && (lesson.readmePath || '').length > 0 ?
               <Link to={lesson.readmePath}>
-                <Button style={{float:'right', marginLeft:'0.5em'}} bsSize="xs">Veiledning</Button>
+                <Button className={styles.instructionBtn} bsSize="xs">Veiledning</Button>
               </Link>
               : null}
             <Link to={lesson.path}>
