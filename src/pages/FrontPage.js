@@ -37,16 +37,18 @@ export const  FrontPage = React.createClass({
         </Row>
 
         {/* Buttons */}
-        <Row>
-          <div className={styles.center}>
-            <ButtonItem color='green' onClick={() => this.displayExercise}>
-              Kom i gang!
-            </ButtonItem>
-            <ButtonItem color='blue' onClick={() => this.props.changeMode()}>
-              Lærer/Veileder
-            </ButtonItem>
-          </div>
-        </Row>
+        {this.props.isStudentMode ?
+          <Row>
+            <div className={styles.center}>
+              <ButtonItem color='green' onClick={() => this.displayExercise}>
+                Kom i gang!
+              </ButtonItem>
+              <ButtonItem color='blue' onClick={() => this.props.changeMode()}>
+                Lærer/Veileder
+              </ButtonItem>
+            </div>
+          </Row>
+        : null}
 
         {/* Collapse infobox */}
         <Row>
@@ -121,7 +123,7 @@ export const  FrontPage = React.createClass({
                   <CourseList courses={this.props.externalCourses}/>
                 </Col>
               </Row>
-            :null}
+            : null}
           </Col>
         </Row>
       </Grid>
