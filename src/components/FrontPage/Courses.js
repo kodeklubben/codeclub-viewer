@@ -2,7 +2,7 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
-import CourseList from '../components/CourseList/CourseList';
+import CourseList from '../CourseList/CourseList';
 
 const Courses = React.createClass({
 

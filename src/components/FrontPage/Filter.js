@@ -4,7 +4,7 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 
-import {LessonFilterContainer} from '../components/Filter/LessonFilter';
+import {LessonFilterContainer} from '../Filter/LessonFilter';
 
 const Filter = React.createClass({
 

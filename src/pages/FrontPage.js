@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import styles from './FrontPage.scss';
-import Filter from './Filter';
-import Courses from './Courses';
+import Filter from '../components/FrontPage/Filter';
+import Courses from '../components/FrontPage/Courses';
+import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import ButtonItem from '../components/ButtonItem';
-import TeacherInfobox from './TeacherInfobox';
 import {changeMode} from '../action_creators';
 import {getFilteredCourses, getFilteredExternalCourses} from '../selectors/course';
 
