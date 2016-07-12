@@ -1,6 +1,10 @@
 @import './colors';
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/panels';
 
-.panel-student{
+.panel-student {
   @include panel-variant($color-green-light, $color-green-dark, $color-green-light, darken(adjust-hue($color-green-light, -10), 5%));
+}
+
+.panel-teacher {
+  @include panel-variant($color-blue, $color-blue-dark, $color-blue, darken(adjust-hue($color-blue, -10), 5%));
 }

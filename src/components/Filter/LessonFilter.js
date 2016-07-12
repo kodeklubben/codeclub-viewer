@@ -13,8 +13,9 @@ export const LessonFilter = React.createClass({
         <FilterGroup key={idx} groupName={groupName} tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
       );
     });
+
     return (
-      <div className='panel panel-student'>
+      <div className={this.props.isStudentMode ? 'panel panel-student' : 'panel panel-teacher'}>
         <div className='panel-heading'>
           <h3 className='panel-title'>Filter</h3>
         </div>
@@ -31,12 +32,14 @@ export const LessonFilter = React.createClass({
 LessonFilter.propTypes = {
   filter: PropTypes.object,
   onFilterCheck: PropTypes.func,
-  resetFilter: PropTypes.func
+  resetFilter: PropTypes.func,
+  isStudentMode: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
-    filter: state.filter
+    filter: state.filter,
+    isStudentMode: state.isStudentMode
   };
 }
 
