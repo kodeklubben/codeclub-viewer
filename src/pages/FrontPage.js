@@ -44,7 +44,7 @@ export const  FrontPage = React.createClass({
 
         {/* Filter and courses */}
         <Row>
-          <Filter courses={this.props.courses} externalCourses={this.props.externalCourses}/>
+          <Filter/>
           <Courses courses={this.props.courses} externalCourses={this.props.externalCourses}/>
         </Row>
       </Grid>
