@@ -64,6 +64,7 @@ NavBar.propTypes = {
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
+  changeMode: PropTypes.func,
   isStudentMode: PropTypes.bool
 };
 
