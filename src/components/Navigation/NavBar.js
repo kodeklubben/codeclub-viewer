@@ -26,7 +26,7 @@ export const NavBar = React.createClass({
           <FlagGroup />
         </Row>
         <Row>
-          <Navbar className={this.props.isStudentMode ? null : "theme-teacher"} fluid={true}>
+          <Navbar className={this.props.isStudentMode ? null : 'theme-teacher'} fluid={true}>
             <Navbar.Header>
               <Navbar.Brand>
                 <NavLink to="/" onlyActiveOnIndex>
