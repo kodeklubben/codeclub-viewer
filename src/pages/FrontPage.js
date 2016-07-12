@@ -3,7 +3,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
 import {getFilteredCourses, getFilteredExternalCourses} from '../selectors/course';
 import CourseList from '../components/CourseList/CourseList';
-import {LessonFilterContainer} from '../components/Filter/LessonFilter';
+import {FilterContainer} from '../components/Filter/Filter';
 import ButtonItem from '../components/ButtonItem';
 import styles from './FrontPage.scss';
 import {changeMode} from '../action_creators';
@@ -88,7 +88,7 @@ export const  FrontPage = React.createClass({
           {/*Filter desktop*/}
           <Col xsHidden sm={4} md={3} lg={2}>
             <br/>
-            <LessonFilterContainer/>
+            <FilterContainer/>
           </Col>
 
           {/*Filter mobile*/}
@@ -102,7 +102,7 @@ export const  FrontPage = React.createClass({
             <br/>
             <Collapse in={this.state.showMobileFilter}>
               <div>
-                <LessonFilterContainer/>
+                <FilterContainer/>
               </div>
             </Collapse>
           </Col>

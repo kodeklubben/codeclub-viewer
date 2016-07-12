@@ -22,6 +22,24 @@ export function resetFilter() {
   };
 }
 
+export function setConstraintFilter(constraints) {
+  return {
+    type: 'SET_CONSTRAINT_FILTER',
+    payload: {
+      constraints
+    }
+  };
+}
+
+export function onConstraintCheck(constraint) {
+  return {
+    type: 'CONSTRAINT_CHECKED',
+    payload: {
+      constraint
+    }
+  };
+}
+
 export function setContext(contextName, context) {
   return {
     type: 'SET_CONTEXT',

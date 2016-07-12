@@ -1,7 +1,8 @@
 import {createSelector} from 'reselect';
 import {getFilteredLessons} from './lesson';
 import {getPlaylists} from './playlist';
-import {capitalize, tagsContainAllTagsInFilter, cleanseTags} from '../util';
+import {capitalize, constraintsNotInConstraintFilter,
+  fixNonArrayTagList, tagsContainAllTagsInFilter, cleanseTags} from '../util';
 
 const getIconContext = (state) => state.context.iconContext;
 
@@ -41,21 +42,26 @@ export const getFilteredCourses = createSelector(
 
 const getCourseContext = (state) => state.context.courseContext;
 const getFilter = (state) => state.filter;
+const getConstraintFilter = (state) => state.constraintFilter;
 
 export const getFilteredExternalCourses = createSelector(
-  [getCourseContext, getIconContext, getFilter],
-  (courseContext, iconContext, filter = {}) => {
+  [getCourseContext, getIconContext, getFilter, getConstraintFilter],
+  (courseContext, iconContext, filter = {}, constraintFilter = {}) => {
     return courseContext.keys().reduce((res, path) => {
       const coursePath = path.slice(0, path.indexOf('/', 2));
       const fm = courseContext(path).frontmatter;
       if(fm.external != null){
         const course = {
           externalLink: fm.external,
+          constraints: fixNonArrayTagList(fm.constraints).map(constraint => constraint.toLowerCase()),
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
           tags: fm.tags == null ? {} : cleanseTags(fm.tags)
         };
-        return tagsContainAllTagsInFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
+        
+        const courseHasAllTagsInFilter = tagsContainAllTagsInFilter(course.tags, filter);
+        const courseIsNotConstricted = constraintsNotInConstraintFilter(course.constraints, constraintFilter);
+        return courseHasAllTagsInFilter && courseIsNotConstricted ? {...res, [fm.title]: course} : res;
       }
       return res;
     },{});

@@ -9,13 +9,39 @@ export function capitalize(str) {
 }
 
 /**
- * Get tags from all lessons and external courses
+ * Get constraints from all contexts
+ * @returns {Object} constraints
+ */
+export function getConstraints() {
+  return [...arguments].reduce((res, context) => (
+    {...res, ...extractConstraints(context)}
+  ), {});
+}
+
+/**
+ * Get all constraints from lesson or course in context
+ * @param context
+ * @returns {Object} constraints
+ */
+function extractConstraints(context) {
+  return (context.keys()).reduce((res, path) => {
+    const fm = context(path).frontmatter;
+    const constraints = fixNonArrayTagList(fm.constraints).reduce((prev, constraint) => (
+      {...prev, [constraint.toLowerCase()]: false}
+    ), {});
+
+    return {...res, ...constraints};
+  }, {});
+}
+
+/**
+ * Get tags from all contexts
  * Takes any number of contexts as argument
  * @returns {Object} tags
  */
 export function getTags() {
   return [...arguments].reduce((res, context) => (
-    {...res, ...extractTags(context)}
+  {...res, ...extractTags(context)}
   ), {});
 }
 
@@ -40,6 +66,8 @@ export function getLessons(lessonContext) {
     const course = path.slice(2, path.indexOf('/', 2)).toLowerCase();
     const lessonFrontMatter = lessonContext(path).frontmatter;
     const tags = cleanseTags(lessonFrontMatter.tags, false);
+    const constraints = fixNonArrayTagList(lessonFrontMatter.constraints)
+      .map(constraint => constraint.toLowerCase());
 
     res[path] = {
       title: lessonFrontMatter.title || '',
@@ -47,6 +75,7 @@ export function getLessons(lessonContext) {
       level: lessonFrontMatter.level,
       indexed: lessonFrontMatter.indexed == null ? true : lessonFrontMatter.indexed,
       external: lessonFrontMatter.external || '',
+      constraints,
       course,
       tags,
       // Everything between './' and '.md'
@@ -119,6 +148,21 @@ export function fixNonArrayTagList(tagItems) {
   if (typeof tagItems === 'string') return tagItems.split(/,\s*/);
   if (!Array.isArray(tagItems) && typeof tagItems !== 'string') return fixNonArrayTagList(tagItems.toString());
   return tagItems;
+}
+
+/**
+ * Check if no constraints in constraintList is in constraintFilter
+ * @param {Object} constraintList - List of constraints
+ * @param {Object} constraintFilter - Object of constraint booleans
+ * @returns {boolean} constraintsNotInConstraintFilter
+ */
+export function constraintsNotInConstraintFilter(constraintList = [], constraintFilter = {}) {
+  // Check if constraintList has at least one 
+  // constraint from constraintFilter that is checked
+  return Object.keys(constraintFilter).find((constraint) => {
+    const checked = constraintFilter[constraint];
+    return checked && constraintList.indexOf(constraint) !== -1;
+  }) == null;
 }
 
 /**

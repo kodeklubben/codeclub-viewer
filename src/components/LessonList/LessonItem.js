@@ -8,18 +8,10 @@ const LessonItem = React.createClass({
   render() {
     const lesson = this.props.lesson;
 
-    /*Temporary constraint mocks are used until they are implemented*/
-    const constraintStyle = {float: 'right', color: 'gray', fontSize: '1.1em'};
-    const constraints = (this.props.constraints || []).map((constraint, idx) => {
-      switch (constraint) {
-        case 'internet-explorer':
-          return <span key={idx} style={constraintStyle}><Glyphicon glyph="fire"/></span>;
-        case 'tablet':
-          return <span key={idx} style={constraintStyle}><Glyphicon key={idx} glyph="phone"/></span>;
-        case 'money':
-          return <span key={idx} style={constraintStyle}><Glyphicon key={idx} glyph="euro"/></span>;
-      }
-      return null;
+    const constraints = (lesson.constraints || []).map((constraint, idx) => {
+      const imgPath = '../../assets/graphics/constraints/' + constraint + '.png';
+      //TODO: Import/require/use image correctly
+      return <img key={idx} className={styles.constraintImg} src={imgPath}/>;
     });
     const isExternal = lesson.external.length > 0;
     return (

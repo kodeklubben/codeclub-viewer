@@ -11,7 +11,7 @@ const FilterGroup = React.createClass({
     const filterItems = Object.keys(filterTags).map((tagItem, idx) => {
       const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
       return (
-        <FilterItem key={idx} tagItem={tagItem} checked={filterTags[tagItem]} onCheck={onCheck}/>
+        <FilterItem key={idx} name={tagItem} checked={filterTags[tagItem]} onCheck={onCheck}/>
       );
     });
     return (
@@ -26,7 +26,7 @@ const FilterGroup = React.createClass({
 FilterGroup.propTypes = {
   groupName: PropTypes.string,
   tagItems: PropTypes.object,
-  onCheck: PropTypes.func
+  onFilterCheck: PropTypes.func
 };
 
 export default withStyles(styles)(FilterGroup);
