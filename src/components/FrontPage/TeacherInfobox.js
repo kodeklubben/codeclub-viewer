@@ -52,7 +52,7 @@ const TeacherInfobox = React.createClass({
 
 });
 
-TeacherInfobox.PropTypes = {
+TeacherInfobox.propTypes = {
   isStudentMode: PropTypes.bool
 };
 

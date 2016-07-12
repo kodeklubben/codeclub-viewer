@@ -1,10 +1,12 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
+import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
 import CourseList from '../CourseList/CourseList';
 
-const Courses = React.createClass({
+export const Courses = React.createClass({
 
   render() {
     return (
@@ -29,9 +31,18 @@ const Courses = React.createClass({
 
 });
 
-Courses.PropTypes = {
+Courses.propTypes = {
   courses: PropTypes.object,
   externalCourses: PropTypes.object
 };
 
-export default Courses;
+function mapStateToProps(state) {
+  return {
+    courses: getFilteredCourses(state),
+    externalCourses: getFilteredExternalCourses(state)
+  };
+}
+
+export const CoursesContainer = connect(
+  mapStateToProps
+)(Courses);

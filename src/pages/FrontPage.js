@@ -6,11 +6,11 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import styles from './FrontPage.scss';
 import Filter from '../components/FrontPage/Filter';
-import Courses from '../components/FrontPage/Courses';
+import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import ButtonItem from '../components/ButtonItem';
 import {changeMode} from '../action_creators';
-import {getFilteredCourses, getFilteredExternalCourses} from '../selectors/course';
+
 
 export const  FrontPage = React.createClass({
 
@@ -45,7 +45,7 @@ export const  FrontPage = React.createClass({
         {/* Filter and courses */}
         <Row>
           <Filter/>
-          <Courses courses={this.props.courses} externalCourses={this.props.externalCourses}/>
+          <CoursesContainer/>
         </Row>
       </Grid>
     );
@@ -53,17 +53,13 @@ export const  FrontPage = React.createClass({
 });
 
 FrontPage.propTypes = {
-  courses: PropTypes.object,
-  externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
   changeMode: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    courses: getFilteredCourses(state),
-    isStudentMode: state.isStudentMode,
-    externalCourses: getFilteredExternalCourses(state)
+    isStudentMode: state.isStudentMode
   };
 }
 
