@@ -1,7 +1,16 @@
 @import '../../assets/css/colors';
 
-.navPath {
+.themeBase {
   text-decoration: none !important;
   font-size: 17pt;
+}
+
+.themeDefault {
+  composes: themeBase;
   color: $color-green-dark;
+}
+
+.themeTeacher {
+  composes: themeBase;
+  color: $color-blue-dark;
 }

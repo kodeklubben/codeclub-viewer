@@ -7,7 +7,7 @@ import styles from './NavLink.scss';
 const NavLink = React.createClass({
 
   render() {
-    return <Link {...this.props} className={styles.navPath} activeClassName="active"/>;
+    return <Link {...this.props} className={this.props.isStudentMode ? styles.themeStudent : styles.themeTeacher} activeClassName="active"/>;
   }
 });
 
