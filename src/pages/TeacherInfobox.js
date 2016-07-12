@@ -2,7 +2,7 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Collapse from 'react-bootstrap/lib/Collapse';
 
-import styles from './FrontPage.scss';
+import styles from './TeacherInfobox.scss';
 
 const TeacherInfobox = React.createClass({
 
