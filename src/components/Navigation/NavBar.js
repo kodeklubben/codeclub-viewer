@@ -26,7 +26,7 @@ export const NavBar = React.createClass({
           <FlagGroup />
         </Row>
         <Row>
-          <Navbar fluid={true}>
+          <Navbar className={this.props.isStudentMode ? null : "theme-teacher"} fluid={true}>
             <Navbar.Header>
               <Navbar.Brand>
                 <NavLink to="/" onlyActiveOnIndex>
@@ -43,7 +43,7 @@ export const NavBar = React.createClass({
                   <FormControl type="text" placeholder="Søk"/>
                 </FormGroup>
                 {' '}
-                {this.props.isStudentMode ?
+                {!this.props.isStudentMode ?
                   <Button bsStyle="primary" onClick={() => this.props.changeMode()}>LÆRER</Button>
                   :
                   <Button bsStyle="success" onClick={() => this.props.changeMode()}>ELEV</Button>
