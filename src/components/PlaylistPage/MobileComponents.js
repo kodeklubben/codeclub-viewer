@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {LessonFilterContainer} from '../Filter/LessonFilter';
+import {FilterContainer} from '../Filter/Filter';
 import LevelNavigation from '../LessonList/LevelNavigation';
 import PlaylistNavigation from '../Playlist/PlaylistNavigation';
 import MobileButtonsRow from './MobileButtonsRow';
@@ -28,7 +28,7 @@ const MobileComponents = React.createClass({
 
             <Collapse in={this.state.showFilter}>
               <div>
-                <LessonFilterContainer/>
+                <FilterContainer/>
               </div>
             </Collapse>
 

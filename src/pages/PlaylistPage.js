@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {LessonFilterContainer} from '../components/Filter/LessonFilter';
+import {FilterContainer} from '../components/Filter/Filter';
 import LessonList from '../components/LessonList/LessonList';
 import LevelNavigation from '../components/LessonList/LevelNavigation';
 import PlaylistNavigation from '../components/Playlist/PlaylistNavigation';
@@ -60,7 +60,7 @@ export const PlaylistPage = React.createClass({
         <Row>
           {/*Filter desktop*/}
           <Col sm={3} lg={2} xsHidden>
-            <LessonFilterContainer/>
+            <FilterContainer/>
           </Col>
 
           {/*List of lessons grouped by level*/}

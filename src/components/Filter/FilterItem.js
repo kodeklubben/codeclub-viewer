@@ -4,7 +4,7 @@ import {capitalize} from '../../util';
 
 const FilterItem = React.createClass({
   render(){
-    const tagItem = capitalize(this.props.tagItem);
+    const name = capitalize(this.props.name);
     return (
       <div className="checkbox">
         <label>
@@ -12,7 +12,7 @@ const FilterItem = React.createClass({
                  checked={this.props.checked}
                  onChange={this.props.onCheck}
           />
-          {tagItem}
+          {name}
         </label>
       </div>
     );
@@ -20,7 +20,7 @@ const FilterItem = React.createClass({
 });
 
 FilterItem.propTypes = {
-  tagItem: PropTypes.string,
+  name: PropTypes.string,
   checked: PropTypes.bool,
   onCheck: PropTypes.func
 };

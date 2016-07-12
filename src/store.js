@@ -1,8 +1,8 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setModeStudent} from './action_creators';
+import {getConstraints, getLessons, getTags} from './util';
+import {setConstraintFilter, setContext, setFilter, setLessons, setModeStudent} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -32,5 +32,6 @@ store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setModeStudent());
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
+store.dispatch(setConstraintFilter(getConstraints(lessonContext, courseContext)));
 
 export default store;

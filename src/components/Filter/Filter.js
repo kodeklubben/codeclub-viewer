@@ -1,18 +1,21 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {onFilterCheck, resetFilter} from '../../action_creators';
+import {ConstraintFilterGroupContainer} from './ConstraintFilterGroup';
 import FilterGroup from './FilterGroup';
 import Button from 'react-bootstrap/lib/Button';
 
-export const LessonFilter = React.createClass({
+export const Filter = React.createClass({
   render(){
     const filter = this.props.filter || {};
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
       const tagItems = filter[groupName];
       return (
-        <FilterGroup key={idx} groupName={groupName} tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
+        <FilterGroup key={idx} groupName={groupName}
+                     tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
       );
     });
+    
     return (
       <div className='panel panel-student'>
         <div className='panel-heading'>
@@ -20,6 +23,7 @@ export const LessonFilter = React.createClass({
         </div>
         <div className='panel-body'>
           {filterGroups}
+          <ConstraintFilterGroupContainer/>
           <br/>
           <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
         </div>
@@ -28,7 +32,7 @@ export const LessonFilter = React.createClass({
   }
 });
 
-LessonFilter.propTypes = {
+Filter.propTypes = {
   filter: PropTypes.object,
   onFilterCheck: PropTypes.func,
   resetFilter: PropTypes.func
@@ -40,11 +44,11 @@ function mapStateToProps(state) {
   };
 }
 
-export const LessonFilterContainer = connect(
+export const FilterContainer = connect(
   mapStateToProps,
   {
     onFilterCheck,
     resetFilter
   }
 
-)(LessonFilter);
+)(Filter);
