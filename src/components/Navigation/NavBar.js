@@ -10,6 +10,7 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 
+import ModeIndicator from './ModeIndicator';
 import NavLink from './NavLink';
 import FlagGroup from './FlagGroup';
 
@@ -52,6 +53,7 @@ export const NavBar = React.createClass({
             </Navbar.Collapse>
           </Navbar>
         </Row>
+        <ModeIndicator isStudentMode={this.props.isStudentMode}/>
       </Grid>
     );
   }
