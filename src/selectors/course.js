@@ -1,6 +1,5 @@
 import {createSelector} from 'reselect';
 import {getFilteredLessons} from './lesson';
-import {getPlaylists} from './playlist';
 import {capitalize, tagsContainAllTagsInFilter, cleanseTags} from '../util';
 
 const getCourseContext = (state) => state.context.courseContext;
@@ -9,8 +8,8 @@ const getIconContext = (state) => state.context.iconContext;
 
 // Creates a list of courses with lessons that have tags matching the filter
 export const getFilteredCourses = createSelector(
-  [getFilteredLessons, getPlaylists, getIconContext],
-  (lessons = {}, playlists = {}, iconContext) => {
+  [getFilteredLessons, getIconContext],
+  (lessons = {}, iconContext) => {
     return Object.keys(lessons).reduce((res, lessonKey) => {
       const lesson = lessons[lessonKey];
       const courseName = lesson.course;
