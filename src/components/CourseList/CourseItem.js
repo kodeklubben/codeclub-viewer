@@ -23,7 +23,7 @@ const CourseItem = React.createClass({
           <div className={styles.courseItem} onClick={this.onClick.bind(null, course.path)}>
             <img className={styles.courseLogo} src={course.iconPath}/>
             <span className={styles.courseName}>{course.name}</span>
-            <span className={styles.lessonCount}>Oppgaver: {course.lessons.length}</span>
+            <span className={styles.lessonCount}>Oppgaver: {course.lessonCount}</span>
           </div>
         }
       </div>
@@ -35,8 +35,9 @@ CourseItem.propTypes = {
   course: PropTypes.shape({
     name: PropTypes.string,
     path: PropTypes.string,
+    externalLink: PropTypes.string,
     iconPath: PropTypes.string,
-    lessons: PropTypes.array
+    lessonCount: PropTypes.int
   })
 };
 
