@@ -44,7 +44,7 @@ export const  FrontPage = React.createClass({
 
         {/* Filter and courses */}
         <Row>
-          <Filter/>
+          <Filter isStudentMode={this.props.isStudentMode}/>
           <CoursesContainer/>
         </Row>
       </Grid>
