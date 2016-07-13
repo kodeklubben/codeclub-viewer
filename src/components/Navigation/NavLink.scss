@@ -1,16 +1,16 @@
 @import '../../assets/css/colors';
 
-.themeBase {
+.linkBase {
   text-decoration: none !important;
   font-size: 17pt;
 }
 
-.themeDefault {
-  composes: themeBase;
+.linkStudent {
+  composes: linkBase;
   color: $color-green-dark;
 }
 
-.themeTeacher {
-  composes: themeBase;
+.linkTeacher {
+  composes: linkBase;
   color: $color-blue-dark;
 }

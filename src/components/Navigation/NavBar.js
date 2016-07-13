@@ -16,9 +16,9 @@ import FlagGroup from './FlagGroup';
 export const NavBar = React.createClass({
   render() {
     const params = this.props.params;
-    const courseLink = params.course ? <NavLink to={`/${params.course}`}>{params.course}</NavLink> : null;
+    const courseLink = params.course ? <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}`}>{params.course}</NavLink> : null;
     const lessonLink = params.course && params.lesson && params.file ?
-      <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
+      <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
 
     return (
       <Grid fluid={true}>
@@ -29,7 +29,7 @@ export const NavBar = React.createClass({
           <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true}>
             <Navbar.Header>
               <Navbar.Brand>
-                <NavLink to="/" onlyActiveOnIndex>
+                <NavLink isStudentMode={this.props.isStudentMode} to="/" onlyActiveOnIndex>
                   <Glyphicon glyph="home"/>
                 </NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}
