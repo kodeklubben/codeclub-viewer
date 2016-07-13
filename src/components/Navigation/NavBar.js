@@ -17,11 +17,11 @@ export const NavBar = React.createClass({
   render() {
     const params = this.props.params;
     const courseLink = params.course ?
-      <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}`}>
+      <NavLink to={`/${params.course}`}>
         {params.course}
       </NavLink> : null;
     const lessonLink = params.course && params.lesson && params.file ?
-      <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}/${params.lesson}/${params.file}`}>
+      <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>
         {params.file}
       </NavLink> : null;
 
@@ -34,7 +34,7 @@ export const NavBar = React.createClass({
           <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true}>
             <Navbar.Header>
               <Navbar.Brand>
-                <NavLink isStudentMode={this.props.isStudentMode} to="/" onlyActiveOnIndex>
+                <NavLink to="/" onlyActiveOnIndex>
                   <Glyphicon glyph="home"/>
                 </NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}

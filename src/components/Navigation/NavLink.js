@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
@@ -13,4 +14,16 @@ const NavLink = React.createClass({
 
 });
 
-export default withStyles(styles)(NavLink);
+NavLink.propTypes = {
+  isStudentMode: PropTypes.bool
+};
+
+function mapStateToProps(state) {
+  return {
+    isStudentMode: state.isStudentMode
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(NavLink));
