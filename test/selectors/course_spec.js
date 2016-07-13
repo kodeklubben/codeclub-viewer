@@ -59,56 +59,10 @@ describe('course selector', () => {
       const iconContext = function (input) {
         return input;
       };
-      const playlists = {
-        'intro': [
-          {
-            author: 'Bill Gates',
-            course: 'scratch',
-            indexed: true,
-            level: 3,
-            path: 'scratch/asteroids/asteroids',
-            tags: {
-              platform: ['windows', 'mac'],
-              category: ['create game'],
-              subject: ['reading']
-            },
-            title: 'Asteroids'
-          },
-          {
-            author: 'Bill Gates',
-            course: 'scratch',
-            indexed: true,
-            level: 1,
-            path: 'scratch/hei_verden/hei_verden',
-            tags: {
-              platform: ['windows', 'browser'],
-              category: ['create game', 'get started'],
-              subject: ['physics']
-            },
-            title: 'Hei verden'
-          }
-        ],
-        'advanced': [
-          {
-            author: 'Bill Gates',
-            course: 'python',
-            indexed: true,
-            level: 1,
-            path: 'python/adv/adv',
-            tags: {
-              platform: ['windows', 'browser'],
-              category: ['create game', 'get started'],
-              subject: ['physics']
-            },
-            title: 'Adv'
-          }
-        ]
-      };
 
       deepFreeze(lessons);
-      deepFreeze(playlists);
       deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(lessons, playlists, iconContext)).to.eql({
+      expect(getFilteredCourses.resultFunc(lessons, iconContext)).to.eql({
         python: {
           iconPath: './python/logo-black.png',
           lessonCount: 1,
@@ -137,11 +91,9 @@ describe('course selector', () => {
       const iconContext = function (input) {
         return input;
       };
-      const playlists = {};
 
-      deepFreeze(playlists);
       deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(undefined, playlists, iconContext)).to.eql({});
+      expect(getFilteredCourses.resultFunc(undefined, iconContext)).to.eql({});
     });
 
     it('should create an empty object if lessons is an empty array', () => {
@@ -149,12 +101,10 @@ describe('course selector', () => {
       const iconContext = function (input) {
         return input;
       };
-      const playlists = {};
 
       deepFreeze(lessons);
-      deepFreeze(playlists);
       deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(lessons, playlists, iconContext)).to.eql({});
+      expect(getFilteredCourses.resultFunc(lessons, iconContext)).to.eql({});
     });
   });
   
