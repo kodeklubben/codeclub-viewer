@@ -22,7 +22,9 @@ const NavBar = React.createClass({
     const params = this.props.params;
     const courseLink = params.course ? <NavLink to={`/${params.course}`}>{params.course}</NavLink> : null;
     const lessonLink = params.course && params.lesson && params.file ?
-      <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
+      <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>
+        {(params.lesson).replace(/_/g, ' ')}
+      </NavLink> : null;
 
     return (
       <Grid fluid={true}>

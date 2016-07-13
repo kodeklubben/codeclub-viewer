@@ -20,7 +20,7 @@ const getComponentLessonPage = (nextState, cb) => {
   const path = `${params.course}/${params.lesson}/${params.file}`;
 
   const bundledLessonContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$|README\.md$)[^\/]*\.md/);
+    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
   const bundle = bundledLessonContext('./' + path + '.md');
   bundle(result => {
     // How to pass props directly to component,
@@ -41,6 +41,20 @@ const getComponentLessonPage = (nextState, cb) => {
   // });
 };
 
+/*const getComponentLessonInstructionPage = (nextState, cb) => {
+  const params = nextState.params;
+  const path = `${params.course}/${params.lesson}/${params.file}`;
 
-const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage);
+  const bundledLessonInstructionContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
+    /^\.\/[^\/]*\/[^\/]*\/README\.md$/);
+  const bundle = bundledLessonInstructionContext('./' + path + '.md');
+  bundle(result => {
+    cb(null, props => <Lesson {...props} lesson={result}/>);
+  });
+
+};*/
+
+
+const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
+  getComponentLessonPage);
 export default routes;
