@@ -1,0 +1,35 @@
+@import '../../assets/css/fonts';
+
+.link {
+  text-decoration: none !important;
+  color: black;
+  border-bottom: 1px black dotted;
+}
+
+.fontInfoBox {
+  font-family: $font-default;
+  font-size: 12pt;
+  font-weight: 300;
+}
+
+.infoBox {
+  composes: fontInfoBox;
+  padding: 5px;
+  margin: 0 auto;
+  max-width: 700px;
+  background-color: #f7f7f7 !important;
+  border: 1px solid #b2b2b2;
+  border-radius: 10px;
+}
+
+.infoBoxRow {
+  display: flex;
+  flex-direction: row;
+
+  .infoBoxItem {
+    text-align: center;
+  }
+  div {
+    padding: 5px;
+  }
+}
