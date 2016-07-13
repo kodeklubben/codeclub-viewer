@@ -23,10 +23,10 @@ export const NavBar = React.createClass({
     return (
       <Grid fluid={true}>
         <Row>
-          <FlagGroup />
+          <FlagGroup/>
         </Row>
         <Row>
-          <Navbar className={this.props.isStudentMode ? null : 'theme-teacher'} fluid={true}>
+          <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true}>
             <Navbar.Header>
               <Navbar.Brand>
                 <NavLink to="/" onlyActiveOnIndex>
@@ -35,7 +35,7 @@ export const NavBar = React.createClass({
                 {courseLink ? <span> / {courseLink}</span> : null}
                 {lessonLink ? <span className="hidden-xs"> / {lessonLink}</span> : null}
               </Navbar.Brand>
-              <Navbar.Toggle />
+              <Navbar.Toggle className={this.props.isStudentMode ? null : 'toggle-teacher'}/>
             </Navbar.Header>
             <Navbar.Collapse>
               <Navbar.Form pullRight>
