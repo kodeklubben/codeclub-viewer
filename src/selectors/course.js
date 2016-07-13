@@ -16,7 +16,7 @@ export const getFilteredCourses = createSelector(
       const name = capitalize(courseName).replace('_', ' ');
 
       // Increment lessonCount of existing course
-      if (res.hasOwnProperty(courseName)) res[courseName].lessonCount = res[courseName].lessonCount + 1;
+      if (res.hasOwnProperty(courseName)) {res[courseName].lessonCount++;}
       // Or create a new course
       else res[courseName] = {
         iconPath: iconContext('./' + courseName + '/logo-black.png'),

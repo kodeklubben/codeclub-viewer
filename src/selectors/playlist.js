@@ -7,7 +7,10 @@ const getPlaylistPaths = (state, courseName = '') => {
 };
 const getPlaylistContext = (state) => state.context.playlistContext;
 
-// Creates an object containing all playlists
+/**
+ * Creates an object containing playlists
+ * Input props: courseName (string, optional)
+ */
 export const getPlaylists = createSelector(
   [getFilteredLessons, getPlaylistContext, getPlaylistPaths],
   (filteredLessons, playlistContext, playlistPaths) => {

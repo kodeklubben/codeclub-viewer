@@ -8,7 +8,10 @@ const getLessons = (state, courseName = '') => {
 };
 const getFilter = (state) => state.filter;
 
-// Creates an object containing lessons that have tags matching the filter
+/**
+ * Creates an object containing lessons that have tags matching the filter
+ * Input props: courseName (string, optional)
+ */
 export const getFilteredLessons = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
@@ -22,7 +25,10 @@ export const getFilteredLessons = createSelector(
   }
 );
 
-// Creates an object containing indexed lessons that have tags matching the filter
+/**
+ * Creates an object containing indexed lessons that have tags matching the filter
+ * Input props: courseName (string, optional)
+ */
 export const getFilteredAndIndexedLessons = createSelector(
   [getFilteredLessons],
   (filteredLessons = {}) => {
