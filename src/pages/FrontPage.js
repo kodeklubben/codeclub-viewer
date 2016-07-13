@@ -96,7 +96,7 @@ export const  FrontPage = React.createClass({
           {/*Filter mobile*/}
           <Col smHidden mdHidden lgHidden xs={12}>
             <br/>
-            <Button bsStyle='success' onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
+            <Button className={this.props.isStudentMode ? 'btn-student' : 'btn-teacher'} onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
               <Glyphicon glyph={this.state.showMobileFilter ? 'chevron-down' : 'chevron-right'}/>
               Vis/skjul filter
             </Button>

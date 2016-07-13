@@ -6,5 +6,5 @@
 }
 
 .panel-teacher {
-  @include panel-variant($color-blue, $color-blue-dark, $color-blue, darken(adjust-hue($color-blue, -10), 5%));
+  @include panel-variant($color-blue-light, $color-blue-dark, $color-blue-light, darken(adjust-hue($color-blue-light, -10), 5%));
 }
