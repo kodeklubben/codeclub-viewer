@@ -49,8 +49,8 @@ export const NavBar = React.createClass({
                 </FormGroup>
                 {' '}
                 {this.props.isStudentMode
-                  ? <Button className='btn-student' onClick={() => this.props.changeMode()}>ELEV</Button>
-                  : <Button className="btn-teacher" onClick={() => this.props.changeMode()}>LÆRER</Button>}
+                  ? <Button className='btn-student' onClick={() => this.props.changeMode()}>Modus: ELEV</Button>
+                  : <Button className="btn-teacher" onClick={() => this.props.changeMode()}>Modus: LÆRER</Button>}
               </Navbar.Form>
             </Navbar.Collapse>
           </Navbar>
