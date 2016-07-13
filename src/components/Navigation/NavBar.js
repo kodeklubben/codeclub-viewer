@@ -16,9 +16,14 @@ import FlagGroup from './FlagGroup';
 export const NavBar = React.createClass({
   render() {
     const params = this.props.params;
-    const courseLink = params.course ? <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}`}>{params.course}</NavLink> : null;
+    const courseLink = params.course ?
+      <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}`}>
+        {params.course}
+      </NavLink> : null;
     const lessonLink = params.course && params.lesson && params.file ?
-      <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}/${params.lesson}/${params.file}`}>{params.file}</NavLink> : null;
+      <NavLink isStudentMode={this.props.isStudentMode} to={`/${params.course}/${params.lesson}/${params.file}`}>
+        {params.file}
+      </NavLink> : null;
 
     return (
       <Grid fluid={true}>
