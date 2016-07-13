@@ -6,7 +6,7 @@ import CourseList from '../components/CourseList/CourseList';
 import {LessonFilterContainer} from '../components/Filter/LessonFilter';
 import ButtonItem from '../components/ButtonItem';
 import styles from './FrontPage.scss';
-import {changeMode} from '../action_creators';
+import {setModeTeacher} from '../action_creators';
 
 import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
@@ -43,7 +43,7 @@ export const  FrontPage = React.createClass({
               <ButtonItem color='green' onClick={() => this.displayExercise}>
                 Kom i gang!
               </ButtonItem>
-              <ButtonItem color='blue' onClick={() => this.props.changeMode()}>
+              <ButtonItem color='blue' onClick={() => this.props.setModeTeacher()}>
                 Lærer/Veileder
               </ButtonItem>
             </div>
@@ -133,7 +133,8 @@ export const  FrontPage = React.createClass({
 
 FrontPage.propTypes = {
   courses: PropTypes.object,
-  externalCourses: PropTypes.object
+  externalCourses: PropTypes.object,
+  setModeTeacher: PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -147,6 +148,6 @@ function mapStateToProps(state) {
 export const FrontPageContainer = connect(
   mapStateToProps,
   {
-    changeMode
+    setModeTeacher
   }
 )(withStyles(styles)(FrontPage));
