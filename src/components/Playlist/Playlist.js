@@ -24,7 +24,7 @@ const Playlist = React.createClass({
           &nbsp;<Badge>{lessons.length}</Badge>{name}
         </li>
         <ul className={'list-group'} style={this.state.expanded ? null : {display:'none'}}>
-          {lessons.map((lesson, idx) => <LessonItem key={idx} lesson={lesson}/>)}
+          {lessons.map((lesson, idx) => <LessonItem key={idx} showLevelIcon={true} lesson={lesson}/>)}
         </ul>
       </div>
     );

@@ -28,13 +28,16 @@ const LessonItem = React.createClass({
           <a href={lesson.external} target="_blank">
             <div className={styles.lessonItem}>
               {constraints}
-              {lesson.title} <Glyphicon glyph="share"/>
+              <span className={this.props.showLevelIcon ?  styles['level-'+lesson.level] : ''}/>
+              {lesson.title}
+              &nbsp;<Glyphicon glyph="share"/>
             </div>
           </a>
           :
           <Link to={lesson.path}>
             <div className={styles.lessonItem}>
               {constraints}
+              <span className={this.props.showLevelIcon ?  styles['level-'+lesson.level] : ''}/>
               {lesson.title}
             </div>
           </Link>
