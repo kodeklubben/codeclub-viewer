@@ -9,11 +9,34 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
+import Nav from 'react-bootstrap/lib/Nav';
 
 import NavLink from './NavLink';
 import FlagGroup from './FlagGroup';
 
 export const NavBar = React.createClass({
+
+  getInitialState() {
+    return {
+      selectedLanguage: "norway"
+    };
+  },
+
+  handle(eventKey) {
+    switch (eventKey) {
+      case 'norway':
+        this.setState({selectedLanguage: eventKey});
+        break;
+      case 'sweden':
+        this.setState({selectedLanguage: eventKey});
+        break;
+      case 'denmark':
+        this.setState({selectedLanguage: eventKey});
+    }
+  },
+
   render() {
     const params = this.props.params;
     const courseLink = params.course ? <NavLink to={`/${params.course}`}>{params.course}</NavLink> : null;
@@ -48,6 +71,14 @@ export const NavBar = React.createClass({
                   :
                   <Button bsStyle="success" onClick={() => this.props.changeMode()}>ELEV</Button>
                 }
+                {' '}
+                <Nav>
+                  <NavDropdown title={this.state.selectedLanguage} id="basic-nav-dropdown" onSelect={(eventKey) => this.handle(eventKey)}>
+                    <MenuItem eventKey={"norway"}>Action 1</MenuItem>
+                    <MenuItem eventKey={"sweden"}>Action 2</MenuItem>
+                    <MenuItem eventKey={"denmark"}>Action 3</MenuItem>
+                  </NavDropdown>
+                </Nav>
               </Navbar.Form>
             </Navbar.Collapse>
           </Navbar>
