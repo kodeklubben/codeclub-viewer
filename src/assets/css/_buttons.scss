@@ -2,15 +2,15 @@
 @import './fonts';
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons';
 
-.btn-student{
-  @include button-variant(#fff, $color-green, $color-green-median)
+.btn-student {
+  @include button-variant(#fff, $color-green, $color-green-median);
 }
 
-.btn-teacher{
-  @include button-variant(#fff, $color-blue, $color-blue-median)
+.btn-teacher {
+  @include button-variant(#fff, $color-blue, $color-blue-median);
 }
 
-.btn-xxl{
+.btn-xxl {
   @include button-size(0, 0, 1.5em, 1em, 0);
   font-family: $font-default;
   font-weight: 300;
@@ -22,6 +22,6 @@
   border: none;
 }
 
-.btn-sm-fixed-width{
+.btn-sm-fixed-width {
   width: 6em;
 }

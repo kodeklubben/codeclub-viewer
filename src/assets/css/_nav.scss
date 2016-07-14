@@ -1,8 +1,9 @@
 @import './fonts';
 @import './colors';
 
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-    background-color: transparent;
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: transparent;
 }
 
 .navbar-default .navbar-toggle {
@@ -13,15 +14,15 @@
   background-color: $color-green-dark;
 }
 
+.navbar-teacher {
+  background-color: $color-blue-light !important;
+}
+
 .toggle-teacher {
   border-color: $color-blue-dark !important;
   .icon-bar {
     background-color: $color-blue-dark !important;
   }
-}
-
-.navbar-teacher {
-  background-color: $color-blue-light !important;
 }
 
 .navbar-form {
