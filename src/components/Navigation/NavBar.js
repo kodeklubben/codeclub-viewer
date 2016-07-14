@@ -10,31 +10,19 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import NavDropdown from 'react-bootstrap/lib/NavDropdown';
-import Nav from 'react-bootstrap/lib/Nav';
-
+import Dropdown from 'react-bootstrap/lib/Dropdown';
 import NavLink from './NavLink';
-import FlagGroup from './FlagGroup';
 
 export const NavBar = React.createClass({
 
   getInitialState() {
     return {
-      selectedLanguage: "norway"
+      selectedLanguage: 'Norsk'
     };
   },
 
   handle(eventKey) {
-    switch (eventKey) {
-      case 'norway':
-        this.setState({selectedLanguage: eventKey});
-        break;
-      case 'sweden':
-        this.setState({selectedLanguage: eventKey});
-        break;
-      case 'denmark':
-        this.setState({selectedLanguage: eventKey});
-    }
+    this.setState({selectedLanguage: eventKey});
   },
 
   render() {
@@ -46,10 +34,7 @@ export const NavBar = React.createClass({
     return (
       <Grid fluid={true}>
         <Row>
-          <FlagGroup />
-        </Row>
-        <Row>
-          <Navbar fluid={true}>
+          <Navbar fluid={true} fixedTop={true}>
             <Navbar.Header>
               <Navbar.Brand>
                 <NavLink to="/" onlyActiveOnIndex>
@@ -72,13 +57,16 @@ export const NavBar = React.createClass({
                   <Button bsStyle="success" onClick={() => this.props.changeMode()}>ELEV</Button>
                 }
                 {' '}
-                <Nav>
-                  <NavDropdown title={this.state.selectedLanguage} id="basic-nav-dropdown" onSelect={(eventKey) => this.handle(eventKey)}>
-                    <MenuItem eventKey={"norway"}>Action 1</MenuItem>
-                    <MenuItem eventKey={"sweden"}>Action 2</MenuItem>
-                    <MenuItem eventKey={"denmark"}>Action 3</MenuItem>
-                  </NavDropdown>
-                </Nav>
+                <Dropdown id="dropdown-custom-1" onSelect={(eventKey) => this.handle(eventKey)}>
+                  <Dropdown.Toggle className="btn-language">
+                    {this.state.selectedLanguage}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <MenuItem eventKey="Norsk">Norsk</MenuItem>
+                    <MenuItem eventKey="Svensk">Svensk</MenuItem>
+                    <MenuItem eventKey="Dansk">Dansk</MenuItem>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Navbar.Form>
             </Navbar.Collapse>
           </Navbar>
