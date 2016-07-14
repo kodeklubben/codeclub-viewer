@@ -49,9 +49,15 @@ export const NavBar = React.createClass({
                   <FormControl type="text" placeholder="Søk"/>
                 </FormGroup>
                 {' '}
-                <Button className='btn-student' active={this.props.isStudentMode} onClick={() => this.props.changeMode()}>ELEV</Button>
+                <Button className='btn-student' active={this.props.isStudentMode}
+                  onClick={() => this.props.changeMode()}>
+                  ELEV
+                </Button>
                 {' '}
-                <Button className="btn-teacher" active={!this.props.isStudentMode} onClick={() => this.props.changeMode()}>LÆRER</Button>
+                <Button className="btn-teacher" active={!this.props.isStudentMode}
+                  onClick={() => this.props.changeMode()}>
+                  LÆRER
+                </Button>
               </Navbar.Form>
             </Navbar.Collapse>
           </Navbar>
