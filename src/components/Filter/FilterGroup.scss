@@ -1,7 +1,7 @@
 @import '../../assets/css/colors';
 
-.filterGroup{
-  &:first-child > h4{
+.filterGroup {
+  &:first-child > h4 {
     margin-top: 0;
   }
   &:not(:last-child) {

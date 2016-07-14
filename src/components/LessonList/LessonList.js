@@ -18,9 +18,7 @@ const LessonList = React.createClass({
         <h3>{level + '. ' + getLevelName(level)}</h3>
         <ul className='list-group'>
           {lessons.map((lesson, idx) =>
-            lesson.indexed ?
-              <LessonItem key={idx} lesson={lesson} constraints={this.generateMockConstraints(idx)}/>
-              : null
+            <LessonItem key={idx} lesson={lesson} constraints={this.generateMockConstraints(idx)}/>
           )}
         </ul>
       </div>
