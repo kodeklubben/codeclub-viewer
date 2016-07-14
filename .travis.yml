@@ -4,6 +4,7 @@ node_js:
 before_install:
   - git clone https://github.com/kodeklubben/oppgaver.git ../oppgaver
 script:
-  - npm run eslint
-  - npm run test
+  - npm run eslint -s
+  - npm run stylelint -s
+  - npm run test -s
   - ./travis_build_prod.sh

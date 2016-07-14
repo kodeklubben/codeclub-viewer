@@ -5,12 +5,12 @@ import {getFilteredCourses} from '../../src/selectors/course';
 
 describe('course selector', () => {
   describe('getFilteredCourses', () => {
-
-    it('should create an object of courses based on lessons', () => {
+    it('creates an object of courses', () => {
       const lessons = {
         './scratch/asteroids/asteroids': {
           author: 'Bill Gates',
           course: 'scratch',
+          indexed: true,
           level: 3,
           path: 'scratch/asteroids/asteroids',
           tags: {
@@ -23,6 +23,7 @@ describe('course selector', () => {
         './scratch/hei_verden/hei_verden': {
           author: 'Bill Gates',
           course: 'scratch',
+          indexed: true,
           level: 1,
           path: 'scratch/hei_verden/hei_verden',
           tags: {
@@ -35,6 +36,7 @@ describe('course selector', () => {
         './python/hei_verden/hei_verden': {
           author: 'Ola Nordmann',
           course: 'python',
+          indexed: true,
           level: 1,
           path: 'python/hei_verden/hei_verden',
           tags: {
@@ -47,186 +49,37 @@ describe('course selector', () => {
         './web/nettside/nettside': {
           author: 'Ola Nordmann',
           course: 'web',
+          indexed: false,
           level: 2,
           path: 'web/nettside/nettside',
           tags: {},
           title: 'Nettside'
         }
       };
-
-      // TODO: Create testdata contexts
-      // Create fake context
       const iconContext = function (input) {
         return input;
       };
-      const playlists = {
-        'intro': [
-          {
-            author: 'Bill Gates',
-            course: 'scratch',
-            level: 3,
-            path: 'scratch/asteroids/asteroids',
-            tags: {
-              platform: ['windows', 'mac'],
-              category: ['create game'],
-              subject: ['reading']
-            },
-            title: 'Asteroids'
-          },
-          {
-            author: 'Bill Gates',
-            course: 'scratch',
-            level: 1,
-            path: 'scratch/hei_verden/hei_verden',
-            tags: {
-              platform: ['windows', 'browser'],
-              category: ['create game', 'get started'],
-              subject: ['physics']
-            },
-            title: 'Hei verden'
-          }
-        ],
-        'advanced': [
-          {
-            author: 'Bill Gates',
-            course: 'python',
-            level: 1,
-            path: 'python/adv/adv',
-            tags: {
-              platform: ['windows', 'browser'],
-              category: ['create game', 'get started'],
-              subject: ['physics']
-            },
-            title: 'Adv'
-          }
-        ]
-      };
 
       deepFreeze(lessons);
-      deepFreeze(playlists);
       deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(lessons, playlists, iconContext)).to.eql({
+      expect(getFilteredCourses.resultFunc(lessons, iconContext)).to.eql({
         python: {
           iconPath: './python/logo-black.png',
-          lessons: [
-            {
-              author: 'Ola Nordmann',
-              course: 'python',
-              level: 1,
-              path: 'python/hei_verden/hei_verden',
-              tags: {
-                category: [
-                  'create game',
-                  'get started'
-                ],
-                platform: [
-                  'windows',
-                  'ios',
-                  'linux'
-                ],
-                subject: [
-                  'math'
-                ]
-              },
-              title: 'Hei verden'
-            }
-          ],
+          lessonCount: 1,
           name: 'Python',
-          path: 'python',
-          playlists: {'advanced': [
-            {
-              author: 'Bill Gates',
-              course: 'python',
-              level: 1,
-              path: 'python/adv/adv',
-              tags: {
-                platform: ['windows', 'browser'],
-                category: ['create game', 'get started'],
-                subject: ['physics']
-              },
-              title: 'Adv'
-            }
-          ]}
+          path: 'python'
         },
         scratch: {
           iconPath: './scratch/logo-black.png',
-          lessons: [
-            {
-              author: 'Bill Gates',
-              course: 'scratch',
-              level: 3,
-              path: 'scratch/asteroids/asteroids',
-              tags: {
-                category: [
-                  'create game'
-                ],
-                platform: [
-                  'windows',
-                  'mac'
-                ],
-                subject: [
-                  'reading'
-                ]
-              },
-              title: 'Asteroids'
-            },
-            {
-              author: 'Bill Gates',
-              course: 'scratch',
-              level: 1,
-              path: 'scratch/hei_verden/hei_verden',
-              tags: {
-                platform: ['windows', 'browser'],
-                category: ['create game', 'get started'],
-                subject: ['physics']
-              },
-              title: 'Hei verden'
-            }
-          ],
+          lessonCount: 2,
           name: 'Scratch',
-          path: 'scratch',
-          playlists: {'intro': [
-            {
-              author: 'Bill Gates',
-              course: 'scratch',
-              level: 3,
-              path: 'scratch/asteroids/asteroids',
-              tags: {
-                platform: ['windows', 'mac'],
-                category: ['create game'],
-                subject: ['reading']
-              },
-              title: 'Asteroids'
-            },
-            {
-              author: 'Bill Gates',
-              course: 'scratch',
-              level: 1,
-              path: 'scratch/hei_verden/hei_verden',
-              tags: {
-                platform: ['windows', 'browser'],
-                category: ['create game', 'get started'],
-                subject: ['physics']
-              },
-              title: 'Hei verden'
-            }
-          ]}
+          path: 'scratch'
         },
         web: {
           iconPath: './web/logo-black.png',
-          lessons: [
-            {
-              author: 'Ola Nordmann',
-              course: 'web',
-              level: 2,
-              path: 'web/nettside/nettside',
-              tags: {},
-              title: 'Nettside'
-            }
-          ],
+          lessonCount: 1,
           name: 'Web',
-          path: 'web',
-          playlists: {}
+          path: 'web'
         }
       });
     });
@@ -238,11 +91,9 @@ describe('course selector', () => {
       const iconContext = function (input) {
         return input;
       };
-      const playlists = {};
 
-      deepFreeze(playlists);
       deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(undefined, playlists, iconContext)).to.eql({});
+      expect(getFilteredCourses.resultFunc(undefined, iconContext)).to.eql({});
     });
 
     it('should create an empty object if lessons is an empty array', () => {
@@ -250,12 +101,10 @@ describe('course selector', () => {
       const iconContext = function (input) {
         return input;
       };
-      const playlists = {};
 
       deepFreeze(lessons);
-      deepFreeze(playlists);
       deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(lessons, playlists, iconContext)).to.eql({});
+      expect(getFilteredCourses.resultFunc(lessons, iconContext)).to.eql({});
     });
   });
   
