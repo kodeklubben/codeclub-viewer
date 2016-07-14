@@ -14,6 +14,7 @@ import NavLink from './NavLink';
 import FlagGroup from './FlagGroup';
 
 export const NavBar = React.createClass({
+
   render() {
     const params = this.props.params;
     const courseLink = params.course ?
@@ -48,9 +49,9 @@ export const NavBar = React.createClass({
                   <FormControl type="text" placeholder="Søk"/>
                 </FormGroup>
                 {' '}
-                {this.props.isStudentMode
-                  ? <Button className='btn-student' onClick={() => this.props.changeMode()}>Modus: ELEV</Button>
-                  : <Button className="btn-teacher" onClick={() => this.props.changeMode()}>Modus: LÆRER</Button>}
+                <Button className='btn-student' active={this.props.isStudentMode} onClick={() => this.props.changeMode()}>ELEV</Button>
+                {' '}
+                <Button className="btn-teacher" active={!this.props.isStudentMode} onClick={() => this.props.changeMode()}>LÆRER</Button>
               </Navbar.Form>
             </Navbar.Collapse>
           </Navbar>
