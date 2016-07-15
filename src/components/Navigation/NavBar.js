@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {changeMode} from '../../action_creators';
+import {changeMode, setLanguageNorway, setLanguageSweden, setLanguageDenmark} from '../../action_creators';
 
 import Button from 'react-bootstrap/lib/Button';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -22,7 +22,19 @@ export const NavBar = React.createClass({
   },
 
   handle(eventKey) {
-    this.setState({selectedLanguage: eventKey});
+    switch (eventKey) {
+      case 'norway':
+        this.props.setLanguageNorway();
+        this.setState({selectedLanguage: 'Norsk'});
+        break;
+      case 'sweden':
+        this.props.setLanguageSweden();
+        this.setState({selectedLanguage: 'Svensk'});
+        break;
+      case 'denmark':
+        this.props.setLanguageDenmark();
+        this.setState({selectedLanguage: 'Dansk'});
+    }
   },
 
   render() {
@@ -37,34 +49,32 @@ export const NavBar = React.createClass({
           <Navbar fluid={true} fixedTop={true}>
             <Navbar.Header>
               <Navbar.Brand>
-                <NavLink to="/" onlyActiveOnIndex>
-                  <Glyphicon glyph="home"/>
+                <NavLink to='/' onlyActiveOnIndex>
+                  <Glyphicon glyph='home'/>
                 </NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}
-                {lessonLink ? <span className="hidden-xs"> / {lessonLink}</span> : null}
+                {lessonLink ? <span className='hidden-xs'> / {lessonLink}</span> : null}
               </Navbar.Brand>
               <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
               <Navbar.Form pullRight>
                 <FormGroup>
-                  <FormControl type="text" placeholder="Søk"/>
+                  <FormControl type='text' placeholder='Søk'/>
                 </FormGroup>
                 {' '}
-                {this.props.isStudentMode ?
-                  <Button bsStyle="primary" onClick={() => this.props.changeMode()}>LÆRER</Button>
-                  :
-                  <Button bsStyle="success" onClick={() => this.props.changeMode()}>ELEV</Button>
-                }
+                {this.props.isStudentMode
+                  ? <Button bsStyle='primary' onClick={() => this.props.changeMode()}>LÆRER</Button>
+                  : <Button bsStyle='success' onClick={() => this.props.changeMode()}>ELEV</Button>}
                 {' '}
-                <Dropdown id="dropdown-custom-1" onSelect={(eventKey) => this.handle(eventKey)}>
-                  <Dropdown.Toggle className="btn-language">
+                <Dropdown id='btn-language-navbar' onSelect={(eventKey) => this.handle(eventKey)}>
+                  <Dropdown.Toggle className='btn-language'>
                     {this.state.selectedLanguage}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <MenuItem eventKey="Norsk">Norsk</MenuItem>
-                    <MenuItem eventKey="Svensk">Svensk</MenuItem>
-                    <MenuItem eventKey="Dansk">Dansk</MenuItem>
+                    <MenuItem eventKey='norway'>Norsk</MenuItem>
+                    <MenuItem eventKey='sweden'>Svensk</MenuItem>
+                    <MenuItem eventKey='denmark'>Dansk</MenuItem>
                   </Dropdown.Menu>
                 </Dropdown>
               </Navbar.Form>
@@ -84,18 +94,25 @@ NavBar.propTypes = {
     file: PropTypes.string
   }),
   changeMode: PropTypes.func,
-  isStudentMode: PropTypes.bool
+  isStudentMode: PropTypes.bool,
+  setLanguageNorway: PropTypes.func,
+  setLanguageSweden: PropTypes.func,
+  setLanguageDenmark: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    language: state.language
   };
 }
 
 export const NavBarContainer = connect(
   mapStateToProps,
   {
-    changeMode
+    changeMode,
+    setLanguageNorway,
+    setLanguageSweden,
+    setLanguageDenmark
   }
 )(NavBar);

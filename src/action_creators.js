@@ -59,3 +59,21 @@ export function changeMode() {
     type: 'CHANGE_MODE'
   };
 }
+
+export function setLanguageNorway() {
+  return {
+    type: 'SET_LANGUAGE_NORWAY'
+  };
+}
+
+export function setLanguageSweden() {
+  return {
+    type: 'SET_LANGUAGE_SWEDEN'
+  };
+}
+
+export function setLanguageDenmark() {
+  return {
+    type: 'SET_LANGUAGE_DENMARK'
+  };
+}
