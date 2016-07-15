@@ -9,6 +9,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 
 import NavLink from './NavLink';
 import FlagGroup from './FlagGroup';
@@ -49,15 +50,16 @@ export const NavBar = React.createClass({
                   <FormControl type="text" placeholder="Søk"/>
                 </FormGroup>
                 {' '}
-                <Button className='btn-student' active={this.props.isStudentMode}
-                  onClick={() => this.props.changeMode()}>
-                  ELEV
-                </Button>
-                {' '}
-                <Button className="btn-teacher" active={!this.props.isStudentMode}
-                  onClick={() => this.props.changeMode()}>
-                  LÆRER
-                </Button>
+                <ButtonGroup className='btn-group'>
+                  <Button className='btn-student' active={this.props.isStudentMode}
+                    onClick={() => this.props.changeMode()}>
+                    ELEV
+                  </Button>
+                  <Button className="btn-teacher" active={!this.props.isStudentMode}
+                    onClick={() => this.props.changeMode()}>
+                    LÆRER
+                  </Button>
+                </ButtonGroup>
               </Navbar.Form>
             </Navbar.Collapse>
           </Navbar>
