@@ -23,7 +23,7 @@ export const NavBar = React.createClass({
       </NavLink> : null;
     const lessonLink = params.course && params.lesson && params.file ?
       <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>
-        {params.file}
+        {(params.lesson).replace(/_/g, ' ')}
       </NavLink> : null;
 
     return (

@@ -10,7 +10,9 @@ const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/
 const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^\/]*\/playlists\/[^\/]*\.txt$/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README\.md$)[^\/]*\.md/);
-const lessons = getLessons(lessonContext);
+const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
+  /^\.\/[^\/]*\/[^\/]*\/README\.md$/);
+const lessons = getLessons(lessonContext, readmeContext);
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
