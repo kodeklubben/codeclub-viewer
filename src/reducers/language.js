@@ -1,11 +1,11 @@
-export default function(state="YAYAYYAYA", action) {
+export default function(state='norway', action) {
   switch (action.type) {
-    case "SET_LANGUAGE_NORWAY":
-      return "norway";
-    case "SET_LANGUAGE_SWEDEN":
-      return "sweden";
-    case "SET_LANGUAGE_DENMARK":
-      return "denmark";
+    case 'SET_LANGUAGE_NORWAY':
+      return 'norway';
+    case 'SET_LANGUAGE_SWEDEN':
+      return 'sweden';
+    case 'SET_LANGUAGE_DENMARK':
+      return 'denmark';
   }
 
   return state;
