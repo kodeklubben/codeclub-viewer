@@ -1,0 +1,21 @@
+.flag {
+  margin-left: 5px;
+  transition: all .075s ease-in-out;
+  width: 30px;
+  height: 20px;
+}
+
+.icon {
+  margin-left: 5px;
+  transition: all .075s ease-in-out;
+  width: 20px;
+  height: 20px;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+}
+
+.flag:hover {
+  transform: scale(1.2);
+}

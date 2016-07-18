@@ -9,7 +9,7 @@ const FlagDenmark = React.createClass({
     };
 
     return (
-      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 500 350">
+      <svg version="1.1" x="0px" y="0px" width="30" height="20" viewBox="0 0 500 350">
         <rect style={color.s0} width="500" height="350"/>
         <rect x="162.2" style={color.s1} width="54.1" height="350"/>
         <rect y="150" style={color.s1} width="500" height="50"/>

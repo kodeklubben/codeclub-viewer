@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -8,7 +9,8 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 
 import NavLink from './NavLink';
 import ToggleButton from './ToggleButton';
-import FlagGroup from './FlagGroup';
+import SVGLoader from '../../assets/graphics/SVGLoader';
+import styles from './NavBar.scss';
 
 const NavBar = React.createClass({
 
@@ -27,7 +29,11 @@ const NavBar = React.createClass({
     return (
       <Grid fluid={true}>
         <Row>
-          <FlagGroup />
+          <div className={styles.flagGroup}>
+            <SVGLoader type='flag' item='norway'/>
+            <SVGLoader type='flag' item='sweden'/>
+            <SVGLoader type='flag' item='denmark'/>
+          </div>
         </Row>
         <Row>
           <Navbar fluid={true}>
@@ -66,4 +72,4 @@ NavBar.propTypes = {
   })
 };
 
-export default NavBar;
+export default withStyles(styles)(NavBar);
