@@ -21,8 +21,8 @@ export const NavBar = React.createClass({
     };
   },
 
-  handle(eventKey) {
-    switch (eventKey) {
+  handle(language) {
+    switch (language) {
       case 'norway':
         this.props.setLanguageNorway();
         this.setState({selectedLanguage: 'Norsk'});
@@ -69,14 +69,14 @@ export const NavBar = React.createClass({
                   ? <Button bsStyle='primary' onClick={() => this.props.changeMode()}>LÆRER</Button>
                   : <Button bsStyle='success' onClick={() => this.props.changeMode()}>ELEV</Button>}
                 {' '}
-                <Dropdown id='btn-language-navbar' onSelect={(eventKey) => this.handle(eventKey)}>
+                <Dropdown id='btn-language-navbar' onSelect={(language) => this.handle(language)}>
                   <Dropdown.Toggle className='btn-language'>
                     {this.state.selectedLanguage}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <MenuItem eventKey='norway'>Norsk</MenuItem>
-                    <MenuItem eventKey='sweden'>Svensk</MenuItem>
-                    <MenuItem eventKey='denmark'>Dansk</MenuItem>
+                    <MenuItem language='norway'>Norsk</MenuItem>
+                    <MenuItem language='sweden'>Svensk</MenuItem>
+                    <MenuItem language='denmark'>Dansk</MenuItem>
                   </Dropdown.Menu>
                 </Dropdown>
               </Navbar.Form>
