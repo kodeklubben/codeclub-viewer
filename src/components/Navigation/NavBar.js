@@ -11,7 +11,6 @@ import Button from 'react-bootstrap/lib/Button';
 
 import {changeMode} from '../../action_creators';
 import NavLink from './NavLink';
-import ToggleButton from './ToggleButton';
 import SVGLoader from '../../assets/graphics/SVGLoader';
 import styles from './NavBar.scss';
 

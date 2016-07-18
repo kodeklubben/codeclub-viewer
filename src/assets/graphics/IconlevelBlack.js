@@ -8,7 +8,7 @@ const IconLevelBlack = React.createClass({
       stroke:'#000000',
       strokeWidth:'5',
       strokeMiterlimit:'10'
-    }
+    };
 
     return (
       <svg version="1.1" x="0px" y="0px" viewBox="0 0 257 257">
