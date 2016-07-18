@@ -70,7 +70,7 @@ styles:
   # Components
   component-animations: true
   dropdowns: true
-  button-groups: false
+  button-groups: true
   input-groups: false
   navs: false
   navbar: true
