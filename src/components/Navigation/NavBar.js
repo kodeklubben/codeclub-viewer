@@ -51,11 +51,11 @@ export const NavBar = React.createClass({
                 </FormGroup>
                 {' '}
                 <ButtonGroup className='btn-group'>
-                  <Button className='btn-student' active={this.props.isStudentMode}
+                  <Button className='btn-student-nav' active={this.props.isStudentMode}
                     onClick={() => this.props.setModeStudent()}>
                     ELEV
                   </Button>
-                  <Button className="btn-teacher" active={!this.props.isStudentMode}
+                  <Button className="btn-teacher-nav" active={!this.props.isStudentMode}
                     onClick={() => this.props.setModeTeacher()}>
                     LÆRER
                   </Button>
