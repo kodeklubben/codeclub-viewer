@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {changeMode} from '../../action_creators';
+import {setModeStudent, setModeTeacher} from '../../action_creators';
 
 import Button from 'react-bootstrap/lib/Button';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -52,11 +52,11 @@ export const NavBar = React.createClass({
                 {' '}
                 <ButtonGroup className='btn-group'>
                   <Button className='btn-student' active={this.props.isStudentMode}
-                    onClick={() => this.props.changeMode()}>
+                    onClick={() => this.props.setModeStudent()}>
                     ELEV
                   </Button>
                   <Button className="btn-teacher" active={!this.props.isStudentMode}
-                    onClick={() => this.props.changeMode()}>
+                    onClick={() => this.props.setModeTeacher()}>
                     LÆRER
                   </Button>
                 </ButtonGroup>
@@ -76,7 +76,8 @@ NavBar.propTypes = {
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
-  changeMode: PropTypes.func,
+  setModeStudent: PropTypes.func,
+  setModeTeacher: PropTypes.func,
   isStudentMode: PropTypes.bool
 };
 
@@ -89,6 +90,7 @@ function mapStateToProps(state) {
 export const NavBarContainer = connect(
   mapStateToProps,
   {
-    changeMode
+    setModeStudent,
+    setModeTeacher
   }
 )(NavBar);
