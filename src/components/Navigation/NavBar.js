@@ -10,7 +10,6 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
-import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 
 import NavLink from './NavLink';
 import FlagGroup from './FlagGroup';
@@ -52,17 +51,17 @@ export const NavBar = React.createClass({
                 </FormGroup>
                 {' '}
                 <div className='btn-toggle'>
-                <div>Velg modus:</div>
-                <ButtonGroup className='btn-group'>
-                  <Button className='btn-student-nav' active={this.props.isStudentMode}
-                    onClick={() => this.props.setModeStudent()}>
-                    ELEV
-                  </Button>
-                  <Button className="btn-teacher-nav" active={!this.props.isStudentMode}
-                    onClick={() => this.props.setModeTeacher()}>
-                    LÆRER
-                  </Button>
-                </ButtonGroup>
+                  <div>Velg modus:</div>
+                  <ButtonGroup className='btn-group'>
+                    <Button className='btn-student-nav' active={this.props.isStudentMode}
+                      onClick={() => this.props.setModeStudent()}>
+                      ELEV
+                    </Button>
+                    <Button className="btn-teacher-nav" active={!this.props.isStudentMode}
+                      onClick={() => this.props.setModeTeacher()}>
+                      LÆRER
+                    </Button>
+                  </ButtonGroup>
                 </div>
               </Navbar.Form>
             </Navbar.Collapse>
