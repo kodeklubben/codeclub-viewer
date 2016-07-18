@@ -15,49 +15,15 @@
   margin: 50px;
 
   .t1 {
-    color: #000000;
+    color: #000;
   }
   .t2 {
     color: #71bf44;
   }
 }
 
-.link {
-  text-decoration: none !important;
-  color: black;
-  border-bottom: 1px black dotted;
-}
-
-.fontInfoBox {
-  font-family: $font-default;
-  font-size: 12pt;
-  font-weight: 300;
-}
-
-.infoBox {
-  composes: fontInfoBox;
-  padding: 5px;
-  margin: 0 auto;
-  max-width: 700px;
-  background-color: #f7f7f7 !important;
-  border: 1px solid #b2b2b2;
-  border-radius: 10px;
-}
-
-.infoBoxRow {
-  display: flex;
-  flex-direction: row;
-
-  .infoBoxItem {
-    text-align: center;
-  }
-  div {
-    padding: 5px;
-  }
-}
-
 @media (max-width: 700px) {
   .fontTitle {
-      font-size: 25pt;
+    font-size: 25pt;
   }
 }

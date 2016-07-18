@@ -16,7 +16,8 @@
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch",
     "eslint": "eslint src/ test/ --ext .js,.jsx",
-    "testall": "npm run eslint && npm run test"
+    "stylelint": "stylelint 'src/**/*.scss'",
+    "testall": "npm run eslint && npm run stylelint && npm run test"
   },
   "repository": {
     "type": "git",
@@ -95,6 +96,8 @@
     "sass-loader": "3.2.0",
     "static-site-generator-webpack-plugin": "2.1.0",
     "style-loader": "0.13.1",
+    "stylelint": "7.0.1",
+    "stylelint-config-standard": "11.0.0",
     "url-loader": "0.5.7",
     "webpack": "1.13.1",
     "webpack-dev-server": "1.14.0"

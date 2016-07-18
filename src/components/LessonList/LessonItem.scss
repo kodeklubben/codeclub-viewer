@@ -1,6 +1,7 @@
 a:hover {
   text-decoration: none;
 }
+
 .lessonItem {
   font-size: 1.3em;
 
@@ -8,4 +9,9 @@ a:hover {
     cursor: pointer;
     font-weight: bold;
   }
+}
+
+.instructionBtn {
+  float: right;
+  margin-left: 0.5em;
 }
