@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {changeMode, setLanguageNorway, setLanguageSweden, setLanguageDenmark} from '../../action_creators';
+import {changeMode, setLanguage} from '../../action_creators';
 
 import Button from 'react-bootstrap/lib/Button';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -24,15 +24,19 @@ export const NavBar = React.createClass({
   handle(language) {
     switch (language) {
       case 'norway':
-        this.props.setLanguageNorway();
+        this.props.setLanguage(language);
         this.setState({selectedLanguage: 'Norsk'});
         break;
+      case 'norway-nynorsk':
+        this.props.setLanguage(language);
+        this.setState({selectedLanguage: 'Nynorsk'});
+        break;
       case 'sweden':
-        this.props.setLanguageSweden();
+        this.props.setLanguage(language);
         this.setState({selectedLanguage: 'Svensk'});
         break;
       case 'denmark':
-        this.props.setLanguageDenmark();
+        this.props.setLanguage(language);
         this.setState({selectedLanguage: 'Dansk'});
     }
   },
@@ -69,14 +73,15 @@ export const NavBar = React.createClass({
                   ? <Button bsStyle='primary' onClick={() => this.props.changeMode()}>LÆRER</Button>
                   : <Button bsStyle='success' onClick={() => this.props.changeMode()}>ELEV</Button>}
                 {' '}
-                <Dropdown id='btn-language-navbar' onSelect={(language) => this.handle(language)}>
-                  <Dropdown.Toggle className='btn-language'>
+                <Dropdown id='btn-language-navbar' onSelect={(eventKey) => this.handle(eventKey)}>
+                  <Dropdown.Toggle className={this.props.isStudentMode ? 'btn-language-student' : 'btn-language-teacher'}>
                     {this.state.selectedLanguage}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <MenuItem language='norway'>Norsk</MenuItem>
-                    <MenuItem language='sweden'>Svensk</MenuItem>
-                    <MenuItem language='denmark'>Dansk</MenuItem>
+                    <MenuItem eventKey='norway'>Norsk</MenuItem>
+                    <MenuItem eventKey='norway-nynorsk'>Norsk (nynorsk)</MenuItem>
+                    <MenuItem eventKey='sweden'>Svensk</MenuItem>
+                    <MenuItem eventKey='denmark'>Dansk</MenuItem>
                   </Dropdown.Menu>
                 </Dropdown>
               </Navbar.Form>
@@ -97,9 +102,7 @@ NavBar.propTypes = {
   }),
   changeMode: PropTypes.func,
   isStudentMode: PropTypes.bool,
-  setLanguageNorway: PropTypes.func,
-  setLanguageSweden: PropTypes.func,
-  setLanguageDenmark: PropTypes.func
+  setLanguage: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -113,8 +116,6 @@ export const NavBarContainer = connect(
   mapStateToProps,
   {
     changeMode,
-    setLanguageNorway,
-    setLanguageSweden,
-    setLanguageDenmark
+    setLanguage
   }
 )(NavBar);

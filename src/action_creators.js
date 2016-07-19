@@ -60,20 +60,9 @@ export function changeMode() {
   };
 }
 
-export function setLanguageNorway() {
+export function setLanguage(language) {
   return {
-    type: 'SET_LANGUAGE_NORWAY'
-  };
-}
-
-export function setLanguageSweden() {
-  return {
-    type: 'SET_LANGUAGE_SWEDEN'
-  };
-}
-
-export function setLanguageDenmark() {
-  return {
-    type: 'SET_LANGUAGE_DENMARK'
+    type: 'SET_LANGUAGE',
+    payload: language
   };
 }
