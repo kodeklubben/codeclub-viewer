@@ -18,6 +18,17 @@
   @include button-variant($color-blue-dark, transparent, $color-blue-dark);
 }
 
+.btn-language {
+  padding: 2px;
+  font-size: 10pt;
+}
+
+.btn-language-dropdown {
+  position: absolute;
+  right: 15px;
+  top: 2.5px;
+}
+
 .btn-xxl {
   @include button-size(0, 0, 1.5em, 1em, 0);
   font-family: $font-default;

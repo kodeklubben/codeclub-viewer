@@ -53,6 +53,19 @@ export const NavBar = React.createClass({
       <Grid fluid={true}>
         <Row>
           <Navbar fluid={true} fixedTop={true}>
+            <Dropdown id='language-dropdown' className='btn-language-dropdown pull-right'
+              onSelect={(eventKey) => this.handle(eventKey)}>
+              <Dropdown.Toggle className={this.props.isStudentMode
+                ? 'btn-language-student btn-language' : 'btn-language-teacher btn-language'}>
+                {this.state.selectedLanguage}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <MenuItem eventKey='norway'>Norsk</MenuItem>
+                <MenuItem eventKey='norway-nynorsk'>Norsk (nynorsk)</MenuItem>
+                <MenuItem eventKey='sweden'>Svensk</MenuItem>
+                <MenuItem eventKey='denmark'>Dansk</MenuItem>
+              </Dropdown.Menu>
+            </Dropdown>
             <Navbar.Header>
               <Navbar.Brand>
                 <NavLink to='/' onlyActiveOnIndex>
@@ -72,18 +85,6 @@ export const NavBar = React.createClass({
                 {this.props.isStudentMode
                   ? <Button bsStyle='primary' onClick={() => this.props.changeMode()}>LÆRER</Button>
                   : <Button bsStyle='success' onClick={() => this.props.changeMode()}>ELEV</Button>}
-                {' '}
-                <Dropdown id='btn-language-navbar' onSelect={(eventKey) => this.handle(eventKey)}>
-                  <Dropdown.Toggle className={this.props.isStudentMode ? 'btn-language-student' : 'btn-language-teacher'}>
-                    {this.state.selectedLanguage}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <MenuItem eventKey='norway'>Norsk</MenuItem>
-                    <MenuItem eventKey='norway-nynorsk'>Norsk (nynorsk)</MenuItem>
-                    <MenuItem eventKey='sweden'>Svensk</MenuItem>
-                    <MenuItem eventKey='denmark'>Dansk</MenuItem>
-                  </Dropdown.Menu>
-                </Dropdown>
               </Navbar.Form>
             </Navbar.Collapse>
           </Navbar>
@@ -102,7 +103,7 @@ NavBar.propTypes = {
   }),
   changeMode: PropTypes.func,
   isStudentMode: PropTypes.bool,
-  setLanguage: PropTypes.func,
+  setLanguage: PropTypes.func
 };
 
 function mapStateToProps(state) {
