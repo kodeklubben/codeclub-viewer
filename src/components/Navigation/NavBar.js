@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/lib/Button';
 
 import {changeMode} from '../../action_creators';
 import NavLink from './NavLink';
-import SVGLoader from '../../assets/graphics/SVGLoader';
+import Flag from '../Flags/Flag';
 import styles from './NavBar.scss';
 
 export const NavBar = React.createClass({
@@ -27,9 +27,9 @@ export const NavBar = React.createClass({
       <Grid fluid={true}>
         <Row>
           <div className={styles.flagGroup}>
-            <SVGLoader type='flag' item='norway'/>
-            <SVGLoader type='flag' item='sweden'/>
-            <SVGLoader type='flag' item='denmark'/>
+            <Flag country={'norway'}/>
+            <Flag country={'sweden'}/>
+            <Flag country={'denmark'}/>
           </div>
         </Row>
         <Row>
