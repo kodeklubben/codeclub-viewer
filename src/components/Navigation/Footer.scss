@@ -1,0 +1,52 @@
+@import '../../assets/css/fonts';
+@import '../../assets/css/colors';
+
+.container {
+  margin-top: 100px;
+  padding-bottom: 20px;
+  background-color: $color-green-light;
+  font-family: $font-default;
+  font-weight: 300;
+  font-size: 15pt;
+  color: $color-green-dark !important;
+  a {
+    text-decoration: none;
+    color: $color-green-dark;
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.linkGroup {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.svg {
+  width: 100px;
+  height: auto;
+  transition: all 0.075s ease-in-out;
+}
+
+.img {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  width: auto;
+  height: 50px;
+  transition: all 0.075s ease-in-out;
+}
+
+.divider {
+  border-top: 1px solid;
+  width: 75%;
+  margin: 20px auto;
+}
+
+.svg:hover, .img:hover {
+  transform: scale(1.2);
+}
