@@ -8,6 +8,7 @@ a:hover {
   &:hover {
     cursor: pointer;
     font-weight: bold;
+    white-space: nowrap;
   }
 }
 
