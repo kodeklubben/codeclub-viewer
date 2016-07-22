@@ -7,10 +7,10 @@ import styles from './TeacherInfobox.scss';
 const TeacherInfobox = React.createClass({
 
   render() {
-    const url = {
-      assistant: 'http://kidsakoder.no/kodeklubben/',
-      teacher: 'http://kidsakoder.no/skole/'
-    };
+    const url = [
+      'http://kidsakoder.no/skole/valgfag/',
+      'http://kidsakoder.no/kodeklubben/'
+    ];
 
     return (
       <div>
@@ -27,21 +27,21 @@ const TeacherInfobox = React.createClass({
             <div className={styles.infoBoxRow}>
               <div>
                 <h3>Lærer</h3>
-                text text text text text text text text text text text
-                text text text text text text text text text text text
-                text text text text text text text text text text text
-                text text text text text text text text text text text
+                  Lær Kidsa Koding har gjennom flere år med undervisning i programmering
+                  gjort seg mange erfaringer og har produsert mye læringsmateriell. Her
+                  finner du informasjon om programmering som valgfag, forsøkslærerplanen,
+                  og hvilke skoler som skal delta i pilotprosjektet.
                 <br /><br />
-                <a className={styles.link} href={url.teacher}>Lær mer</a>
+                <a className={styles.link} href={url[0]}>Lær mer</a>
               </div>
               <div>
                 <h3>Veileder</h3>
-                text text text text text text text text text text text
-                text text text text text text text text text text text
-                text text text text text text text text text text text
-                text text text text text text text text text text text
+                  Som veileder ved en kodeklubb er du i en unik posisjon til å hjelpe barn
+                  og unge med å komme i gang med programmering og å inspirere til videre utvikling.
+                  Her finner du nyttige ressurser til oppgaver for nybegynnere og viderekomne, og
+                  informasjon om hvordan du kan starte din egen kodeklubb.
                 <br /><br />
-                <a className={styles.link} href={url.assistant}>Lær mer</a>
+                <a className={styles.link} href={url[1]}>Lær mer</a>
               </div>
             </div>
           </div>
