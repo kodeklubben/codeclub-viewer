@@ -1,0 +1,10 @@
+.fixed {
+  position: fixed;
+  top: 200px;
+  bottom: 25px;
+}
+
+.scrollable {
+  overflow-y: auto;
+  height: 100%;
+}
