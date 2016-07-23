@@ -42,6 +42,8 @@ export const  FrontPage = React.createClass({
           <TeacherInfobox isStudentMode={this.props.isStudentMode}/>
         </Row>
 
+        <hr/>
+
         {/* Filter and courses */}
         <Row>
           <Filter isStudentMode={this.props.isStudentMode}/>
