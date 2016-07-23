@@ -28,7 +28,22 @@ function extractTags(context) {
   return (context.keys()).reduce((res, path) => {
     const fm = context(path).frontmatter;
     const tags = cleanseTags(fm.tags, true);
-    return {...res, ...tags};
+    return mergeTags(res, tags);
+  }, {});
+}
+
+/**
+ * 
+ * @param {Object} tagsA
+ * @param {Object} tagsB
+ * @returns {Object} mergedTags
+ */
+export function mergeTags(tagsA, tagsB){
+  const groups = [...new Set(Object.keys(tagsA).concat(Object.keys(tagsB)))];
+  return groups.reduce((res, groupName) => {
+    const tagsFromA = tagsA[groupName];
+    const tagsFromB = tagsB[groupName];
+    return {...res, [groupName]: {...tagsFromA, ...tagsFromB}};
   }, {});
 }
 
@@ -89,7 +104,7 @@ export function cleanseTags(tags, toObject = false) {
   if (tags == null) return {};
 
   return Object.keys(tags).reduce((result, groupName) => {
-    let tagItemsArray = fixNonArrayTagList(tags[groupName]);
+    let tagItemsArray = fixNonArrayTagList(tags[groupName]).filter(item => item.length > 0);
 
     // Make groupName and all tags lowerCase
     tagItemsArray = tagItemsArray.map(tagItem => tagItem.toLowerCase());
@@ -126,27 +141,55 @@ export function fixNonArrayTagList(tagItems) {
 }
 
 /**
- * Check if tags contain all tags in filter
+ * Check if tags contain at least one tag in each group that are checked in filter
  * @param {Object} tags
  * @param {Object} filter
- * @returns {boolean} tagsContainAllTagsInFilter
+ * @returns {boolean}
  */
-export function tagsContainAllTagsInFilter(tags, filter) {
+export function tagsMatchFilter(tags, filter) {
   // Filter is empty
   if (Object.keys(filter).length === 0) return true;
 
-  for (let groupName in filter) {
-    if (filter.hasOwnProperty(groupName)) {
-      const filterTagItems = filter[groupName];
-      const tagItems = tags[groupName] || [];
-      // Check if there exist at least one filterTag that the tags does not have
-      if (Object.keys(filterTagItems).find((tagItemName) => {
-        const tagInFilter = filterTagItems[tagItemName];
-        // Tag is in filter and tags does not contain the tag
-        return tagInFilter && tagItems.indexOf(tagItemName) < 0;
-      })) return false;// Found a filterTag that is NOT in lesson
-    }
-  }
-  // Tags contains all tags in the filter
-  return true;
+  // Get groups with checked tags from filter
+  const checkedFilter = getFilterWithOnlyCheckedTags(filter);
+
+  const groups = Object.keys(checkedFilter);
+  // Find a group where none of the checked tags from filter is in tags
+  const groupWithNoCheckedTags = groups.find((group) => {
+    if (!tags.hasOwnProperty(group)) return true;
+
+    const tagNamesInTags = tags[group];
+    const tagNamesInFilter = Object.keys(checkedFilter[group]);
+    // Check if tags has at least one of the checked tags in filter
+    return arrayIntersection(tagNamesInFilter, tagNamesInTags).length === 0;
+  });
+
+  // True if tags has at least one tag in each group that are checked in the filter
+  return groupWithNoCheckedTags == null;
+}
+
+/**
+ * Get identical items in arrA and arrB
+ * @param {Array} arrA
+ * @param {Array} arrB
+ * @returns {Array}
+ */
+export function arrayIntersection(arrA, arrB) {
+  return arrA.filter(item => arrB.indexOf(item) !== -1);
+}
+
+/**
+ * Get filter with only checked tags
+ * @param {Object} filter
+ * @returns {Object} checkedFilter
+ */
+export function getFilterWithOnlyCheckedTags(filter) {
+  return Object.keys(filter).reduce((res, groupName) => {
+    const tags = filter[groupName];
+    const checkedTags = Object.keys(tags).reduce((prev, tagName) => {
+      const isChecked = tags[tagName];
+      return isChecked ? {...prev, [tagName]: true} : prev;
+    }, {});
+    return Object.keys(checkedTags).length > 0 ? {...res, [groupName]: checkedTags} : res;
+  }, {});
 }
