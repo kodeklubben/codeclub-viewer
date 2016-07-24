@@ -2,9 +2,12 @@ language: node_js
 node_js:
   - "6.2.2"
 before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get -qq update
-  - sudo apt-get install -y libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
+  - sudo apt-get install -y libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++-4.8
   - git clone https://github.com/kodeklubben/oppgaver.git ../oppgaver
+env:
+  - CXX=g++-4.8
 script:
   - npm run eslint -s
   - npm run stylelint -s
