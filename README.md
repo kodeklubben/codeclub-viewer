@@ -2,14 +2,27 @@
 A viewer to display codeclub lessons
 
 ## Getting started
+1. Clone repositories:
 ```
 git clone https://github.com/NorwegianKiwi/codeclub-viewer.git
 git clone https://github.com/kodeklubben/oppgaver.git
+```
+
+2. Install [cairo dependencies](https://github.com/Automattic/node-canvas#installation) for your operating system.
+
+
+3. Install dependencies:
+```
 cd codeclub-viewer
 npm install
+````
+
+4. Start development server:
+```
 npm start
 ```
-Then open http://localhost:8080
+
+5. Open http://localhost:8080 in your browser.
 
 ## Redux DevTools
 Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
