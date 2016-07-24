@@ -1,7 +1,8 @@
 @import "../../../node_modules/highlight.js/styles/idea";
 
 // scratch code is colored and stands nice by itself
-pre.blocks, code.b {
+pre.blocks,
+code.b {
   background-color: inherit;
   border: 0;
 }
@@ -9,16 +10,16 @@ pre.blocks, code.b {
 // manual colors for scratch code
 // example: Press `motion`{.blockmotion} ...
 code {
-  &.blockmotion { background-color: #505FD7; }
-  &.blocklooks { background-color: #9B33D9; }
-  &.blocksound { background-color: #D000C2; }
-  &.blockpen { background-color: #00A16F; }
-  &.blockdata { background-color: #FF7500; }
-  &.blockevents { background-color: #D38117; }
-  &.blockcontrol { background-color: #E9AA00; }
-  &.blocksensing { background-color: #00A3E6; }
-  &.blockoperators { background-color: #00C114; }
-  &.blockmoreblocks { background-color: #71009A; }
+  &.blockmotion { background-color: #505fd7; }
+  &.blocklooks { background-color: #9b33d9; }
+  &.blocksound { background-color: #d000c2; }
+  &.blockpen { background-color: #00a16f; }
+  &.blockdata { background-color: #ff7500; }
+  &.blockevents { background-color: #d38117; }
+  &.blockcontrol { background-color: #e9aa00; }
+  &.blocksensing { background-color: #00a3e6; }
+  &.blockoperators { background-color: #00c114; }
+  &.blockmoreblocks { background-color: #71009a; }
 
   &.blockmotion,
   &.blocklooks,
