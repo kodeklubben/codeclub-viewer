@@ -36,13 +36,13 @@ export const NavBar = React.createClass({
       case 'norwegian':
         return 'Norsk';
       case 'norwegian-nynorsk':
-        return 'Norsk-Nynorsk'
+        return 'Norsk-Nynorsk';
       case 'swedish':
-        return 'Svensk'
+        return 'Svensk';
       case 'english':
-        return 'Engelsk'
+        return 'Engelsk';
       case 'danish':
-        return 'Dansk'
+        return 'Dansk';
     }
   },
 
