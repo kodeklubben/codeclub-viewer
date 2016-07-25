@@ -15,29 +15,34 @@ import NavLink from './NavLink';
 
 export const NavBar = React.createClass({
 
-  getInitialState() {
-    return {
-      selectedLanguage: 'Norsk'
-    };
-  },
-
   handle(language) {
     switch (language) {
-      case 'norway':
+      case 'norwegian':
         this.props.setLanguage(language);
-        this.setState({selectedLanguage: 'Norsk'});
         break;
-      case 'norway-nynorsk':
+      case 'norwegian-nynorsk':
         this.props.setLanguage(language);
-        this.setState({selectedLanguage: 'Nynorsk'});
         break;
-      case 'sweden':
+      case 'swedish':
         this.props.setLanguage(language);
-        this.setState({selectedLanguage: 'Svensk'});
         break;
-      case 'denmark':
+      case 'danish':
         this.props.setLanguage(language);
-        this.setState({selectedLanguage: 'Dansk'});
+    }
+  },
+
+  getLanguageName(language) {
+    switch(language) {
+      case 'norwegian':
+        return 'Norsk';
+      case 'norwegian-nynorsk':
+        return 'Norsk-Nynorsk'
+      case 'swedish':
+        return 'Svensk'
+      case 'english':
+        return 'Engelsk'
+      case 'danish':
+        return 'Dansk'
     }
   },
 
@@ -57,13 +62,13 @@ export const NavBar = React.createClass({
               onSelect={(eventKey) => this.handle(eventKey)}>
               <Dropdown.Toggle className={this.props.isStudentMode
                 ? 'btn-language-student btn-language' : 'btn-language-teacher btn-language'}>
-                {this.state.selectedLanguage}
+                {this.getLanguageName(this.props.language)}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <MenuItem eventKey='norway'>Norsk</MenuItem>
-                <MenuItem eventKey='norway-nynorsk'>Norsk (nynorsk)</MenuItem>
-                <MenuItem eventKey='sweden'>Svensk</MenuItem>
-                <MenuItem eventKey='denmark'>Dansk</MenuItem>
+                <MenuItem eventKey='norwegian'>Norsk</MenuItem>
+                <MenuItem eventKey='norwegian-nynorsk'>Norsk-Nynorsk</MenuItem>
+                <MenuItem eventKey='swedish'>Svensk</MenuItem>
+                <MenuItem eventKey='danish'>Dansk</MenuItem>
               </Dropdown.Menu>
             </Dropdown>
             <Navbar.Header>
