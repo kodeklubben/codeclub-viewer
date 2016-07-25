@@ -2,6 +2,8 @@ import React, {PropTypes} from 'react';
 import styles from './CourseItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+
 const CourseItem = React.createClass({
   contextTypes: {
     router: React.PropTypes.object
@@ -15,9 +17,9 @@ const CourseItem = React.createClass({
     return (
       <div>
         {isExternal ?
-          <a className={styles.courseItem} href={course.externalLink}>
+          <a className={styles.courseItem} href={course.externalLink} target='_blank'>
             <img className={styles.courseLogo} src={course.iconPath}/>
-            <span className={styles.courseName}>{course.name}</span>
+            <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
           </a>
           :
           <div className={styles.courseItem} onClick={this.onClick.bind(null, course.path)}>
