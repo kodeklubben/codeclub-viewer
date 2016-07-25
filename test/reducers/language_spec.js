@@ -19,7 +19,7 @@ describe('language reducer', () => {
       expect(nextState).to.equal('norway');
     });
 
-    it('sets current language to null if argument is not spesified or not valid', () => {
+    it('sets current language to null if argument is not specified or not valid', () => {
       const initialState = {};
       const action = {
         type: 'SET_LANGUAGE',
