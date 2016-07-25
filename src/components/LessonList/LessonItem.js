@@ -30,7 +30,7 @@ export const LessonItem = React.createClass({
           <a href={lesson.external} target="_blank">
             <div className={styles.lessonItem}>
               {constraints}
-              {lesson.title} <Glyphicon glyph="share"/>
+              {lesson.title} <Glyphicon glyph="new-window"/>
             </div>
           </a>
           :

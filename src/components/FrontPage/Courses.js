@@ -10,7 +10,7 @@ export const Courses = React.createClass({
 
   render() {
     return (
-      <Col xs={12} sm={8} md={9} lg={10}>
+      <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
         <Row>
           <Col xs={12}>
             <h2>Kurs</h2>
