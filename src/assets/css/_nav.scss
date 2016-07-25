@@ -12,7 +12,17 @@
 
 .navbar-default .navbar-toggle .icon-bar {
   background-color: $color-green-dark;
-  color: $color-green-dark;
+}
+
+.navbar-teacher {
+  background-color: $color-blue-light !important;
+}
+
+.toggle-teacher {
+  border-color: $color-blue-dark !important;
+  .icon-bar {
+    background-color: $color-blue-dark !important;
+  }
 }
 
 .navbar-form {
@@ -20,6 +30,15 @@
   box-shadow: none;
   padding-left: 0;
   padding-right: 0;
+  display: inline-block;
+}
+
+.btn-toggle {
+  display: inline-block;
+}
+
+.navbar-brand {
+  padding: 25px 15px;
 }
 
 .navbar-right {
@@ -51,5 +70,8 @@
   }
   .form-group {
     max-width: 200px;
+  }
+  .navbar-brand {
+    padding: 15px;
   }
 }
