@@ -30,7 +30,7 @@ import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 ///////////////
 const buildDir = 'dist';
 const publicPath = '/';
-export const lessonSrc = process.platform === 'win32' ? path.basename('../oppgaver/src') : '../oppgaver/src';
+export const lessonSrc = '../oppgaver/src';
 
 // Loaders for lesson files written in markdown (.md)
 const frontmatterLoaders = ['json', 'front-matter?onlyAttributes'];
