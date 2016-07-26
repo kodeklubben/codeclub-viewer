@@ -4,14 +4,29 @@
 .container {
   margin-top: 100px;
   padding-bottom: 20px;
-  background-color: $color-green-light;
-  font-family: $font-default;
   font-weight: 300;
   font-size: 15pt;
-  color: $color-green-dark !important;
+  font-family: $font-default;
   a {
     text-decoration: none;
-    color: $color-green-dark;
+  }
+}
+
+.containerStudent {
+  composes: container;
+  background-color: $color-green-light;
+  color: $color-green-dark !important;
+  a {
+    color: $color-green-dark !important;
+  }
+}
+
+.containerTeacher {
+  composes: container;
+  background-color: $color-blue-light;
+  color: $color-blue-dark !important;
+  a {
+    color: $color-blue-dark !important;
   }
 }
 
@@ -21,9 +36,7 @@
 
 .linkGroup {
   display: inline-block;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  margin: 20px;
 }
 
 .svg {
@@ -42,9 +55,11 @@
 }
 
 .divider {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
   border-top: 1px solid;
   width: 75%;
-  margin: 20px auto;
 }
 
 .svg:hover,

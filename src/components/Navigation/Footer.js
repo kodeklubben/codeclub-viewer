@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -7,40 +8,49 @@ import styles from './Footer.scss';
 
 const Footer = React.createClass({
 
+  getGitHubLink() {
+    const url = 'https://github.com/kodeklubben/oppgaver/';
+
+    return (
+      <div>
+        <Row className={styles.center}>
+          <p>Bidra?</p>
+        </Row>
+        <Row className={styles.center}>
+          <a href={url}>
+            <img className={styles.svg} src={'src/assets/graphics/github-teacher.svg'}/>
+          </a>
+        </Row>
+        <Row>
+          <div className={styles.divider}/>
+        </Row>
+      </div>
+    );
+  },
+
   render() {
     const url = [
-      'https://github.com/kodeklubben/oppgaver/',
       'http://kidsakoder.no/',
       'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
       'http://kidsakoder.no/2015/07/03/kodeklubben-trondheim-utvikler-materiell-i-sommer/'
     ];
 
     return (
-      <Grid fluid={true} className={styles.container}>
-        <Row className={styles.center}>
-          <p>Bidra?</p>
-        </Row>
-        <Row className={styles.center}>
-          <a href={url[0]}>
-            <img className={styles.svg} src={'src/assets/graphics/github.svg'}/>
-          </a>
-        </Row>
-        <Row>
-          <div className={styles.divider}/>
-        </Row>
+      <Grid fluid={true} className={this.props.isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+        {this.props.isStudentMode ? null : this.getGitHubLink()}
         <Row className={styles.center}>
           <div className={styles.linkGroup}>
-            <a href={url[1]}>kidsakoder.no</a>
+            <a href={url[0]}>kidsakoder.no</a>
           </div>
           <div className={styles.linkGroup}>
-            <a href={url[2]}>Last ned alle kurs som zip-fil</a>
+            <a href={url[1]}>Last ned alle kurs som zip-fil</a>
           </div>
         </Row>
         <Row className={styles.center}>
-          <a href={url[3]}>
+          <a href={url[2]}>
             <img className={styles.img} src={'src/assets/graphics/smn.jpg'}/>
           </a>
-          <a href={url[3]}>
+          <a href={url[2]}>
             <img className={styles.img} src={'src/assets/graphics/ibok.jpg'}/>
           </a>
         </Row>
@@ -50,4 +60,16 @@ const Footer = React.createClass({
 
 });
 
-export default withStyles(styles)(Footer);
+Footer.propTypes = {
+  isStudentMode: PropTypes.bool
+};
+
+function mapStateToProps(state) {
+  return {
+    isStudentMode: state.isStudentMode
+  };
+}
+
+export const FooterContainer = connect(
+  mapStateToProps,
+)(withStyles(styles)(Footer));

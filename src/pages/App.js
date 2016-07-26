@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavBarContainer} from '../components/Navigation/NavBar';
-import Footer from '../components/Navigation/Footer';
+import {FooterContainer} from '../components/Navigation/Footer';
 
 const App = React.createClass({
 
@@ -9,7 +9,7 @@ const App = React.createClass({
       <div>
         <NavBarContainer params={this.props.params}/>
         {this.props.children}
-        <Footer/>
+        <FooterContainer/>
       </div>
     );
   }
