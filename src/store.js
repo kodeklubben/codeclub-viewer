@@ -1,8 +1,8 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setModeStudent} from './action_creators';
+import {getLessons, getTags, getTeacherInfo} from './util';
+import {setContext, setFilter, setLessons, setModeStudent, setTeacherInfo} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -13,6 +13,7 @@ const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
 const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/README\.md$/);
 const lessons = getLessons(lessonContext, readmeContext);
+const teacherInfoContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -33,6 +34,7 @@ store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setModeStudent());
+store.dispatch(setTeacherInfo(getTeacherInfo(teacherInfoContext)));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 export default store;

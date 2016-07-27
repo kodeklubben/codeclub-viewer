@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -29,17 +30,11 @@ const TeacherInfobox = React.createClass({
           <Row>
             <Col xs={6} md={6}>
               <h3>Lærer</h3>
-              Lær Kidsa Koding har gjennom flere år med undervisning i programmering
-              gjort seg mange erfaringer og har produsert mye læringsmateriell. Her
-              finner du informasjon om programmering som valgfag, forsøkslærerplanen,
-              og hvilke skoler som skal delta i pilotprosjektet.
+              {this.props.infoTeacher}
             </Col>
             <Col xs={6} md={6}>
               <h3>Veileder</h3>
-              Som veileder ved en kodeklubb er du i en unik posisjon til å hjelpe barn
-              og unge med å komme i gang med programmering og å inspirere til videre utvikling.
-              Her finner du nyttige ressurser til oppgaver for nybegynnere og viderekomne, og
-              informasjon om hvordan du kan starte din egen kodeklubb.
+              {this.props.infoAssistant}
             </Col>
           </Row>
           <Row>
@@ -58,7 +53,19 @@ const TeacherInfobox = React.createClass({
 });
 
 TeacherInfobox.propTypes = {
+  infoTeacher: PropTypes.string,
+  infoAssistant: PropTypes.string,
   isStudentMode: PropTypes.bool
 };
 
-export default withStyles(styles)(TeacherInfobox);
+function mapStateToProps(state) {
+  return {
+    infoTeacher: state.teacherInfo.teacher,
+    infoAssistant: state.teacherInfo.assistant,
+    isStudentMode: state.isStudentMode
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(TeacherInfobox));

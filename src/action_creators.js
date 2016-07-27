@@ -59,3 +59,10 @@ export function changeMode() {
     type: 'CHANGE_MODE'
   };
 }
+
+export function setTeacherInfo(context) {
+  return {
+    type: 'SET_TEACHER_INFO',
+    payload: context
+  };
+}
