@@ -65,7 +65,7 @@
     "case-sensitive-paths-webpack-plugin": "^1.1.2",
     "chai": "^3.5.0",
     "clean-webpack-plugin": "^0.1.9",
-    "combine-loader": "fredaas/combine-loader#fix-windows-paths-compiled",
+    "combine-loader": "0.2.0",
     "compression": "^1.6.2",
     "cross-env": "^1.0.8",
     "css-loader": "^0.23.1",
