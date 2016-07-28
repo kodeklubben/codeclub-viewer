@@ -14,6 +14,7 @@ const FilterGroup = React.createClass({
         <FilterItem key={idx} tagItem={tagItem} checked={filterTags[tagItem]} onCheck={onCheck}/>
       );
     });
+
     return (
       <div className={styles.filterGroup}>
         <h4>{groupName}</h4>

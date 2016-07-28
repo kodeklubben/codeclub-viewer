@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {tagsContainAllTagsInFilter} from '../util';
+import {tagsMatchFilter} from '../util';
 
 const getLessons = (state, courseName = '') => {
   return Object.keys(state.lessons).reduce((res, lessonPath) => {
@@ -18,7 +18,7 @@ export const getFilteredLessons = createSelector(
 
     return Object.keys(lessons).reduce((res, lessonKey) => {
       const lesson = lessons[lessonKey];
-      if (tagsContainAllTagsInFilter(lesson.tags, filter)) res[lessonKey] = lesson;
+      if (tagsMatchFilter(lesson.tags, filter)) res[lessonKey] = lesson;
       return res;
     }, {});
 

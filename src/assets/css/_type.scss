@@ -1,0 +1,5 @@
+@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/text-emphasis';
+@import './colors';
+
+@include text-emphasis-variant('.text-student', $color-green);
+@include text-emphasis-variant('.text-teacher', $color-blue);

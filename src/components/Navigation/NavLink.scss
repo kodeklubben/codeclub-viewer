@@ -1,7 +1,16 @@
 @import '../../assets/css/colors';
 
-.navPath {
+.linkBase {
   text-decoration: none !important;
   font-size: 17pt;
+}
+
+.linkStudent {
+  composes: linkBase;
   color: $color-green-dark;
+}
+
+.linkTeacher {
+  composes: linkBase;
+  color: $color-blue-dark;
 }

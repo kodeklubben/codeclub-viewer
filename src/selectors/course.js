@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import {getFilteredLessons} from './lesson';
-import {capitalize, tagsContainAllTagsInFilter, cleanseTags} from '../util';
+import {capitalize, tagsMatchFilter, cleanseTags} from '../util';
 
 const getCourseContext = (state) => state.context.courseContext;
 const getFilter = (state) => state.filter;
@@ -43,7 +43,7 @@ export const getFilteredExternalCourses = createSelector(
           name: fm.title,
           tags: fm.tags == null ? {} : cleanseTags(fm.tags)
         };
-        return tagsContainAllTagsInFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
+        return tagsMatchFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
       }
       return res;
     }, {});
