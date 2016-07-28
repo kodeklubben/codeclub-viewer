@@ -17,19 +17,16 @@ import NavLink from './NavLink';
 
 export const NavBar = React.createClass({
 
-  getLanguageName(language) {
-    switch(language) {
-      case 'norwegian':
-        return 'Norsk';
-      case 'norwegian-nynorsk':
-        return 'Norsk-Nynorsk';
-      case 'swedish':
-        return 'Svensk';
-      case 'english':
-        return 'Engelsk';
-      case 'danish':
-        return 'Dansk';
+  getNativeLanguageName(language) {
+    const nativeLanguages = {
+      'nn': 'Norsk bokmål',
+      'nb': 'Norsk nynorsk',
+      'sv': 'Svenska',
+      'en': 'English',
+      'da': 'Dansk'
     }
+
+    return nativeLanguages[language];
   },
 
   render() {
@@ -51,13 +48,13 @@ export const NavBar = React.createClass({
               onSelect={(eventKey) => this.props.setLanguage(eventKey)}>
               <Dropdown.Toggle className={this.props.isStudentMode
                 ? 'btn-language-student btn-language' : 'btn-language-teacher btn-language'}>
-                {this.getLanguageName(this.props.language)}
+                {this.getNativeLanguageName(this.props.language)}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <MenuItem eventKey='norwegian'>Norsk</MenuItem>
-                <MenuItem eventKey='norwegian-nynorsk'>Norsk-Nynorsk</MenuItem>
-                <MenuItem eventKey='swedish'>Svensk</MenuItem>
-                <MenuItem eventKey='danish'>Dansk</MenuItem>
+                <MenuItem eventKey='nn'>{this.getNativeLanguageName('nn')}</MenuItem>
+                <MenuItem eventKey='nb'>{this.getNativeLanguageName('nb')}</MenuItem>
+                <MenuItem eventKey='sv'>{this.getNativeLanguageName('sv')}</MenuItem>
+                <MenuItem eventKey='da'>{this.getNativeLanguageName('da')}</MenuItem>
               </Dropdown.Menu>
             </Dropdown>
             <Navbar.Header>

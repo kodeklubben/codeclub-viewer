@@ -1,4 +1,4 @@
-export default function(state='norwegian', action) {
+export default function(state='nb', action) {
   switch (action.type) {
     case 'SET_LANGUAGE':
       return isLanguageValid(action.payload) ? action.payload : null;
@@ -7,13 +7,7 @@ export default function(state='norwegian', action) {
 }
 
 function isLanguageValid(language) {
-  const languages = [
-    'norwegian',
-    'norwegian-nynorsk',
-    'swedish',
-    'danish',
-    'english'
-  ];
+  const languages = ['nb','nn','sv','da','en'];
 
   return languages.indexOf(language) > -1;
 }
