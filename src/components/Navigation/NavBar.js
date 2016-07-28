@@ -13,7 +13,6 @@ import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import {setModeStudent, setModeTeacher} from '../../action_creators';
 import ModeIndicator from './ModeIndicator';
 import NavLink from './NavLink';
-import Flag from '../Flags/Flag';
 import styles from './NavBar.scss';
 
 export const NavBar = React.createClass({
@@ -32,9 +31,9 @@ export const NavBar = React.createClass({
     return (
       <Grid fluid={true}>
         <Row className={styles.flagGroup}>
-          <Flag country='norway' />
-          <Flag country='sweden' />
-          <Flag country='denmark' />
+          <img className={styles.flag} src='src/assets/graphics/norway.svg'/>
+          <img className={styles.flag} src='src/assets/graphics/sweden.svg'/>
+          <img className={styles.flag} src='src/assets/graphics/denmark.svg'/>
         </Row>
         <Row>
           <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true}>
