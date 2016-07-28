@@ -33,7 +33,7 @@ function extractTags(context) {
 }
 
 /**
- * 
+ *
  * @param {Object} tagsA
  * @param {Object} tagsB
  * @returns {Object} mergedTags
@@ -91,7 +91,9 @@ export function getLevelName(level) {
 }
 
 export function getTeacherInfo(context) {
-  return context(context.keys()[0]).frontmatter.teacherInfo;
+  return context.keys().length !== 0
+    ? context(context.keys()[0]).frontmatter.teacherInfo
+    : {};
 }
 
 ///////////////////////////////////
