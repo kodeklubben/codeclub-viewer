@@ -6,17 +6,17 @@ import reducer from '../../src/reducers/language';
 describe('language reducer', () => {
   describe('SET_LANGUAGE', () => {
     it('sets current language to argument', () => {
-      const initialState = 'sweden';
+      const initialState = 'sv';
       const action = {
         type: 'SET_LANGUAGE',
-        payload: 'norway'
+        payload: 'nn'
       };
 
       deepFreeze(initialState);
       deepFreeze(action);
       const nextState = reducer(initialState, action);
 
-      expect(nextState).to.equal('norway');
+      expect(nextState).to.equal('nn');
     });
 
     it('sets current language to null if argument is not specified or not valid', () => {
