@@ -60,9 +60,11 @@ export function changeMode() {
   };
 }
 
-export function setTeacherInfo(context) {
+export function setTeacherInfo(teacherInfo) {
   return {
     type: 'SET_TEACHER_INFO',
-    payload: context
+    payload: {
+      teacherInfo
+    }
   };
 }
