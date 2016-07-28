@@ -17,22 +17,6 @@ import NavLink from './NavLink';
 
 export const NavBar = React.createClass({
 
-  handle(language) {
-    switch (language) {
-      case 'norwegian':
-        this.props.setLanguage(language);
-        break;
-      case 'norwegian-nynorsk':
-        this.props.setLanguage(language);
-        break;
-      case 'swedish':
-        this.props.setLanguage(language);
-        break;
-      case 'danish':
-        this.props.setLanguage(language);
-    }
-  },
-
   getLanguageName(language) {
     switch(language) {
       case 'norwegian':
@@ -64,7 +48,7 @@ export const NavBar = React.createClass({
         <Row>
           <Navbar fluid={true} fixedTop={true}>
             <Dropdown id='language-dropdown' className='btn-language-dropdown pull-right'
-              onSelect={(eventKey) => this.handle(eventKey)}>
+              onSelect={(eventKey) => this.props.setLanguage(eventKey)}>
               <Dropdown.Toggle className={this.props.isStudentMode
                 ? 'btn-language-student btn-language' : 'btn-language-teacher btn-language'}>
                 {this.getLanguageName(this.props.language)}
