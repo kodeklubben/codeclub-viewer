@@ -1,8 +1,9 @@
 export default function(state='nb', action) {
   switch (action.type) {
     case 'SET_LANGUAGE':
-      return isLanguageValid(action.payload) ? action.payload : null;
+      return isLanguageValid(action.payload) ? action.payload : state;
   }
+
   return state;
 }
 
