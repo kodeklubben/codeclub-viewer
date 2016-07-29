@@ -19,16 +19,32 @@ import ModeIndicator from './ModeIndicator';
 
 export const NavBar = React.createClass({
 
-  getNativeLanguageName(language) {
+  getNativeLanguage(language) {
     const nativeLanguages = {
-      'nb': 'Norsk bokmål',
-      'nn': 'Norsk nynorsk',
-      'sv': 'Svenska',
-      'en': 'English',
-      'da': 'Dansk'
+      'nb': {
+        name: 'Norsk bokmål',
+        url: 'src/assets/graphics/norway.svg'
+      },
+      'nn': {
+        name: 'Norsk nynorsk',
+        url: 'src/assets/graphics/norway.svg'
+      },
+      'sv': {
+        name: 'Svenska',
+        url: 'src/assets/graphics/sweden.svg'
+      },
+      'da': {
+        name: 'Dansk',
+        url: 'src/assets/graphics/denmark.svg'
+      }
     }
 
-    return nativeLanguages[language];
+    return (
+      <span>
+        {nativeLanguages[language].name}
+        <img className={styles.flag} src={nativeLanguages[language].url}/>
+      </span>
+    );
   },
 
   render() {
@@ -48,15 +64,16 @@ export const NavBar = React.createClass({
           <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true} fixedTop={true}>
             <Dropdown id='language-dropdown' className='btn-language-dropdown pull-right'
               onSelect={(eventKey) => this.props.setLanguage(eventKey)}>
-              <Dropdown.Toggle className={this.props.isStudentMode
-                ? 'btn-language-student btn-language' : 'btn-language-teacher btn-language'}>
-                {this.getNativeLanguageName(this.props.language)}
+              <Dropdown.Toggle noCaret={true} className={this.props.isStudentMode
+                ? 'btn-language-student btn-language'
+                : 'btn-language-teacher btn-language'}>
+                {this.getNativeLanguage(this.props.language)}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <MenuItem eventKey='nb'>{this.getNativeLanguageName('nb')}</MenuItem>
-                <MenuItem eventKey='nn'>{this.getNativeLanguageName('nn')}</MenuItem>
-                <MenuItem eventKey='sv'>{this.getNativeLanguageName('sv')}</MenuItem>
-                <MenuItem eventKey='da'>{this.getNativeLanguageName('da')}</MenuItem>
+                <MenuItem eventKey='nb'>{this.getNativeLanguage('nb')}</MenuItem>
+                <MenuItem eventKey='nn'>{this.getNativeLanguage('nn')}</MenuItem>
+                <MenuItem eventKey='sv'>{this.getNativeLanguage('sv')}</MenuItem>
+                <MenuItem eventKey='da'>{this.getNativeLanguage('da')}</MenuItem>
               </Dropdown.Menu>
             </Dropdown>
             <Navbar.Header>
