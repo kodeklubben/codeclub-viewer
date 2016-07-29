@@ -15,18 +15,18 @@
 .containerStudent {
   composes: container;
   background-color: $color-green-light;
-  color: $color-green-dark !important;
+  color: $color-green-dark;
   a {
-    color: $color-green-dark !important;
+    color: $color-green-dark;
   }
 }
 
 .containerTeacher {
   composes: container;
   background-color: $color-blue-light;
-  color: $color-blue-dark !important;
+  color: $color-blue-dark;
   a {
-    color: $color-blue-dark !important;
+    color: $color-blue-dark;
   }
 }
 
@@ -34,9 +34,9 @@
   text-align: center;
 }
 
-.linkGroup {
+.inline {
   display: inline-block;
-  margin: 20px;
+  margin: 20px 10px;
 }
 
 .svg {
@@ -59,7 +59,7 @@
   margin-left: auto;
   margin-right: auto;
   border-top: 1px solid;
-  width: 75%;
+  width: 50%;
 }
 
 .svg:hover,

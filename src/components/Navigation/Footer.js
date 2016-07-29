@@ -9,7 +9,9 @@ import styles from './Footer.scss';
 const Footer = React.createClass({
 
   getGitHubLink() {
-    const url = 'https://github.com/kodeklubben/oppgaver/';
+    const url = {
+      oppgaver: 'https://github.com/kodeklubben/oppgaver/'
+    };
 
     return (
       <div>
@@ -17,7 +19,7 @@ const Footer = React.createClass({
           <p>Bidra?</p>
         </Row>
         <Row className={styles.center}>
-          <a href={url}>
+          <a href={url.oppgaver}>
             <img className={styles.svg} src={'src/assets/graphics/github-teacher.svg'}/>
           </a>
         </Row>
@@ -29,28 +31,24 @@ const Footer = React.createClass({
   },
 
   render() {
-    const url = [
-      'http://kidsakoder.no/',
-      'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
-      'http://kidsakoder.no/2015/07/03/kodeklubben-trondheim-utvikler-materiell-i-sommer/'
-    ];
+    const url = {
+      kidsakoder: 'http://kidsakoder.no/',
+      archive: 'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
+      sponsor: 'http://kidsakoder.no/2015/07/03/kodeklubben-trondheim-utvikler-materiell-i-sommer/'
+    };
 
     return (
       <Grid fluid={true} className={this.props.isStudentMode ? styles.containerStudent : styles.containerTeacher}>
         {this.props.isStudentMode ? null : this.getGitHubLink()}
         <Row className={styles.center}>
-          <div className={styles.linkGroup}>
-            <a href={url[0]}>kidsakoder.no</a>
-          </div>
-          <div className={styles.linkGroup}>
-            <a href={url[1]}>Last ned alle kurs som zip-fil</a>
-          </div>
+            <a className={styles.inline} href={url.kidsakoder}>kidsakoder.no</a>
+            <a className={styles.inline} href={url.archive}>Last ned alle kurs som zip-fil</a>
         </Row>
         <Row className={styles.center}>
-          <a href={url[2]}>
+          <a href={url.sponsor}>
             <img className={styles.img} src={'src/assets/graphics/smn.jpg'}/>
           </a>
-          <a href={url[2]}>
+          <a href={url.sponsor}>
             <img className={styles.img} src={'src/assets/graphics/ibok.jpg'}/>
           </a>
         </Row>
