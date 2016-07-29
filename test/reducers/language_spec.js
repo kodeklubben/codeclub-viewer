@@ -19,7 +19,7 @@ describe('language reducer', () => {
       expect(nextState).to.equal('nn');
     });
 
-    it('sets current language to null if argument is not specified or not valid', () => {
+    it('sets current language to previous state if argument is not specified or not valid', () => {
       const initialState = {};
       const action = {
         type: 'SET_LANGUAGE',
@@ -30,7 +30,7 @@ describe('language reducer', () => {
       deepFreeze(action);
       const nextState = reducer(initialState, action);
 
-      expect(nextState).to.equal(null);
+      expect(nextState).to.equal(initialState);
     });
   });
 });
