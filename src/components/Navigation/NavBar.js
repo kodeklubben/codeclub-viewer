@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {setModeStudent, setModeTeacher, setLanguage} from '../../action_creators';
-
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -12,8 +12,10 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Dropdown from 'react-bootstrap/lib/Dropdown';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
-import ModeIndicator from './ModeIndicator';
+
 import NavLink from './NavLink';
+import styles from './NavBar.scss';
+import ModeIndicator from './ModeIndicator';
 
 export const NavBar = React.createClass({
 
@@ -43,7 +45,7 @@ export const NavBar = React.createClass({
     return (
       <Grid fluid={true}>
         <Row>
-          <Navbar fluid={true} fixedTop={true}>
+          <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true} fixedTop={true}>
             <Dropdown id='language-dropdown' className='btn-language-dropdown pull-right'
               onSelect={(eventKey) => this.props.setLanguage(eventKey)}>
               <Dropdown.Toggle className={this.props.isStudentMode
@@ -123,4 +125,4 @@ export const NavBarContainer = connect(
     setModeStudent,
     setModeTeacher
   }
-)(NavBar);
+)(withStyles(styles)(NavBar));

@@ -12,7 +12,7 @@ const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README\.md$)[^\/]*\.md/);
 const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/README\.md$/);
-const lessons = getLessons(lessonContext, readmeContext);
+const lessons = getLessons(lessonContext, readmeContext, courseContext);
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
