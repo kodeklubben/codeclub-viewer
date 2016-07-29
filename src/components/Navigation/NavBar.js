@@ -19,8 +19,8 @@ export const NavBar = React.createClass({
 
   getNativeLanguageName(language) {
     const nativeLanguages = {
-      'nn': 'Norsk bokmål',
-      'nb': 'Norsk nynorsk',
+      'nb': 'Norsk bokmål',
+      'nn': 'Norsk nynorsk',
       'sv': 'Svenska',
       'en': 'English',
       'da': 'Dansk'
@@ -51,8 +51,8 @@ export const NavBar = React.createClass({
                 {this.getNativeLanguageName(this.props.language)}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <MenuItem eventKey='nn'>{this.getNativeLanguageName('nn')}</MenuItem>
                 <MenuItem eventKey='nb'>{this.getNativeLanguageName('nb')}</MenuItem>
+                <MenuItem eventKey='nn'>{this.getNativeLanguageName('nn')}</MenuItem>
                 <MenuItem eventKey='sv'>{this.getNativeLanguageName('sv')}</MenuItem>
                 <MenuItem eventKey='da'>{this.getNativeLanguageName('da')}</MenuItem>
               </Dropdown.Menu>
