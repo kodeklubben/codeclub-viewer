@@ -47,26 +47,34 @@ export function mergeTags(tagsA, tagsB){
   }, {});
 }
 
-export function getLessons(lessonContext, readmeContext) {
+export function getLessons(lessonContext, readmeContext, courseContext) {
   const paths = lessonContext.keys();
 
   return paths.reduce((res, path) => {
     // Course name is between './' and second '/'
-    const course = path.slice(2, path.indexOf('/', 2)).toLowerCase();
-    const lessonFrontMatter = lessonContext(path).frontmatter;
-    const tags = cleanseTags(lessonFrontMatter.tags, false);
+    const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
+    const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
+
+    const courseFrontmatter = courseContext(coursePath).frontmatter;
+    const lessonFrontmatter = lessonContext(path).frontmatter;
+
+    // Inherit tags from course, and override with lessonTags
+    const courseTags = cleanseTags(courseFrontmatter.tags, false);
+    const lessonTags = cleanseTags(lessonFrontmatter.tags, false);
+    const tags = {...courseTags, ...lessonTags};
+
     // Everything between '.' and last '/'. Add '/README' at the end
     const readmePath = path.slice(1, path.lastIndexOf('/')) + '/README';
     const hasReadme = readmeContext.keys().indexOf('.' + readmePath + '.md') !== -1;
 
     res[path] = {
-      title: lessonFrontMatter.title || '',
-      author: lessonFrontMatter.author || '',
-      level: lessonFrontMatter.level,
-      indexed: lessonFrontMatter.indexed == null ? true : lessonFrontMatter.indexed,
-      external: lessonFrontMatter.external || '',
+      title: lessonFrontmatter.title || '',
+      author: lessonFrontmatter.author || '',
+      level: lessonFrontmatter.level,
+      indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
+      external: lessonFrontmatter.external || '',
       readmePath: hasReadme ? readmePath : '',
-      course,
+      course: courseName,
       tags,
       // Everything between '.' and '.md'
       path: path.slice(1, path.length - 3)
