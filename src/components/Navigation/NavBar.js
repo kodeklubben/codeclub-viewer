@@ -37,7 +37,7 @@ export const NavBar = React.createClass({
         name: 'Dansk',
         url: 'src/assets/graphics/denmark.svg'
       }
-    }
+    };
 
     return (
       <span>
