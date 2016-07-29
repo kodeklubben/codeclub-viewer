@@ -34,6 +34,6 @@ store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setModeStudent());
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
-store.dispatch(setLanguage('nn'));
+store.dispatch(setLanguage('nb'));
 
 export default store;
