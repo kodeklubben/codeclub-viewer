@@ -16,12 +16,8 @@ const Lesson = React.createClass({
     };
   },
   componentDidMount() {
-    // TODO: Remove scripts upon unmount?
     if (containsScratchCode(this.props.lesson.content)) {
-      // TODO: use local scripts
-      appendScript('http://scratchblocks.github.io/js/scratchblocks-v3.1-min.js')
-      .then(() => appendScript('http://scratchblocks.github.io/js/translations-all-v3.1-min.js'))
-      .then(renderScratchBlocks);
+      renderScratchBlocks();
     }
   },
   render() {
@@ -44,24 +40,14 @@ Lesson.propTypes = {
 
 export default Lesson;
 
-/**
- * Takes a script url and appends it to the HTML body.
- *
- * @param url {string}
- * @returns {Promise} Resolves when script has loaded.
- */
-function appendScript(url) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = url;
-    script.onload = resolve;
-    document.body.appendChild(script);
-  });
-}
+
+/////////////////////
+// PRIVATE FUNCTIONS:
 
 /**
  * Appends a script to the HTML body that will render scratch code.
  */
+// TODO: Get all languages supported.
 function renderScratchBlocks() {
   const script = document.createElement('script');
   script.text = `
@@ -80,7 +66,7 @@ function renderScratchBlocks() {
  * Search in `html` for `<pre class="blocks">`. Returns true if found.
  *
  * @param html {string} String to search.
- * @returns {bool} True if html contains scratch code.
+ * @returns {boolean} True if html contains scratch code.
  */
 function containsScratchCode(html){
   return (html.indexOf('<pre class="blocks">') !== -1 ||
