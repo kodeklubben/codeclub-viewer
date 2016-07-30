@@ -11,6 +11,15 @@ npm start
 ```
 Then open http://localhost:8080
 
+**Note:** You will get an node-gyp error
+
+```
+1 error generated.
+make: *** [Release/obj.target/canvas/src/Canvas.o] Error 1
+```
+
+The error is normal, and you can dismiss it. It's from an optional dependecy, `canvas` in `scratchblocks`, which is not needed.
+
 ## Redux DevTools
 Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 
