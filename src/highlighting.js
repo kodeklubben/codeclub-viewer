@@ -4,7 +4,9 @@ export default function (code, lang) {
   if (lang === 'blocks') {
     // set class on pre, to avoid background coloring of scratch code
     // rendering to SVG is done client-side in Lesson component
-    return `<pre class="blocks">${code}</pre>`;
+    let safeCode = code.replace('<', '&lt;');
+    safeCode = code.replace('>', '&gt;');
+    return `<pre class="blocks">${safeCode}</pre>`;
   }
 
   if (lang && hljs.getLanguage(lang)) {
