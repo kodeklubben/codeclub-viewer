@@ -4,8 +4,8 @@ export default function (code, lang) {
   if (lang === 'blocks') {
     // set class on pre, to avoid background coloring of scratch code
     // rendering to SVG is done client-side in Lesson component
-    let safeCode = code.replace('<', '&lt;');
-    safeCode = code.replace('>', '&gt;');
+    let safeCode = code.replace(/</g, '&lt;');
+    safeCode = code.replace(/>/g, '&gt;');
     return `<pre class="blocks">${safeCode}</pre>`;
   }
 
