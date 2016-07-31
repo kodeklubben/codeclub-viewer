@@ -35,18 +35,7 @@ import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 // CONSTANTS //
 ///////////////
 
-const scope = {
-  window: {},
-  /**
-   * We use the `process` global to check if we are on client or not,
-   * in example when rendering scratchblocks.
-   *
-   * if (!process) {
-   *   // do something that requires browser DOM, etc
-   * }
-   */
-  process: {}
-};
+const scope = {window: {}};
 const locals = {};
 
 
