@@ -19,7 +19,7 @@ const Lesson = React.createClass({
     };
   },
   componentWillMount(){
-    if (process) {
+    if (typeof document === 'undefined') {
       // do nothing server-side
       return;
     }
@@ -60,7 +60,9 @@ export default Lesson;
  */
 function renderScratchBlocks(content) {
   const replace = [
-    { start: '<pre class="blocks">', end: '</pre>' },
+    { start: '<pre class=blocks>', end: '</pre>' },
+    { start: '<code class=b>', end: '</code>', options: { inline: true } },
+    // for dev server, attr="val" minified to attr=val in production build
     { start: '<code class="b">', end: '</code>', options: { inline: true } }
   ];
 
@@ -88,6 +90,15 @@ function renderScratchBlocks(content) {
  * @returns {boolean} True if html contains scratch code.
  */
 function containsScratchCode(html){
-  return (html.indexOf('<pre class="blocks">') !== -1 ||
-          html.indexOf('<code class="b">') !== -1);
+  let blocks = [
+    '<pre class=blocks>',
+    '<code class=b>',  // minified in production build, attr="val" -> attr=val
+    '<code class="b">'
+  ];
+  for (let i = 0; i < blocks.length; i += 1) {
+    if (html.indexOf(blocks[i]) !== -1) {
+      return true;
+    }
+  }
+  return false;
 }

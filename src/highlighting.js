@@ -2,10 +2,11 @@ import hljs from 'highlight.js';
 
 export default function (code, lang) {
   if (lang === 'blocks') {
-    // set class on pre, to avoid background coloring of scratch code
-    // rendering to SVG is done client-side in Lesson component
+    // replace <> with &lt; and &gt; to keep HTML valid
     let safeCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return `<pre class="blocks">${safeCode}</pre>`;
+    // put scratchcode in single <pre> to easier find and
+    // replace with SVG client side (Lesson component)
+    return `<pre class=blocks>${safeCode}</pre>`;
   }
 
   if (lang && hljs.getLanguage(lang)) {
