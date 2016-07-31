@@ -19,7 +19,7 @@ const Lesson = React.createClass({
     };
   },
   componentWillMount(){
-    if (!process) {
+    if (process) {
       // do nothing server-side
       return;
     }
