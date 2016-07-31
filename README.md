@@ -11,7 +11,7 @@ npm start
 ```
 Then open http://localhost:8080
 
-**Note:** You will get an node-gyp error
+**Note:** You will get a node-gyp error
 
 ```
 1 error generated.
