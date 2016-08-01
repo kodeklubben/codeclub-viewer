@@ -23,19 +23,19 @@ export const NavBar = React.createClass({
     const nativeLanguages = {
       'nb': {
         name: 'Norsk bokmål',
-        url: 'src/assets/graphics/norway.svg'
+        url: require('../../assets/graphics/norway.svg')
       },
       'nn': {
         name: 'Norsk nynorsk',
-        url: 'src/assets/graphics/norway.svg'
+        url: require('../../assets/graphics/norway.svg')
       },
       'sv': {
         name: 'Svenska',
-        url: 'src/assets/graphics/sweden.svg'
+        url: require('../../assets/graphics/sweden.svg')
       },
       'da': {
         name: 'Dansk',
-        url: 'src/assets/graphics/denmark.svg'
+        url: require('../../assets/graphics/denmark.svg')
       }
     };
 
