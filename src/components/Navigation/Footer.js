@@ -20,7 +20,7 @@ const Footer = React.createClass({
         </Row>
         <Row className={styles.center}>
           <a href={url.oppgaver}>
-            <img className={styles.svg} src={'src/assets/graphics/github-teacher.svg'}/>
+            <img className={styles.svg} src={require('../../assets/graphics/github-teacher.svg')}/>
           </a>
         </Row>
         <Row>
@@ -46,10 +46,10 @@ const Footer = React.createClass({
         </Row>
         <Row className={styles.center}>
           <a href={url.sponsor}>
-            <img className={styles.img} src={'src/assets/graphics/smn.jpg'}/>
+            <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}/>
           </a>
           <a href={url.sponsor}>
-            <img className={styles.img} src={'src/assets/graphics/ibok.jpg'}/>
+            <img className={styles.img} src={require('../../assets/graphics/ibok.jpg')}/>
           </a>
         </Row>
       </Grid>
