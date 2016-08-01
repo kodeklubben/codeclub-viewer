@@ -1,4 +1,7 @@
 import React, {PropTypes} from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
+import styles from './Lesson.scss';
 
 const Lesson = React.createClass({
   getTitle() {
@@ -17,7 +20,7 @@ const Lesson = React.createClass({
   },
   render() {
     return (
-      <div>
+      <div className={styles.container}>
         <h1>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
@@ -33,4 +36,4 @@ Lesson.propTypes = {
   })
 };
 
-export default Lesson;
+export default withStyles(styles)(Lesson);
