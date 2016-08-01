@@ -2,10 +2,13 @@ import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
 import {
+  arrayIntersection,
   capitalize,
   cleanseTags,
   fixNonArrayTagList,
-  tagsContainAllTagsInFilter
+  mergeTags,
+  tagsMatchFilter,
+  getFilterWithOnlyCheckedTags
 } from '../src/util';
 
 describe('util', () => {
@@ -117,78 +120,216 @@ describe('util', () => {
       expect(fixNonArrayTagList(tagList)).to.eql([]);
     });
   });
-
-  describe('tagsContainAllTagsInFilter', () => {
-    it('return true if all tags contain all tags in filter', () => {
-      const filter = {
-        platform: {'windows': true, 'linux': false},
-        category: {'create game': true}
-      };
-      const lesson = {
-        name: 'task1',
-        tags: {
-          platform: ['no-iPad', 'windows'],
-          category: ['create game']
-        }
-      };
-
-      deepFreeze(filter);
-      deepFreeze(lesson);
-      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(true);
-    });
-
-    it('return false if all tags do not contain all tags in filter', () => {
-      const filter = {
-        platform: {'windows': true, 'ios': true, 'linux': false},
-        category: {'create game': true, 'create app': false}
-      };
-      const lesson = {
-        course: 'scratch',
-        tags: {
-          platform: ['no-iPad', 'windows'],
-          category: ['create game']
-        }
-      };
-
-      deepFreeze(filter);
-      deepFreeze(lesson);
-      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(false);
-    });
-
-    it('is not affected by object extension', () => {
-      Object.prototype.hi = function(){console.log('muhahaha');};
-      const filter = {
-        platform: {'windows': true, 'linux': false},
-        category: {'create game': true}
-      };
-      const lesson = {
-        name: 'task1',
-        tags: {
-          platform: ['no-iPad', 'windows'],
-          category: ['create game']
-        }
-      };
-
-      deepFreeze(filter);
-      deepFreeze(lesson);
-      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(true);
-    });
-
-    it('return true filter is empty', () => {
-      const filter = {};
-      const lesson = {
-        name: 'task1',
-        tags: {
-          platform: ['no-iPad', 'windows'],
-          category: ['create game']
-        }
-      };
   
+  describe('getFilterWithOnlyCheckedTags', () => {
+    it('returns empty object if filter is empty', () => {
+      const filter = {};
+      
       deepFreeze(filter);
-      deepFreeze(lesson);
-      expect(tagsContainAllTagsInFilter(lesson.tags, filter)).to.equal(true);
+      expect(getFilterWithOnlyCheckedTags(filter)).to.eql({});
+    });
+    
+    it('removes all unchecked tags from filter', () => {
+      const filter = {
+        'platform': {
+          'android': false,
+          'linux': true,
+          'mac': false,
+          'windows': true
+        },
+        'subject': {
+          'math': false,
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': true
+        }
+      };
+      
+      deepFreeze(filter);
+      expect(getFilterWithOnlyCheckedTags(filter)).to.eql({
+        'platform': {
+          'linux': true,
+          'windows': true
+        },
+        'subject': {
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'robots': true
+        }
+      });
+    });
+  });
+  
+  describe('arrayIntersection', () => {
+    it('gets only identical items', () => {
+      const arrA = ['item1', 'item2', 'item3', 'item4'];
+      const arrB = ['item3', 'item4', 'item5'];
+      
+      deepFreeze(arrA);
+      deepFreeze(arrB);
+      expect(arrayIntersection(arrA, arrB)).to.eql(['item3', 'item4']);
+    });
+  });
+
+  describe('mergeTags', () => {
+    it('merges tags from A and B', () => {
+      const tagsA = {
+        'platform': {
+          'android': false,
+          'linux': true
+        },
+        'subject': {
+          'math': false,
+          'physics': true
+        },
+        'category': {
+          'create app': true
+        }
+      };
+      const tagsB = {
+        'platform': {
+          'linux': true,
+          'windows': true
+        },
+        'subject': {
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': true
+        }
+      };
+      
+      deepFreeze(tagsA);
+      deepFreeze(tagsB);
+      expect(mergeTags(tagsA, tagsB)).to.eql({
+        'platform': {
+          'android': false,
+          'linux': true,
+          'windows': true
+        },
+        'subject': {
+          'math': false,
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': true
+        }
+      });
     });
 
+    it('returns all tags in B if A is empty', () => {
+      const tagsA = {};
+      const tagsB = {
+        'platform': {
+          'linux': true,
+          'windows': true
+        },
+        'subject': {
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': true
+        }
+      };
+
+      deepFreeze(tagsA);
+      deepFreeze(tagsB);
+      expect(mergeTags(tagsA, tagsB)).to.eql(tagsB);
+    });
+
+    it('returns all tags in A if B is empty', () => {
+      const tagsA = {
+        'platform': {
+          'linux': true,
+          'windows': true
+        },
+        'subject': {
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': true
+        }
+      };
+      const tagsB = {};
+
+      deepFreeze(tagsA);
+      deepFreeze(tagsB);
+      expect(mergeTags(tagsA, tagsB)).to.eql(tagsA);
+    });
   });
+  
+  describe('tagsMatchFilter', () => {
+    it('returns true if tags match filter', () => {
+      const tags = {
+        'platform': ['linux'],
+        'subject': ['math', 'physics'],
+        'category': ['create app', 'arduino']
+      };
+      const filter = {
+        'platform': {
+          'android': false,
+          'linux': true,
+          'mac': false,
+          'windows': true
+        },
+        'subject': {
+          'math': false,
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': true
+        }
+      };
+      
+      deepFreeze(tags);
+      deepFreeze(filter);
+      expect(tagsMatchFilter(tags, filter)).to.equal(true);
+    });
+
+    it('returns false if tags does not match filter', () => {
+      const tags = {
+        'platform': ['linux'],
+        'subject': ['math', 'programming'],
+        'category': ['create app', 'arduino']
+      };
+      const filter = {
+        'platform': {
+          'android': false,
+          'linux': true,
+          'mac': false,
+          'windows': true
+        },
+        'subject': {
+          'math': false,
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': true
+        }
+      };
+
+      deepFreeze(tags);
+      deepFreeze(filter);
+      expect(tagsMatchFilter(tags, filter)).to.equal(false);
+    });
+  });
+
 });
 
