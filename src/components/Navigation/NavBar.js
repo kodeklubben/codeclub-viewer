@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {setModeStudent, setModeTeacher} from '../../action_creators';
-
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -11,9 +10,10 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 
+import {setModeStudent, setModeTeacher} from '../../action_creators';
 import ModeIndicator from './ModeIndicator';
 import NavLink from './NavLink';
-import FlagGroup from './FlagGroup';
+import styles from './NavBar.scss';
 
 export const NavBar = React.createClass({
 
@@ -30,8 +30,10 @@ export const NavBar = React.createClass({
 
     return (
       <Grid fluid={true}>
-        <Row>
-          <FlagGroup/>
+        <Row className={styles.flagGroup}>
+          <img className={styles.flag} src='src/assets/graphics/norway.svg'/>
+          <img className={styles.flag} src='src/assets/graphics/sweden.svg'/>
+          <img className={styles.flag} src='src/assets/graphics/denmark.svg'/>
         </Row>
         <Row>
           <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true}>
@@ -98,4 +100,4 @@ export const NavBarContainer = connect(
     setModeStudent,
     setModeTeacher
   }
-)(NavBar);
+)(withStyles(styles)(NavBar));
