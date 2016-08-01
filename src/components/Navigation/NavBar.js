@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
+import {setModeStudent, setModeTeacher, setLanguage} from '../../action_creators';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -8,14 +9,43 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
+import Dropdown from 'react-bootstrap/lib/Dropdown';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 
-import {setModeStudent, setModeTeacher} from '../../action_creators';
-import ModeIndicator from './ModeIndicator';
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
+import ModeIndicator from './ModeIndicator';
 
 export const NavBar = React.createClass({
+
+  getNativeLanguage(language) {
+    const nativeLanguages = {
+      'nb': {
+        name: 'Norsk bokmål',
+        url: require('../../assets/graphics/norway.svg')
+      },
+      'nn': {
+        name: 'Norsk nynorsk',
+        url: require('../../assets/graphics/norway.svg')
+      },
+      'sv': {
+        name: 'Svenska',
+        url: require('../../assets/graphics/sweden.svg')
+      },
+      'da': {
+        name: 'Dansk',
+        url: require('../../assets/graphics/denmark.svg')
+      }
+    };
+
+    return (
+      <span>
+        {nativeLanguages[language].name}
+        <img className={styles.flag} src={nativeLanguages[language].url}/>
+      </span>
+    );
+  },
 
   render() {
     const params = this.props.params;
@@ -30,27 +60,36 @@ export const NavBar = React.createClass({
 
     return (
       <Grid fluid={true}>
-        <Row className={styles.flagGroup}>
-          <img className={styles.flag} src='src/assets/graphics/norway.svg'/>
-          <img className={styles.flag} src='src/assets/graphics/sweden.svg'/>
-          <img className={styles.flag} src='src/assets/graphics/denmark.svg'/>
-        </Row>
         <Row>
-          <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true}>
+          <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true} fixedTop={true}>
+            <Dropdown id='language-dropdown' className='btn-language-dropdown pull-right'
+              onSelect={(eventKey) => this.props.setLanguage(eventKey)}>
+              <Dropdown.Toggle noCaret={true} className={this.props.isStudentMode
+                ? 'btn-language-student btn-language'
+                : 'btn-language-teacher btn-language'}>
+                {this.getNativeLanguage(this.props.language)}
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <MenuItem eventKey='nb'>{this.getNativeLanguage('nb')}</MenuItem>
+                <MenuItem eventKey='nn'>{this.getNativeLanguage('nn')}</MenuItem>
+                <MenuItem eventKey='sv'>{this.getNativeLanguage('sv')}</MenuItem>
+                <MenuItem eventKey='da'>{this.getNativeLanguage('da')}</MenuItem>
+              </Dropdown.Menu>
+            </Dropdown>
             <Navbar.Header>
               <Navbar.Brand>
-                <NavLink to="/" onlyActiveOnIndex>
-                  <Glyphicon glyph="home"/>
+                <NavLink to='/' onlyActiveOnIndex>
+                  <Glyphicon glyph='home'/>
                 </NavLink>
                 {courseLink ? <span> / {courseLink}</span> : null}
-                {lessonLink ? <span className="hidden-xs"> / {lessonLink}</span> : null}
+                {lessonLink ? <span className='hidden-xs'> / {lessonLink}</span> : null}
               </Navbar.Brand>
               <Navbar.Toggle className={this.props.isStudentMode ? null : 'toggle-teacher'}/>
             </Navbar.Header>
             <Navbar.Collapse>
               <Navbar.Form pullRight>
                 <FormGroup>
-                  <FormControl type="text" placeholder="Søk"/>
+                  <FormControl type='text' placeholder='Søk'/>
                 </FormGroup>
                 {' '}
                 <div className='btn-toggle'>
@@ -83,6 +122,7 @@ NavBar.propTypes = {
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
+  setLanguage: PropTypes.func,
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
   isStudentMode: PropTypes.bool
@@ -90,13 +130,15 @@ NavBar.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    language: state.language
   };
 }
 
 export const NavBarContainer = connect(
   mapStateToProps,
   {
+    setLanguage,
     setModeStudent,
     setModeTeacher
   }
