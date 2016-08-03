@@ -59,3 +59,10 @@ export function changeMode() {
     type: 'CHANGE_MODE'
   };
 }
+
+export function setLanguage(language) {
+  return {
+    type: 'SET_LANGUAGE',
+    payload: language
+  };
+}

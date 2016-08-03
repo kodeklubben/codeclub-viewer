@@ -23,7 +23,7 @@ import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
-
+import highlight from './src/highlighting.js';
 
 ///////////////
 // CONSTANTS //
@@ -94,6 +94,7 @@ export function getLoaders() {
 
 const baseConfig = {
   module: {
+    noParse: /node_modules\/scratchblocks\/browser\/scratchblocks\.(min\.)?js/,
     loaders: getValuesAsArray(getLoaders())
   },
   output: {
@@ -131,7 +132,8 @@ const baseConfig = {
       MarkdownItAttrs,
       MarkdownItHeaderSections,
       MarkdownItImplicitFigures
-    ]
+    ],
+    highlight
   },
   plugins: [
     new CaseSensitivePathsPlugin()

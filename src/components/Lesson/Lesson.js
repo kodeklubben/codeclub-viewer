@@ -1,7 +1,9 @@
+/* eslint-env node */
+
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
 import styles from './Lesson.scss';
+import scratchblocks from 'scratchblocks/browser/scratchblocks.js';
 
 const Lesson = React.createClass({
   getTitle() {
@@ -17,6 +19,16 @@ const Lesson = React.createClass({
     return {
       __html: this.props.lesson.content
     };
+  },
+  componentWillMount(){
+    if (typeof document === 'undefined') {
+      // do nothing server-side
+      return;
+    }
+    let content = this.props.lesson.content;
+    if (containsScratchCode(content)) {
+      this.props.lesson.content = renderScratchBlocks(content);
+    }
   },
   render() {
     return (
@@ -37,3 +49,57 @@ Lesson.propTypes = {
 };
 
 export default withStyles(styles)(Lesson);
+
+/////////////////////
+// PRIVATE FUNCTIONS:
+
+/**
+ * Render scratchblocks.
+ *
+ * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ */
+function renderScratchBlocks(content) {
+  const replace = [
+    { start: '<pre class=blocks>', end: '</pre>' },
+    { start: '<code class=b>', end: '</code>', options: { inline: true } },
+    // for dev server, attr="val" minified to attr=val in production build
+    { start: '<code class="b">', end: '</code>', options: { inline: true } }
+  ];
+
+  let returnContent = content;
+  replace.forEach(r => {
+    const re = new RegExp(r.start + '[\\s\\S]*?' + r.end, 'g');
+
+    let blocks = content.match(re);
+    if (blocks) {
+      blocks.forEach(block => {
+        let code = block.substring(r.start.length, block.length - r.end.length);
+        let SVG = scratchblocks(code, r.options);
+        returnContent = returnContent.replace(block, SVG);
+      });
+    }
+  });
+
+  return returnContent;
+}
+
+/**
+ * Search in `html` for `<pre class="blocks">`. Returns true if found.
+ *
+ * @param html {string} String to search.
+ * @returns {boolean} True if html contains scratch code.
+ */
+function containsScratchCode(html){
+  let blocks = [
+    '<pre class=blocks>',
+    '<code class=b>',  // minified in production build, attr="val" -> attr=val
+    '<code class="b">'
+  ];
+  for (let i = 0; i < blocks.length; i += 1) {
+    if (html.indexOf(blocks[i]) !== -1) {
+      return true;
+    }
+  }
+  return false;
+}

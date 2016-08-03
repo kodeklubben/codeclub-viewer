@@ -4541,6 +4541,11 @@
       "from": "sax@>=1.2.1 <1.3.0",
       "resolved": "https://registry.npmjs.org/sax/-/sax-1.2.1.tgz"
     },
+    "scratchblocks": {
+      "version": "4.0.1",
+      "from": "arve0/scratchblocks",
+      "resolved": "git://github.com/arve0/scratchblocks.git#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
+    },
     "scroll-behavior": {
       "version": "0.7.0",
       "from": "scroll-behavior@>=0.7.0 <0.8.0",
@@ -5328,6 +5333,11 @@
       "version": "2.0.1",
       "from": "xml-name-validator@>=2.0.1 <3.0.0",
       "resolved": "https://registry.npmjs.org/xml-name-validator/-/xml-name-validator-2.0.1.tgz"
+    },
+    "xmldom": {
+      "version": "0.1.22",
+      "from": "xmldom@>=0.1.22 <0.2.0",
+      "resolved": "https://registry.npmjs.org/xmldom/-/xmldom-0.1.22.tgz"
     },
     "xregexp": {
       "version": "3.1.1",

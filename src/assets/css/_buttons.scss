@@ -63,6 +63,25 @@
   @include button-variant(#fff, $color-blue, $color-blue-median);
 }
 
+.btn-language-student {
+  @include button-variant($color-green-dark, transparent, $color-green-dark);
+}
+
+.btn-language-teacher {
+  @include button-variant($color-blue-dark, transparent, $color-blue-dark);
+}
+
+.btn-language {
+  padding: 2px;
+  font-size: 10pt;
+}
+
+.btn-language-dropdown {
+  position: absolute;
+  right: 15px;
+  top: 2.5px;
+}
+
 .btn-student-nav {
   @include button-nav(#fff, $color-green, $color-green-median, 25%);
 }
