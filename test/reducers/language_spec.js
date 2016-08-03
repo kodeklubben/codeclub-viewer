@@ -6,10 +6,14 @@ import reducer from '../../src/reducers/language';
 describe('language reducer', () => {
   describe('SET_LANGUAGE', () => {
     it('sets current language to argument', () => {
-      const initialState = 'sv';
+      const initialState = {
+        language: 'sv'
+      };
       const action = {
         type: 'SET_LANGUAGE',
-        payload: 'nn'
+        payload: {
+          language: 'nn'
+        }
       };
 
       deepFreeze(initialState);
@@ -23,7 +27,7 @@ describe('language reducer', () => {
       const initialState = {};
       const action = {
         type: 'SET_LANGUAGE',
-        payload: ''
+        payload: {}
       };
 
       deepFreeze(initialState);
