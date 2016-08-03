@@ -17,14 +17,13 @@ const LessonList = React.createClass({
     return <img className={styles.levelIcon}
       src={require('../../assets/graphics/level-' + level + '.svg')}/>;
   },
-
   render() {
     const lessons = this.props.lessons;
     const level = this.props.level;
     return (
       <div id={this.props.id}>
 
-        <h3>{this.getLevelIcon(level)}{getLevelName(level)}</h3>
+        <h3>{this.getLevelIcon(level)}{getLevelName(level)}{' - Level ' + level}</h3>
         <ul className='list-group'>
           {lessons.map((lesson, idx) =>
             lesson.indexed ?
