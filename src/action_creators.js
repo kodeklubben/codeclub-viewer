@@ -68,3 +68,12 @@ export function setTeacherInfo(teacherInfo) {
     }
   };
 }
+
+export function setLanguage(language) {
+  return {
+    type: 'SET_LANGUAGE',
+    payload: {
+      language
+    }
+  };
+}
