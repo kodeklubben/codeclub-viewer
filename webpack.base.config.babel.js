@@ -28,8 +28,11 @@ import highlight from './src/highlighting.js';
 ///////////////
 // CONSTANTS //
 ///////////////
-const buildDir = 'dist';
-const publicPath = '/';
+// Use 'subDir' to serve the site from a subdir, e.g. subDir='beta' for http://kodeklubben.github.io/beta
+const subDir = ''; // No slashes at start or end
+export const buildDir = path.join('dist', subDir);
+// Webpack needs final slash in publicPath to rewrite relative paths correctly
+export const publicPath = path.join('/', subDir)+ (subDir ? '/' : '');
 export const lessonSrc = '../oppgaver/src';
 
 // Loaders for lesson files written in markdown (.md)
