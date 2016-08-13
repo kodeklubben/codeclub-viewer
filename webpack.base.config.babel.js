@@ -16,6 +16,7 @@
 //////////////////////
 // IMPORT / REQUIRE //
 //////////////////////
+const webpack = require('webpack');
 import path from 'path';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 
@@ -28,11 +29,15 @@ import highlight from './src/highlighting.js';
 ///////////////
 // CONSTANTS //
 ///////////////
-// Use 'subDir' to serve the site from a subdir, e.g. subDir='beta' for http://kodeklubben.github.io/beta
+
+// Use 'subDir' to serve the site from a subdir,
+// e.g. subDir='beta' for http://kodeklubben.github.io/beta
 const subDir = ''; // No slashes at start or end
+
 export const buildDir = path.join('dist', subDir);
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
-export const publicPath = path.join('/', subDir)+ (subDir ? '/' : '');
+const publicPathWithoutSlash = path.join('/', subDir);
+export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
 export const lessonSrc = '../oppgaver/src';
 
 // Loaders for lesson files written in markdown (.md)
@@ -139,7 +144,12 @@ const baseConfig = {
     highlight
   },
   plugins: [
-    new CaseSensitivePathsPlugin()
+    new CaseSensitivePathsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
+      }
+    })
   ]
 };
 

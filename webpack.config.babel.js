@@ -172,7 +172,10 @@ const config = {
   historyApiFallback: {
     index: publicPath
   },
-  plugins: getPlugins(),
+  plugins: [
+    ...baseConfig.plugins,
+    ...getPlugins()
+  ],
   postcss: [autoprefixer]
 };
 
