@@ -10,5 +10,5 @@ export default function(state={}, action) {
 }
 
 function isValidPayload(action) {
-  return action.payload.teacherInfo !== null;
+  return action.payload.teacherInfo != null;
 }
