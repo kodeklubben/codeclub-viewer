@@ -14,8 +14,9 @@ const LessonList = React.createClass({
     return null;
   },
   getLevelIcon(level) {
-    return <img className={styles.levelIcon}
-      src={require('../../assets/graphics/level-' + level + '.svg')}/>;
+    return level != null
+      ? <img className={styles.levelIcon} src={require('../../assets/graphics/level-' + level + '.svg')}/>
+      : null;
   },
   render() {
     const lessons = this.props.lessons;

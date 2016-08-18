@@ -32,8 +32,9 @@ const Lesson = React.createClass({
     }
   },
   getLevelIcon(level) {
-    return <img className={styles.levelIcon}
-      src={require('../../assets/graphics/level-' + level.toString() + '.svg')}/>;
+    return level != null
+      ? <img className={styles.levelIcon} src={require('../../assets/graphics/level-' + level + '.svg')}/>
+      :  null;
   },
   render() {
     return (
