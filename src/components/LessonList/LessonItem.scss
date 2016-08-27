@@ -1,3 +1,5 @@
+@import "../../assets/css/colors";
+
 a:hover {
   text-decoration: none;
 }
@@ -7,8 +9,7 @@ a:hover {
 
   &:hover {
     cursor: pointer;
-    font-weight: bold;
-    white-space: nowrap;
+    color: darken($brand-primary, 20%);
   }
 }
 

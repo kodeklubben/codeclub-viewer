@@ -1,5 +1,6 @@
+@import "../../assets/css/colors";
+
 .playlist:hover {
+  color: $brand-primary;
   cursor: pointer;
-  font-weight: bold;
-  white-space: nowrap;
 }
