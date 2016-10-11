@@ -13,6 +13,10 @@ import {setModeTeacher} from '../action_creators';
 
 export const  FrontPage = React.createClass({
 
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
   render() {
     return (
       <Grid fluid={true}>
@@ -27,7 +31,7 @@ export const  FrontPage = React.createClass({
         {this.props.isStudentMode
           ? <Row>
               <div className={styles.center}>
-                <ButtonItem color='green' onClick={() => this.displayExercise}>
+                <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
                   Kom i gang!
                 </ButtonItem>
                 <ButtonItem color='blue' onClick={() => this.props.setModeTeacher()}>
