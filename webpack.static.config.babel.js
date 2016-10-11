@@ -26,7 +26,7 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {lessonSrc} from './webpack.base.config.babel';
+import baseConfig, {lessonSrc, buildDir} from './webpack.base.config.babel';
 import path from 'path';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 
@@ -85,6 +85,13 @@ const config = {
     // static-site-generator must have files compiled to UMD or CommonJS
     // so they can be required in a Node context:
     libraryTarget: 'umd'
+  },
+  resolve: {
+    ...baseConfig.resolve,
+    alias: {
+      ...baseConfig.resolve.alias,
+      buildDir: path.resolve(__dirname, buildDir)
+    }
   },
   plugins: [
     ...baseConfig.plugins,

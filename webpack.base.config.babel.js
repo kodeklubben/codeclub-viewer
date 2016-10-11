@@ -16,6 +16,7 @@
 //////////////////////
 // IMPORT / REQUIRE //
 //////////////////////
+const webpack = require('webpack');
 import path from 'path';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 
@@ -24,12 +25,23 @@ import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 import highlight from './src/highlighting.js';
+const fs = require('fs');
 
 ///////////////
 // CONSTANTS //
 ///////////////
-const buildDir = 'dist';
-const publicPath = '/';
+
+// Use 'subDir' to serve the site from a subdir, e.g. subDir='beta' for http://kodeklubben.github.io/beta
+// The value of subDir is read from the file 'url-path-prefix.config' in the root folder, if it exists.
+const subDirFile = './url-path-prefix.config';
+var subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').trim() : '';
+if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
+if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
+
+export const buildDir = path.join('dist', subDir);
+// Webpack needs final slash in publicPath to rewrite relative paths correctly
+const publicPathWithoutSlash = path.join('/', subDir);
+export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
 export const lessonSrc = '../oppgaver/src';
 
 // Loaders for lesson files written in markdown (.md)
@@ -136,7 +148,12 @@ const baseConfig = {
     highlight
   },
   plugins: [
-    new CaseSensitivePathsPlugin()
+    new CaseSensitivePathsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
+      }
+    })
   ]
 };
 

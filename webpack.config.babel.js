@@ -32,7 +32,7 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {getValuesAsArray, getLoaders} from './webpack.base.config.babel';
+import baseConfig, {getValuesAsArray, getLoaders, buildDir, publicPath} from './webpack.base.config.babel';
 const webpack = require('webpack');
 
 import path from 'path';
@@ -47,9 +47,6 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 // CONSTANTS //
 ///////////////
 
-const buildDir = 'dist';
-const publicPath = '/';
-
 const isHot = process.argv.indexOf('--hot') >= 0;
 console.log(`isHot=${isHot}`);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -57,6 +54,10 @@ console.log(`isProduction=${isProduction}`);
 console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
+
+// Small hack to avoid having to type a slash at the end of the url if there is a subdir in publicPath:
+const newPublicPath = (isHot && publicPath.length > 1 && publicPath.slice(-1) === '/') ?
+  publicPath.slice(0, -1) : publicPath;
 
 ///////////////
 // FUNCTIONS //
@@ -161,6 +162,7 @@ const config = {
   entry: getEntry(),
   output: {
     ...baseConfig.output,
+    publicPath: newPublicPath,
     filename: `${filenameBase}.js`,
     chunkFilename: `${filenameBase}.js`
   },
@@ -170,7 +172,10 @@ const config = {
   historyApiFallback: {
     index: publicPath
   },
-  plugins: getPlugins(),
+  plugins: [
+    ...baseConfig.plugins,
+    ...getPlugins()
+  ],
   postcss: [autoprefixer]
 };
 

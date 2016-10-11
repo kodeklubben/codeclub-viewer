@@ -20,7 +20,7 @@ export default (locals, callback) => {
       </Provider>
     );
     css = [...new Set(css)]; // make array unique
-    const template = require('raw!./../dist/index-html-template.ejs');
+    const template = require('raw!buildDir/index-html-template.ejs');
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
     const html = template
       .replace('<%= appCss %>', appCss)
