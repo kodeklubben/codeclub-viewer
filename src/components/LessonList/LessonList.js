@@ -1,9 +1,7 @@
 import React, {PropTypes} from 'react';
 import {LessonItemContainer} from './LessonItem';
 import {getLevelName} from '../../util';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
-import styles from './LessonList.scss';
+import LevelIcon from '../LevelIcon';
 
 const LessonList = React.createClass({
   generateMockConstraints(i) {
@@ -13,18 +11,12 @@ const LessonList = React.createClass({
     if(i % 7 === 0) return ['tablet'];
     return null;
   },
-  getLevelIcon(level) {
-    return level != null
-      ? <img className={styles.levelIcon} src={require('../../assets/graphics/level-' + level + '.svg')}/>
-      : null;
-  },
   render() {
     const lessons = this.props.lessons;
     const level = this.props.level;
     return (
       <div id={this.props.id}>
-
-        <h3>{this.getLevelIcon(level)}{getLevelName(level)}{' - Level ' + level}</h3>
+        <h3><LevelIcon level={level} size="medium"/>{getLevelName(level)}{' - Level ' + level}</h3>
         <ul className='list-group'>
           {lessons.map((lesson, idx) =>
             lesson.indexed ?
@@ -42,4 +34,4 @@ LessonList.propTypes = {
   level: PropTypes.string
 };
 
-export default withStyles(styles)(LessonList);
+export default LessonList;

@@ -2,9 +2,7 @@
 
 import React, {PropTypes} from 'react';
 import scratchblocks from 'scratchblocks/browser/scratchblocks.js';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
-import styles from './Lesson.scss';
+import LevelIcon from '../LevelIcon';
 
 const Lesson = React.createClass({
   getTitle() {
@@ -31,15 +29,10 @@ const Lesson = React.createClass({
       this.props.lesson.content = renderScratchBlocks(content);
     }
   },
-  getLevelIcon(level) {
-    return level != null
-      ? <img className={styles.levelIcon} src={require('../../assets/graphics/level-' + level + '.svg')}/>
-      :  null;
-  },
   render() {
     return (
       <div>
-        <h1>{this.getLevelIcon(this.getLevel())}{this.getTitle()} - Level {this.getLevel()}</h1>
+        <h1><LevelIcon level={this.getLevel()} size="large"/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
       </div>
@@ -54,7 +47,7 @@ Lesson.propTypes = {
   })
 };
 
-export default withStyles(styles)(Lesson);
+export default Lesson;
 
 
 /////////////////////
