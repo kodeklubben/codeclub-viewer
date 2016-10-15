@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {LessonItemContainer} from './LessonItem';
 import {getLevelName} from '../../util';
+import LevelIcon from '../LevelIcon';
 
 const LessonList = React.createClass({
   generateMockConstraints(i) {
@@ -15,7 +16,7 @@ const LessonList = React.createClass({
     const level = this.props.level;
     return (
       <div id={this.props.id}>
-        <h3>{level + '. ' + getLevelName(level)}</h3>
+        <h3><LevelIcon level={level} size="medium"/>{getLevelName(level)}{' - Level ' + level}</h3>
         <ul className='list-group'>
           {lessons.map((lesson, idx) =>
             lesson.indexed ?

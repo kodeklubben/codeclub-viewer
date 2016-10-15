@@ -2,6 +2,7 @@
 
 import React, {PropTypes} from 'react';
 import scratchblocks from 'scratchblocks/browser/scratchblocks.js';
+import LevelIcon from '../LevelIcon';
 
 const Lesson = React.createClass({
   getTitle() {
@@ -31,7 +32,7 @@ const Lesson = React.createClass({
   render() {
     return (
       <div>
-        <h1>{this.getTitle()} - Level {this.getLevel()}</h1>
+        <h1><LevelIcon level={this.getLevel()} size="large"/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
       </div>
