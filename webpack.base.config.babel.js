@@ -26,6 +26,7 @@ import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 import highlight from './src/highlighting.js';
 const fs = require('fs');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 ///////////////
 // CONSTANTS //
@@ -153,7 +154,8 @@ const baseConfig = {
       'process.env': {
         'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
       }
-    })
+    }),
+    new FaviconsWebpackPlugin('./src/assets/graphics/favicon.png')
   ]
 };
 
