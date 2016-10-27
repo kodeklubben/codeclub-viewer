@@ -1385,11 +1385,6 @@
       "from": "caniuse-db@>=1.0.30000444 <2.0.0",
       "resolved": "https://registry.npmjs.org/caniuse-db/-/caniuse-db-1.0.30000507.tgz"
     },
-    "canvas": {
-      "version": "1.4.0",
-      "from": "canvas@1.4.0",
-      "resolved": "https://registry.npmjs.org/canvas/-/canvas-1.4.0.tgz"
-    },
     "case-sensitive-paths-webpack-plugin": {
       "version": "1.1.2",
       "from": "case-sensitive-paths-webpack-plugin@1.1.2",
