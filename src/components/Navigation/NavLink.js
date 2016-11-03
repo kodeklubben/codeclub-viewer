@@ -8,7 +8,8 @@ import styles from './NavLink.scss';
 const NavLink = React.createClass({
 
   render() {
-    return <Link {...this.props} className={this.props.isStudentMode ? styles.linkStudent : styles.linkTeacher}
+    const {isStudentMode, ...rest} = this.props;
+    return <Link {...rest} className={isStudentMode ? styles.linkStudent : styles.linkTeacher}
       activeClassName="active"/>;
   }
 
@@ -25,5 +26,6 @@ function mapStateToProps(state) {
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  {} // Use an empty mapDispatchToProps to avoid connect() from sending a default {dispatch:dispatch}
 )(withStyles(styles)(NavLink));
