@@ -2,23 +2,28 @@
 A viewer to display codeclub lessons
 
 ## Getting started
+First make sure you have [node](https://nodejs.org/en/) and
+[yarn](https://code.facebook.com/posts/1840075619545360) installed.
+
+The easiest way is probably to first install
+[nvm](https://github.com/creationix/nvm#installation). Then install
+node version 6 by writing `nvm install 6`. Finally install yarn by
+typing `npm install -g yarn`. (Note that if you update to a newer version
+of node using nvm, you probably need to install yarn again too).
+
+On OSX, if you have [brew](http://brew.sh/) installed, you could just do
+`brew install yarn` (it might be smart to do a `brew update` first).
+This will also install node.
+
+When yarn is installed, just type
 ```
-git clone https://github.com/NorwegianKiwi/codeclub-viewer.git
+git clone https://github.com/kodeklubben/codeclub-viewer.git
 git clone https://github.com/kodeklubben/oppgaver.git
 cd codeclub-viewer
-npm install
-npm start
+yarn
+yarn start
 ```
 Then open http://localhost:8080
-
-**Note:** You will get a node-gyp error
-
-```
-1 error generated.
-make: *** [Release/obj.target/canvas/src/Canvas.o] Error 1
-```
-
-The error is normal, and you can dismiss it. It's from an optional dependecy, `canvas` in `scratchblocks`, which is not needed.
 
 ## Redux DevTools
 Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
