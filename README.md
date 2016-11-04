@@ -31,47 +31,50 @@ Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux
 ## Building and serving
 This requires that you install http-server globally:
 ```
-npm install -g http-server
+yarn global add http-server
 ```
 
 ### Building and serving with sourcemaps
 ```
-npm run build
-npm run serve
+yarn run build
+yarn run serve
 ```
 
 ### Building and serving for production
 ```
-npm run build:prod
-npm run serve
+yarn run build:prod
+yarn run serve
 ```
 
 ### Building and serving without using static html-files
 No real reason to do this, but possible. Here the files are served using a node express server.
-It should work both when only doing `npm run buildjs` and when doing the full `npm run build`:
+It should work both when only doing `yarn run buildjs` and then doing the full `yarn run build`:
 ```
-npm run buildjs
-npm run servejs
+yarn run buildjs
+yarn run servejs
 ```
 
 ## Running tests
 ```
-npm run test -s
+yarn run test
 ```
-The `-s` is to remove npm-errors and just show errors from the test.
 
 ## Running eslint
 To check that the code is formatted correctly, run
 ```
-npm run eslint -s
+yarn run eslint
 ```
-The `-s` is to remove npm-errors and just show errors from the test.
 
-## Running both eslint and tests
+## Running stylelint
+To check that the styling is formatted correctly, run
 ```
-npm run testall -s
+yarn run stylelint
 ```
-The `-s` is to remove npm-errors and just show errors from the test.
+
+## Running eslint, stylelint and tests
+```
+yarn run testall
+```
 
 ## State Tree
 ![State Tree](/diagrams/State Tree.png)
@@ -81,9 +84,9 @@ A prototype framework for codeclub-viewer can be found at https://github.com/Nor
 
 ## TODO
 We are now generating staticsite.static.[hash].js and all the images one more time during generation
-of html files in `npm run build:static`, which is unnecessary. The js-file is not used, since this code
+of html files in `yarn run build:static`, which is unnecessary. The js-file is not used, since this code
 already exists in main, vendor, etc., and the images already exist (all of this created during the first
-part of the build, `npm run build`).
+part of the build, `yarn run build`).
 It doesn't matter, but more elegant if we didn't emit/produce these files during static html generation.
 
 Perhaps we could merge this with the serving-lazy-branch, so that it is possible to run this on a node-server as well?
