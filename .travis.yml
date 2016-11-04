@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-  - "6.2.2"
+  - "6.9.1"
 before_install:
   - git clone https://github.com/kodeklubben/oppgaver.git ../oppgaver
 script:
-  - npm run eslint -s
-  - npm run stylelint -s
-  - npm run test -s
+  - yarn run eslint
+  - yarn run stylelint
+  - yarn run test
   - ./travis_build_prod.sh
