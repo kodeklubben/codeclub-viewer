@@ -13,6 +13,8 @@ before_install:
 cache:
   directories:
   - $HOME/.yarn-cache
+install:
+  - yarn
 script:
   - yarn run eslint
   - yarn run stylelint
