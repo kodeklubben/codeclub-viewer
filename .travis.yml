@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "6.9.1"
 before_install:
-  - git clone https://github.com/kodeklubben/oppgaver.git ../oppgaver
+  - git clone --depth=50 https://github.com/kodeklubben/oppgaver.git ../oppgaver
   # Repo for newer Node.js versions
   - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
   # Repo for Yarn until Travis includes yarn
@@ -14,7 +14,7 @@ cache:
   directories:
   - $HOME/.yarn-cache
 install:
-  - yarn
+  - yarn --no-emoji
 script:
   - yarn run eslint
   - yarn run stylelint
