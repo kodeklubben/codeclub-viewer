@@ -2,23 +2,28 @@
 A viewer to display codeclub lessons
 
 ## Getting started
+First make sure you have [node](https://nodejs.org/en/) and
+[yarn](https://code.facebook.com/posts/1840075619545360) installed.
+
+The easiest way is probably to first install
+[nvm](https://github.com/creationix/nvm#installation). Then install
+node version 6 by writing `nvm install 6`. Finally install yarn by
+typing `npm install -g yarn`. (Note that if you update to a newer version
+of node using nvm, you probably need to install yarn again too).
+
+On OSX, if you have [brew](http://brew.sh/) installed, you could just do
+`brew install yarn` (it might be smart to do a `brew update` first).
+This will also install node.
+
+When yarn is installed, just type
 ```
-git clone https://github.com/NorwegianKiwi/codeclub-viewer.git
+git clone https://github.com/kodeklubben/codeclub-viewer.git
 git clone https://github.com/kodeklubben/oppgaver.git
 cd codeclub-viewer
-npm install
-npm start
+yarn
+yarn start
 ```
 Then open http://localhost:8080
-
-**Note:** You will get a node-gyp error
-
-```
-1 error generated.
-make: *** [Release/obj.target/canvas/src/Canvas.o] Error 1
-```
-
-The error is normal, and you can dismiss it. It's from an optional dependecy, `canvas` in `scratchblocks`, which is not needed.
 
 ## Redux DevTools
 Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
@@ -26,47 +31,50 @@ Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux
 ## Building and serving
 This requires that you install http-server globally:
 ```
-npm install -g http-server
+yarn global add http-server
 ```
 
 ### Building and serving with sourcemaps
 ```
-npm run build
-npm run serve
+yarn run build
+yarn run serve
 ```
 
 ### Building and serving for production
 ```
-npm run build:prod
-npm run serve
+yarn run build:prod
+yarn run serve
 ```
 
 ### Building and serving without using static html-files
 No real reason to do this, but possible. Here the files are served using a node express server.
-It should work both when only doing `npm run buildjs` and when doing the full `npm run build`:
+It should work both when only doing `yarn run buildjs` and then doing the full `yarn run build`:
 ```
-npm run buildjs
-npm run servejs
+yarn run buildjs
+yarn run servejs
 ```
 
 ## Running tests
 ```
-npm run test -s
+yarn run test
 ```
-The `-s` is to remove npm-errors and just show errors from the test.
 
 ## Running eslint
 To check that the code is formatted correctly, run
 ```
-npm run eslint -s
+yarn run eslint
 ```
-The `-s` is to remove npm-errors and just show errors from the test.
 
-## Running both eslint and tests
+## Running stylelint
+To check that the styling is formatted correctly, run
 ```
-npm run testall -s
+yarn run stylelint
 ```
-The `-s` is to remove npm-errors and just show errors from the test.
+
+## Running eslint, stylelint and tests
+```
+yarn run testall
+```
 
 ## State Tree
 ![State Tree](/diagrams/State Tree.png)
@@ -76,9 +84,9 @@ A prototype framework for codeclub-viewer can be found at https://github.com/Nor
 
 ## TODO
 We are now generating staticsite.static.[hash].js and all the images one more time during generation
-of html files in `npm run build:static`, which is unnecessary. The js-file is not used, since this code
+of html files in `yarn run build:static`, which is unnecessary. The js-file is not used, since this code
 already exists in main, vendor, etc., and the images already exist (all of this created during the first
-part of the build, `npm run build`).
+part of the build, `yarn run build`).
 It doesn't matter, but more elegant if we didn't emit/produce these files during static html generation.
 
 Perhaps we could merge this with the serving-lazy-branch, so that it is possible to run this on a node-server as well?

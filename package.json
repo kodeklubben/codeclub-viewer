@@ -8,16 +8,16 @@
     "buildjs": "webpack -d --progress",
     "buildjs:prod": "cross-env NODE_ENV=production webpack -p --progress",
     "buildstatic": "webpack --config=webpack.static.config.babel.js --progress",
-    "build": "npm run buildjs && npm run buildstatic",
-    "build:prod": "npm run buildjs:prod && npm run buildstatic",
+    "build": "yarn run buildjs && yarn run buildstatic",
+    "build:prod": "yarn run buildjs:prod && yarn run buildstatic",
     "build:prod:travis": "cross-env NODE_ENV=production webpack -p && webpack --config=webpack.static.config.babel.js",
     "serve": "http-server ./dist",
     "servejs": "node ./server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
-    "test:watch": "npm run test -- --watch",
+    "test:watch": "yarn run test -- --watch",
     "eslint": "eslint src/ test/ --ext .js,.jsx",
     "stylelint": "stylelint 'src/**/*.scss'",
-    "testall": "npm run eslint && npm run stylelint && npm run test"
+    "testall": "yarn run eslint && yarn run stylelint && yarn run test"
   },
   "repository": {
     "type": "git",
@@ -44,7 +44,7 @@
   "dependencies": {
     "history": "^2.1.2",
     "react": "^15.1.0",
-    "react-bootstrap": "^0.29.4",
+    "react-bootstrap": "^0.30.6",
     "react-dom": "^15.1.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.1",
