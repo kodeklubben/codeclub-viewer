@@ -12,9 +12,14 @@ export default (locals, callback) => {
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     let css = [];
+    // The following onInsertCss function allows multiple styles as arguments in withStyles().
+    // If we only require one style, it would suffice with onInsertCss = style => css.push(style._getCss())
+    const onInsertCss = (...styles) => {
+      styles.forEach(style => css.push(style._getCss()));
+    };
     const appHtml = ReactDOMServer.renderToString(
       <Provider store={store}>
-        <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+        <WithStylesContext onInsertCss={onInsertCss}>
           <RouterContext {...renderProps} />
         </WithStylesContext>
       </Provider>

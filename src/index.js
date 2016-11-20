@@ -17,9 +17,18 @@ const historyOptions = publicPath === '/' ? {} : {
 };
 const browserHistory = useRouterHistory(createHistory)(historyOptions);
 
+// The following onInsertCss function allows multiple styles as arguments in withStyles().
+// If we only require one style, it would suffice with onInsertCss = style => style._insertCss()
+const onInsertCss = (...styles) => {
+  const removeCss = styles.map(style => style._insertCss());
+  return () => {
+    removeCss.forEach(f => f());
+  };
+};
+
 render(
   <Provider store={store}>
-    <WithStylesContext onInsertCss={styles => styles._insertCss()}>
+    <WithStylesContext onInsertCss={onInsertCss}>
       <Router routes={routes}
               history={browserHistory}
               render={applyRouterMiddleware(useScroll())}
