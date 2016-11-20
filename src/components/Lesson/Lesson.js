@@ -26,10 +26,7 @@ const Lesson = React.createClass({
       // do nothing server-side
       return;
     }
-    let content = this.props.lesson.content;
-    if (containsScratchCode(content)) {
-      this.props.lesson.content = renderScratchBlocks(content);
-    }
+    this.props.lesson.content = prepareHtml(this.props.lesson.content);
   },
   render() {
     return (
@@ -54,6 +51,47 @@ export default withStyles(styles)(Lesson);
 /////////////////////
 // PRIVATE FUNCTIONS:
 
+// TODO:
+//  - non-mutating replaceClassRecursively
+//  - clean up constainsScratchCode and renderScratchBlocks, inkl. DRY
+//  - activate the rest of Lesson.scss (compare with kodeklubben.github.io)
+
+const parser = require('posthtml-parser');
+const render = require('posthtml-render');
+
+// This mutates the object -- make a version that doesn't do that!
+function replaceClassRecursively(obj) {
+  for (var k in obj) {
+    if (typeof obj[k] == 'object' && obj[k] !== null) {
+      replaceClassRecursively(obj[k]);
+    } else {
+      if (k === 'class') {
+        if (obj[k] in styles) {
+          console.log(obj[k]);
+          console.log(styles[obj[k]]);
+          obj[k] = styles[obj[k]];
+        }
+      }
+    }
+  }
+}
+
+function prepareHtml(content) {
+  //console.log(styles);
+  //console.log(content);
+  const parsedContent = parser(content);
+  //console.log(parsedContent);
+  replaceClassRecursively(parsedContent);
+  //console.log(parsedContent);
+  content = render(parsedContent);
+  //console.log(content);
+  if (containsScratchCode(content)) {
+    content = renderScratchBlocks(content);
+  }
+  return content;
+}
+
+
 /**
  * Render scratchblocks.
  *
@@ -61,12 +99,23 @@ export default withStyles(styles)(Lesson);
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
  */
 function renderScratchBlocks(content) {
-  const replace = [
-    { start: '<pre class=blocks>', end: '</pre>' },
-    { start: '<code class=b>', end: '</code>', options: { inline: true } },
-    // for dev server, attr="val" minified to attr=val in production build
-    { start: '<code class="b">', end: '</code>', options: { inline: true } }
-  ];
+  let replace = [];
+  // minified in production build, attr="val" -> attr=val
+  if ('blocks' in styles) {
+    replace.push({ start: '<pre class=' + styles.blocks + '>', end: '</pre>' }); // not needed after posthtml-render
+    replace.push({ start: '<pre class="' + styles.blocks + '">', end: '</pre>' });
+  }
+  if ('b' in styles) {
+    replace.push({ start: '<code class=' + styles.b + '>', end: '</code>', options: { inline: true } });  // not needed after posthtml-render
+    replace.push({ start: '<code class="' + styles.b + '">', end: '</code>', options: { inline: true } });
+  }
+  // const replace = [
+  //   { start: '<pre class=' + styles.blocks + '>', end: '</pre>' },
+  //   { start: '<pre class="' + styles.blocks + '">', end: '</pre>' },
+  //   { start: '<code class=' + styles.b + '>', end: '</code>', options: { inline: true } },
+  //   // for dev server, attr="val" minified to attr=val in production build
+  //   { start: '<code class="' + styles.b + '">', end: '</code>', options: { inline: true } }
+  // ];
 
   let returnContent = content;
   replace.forEach(r => {
@@ -92,11 +141,16 @@ function renderScratchBlocks(content) {
  * @returns {boolean} True if html contains scratch code.
  */
 function containsScratchCode(html){
-  let blocks = [
-    '<pre class=blocks>',
-    '<code class=b>',  // minified in production build, attr="val" -> attr=val
-    '<code class="b">'
-  ];
+  let blocks = [];
+  // minified in production build, attr="val" -> attr=val
+  if ('blocks' in styles) {
+    blocks.push('<pre class=' + styles.blocks + '>');  // not needed after posthtml-render
+    blocks.push('<pre class="' + styles.blocks + '">');
+  }
+  if ('b' in styles) {
+    blocks.push('<code class=' + styles.b + '>');  // not needed after posthtml-render
+    blocks.push('<code class="' + styles.b + '">');
+  }
   for (let i = 0; i < blocks.length; i += 1) {
     if (html.indexOf(blocks[i]) !== -1) {
       return true;
