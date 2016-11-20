@@ -56,17 +56,17 @@ section.activity {
     font-weight: 300;
   }
 }
-//section.check {
-//  // check lists
-//  h2 {
-//    background-image: url(img/check.svg);
-//    background-size: 40px 40px;
-//    background-repeat: no-repeat;
-//    padding-top: 4px;
-//    padding-bottom: 9px;
-//    padding-left: 50px;
-//  }
-//}
+section.check {
+  // check lists
+  h2 {
+    background-image: url(assets/graphics/check.svg);
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    padding-top: 4px;
+    padding-bottom: 9px;
+    padding-left: 50px;
+  }
+}
 section.try {
   background: #ABDBEA;
   border-radius: 10px;
@@ -87,39 +87,39 @@ section.protip, section.tip {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-//section.flag {
-//  border-top: 3px dotted rgb(230,134,45);
-//  padding-bottom: 20px;
-//  margin-top: 20px;
-//  margin-bottom: 20px;
-//  h2 {
-//    color: rgb(54,161,55);
-//    background-image: url(img/flag.svg);
-//    background-position: 0px 10px;
-//    background-size: 40px 40px;
-//    background-repeat: no-repeat;
-//    margin-top: 10px;
-//    margin-bottom: 10px;
-//    padding-top: 15px;
-//    padding-bottom: 10px;
-//    padding-left: 60px;
-//  }
-//}
-//section.save {
-//  border-top: 3px solid rgb(36,90,154);
-//  margin: 20px 0;
-//  h2 {
-//    color: rgb(36,90,154);
-//    background-image: url(img/save.svg);
-//    background-position: 0px 10px;
-//    background-size: 40px 40px;
-//    background-repeat: no-repeat;
-//    margin: 0;
-//    padding-top: 10px;
-//    padding-bottom: 20px;
-//    padding-left: 50px;
-//  }
-//}
+section.flag {
+  border-top: 3px dotted rgb(230,134,45);
+  padding-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  h2 {
+    color: rgb(54,161,55);
+    background-image: url(assets/graphics/flag.svg);
+    background-position: 0px 10px;
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 60px;
+  }
+}
+section.save {
+  border-top: 3px solid rgb(36,90,154);
+  margin: 20px 0;
+  h2 {
+    color: rgb(36,90,154);
+    background-image: url(assets/graphics/save.svg);
+    background-position: 0px 10px;
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+  }
+}
 section.challenge {
   border: 3px solid #00b1da;
   border-radius: 12px;
