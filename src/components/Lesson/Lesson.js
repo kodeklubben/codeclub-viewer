@@ -52,6 +52,10 @@ export default withStyles(styles)(Lesson);
 // PRIVATE FUNCTIONS:
 
 // TODO:
+//  - move these functions into a util file
+//  - if possible, make webpack preprocess the HTML.
+//    - replace classnames with locally scoped css-module class names
+//    - insert scratch blocks if possible
 //  - non-mutating replaceClassRecursively
 //  - clean up constainsScratchCode and renderScratchBlocks, inkl. DRY
 //  - activate the rest of Lesson.scss (compare with kodeklubben.github.io)
@@ -59,35 +63,31 @@ export default withStyles(styles)(Lesson);
 const parser = require('posthtml-parser');
 const render = require('posthtml-render');
 
-// This mutates the object -- make a version that doesn't do that!
-function replaceClassRecursively(obj) {
-  for (var k in obj) {
-    if (typeof obj[k] == 'object' && obj[k] !== null) {
-      replaceClassRecursively(obj[k]);
-    } else {
-      if (k === 'class') {
-        if (obj[k] in styles) {
-          console.log(obj[k]);
-          console.log(styles[obj[k]]);
-          obj[k] = styles[obj[k]];
+function replaceClassRecursivelyImm(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map((val, idx) => replaceClassRecursivelyImm(val));
+  } else if (typeof obj === 'object' && obj !== null) {
+    var newObj = {};
+    for (var k in obj) {
+      if (obj.hasOwnProperty(k)) {
+        if (k === 'class' && obj[k] in styles) {
+          newObj[k] = styles[obj[k]];
+        } else {
+          newObj[k] = replaceClassRecursivelyImm(obj[k]);
         }
       }
     }
+    return newObj;
+  } else {
+    return obj;
   }
 }
 
 function prepareHtml(content) {
-  //console.log(styles);
-  //console.log(content);
-  const parsedContent = parser(content);
-  //console.log(parsedContent);
-  replaceClassRecursively(parsedContent);
-  //console.log(parsedContent);
+  let parsedContent = parser(content);
+  parsedContent = replaceClassRecursivelyImm(parsedContent);
   content = render(parsedContent);
-  //console.log(content);
-  if (containsScratchCode(content)) {
-    content = renderScratchBlocks(content);
-  }
+  content = renderScratchBlocks(content);
   return content;
 }
 
@@ -100,22 +100,12 @@ function prepareHtml(content) {
  */
 function renderScratchBlocks(content) {
   let replace = [];
-  // minified in production build, attr="val" -> attr=val
   if ('blocks' in styles) {
-    replace.push({ start: '<pre class=' + styles.blocks + '>', end: '</pre>' }); // not needed after posthtml-render
-    replace.push({ start: '<pre class="' + styles.blocks + '">', end: '</pre>' });
+    replace.push({start: '<pre class="' + styles.blocks + '">', end: '</pre>'});
   }
   if ('b' in styles) {
-    replace.push({ start: '<code class=' + styles.b + '>', end: '</code>', options: { inline: true } });  // not needed after posthtml-render
-    replace.push({ start: '<code class="' + styles.b + '">', end: '</code>', options: { inline: true } });
+    replace.push({start: '<code class="' + styles.b + '">', end: '</code>', options: {inline: true}});
   }
-  // const replace = [
-  //   { start: '<pre class=' + styles.blocks + '>', end: '</pre>' },
-  //   { start: '<pre class="' + styles.blocks + '">', end: '</pre>' },
-  //   { start: '<code class=' + styles.b + '>', end: '</code>', options: { inline: true } },
-  //   // for dev server, attr="val" minified to attr=val in production build
-  //   { start: '<code class="' + styles.b + '">', end: '</code>', options: { inline: true } }
-  // ];
 
   let returnContent = content;
   replace.forEach(r => {
@@ -134,27 +124,3 @@ function renderScratchBlocks(content) {
   return returnContent;
 }
 
-/**
- * Search in `html` for `<pre class="blocks">`. Returns true if found.
- *
- * @param html {string} String to search.
- * @returns {boolean} True if html contains scratch code.
- */
-function containsScratchCode(html){
-  let blocks = [];
-  // minified in production build, attr="val" -> attr=val
-  if ('blocks' in styles) {
-    blocks.push('<pre class=' + styles.blocks + '>');  // not needed after posthtml-render
-    blocks.push('<pre class="' + styles.blocks + '">');
-  }
-  if ('b' in styles) {
-    blocks.push('<code class=' + styles.b + '>');  // not needed after posthtml-render
-    blocks.push('<code class="' + styles.b + '">');
-  }
-  for (let i = 0; i < blocks.length; i += 1) {
-    if (html.indexOf(blocks[i]) !== -1) {
-      return true;
-    }
-  }
-  return false;
-}
