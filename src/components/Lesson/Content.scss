@@ -1,5 +1,19 @@
 //////////////////////////////////////////////
 // The code below was originally copied from
+// codeclub_lesson_builder/styles/main.less
+//////////////////////////////////////////////
+
+@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image';
+
+// responsive images
+figure > img {
+  @include img-responsive;
+  margin:0 auto; // centered
+  padding: 20px;
+}
+
+//////////////////////////////////////////////
+// The code below was originally copied from
 // codeclub_lesson_builder/styles/lesson.less
 //////////////////////////////////////////////
 .intro h1 {
