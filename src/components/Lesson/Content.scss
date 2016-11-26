@@ -1,8 +1,10 @@
 //////////////////////////////////////////////
 // The code below was originally copied from
 // codeclub_lesson_builder/styles/main.less
+// and
+// codeclub_lesson_builder/styles/lesson.less
 //////////////////////////////////////////////
-
+@import "../../../node_modules/highlight.js/styles/idea";
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image';
 
 // responsive images
@@ -12,10 +14,6 @@ figure > img {
   padding: 20px;
 }
 
-//////////////////////////////////////////////
-// The code below was originally copied from
-// codeclub_lesson_builder/styles/lesson.less
-//////////////////////////////////////////////
 .intro h1 {
   font-size: 26px;
 }
@@ -45,8 +43,9 @@ figure > img {
 }
 
 // scratch code blocks
-pre.blocks, code.b {
-  background-color: inherit !important;
+pre.blocks,
+code.b {
+  background-color: inherit;
   border: 0;
 }
 
@@ -153,33 +152,43 @@ section.challenge {
   }
 }
 
+// manual colors for scratch code
+// example: Press `motion`{.blockmotion} ...
+code {
+  &.blockmotion { background-color: #505fd7; }
+  &.blocklooks { background-color: #9b33d9; }
+  &.blocksound { background-color: #d000c2; }
+  &.blockpen { background-color: #00a16f; }
+  &.blockdata { background-color: #ff7500; }
+  &.blockevents { background-color: #d38117; }
+  &.blockcontrol { background-color: #e9aa00; }
+  &.blocksensing { background-color: #00a3e6; }
+  &.blockoperators { background-color: #00c114; }
+  &.blockmoreblocks { background-color: #71009a; }
 
-//// scratchblocks colors
-//code {
-//  &.blockmotion     { background-color: @color-scratchblock-motion !important;     }
-//  &.blocklooks      { background-color: @color-scratchblock-looks !important;      }
-//  &.blocksound      { background-color: @color-scratchblock-sound !important;      }
-//  &.blockpen        { background-color: @color-scratchblock-pen !important;        }
-//  &.blockdata       { background-color: @color-scratchblock-data !important;       }
-//  &.blockevents     { background-color: @color-scratchblock-events !important;     }
-//  &.blockcontrol    { background-color: @color-scratchblock-control !important;    }
-//  &.blocksensing    { background-color: @color-scratchblock-sensing !important;    }
-//  &.blockoperators  { background-color: @color-scratchblock-operators !important;  }
-//  &.blockmoreblocks { background-color: @color-scratchblock-moreblocks !important; }
-//
-//  &.blockmotion,
-//  &.blocklooks,
-//  &.blocksound,
-//  &.blockpen,
-//  &.blockdata,
-//  &.blockevents,
-//  &.blockcontrol,
-//  &.blocksensing,
-//  &.blockoperators,
-//  &.blockmoreblocks {
-//    color: #fff !important;
-//  }
-//}
+  &.blockmotion,
+  &.blocklooks,
+  &.blocksound,
+  &.blockpen,
+  &.blockdata,
+  &.blockevents,
+  &.blockcontrol,
+  &.blocksensing,
+  &.blockoperators,
+  &.blockmoreblocks {
+    color: #fff !important;
+  }
+}
+
+// horisontal scroll on screens, do not wrap
+// not keyword negate _whole_ media query,
+// making `(not print) and (min-width: @screen-sm)` impossible
+@media aural, braille, handheld, projection, screen, tty, tv, embossed {
+  pre > code {
+    word-wrap: normal;
+    white-space: pre;
+  }
+}
 
 // embedded videos
 .video-container {
