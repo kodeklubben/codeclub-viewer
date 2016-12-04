@@ -52,7 +52,7 @@ code.b {
 // code blocks
 pre > code {
   // override hljs background
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 // sections
@@ -89,7 +89,7 @@ section.try {
     color: #007CC9;
   }
   li:before {
-    border: 3px solid #fff !important;
+    border: 3px solid #fff;
   }
 }
 section.protip, section.tip {
@@ -176,7 +176,7 @@ code {
   &.blocksensing,
   &.blockoperators,
   &.blockmoreblocks {
-    color: #fff !important;
+    color: #fff;
   }
 }
 
