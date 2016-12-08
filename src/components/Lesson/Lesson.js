@@ -1,9 +1,11 @@
 /* eslint-env node */
 
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
+import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
 
@@ -29,6 +31,22 @@ const Lesson = React.createClass({
       return;
     }
     this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
+  },
+  componentDidMount() {
+    const nodes = document.getElementsByClassName('togglebutton');
+    for (let node of nodes) {
+      const strongNode = node.getElementsByTagName('strong')[0];
+      const buttonText = strongNode ? strongNode.textContent : 'Hint';
+      const hiddenNode = node.getElementsByTagName('hide')[0];
+      const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
+      ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
+    }
+  },
+  componentWillUnmount() {
+    const nodes = document.getElementsByClassName('togglebutton');
+    for (let node of nodes) {
+      ReactDOM.unmountComponentAtNode(node);
+    }
   },
   render() {
     return (

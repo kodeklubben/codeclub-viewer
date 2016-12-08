@@ -6,6 +6,23 @@ import scratchblocks from 'scratchblocks/browser/scratchblocks.js';
 //    - insert scratch blocks if possible
 //  - activate the rest of Lesson.scss (compare with kodeklubben.github.io)
 
+// Structure of replaceTags:
+// {
+//   <oldtag>: {
+//     tag: <newtag>
+//     attrs: {
+//       <attribute>: <value>,
+//       ...
+//     }
+// }
+const replaceTags = {
+  toggle: {
+    tag: 'div',
+    attrs: {
+      class: 'togglebutton'
+    }
+  }
+};
 
 function processContent(content, styles) {
   const parser = require('posthtml-parser');
@@ -18,17 +35,32 @@ function processContent(content, styles) {
   return content;
 }
 
+function replaceTagObject(obj) {
+  const tag = obj['tag'];
+  if (tag in replaceTags) {
+    const replacementObj = replaceTags[tag];
+    return {
+      ...obj,
+      tag: replacementObj['tag'],
+      attrs: {...obj['attrs'], ...replacementObj['attrs']}
+    };
+  } else {
+    return obj;
+  }
+}
+
 function replaceClassRecursively(obj, styles) {
   if (Array.isArray(obj)) {
     return obj.map((val, idx) => replaceClassRecursively(val, styles));
   } else if (typeof obj === 'object' && obj !== null) {
-    var newObj = {};
-    for (var k in obj) {
-      if (obj.hasOwnProperty(k)) {
-        if (k === 'class' && obj[k] in styles) {
-          newObj[k] = styles[obj[k]];
+    const repObj = replaceTagObject(obj);
+    let newObj = {};
+    for (let k in repObj) {
+      if (repObj.hasOwnProperty(k)) {
+        if (k === 'class' && repObj[k] in styles) {
+          newObj[k] = styles[repObj[k]];
         } else {
-          newObj[k] = replaceClassRecursively(obj[k], styles);
+          newObj[k] = replaceClassRecursively(repObj[k], styles);
         }
       }
     }
