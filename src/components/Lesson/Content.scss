@@ -4,13 +4,13 @@
 // and
 // codeclub_lesson_builder/styles/lesson.less
 //////////////////////////////////////////////
-@import "../../../node_modules/highlight.js/styles/idea";
+@import '../../../node_modules/highlight.js/styles/idea';
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image';
 
 // responsive images
 figure > img {
   @include img-responsive;
-  margin:0 auto; // centered
+  margin: 0 auto; // centered
   padding: 20px;
 }
 
@@ -19,10 +19,13 @@ figure > img {
 }
 
 // list items in .check, .activity and .save
-.check, .activity, .save {
-  ul, ol {
+.check,
+.activity,
+.save {
+  ul,
+  ol {
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px;
   }
   li {
     list-style: none;
@@ -32,11 +35,11 @@ figure > img {
     margin-left: 45px;
   }
   // check box for list items
-  li:before {
+  li::before {
     content: " ";
     border-radius: 8px;
-    border: 3px solid #ABDBEA;
-    padding: 10px 10px;
+    border: 3px solid #abdbea;
+    padding: 10px;
     float: left;
     margin-left: -40px;
   }
@@ -59,7 +62,7 @@ pre > code {
 section.activity {
   // activities, "Step 1: Bla bla"
   h1 {
-    color: #FFF;
+    color: #fff;
     background: #349946;
     padding: 10px;
     border-radius: 5px;
@@ -69,6 +72,7 @@ section.activity {
     font-weight: 300;
   }
 }
+
 section.check {
   // check lists
   h2 {
@@ -80,35 +84,39 @@ section.check {
     padding-left: 50px;
   }
 }
+
 section.try {
-  background: #ABDBEA;
+  background: #abdbea;
   border-radius: 10px;
-  padding: 1px 20px 10px 20px;
+  padding: 1px 20px 10px;
   code {
     background-color: #fff;
-    color: #007CC9;
+    color: #007cc9;
   }
-  li:before {
+  li::before {
     border: 3px solid #fff;
   }
 }
-section.protip, section.tip {
+
+section.protip,
+section.tip {
   border: 3px solid #ff7f00;
   background: #fff99d;
   border-radius: 12px;
-  padding: 0 20px 20px 20px;
+  padding: 0 20px 20px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 section.flag {
-  border-top: 3px dotted rgb(230,134,45);
+  border-top: 3px dotted rgb(230, 134, 45);
   padding-bottom: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
   h2 {
-    color: rgb(54,161,55);
+    color: rgb(54, 161, 55);
     background-image: url(assets/graphics/flag.svg);
-    background-position: 0px 10px;
+    background-position: 0 10px;
     background-size: 40px 40px;
     background-repeat: no-repeat;
     margin-top: 10px;
@@ -118,13 +126,14 @@ section.flag {
     padding-left: 60px;
   }
 }
+
 section.save {
-  border-top: 3px solid rgb(36,90,154);
+  border-top: 3px solid rgb(36, 90, 154);
   margin: 20px 0;
   h2 {
-    color: rgb(36,90,154);
+    color: rgb(36, 90, 154);
     background-image: url(assets/graphics/save.svg);
-    background-position: 0px 10px;
+    background-position: 0 10px;
     background-size: 40px 40px;
     background-repeat: no-repeat;
     margin: 0;
@@ -133,6 +142,7 @@ section.save {
     padding-left: 50px;
   }
 }
+
 section.challenge {
   border: 3px solid #00b1da;
   border-radius: 12px;
@@ -193,13 +203,13 @@ code {
 // embedded videos
 .video-container {
   position: relative;
-  padding-bottom: 56.25%;  // 16:9
+  padding-bottom: 56.25%; // 16:9
   height: 0;
   overflow: hidden;
-  margin: 30px 0 60px 0;
+  margin: 30px 0 60px;
   iframe {
     position: absolute;
-    top:0;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
