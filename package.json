@@ -43,6 +43,8 @@
   },
   "dependencies": {
     "history": "^2.1.2",
+    "posthtml-parser": "^0.2.0",
+    "posthtml-render": "^1.0.6",
     "react": "^15.1.0",
     "react-bootstrap": "^0.30.6",
     "react-dom": "^15.1.0",
