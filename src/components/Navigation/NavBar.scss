@@ -1,12 +1,23 @@
-.flagGroup {
-  display: flex;
-  justify-content: flex-end;
-  padding: 5px;
+$flag-width: 30px;
+$flag-height: 20px;
+$space-between-text-and-flag: 10px;
+
+.language {
+  margin-right: $flag-width + $space-between-text-and-flag;
 }
 
 .flag {
-  width: 30px;
-  height: 20px;
+  width: $flag-width;
+  height: $flag-height;
   float: right;
-  margin-left: 5px;
+}
+
+.gadgetGroup {
+  display: inline;
+  float: right;
+  padding: 10px 0 0 0;
+}
+.gadgetContainer {
+  display: inline-block;
+  padding: 0 5px 10px 5px;
 }

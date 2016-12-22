@@ -25,33 +25,7 @@
   }
 }
 
-.navbar-form {
-  border: 0;
-  box-shadow: none;
-  padding-left: 0;
-  padding-right: 0;
-  display: inline-block;
-}
-
-.btn-toggle {
-  display: inline-block;
-}
-
-.dropdown-menu {
-  width: 175px;
-}
-
-.navbar-brand {
-  padding: 25px 15px;
-}
-
-.navbar-right {
-  margin-right: 0;
-}
-
 .navbar-default {
-  padding-top: 30px;
-  padding-bottom: 10px;
   border-radius: 0;
   background-color: $color-green-light;
   color: $color-green-dark;
@@ -59,23 +33,12 @@
   font-weight: 300;
 }
 
-.navbar-collapse {
-  padding-right: 15px;
-  padding-left: 15px;
+// It seems like overflow-y is set to "auto" for screensize below screen-md-min (768px)
+// (see node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss:60)
+// but this doesn't make any sense to me.
+// Perhaps the menu shouldn't show like that on mobile, but should be displayed differently?
+// Setting this to visible to always show dropdown menus for now.
+.navbar-collapse.in {
+  overflow-y: visible;
 }
 
-@media (max-width: 767px) {
-  .navbar-form {
-    margin: 0;
-    padding-bottom: 0;
-  }
-  .navbar-right {
-    float: left;
-  }
-  .form-group {
-    max-width: 200px;
-  }
-  .navbar-brand {
-    padding: 15px;
-  }
-}
