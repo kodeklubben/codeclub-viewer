@@ -185,7 +185,7 @@ const config = {
 
 if (isHot) {
   const loaders = getLoaders();
-  loaders.js.loader = 'react-hot!' + loaders.js.loader;
+  loaders.js.loader = 'react-hot-loader!' + loaders.js.loader;
   config.module.loaders = getValuesAsArray(loaders);
 }
 
