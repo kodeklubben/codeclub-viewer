@@ -47,10 +47,10 @@ export const lessonSrc = '../oppgaver/src';
 const assets = './src/assets';
 
 // Loaders for lesson files written in markdown (.md)
-const frontmatterLoaders = ['json', 'front-matter?onlyAttributes'];
-const contentLoaders = ['html', 'markdown-it', 'front-matter?onlyBody'];
+const frontmatterLoaders = ['json-loader', 'front-matter-loader?onlyAttributes'];
+const contentLoaders = ['html-loader', 'markdown-it-loader', 'front-matter-loader?onlyBody'];
 
-const cssModuleLoaderStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
+const cssModuleLoaderStr = 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
 
 /////////////////////
 // Helper function //
@@ -70,17 +70,17 @@ export function getLoaders() {
     js: {
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel'
+      loader: 'babel-loader'
     },
     css: {
       test: /\.css$/,
       exclude: /node_modules/,
-      loaders: ['isomorphic-style', cssModuleLoaderStr, 'postcss']
+      loaders: ['isomorphic-style-loader', cssModuleLoaderStr, 'postcss-loader']
     },
     scss: {
       test: /\.scss$/,
       exclude: /node_modules/,
-      loaders: ['isomorphic-style', cssModuleLoaderStr, 'postcss', 'sass']
+      loaders: ['isomorphic-style-loader', cssModuleLoaderStr, 'postcss-loader', 'sass-loader']
     },
     image: {
       test: /\.(png|jpg|jpeg|gif)$/,
@@ -88,16 +88,16 @@ export function getLoaders() {
     },
     fonturl: {
       test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url?limit=10000'
+      loader: 'url-loader?limit=10000'
     },
     fontfile: {
       test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-      loader: 'file'
+      loader: 'file-loader'
     },
     json: {
       // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
       test: /\.json$/,
-      loader: 'json'
+      loader: 'json-loader'
     }
   };
 }
