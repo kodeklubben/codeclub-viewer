@@ -3,18 +3,18 @@
 
 .panel-student {
   @include panel-variant(
-                  $color-green-light,
-                  $color-green-dark,
-                  $color-green-light,
-                  darken(adjust-hue($color-green-light, -10), 5%)
+    $color-green-light,
+    $color-green-dark,
+    $color-green-light,
+    darken(adjust-hue($color-green-light, -10), 5%)
   );
 }
 
 .panel-teacher {
   @include panel-variant(
-                  $color-blue-light,
-                  $color-blue-dark,
-                  $color-blue-light,
-                  darken(adjust-hue($color-blue-light, -10), 5%)
+    $color-blue-light,
+    $color-blue-dark,
+    $color-blue-light,
+    darken(adjust-hue($color-blue-light, -10), 5%)
   );
 }
