@@ -2,20 +2,16 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {setModeStudent, setModeTeacher, setLanguage} from '../../action_creators';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Button from 'react-bootstrap/lib/Button';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
-import FormGroup from 'react-bootstrap/lib/FormGroup';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import Dropdown from 'react-bootstrap/lib/Dropdown';
-import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
 import NavLink from './NavLink';
 import styles from './NavBar.scss';
-import ModeIndicator from './ModeIndicator';
 
 export const NavBar = React.createClass({
 
@@ -38,12 +34,12 @@ export const NavBar = React.createClass({
         url: require('../../assets/graphics/denmark.svg')
       }
     };
-
+    // Note that the block with "float" (the flag) must be first in the containing div
     return (
-      <span>
-        {nativeLanguages[language].name}
+      <div>
         <img className={styles.flag} src={nativeLanguages[language].url}/>
-      </span>
+        <div className={styles.language}>{nativeLanguages[language].name}</div>
+      </div>
     );
   },
 
@@ -57,25 +53,45 @@ export const NavBar = React.createClass({
       <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>
         {(params.lesson).replace(/_/g, ' ')}
       </NavLink> : null;
-
+    const modes = ['student', 'teacher'];
+    const mode = modes[this.props.isStudentMode ? 0 : 1];
+    const texts = {'student': 'ELEV', 'teacher': 'LÆRER'};
+    const setMode = mode => mode === 'student' ? this.props.setModeStudent() : this.props.setModeTeacher();
+    const languages = ['nb', 'nn', 'sv', 'da'];
+    const language = this.props.language;
+    const languageDropdown = (
+      <DropdownButton id='language-dropdown'
+                      noCaret
+                      bsStyle={'language-' + mode}
+                      title={this.getNativeLanguage(language)}
+                      onSelect={(eventKey) => this.props.setLanguage(eventKey)}>
+        {
+          languages.map(k =>
+            <MenuItem key={k} eventKey={k} active={language === k}>{this.getNativeLanguage(k)}</MenuItem>
+          )
+        }
+      </DropdownButton>
+    );
+    const modeDropdown = (
+      <DropdownButton id='mode-dropdown'
+                      noCaret
+                      bsStyle={mode}
+                      title={'Modus: ' + texts[mode]}
+                      onSelect={setMode}>
+        {
+          modes.map(k =>
+            <MenuItem key={k} eventKey={k} active={mode === k}>{texts[k]}</MenuItem>
+          )
+        }
+      </DropdownButton>
+    );
+    const searchBox = (
+      <FormControl type='text' placeholder='Søk'/>
+    );
     return (
       <Grid fluid={true}>
         <Row>
           <Navbar className={this.props.isStudentMode ? null : 'navbar-teacher'} fluid={true} fixedTop={true}>
-            <Dropdown id='language-dropdown' className='btn-language-dropdown pull-right'
-              onSelect={(eventKey) => this.props.setLanguage(eventKey)}>
-              <Dropdown.Toggle noCaret={true} className={this.props.isStudentMode
-                ? 'btn-language-student btn-language'
-                : 'btn-language-teacher btn-language'}>
-                {this.getNativeLanguage(this.props.language)}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <MenuItem eventKey='nb'>{this.getNativeLanguage('nb')}</MenuItem>
-                <MenuItem eventKey='nn'>{this.getNativeLanguage('nn')}</MenuItem>
-                <MenuItem eventKey='sv'>{this.getNativeLanguage('sv')}</MenuItem>
-                <MenuItem eventKey='da'>{this.getNativeLanguage('da')}</MenuItem>
-              </Dropdown.Menu>
-            </Dropdown>
             <Navbar.Header>
               <Navbar.Brand>
                 <NavLink to='/' onlyActiveOnIndex>
@@ -87,29 +103,20 @@ export const NavBar = React.createClass({
               <Navbar.Toggle className={this.props.isStudentMode ? null : 'toggle-teacher'}/>
             </Navbar.Header>
             <Navbar.Collapse>
-              <Navbar.Form pullRight>
-                <FormGroup>
-                  <FormControl type='text' placeholder='Søk'/>
-                </FormGroup>
-                {' '}
-                <div className='btn-toggle'>
-                  <div>Velg modus:</div>
-                  <ButtonGroup className='btn-group'>
-                    <Button className='btn-student-nav' active={this.props.isStudentMode}
-                      onClick={() => this.props.setModeStudent()}>
-                      ELEV
-                    </Button>
-                    <Button className="btn-teacher-nav" active={!this.props.isStudentMode}
-                      onClick={() => this.props.setModeTeacher()}>
-                      LÆRER
-                    </Button>
-                  </ButtonGroup>
+              <div className={styles.gadgetGroup}>
+                <div className={styles.gadgetContainer}>
+                  {languageDropdown}
                 </div>
-              </Navbar.Form>
+                <div className={styles.gadgetContainer}>
+                  {modeDropdown}
+                </div>
+                <div className={styles.gadgetContainer}>
+                  {searchBox}
+                </div>
+              </div>
             </Navbar.Collapse>
           </Navbar>
         </Row>
-        <ModeIndicator isStudentMode={this.props.isStudentMode}/>
       </Grid>
     );
   }

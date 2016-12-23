@@ -71,35 +71,12 @@
   @include button-variant($color-blue-dark, transparent, $color-blue-dark);
 }
 
-.btn-language {
-  padding: 2px;
-  font-size: 10pt;
-}
-
-.btn-language-dropdown {
-  position: absolute;
-  right: 15px;
-  top: 2.5px;
-}
-
 .btn-student-nav {
   @include button-nav(#fff, $color-green, $color-green-median, 25%);
 }
 
 .btn-teacher-nav {
   @include button-nav(#fff, $color-blue, $color-blue-median, 25%);
-}
-
-.btn-xxl {
-  @include button-size(0, 0, 1.5em, 1em, 0);
-  font-family: $font-default;
-  font-weight: 300;
-  margin: 1em;
-  width: 13em;
-  height: 6em;
-  max-width: 100%;
-  max-height: 100%;
-  border: none;
 }
 
 .btn-sm-fixed-width {
