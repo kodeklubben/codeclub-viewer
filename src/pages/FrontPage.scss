@@ -1,11 +1,11 @@
-@import '../assets/css/fonts';
+@import '../styles/variables';
 
 .center {
   text-align: center;
 }
 
 .fontTitle {
-  font-family: $font-code;
+  font-family: $font-family-roboto-mono;
   font-size: 50pt;
   font-weight: 300;
 }

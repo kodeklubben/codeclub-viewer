@@ -1,4 +1,4 @@
-@import '../../assets/css/fonts';
+@import '../../styles/variables';
 
 .link {
   text-decoration: none !important;
@@ -7,7 +7,7 @@
 }
 
 .fontInfoBox {
-  font-family: $font-default;
+  font-family: $font-family-roboto;
   font-size: 12pt;
   font-weight: 300;
 }

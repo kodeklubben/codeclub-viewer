@@ -1,12 +1,11 @@
-@import '../../assets/css/fonts';
-@import '../../assets/css/colors';
+@import '../../styles/variables';
 
 .container {
   margin-top: 100px;
   padding-bottom: 20px;
   font-weight: 300;
   font-size: 15pt;
-  font-family: $font-default;
+  font-family: $font-family-roboto;
   a {
     text-decoration: none;
   }

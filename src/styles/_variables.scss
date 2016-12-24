@@ -1,5 +1,6 @@
-@import "../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 
+// Colors
 $color-gray: #656565;
 $color-gray-light: #dadada;
 $color-gray-dark: #333;
@@ -11,3 +12,7 @@ $color-blue: #46cccc;
 $color-blue-light: #a3cccb;
 $color-blue-median: #3a9b94;
 $color-blue-dark: #215651;
+
+// Fonts
+$font-family-roboto: 'Roboto', 'Verdana', sans-serif;
+$font-family-roboto-mono: 'Roboto Mono', monospace;

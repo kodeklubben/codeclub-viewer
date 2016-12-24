@@ -38,13 +38,13 @@ extractStyles: false
 # Thus, you may customize Bootstrap variables
 # based on the values established in the Bootstrap _variables.scss file
 #
-# bootstrapCustomizations: ./path/to/bootstrap/customizations.scss
+bootstrapCustomizations: ./src/styles/variables.scss
 
 
 # Import your custom styles here
 # Usually this endpoint-file contains list of @imports of your application styles
 #
-appStyles: ./src/assets/css/app.scss
+appStyles: ./src/styles/app.scss
 
 
 ### Bootstrap styles
