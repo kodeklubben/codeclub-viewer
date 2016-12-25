@@ -1,6 +1,12 @@
-@import "../../styles/variables";
+@import "~bootstrapStyles/variables";
 
-.playlist:hover {
-  color: $brand-primary;
-  cursor: pointer;
+.playlist {
+  font-size: 0.8em;
+}
+
+.playlistItem {
+  &:hover {
+    color: $brand-primary;
+    cursor: pointer;
+  }
 }

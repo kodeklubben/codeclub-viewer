@@ -6,7 +6,7 @@
 
 .fontTitle {
   font-family: $font-family-roboto-mono;
-  font-size: 50pt;
+  font-size: 3em;
   font-weight: 300;
 }
 
@@ -19,11 +19,5 @@
   }
   .t2 {
     color: #71bf44;
-  }
-}
-
-@media (max-width: 700px) {
-  .fontTitle {
-    font-size: 25pt;
   }
 }

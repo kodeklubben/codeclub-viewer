@@ -18,8 +18,8 @@ const Playlist = React.createClass({
     const name = this.props.name;
     const lessons = this.props.lessons || [];
     return (
-      <div>
-        <li className={styles.playlist + ' list-group-item'} onClick={this.expand}>
+      <div className={styles.playlist}>
+        <li className={styles.playlistItem + ' list-group-item'} onClick={this.expand}>
           <Glyphicon glyph={this.state.expanded ? 'chevron-down' : 'chevron-right'}/>
           &nbsp;<Badge>{lessons.length}</Badge>{name}
         </li>

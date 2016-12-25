@@ -45,6 +45,7 @@ const publicPathWithoutSlash = path.join('/', subDir);
 export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
 export const lessonSrc = '../oppgaver/src';
 const assets = './src/assets';
+const bootstrapStyles = './node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
 // Loaders for lesson files written in markdown (.md)
 const frontmatterLoaders = ['json-loader', 'front-matter-loader?onlyAttributes'];
@@ -119,7 +120,8 @@ const baseConfig = {
     extensions: ['', '.js', '.jsx'],
     alias: {
       lessonSrc: path.resolve(__dirname, lessonSrc),
-      assets: path.resolve(__dirname, assets)
+      assets: path.resolve(__dirname, assets),
+      bootstrapStyles: path.resolve(__dirname, bootstrapStyles)
     }
   },
   resolveLoader: {

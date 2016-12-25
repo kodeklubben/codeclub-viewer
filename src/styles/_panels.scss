@@ -1,4 +1,4 @@
-@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/panels';
+@import '~bootstrapStyles/mixins/panels';
 
 .panel-student {
   @include panel-variant(

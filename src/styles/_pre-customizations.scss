@@ -1,0 +1,4 @@
+// Override bootstrap variables that have the !default flag, i.e. the values set here will be used in computing
+// the derived bootstrap variables.
+
+$font-size-base: 16px; // Override bootstrap's 14px default base
