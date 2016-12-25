@@ -14,5 +14,7 @@ $color-blue-median: #3a9b94;
 $color-blue-dark: #215651;
 
 // Fonts
+$font-size-base: 16px; // Override bootstrap's 14px default base
+
 $font-family-roboto: 'Roboto', 'Verdana', sans-serif;
 $font-family-roboto-mono: 'Roboto Mono', monospace;

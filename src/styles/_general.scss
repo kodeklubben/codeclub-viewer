@@ -1,3 +1,19 @@
 // This file should include "normalization type" alterations of tags,
 // e.g. removing padding and margins from or setting fonts in html, body, p etc.
-// Do NOT add any bootstrap specific style here.
+// Do NOT change or define any bootstrap specific styles here (although it is ok to use bootstrap variables).
+
+html {
+  font-size: $font-size-base;
+}
+
+body {
+  @media (max-width: $screen-sm) {
+    font-size: 106.25%; // 17px if base font is 16px
+  }
+  @media (min-width: $screen-sm) and (max-width: $screen-md) {
+    font-size: 118.75%; // 19px if base font is 16px
+  }
+  @media (min-width: $screen-md) {
+    font-size: 125%; // 20px if base font is 16px
+  }
+}
