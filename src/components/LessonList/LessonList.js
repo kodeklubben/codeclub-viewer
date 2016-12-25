@@ -16,7 +16,7 @@ const LessonList = React.createClass({
     const level = this.props.level;
     return (
       <div id={this.props.id}>
-        <h3><LevelIcon level={level} size="medium"/>{getLevelName(level)}{' - Level ' + level}</h3>
+        <h3><LevelIcon level={level}/>{getLevelName(level)}{' - Level ' + level}</h3>
         <ul className='list-group'>
           {lessons.map((lesson, idx) =>
             lesson.indexed ?

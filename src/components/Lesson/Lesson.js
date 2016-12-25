@@ -51,7 +51,7 @@ const Lesson = React.createClass({
   render() {
     return (
       <div className={styles.container}>
-        <h1><LevelIcon level={this.getLevel()} size="large"/>{this.getTitle()} - Level {this.getLevel()}</h1>
+        <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
       </div>

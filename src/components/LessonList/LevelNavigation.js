@@ -7,7 +7,7 @@ const LevelNavigation = React.createClass({
     const levels = this.props.levels || [];
     const levelListItems = levels.map((level, idx) => (
       <li key={idx} className='list-group-item'>
-        <a href={'#level-'+level}><LevelIcon level={level} size="small"/>{getLevelName(level)}</a>
+        <a href={'#level-'+level}><LevelIcon level={level}/>{getLevelName(level)}</a>
       </li>
     ));
     return (
