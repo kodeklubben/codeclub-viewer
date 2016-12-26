@@ -6,14 +6,15 @@ html {
   font-size: $font-size-base;
 }
 
-body {
-  @media (max-width: $screen-sm) {
+p,
+li {
+  @media (max-width: $screen-xs-max) {
     font-size: 106.25%; // 17px if base font is 16px
   }
-  @media (min-width: $screen-sm) and (max-width: $screen-md) {
+  @media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
     font-size: 118.75%; // 19px if base font is 16px
   }
-  @media (min-width: $screen-md) {
+  @media (min-width: $screen-md-min) {
     font-size: 125%; // 20px if base font is 16px
   }
 }
