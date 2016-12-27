@@ -60,9 +60,20 @@ export function changeMode() {
   };
 }
 
+export function setTeacherInfo(teacherInfo) {
+  return {
+    type: 'SET_TEACHER_INFO',
+    payload: {
+      teacherInfo
+    }
+  };
+}
+
 export function setLanguage(language) {
   return {
     type: 'SET_LANGUAGE',
-    payload: language
+    payload: {
+      language
+    }
   };
 }
