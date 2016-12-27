@@ -100,7 +100,7 @@ export const NavBar = React.createClass({
                 {courseLink ? <span> / {courseLink}</span> : null}
                 {lessonLink ? <span className='hidden-xs'> / {lessonLink}</span> : null}
               </Navbar.Brand>
-              <Navbar.Toggle className={this.props.isStudentMode ? null : 'toggle-teacher'}/>
+              <Navbar.Toggle/>
             </Navbar.Header>
             <Navbar.Collapse>
               <div className={styles.gadgetGroup}>

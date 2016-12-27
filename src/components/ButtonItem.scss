@@ -1,4 +1,4 @@
-@import '../assets/css/fonts';
+@import '../styles/variables';
 
 $button-blue: #46cccc;
 $button-blue-hover: #3a9b94;
@@ -6,10 +6,10 @@ $button-green: #46cc46;
 $button-green-hover: #359e37;
 
 .fontButton {
-  font-family: $font-default;
+  font-family: $font-family-roboto;
   font-weight: 300;
-  font-size: 15pt;
   color: white;
+  font-size: 1.5em;
 }
 
 .button {

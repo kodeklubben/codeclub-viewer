@@ -5,17 +5,13 @@
 // codeclub_lesson_builder/styles/lesson.less
 //////////////////////////////////////////////
 @import '../../../node_modules/highlight.js/styles/idea';
-@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/image';
+@import '~bootstrapStyles/mixins/image';
 
 // responsive images
 figure > img {
   @include img-responsive;
   margin: 0 auto; // centered
   padding: 20px;
-}
-
-.intro h1 {
-  font-size: 26px;
 }
 
 // list items in .check, .activity and .save

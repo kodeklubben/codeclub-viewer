@@ -1,12 +1,10 @@
-@import "../../assets/css/colors";
+@import "~bootstrapStyles/variables";
 
 a:hover {
   text-decoration: none;
 }
 
 .lessonItem {
-  font-size: 1.3em;
-
   &:hover {
     cursor: pointer;
     color: darken($brand-primary, 20%);

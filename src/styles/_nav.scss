@@ -1,6 +1,3 @@
-@import './fonts';
-@import './colors';
-
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
   background-color: transparent;
@@ -18,18 +15,11 @@
   background-color: $color-blue-light !important;
 }
 
-.toggle-teacher {
-  border-color: $color-blue-dark !important;
-  .icon-bar {
-    background-color: $color-blue-dark !important;
-  }
-}
-
 .navbar-default {
   border-radius: 0;
   background-color: $color-green-light;
   color: $color-green-dark;
-  font-family: $font-default;
+  font-family: $font-family-roboto;
   font-weight: 300;
 }
 

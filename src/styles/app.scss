@@ -1,0 +1,24 @@
+// Any global CSS should be added through this file.
+//
+// As a general rule, CSS should be added locally using css-modules when possible.
+//
+// The exceptions where CSS is added globally are:
+// * Modifications of existing and additions of new styles to bootstrap CSS,
+//   e.g. .btn-mynewstyle or .panel-nynewstyle, which is used by adding the attribute bsStyle="mynewstyle",
+//   <Button bsStyle="mynewstyle"> or <Panel bsStyle="mynewstyle"> in the React markup.
+//   Note that extra bootstrap styles must also be added customBootstrapStyles.js using
+//   bootstrapUtils.addStyle, e.g. bootstrapUtils.addStyle(Button, 'mynewstyle')
+// * Including new fonts that should be available globally.
+// * Normalization type alterations of tags,
+//   e.g. removing padding and margins from or setting fonts in html, body, p etc.
+//
+// All SASS variables are set in _variables.scss.
+// It is included by bootstrap-loader through .bootstraprc as bootstrapCustomization,
+// and all variables defined there are available to all css included in this file.
+// The file _variables.scss can also be included in local css-modules files if needed there.
+
+@import "fonts";
+@import "general";
+@import "buttons";
+@import "panels";
+@import "nav";

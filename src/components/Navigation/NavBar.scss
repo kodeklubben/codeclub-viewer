@@ -2,6 +2,16 @@ $flag-width: 30px;
 $flag-height: 20px;
 $space-between-text-and-flag: 10px;
 
+:global {
+  .navbar-brand {
+    font-size: 1.4em;
+  }
+  .glyphicon-home {
+    line-height: 0; // So that it doesn't affect the centering of the rest of the breadcrumb text
+    font-size: 0.9em;
+  }
+}
+
 .language {
   margin-right: $flag-width + $space-between-text-and-flag;
 }
@@ -15,10 +25,10 @@ $space-between-text-and-flag: 10px;
 .gadgetGroup {
   display: inline;
   float: right;
-  padding: 10px 0 0;
+  padding: 3px 0;
 }
 
 .gadgetContainer {
   display: inline-block;
-  padding: 0 5px 10px;
+  padding: 3px 5px;
 }

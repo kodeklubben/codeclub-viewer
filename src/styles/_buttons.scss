@@ -1,6 +1,4 @@
-@import './colors';
-@import './fonts';
-@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins/buttons';
+@import '~bootstrapStyles/mixins/buttons';
 
 @mixin button-nav($color, $background, $border, $darken) {
   color: $color;

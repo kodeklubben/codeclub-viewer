@@ -1,4 +1,4 @@
-@import '../../assets/css/colors';
+@import '../../styles/variables';
 
 .courseItem {
   color: $color-gray-dark;
@@ -38,6 +38,5 @@
 }
 
 .lessonCount {
-  font-size: 1em;
   color: $color-gray;
 }
