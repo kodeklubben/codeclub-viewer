@@ -1,6 +1,14 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": [
+          "global"
+        ]
+      }
+    ],
     "at-rule-empty-line-before": [
       "always",
       {
