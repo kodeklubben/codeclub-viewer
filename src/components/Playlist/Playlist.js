@@ -4,6 +4,8 @@ import styles from './Playlist.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Badge from 'react-bootstrap/lib/Badge';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 const Playlist = React.createClass({
   getInitialState() {
@@ -18,14 +20,23 @@ const Playlist = React.createClass({
     const name = this.props.name;
     const lessons = this.props.lessons || [];
     return (
-      <div className={styles.playlist}>
-        <li className={styles.playlistItem + ' list-group-item'} onClick={this.expand}>
-          <Glyphicon glyph={this.state.expanded ? 'chevron-down' : 'chevron-right'}/>
-          &nbsp;<Badge>{lessons.length}</Badge>{name}
-        </li>
-        <ul className={'list-group'} style={this.state.expanded ? null : {display:'none'}}>
-          {lessons.map((lesson, idx) => <LessonItemContainer key={idx} lesson={lesson}/>)}
-        </ul>
+      <div>
+        <span className={styles.playlistItem} onClick={this.expand}>
+          <ListGroupItem>
+            <Glyphicon glyph={this.state.expanded ? 'chevron-down' : 'chevron-right'}/>
+            &nbsp;
+            <Badge>{lessons.length}</Badge>{name}
+          </ListGroupItem>
+        </span>
+        {
+          this.state.expanded
+            ?
+            <ListGroup>
+              {lessons.map((lesson, idx) => <LessonItemContainer key={idx} lesson={lesson}/>)}
+            </ListGroup>
+            :
+            null
+        }
       </div>
     );
   }

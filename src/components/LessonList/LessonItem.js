@@ -5,6 +5,7 @@ import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 export const LessonItem = React.createClass({
   render() {
@@ -25,7 +26,7 @@ export const LessonItem = React.createClass({
     });
     const isExternal = lesson.external.length > 0;
     return (
-      <li className='list-group-item'>
+      <ListGroupItem>
         {isExternal ?
           <a href={lesson.external} target="_blank">
             <div className={styles.lessonItem}>
@@ -48,7 +49,7 @@ export const LessonItem = React.createClass({
             </Link>
           </div>
         }
-      </li>
+      </ListGroupItem>
     );
   }
 });

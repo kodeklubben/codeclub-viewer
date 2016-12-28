@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import Playlist from './Playlist';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 const PlaylistNavigation = React.createClass({
   render() {
@@ -11,10 +13,10 @@ const PlaylistNavigation = React.createClass({
     return (
       <div>
         <h3>Oppgavesamlinger</h3>
-        <ul className='list-group'>
+        <ListGroup>
           {playlistListItems.length ? 
-            playlistListItems : <li className='list-group-item list-group-item-warning'>Ingen samlinger</li>}
-        </ul>
+            playlistListItems : <ListGroupItem bsStyle="warning">Ingen samlinger</ListGroupItem>}
+        </ListGroup>
       </div>
     );
   }
