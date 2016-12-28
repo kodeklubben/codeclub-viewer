@@ -1,4 +1,5 @@
-@import "~bootstrapStyles/variables";
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 
 a:hover {
   text-decoration: none;
@@ -9,6 +10,8 @@ a:hover {
     cursor: pointer;
     color: darken($brand-primary, 20%);
   }
+
+  @include responsiveFontSizes;
 }
 
 .instructionBtn {

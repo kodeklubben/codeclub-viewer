@@ -15,6 +15,10 @@ $color-blue-median: #3a9b94;
 $color-blue-dark: #215651;
 
 // Fonts
+$font-size-xs-pct: 106.25%; // 17px if base font is 16px
+$font-size-sm-pct: 118.75%; // 19px if base font is 16px
+$font-size-md-pct: 125%; // 20px if base font is 16px
+
 $font-size-xlarge: ceil($font-size-base * 1.5);
 $font-size-xsmall: ceil($font-size-base * 0.7);
 
