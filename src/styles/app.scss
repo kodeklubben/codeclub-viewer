@@ -12,10 +12,10 @@
 // * Normalization type alterations of tags,
 //   e.g. removing padding and margins from or setting fonts in html, body, p etc.
 //
-// All SASS variables are set in _variables.scss.
+// All SASS variables are set in variables.scss.
 // It is included by bootstrap-loader through .bootstraprc as bootstrapCustomization,
 // and all variables defined there are available to all css included in this file.
-// The file _variables.scss can also be included in local css-modules files if needed there.
+// The file variables.scss can also be included in local css-modules files if needed there.
 
 @import "fonts";
 @import "general";

@@ -3,6 +3,12 @@
 // Do NOT change or define any bootstrap specific styles here (although it is ok to use bootstrap variables).
 
 html {
+  // Bootstrap uses px for all font sizes, and bases them from $font-size-base,
+  // which can be changed in pre-customizations.scss.
+  // The global font size for the website is here set to this same value.
+  // In general, it is usually smart to base other font sizes off of this by using em (or rem) or percent,
+  // rather than using px directly, since with the latter, a change in $font-size-base won't affect it,
+  // and the font's size would not scale relative to all the other fonts.
   font-size: $font-size-base;
 }
 
