@@ -50,6 +50,7 @@ LanguageItem.propTypes = {
 function LanguageDropdown(props) {
   return <DropdownButton id='language-dropdown'
                          noCaret
+                         pullRight
                          bsStyle={'language-' + props.mode}
                          title={<LanguageItem language={props.language}/>}
                          onSelect={(eventKey) => props.setLanguage(eventKey)}>
@@ -73,6 +74,7 @@ function ModeDropdown(props) {
   const setMode = mode => mode === 'student' ? props.setModeStudent() : props.setModeTeacher();
   return <DropdownButton id='mode-dropdown'
                          noCaret
+                         pullRight
                          bsStyle={props.mode}
                          title={'Modus: ' + texts[props.mode]}
                          onSelect={setMode}>
