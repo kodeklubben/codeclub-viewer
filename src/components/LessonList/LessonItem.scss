@@ -1,14 +1,13 @@
-@import "~bootstrapStyles/variables";
-
-a:hover {
-  text-decoration: none;
-}
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 
 .lessonItem {
   &:hover {
     cursor: pointer;
     color: darken($brand-primary, 20%);
   }
+
+  @include responsiveFontSizes;
 }
 
 .instructionBtn {

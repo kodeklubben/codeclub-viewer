@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import Link from 'react-router/lib/Link';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 export const LessonItem = React.createClass({
   render() {
@@ -23,32 +24,27 @@ export const LessonItem = React.createClass({
       }
       return null;
     });
-    const isExternal = lesson.external.length > 0;
+    const instructionBtn = !this.props.isStudentMode && lesson.readmePath ?
+      <LinkContainer to={lesson.readmePath}>
+        <Button componentClass="div" className={styles.instructionBtn} bsSize="xs">Veiledning</Button>
+      </LinkContainer>
+      : null;
     return (
-      <li className='list-group-item'>
-        {isExternal ?
-          <a href={lesson.external} target="_blank">
-            <div className={styles.lessonItem}>
-              {constraints}
-              {lesson.title} <Glyphicon glyph="new-window"/>
-            </div>
-          </a>
-          :
-          <div>
-            {!this.props.isStudentMode && (lesson.readmePath || '').length > 0 ?
-              <Link to={lesson.readmePath}>
-                <Button className={styles.instructionBtn} bsSize="xs">Veiledning</Button>
-              </Link>
-              : null}
-            <Link to={lesson.path}>
-              <div className={styles.lessonItem}>
-                {constraints}
-                {lesson.title}
-              </div>
-            </Link>
-          </div>
-        }
-      </li>
+      lesson.external ?
+        <ListGroupItem href={lesson.external} target="_blank">
+          {instructionBtn}
+          {constraints}
+          {lesson.title}
+          &nbsp;<Glyphicon glyph="new-window"/>
+        </ListGroupItem>
+        :
+        <LinkContainer to={lesson.path}>
+          <ListGroupItem>
+            {instructionBtn}
+            {constraints}
+            {lesson.title}
+          </ListGroupItem>
+        </LinkContainer>
     );
   }
 });
