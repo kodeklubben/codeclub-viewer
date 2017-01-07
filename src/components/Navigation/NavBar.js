@@ -6,7 +6,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
-import FormControl from 'react-bootstrap/lib/FormControl';
+//import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 
@@ -85,9 +85,10 @@ export const NavBar = React.createClass({
         }
       </DropdownButton>
     );
-    const searchBox = (
-      <FormControl type='text' placeholder='Søk'/>
-    );
+    // Hide search until it is implemented
+    // const searchBox = (
+    //   <FormControl type='text' placeholder='Søk'/>
+    // );
     return (
       <Grid fluid={true}>
         <Row>
@@ -110,9 +111,11 @@ export const NavBar = React.createClass({
                 <div className={styles.gadgetContainer}>
                   {modeDropdown}
                 </div>
+                {/* Hide search until it is implemented
                 <div className={styles.gadgetContainer}>
                   {searchBox}
                 </div>
+                */}
               </div>
             </Navbar.Collapse>
           </Navbar>
