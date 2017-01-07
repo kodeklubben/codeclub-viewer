@@ -107,7 +107,7 @@ export function NavBar(props) {
   return (
     <Grid fluid={true}>
       <Row>
-        <Navbar className={props.isStudentMode ? null : 'navbar-teacher'} fluid={true} fixedTop={true}>
+        <Navbar className={props.isStudentMode ? null : 'navbar-teacher'} fluid={true}>
           <Navbar.Header>
             <Navbar.Brand>
               <NavLink to='/' onlyActiveOnIndex>
