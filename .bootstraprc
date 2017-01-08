@@ -55,7 +55,7 @@ styles:
 
   # Reset and dependencies
   normalize: true
-  print: false
+  print: true
   glyphicons: true
 
   # Core CSS
@@ -63,7 +63,7 @@ styles:
   type: true
   code: true
   grid: true
-  tables: false
+  tables: true
   forms: true
   buttons: true
 
@@ -71,24 +71,24 @@ styles:
   component-animations: true
   dropdowns: true
   button-groups: true
-  input-groups: false
+  input-groups: true
   navs: true
   navbar: true
-  breadcrumbs: false
-  pagination: false
-  pager: false
-  labels: false
+  breadcrumbs: true
+  pagination: true
+  pager: true
+  labels: true
   badges: true
-  jumbotron: false
-  thumbnails: false
-  alerts: false
-  progress-bars: false
-  media: false
+  jumbotron: true
+  thumbnails: true
+  alerts: true
+  progress-bars: true
+  media: true
   list-group: true
   panels: true
-  wells: false
-  responsive-embed: false
-  close: false
+  wells: true
+  responsive-embed: true
+  close: true
 
   # Components w/ JavaScript
   modals: false
@@ -97,7 +97,7 @@ styles:
   carousel: false
 
   # Utility classes
-  utilities: false
+  utilities: true
   responsive-utilities: true
 
 ### Bootstrap scripts, set to false to avoid jQuery
