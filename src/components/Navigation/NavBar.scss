@@ -1,15 +1,126 @@
+@import '../../styles/variables';
+
 $flag-width: 30px;
 $flag-height: 20px;
 $space-between-text-and-flag: 10px;
+$logo-height: 130px;
+$widget-height: 50px;
+
+$lkk-green: #0fbe7c;
+$lkk-dark-grey: #3a3a3a;
+$lkk-grey: #444;
+$lkk-offwhite: #f2f2f2;
+$lkk-white: #fff;
 
 :global {
+  .navbar > .container-fluid {
+    padding: 0;
+  }
+
+  .navbar-header {
+    margin: 0;
+  }
+
+  .navbar-nav {
+    margin: 0;
+  }
+
   .navbar-brand {
-    font-size: 1.4em;
+    padding: 0 10px;
   }
   .glyphicon-home {
     line-height: 0; // So that it doesn't affect the centering of the rest of the breadcrumb text
-    font-size: 0.9em;
   }
+
+  .navbar-default {
+    background-color: $lkk-offwhite;
+    & .navbar-nav {
+      background-color: transparent;
+      & > li > a {
+        color: $lkk-grey;
+        &:focus {
+          color: $lkk-green;
+          background-color: transparent;
+        }
+        &:hover {
+          color: $lkk-green;
+          background-color: transparent;
+        }
+      }
+      & > .active > a {
+        &,
+        &:focus,
+        &:hover {
+          color: $lkk-green;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  .navbar-toggle.navbar-toggle { // write twice to increase specificity
+    float: none;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    width: 100%;
+    color: $lkk-white;
+    font-size: 1.2em;
+    &,
+    &:focus {
+      background-color: $lkk-dark-grey;
+    }
+    &:hover {
+      background-color: $lkk-green;
+    }
+    & .icon-bar {
+      background-color: $lkk-white;
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    .navbar-header {
+      text-align: center;
+    }
+    .navbar-brand {
+      float: none;
+      display: inline-block;
+    }
+    .navbar-default {
+      & .navbar-nav {
+        background-color: $lkk-dark-grey;
+        & > li > a {
+          color: $lkk-white;
+          &:focus {
+            color: $lkk-white;
+            background-color: $lkk-dark-grey;
+          }
+          &:hover {
+            color: $lkk-white;
+            background-color: $lkk-green;
+          }
+        }
+        & > .active > a {
+          &,
+          &:focus,
+          &:hover {
+            color: $lkk-white;
+            background-color: $lkk-green;
+          }
+        }
+      }
+    }
+  }
+}
+
+.toggleContent {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.navContainer {
+  background-color: $lkk-dark-grey;
+  padding: 0 20px;
 }
 
 .language {
@@ -20,6 +131,45 @@ $space-between-text-and-flag: 10px;
   width: $flag-width;
   height: $flag-height;
   float: right;
+}
+
+.logo {
+  height: $logo-height;
+}
+
+.spacing {
+  width: 100%;
+  height: $logo-height - $widget-height;
+  @media (max-width: $screen-xs-max) {
+    height: 0;
+    width: 0;
+  }
+}
+
+.widgets {
+  display: inline-block;
+  width: 100%;
+  min-height: $widget-height;
+  font-family: $font-family-roboto;
+  font-weight: 300;
+  border-radius: 0;
+  margin-bottom: -5px; // to get rid of the 5px spacing below, don't understand why it is there
+}
+
+.widgetStudent {
+  color: $color-green-dark;
+  background-color: $color-green-light;
+}
+
+.widgetTeacher {
+  color: $color-blue-dark;
+  background-color: $color-blue-light;
+}
+
+.breadcrumb {
+  padding-left: 10px;
+  float: left;
+  line-height: $widget-height;
 }
 
 .gadgetGroup {
