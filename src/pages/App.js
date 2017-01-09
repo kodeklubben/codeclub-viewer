@@ -1,22 +1,13 @@
 import React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {NavBarContainer} from '../components/Navigation/NavBar';
 import {FooterContainer} from '../components/Navigation/Footer';
 import '../styles/customBootstrapStyles';
-import styles from './App.scss';
 
-const App = React.createClass({
+const App = (props) =>
+  <div>
+    <NavBarContainer params={props.params}/>
+    {props.children}
+    <FooterContainer/>
+  </div>;
 
-  render() {
-    return (
-      <div className={styles.container}>
-        <NavBarContainer params={this.props.params}/>
-        {this.props.children}
-        <FooterContainer/>
-      </div>
-    );
-  }
-
-});
-
-export default withStyles(styles)(App);
+export default App;

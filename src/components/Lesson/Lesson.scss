@@ -1,7 +1,23 @@
+@import '../../styles/mixins.scss';
+@import '~bootstrapStyles/mixins/image';
+
 .container {
   max-width: 800px;
   padding-left: 15px;
   padding-right: 15px;
   margin-left: auto;
   margin-right: auto;
+
+  // responsive images
+  & figure > img {
+    @include img-responsive;
+    margin: 0 auto; // centered
+    padding: 20px;
+  }
+
+  // responsive font
+  & p,
+  & li {
+    @include responsiveFontSizes;
+  }
 }

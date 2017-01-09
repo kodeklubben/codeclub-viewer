@@ -20,12 +20,6 @@ export const  FrontPage = React.createClass({
   render() {
     return (
       <Grid fluid={true}>
-        {/* Front page title */}
-        <Row>
-          <div className={styles.title}>
-            <span className={styles.t1}>kode</span><span className={styles.t2}>klubben_</span>
-          </div>
-        </Row>
 
         {/* Buttons */}
         {this.props.isStudentMode
