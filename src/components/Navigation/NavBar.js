@@ -6,7 +6,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-import FormControl from 'react-bootstrap/lib/FormControl';
+// import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
@@ -97,11 +97,11 @@ ModeDropdown.propTypes = {
   mode: PropTypes.oneOf(modes).isRequired
 };
 
-function SearchBox() {
-  return <div className={styles.gadgetContainer}>
-    <FormControl type='text' placeholder='Søk'/>
-  </div>;
-}
+// function SearchBox() {
+//   return <div className={styles.gadgetContainer}>
+//     <FormControl type='text' placeholder='Søk'/>
+//   </div>;
+// }
 
 function LkkBrand() {
   return <Navbar.Brand>
