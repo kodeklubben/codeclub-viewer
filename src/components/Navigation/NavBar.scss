@@ -3,7 +3,7 @@
 $flag-width: 30px;
 $flag-height: 20px;
 $space-between-text-and-flag: 10px;
-$logo-height: 130px;
+$logo-height: 127px;
 $widget-height: 50px;
 
 $lkk-green: #0fbe7c;
@@ -15,10 +15,13 @@ $lkk-white: #fff;
 :global {
   .navbar > .container-fluid {
     padding: 0;
-  }
-
-  .navbar-header {
-    margin: 0;
+    & .navbar-header {
+      margin: 0;
+    }
+    & .navbar-collapse {
+      margin: 0;
+      padding: 0;
+    }
   }
 
   .navbar-nav {
@@ -85,6 +88,7 @@ $lkk-white: #fff;
     .navbar-brand {
       float: none;
       display: inline-block;
+      padding: 0;
     }
     .navbar-default {
       & .navbar-nav {
