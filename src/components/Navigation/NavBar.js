@@ -204,15 +204,15 @@ export function NavBar(props) {
       <Navbar.Collapse>
         <div className={styles.spacing}/>
         <LkkNav/>
-        <div className={styles.widgets + ' ' + widgetClass}>
-          <BreadCrumb params={props.params}/>
-          <Gadgets language={props.language}
-                   setLanguage={props.setLanguage}
-                   setModeStudent={props.setModeStudent}
-                   setModeTeacher={props.setModeTeacher}
-                   isStudentMode={props.isStudentMode}/>
-        </div>
       </Navbar.Collapse>
+      <div className={styles.widgets + ' ' + widgetClass}>
+        <BreadCrumb params={props.params}/>
+        <Gadgets language={props.language}
+                 setLanguage={props.setLanguage}
+                 setModeStudent={props.setModeStudent}
+                 setModeTeacher={props.setModeTeacher}
+                 isStudentMode={props.isStudentMode}/>
+      </div>
     </Navbar>
   );
 }
