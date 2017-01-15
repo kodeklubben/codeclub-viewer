@@ -1,15 +1,8 @@
-@import '../../styles/variables';
-
 .linkBase {
-  text-decoration: none !important;
-}
-
-.linkStudent {
-  composes: linkBase;
-  color: $color-green-dark;
-}
-
-.linkTeacher {
-  composes: linkBase;
-  color: $color-blue-dark;
+  color: black;
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    opacity: 0.5;
+  }
 }

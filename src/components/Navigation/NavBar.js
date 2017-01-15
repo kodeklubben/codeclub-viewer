@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {setModeStudent, setModeTeacher, setLanguage} from '../../action_creators';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
@@ -11,8 +10,8 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
 
-import NavLink from './NavLink';
 import styles from './NavBar.scss';
 
 const languages = ['nb', 'nn', 'sv', 'da'];
@@ -128,32 +127,6 @@ function LkkNav() {
   </div>;
 }
 
-function BreadCrumb(props) {
-  const params = props.params;
-  const courseLink = params.course ?
-    <NavLink to={`/${params.course}`}>
-      {params.course}
-    </NavLink> : null;
-  const lessonLink = params.course && params.lesson && params.file ?
-    <NavLink to={`/${params.course}/${params.lesson}/${params.file}`}>
-      {(params.lesson).replace(/_/g, ' ')}
-    </NavLink> : null;
-  return <div className={styles.breadcrumb}>
-    <NavLink to='/' onlyActiveOnIndex>
-      <Glyphicon glyph='home'/>
-    </NavLink>
-    {courseLink ? <span> / {courseLink}</span> : null}
-    {lessonLink ? <span> / {lessonLink}</span> : null}
-  </div>;
-}
-BreadCrumb.propTypes = {
-  params: PropTypes.shape({
-    course: PropTypes.string,
-    lesson: PropTypes.string,
-    file: PropTypes.string
-  })
-};
-
 function Gadgets(props) {
   const mode = modes[props.isStudentMode ? 0 : 1];
   // NOTE: Commenting out LanguageDropdown and SearchBox until these are implemented
@@ -186,13 +159,6 @@ function MenuToggle() {
 }
 
 export function NavBar(props) {
-  // Øverst: Den samme logoen og navlinks som ellers på kidsakoder.no, og i samme farge (grått)
-  // Under denne: Menylinjen slik den var før jeg begynte med kidsakoder-navbaren.
-  // I mobile mode: Vis menylinje-objektene nederst under navitems, navitems stacked "som vanlig";
-  //                Hvis mulig, la logoen bli sentrert i navbar, og flytt knappen ned under kidsakoder-navitems
-  //                slik at det ser mest mulig likt ut.
-  // Dessuten: Se hvordan det blir dersom vi bytter ut kurs-navn i breadcrumb med logoen. Og til slutt,
-  //           deaktiver språk og søk.
   const widgetClass = props.isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
     <Navbar fluid={true} staticTop>
