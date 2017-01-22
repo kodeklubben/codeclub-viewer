@@ -18,7 +18,7 @@ export function BreadCrumb(props) {
   const lessonLink = params.course && params.lesson && params.file ?
     <NavLink to={`/${params.course}/${params.lesson}/${params.file}`} className={styles.lessonLink}>
       <LevelIcon level={props.lessonLevel}/>
-      {(params.lesson).replace(/_/g, ' ')}
+      <span className={styles.lesson}>{props.lessonTitle}</span>
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
     {homeLink}
@@ -41,7 +41,8 @@ function mapStateToProps(state, ownProps) {
   const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
   return {
     iconContext: state.context.iconContext,
-    lessonLevel: lessonPath ? state.lessons[lessonPath].level : 0
+    lessonLevel: lessonPath ? state.lessons[lessonPath].level : 0,
+    lessonTitle: lessonPath ? state.lessons[lessonPath].title : '',
   };
 }
 
