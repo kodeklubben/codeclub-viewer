@@ -6,12 +6,6 @@ $space-between-text-and-flag: 10px;
 $logo-height: 127px;
 $widget-height: 50px;
 
-$lkk-green: #0fbe7c;
-$lkk-dark-grey: #3a3a3a;
-$lkk-grey: #444;
-$lkk-offwhite: #f2f2f2;
-$lkk-white: #fff;
-
 :global {
   .navbar > .container-fluid {
     padding: 0;
@@ -30,9 +24,6 @@ $lkk-white: #fff;
 
   .navbar-brand {
     padding: 0 10px;
-  }
-  .glyphicon-home {
-    line-height: 0; // So that it doesn't affect the centering of the rest of the breadcrumb text
   }
 
   .navbar-default {
@@ -67,7 +58,7 @@ $lkk-white: #fff;
     border-radius: 0;
     margin: 0;
     width: 100%;
-    color: $lkk-white;
+    color: white;
     font-size: 1.2em;
     &,
     &:focus {
@@ -77,7 +68,7 @@ $lkk-white: #fff;
       background-color: $lkk-green;
     }
     & .icon-bar {
-      background-color: $lkk-white;
+      background-color: white;
     }
   }
 
@@ -94,13 +85,13 @@ $lkk-white: #fff;
       & .navbar-nav {
         background-color: $lkk-dark-grey;
         & > li > a {
-          color: $lkk-white;
+          color: white;
           &:focus {
-            color: $lkk-white;
+            color: white;
             background-color: $lkk-dark-grey;
           }
           &:hover {
-            color: $lkk-white;
+            color: white;
             background-color: $lkk-green;
           }
         }
@@ -108,7 +99,7 @@ $lkk-white: #fff;
           &,
           &:focus,
           &:hover {
-            color: $lkk-white;
+            color: white;
             background-color: $lkk-green;
           }
         }
@@ -171,16 +162,10 @@ $lkk-white: #fff;
   background-color: $color-blue-light;
 }
 
-.breadcrumb {
-  padding-left: 10px;
-  float: left;
-  line-height: $widget-height;
-}
-
 .gadgetGroup {
   display: inline;
   float: right;
-  padding: 3px 0;
+  padding: 4px 0;
 }
 
 .gadgetContainer {

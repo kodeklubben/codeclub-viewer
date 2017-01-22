@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.breadcrumb {
+  padding-left: 10px;
+  float: left;
+  font-size: 30px;
+}
+
+.homeIcon {
+  line-height: 45px;
+  font-size: 0.8em;
+}
+
+.courseIcon {
+  height: 50px;
+  padding: 10px 0 15px;
+}
+
+.lessonLink {
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.lesson {
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
+}
