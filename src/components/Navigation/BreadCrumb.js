@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import NavLink from './NavLink';
+import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -16,6 +17,7 @@ export function BreadCrumb(props) {
     </NavLink> : null;
   const lessonLink = params.course && params.lesson && params.file ?
     <NavLink to={`/${params.course}/${params.lesson}/${params.file}`} className={styles.lessonLink}>
+      <LevelIcon level={props.lessonLevel}/>
       {(params.lesson).replace(/_/g, ' ')}
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
@@ -34,9 +36,12 @@ BreadCrumb.propTypes = {
   })
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const {course, lesson, file} = ownProps.params;
+  const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
   return {
-    iconContext: state.context.iconContext
+    iconContext: state.context.iconContext,
+    lessonLevel: lessonPath ? state.lessons[lessonPath].level : 0
   };
 }
 
