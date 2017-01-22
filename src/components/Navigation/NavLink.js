@@ -6,8 +6,8 @@ import styles from './NavLink.scss';
 
 const NavLink = React.createClass({
   render() {
-    const {className, ...rest} = this.props;
-    return <Link {...rest} className={styles.linkBase + ' ' + className} activeClassName="active"/>;
+    const {className: c, ...rest} = this.props;
+    return <Link {...rest} className={styles.linkBase + (c ? ' ' + c : '')} activeClassName="active"/>;
   }
 
 });

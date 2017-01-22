@@ -3,6 +3,10 @@
   &:focus,
   &:hover {
     text-decoration: none;
+    color: black;
+  }
+  &:hover {
     opacity: 0.5;
+    color: black;
   }
 }
