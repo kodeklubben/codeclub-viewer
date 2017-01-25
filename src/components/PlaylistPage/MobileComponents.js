@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {LessonFilterContainer} from '../Filter/LessonFilter';
-import LevelNavigation from '../LessonList/LevelNavigation';
-import PlaylistNavigation from '../Playlist/PlaylistNavigation';
+import LevelNavigation from './LevelNavigation';
 import MobileButtonsRow from './MobileButtonsRow';
 import Col from 'react-bootstrap/lib/Col';
 import Collapse from 'react-bootstrap/lib/Collapse';
@@ -10,8 +9,7 @@ import Row from 'react-bootstrap/lib/Row';
 const MobileComponents = React.createClass({
   getInitialState() {
     return {
-      showFilter: false,
-      showPlaylists: false
+      showFilter: false
     };
   },
   toggle(componentName) {
@@ -32,13 +30,6 @@ const MobileComponents = React.createClass({
               </div>
             </Collapse>
 
-            {/*Playlists mobile*/}
-            <Collapse in={this.state.showPlaylists}>
-              <div>
-                <PlaylistNavigation playlists={this.props.playlists}/>
-              </div>
-            </Collapse>
-
             {/*Level navigation mobile*/}
             <div>
               {this.props.showLevelNavigation ? <LevelNavigation levels={this.props.levels}/> : null}
@@ -53,8 +44,7 @@ const MobileComponents = React.createClass({
 
 MobileComponents.propTypes = {
   showLevelNavigation: PropTypes.bool,
-  levels: PropTypes.array,
-  playlists: PropTypes.object
+  levels: PropTypes.array
 };
 
 export default MobileComponents;

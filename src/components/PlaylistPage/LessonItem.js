@@ -6,6 +6,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import LevelIcon from '../LevelIcon';
 
 export const LessonItem = React.createClass({
   render() {
@@ -24,6 +25,7 @@ export const LessonItem = React.createClass({
       }
       return null;
     });
+    const levelIcon = <LevelIcon level={lesson.level}/>;
     const instructionBtn = !this.props.isStudentMode && lesson.readmePath ?
       <LinkContainer to={lesson.readmePath}>
         <Button componentClass="div" className={styles.instructionBtn} bsSize="xs">Veiledning</Button>
@@ -32,6 +34,7 @@ export const LessonItem = React.createClass({
     return (
       lesson.external ?
         <ListGroupItem href={lesson.external} target="_blank">
+          {levelIcon}
           {instructionBtn}
           {constraints}
           {lesson.title}
@@ -40,6 +43,7 @@ export const LessonItem = React.createClass({
         :
         <LinkContainer to={lesson.path}>
           <ListGroupItem>
+            {levelIcon}
             {instructionBtn}
             {constraints}
             {lesson.title}
