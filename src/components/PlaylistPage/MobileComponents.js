@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {LessonFilterContainer} from '../Filter/LessonFilter';
 import LevelNavigation from './LevelNavigation';
-import PlaylistNavigation from './PlaylistNavigation';
 import MobileButtonsRow from './MobileButtonsRow';
 import Col from 'react-bootstrap/lib/Col';
 import Collapse from 'react-bootstrap/lib/Collapse';
