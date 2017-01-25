@@ -7,9 +7,9 @@ import {getFilteredAndIndexedLessons} from '../selectors/lesson';
 import {getPlaylists} from '../selectors/playlist';
 
 import {LessonFilterContainer} from '../components/Filter/LessonFilter';
-import LessonList from '../components/LessonList/LessonList';
-import LevelNavigation from '../components/LessonList/LevelNavigation';
-import PlaylistNavigation from '../components/Playlist/PlaylistNavigation';
+import LessonList from '../components/PlaylistPage/LessonList';
+import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
+import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import HeadRow from '../components/PlaylistPage/HeadRow';
 import MobileComponents from '../components/PlaylistPage/MobileComponents';
 
@@ -54,28 +54,27 @@ export const PlaylistPage = React.createClass({
         <HeadRow courseName={this.props.params.course}/>
         
         {/*Components only visible on mobile that can be toggled hidden/visible*/}
-        <MobileComponents playlists={playlists} levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
+        <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
 
         <Row>
           {/*Filter desktop*/}
-          <Col sm={3} lg={2} xsHidden className={styles.fixed}>
-            <div className={styles.scrollable}>
+          <Col xsHidden sm={3}>
+            <div className={styles.filter}>
               <LessonFilterContainer/>
             </div>
           </Col>
 
-          {/*List of lessons grouped by level*/}
-          <Col xs={12} sm={6} lg={5} smOffset={3} lgOffset={3}>
+          <Col xs={12} sm={6}>
+            {/*Desktop playlists*/}
+            <PlaylistNavigation playlists={playlists}/>
+            {/*List of lessons grouped by level*/}
             {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
           </Col>
 
-          <Col sm={3} smOffset={9} lgOffset={9} xsHidden className={styles.fixed}>
+          <Col xsHidden sm={3}>
             <div className={styles.scrollable}>
               {/*Desktop level navigation*/}
               {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
-
-              {/*Desktop playlists*/}
-              <PlaylistNavigation playlists={playlists}/>
             </div>
           </Col>
 

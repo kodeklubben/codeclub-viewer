@@ -11,10 +11,6 @@ const MobileButtonsRow = React.createClass({
           <Button onClick={() => this.props.toggle('Filter')}>
             Vis/skjul filter
           </Button>
-
-          <Button onClick={() => this.props.toggle('Playlists')}>
-            Vis/skjul oppgavesamlinger
-          </Button>
         </Col>
       </Row>
     );
