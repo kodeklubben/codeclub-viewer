@@ -12,23 +12,49 @@
 }
 
 .infoBox {
+  display: flex;
   composes: fontInfoBox;
   padding: 5px;
   margin: 0 auto;
-  max-width: 700px;
-  background-color: #f7f7f7 !important;
-  border: 1px solid #b2b2b2;
+  max-width: 500px;
+  
   border-radius: 10px;
 }
 
 .infoBoxRow {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 
-  .infoBoxItem {
-    text-align: center;
-  }
   div {
     padding: 5px;
   }
+}
+
+.infoBoxStudent {
+
+  background-color: red;
+
+ /*
+ composes: infoBox;
+  background-color: $color-green-light;
+  color: $color-green-dark;
+  a {
+    color: $color-green-dark;
+  }
+  */
+}
+
+.infoBoxTeacher {
+
+background-color: yellow;
+
+  /*
+  composes: infoBox;
+  background-color: $color-blue-light;
+  color: $color-blue-dark;
+  a {
+    color: $color-blue-dark;
+  }
+  */
 }

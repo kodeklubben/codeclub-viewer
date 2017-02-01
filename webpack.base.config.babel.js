@@ -41,7 +41,10 @@ if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 
 export const buildDir = path.join('dist', subDir);
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
-const publicPathWithoutSlash = path.join('/', subDir);
+//Does not work on windows
+//const publicPathWithoutSlash = path.join('/', subDir); 
+//Added this instead
+const publicPathWithoutSlash = "/";
 export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
 export const lessonSrc = '../oppgaver/src';
 const assets = './src/assets';
