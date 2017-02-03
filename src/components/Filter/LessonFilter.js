@@ -25,7 +25,7 @@ export const LessonFilter = React.createClass({
         <Button block>?</Button>
         innerHeighthrg
     htgdfs
-    bgvfds
+    bgvfdcfrcfcfs
       </Panel>
     );
   }
