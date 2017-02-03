@@ -8,7 +8,7 @@ import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
-import ImprovePage from '../ImprovePage.js';
+import {ImprovePageContainer} from '../ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 
 
@@ -58,7 +58,7 @@ const Lesson = React.createClass({
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
         
         <Row>
-          <ImprovePage isStudentMode={this.props.isStudentMode}/>
+          <ImprovePageContainer/>
         </Row>
 
       </div>

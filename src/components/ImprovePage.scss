@@ -19,46 +19,38 @@
 
   composes: fontInfoBox;
   padding: 5px;
-  margin: 0 auto;
+  margin: 10px auto;
   max-width: 700px;
   border-radius: 10px;
 }
 
 .infoBoxRow {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
 
   div {
-    padding: 5px;
+    padding: 0 50px;
   }
 }
 
 .infoBoxStudent {
-
-  background-color: red;
-
- 
  composes: infoBox;
- /*
+ 
   background-color: $color-green-light;
   color: $color-green-dark;
   a {
     color: $color-green-dark;
   }
-  */
+  
 }
 
 .infoBoxTeacher {
-
-  background-color: yellow;
-
-  
   composes: infoBox;
-  /*
+  
   background-color: $color-blue-light;
   color: $color-blue-dark;
   a {
     color: $color-blue-dark;
   }
-  */
+  
 }
