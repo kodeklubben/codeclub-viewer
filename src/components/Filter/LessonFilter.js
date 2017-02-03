@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {onFilterCheck, resetFilter} from '../../action_creators';
-import FilterGroup from './FilterGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
+import FilterGroup from './FilterGroup';
 
 export const LessonFilter = React.createClass({
   render(){
@@ -18,15 +18,14 @@ export const LessonFilter = React.createClass({
     const title = <h3>Filter</h3>;
     const bsStyle = (this.props.isStudentMode ? 'student' : 'teacher');
     return (
-      <Panel header={title} bsStyle={bsStyle}>
-        {filterGroups}
-        <br/>
-        <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
-        <Button block>?</Button>
-        innerHeighthrg
-    htgdfs
-    bgvfdcfrcfcfs
-      </Panel>
+      <div>
+        <Button className="btn-sm-fixed-width pull-right" onClick={() => console.log('Her kan det stå sykt my shit om filter')}>?</Button>
+        <Panel header={title} bsStyle={bsStyle}>
+          {filterGroups}
+          <br/>
+          <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
+        </Panel>
+      </div>
     );
   }
 });
