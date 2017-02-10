@@ -8,7 +8,7 @@ import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
-import {ImprovePageContainer} from '../ImprovePage.js';
+import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 
 

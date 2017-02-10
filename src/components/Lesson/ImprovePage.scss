@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@import '../../styles/variables';
 
 .link {
   text-decoration: none !important;
@@ -10,7 +10,7 @@
   padding: 7px;
 
   opacity: 0.85;
-  transition: 0.1s;
+  transition: 0.15s;
 }
 /* Css for "Rapporter et problem" */
 .newIssue{
@@ -21,6 +21,7 @@
 .newIssue:hover, .newIssue:visited{
   opacity: 1;
   color:black;
+  box-shadow: inset 0 0 10px #b4c2e4;
 }
 /* Css for "Vis koden og fiks selv" */
 .showCode {
@@ -31,6 +32,7 @@
 .showCode:hover, .showCode:visited{
   opacity: 1;
   color:white;
+  box-shadow: inset 0 0 10px #d38312;
 }
 
 .fontImprovePageBox {

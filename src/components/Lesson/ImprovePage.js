@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import styles from './ImprovePage.scss';
-import {capitalize} from '../util.js';
+import {capitalize} from '../../util.js';
 
 
 const ImprovePage = React.createClass({
