@@ -3,54 +3,72 @@
 .link {
   text-decoration: none !important;
   text-align: center;
-  color: black;
-  border-bottom: 1px black dotted;
+  font-size: 16px;
+  font-weight: 350;
+
+  border-radius: 5px;
+  padding: 7px;
+
+  opacity: 0.85;
+  transition: 0.1s;
+}
+/* Css for "Rapporter et problem" */
+.newIssue{
+  composes: link;
+  background-color: #e6e6ff;
+  color:black;
+}
+.newIssue:hover, .newIssue:visited{
+  opacity: 1;
+  color:black;
+}
+/* Css for "Vis koden og fiks selv" */
+.showCode {
+  composes: link;
+  background-color: #EC971F;
+  color:white;
+}
+.showCode:hover, .showCode:visited{
+  opacity: 1;
+  color:white;
 }
 
 .fontImprovePageBox {
   font-family: $font-family-roboto;
   font-weight: 300;
+  font-size: 14px;
 }
-
+/* Container for hele improve box */
 .improvePageBox {
+  composes: fontImprovePageBox;
   display: flex;
   flex-direction: column;
   text-align: center;
 
-  composes: fontImprovePageBox;
-  padding: 5px;
+  padding: 0 5px 5px 5px;
   margin: 10px auto;
-  max-width: 700px;
+  max-width: 650px;
   border-radius: 10px;
+  div{
+    margin: 0 20px;
+  }
 }
-
 .improvePageBoxRow {
   display: flex;
   justify-content: center;
-
+  flex-wrap: wrap;
   div {
-    padding: 0 50px;
+    margin: 10px 30px;
   }
 }
 
+/* Student / Teacher mode */
 .improvePageBoxStudent {
- composes: improvePageBox;
- 
+  composes: improvePageBox;
   background-color: $color-green-light;
-  color: $color-green-dark;
-  a {
-    color: $color-green-dark;
-  }
-  
 }
 
 .improvePageBoxTeacher {
   composes: improvePageBox;
-  
   background-color: $color-blue-light;
-  color: $color-blue-dark;
-  a {
-    color: $color-blue-dark;
-  }
-  
 }

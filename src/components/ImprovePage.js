@@ -21,7 +21,7 @@ const ImprovePage = React.createClass({
 
     const url = {
       newIssue: 'https://github.com/kodeklubben/oppgaver/issues/new/' + createNewIssueLink,
-      visKode: 'https://github.com/kodeklubben/oppgaver/tree/master/src/' + githubLink
+      showCode: 'https://github.com/kodeklubben/oppgaver/tree/master/src/' + githubLink
     };
     return (
       
@@ -29,16 +29,16 @@ const ImprovePage = React.createClass({
           <div className={styles.improvePageBox}>
             <div>
               <h3>Forbedre denne siden</h3>
-              <p>Funnet en feil? Kunne noe vært bedre? 
+              <p>Funnet en feil? Kunne noe vært bedre? <br/>
               Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
               Vi er takknemlige for enhver tilbakemelding!</p>
             </div>
             <div className={styles.improvePageBoxRow}>
                 <div>
-                  <a className={styles.link} href={url.newIssue}>Rapporter et problem</a>
+                  <a className={styles.newIssue} href={url.newIssue}>Rapporter et problem</a>
                 </div>
                 <div>
-                  <a className={styles.link} href={url.visKode}>Vis koden og fiks selv</a>
+                  <a className={styles.showCode} href={url.showCode}>Vis koden og fiks selv</a>
                 </div>
             </div>
           </div>
