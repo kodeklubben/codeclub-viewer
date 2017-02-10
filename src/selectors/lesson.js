@@ -42,6 +42,16 @@ export const getFilteredAndIndexedLessons = createSelector(
 export const getAvailableLessons = createSelector(
   [getFilteredLessons],
   (filteredLessons = {}) => {
-    return 1;
+    let availableAndroidLessons = 0;
+
+    Object.keys(filteredLessons).reduce((sum, lessonKey) => {
+      const lesson = filteredLessons[lessonKey];
+      if((lesson.tags.operativsystem || []).indexOf('android') !== -1){
+        availableAndroidLessons++;
+      }
+    }, 0);
+
+    return availableAndroidLessons;
+
   }
 );
