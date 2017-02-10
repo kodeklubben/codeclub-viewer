@@ -6,6 +6,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 const FilterItem = React.createClass({
   render(){
     const tagItem = capitalize(this.props.tagItem);
+    const numberOfLessons = this.props.numberOfLessons;
     return (
       <div className="checkbox">
         <label className={styles.label}>
@@ -13,7 +14,7 @@ const FilterItem = React.createClass({
                  checked={this.props.checked}
                  onChange={this.props.onCheck}
           />
-          {tagItem}
+          {tagItem} ({numberOfLessons})
         </label>
       </div>
     );
@@ -23,7 +24,8 @@ const FilterItem = React.createClass({
 FilterItem.propTypes = {
   tagItem: PropTypes.string,
   checked: PropTypes.bool,
-  onCheck: PropTypes.func
+  onCheck: PropTypes.func,
+  numberOfLessons: PropTypes.number
 };
 
 export default withStyles(styles)(FilterItem);

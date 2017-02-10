@@ -38,3 +38,10 @@ export const getFilteredAndIndexedLessons = createSelector(
     }, {});
   }
 );
+
+export const getAvailableLessons = createSelector(
+  [getFilteredLessons],
+  (filteredLessons = {}) => {
+    return 1;
+  }
+);

@@ -4,6 +4,7 @@ import {onFilterCheck, resetFilter} from '../../action_creators';
 import FilterGroup from './FilterGroup';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
+import {getAvailableLessons} from '../../selectors/lesson';
 
 export const LessonFilter = React.createClass({
   render(){
@@ -11,7 +12,13 @@ export const LessonFilter = React.createClass({
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
       const tagItems = filter[groupName];
       return (
-        <FilterGroup key={idx} groupName={groupName} tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
+        <FilterGroup
+          key={idx}
+          groupName={groupName}
+          availableLessons={this.props.availableLessons}
+          tagItems={tagItems}
+          onFilterCheck={this.props.onFilterCheck}
+        />
       );
     });
 
@@ -37,7 +44,8 @@ LessonFilter.propTypes = {
 function mapStateToProps(state) {
   return {
     filter: state.filter,
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    availableLessons: getAvailableLessons(state)
   };
 }
 
