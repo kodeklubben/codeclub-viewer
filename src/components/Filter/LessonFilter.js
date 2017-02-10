@@ -26,7 +26,7 @@ export const LessonFilter = React.createClass({
     const bsStyle = (this.props.isStudentMode ? 'student' : 'teacher');
     return (
       <div>  
-        <Button data-place="right" style={{ marginTop: 2, marginRight: 2 }} className="pull-right" data-effect="solid" data-multiline="true" data-tip="I filteret ser man hvor mange oppgaver man kan velge i parentesene bak valgene i Operativsystem og Tema.<br> Velger man f.eks. Android, under Operativsystem, får man opp de kursene som kun fungerer på Anroid<br>Velger man f.eks. App, under Tema, får man opp de kursene som ">?</Button>
+        <Button data-place="right" style={{ marginTop: 2, marginRight: 2 }} className="pull-right" data-effect="solid" data-multiline="true" data-tip="I filteret kan man sortere ut de oppgavene man vil løse,<br>etter hvilket operativsystem det skal kjøres på og/eller<br> hvilket tema man vil jobbe med.<br><br><br>Bak hvert valg vil det alltid stå antall oppgaver som kan løses,<br>etter hvilke valg du gjør i filteret.<br><br><br>Velger man for eksempel Android, under operativsystem,<br> vises kun de oppgavene som kan vises på Android.<br><br><br>Velger man for eksempel App, under Tema,<br>">?</Button>
         <ReactTooltip />
         <Panel header={title} bsStyle={bsStyle}>
           {filterGroups}
