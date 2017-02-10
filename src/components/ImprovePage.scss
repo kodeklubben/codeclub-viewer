@@ -7,24 +7,24 @@
   border-bottom: 1px black dotted;
 }
 
-.fontInfoBox {
+.fontImprovePageBox {
   font-family: $font-family-roboto;
   font-weight: 300;
 }
 
-.infoBox {
+.improvePageBox {
   display: flex;
   flex-direction: column;
   text-align: center;
 
-  composes: fontInfoBox;
+  composes: fontImprovePageBox;
   padding: 5px;
   margin: 10px auto;
   max-width: 700px;
   border-radius: 10px;
 }
 
-.infoBoxRow {
+.improvePageBoxRow {
   display: flex;
   justify-content: center;
 
@@ -33,8 +33,8 @@
   }
 }
 
-.infoBoxStudent {
- composes: infoBox;
+.improvePageBoxStudent {
+ composes: improvePageBox;
  
   background-color: $color-green-light;
   color: $color-green-dark;
@@ -44,8 +44,8 @@
   
 }
 
-.infoBoxTeacher {
-  composes: infoBox;
+.improvePageBoxTeacher {
+  composes: improvePageBox;
   
   background-color: $color-blue-light;
   color: $color-blue-dark;

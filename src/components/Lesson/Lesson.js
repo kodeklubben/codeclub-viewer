@@ -58,7 +58,7 @@ const Lesson = React.createClass({
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
         
         <Row>
-          <ImprovePageContainer/>
+          <ImprovePageContainer courseLessonFileProp={this.props.params}/>
         </Row>
 
       </div>
