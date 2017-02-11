@@ -54,12 +54,11 @@
     "react-router-scroll": "^0.2.0",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
-    "scratchblocks": "github:arve0/scratchblocks"
+    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
     "babel-core": "^6.9.1",
-    "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
@@ -94,12 +93,12 @@
     "markdown-it-implicit-figures": "^0.3.0",
     "markdown-it-loader": "^0.2.0",
     "mocha": "^3.2.0",
-    "node-sass": "^3.7.0",
+    "node-sass": "^4.5.0",
     "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^1.3.0",
     "resolve-url-loader": "^1.4.3",
-    "sass-loader": "^3.2.0",
+    "sass-loader": "^4.1.1",
     "static-site-generator-webpack-plugin": "^2.1.0",
     "style-loader": "^0.13.1",
     "stylelint": "^7.8.0",
