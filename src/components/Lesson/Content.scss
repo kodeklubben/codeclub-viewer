@@ -6,10 +6,7 @@
 //////////////////////////////////////////////
 @import '../../../node_modules/highlight.js/styles/idea';
 
-// list items in .check, .activity and .save
-.check,
-.activity,
-.save {
+@mixin styledList {
   ul,
   ol {
     padding: 0;
@@ -33,6 +30,12 @@
   }
 }
 
+.check,
+.activity,
+.save {
+  @include styledList;
+}
+
 // scratch code blocks
 pre.blocks,
 code.b {
@@ -46,17 +49,22 @@ pre > code {
   background-color: transparent;
 }
 
+@mixin headingStyle {
+  color: #fff;
+  background: #349946;
+  padding: 10px;
+  border-radius: 5px;
+}
+
 // sections
 section.activity {
   // activities, "Step 1: Bla bla"
   h1 {
-    color: #fff;
-    background: #349946;
-    padding: 10px;
-    border-radius: 5px;
+    @include headingStyle;
   }
   .subsection h2 {
-    @extend .activity, h1;
+    @include styledList;
+    @include headingStyle;
     font-weight: 300;
   }
 }
