@@ -4,6 +4,7 @@
     "stylelint-config-css-modules"
   ],
   "rules": {
+    "max-line-length": 120,
     "rule-empty-line-before": [ "always-multi-line", {
       "except": ["first-nested"],
       "ignore": ["after-comment", "inside-block"]
