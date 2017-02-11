@@ -29,9 +29,9 @@ Then open http://localhost:8080
 Download [Chrome Extension here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd)
 
 ## Building and serving
-This requires that you install http-server globally:
+This requires that you install local-web-server globally:
 ```
-yarn global add http-server
+yarn global add local-web-server
 ```
 
 ### Building and serving with sourcemaps
@@ -94,6 +94,3 @@ Perhaps we could merge this with the serving-lazy-branch, so that it is possible
 Of course, we still need to create (or transfer) css and functionality from codeclub_lesson_builder, and/or
 create the new design.
 
-Other things:
-* Make last part of breadcrumb unclickable.
-* See github issues.
