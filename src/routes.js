@@ -1,8 +1,38 @@
 import React from 'react';
 import Lesson from './components/Lesson/Lesson';
-import {getRouteObject, getRouteObject404} from './routeObject';
+import getRouteObject from './routeObject';
+import store from './store';
 //import getRouteObject404 from './routeObject';
 
+function validPathTest(course, lesson, file){
+  const state = store.getState().lessons; 
+
+  if(!lesson){
+    for(var key in state){
+      if(course == state[key]['course']){
+        return true;
+      }
+    }
+    return false;
+  }else{
+    for(var key in state){
+      if('/' + course + '/' + lesson + '/' + file == state[key]['path']){
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+function pathTest(nextState, replace, callback){
+  const params = nextState.params;
+  const pathCorrect = validPathTest(params.course, params.lesson, params.file);
+
+  if(!pathCorrect){
+    replace('/PageNotFound');
+  }
+  callback();
+}
 
 const getComponentFrontPage = (nextState, cb) => {
   require.ensure([], require => {
@@ -11,6 +41,9 @@ const getComponentFrontPage = (nextState, cb) => {
 };
 
 const getComponentPlaylist = (nextState, cb) => {
+  const params = nextState.params;
+  //const pathCorrect = validPathTest(params.course, null);
+  console.log('Riktig path.');
   require.ensure([], (require) => {
     cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
   }, 'PlaylistPageContainer');
@@ -19,9 +52,10 @@ const getComponentPlaylist = (nextState, cb) => {
 const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
   const path = `${params.course}/${params.lesson}/${params.file}`;
+  //const pathCorrect = validPathTest(params.course, path);
 
   const bundledLessonContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
+  /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
   const bundle = bundledLessonContext('./' + path + '.md');
   bundle(result => {
     // How to pass props directly to component,
@@ -61,9 +95,9 @@ const getComponent404Page = (nextState, cb) => {
   }, 'NotFoundContainer');
 };
 
-export const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
-  getComponentLessonPage, getComponent404Page);
-//export default routes;
+const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
+  getComponentLessonPage, getComponent404Page, pathTest);
+export default routes;
 
-export const routes404 = getRouteObject404(getComponentFrontPage, getComponent404Page);
+//export const routes404 = getRouteObject404(getComponentFrontPage, getComponent404Page);
 //export const routes404;

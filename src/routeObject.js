@@ -2,22 +2,24 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 import App from './pages/App';
 
-export function getRouteObject(
+export default function getRouteObject(
   getComponentFrontPage,
   getComponentPlaylist,
   getComponentLessonPage,
-  getComponent404Page
+  getComponent404Page,
+  pathTest
 ) {
   return (
     <Route path="/" component={App}>
       <IndexRoute getComponent={getComponentFrontPage}/>
-      <Route path="/:course" getComponent={getComponentPlaylist}/>
-      <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage}/>
+      <Route path="/PageNotFound" getComponent={getComponent404Page}/> 
+      <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
+      <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>
       <Route path="*" getComponent={getComponent404Page}/>
     </Route>
   );
 }
-
+/*
 export function getRouteObject404(
   getComponentFrontPage,
   getComponent404Page
@@ -29,3 +31,4 @@ export function getRouteObject404(
     </Route>
   );
 }
+*/

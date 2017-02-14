@@ -6,7 +6,7 @@ import {applyRouterMiddleware, Router, Route, IndexRoute, useRouterHistory} from
 import { createHistory } from 'history';
 import useScroll from 'react-router-scroll';
 import {Provider} from 'react-redux';
-import {routes, routes404} from './routes';
+import routes from './routes';
 //import routes404 from './routes';
 import WithStylesContext from './WithStylesContext';
 
@@ -30,18 +30,7 @@ const onInsertCss = (...styles) => {
     removeCss.forEach(f => f());
   };
 };
-
-var relativeURL = "./" + document.URL.replace(/^(?:\/\/|[^\/]+)*\//, "");
-var urlCorrect = false;
-var lessons = store.getState().lessons;
-for (var key in lessons) {
-  if(key == relativeURL || relativeURL == "./" + lessons[key]['course']) {
-    urlCorrect = true;
-    break;
-  }
-}
-if (urlCorrect) {
-  render(
+render(
     <Provider store={store}>
       <WithStylesContext onInsertCss={onInsertCss}>
         <Router routes={routes}
@@ -52,17 +41,3 @@ if (urlCorrect) {
     </Provider>,
     document.getElementById('app')
   );
-}
-else {
-  render(
-    <Provider store={store}>
-      <WithStylesContext onInsertCss={onInsertCss}>
-        <Router routes={routes404}
-                history={browserHistory}
-                render={applyRouterMiddleware(useScroll())}
-        />
-      </WithStylesContext>
-    </Provider>,
-    document.getElementById('app')
-  );
-}
