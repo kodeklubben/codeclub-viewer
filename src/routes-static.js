@@ -23,6 +23,10 @@ const getComponentLessonPage = (nextState, cb) => {
   cb(null, props => <Lesson {...props} lesson={result}/>);
 };
 
+const getComponent404Page = (nextState, cb) => {
+  cb(null, require('./pages/PageNotFound').NotFound);
+}
 
-const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage);
+
+const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage, getComponent404Page);
 export default routes;

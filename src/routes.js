@@ -1,6 +1,7 @@
 import React from 'react';
 import Lesson from './components/Lesson/Lesson';
-import getRouteObject from './routeObject';
+import {getRouteObject, getRouteObject404} from './routeObject';
+//import getRouteObject404 from './routeObject';
 
 
 const getComponentFrontPage = (nextState, cb) => {
@@ -54,7 +55,15 @@ const getComponentLessonPage = (nextState, cb) => {
 
 };*/
 
+const getComponent404Page = (nextState, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./pages/PageNotFound').NotFoundContainer);
+  }, 'NotFoundContainer');
+};
 
-const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
-  getComponentLessonPage);
-export default routes;
+export const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
+  getComponentLessonPage, getComponent404Page);
+//export default routes;
+
+export const routes404 = getRouteObject404(getComponentFrontPage, getComponent404Page);
+//export const routes404;
