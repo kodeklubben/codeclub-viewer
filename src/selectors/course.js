@@ -49,26 +49,3 @@ export const getFilteredExternalCourses = createSelector(
     }, {});
   }
 );
-
-export const getCourses = createSelector(
-  [getFilteredLessons, getIconContext],
-  (lessons = {}, iconContext) => {
-    return Object.keys(lessons).reduce((res, lessonKey) => {
-      const lesson = lessons[lessonKey];
-      const courseName = lesson.course;
-      const name = capitalize(courseName).replace('_', ' ');
-
-      // Increment lessonCount of existing course
-      if (res.hasOwnProperty(courseName)) {res[courseName].lessonCount++;}
-      // Or create a new course
-      else res[courseName] = {
-        iconPath: iconContext('./' + courseName + '/logo-black.png'),
-        lessonCount: 1,
-        name,
-        path: courseName
-      };
-
-      return res;
-    }, {});
-  }
-);
