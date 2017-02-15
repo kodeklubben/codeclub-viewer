@@ -7,6 +7,7 @@ import styles from './PageNotFound.scss';
 export const NotFound = React.createClass({
     render(){
         
+        
         return (
             <div className={styles.center}>
                 <h3>Noe gikk galt.</h3>
@@ -28,6 +29,6 @@ function mapStateToProps(state) {
   };
 }
 
-export const NotFoundContainer = connect(
+export const PageNotFoundContainer = connect(
     mapStateToProps
     )(withStyles(styles)(NotFound));

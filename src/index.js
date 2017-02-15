@@ -7,12 +7,9 @@ import { createHistory } from 'history';
 import useScroll from 'react-router-scroll';
 import {Provider} from 'react-redux';
 import routes from './routes';
-//import routes404 from './routes';
 import WithStylesContext from './WithStylesContext';
 
 import App from './pages/App';
-import FrontPage from './pages/FrontPage';
-import PageNotFound from './pages/PageNotFound';
 
 import store from './store';
 

@@ -24,7 +24,7 @@ const getComponentLessonPage = (nextState, cb) => {
 };
 
 const getComponent404Page = (nextState, cb) => {
-  cb(null, require('./pages/PageNotFound').NotFound);
+  cb(null, require('./pages/PageNotFound').PageNotFoundContainer);
 }
 
 

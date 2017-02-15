@@ -12,23 +12,10 @@ export default function getRouteObject(
   return (
     <Route path="/" component={App}>
       <IndexRoute getComponent={getComponentFrontPage}/>
-      <Route path="/PageNotFound" getComponent={getComponent404Page}/> 
+      <Route path="/PageNotFound" getComponent={getComponent404Page}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
       <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>
       <Route path="*" getComponent={getComponent404Page}/>
     </Route>
   );
 }
-/*
-export function getRouteObject404(
-  getComponentFrontPage,
-  getComponent404Page
-) {
-  return (
-    <Route path="/" component={App}>
-      <IndexRoute getComponent={getComponentFrontPage}/>
-      <Route path="*" getComponent={getComponent404Page}/>
-    </Route>
-  );
-}
-*/

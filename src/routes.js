@@ -2,9 +2,8 @@ import React from 'react';
 import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
 import store from './store';
-//import getRouteObject404 from './routeObject';
 
-function validPathTest(course, lesson, file){
+function validPathTest(course, lesson, path){
   const state = store.getState().lessons; 
 
   if(!lesson){
@@ -16,7 +15,7 @@ function validPathTest(course, lesson, file){
     return false;
   }else{
     for(var key in state){
-      if('/' + course + '/' + lesson + '/' + file == state[key]['path']){
+      if(path == state[key]['path']){
         return true;
       }
     }
@@ -26,8 +25,9 @@ function validPathTest(course, lesson, file){
 
 function pathTest(nextState, replace, callback){
   const params = nextState.params;
-  const pathCorrect = validPathTest(params.course, params.lesson, params.file);
-
+  const path = nextState.location.pathname;
+  const pathCorrect = validPathTest(params.course, params.lesson, path);
+  
   if(!pathCorrect){
     replace('/PageNotFound');
   }
@@ -42,8 +42,6 @@ const getComponentFrontPage = (nextState, cb) => {
 
 const getComponentPlaylist = (nextState, cb) => {
   const params = nextState.params;
-  //const pathCorrect = validPathTest(params.course, null);
-  console.log('Riktig path.');
   require.ensure([], (require) => {
     cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
   }, 'PlaylistPageContainer');
@@ -52,7 +50,6 @@ const getComponentPlaylist = (nextState, cb) => {
 const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
   const path = `${params.course}/${params.lesson}/${params.file}`;
-  //const pathCorrect = validPathTest(params.course, path);
 
   const bundledLessonContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
@@ -90,14 +87,11 @@ const getComponentLessonPage = (nextState, cb) => {
 };*/
 
 const getComponent404Page = (nextState, cb) => {
-  require.ensure([], require => {
-    cb(null, require('./pages/PageNotFound').NotFoundContainer);
-  }, 'NotFoundContainer');
+  require.ensure([], (require) => {
+    cb(null, require('./pages/PageNotFound').PageNotFoundContainer);
+  }, 'PageNotFoundContainer');
 };
 
 const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
   getComponentLessonPage, getComponent404Page, pathTest);
 export default routes;
-
-//export const routes404 = getRouteObject404(getComponentFrontPage, getComponent404Page);
-//export const routes404;
