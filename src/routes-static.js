@@ -25,7 +25,7 @@ const getComponentLessonPage = (nextState, cb) => {
 
 const getComponent404Page = (nextState, cb) => {
   cb(null, require('./pages/PageNotFound').PageNotFoundContainer);
-}
+};
 
 
 const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage, getComponent404Page);

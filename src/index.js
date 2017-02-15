@@ -2,14 +2,12 @@
 
 import React from 'react';
 import {render} from 'react-dom';
-import {applyRouterMiddleware, Router, Route, IndexRoute, useRouterHistory} from 'react-router';
+import {applyRouterMiddleware, Router, useRouterHistory} from 'react-router';
 import { createHistory } from 'history';
 import useScroll from 'react-router-scroll';
 import {Provider} from 'react-redux';
 import routes from './routes';
 import WithStylesContext from './WithStylesContext';
-
-import App from './pages/App';
 
 import store from './store';
 
@@ -27,14 +25,15 @@ const onInsertCss = (...styles) => {
     removeCss.forEach(f => f());
   };
 };
+
 render(
-    <Provider store={store}>
-      <WithStylesContext onInsertCss={onInsertCss}>
-        <Router routes={routes}
-                history={browserHistory}
-                render={applyRouterMiddleware(useScroll())}
-        />
-      </WithStylesContext>
-    </Provider>,
-    document.getElementById('app')
-  );
+  <Provider store={store}>
+    <WithStylesContext onInsertCss={onInsertCss}>
+      <Router routes={routes}
+              history={browserHistory}
+              render={applyRouterMiddleware(useScroll())}
+      />
+    </WithStylesContext>
+  </Provider>,
+  document.getElementById('app')
+);

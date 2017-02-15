@@ -14,8 +14,8 @@ function validPathTest(course, lesson, path){
     }
     return false;
   }else{
-    for(var key in state){
-      if(path == state[key]['path']){
+    for(var object in state){
+      if(path == state[object]['path']){
         return true;
       }
     }
@@ -27,7 +27,7 @@ function pathTest(nextState, replace, callback){
   const params = nextState.params;
   const path = nextState.location.pathname;
   const pathCorrect = validPathTest(params.course, params.lesson, path);
-  
+
   if(!pathCorrect){
     replace('/PageNotFound');
   }
@@ -41,7 +41,6 @@ const getComponentFrontPage = (nextState, cb) => {
 };
 
 const getComponentPlaylist = (nextState, cb) => {
-  const params = nextState.params;
   require.ensure([], (require) => {
     cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
   }, 'PlaylistPageContainer');
