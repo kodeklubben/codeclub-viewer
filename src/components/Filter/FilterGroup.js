@@ -12,8 +12,6 @@ const FilterGroup = React.createClass({
       const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
       const availableLessons = this.props.availableLessons[tagItem];
 
-      //TODO: Send only the relevant availableLesson to the FilterItem
-
       if (availableLessons) {
         return (
           <FilterItem

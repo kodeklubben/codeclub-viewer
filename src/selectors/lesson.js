@@ -63,8 +63,6 @@ export const getAvailableLessons = createSelector(
       }
     }, 0);
 
-    console.log(availableLessons);
-
     return availableLessons;
 
   }
