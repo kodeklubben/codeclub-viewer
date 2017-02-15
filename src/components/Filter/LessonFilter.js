@@ -25,8 +25,10 @@ export const LessonFilter = React.createClass({
           className="pull-right" data-effect="solid" 
           data-multiline="true" 
           data-tip="I filteret kan man sortere ut de oppgavene man vil løse,<br>
-                    etter hvilket operativsystem det skal kjøres på og/eller<br> hvilket tema man vil jobbe med.<br><br><br>
-                    Bak hvert valg står det antall oppgaver som kan løses,<br>etter hvilke valg du gjør i filteret."
+                    etter hvilket operativsystem det skal kjøres på og/eller<br>
+                    hvilket tema man vil jobbe med.<br><br><br>
+                    Bak hvert valg står det antall oppgaver som kan løses,<br>
+                    etter hvilke valg du gjør i filteret."
         >?
         </Button>
         <ReactTooltip />
