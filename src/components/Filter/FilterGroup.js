@@ -14,15 +14,17 @@ const FilterGroup = React.createClass({
 
       //TODO: Send only the relevant availableLesson to the FilterItem
 
-      return (
-        <FilterItem
-          key={idx}
-          tagItem={tagItem}
-          numberOfLessons={availableLessons}
-          checked={filterTags[tagItem]}
-          onCheck={onCheck}
-        />
-      );
+      if (availableLessons) {
+        return (
+          <FilterItem
+            key={idx}
+            tagItem={tagItem}
+            numberOfLessons={availableLessons}
+            checked={filterTags[tagItem]}
+            onCheck={onCheck}
+          />
+        );
+      }
     });
 
     return (
