@@ -69,5 +69,5 @@ function mapStateToProps(state) {
 }
 
 export const FooterContainer = connect(
-  mapStateToProps,
+  mapStateToProps
 )(withStyles(styles)(Footer));
