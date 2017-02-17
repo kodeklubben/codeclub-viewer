@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
+import ActiveFilterItem from '../Filter/ActiveFilterItem';
 
 import {LessonFilterContainer} from '../Filter/LessonFilter';
 
@@ -32,6 +33,10 @@ const Filter = React.createClass({
             Vis/skjul filter
           </Button>
           <br/>
+          <ActiveFilterItem tagItem="hei" />
+          <ActiveFilterItem tagItem="hallo" />
+          <ActiveFilterItem tagItem="heihopp" />
+
           <br/>
           <Collapse in={this.state.showMobileFilter}>
             <div>

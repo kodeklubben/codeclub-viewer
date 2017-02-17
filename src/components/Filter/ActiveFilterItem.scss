@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+
+.item {
+  margin-top: 10px;
+  margin-right: 10px;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
+.remove {
+  padding-right: 2px;
+}
