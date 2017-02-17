@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import ActiveFilterItem from '../Filter/ActiveFilterItem';
 import {connect} from 'react-redux';
+import {onFilterCheck} from '../../action_creators';
 
 
 import {LessonFilterContainer} from '../Filter/LessonFilter';
@@ -24,11 +25,11 @@ const Filter = React.createClass({
       const group = filter[groupName];
 
       const activeFilterItems = Object.keys(group).map((tagItem, idx) => {
-        const onCheck = () => this.props.onFilterCheck(tagItem);
+        const onClick = () => this.props.onFilterCheck(groupName, tagItem);
 
         if (group[tagItem]){
           return (
-              <ActiveFilterItem key={idx} tagItem={tagItem} onCheck={onCheck}/>
+              <ActiveFilterItem key={idx} tagItem={tagItem} onClick={onClick}/>
           );
         }
       });
@@ -68,10 +69,19 @@ const Filter = React.createClass({
   }
 });
 
+Filter.propTypes = {
+  onFilterCheck: PropTypes.func,
+};
+
 function mapStateToProps(state) {
   return {
     filter: state.filter,
   };
 }
 
-export default connect(mapStateToProps)(Filter);
+export default connect(
+  mapStateToProps,
+  {
+    onFilterCheck
+  }
+)(Filter);
