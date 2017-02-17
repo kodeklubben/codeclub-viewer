@@ -25,13 +25,11 @@ export const LessonFilter = React.createClass({
             etter hvilke valg du gjør i filteret.</p>
       </Tooltip>;
     const title = 
-      <div>
         <h3>Filter
-          <OverlayTrigger trigger="click" rootClose placement="right" overlay={tooltip}>
-            <Button  className="pull-right">?</Button>
+          <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
+            <Button style={{ marginTop: -9, marginRight: -14 }} className="pull-right">?</Button>
           </OverlayTrigger>
         </h3>
-      </div>;  
     const bsStyle = (this.props.isStudentMode ? 'student' : 'teacher');
     return (
         <Panel header={title} bsStyle={bsStyle}>
