@@ -18,16 +18,24 @@ const Filter = React.createClass({
   },
 
   render() {
-    const activeFilterItems = Object.keys(this.props.filter.operativsystem).map((tagItem, idx) => {
-      const onCheck = () => this.props.onFilterCheck(tagItem);
+    const filter = this.props.filter || {};
 
-      if (this.props.filter.operativsystem[tagItem]){
-        return (
-            <ActiveFilterItem key={idx} tagItem={tagItem} onCheck={onCheck}/>
-        );
-      }
+    const filterGroups = Object.keys(filter).map((groupName, idx) => {
+      const group = filter[groupName];
 
+      const activeFilterItems = Object.keys(group).map((tagItem, idx) => {
+        const onCheck = () => this.props.onFilterCheck(tagItem);
+
+        if (group[tagItem]){
+          return (
+              <ActiveFilterItem key={idx} tagItem={tagItem} onCheck={onCheck}/>
+          );
+        }
+      });
+
+      return activeFilterItems;
     });
+
     return (
       <div>
         {/*Filter desktop*/}
@@ -46,7 +54,7 @@ const Filter = React.createClass({
           </Button>
           <br/>
 
-          {activeFilterItems}
+          {filterGroups}
 
           <br/>
           <Collapse in={this.state.showMobileFilter}>

@@ -1,8 +1,7 @@
 @import '../../styles/variables';
 
 .item {
-  margin-top: 10px;
-  margin-right: 10px;
+  margin: 10px 10px 10px 0;
   text-overflow: ellipsis;
   overflow-x: hidden;
 }
