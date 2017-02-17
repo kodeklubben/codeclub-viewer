@@ -22,10 +22,6 @@ export const LessonFilter = React.createClass({
         {filterGroups}
         <br/>
         <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
-        <Button block>?</Button>
-        innerHeighthrg
-    htgdfs
-    bgvfd
       </Panel>
     );
   }
