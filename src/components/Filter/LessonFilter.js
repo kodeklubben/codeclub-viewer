@@ -4,7 +4,8 @@ import {onFilterCheck, resetFilter} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
 import FilterGroup from './FilterGroup';
-import ReactTooltip from 'react-tooltip';
+import Tooltip from 'react-bootstrap/lib/Tooltip';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 export const LessonFilter = React.createClass({
   render(){
@@ -15,29 +16,29 @@ export const LessonFilter = React.createClass({
         <FilterGroup key={idx} groupName={groupName} tagItems={tagItems} onFilterCheck={this.props.onFilterCheck}/>
       );
     });
-
-    const title = <h3>Filter</h3>;
+    const tooltip = 
+      <Tooltip placement="right" id="filterhelp">
+        <p>I filteret kan man sortere ut de oppgavene man vil løse,
+            etter hvilket operativsystem det skal kjøres på og/eller
+            hvilket tema man vil jobbe med.</p>
+        <p>Bak hvert valg står det antall oppgaver som kan løses,
+            etter hvilke valg du gjør i filteret.</p>
+      </Tooltip>;
+    const title = 
+      <div>
+        <h3>Filter
+          <OverlayTrigger trigger="click" rootClose placement="right" overlay={tooltip}>
+            <Button  className="pull-right">?</Button>
+          </OverlayTrigger>
+        </h3>
+      </div>;  
     const bsStyle = (this.props.isStudentMode ? 'student' : 'teacher');
     return (
-      <div>  
-        <Button data-place="right" 
-          style={{ marginTop: 2, marginRight: 2 }} 
-          className="pull-right" data-effect="solid" 
-          data-multiline="true" 
-          data-tip="I filteret kan man sortere ut de oppgavene man vil løse,<br>
-                    etter hvilket operativsystem det skal kjøres på og/eller<br>
-                    hvilket tema man vil jobbe med.<br><br><br>
-                    Bak hvert valg står det antall oppgaver som kan løses,<br>
-                    etter hvilke valg du gjør i filteret."
-        >?
-        </Button>
-        <ReactTooltip />
         <Panel header={title} bsStyle={bsStyle}>
           {filterGroups}
           <br/>
           <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
         </Panel>
-      </div>
     );
   }
 });
