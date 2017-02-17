@@ -4,6 +4,8 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import ActiveFilterItem from '../Filter/ActiveFilterItem';
+import {connect} from 'react-redux';
+
 
 import {LessonFilterContainer} from '../Filter/LessonFilter';
 
@@ -16,6 +18,16 @@ const Filter = React.createClass({
   },
 
   render() {
+    const activeFilterItems = Object.keys(this.props.filter.operativsystem).map((tagItem, idx) => {
+      const onCheck = () => this.props.onFilterCheck(tagItem);
+
+      if (this.props.filter.operativsystem[tagItem]){
+        return (
+            <ActiveFilterItem key={idx} tagItem={tagItem} onCheck={onCheck}/>
+        );
+      }
+
+    });
     return (
       <div>
         {/*Filter desktop*/}
@@ -33,9 +45,8 @@ const Filter = React.createClass({
             Vis/skjul filter
           </Button>
           <br/>
-          <ActiveFilterItem tagItem="hei" />
-          <ActiveFilterItem tagItem="hallo" />
-          <ActiveFilterItem tagItem="heihopp" />
+
+          {activeFilterItems}
 
           <br/>
           <Collapse in={this.state.showMobileFilter}>
@@ -49,4 +60,10 @@ const Filter = React.createClass({
   }
 });
 
-export default Filter;
+function mapStateToProps(state) {
+  return {
+    filter: state.filter,
+  };
+}
+
+export default connect(mapStateToProps)(Filter);

@@ -12,7 +12,7 @@ const ActiveFilterItem = React.createClass({
 
     return (
       <span>
-        <Button className={styles.item} onClick={() => this.props.toggle('Filter')}>
+        <Button className={styles.item} onClick={() => this.props.onCheck}>
           <Glyphicon glyph={'glyphicon glyphicon-remove'} className={styles.remove}/> {tagItem}
         </Button>
       </span>
