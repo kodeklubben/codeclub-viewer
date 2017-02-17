@@ -29,7 +29,7 @@ export const LessonFilter = React.createClass({
           <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
             <Button style={{ marginTop: -9, marginRight: -14 }} className="pull-right">?</Button>
           </OverlayTrigger>
-        </h3>
+        </h3>;
     const bsStyle = (this.props.isStudentMode ? 'student' : 'teacher');
     return (
         <Panel header={title} bsStyle={bsStyle}>
