@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Grid from 'react-bootstrap/lib/Grid';
 import styles from './ImprovePage.scss';
 import {capitalize} from '../../util.js';
 
