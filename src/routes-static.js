@@ -2,7 +2,6 @@ import React from 'react';
 import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
 
-
 const getComponentPlaylist = (nextState, cb) => {
   cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
 };
@@ -23,10 +22,5 @@ const getComponentLessonPage = (nextState, cb) => {
   cb(null, props => <Lesson {...props} lesson={result}/>);
 };
 
-const getComponent404Page = (nextState, cb) => {
-  cb(null, require('./pages/PageNotFound').PageNotFoundContainer);
-};
-
-
-const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage, getComponent404Page);
+const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage);
 export default routes;

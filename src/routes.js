@@ -1,38 +1,6 @@
 import React from 'react';
 import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
-import store from './store';
-
-function validPathTest(course, lesson, path){
-  const state = store.getState().lessons; 
-
-  if(!lesson){
-    for(var key in state){
-      if(course == state[key]['course']){
-        return true;
-      }
-    }
-    return false;
-  }else{
-    for(var object in state){
-      if(path == state[object]['path']){
-        return true;
-      }
-    }
-    return false;
-  }
-}
-
-function pathTest(nextState, replace, callback){
-  const params = nextState.params;
-  const path = nextState.location.pathname;
-  const pathCorrect = validPathTest(params.course, params.lesson, path);
-
-  if(!pathCorrect){
-    replace('/PageNotFound');
-  }
-  callback();
-}
 
 const getComponentFrontPage = (nextState, cb) => {
   require.ensure([], require => {
@@ -51,7 +19,7 @@ const getComponentLessonPage = (nextState, cb) => {
   const path = `${params.course}/${params.lesson}/${params.file}`;
 
   const bundledLessonContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
-  /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
+    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
   const bundle = bundledLessonContext('./' + path + '.md');
   bundle(result => {
     // How to pass props directly to component,
@@ -85,12 +53,6 @@ const getComponentLessonPage = (nextState, cb) => {
 
 };*/
 
-const getComponent404Page = (nextState, cb) => {
-  require.ensure([], (require) => {
-    cb(null, require('./pages/PageNotFound').PageNotFoundContainer);
-  }, 'PageNotFoundContainer');
-};
-
 const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
-  getComponentLessonPage, getComponent404Page, pathTest);
+  getComponentLessonPage);
 export default routes;
