@@ -8,16 +8,16 @@ import {capitalize} from '../../util.js';
 
 const ImprovePage = React.createClass({
 
-  render() {      
+  render() { 
     const courseName = this.props.courseLessonFileProp.course;
     const lessonName = this.props.courseLessonFileProp.lesson;
     
-    //Link to making a new issue + title,body fill
-    const createNewIssueLink = "?title=" + capitalize(courseName) + ": " + capitalize(lessonName).replace(/_/g, " ")
-     + "&body=Beskriv ditt problem...";
+    // Link to making a new issue + title,body fill
+    const createNewIssueLink = '?title=' + capitalize(courseName) + ': ' + capitalize(lessonName).replace(/_/g, ' ')
+     + '&body=Beskriv ditt problem...';
 
-    //Link to the problem on github
-    const githubLink = courseName + "/" + lessonName;
+    // Link to the problem on github
+    const githubLink = courseName + '/' + lessonName;
 
     const url = {
       newIssue: 'https://github.com/kodeklubben/oppgaver/issues/new/' + createNewIssueLink,
@@ -25,7 +25,8 @@ const ImprovePage = React.createClass({
     };
     return (
       
-      <Grid fluid={true} className={this.props.isStudentMode ? styles.improvePageBoxStudent : styles.improvePageBoxTeacher}>
+      <Grid fluid={true} className={
+        this.props.isStudentMode ? styles.improvePageBoxStudent : styles.improvePageBoxTeacher}>
           <div className={styles.improvePageBox}>
             <div>
               <h3>Forbedre denne siden</h3>
