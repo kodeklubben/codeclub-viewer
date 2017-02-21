@@ -59,7 +59,5 @@ function mapStateToProps(state) {
   };
 }
 
-export const ImprovePageContainer = connect(
-  mapStateToProps,
-)(withStyles(styles)(ImprovePage));
+export const ImprovePageContainer = connect(mapStateToProps)(withStyles(styles)(ImprovePage));
 
