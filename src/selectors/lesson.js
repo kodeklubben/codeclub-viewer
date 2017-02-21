@@ -39,29 +39,33 @@ export const getFilteredAndIndexedLessons = createSelector(
   }
 );
 
+/**
+ * Creates an object containing number of lessons available in each tag given your current filter
+ */
+
 export const getAvailableLessons = createSelector(
   [getFilter, getFilteredLessons],
   (current_filter = {}, filteredLessons = {}) => {
 
     let availableLessons = {};
-    for (let tag in current_filter.operativsystem) {
-      availableLessons[tag] = 0;
-    }
-    for (let tag in current_filter.tema) {
-      availableLessons[tag] = 0;
-    }
 
-    Object.keys(filteredLessons).reduce((sum, lessonKey) => {
+    Object.keys(current_filter).map((groupName, idx) => {
+      const group = current_filter[groupName];
+      Object.keys(group).map((tagItem, idx) => {
+        availableLessons[tagItem] = 0;
+      });
+    });
+
+    Object.keys(filteredLessons).forEach((lessonKey) => {
       const lesson = filteredLessons[lessonKey];
-      for (let tag in availableLessons){
-        if ((lesson.tags.operativsystem || []).indexOf(tag)!== -1){
-          availableLessons[tag]++;
-        }
-        if ((lesson.tags.tema || []).indexOf(tag)!== -1){
-          availableLessons[tag]++;
-        }
-      }
-    }, 0);
+      Object.keys(availableLessons).forEach((tag) => {
+        Object.keys(current_filter).forEach((groupName) => {
+          if((lesson.tags[groupName] || []).indexOf(tag)!== -1){
+            availableLessons[tag]++;
+          }
+        });
+      });
+    });
 
     return availableLessons;
 

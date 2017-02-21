@@ -10,14 +10,14 @@ const FilterGroup = React.createClass({
     const filterTags = this.props.tagItems;
     const filterItems = Object.keys(filterTags).map((tagItem, idx) => {
       const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
-      const availableLessons = this.props.availableLessons[tagItem];
+      const availableLessonsForTag = this.props.availableLessons[tagItem];
 
-      if (availableLessons) {
+      if (availableLessonsForTag) {
         return (
           <FilterItem
             key={idx}
             tagItem={tagItem}
-            numberOfLessons={availableLessons}
+            numberOfLessons={availableLessonsForTag}
             checked={filterTags[tagItem]}
             onCheck={onCheck}
           />
@@ -37,7 +37,8 @@ const FilterGroup = React.createClass({
 FilterGroup.propTypes = {
   groupName: PropTypes.string,
   tagItems: PropTypes.object,
-  onCheck: PropTypes.func
+  onCheck: PropTypes.func,
+  availableLessonsForTag: PropTypes.object
 };
 
 export default withStyles(styles)(FilterGroup);
