@@ -1,10 +1,12 @@
 @import '../../styles/variables';
 
 .link {
-  text-decoration: none !important;
+  &, &:focus, &:hover {
+    text-decoration: none;
+  }
   text-align: center;
-  font-size: 16px;
-  font-weight: 350;
+  font-size: 1.2em;
+  font-weight: 300;
   border-radius: 5px;
   padding: 7px;
   opacity: 0.85;
@@ -42,25 +44,32 @@
 .fontImprovePageBox {
   font-family: $font-family-roboto;
   font-weight: 300;
-  font-size: 14px;
+  font-size: 1em;
 }
 
 /* Container for hele improve box */
+.container{
+  margin: 10px 30px;
+}
+
 .improvePageBox {
   composes: fontImprovePageBox;
   display: flex;
   flex-direction: column;
   text-align: center;
-  padding: 1px 5px 5px;
-  margin: 10px auto;
+  padding: 5px;
+  margin: auto;
   max-width: 650px;
   border-radius: 10px;
-  div {
-    margin: 0 20px;
-  }
 }
 
-.improvePageBoxRow {
+/* Row containing the text */
+.improvePageBoxTextRow{
+  margin: 5px 20px;
+}
+
+/* Row containing the links */
+.improvePageBoxLinkRow {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -78,4 +87,16 @@
 .improvePageBoxTeacher {
   composes: improvePageBox;
   background-color: $color-blue-light;
+}
+
+/* Media screen */
+@media only screen and (max-width: 450px) {
+  .link {
+    font-size: 0.9em;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .link {
+    font-size: 0.7em;
+  }
 }

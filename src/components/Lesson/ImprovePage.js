@@ -24,26 +24,27 @@ const ImprovePage = React.createClass({
       showCode: 'https://github.com/kodeklubben/oppgaver/tree/master/src/' + githubLink
     };
     return (
-      
-      <Grid fluid={true} className={
-        this.props.isStudentMode ? styles.improvePageBoxStudent : styles.improvePageBoxTeacher}>
-          <div className={styles.improvePageBox}>
-            <div>
-              <h3>Forbedre denne siden</h3>
-              <p>Funnet en feil? Kunne noe vært bedre? <br/>
-              Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
-              Vi er takknemlige for enhver tilbakemelding!</p>
+      <div className={styles.container}>
+        <div className={
+          this.props.isStudentMode ? styles.improvePageBoxStudent : styles.improvePageBoxTeacher}>
+            <div className={styles.improvePageBox}>
+              <div className={styles.improvePageBoxTextRow}>
+                <h2>Forbedre denne siden</h2>
+                <p>Funnet en feil? Kunne noe vært bedre? <br/>
+                Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
+                Vi er takknemlige for enhver tilbakemelding!</p>
+              </div>
+              <div className={styles.improvePageBoxLinkRow}>
+                  <div>
+                    <a className={styles.newIssue} href={url.newIssue}>Rapporter et problem</a>
+                  </div>
+                  <div>
+                    <a className={styles.showCode} href={url.showCode}>Vis koden og fiks selv</a>
+                  </div>
+              </div>
             </div>
-            <div className={styles.improvePageBoxRow}>
-                <div>
-                  <a className={styles.newIssue} href={url.newIssue}>Rapporter et problem</a>
-                </div>
-                <div>
-                  <a className={styles.showCode} href={url.showCode}>Vis koden og fiks selv</a>
-                </div>
-            </div>
-          </div>
-      </Grid>
+        </div>
+      </div>
     );
   }
 });
