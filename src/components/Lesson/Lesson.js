@@ -8,6 +8,7 @@ import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
+import Button from 'react-bootstrap/lib/Button';
 import {buildPDF} from '../../pdf.js'
 
 
@@ -58,7 +59,7 @@ const Lesson = React.createClass({
       <div className={styles.container}>
         <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
-        <button onClick={this.pdfLinkClick}>Click me</button>
+        <Button onClick={this.pdfLinkClick}>last ned oppgave</Button>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
       </div>
     );
