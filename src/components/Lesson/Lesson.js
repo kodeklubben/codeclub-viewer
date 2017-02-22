@@ -8,6 +8,8 @@ import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
+import Button from 'react-bootstrap/lib/Button';
+import {buildPDF} from '../../pdf.js'
 
 
 const Lesson = React.createClass({
@@ -48,11 +50,22 @@ const Lesson = React.createClass({
       ReactDOM.unmountComponentAtNode(node);
     }
   },
+  generatePDF() {
+      let element = document.createElement('script');
+      element.setAttribute('type', 'text/javascript');
+      element.setAttribute('Source', '/../../pdf.js');
+      document.getElementsByTagName('head')[0].appendChild(element);
+  },
+  pdfLinkClick() {
+      buildPDF(this.state);
+      return false;
+  },
   render() {
     return (
       <div className={styles.container}>
         <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
+        <Button onClick={this.pdfLinkClick}>last ned oppgave</Button>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
       </div>
     );
