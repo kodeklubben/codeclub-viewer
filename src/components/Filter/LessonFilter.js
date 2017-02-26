@@ -17,7 +17,7 @@ export const LessonFilter = React.createClass({
       );
     });
     const tooltip = 
-      <Tooltip placement="right" id="filterhelp">
+      <Tooltip id="filterhelp">
         <p>I filteret kan man sortere ut de oppgavene man vil løse,
             etter hvilket operativsystem det skal kjøres på og/eller
             hvilket tema man vil jobbe med.</p>
