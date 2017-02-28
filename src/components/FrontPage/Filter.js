@@ -70,17 +70,19 @@ const Filter = React.createClass({
 
 Filter.propTypes = {
   onFilterCheck: PropTypes.func,
+  filter: PropTypes.object,
+  isStudentMode: PropTypes.bool,
 };
 
-function mapStateToProps(state) {
-  return {
-    filter: state.filter,
-  };
-}
+const mapStateToProps = (state) => ({
+  filter: state.filter,
+});
+
+const mapDispatchToProps = {
+  onFilterCheck
+};
 
 export default connect(
   mapStateToProps,
-  {
-    onFilterCheck
-  }
+  mapDispatchToProps,
 )(Filter);
