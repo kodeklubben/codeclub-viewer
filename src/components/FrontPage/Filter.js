@@ -47,6 +47,7 @@ const Filter = React.createClass({
 
         {/*Filter mobile*/}
         <Col smHidden mdHidden lgHidden xs={12}>
+          {filterGroups}
           <br/>
           <Button className={this.props.isStudentMode ? 'btn-student' : 'btn-teacher'}
             onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
@@ -54,8 +55,6 @@ const Filter = React.createClass({
             Vis/skjul filter
           </Button>
           <br/>
-
-          {filterGroups}
 
           <br/>
           <Collapse in={this.state.showMobileFilter}>
