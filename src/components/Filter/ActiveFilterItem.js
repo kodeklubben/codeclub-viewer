@@ -10,7 +10,7 @@ const ActiveFilterItem = (props) => {
 
   return (
     <span>
-      <Button className={styles.item} onClick={this.props.onClick}>
+      <Button className={styles.item} onClick={props.onClick}>
         <Glyphicon glyph={'glyphicon glyphicon-remove'} className={styles.remove}/> {tagItem}
       </Button>
     </span>
