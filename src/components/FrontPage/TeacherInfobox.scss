@@ -6,19 +6,15 @@
   border-bottom: 1px black dotted;
 }
 
-.fontInfoBox {
-  font-family: $font-family-roboto;
-  font-weight: 300;
-}
-
 .infoBox {
-  composes: fontInfoBox;
-  padding: 5px;
-  margin: 0 auto;
+  padding: 10px 0;
   max-width: 700px;
   background-color: #f7f7f7 !important;
   border: 1px solid #b2b2b2;
   border-radius: 10px;
+  font-family: $font-family-roboto;
+  font-size: 12pt;
+  font-weight: 300;
 }
 
 .infoBoxRow {
@@ -30,5 +26,9 @@
   }
   div {
     padding: 5px;
+  }
+
+  .center {
+    text-align: center;
   }
 }
