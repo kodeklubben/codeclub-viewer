@@ -91,10 +91,10 @@ styles:
   close: true
 
   # Components w/ JavaScript
-  modals: false
-  tooltip: false
-  popovers: false
-  carousel: false
+  modals: true
+  tooltip: true
+  popovers: true
+  carousel: true
 
   # Utility classes
   utilities: true
