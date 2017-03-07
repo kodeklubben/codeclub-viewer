@@ -13,9 +13,7 @@ export function buildPDF() {
   const jsPDF = require('jspdf');
   const html2canvas = require('html2canvas');
 
-
-  
-  let html = document.getElementsByTagName("body")[0];
+  let html = document.getElementsByTagName("body")[0].querySelectorAll("[class^=Lesson__container]");
 
   //var canvas = html2canvas(html);
 
@@ -25,11 +23,11 @@ export function buildPDF() {
       let converter = new jsPDF('p', 'mm');
       //converter.fromHTML(`<canvas>${canvas}</canvas>`);
       let i = new Image();
-      i.src = canvas.toDataURL('image/jpeg');
+      i.src = canvas.toDataURL('image/png');
       console.log("converted");
       i.onload = function() {
         callback(i);
-      }
+      };
       converter.addImage(i, 'JPEG', 0, 0);
 
       document.body.appendChild(canvas);
