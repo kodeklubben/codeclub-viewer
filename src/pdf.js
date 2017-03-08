@@ -12,25 +12,43 @@ export function buildPDF() {
 
   const jsPDF = require('jspdf');
   const html2canvas = require('html2canvas');
-
+  
+  //let html = document.getElementsByTagName("body")[0];
   let html = document.getElementsByTagName("body")[0].querySelectorAll("[class^=Lesson__container]");
 
   //var canvas = html2canvas(html);
 
-
   html2canvas(html, {
+    allowTaint: true,
     onrendered: function(canvas) {
-      let converter = new jsPDF('p', 'mm');
+      let converter = new jsPDF('p', 'mm', [canvas.width, canvas.height]);
       //converter.fromHTML(`<canvas>${canvas}</canvas>`);
+
       let i = new Image();
       i.src = canvas.toDataURL('image/png');
       console.log("converted");
       i.onload = function() {
         callback(i);
       };
-      converter.addImage(i, 'JPEG', 0, 0);
 
+      /*let pageHeight = converter.internal.pageSize.height;
+      var height = canvas.height;
+      let y = 0 // Height position of new content
+      let i = 1;
+      while (height>=y*i) {
+        if (y >= pageHeight) {
+          converter.addImage(image, 'JPEG', 0, y*i, 0, 0);
+          converter.addPage();
+          y = 0 // Restart height position
+          i+=1;
+        }
+        y+=1;
+      }*/
+
+      converter.addImage(i, 'PNG', 0, 0);//, canvas.width, canvas.height);
+      console.log('added');
       document.body.appendChild(canvas);
+      console.log('added child');
       converter.save('a4.pdf');
     }
   });
