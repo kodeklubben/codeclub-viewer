@@ -45,7 +45,7 @@ export function buildPDF() {
         y+=1;
       }*/
 
-      converter.addImage(i, 'PNG', 0, 0);//, canvas.width, canvas.height);
+      converter.addImage(i, 'PNG', 10, 10); //, canvas.width, canvas.height);
       console.log('added');
       document.body.appendChild(canvas);
       console.log('added child');
