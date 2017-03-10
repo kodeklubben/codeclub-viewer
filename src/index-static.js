@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {Provider} from 'react-redux';
@@ -10,7 +11,7 @@ export default (locals, callback) => {
   const history = createMemoryHistory();
   const location = history.createLocation(locals.path);
 
-  match({ routes, location }, (error, redirectLocation, renderProps) => {
+  match({ routes: routes, location: location }, (error, redirectLocation, renderProps) => {
     let css = [];
     // The following onInsertCss function allows multiple styles as arguments in withStyles().
     // If we only require one style, it would suffice with onInsertCss = style => css.push(style._getCss())

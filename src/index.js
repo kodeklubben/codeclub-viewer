@@ -3,7 +3,7 @@
 import React from 'react';
 import {render} from 'react-dom';
 import {applyRouterMiddleware, Router, useRouterHistory} from 'react-router';
-import { createHistory } from 'history';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'react-router-scroll';
 import {Provider} from 'react-redux';
 import routes from './routes';
@@ -15,7 +15,7 @@ const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
 const historyOptions = publicPath === '/' ? {} : {
   basename: publicPath
 };
-const browserHistory = useRouterHistory(createHistory)(historyOptions);
+const browserHistory = useRouterHistory(createBrowserHistory)(historyOptions);
 
 // The following onInsertCss function allows multiple styles as arguments in withStyles().
 // If we only require one style, it would suffice with onInsertCss = style => style._insertCss()
