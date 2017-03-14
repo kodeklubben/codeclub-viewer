@@ -1,13 +1,14 @@
 @import '../../styles/variables';
 
-
 .link {
   color: black;
   border-bottom: 1px black dotted;
 
-  &, &:hover, &:focus {
-      text-decoration: none;
-    }
+  &,
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
 }
 
 .infoBox {
