@@ -10,7 +10,15 @@
   @include responsiveFontSizes;
 }
 
+.row {
+	display: flex;
+	align-items: center;
+}
+
 .instructionBtn {
-  float: right;
-  margin-left: 0.5em;
+	margin-left: auto;
+}
+
+.title {
+	padding: 2px 0;
 }
