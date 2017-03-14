@@ -33,7 +33,7 @@ function extractTags(context) {
 }
 
 /**
- * 
+ *
  * @param {Object} tagsA
  * @param {Object} tagsB
  * @returns {Object} mergedTags
@@ -162,14 +162,14 @@ export function tagsMatchFilter(tags, filter) {
   const checkedFilter = getFilterWithOnlyCheckedTags(filter);
 
   const groups = Object.keys(checkedFilter);
-  // Find a group where none of the checked tags from filter is in tags
+  // Find a group where not all of the checked tags from filter is in tags
   const groupWithNoCheckedTags = groups.find((group) => {
     if (!tags.hasOwnProperty(group)) return true;
 
     const tagNamesInTags = tags[group];
     const tagNamesInFilter = Object.keys(checkedFilter[group]);
-    // Check if tags has at least one of the checked tags in filter
-    return arrayIntersection(tagNamesInFilter, tagNamesInTags).length === 0;
+    // Exclude all lessons that don't have identical tags to the filter
+    return arrayIntersection(tagNamesInFilter, tagNamesInTags).length !== tagNamesInFilter.length;
   });
 
   // True if tags has at least one tag in each group that are checked in the filter
