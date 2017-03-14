@@ -30,7 +30,6 @@ if (isProduction) {
   store = createStore(reducer, initialState, devTools);
 }
 
-console.log(getTeacherInfo(courseContext));
 store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
