@@ -11,6 +11,7 @@ const FilterGroup = React.createClass({
     const filterItems = Object.keys(filterTags).map((tagItem, idx) => {
       const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
       const availableLessonsForTag = this.props.availableLessons[tagItem];
+      const totalAvailableLessonsForTag = this.props.totalAvailableLessons[tagItem];
 
       if (availableLessonsForTag) {
         return (
@@ -18,6 +19,7 @@ const FilterGroup = React.createClass({
             key={idx}
             tagItem={tagItem}
             numberOfLessons={availableLessonsForTag}
+            totalAvailableLessons={totalAvailableLessonsForTag}
             checked={filterTags[tagItem]}
             onCheck={onCheck}
           />

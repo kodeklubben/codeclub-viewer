@@ -7,6 +7,7 @@ const FilterItem = React.createClass({
   render(){
     const tagItem = capitalize(this.props.tagItem);
     const numberOfLessons = this.props.numberOfLessons;
+    const totalNumberOfLessons = this.props.totalAvailableLessons;
     return (
       <div className="checkbox">
         <label className={styles.label}>
@@ -14,7 +15,7 @@ const FilterItem = React.createClass({
                  checked={this.props.checked}
                  onChange={this.props.onCheck}
           />
-          {tagItem} ({numberOfLessons})
+          {tagItem} <span className={styles.numbers}> ({numberOfLessons}/{totalNumberOfLessons}) </span>
         </label>
       </div>
     );

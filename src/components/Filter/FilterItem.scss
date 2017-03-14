@@ -1,4 +1,10 @@
+@import '../../styles/variables';
+
 .label {
   text-overflow: ellipsis;
   overflow-x: hidden;
+}
+
+.numbers {
+  color: $color-gray-light;
 }

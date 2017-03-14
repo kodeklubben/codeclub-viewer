@@ -68,6 +68,33 @@ export const getAvailableLessons = createSelector(
     });
 
     return availableLessons;
+  }
+);
 
+export const getTotalAvailableLessons = createSelector(
+  [getFilter, getLessons],
+  (current_filter = {}, lessons = {}) => {
+
+    let totalAvailableLessons = {};
+
+    Object.keys(current_filter).map((groupName, idx) => {
+      const group = current_filter[groupName];
+      Object.keys(group).map((tagItem, idx) => {
+        totalAvailableLessons[tagItem] = 0;
+      });
+    });
+
+    Object.keys(lessons).forEach((lessonKey) => {
+      const lesson = lessons[lessonKey];
+      Object.keys(totalAvailableLessons).forEach((tag) => {
+        Object.keys(current_filter).forEach((groupName) => {
+          if((lesson.tags[groupName] || []).indexOf(tag)!== -1){
+            totalAvailableLessons[tag]++;
+          }
+        });
+      });
+    });
+
+    return totalAvailableLessons;
   }
 );
