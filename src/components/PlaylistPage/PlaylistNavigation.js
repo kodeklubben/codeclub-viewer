@@ -20,8 +20,7 @@ const PlaylistNavigation = React.createClass({
         <ListGroup fill>
           {
             playlists[playlistName].map((lesson, idx) => {
-              // TODO: Legg inn constraints
-              return <LessonItemContainer key={idx} lesson={lesson} constraints={null}/>;
+              return <LessonItemContainer key={idx} lesson={lesson}/>;
             })
           }
         </ListGroup>
