@@ -116,6 +116,13 @@ function getPlugins() {
       template: 'src/index-template.ejs',
       inject: 'body',
       chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Kodeklubben (server)',
+      filename: '404.html',
+      template: 'src/404-template.ejs',
+      inject: 'body',
+      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
     })
   ];
 

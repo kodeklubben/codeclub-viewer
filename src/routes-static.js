@@ -2,6 +2,7 @@ import React from 'react';
 import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
 
+
 const getComponentPlaylist = (nextState, cb) => {
   cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
 };

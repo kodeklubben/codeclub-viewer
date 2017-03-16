@@ -2,6 +2,7 @@ import React from 'react';
 import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
 
+
 const getComponentFrontPage = (nextState, cb) => {
   require.ensure([], require => {
     cb(null, require('./pages/FrontPage').FrontPageContainer);
