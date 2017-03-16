@@ -8,6 +8,8 @@ import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
+import {ImprovePageContainer} from './ImprovePage.js';
+import Row from 'react-bootstrap/lib/Row';
 
 
 const Lesson = React.createClass({
@@ -54,6 +56,11 @@ const Lesson = React.createClass({
         <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
+        
+        <Row>
+          <ImprovePageContainer courseLessonFileProp={this.props.params}/>
+        </Row>
+
       </div>
     );
   }
