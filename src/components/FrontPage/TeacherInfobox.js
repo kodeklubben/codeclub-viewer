@@ -13,7 +13,7 @@ const TeacherInfobox = React.createClass({
     };
 
     return (
-      <div>
+      <div className={styles.infoBoxContainer}>
         <Collapse in={!this.props.isStudentMode}>
           <div className={styles.infoBox}>
             <div className={styles.infoBoxRow}>
