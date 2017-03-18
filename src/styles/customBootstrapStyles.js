@@ -8,4 +8,4 @@ import Panel from 'react-bootstrap/lib/Panel';
 import Button from 'react-bootstrap/lib/Button';
 
 bootstrapUtils.addStyle(Panel, 'student', 'teacher');
-bootstrapUtils.addStyle(Button, 'student', 'teacher', 'language-student', 'language-teacher');
+bootstrapUtils.addStyle(Button, 'student', 'teacher', 'language-student', 'language-teacher', 'guide');
