@@ -14,23 +14,23 @@ export const LessonItem = React.createClass({
     const levelIcon = <LevelIcon level={lesson.level}/>;
     const instructionBtn = !this.props.isStudentMode && lesson.readmePath ?
       <LinkContainer to={lesson.readmePath}>
-        <Button componentClass="div" className={styles.instructionBtn} bsSize="xs">Veiledning</Button>
+        <Button componentClass="div" className={styles.instructionBtn} bsStyle="guide" bsSize="xs">Veiledning</Button>
       </LinkContainer>
       : null;
     return (
       lesson.external ?
-        <ListGroupItem href={lesson.external} target="_blank">
+        <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
           {levelIcon}
+          <div className={styles.title}>{lesson.title}</div>
           {instructionBtn}
-          {lesson.title}
           &nbsp;<Glyphicon glyph="new-window"/>
         </ListGroupItem>
         :
         <LinkContainer to={lesson.path}>
-          <ListGroupItem>
+          <ListGroupItem className={styles.row}>
             {levelIcon}
+            <div className={styles.title}>{lesson.title}</div>
             {instructionBtn}
-            {lesson.title}
           </ListGroupItem>
         </LinkContainer>
     );
