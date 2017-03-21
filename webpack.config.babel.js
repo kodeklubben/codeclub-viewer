@@ -32,7 +32,7 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {getValuesAsArray, getLoaders, buildDir, publicPath} from './webpack.base.config.babel';
+import baseConfig, {getValuesAsArray, getLoaders, buildDir, publicPath, publicPathWithoutSlash} from './webpack.base.config.babel';
 const webpack = require('webpack');
 
 import path from 'path';
@@ -118,11 +118,11 @@ function getPlugins() {
       chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
     }),
     new HtmlWebpackPlugin({
-      title: 'Kodeklubben (server)',
+      title: '404 - Page Not Found',
       filename: '404.html',
       template: 'src/404-template.ejs',
-      inject: 'body',
-      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+      inject: 'false',
+      redirectUrl: publicPathWithoutSlash
     })
   ];
 

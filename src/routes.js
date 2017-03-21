@@ -57,3 +57,4 @@ const getComponentLessonPage = (nextState, cb) => {
 const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
   getComponentLessonPage);
 export default routes;
+

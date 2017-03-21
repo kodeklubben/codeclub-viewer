@@ -5,23 +5,28 @@ import App from './pages/App';
 import NotFound from './pages/PageNotFound';
 import store from './store';
 
+const lessons = store.getState().lessons;
+const courses = store.getState().context['courseContext'].keys();
+
+let count;
+for(count = 0; count < courses.length; count++){
+  courses[count] = courses[count].slice(2);
+  courses[count] = courses[count].replace(/\/index.md/i, '');
+}
+
 const validPathTest = (course, lesson, path) => {
-  const lessons = store.getState().lessons;
-  const courses = store.getState().context['courseContext'].keys();
   let key;
 
-  if(!lesson){
-    for(key = 0; key < courses.length; key++){
-      courses[key] = courses[key].slice(2);
-      courses[key] = courses[key].replace(/\/index.md/i, '');
-      if(course === courses[key]){
+  if(lesson){
+    for(key in lessons){
+      if(path === lessons[key]['path']){
         return true;
       }
     }
     return false;
   }else{
-    for(key in lessons){
-      if(path === lessons[key]['path']){
+    for(key = 0; key < courses.length; key++){
+      if(course === courses[key]){
         return true;
       }
     }
