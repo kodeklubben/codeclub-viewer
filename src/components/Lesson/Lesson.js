@@ -35,16 +35,18 @@ const Lesson = React.createClass({
     */
 
     const splitted_content = this.props.lesson.content.split('\n');
-
+    let markup = '';
     for (const row in splitted_content){
       //console.log(this.props.lesson.content[row]);
       if (splitted_content[row].indexOf('<li>') !== -1) {
-        console.log('HURRA');
+        markup += '<input type="checkbox" name="vehicle" value="Bike">';
       }
+      markup += splitted_content[row];
     }
 
     return {
-      __html: this.props.lesson.content
+      //__html: this.props.lesson.content
+      __html: markup
     };
   },
   componentWillMount(){

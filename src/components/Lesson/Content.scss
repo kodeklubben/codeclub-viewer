@@ -19,15 +19,6 @@
     // adjust all elements inside a list item
     margin-left: 45px;
   }
-  // check box for list items
-  li::before {
-    content: " ";
-    border-radius: 8px;
-    border: 3px solid #abdbea;
-    padding: 10px;
-    float: left;
-    margin-left: -40px;
-  }
 }
 
 .check,
