@@ -16,7 +16,7 @@ const FilterGroup = React.createClass({
       if (availableLessonsForTag) {
         return (
           <FilterItem
-            key={idx}
+            key={tagItem}
             tagItem={tagItem}
             numberOfLessons={availableLessonsForTag}
             totalAvailableLessons={totalAvailableLessonsForTag}

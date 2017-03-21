@@ -16,7 +16,7 @@ export const LessonFilter = React.createClass({
       const tagItems = filter[groupName];
       return (
         <FilterGroup
-          key={idx}
+          key={groupName}
           groupName={groupName}
           availableLessons={this.props.availableLessons}
           totalAvailableLessons={this.props.totalAvailableLessons}
@@ -25,7 +25,7 @@ export const LessonFilter = React.createClass({
         />
       );
     });
-    const tooltip = 
+    const tooltip =
       <Tooltip id="filterhelp">
         <p>I filteret kan man sortere ut de oppgavene man vil løse,
             etter hvilket operativsystem det skal kjøres på og/eller
@@ -33,7 +33,7 @@ export const LessonFilter = React.createClass({
         <p>Bak hvert valg står det antall oppgaver som kan løses,
             etter hvilke valg du gjør i filteret.</p>
       </Tooltip>;
-    const title = 
+    const title =
         <h3>Filter
           <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
             <Button style={{ marginTop: -9, marginRight: -14 }} className="pull-right">?</Button>
