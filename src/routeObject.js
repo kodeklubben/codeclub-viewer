@@ -10,18 +10,18 @@ const validPathTest = (course, lesson, path) => {
   const courses = store.getState().context['courseContext'].keys();
   let key;
 
-  if(!lesson){
-    for(key = 0; key < courses.length; key++){
-      courses[key] = courses[key].slice(2);
-      courses[key] = courses[key].replace(/\/index.md/i, '');
-      if(course === courses[key]){
+  if(lesson){
+    for(key in lessons){
+      if(path === lessons[key]['path']){
         return true;
       }
     }
     return false;
   }else{
-    for(key in lessons){
-      if(path === lessons[key]['path']){
+    for(key = 0; key < courses.length; key++){
+      courses[key] = courses[key].slice(2);
+      courses[key] = courses[key].replace(/\/index.md/i, '');
+      if(course === courses[key]){
         return true;
       }
     }
@@ -35,8 +35,8 @@ const pathTest = (nextState, replace, callback) => {
   if(!(path.indexOf('/') === 0)){
     path = '/' + path;
   }
-  if(path.lastIndexOf('/') === -1){
-    path = path.slice(0, path.length-1);
+  if(path.lastIndexOf('/') === path.length-1){
+    path = path.slice(0, -1);
   }
   
   const pathCorrect = validPathTest(params.course, params.lesson, path);
