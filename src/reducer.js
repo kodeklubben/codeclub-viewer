@@ -4,7 +4,6 @@ import filter from './reducers/filter';
 import lessons from './reducers/lesson';
 import isStudentMode from './reducers/mode';
 import language from './reducers/language';
-import teacherInfo from './reducers/teacherInfo';
 
 export default combineReducers({
   lessons,
@@ -12,5 +11,4 @@ export default combineReducers({
   filter,
   isStudentMode,
   language,
-  teacherInfo
 });

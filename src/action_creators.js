@@ -66,12 +66,3 @@ export function setLanguage(language) {
     payload: language
   };
 }
-
-export function setTeacherInfo(teacherInfo) {
-  return {
-    type: 'SET_TEACHER_INFO',
-    payload: {
-      teacherInfo
-    }
-  };
-}

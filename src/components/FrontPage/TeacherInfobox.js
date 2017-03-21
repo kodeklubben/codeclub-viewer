@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import {getTeacherInfo} from '../../util';
 
 import styles from './TeacherInfobox.scss';
 
@@ -15,6 +15,9 @@ const TeacherInfobox = React.createClass({
       'http://kidsakoder.no/skole/valgfag/',
       'http://kidsakoder.no/kodeklubben/'
     ];
+
+    const teacherInfoContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
+    const teacherInfo = getTeacherInfo(teacherInfoContext);
 
     return (
       <Collapse in={!this.props.isStudentMode}>
@@ -30,12 +33,12 @@ const TeacherInfobox = React.createClass({
           <Row>
             <Col xs={6} md={6}>
               <h3>Lærer</h3>
-                {this.props.infoTeacher}
+              {teacherInfo.teacher}
             </Col>
             <Col xs={6} md={6}>
               <h3>Veileder</h3>
-              {this.props.infoAssistant}
-              </Col>
+              {teacherInfo.assistant}
+            </Col>
           </Row>
           <Row>
             <Col xs={6} md={6}>
@@ -54,17 +57,6 @@ const TeacherInfobox = React.createClass({
 
 TeacherInfobox.propTypes = {
   isStudentMode: PropTypes.bool,
-  infoTeacher: PropTypes.string,
-  infoAssistant: PropTypes.string,
 };
 
-function mapStateToProps(state) {
-  return {
-    infoTeacher: state.teacherInfo.teacher,
-    infoAssistant: state.teacherInfo.assistant,
-  };
-}
-
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(TeacherInfobox));
+export default (withStyles(styles)(TeacherInfobox));
