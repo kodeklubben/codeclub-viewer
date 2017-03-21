@@ -16,9 +16,13 @@
     list-style: none;
     padding-top: 10px;
     padding-bottom: 10px;
-    // adjust all elements inside a list item
-    margin-left: 45px;
+
+    display: flex;
   }
+}
+
+.checkbox {
+  margin-right: 20px;
 }
 
 .check,

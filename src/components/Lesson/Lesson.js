@@ -23,29 +23,16 @@ const Lesson = React.createClass({
     return this.props.lesson.frontmatter.author;
   },
   createMarkup(){
-    /*
-    let markup = '';
-    for (let row in this.props.lesson.content) {
-      if (row[0] == '+') {
-        markup.append(<Checkbox> + row);
-      } else {
-        markup.append(row);
-      }
-    }
-    */
-
     const splitted_content = this.props.lesson.content.split('\n');
     let markup = '';
     for (const row in splitted_content){
-      //console.log(this.props.lesson.content[row]);
-      if (splitted_content[row].indexOf('<li>') !== -1) {
-        markup += '<input type="checkbox" name="vehicle" value="Bike">';
-      }
       markup += splitted_content[row];
+      if (splitted_content[row].indexOf('<li>') !== -1) {
+        markup += '<div className="checkbox" style="margin-right: 20px"><input type="checkbox" name="vehicle" value="Bike"></div>';
+      }
     }
 
     return {
-      //__html: this.props.lesson.content
       __html: markup
     };
   },
