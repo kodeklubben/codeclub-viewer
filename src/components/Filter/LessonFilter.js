@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {onFilterCheck, resetFilter} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
-import {getAvailableLessons, getTotalAvailableLessons} from '../../selectors/lesson';
+import {getAvailableLessons} from '../../selectors/lesson';
 import FilterGroup from './FilterGroup';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
@@ -19,7 +19,6 @@ export const LessonFilter = React.createClass({
           key={groupName}
           groupName={groupName}
           availableLessons={this.props.availableLessons}
-          totalAvailableLessons={this.props.totalAvailableLessons}
           tagItems={tagItems}
           onFilterCheck={this.props.onFilterCheck}
         />
@@ -63,7 +62,6 @@ function mapStateToProps(state) {
     filter: state.filter,
     isStudentMode: state.isStudentMode,
     availableLessons: getAvailableLessons(state),
-    totalAvailableLessons: getTotalAvailableLessons(state)
   };
 }
 
