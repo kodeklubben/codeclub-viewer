@@ -23,6 +23,26 @@ const Lesson = React.createClass({
     return this.props.lesson.frontmatter.author;
   },
   createMarkup(){
+    /*
+    let markup = '';
+    for (let row in this.props.lesson.content) {
+      if (row[0] == '+') {
+        markup.append(<Checkbox> + row);
+      } else {
+        markup.append(row);
+      }
+    }
+    */
+
+    const splitted_content = this.props.lesson.content.split('\n');
+
+    for (const row in splitted_content){
+      //console.log(this.props.lesson.content[row]);
+      if (splitted_content[row].indexOf('<li>') !== -1) {
+        console.log('HURRA');
+      }
+    }
+
     return {
       __html: this.props.lesson.content
     };
@@ -56,7 +76,7 @@ const Lesson = React.createClass({
         <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
-        
+
         <Row>
           <ImprovePageContainer courseLessonFileProp={this.props.params}/>
         </Row>
