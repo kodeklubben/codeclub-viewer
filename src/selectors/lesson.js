@@ -49,9 +49,9 @@ export const getAvailableLessons = createSelector(
 
     let availableLessons = {};
 
-    Object.keys(current_filter).map((groupName, idx) => {
+    Object.keys(current_filter).forEach( groupName => {
       const group = current_filter[groupName];
-      Object.keys(group).map((tagItem, idx) => {
+      Object.keys(group).forEach( tagItem => {
         availableLessons[tagItem] = 0;
       });
     });
@@ -77,9 +77,9 @@ export const getTotalAvailableLessons = createSelector(
 
     let totalAvailableLessons = {};
 
-    Object.keys(current_filter).map((groupName, idx) => {
+    Object.keys(current_filter).forEach( groupName => {
       const group = current_filter[groupName];
-      Object.keys(group).map((tagItem, idx) => {
+      Object.keys(group).forEach( tagItem => {
         totalAvailableLessons[tagItem] = 0;
       });
     });
