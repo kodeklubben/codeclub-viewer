@@ -2,13 +2,11 @@ import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
 import {
-  arrayIntersection,
   capitalize,
   cleanseTags,
   fixNonArrayTagList,
   mergeTags,
   tagsMatchFilter,
-  getFilterWithOnlyCheckedTags
 } from '../src/util';
 
 describe('util', () => {
@@ -118,61 +116,6 @@ describe('util', () => {
     it('converts null to empty array', () => {
       const tagList = null;
       expect(fixNonArrayTagList(tagList)).to.eql([]);
-    });
-  });
-
-  describe('getFilterWithOnlyCheckedTags', () => {
-    it('returns empty object if filter is empty', () => {
-      const filter = {};
-
-      deepFreeze(filter);
-      expect(getFilterWithOnlyCheckedTags(filter)).to.eql({});
-    });
-
-    it('removes all unchecked tags from filter', () => {
-      const filter = {
-        'platform': {
-          'android': false,
-          'linux': true,
-          'mac': false,
-          'windows': true
-        },
-        'subject': {
-          'math': false,
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'create game': false,
-          'robots': true
-        }
-      };
-
-      deepFreeze(filter);
-      expect(getFilterWithOnlyCheckedTags(filter)).to.eql({
-        'platform': {
-          'linux': true,
-          'windows': true
-        },
-        'subject': {
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'robots': true
-        }
-      });
-    });
-  });
-
-  describe('arrayIntersection', () => {
-    it('gets only identical items', () => {
-      const arrA = ['item1', 'item2', 'item3', 'item4'];
-      const arrB = ['item3', 'item4', 'item5'];
-
-      deepFreeze(arrA);
-      deepFreeze(arrB);
-      expect(arrayIntersection(arrA, arrB)).to.eql(['item3', 'item4']);
     });
   });
 
