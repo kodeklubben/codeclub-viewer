@@ -5,25 +5,41 @@ import App from './pages/App';
 import NotFound from './pages/PageNotFound';
 import store from './store';
 
-const validPathTest = (course, lesson, path) => {
-  const lessons = store.getState().lessons;
-  const courses = store.getState().context['courseContext'].keys();
-  let key;
+const lessons = store.getState().lessons;
+const courses = store.getState().context['courseContext'].keys();
 
+const getCleanCoursePaths = (courseArray) => {
+  let count;
+
+  for(count = 0; count < courseArray.length; count++){
+    courseArray[count] = courseArray[count].slice(1);
+    courseArray[count] = courseArray[count].replace(/\/index.md/i, '');
+  }
+  return courseArray;
+};
+
+const getLessonPaths = (lessonObject) => {
+  let innerObject;
+  let lessonArray = [];
+
+  for(innerObject in lessonObject){
+    lessonArray.push(lessonObject[innerObject]['path']);
+  }
+  return lessonArray;
+};
+
+const lessonArray = getLessonPaths(lessons);
+const courseArray = getCleanCoursePaths(courses);
+
+const validPathTest = (lesson, path) => {
   if(lesson){
-    for(key in lessons){
-      if(path === lessons[key]['path']){
-        return true;
-      }
+    if(lessonArray.indexOf(path) > -1){
+      return true;
     }
     return false;
   }else{
-    for(key = 0; key < courses.length; key++){
-      courses[key] = courses[key].slice(2);
-      courses[key] = courses[key].replace(/\/index.md/i, '');
-      if(course === courses[key]){
-        return true;
-      }
+    if(courseArray.indexOf(path) > -1){
+      return true;
     }
     return false;
   }
@@ -39,7 +55,7 @@ const pathTest = (nextState, replace, callback) => {
     path = path.slice(0, -1);
   }
   
-  const pathCorrect = validPathTest(params.course, params.lesson, path);
+  const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect){
     replace('/PageNotFound');
