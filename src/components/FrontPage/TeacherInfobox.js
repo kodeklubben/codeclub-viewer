@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Collapse from 'react-bootstrap/lib/Collapse';
+import Button from 'react-bootstrap/lib/Button';
+import {doNotShowAgain} from '../../localStorage';
 
 import styles from './TeacherInfobox.scss';
 
@@ -43,6 +45,7 @@ const TeacherInfobox = React.createClass({
                 <br /><br />
                 <a className={styles.link} href={url.assistant}>Lær mer</a>
               </div>
+              <Button onClick={doNotShowAgain}>Ikke vis igjen</Button>
             </div>
           </div>
         </Collapse>

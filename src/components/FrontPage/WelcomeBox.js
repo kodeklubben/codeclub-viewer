@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Collapse from 'react-bootstrap/lib/Collapse';
+import ButtonItem from 
 
 import styles from './TeacherInfobox.scss';
 
@@ -42,6 +43,7 @@ const TeacherInfobox = React.createClass({
                 text text text text text text text text text text text
                 <br /><br />
                 <a className={styles.link} href={url.assistant}>Lær mer</a>
+                <Button>Ikke vis igjen</Button>
               </div>
             </div>
           </div>
@@ -55,5 +57,7 @@ const TeacherInfobox = React.createClass({
 TeacherInfobox.propTypes = {
   isStudentMode: PropTypes.bool
 };
+
+
 
 export default withStyles(styles)(TeacherInfobox);
