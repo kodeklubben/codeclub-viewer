@@ -11,6 +11,7 @@ export default function getRouteObject(
     <Route path="/" component={App}>
       <IndexRoute getComponent={getComponentFrontPage}/>
       <Route path="/:course" getComponent={getComponentPlaylist}/>
+      <Route path="/:course/:lesson/README" getComponent={getComponentLessonPage}/>
       <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage}/>
     </Route>
   );

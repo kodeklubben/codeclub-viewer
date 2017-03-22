@@ -14,13 +14,13 @@ import Row from 'react-bootstrap/lib/Row';
 
 const Lesson = React.createClass({
   getTitle() {
-    return this.props.lesson.frontmatter.title;
+    return this.props.lesson.frontmatter.title ? this.props.lesson.frontmatter.title : '';
   },
   getLevel() {
-    return this.props.lesson.frontmatter.level;
+    return this.props.lesson.frontmatter.level ? this.props.lesson.frontmatter.level : '';
   },
   getAuthor() {
-    return this.props.lesson.frontmatter.author;
+    return this.props.lesson.frontmatter.author ? this.props.lesson.frontmatter.author : '';
   },
   createMarkup(){
     return {

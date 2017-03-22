@@ -17,7 +17,8 @@ const getComponentPlaylist = (nextState, cb) => {
 
 const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
-  const path = `${params.course}/${params.lesson}/${params.file}`;
+  const path = params.file ? `${params.course}/${params.lesson}/${params.file}`
+    : nextState.location.pathname.slice(1);
 
   const bundledLessonContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
     /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
