@@ -2,8 +2,9 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setModeStudent, setLanguage} from './action_creators';
+import {setContext, setFilter, setLessons, setModeStudent, setLanguage, setUserProgress} from './action_creators';
 import reducer from './reducer';
+import * as storage from './localStorage';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
@@ -17,6 +18,7 @@ const lessons = getLessons(lessonContext, readmeContext, courseContext);
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
 let store;
+const userProgress = storage.loadUserProgress();
 
 if (isProduction) {
   store = createStore(reducer, initialState);
@@ -35,5 +37,6 @@ store.dispatch(setLessons(lessons));
 store.dispatch(setModeStudent());
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 store.dispatch(setLanguage('nb'));
+store.dispatch(setUserProgress(userProgress));
 
 export default store;
