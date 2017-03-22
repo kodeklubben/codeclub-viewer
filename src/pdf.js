@@ -21,7 +21,9 @@ export function buildPDF() {
   html2canvas(html, {
     allowTaint: true,
     onrendered: function(canvas) {
-      let converter = new jsPDF('p', 'mm', [canvas.width, canvas.height]);
+      let converter = new jsPDF('p', 'mm', 'a4');
+      let width = converter.internal.pageSize.width;
+      let height = converter.internal.pageSize.height;
       //converter.fromHTML(`<canvas>${canvas}</canvas>`);
 
       let i = new Image();
@@ -45,9 +47,10 @@ export function buildPDF() {
         y+=1;
       }*/
 
-      converter.addImage(i, 'PNG', 10, 10); //, canvas.width, canvas.height);
+      converter.addImage(i, 'PNG', 0, 0, width, height);
       console.log('added');
       document.body.appendChild(canvas);
+
       console.log('added child');
       converter.save('a4.pdf');
     }

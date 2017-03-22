@@ -22,6 +22,9 @@ const Lesson = React.createClass({
   getAuthor() {
     return this.props.lesson.frontmatter.author;
   },
+  getLanguageTag() {
+    return this.prop.lesson.frontmatter.languageTag;
+  },
   createMarkup(){
     return {
       __html: this.props.lesson.content
@@ -55,6 +58,7 @@ const Lesson = React.createClass({
     return false;
   },
   render() {
+    console.log("ccs");
     return (
       <div className={styles.container}>
         <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
