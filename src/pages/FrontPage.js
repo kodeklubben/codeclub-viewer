@@ -32,6 +32,7 @@ export const  FrontPage = React.createClass({
                   Lærer/Veileder
                 </ButtonItem>
               </div>
+              <TeacherInfobox isStudentMode={false}/>                           
             </Row>
           : null}
 
