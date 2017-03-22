@@ -77,6 +77,14 @@
   @include button-nav(#fff, $color-blue, $color-blue-median, 25%);
 }
 
+.btn-show-code {
+  @include button-variant(#fff, $color-orange-median, $color-orange-dark);
+}
+
+.btn-new-issue {
+  @include button-variant(#000, $color-gray-lighter, $color-gray-light);
+}
+
 .btn-sm-fixed-width {
   width: 6em;
 }
