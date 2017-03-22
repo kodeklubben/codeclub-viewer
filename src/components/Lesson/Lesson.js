@@ -24,13 +24,21 @@ const Lesson = React.createClass({
   },
   createMarkup(){
     const splitted_content = this.props.lesson.content.split('\n');
+    let progress = [];
     let markup = '';
+
     for (const row in splitted_content){
       markup += splitted_content[row];
-      if (splitted_content[row].indexOf('<li>') !== -1) {
-        markup += '<div className="checkbox" style="margin-right: 20px"><input type="checkbox" name="vehicle" value="Bike"></div>';
+      if (splitted_content[row].indexOf('<li>') !== -1) { //if we have a li element
+        markup += '<div className="checkbox" style="margin-right: 20px">' +
+                    '<input type="checkbox" name="checked" value="' + progress.length +
+                    '" onChange="" />' +
+                  '</div>';
+        progress.push(false);
       }
     }
+
+    console.log(progress);
 
     return {
       __html: markup
