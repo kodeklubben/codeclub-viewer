@@ -13,7 +13,7 @@ const Checkbox = React.createClass({
 
     return (
       <div className="checkbox" style="margin-right: 20px">
-        <input type="checkbox" name="vehicle" value={checked} />
+        <input type="checkbox" name="vehicle" value={this.props.checked} />
       </div>
     );
   }
