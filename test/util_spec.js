@@ -2,13 +2,11 @@ import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
 import {
-  arrayIntersection,
   capitalize,
   cleanseTags,
   fixNonArrayTagList,
   mergeTags,
   tagsMatchFilter,
-  getFilterWithOnlyCheckedTags
 } from '../src/util';
 
 describe('util', () => {
@@ -29,7 +27,7 @@ describe('util', () => {
   describe('getCourses', () => {
 
   });
-  
+
   ///////////////////////////////////
   //////// HELPER FUNCTIONS /////////
   ///////////////////////////////////
@@ -84,7 +82,7 @@ describe('util', () => {
         sometag: {'tag1': false, 'tag2': false}
       });
     });
-    
+
     it('does not change already valid tag lists', () => {
       const validTags = {
         platform: ['windows', 'mac', 'browser'],
@@ -120,61 +118,6 @@ describe('util', () => {
       expect(fixNonArrayTagList(tagList)).to.eql([]);
     });
   });
-  
-  describe('getFilterWithOnlyCheckedTags', () => {
-    it('returns empty object if filter is empty', () => {
-      const filter = {};
-      
-      deepFreeze(filter);
-      expect(getFilterWithOnlyCheckedTags(filter)).to.eql({});
-    });
-    
-    it('removes all unchecked tags from filter', () => {
-      const filter = {
-        'platform': {
-          'android': false,
-          'linux': true,
-          'mac': false,
-          'windows': true
-        },
-        'subject': {
-          'math': false,
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'create game': false,
-          'robots': true
-        }
-      };
-      
-      deepFreeze(filter);
-      expect(getFilterWithOnlyCheckedTags(filter)).to.eql({
-        'platform': {
-          'linux': true,
-          'windows': true
-        },
-        'subject': {
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'robots': true
-        }
-      });
-    });
-  });
-  
-  describe('arrayIntersection', () => {
-    it('gets only identical items', () => {
-      const arrA = ['item1', 'item2', 'item3', 'item4'];
-      const arrB = ['item3', 'item4', 'item5'];
-      
-      deepFreeze(arrA);
-      deepFreeze(arrB);
-      expect(arrayIntersection(arrA, arrB)).to.eql(['item3', 'item4']);
-    });
-  });
 
   describe('mergeTags', () => {
     it('merges tags from A and B', () => {
@@ -205,7 +148,7 @@ describe('util', () => {
           'robots': true
         }
       };
-      
+
       deepFreeze(tagsA);
       deepFreeze(tagsB);
       expect(mergeTags(tagsA, tagsB)).to.eql({
@@ -270,12 +213,41 @@ describe('util', () => {
       expect(mergeTags(tagsA, tagsB)).to.eql(tagsA);
     });
   });
-  
+
   describe('tagsMatchFilter', () => {
-    it('returns true if tags match filter', () => {
+    it('returns true if all tags match entire filter', () => {
       const tags = {
         'platform': ['linux'],
         'subject': ['math', 'physics'],
+        'category': ['create app']
+      };
+      const filter = {
+        'platform': {
+          'android': false,
+          'linux': true,
+          'mac': false,
+          'windows': false
+        },
+        'subject': {
+          'math': true,
+          'physics': true
+        },
+        'category': {
+          'create app': true,
+          'create game': false,
+          'robots': false,
+        }
+      };
+
+      deepFreeze(tags);
+      deepFreeze(filter);
+      expect(tagsMatchFilter(tags, filter)).to.equal(true);
+    });
+
+    it('returns false if tags does not match entire filter', () => {
+      const tags = {
+        'platform': ['linux'],
+        'subject': ['math', 'programming'],
         'category': ['create app', 'arduino']
       };
       const filter = {
@@ -286,19 +258,19 @@ describe('util', () => {
           'windows': true
         },
         'subject': {
-          'math': false,
+          'math': true,
           'physics': true
         },
         'category': {
           'create app': true,
           'create game': false,
-          'robots': true
+          'robots': false,
         }
       };
-      
+
       deepFreeze(tags);
       deepFreeze(filter);
-      expect(tagsMatchFilter(tags, filter)).to.equal(true);
+      expect(tagsMatchFilter(tags, filter)).to.equal(false);
     });
 
     it('returns false if tags does not match filter', () => {
@@ -310,7 +282,7 @@ describe('util', () => {
       const filter = {
         'platform': {
           'android': false,
-          'linux': true,
+          'linux': false,
           'mac': false,
           'windows': true
         },
@@ -332,4 +304,3 @@ describe('util', () => {
   });
 
 });
-
