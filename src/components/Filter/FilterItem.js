@@ -16,7 +16,7 @@ const FilterItem = React.createClass({
                  checked={this.props.checked}
                  onChange={this.props.onCheck}
           />
-          <span className={numberOfLessons ? styles.noLessons : styles.lessons}> {tagItem} ({numberOfLessons}) </span>
+          <span className={numberOfLessons ? styles.lessons : styles.noLessons}> {tagItem} ({numberOfLessons}) </span>
         </label>
       </div>
     );

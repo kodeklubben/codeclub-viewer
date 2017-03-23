@@ -12,13 +12,13 @@ export const LessonFilter = React.createClass({
   render(){
     const filter = this.props.filter || {};
 
-    const filterGroups = Object.keys(filter).map((groupName, idx) => {
+    const filterGroups = Object.keys(filter).map((groupName) => {
       const tagItems = filter[groupName];
       return (
         <FilterGroup
           key={groupName}
           groupName={groupName}
-          availableLessons={this.props.availableLessons}
+          availableLessonsForTag={this.props.availableLessons}
           tagItems={tagItems}
           onFilterCheck={this.props.onFilterCheck}
         />
