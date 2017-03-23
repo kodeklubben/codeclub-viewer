@@ -54,7 +54,7 @@ function getStaticSitePaths() {
     .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))
     .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2'));
 
-  const staticPaths = [].concat(coursePaths).concat(lessonPaths);
+  const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
 
   console.log('Static paths:');
   console.log(staticPaths);
