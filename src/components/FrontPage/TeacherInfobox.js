@@ -14,49 +14,43 @@ const TeacherInfobox = React.createClass({
       teacher: 'http://kidsakoder.no/skole/'
     };
     
-    if(this.props.userProgress === "false") {
-      return (
-        <div className={styles.infoBoxContainer}>
-          <Collapse in={!this.props.isStudentMode}>
-            <div className={styles.infoBox}>
-              <div className={styles.infoBoxRow}>
-                <div className={styles.infoBoxItem}>
-                  Du er nå lærermodus!
-                  <br /><br />
-                  Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
-                  Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
-                </div>
-              </div>
-              <div className={styles.infoBoxRow}>
-                <div>
-                  <h3>Lærer</h3>
-                  text text text text text text text text text text text
-                  text text text text text text text text text text text
-                  text text text text text text text text text text text
-                  text text text text text text text text text text text
-                  <br /><br />
-                  <a className={styles.link} href={url.teacher}>Lær mer</a>
-                </div>
-                <div>
-                  <h3>Veileder</h3>
-                  text text text text text text text text text text text
-                  text text text text text text text text text text text
-                  text text text text text text text text text text text
-                  text text text text text text text text text text text
-                  <br /><br />
-                  <a className={styles.link} href={url.assistant}>Lær mer</a>
-                </div>
-                <Button onClick={doNotShowAgain}>Ikke vis igjen</Button>
+    return (
+      <div className={styles.infoBoxContainer}>
+        {!this.props.isStudentMode ?
+          <div className={styles.infoBox}>
+            <div className={styles.infoBoxRow}>
+              <div className={styles.infoBoxItem}>
+                Du er nå i lærermodus!
+                <br /><br />
+                Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
+                Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
               </div>
             </div>
-          </Collapse>
-        </div>
-      );
-    }
-    else {
-      return (
-      <div></div>);
-    }
+            <div className={styles.infoBoxRow}>
+              <div>
+                <h3>Lærer</h3>
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                <br /><br />
+                <a className={styles.link} href={url.teacher}>Lær mer</a>
+              </div>
+              <div>
+                <h3>Veileder</h3>
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer Lærer
+                <br /><br />
+                <a className={styles.link} href={url.assistant}>Lær mer</a>
+              </div>
+            </div>
+          </div>
+      : null}
+      </div>
+    );
   }
 
 });
