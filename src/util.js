@@ -176,3 +176,13 @@ export function tagsMatchFilter(lessonTags, filter) {
 
   return true; // The lessonTags contained all the checked filterTags
 }
+
+export function removeHtmlFileEnding(lessonPage) {
+  const regex = /<a href=\"\.\.\/[^\s]*\.html\">/; //RegEx for del av tekst som starter med ../ så hva som helst uten whitespace og slutter med .html 
+  let result;
+  while (result = regex.exec(lessonPage)){
+    console.log(result);
+    lessonPage = lessonPage.replace(regex, result[0].replace(".html", ""));
+  }
+  return lessonPage;
+}

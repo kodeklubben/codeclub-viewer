@@ -10,6 +10,7 @@ import processContent from './processContent';
 import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
+import {removeHtmlFileEnding} from '../../util.js'
 
 
 const Lesson = React.createClass({
@@ -24,7 +25,7 @@ const Lesson = React.createClass({
   },
   createMarkup(){
     return {
-      __html: this.props.lesson.content
+      __html: removeHtmlFileEnding(this.props.lesson.content)
     };
   },
   componentWillMount(){
