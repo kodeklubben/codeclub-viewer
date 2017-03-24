@@ -178,11 +178,12 @@ export function tagsMatchFilter(lessonTags, filter) {
 }
 
 export function removeHtmlFileEnding(lessonPage) {
-  const regex = /<a href=\"\.\.\/[^\s]*\.html\">/; //RegEx for del av tekst som starter med ../ så hva som helst uten whitespace og slutter med .html 
+  //RegEx for del av tekst som starter med <a href= ../ så hva som helst uten whitespace og slutter med .html">
+  const regex = /<a href=\"\.\.\/[^\s]*\.html\">/;
   let result;
-  while (result = regex.exec(lessonPage)){
-    console.log(result);
-    lessonPage = lessonPage.replace(regex, result[0].replace(".html", ""));
+  while (regex.exec(lessonPage)){
+    result = regex.exec(lessonPage);
+    lessonPage = lessonPage.replace(regex, result[0].replace('.html', ''));
   }
   return lessonPage;
 }

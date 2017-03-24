@@ -10,7 +10,7 @@ import processContent from './processContent';
 import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
-import {removeHtmlFileEnding} from '../../util.js'
+import {removeHtmlFileEnding} from '../../util.js';
 
 
 const Lesson = React.createClass({
