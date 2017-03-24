@@ -8,6 +8,7 @@ import styles from './FrontPage.scss';
 import Filter from '../components/FrontPage/Filter';
 import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
+import WelcomeBox from '../components/FrontPage/WelcomeBox';
 import ButtonItem from '../components/ButtonItem';
 import {setModeTeacher} from '../action_creators';
 
@@ -24,15 +25,7 @@ export const  FrontPage = React.createClass({
         {/* Buttons */}
         {this.props.isStudentMode
           ? <Row>
-              <div className={styles.center}>
-                <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
-                  Kom i gang!
-                </ButtonItem>
-                <ButtonItem color='blue' onClick={() => this.props.setModeTeacher()}>
-                  Lærer/Veileder
-                </ButtonItem>
-              </div>
-              <TeacherInfobox isStudentMode={false}/>                           
+              <WelcomeBox isStudentMode={false}/>                           
             </Row>
           : null}
 

@@ -1,9 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
 import {getTeacherInfo} from '../../util';
 import styles from './TeacherInfobox.scss';
 
@@ -19,34 +16,34 @@ const TeacherInfobox = React.createClass({
     const teacherInfo = getTeacherInfo(teacherInfoContext);
 
     return (
-      <Grid className={styles.infoBox} fluid={true}>
-        <Row className={styles.center}>
-          <Col xs={12} md={12}>
-              Du er nå lærermodus!
-              <br /><br />
-              Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
-              Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6} md={6}>
-            <h3>Lærer</h3>
-            {teacherInfo.teacher}
-          </Col>
-          <Col xs={6} md={6}>
-            <h3>Veileder</h3>
-            {teacherInfo.assistant}
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={6} md={6}>
-            <a className={styles.link} href={url[0]}>Lær mer</a>
-          </Col>
-          <Col xs={6} md={6}>
-            <a className={styles.link} href={url[1]}>Lær mer</a>
-          </Col>
-        </Row>
-      </Grid>
+      <div className={styles.infoBoxContainer}>
+        {!this.props.isStudentMode ?
+          <div className={styles.infoBox}>
+            <div className={styles.infoBoxRow}>
+              <div className={styles.infoBoxItem}>
+                Du er nå i lærermodus!
+                <br /><br />
+                Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
+                Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
+              </div>
+            </div>
+            <div className={styles.infoBoxRow}>
+              <div>
+                <h3>Lærer</h3>
+                {teacherInfo.teacher}
+                <br /><br />
+                <a className={styles.link} href={url[0]}>Lær mer</a>
+              </div>
+              <div>
+                <h3>Veileder</h3>
+                {teacherInfo.assistant}
+                <br /><br />
+                <a cclassName={styles.link} href={url[1]}>Lær mer</a>
+              </div>
+            </div>
+          </div>
+      : null}
+      </div>
     );
   }
 
