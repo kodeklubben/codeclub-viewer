@@ -1,12 +1,17 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Collapse from 'react-bootstrap/lib/Collapse';
 import Button from 'react-bootstrap/lib/Button';
+import ButtonItem from '../ButtonItem';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './TeacherInfobox.scss';
+import {CoursesContainer} from './Courses';
 
 const WelcomeBox = React.createClass({
+  
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   render() {
     const url = {
@@ -46,6 +51,9 @@ const WelcomeBox = React.createClass({
                 <a className={styles.link} href={url.assistant}>Lær mer</a>
               </div>
             </div>
+            <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
+              Start her!
+            </ButtonItem>
             <Button onClick={doNotShowAgain}>x</Button>
           </div>
         </div>
