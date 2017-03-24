@@ -9,23 +9,23 @@ const lessons = store.getState().lessons;
 const courses = store.getState().context['courseContext'].keys();
 
 const getCleanCoursePaths = (courseArray) => {
-  let count;
+  let tempCourses = [];
 
-  for(count = 0; count < courseArray.length; count++){
-    courseArray[count] = courseArray[count].slice(1);
-    courseArray[count] = courseArray[count].replace(/\/index.md/i, '');
+  for(let count = 0; count < courseArray.length; count++){
+    tempCourses.push(courseArray[count].slice(1).replace(/\/index.md/i, ''));
   }
-  return courseArray;
+  return tempCourses;
 };
 
 const getLessonPaths = (lessonObject) => {
-  let innerObject;
-  let lessonArray = [];
+  let tempLessons = [];
 
-  for(innerObject in lessonObject){
-    lessonArray.push(lessonObject[innerObject]['path']);
+  for(let innerObject in lessonObject){
+    if (lessonObject.hasOwnProperty(innerObject)) {
+      tempLessons.push(lessonObject[innerObject]['path']);
+    }
   }
-  return lessonArray;
+  return tempLessons;
 };
 
 const lessonArray = getLessonPaths(lessons);
@@ -33,22 +33,16 @@ const courseArray = getCleanCoursePaths(courses);
 
 const validPathTest = (lesson, path) => {
   if(lesson){
-    if(lessonArray.indexOf(path) > -1){
-      return true;
-    }
-    return false;
+    return (lessonArray.indexOf(path) > -1);
   }else{
-    if(courseArray.indexOf(path) > -1){
-      return true;
-    }
-    return false;
+    return (courseArray.indexOf(path) > -1);
   }
 };
 
 const pathTest = (nextState, replace, callback) => {
   const params = nextState.params;
   let path = nextState.location.pathname;
-  if(!(path.indexOf('/') === 0)){
+  if(path.indexOf('/') !== 0){
     path = '/' + path;
   }
   if(path.lastIndexOf('/') === path.length-1){
@@ -58,8 +52,14 @@ const pathTest = (nextState, replace, callback) => {
   const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect){
-    replace('/PageNotFound');
+    replace({pathname:'/PageNotFound', query: {prevPath: path}});
   }
+  callback();
+};
+
+const saveURL = (nextState, replace, callback) => {
+  const path = nextState.location.query.prevPath;
+  history.pushState(null, null, path);
   callback();
 };
 
@@ -71,7 +71,7 @@ export default function getRouteObject(
   return (
     <Route path="/" component={App}>
       <IndexRoute getComponent={getComponentFrontPage}/>
-      <Route path="/PageNotFound" component={NotFound}/>
+      <Route path="/PageNotFound" component={NotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
       <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>
       <Route path="*" component={NotFound}/>

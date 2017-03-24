@@ -23,6 +23,6 @@ const getComponentLessonPage = (nextState, cb) => {
   cb(null, props => <Lesson {...props} lesson={result}/>);
 };
 
+
 const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage);
 export default routes;
-

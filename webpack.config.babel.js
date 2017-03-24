@@ -121,7 +121,7 @@ function getPlugins() {
       title: '404 - Page Not Found',
       filename: '404.html',
       template: 'src/404-template.ejs',
-      inject: 'false',
+      inject: false,
       redirectUrl: publicPathWithoutSlash
     })
   ];
