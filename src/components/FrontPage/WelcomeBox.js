@@ -8,11 +8,6 @@ import styles from './TeacherInfobox.scss';
 const WelcomeBox = React.createClass({
 
   render() {
-    const url = {
-      assistant: 'http://kidsakoder.no/kodeklubben/',
-      teacher: 'http://kidsakoder.no/skole/'
-    };
-    
     if(this.props.userProgress === "false") {
       return (
         <div className={styles.infoBoxContainer}>
@@ -33,7 +28,6 @@ const WelcomeBox = React.createClass({
                 Student Student Student Student Student Student Student
                 Student Student Student Student Student Student Student 
                 <br /><br />
-                <a className={styles.link} href={url.teacher}>Lær mer</a>
               </div>
               <div>
                 <h3>Student</h3>
@@ -42,7 +36,6 @@ const WelcomeBox = React.createClass({
                 Student Student Student Student Student Student Student
                 Student Student Student Student Student Student Student
                 <br /><br />
-                <a className={styles.link} href={url.assistant}>Lær mer</a>
               </div>
             </div>
             <Button onClick={doNotShowAgain}>x</Button>
