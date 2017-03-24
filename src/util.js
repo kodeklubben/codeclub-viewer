@@ -33,7 +33,7 @@ function extractTags(context) {
 }
 
 /**
- * 
+ *
  * @param {Object} tagsA
  * @param {Object} tagsB
  * @returns {Object} mergedTags
@@ -149,55 +149,30 @@ export function fixNonArrayTagList(tagItems) {
 }
 
 /**
- * Check if tags contain at least one tag in each group that are checked in filter
- * @param {Object} tags
+ * Return true only if tags of a lesson contains all the checked tags in the filter
+ *
+ * @param {Object} lessonTags
  * @param {Object} filter
  * @returns {boolean}
  */
-export function tagsMatchFilter(tags, filter) {
-  // Filter is empty
-  if (Object.keys(filter).length === 0) return true;
+export function tagsMatchFilter(lessonTags, filter) {
+  // lessonTags is e.g. {'tema': ['spill'], 'fag': ['naturfag']}
+  // filter is e.g. {'tema': {'spill':false, 'animasjon': true}, 'utstyr': {'ipad': false, 'arduino': true}}}
+  for (const groupName of Object.keys(filter)) { // groupName is e.g. 'tema'
+    const filterGroup = filter[groupName]; // the whole filter group, e.g. {'spill':false, 'animasjon': true}
+    const tagNames = Object.keys(filter[groupName]); // all tags in this filter group, e.g. ['spill','animasjon']
+    const checkedTagNames = tagNames.filter(tag => filterGroup[tag]); // only the checked tags; e.g. ['animasjon']
+    const lessonGroup = lessonTags[groupName]; // e.g. ['spill']
+    if (checkedTagNames.length > 0 && !lessonGroup) {
+      // this is a filter with checked tags, and lesson doesn't have this group
+      return false;
+    }
+    for (const checkedFilterTag of checkedTagNames) {
+      if (lessonGroup.indexOf(checkedFilterTag) === -1) { // lessonGroup doesn't contain checkedFilterTag
+        return false;
+      }
+    }
+  }
 
-  // Get groups with checked tags from filter
-  const checkedFilter = getFilterWithOnlyCheckedTags(filter);
-
-  const groups = Object.keys(checkedFilter);
-  // Find a group where none of the checked tags from filter is in tags
-  const groupWithNoCheckedTags = groups.find((group) => {
-    if (!tags.hasOwnProperty(group)) return true;
-
-    const tagNamesInTags = tags[group];
-    const tagNamesInFilter = Object.keys(checkedFilter[group]);
-    // Check if tags has at least one of the checked tags in filter
-    return arrayIntersection(tagNamesInFilter, tagNamesInTags).length === 0;
-  });
-
-  // True if tags has at least one tag in each group that are checked in the filter
-  return groupWithNoCheckedTags == null;
-}
-
-/**
- * Get identical items in arrA and arrB
- * @param {Array} arrA
- * @param {Array} arrB
- * @returns {Array}
- */
-export function arrayIntersection(arrA, arrB) {
-  return arrA.filter(item => arrB.indexOf(item) !== -1);
-}
-
-/**
- * Get filter with only checked tags
- * @param {Object} filter
- * @returns {Object} checkedFilter
- */
-export function getFilterWithOnlyCheckedTags(filter) {
-  return Object.keys(filter).reduce((res, groupName) => {
-    const tags = filter[groupName];
-    const checkedTags = Object.keys(tags).reduce((prev, tagName) => {
-      const isChecked = tags[tagName];
-      return isChecked ? {...prev, [tagName]: true} : prev;
-    }, {});
-    return Object.keys(checkedTags).length > 0 ? {...res, [groupName]: checkedTags} : res;
-  }, {});
+  return true; // The lessonTags contained all the checked filterTags
 }
