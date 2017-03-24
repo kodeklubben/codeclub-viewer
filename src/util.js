@@ -178,7 +178,8 @@ export function tagsMatchFilter(lessonTags, filter) {
 }
 
 export function removeHtmlFileEnding(lessonPage) {
-  //RegEx for matching part of text that starts with <a href= ../ followed by anything not containing whitespaces, and ends with .html">
+  // RegEx for matching part of text that starts with <a href= ../ followed by anything not containing whitespaces, 
+  // and ends with .html">
   const regex = /<a href=\"\.\.\/[^\s]*\.html\">/;
   let result;
   while (regex.exec(lessonPage)){
