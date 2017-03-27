@@ -26,9 +26,11 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {lessonSrc, buildDir} from './webpack.base.config.babel';
+import baseConfig, {lessonSrc, buildDir, publicPath} from './webpack.base.config.babel';
 import path from 'path';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
+import SitemapPlugin from 'sitemap-webpack-plugin';
+import yamlFront from 'yaml-front-matter';
 
 
 ///////////////
@@ -48,11 +50,16 @@ function getStaticSitePaths() {
   const absLessonSrc = path.resolve(__dirname, lessonSrc);
 
   const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
-    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2'));
+    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2/'));
 
   const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))
-    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2'));
+    .filter(p => {
+      const {title, external} = yamlFront.loadFront(p);
+      if (external) { console.log('Skipping external course "' + title + '" (' + p + ')'); }
+      return !external;
+    })
+    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2/'));
 
   const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
 
@@ -69,6 +76,7 @@ function getStaticSitePaths() {
   return staticPaths;
 }
 
+const staticSitePaths = getStaticSitePaths();
 
 ///////////////////////
 // THE ACTUAL CONFIG //
@@ -95,7 +103,9 @@ const config = {
   },
   plugins: [
     ...baseConfig.plugins,
-    new StaticSiteGeneratorPlugin('staticbundle', getStaticSitePaths(), locals, scope)
+    new StaticSiteGeneratorPlugin('staticbundle', staticSitePaths, locals, scope),
+    new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths)
+
   ]
 };
 
