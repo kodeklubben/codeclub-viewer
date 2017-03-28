@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "history": "^2.1.2",
+    "markdown-it-checkbox": "^1.1.0",
     "posthtml-parser": "^0.2.0",
     "posthtml-render": "^1.0.6",
     "react": "^15.1.0",
