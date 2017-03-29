@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -53,6 +54,8 @@ const TeacherInfobox = React.createClass({
 
 TeacherInfobox.propTypes = {
   isStudentMode: PropTypes.bool,
+
 };
 
 export default (withStyles(styles)(TeacherInfobox));
+

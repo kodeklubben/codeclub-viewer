@@ -3,7 +3,9 @@ import {setUserProgress} from './action_creators';
 
 export function loadUserProgress() {
   if (typeof(Storage) !== "undefined") {
-    localStorage.setItem("visitedBefore", "false");
+    if (localStorage.getItem("visitedBefore") === null) {
+      localStorage.setItem("visitedBefore", "false");
+    }
   }
   else {
     console.log("Støttet ikke localStorage");
