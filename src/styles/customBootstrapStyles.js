@@ -9,4 +9,4 @@ import Button from 'react-bootstrap/lib/Button';
 
 bootstrapUtils.addStyle(Panel, 'student', 'teacher');
 bootstrapUtils.addStyle(Button, 'student', 'teacher', 'language-student', 'language-teacher',
-								'orange', 'white-grey', 'white-grey-lighter');
+								'orange', 'white-grey', 'white-grey-lighter', 'guide');

@@ -104,7 +104,10 @@
   transition: 0.1s;
 }
 
-
+.btn-guide {
+  @include button-variant(#fff, $color-blue-median, $color-blue-dark);
+  transition: 0.1s;
+}
 
 .btn-sm-fixed-width {
   width: 6em;
