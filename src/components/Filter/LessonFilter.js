@@ -34,10 +34,11 @@ export const LessonFilter = React.createClass({
         </h3>;
     const bsStyle = (this.props.isStudentMode ? 'student' : 'teacher');
     return (
-        <Panel header={title} bsStyle={bsStyle}>
+        <Panel header={title} bsStyle={bsStyle} className={
+          this.props.isStudentMode ? styles.bgColorStudent : styles.bgColorTeacher}>
           {filterGroups}
           <br/>
-          <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
+          <Button block bsStyle="white-grey-lighter" onClick={() => this.props.resetFilter()}>Fjern filter</Button>
         </Panel>
     );
   }

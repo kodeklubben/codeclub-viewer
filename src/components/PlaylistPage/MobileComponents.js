@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {LessonFilterContainer} from '../Filter/LessonFilter';
 import LevelNavigation from './LevelNavigation';
-import MobileButtonsRow from './MobileButtonsRow';
+import {MobileButtonsRowContainer} from './MobileButtonsRow.js';
 import Col from 'react-bootstrap/lib/Col';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Row from 'react-bootstrap/lib/Row';
@@ -18,7 +18,7 @@ const MobileComponents = React.createClass({
   render() {
     return (
       <div>
-        <MobileButtonsRow toggle={this.toggle} />
+        <MobileButtonsRowContainer toggle={this.toggle}/>
 
         <Row>
           {/*Filter mobile*/}

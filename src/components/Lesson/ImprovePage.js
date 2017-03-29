@@ -34,10 +34,10 @@ const ImprovePage = React.createClass({
               </div>
               <div className={styles.improvePageBoxLinkRow}>
                   <div>
-                    <Button href={url.newIssue} bsStyle="new-issue">Rapporter et problem</Button>
+                    <Button href={url.newIssue} bsStyle="white-grey">Rapporter et problem</Button>
                   </div>
                   <div>
-                    <Button href={url.showCode} bsStyle="show-code">Vis koden og fiks selv</Button>
+                    <Button href={url.showCode} bsStyle="orange">Vis koden og fiks selv</Button>
                   </div>
               </div>
             </div>
@@ -59,4 +59,3 @@ function mapStateToProps(state) {
 }
 
 export const ImprovePageContainer = connect(mapStateToProps)(withStyles(styles)(ImprovePage));
-
