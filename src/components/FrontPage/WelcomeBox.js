@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/lib/Button';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './TeacherInfobox.scss';
 import {CoursesContainer} from './Courses';
-import {getTeacherInfo} from '../../util';
+import {getInfo} from '../../util';
 
 const WelcomeBox = React.createClass({
   
@@ -50,13 +50,16 @@ const WelcomeBox = React.createClass({
             </div>
             <Button onClick={doNotShowAgain}>x</Button>
             <Button onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>Start her!</Button>
+            <Button>CONTINUE</Button>
           </div>
         </div>
       );
     }
     else {
       return (
-      <div></div>);
+      <div>
+        <Button>CONTINUE</Button>
+      </div>);
     }
   }
 
