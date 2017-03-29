@@ -21,7 +21,7 @@ const WelcomeBox = React.createClass({
     
     const welcomeBoxContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
     const welcomeBoxInfo = getInfo(welcomeBoxContext);
-    
+
     if(this.props.userProgress === "false") {
       return (
         <div className={styles.infoBoxContainer}>

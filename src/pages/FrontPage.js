@@ -3,13 +3,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
-
 import styles from './FrontPage.scss';
 import Filter from '../components/FrontPage/Filter';
 import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
-import ButtonItem from '../components/ButtonItem';
 import {setModeTeacher} from '../action_creators';
 
 export const  FrontPage = React.createClass({

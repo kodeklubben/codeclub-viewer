@@ -51,8 +51,6 @@ const TeacherInfobox = React.createClass({
 
 TeacherInfobox.propTypes = {
   isStudentMode: PropTypes.bool,
-
 };
 
 export default (withStyles(styles)(TeacherInfobox));
-
