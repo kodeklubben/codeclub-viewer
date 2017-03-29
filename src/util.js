@@ -85,17 +85,14 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 }
 
 export function getLevelName(level) {
-  switch (level) {
-    case '1':
-      return 'Introduksjon';
-    case '2':
-      return 'Nybegynner';
-    case '3':
-      return 'Erfaren';
-    case '4':
-      return 'Ekspert';
-  }
-  return level;
+  const levelData = require('lessonSrc/level-config.json');
+  return(levelData[level.toString()]);
+}
+
+export function getTeacherInfo(context) {
+  return context.keys().length !== 0
+    ? context(context.keys()[0]).frontmatter.teacherInfo
+    : {};
 }
 
 ///////////////////////////////////
