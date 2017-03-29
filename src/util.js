@@ -98,6 +98,12 @@ export function getLevelName(level) {
   return level;
 }
 
+export function getTeacherInfo(context) {
+  return context.keys().length !== 0
+    ? context(context.keys()[0]).frontmatter.teacherInfo
+    : {};
+}
+
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
