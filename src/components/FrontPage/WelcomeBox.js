@@ -4,10 +4,24 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './TeacherInfobox.scss';
+import {CoursesContainer} from './Courses';
+import {getTeacherInfo} from '../../util';
 
 const WelcomeBox = React.createClass({
+  
+  contextTypes: {
+    router: React.PropTypes.object
+    },
 
   render() {
+    const url = [
+      'http://kidsakoder.no/kodeklubben/',
+      'http://kidsakoder.no/skole/'
+    ];
+    
+    const welcomeBoxContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
+    const welcomeBoxInfo = getInfo(welcomeBoxContext);
+    
     if(this.props.userProgress === "false") {
       return (
         <div className={styles.infoBoxContainer}>
@@ -23,22 +37,19 @@ const WelcomeBox = React.createClass({
             <div className={styles.infoBoxRow}>
               <div>
                 <h3>Elev</h3>
-                Student Student Student Student Student Student Student
-                Student Student Student Student Student Student Student
-                Student Student Student Student Student Student Student
-                Student Student Student Student Student Student Student 
+                {welcomeBoxInfo.student} 
                 <br /><br />
+                <a className={styles.link} href={url[0]}>Lær mer</a>
               </div>
               <div>
                 <h3>Student</h3>
-                Student Student Student Student Student Student Student
-                Student Student Student Student Student Student Student
-                Student Student Student Student Student Student Student
-                Student Student Student Student Student Student Student
+                {welcomeBoxInfo.student}
                 <br /><br />
+                <a className={styles.link} href={url[1]}>Lær mer</a>
               </div>
             </div>
             <Button onClick={doNotShowAgain}>x</Button>
+            <Button onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>Start her!</Button>
           </div>
         </div>
       );
@@ -52,6 +63,8 @@ const WelcomeBox = React.createClass({
 });
 
 WelcomeBox.propTypes = {
+  courses: PropTypes.object,
+  externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
   userProgress: PropTypes.string
 };

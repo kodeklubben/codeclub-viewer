@@ -1,19 +1,19 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {getTeacherInfo} from '../../util';
+import {getInfo} from '../../util';
 import styles from './TeacherInfobox.scss';
 
 const TeacherInfobox = React.createClass({
 
-  render() {
+  render() { 
     const url = [
       'http://kidsakoder.no/skole/valgfag/',
       'http://kidsakoder.no/kodeklubben/'
     ];
 
     const teacherInfoContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
-    const teacherInfo = getTeacherInfo(teacherInfoContext);
+    const teacherInfo = getInfo(teacherInfoContext);
 
     return (
       <div className={styles.infoBoxContainer}>
