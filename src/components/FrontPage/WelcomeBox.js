@@ -39,13 +39,13 @@ const WelcomeBox = React.createClass({
                 <h3>Elev</h3>
                 {welcomeBoxInfo.student} 
                 <br /><br />
-                <a className={styles.link} href={url[0]}>Lær mer</a>
+                <a className={styles.link} target= "_blank" href={url[0]}>Lær mer</a>
               </div>
               <div>
                 <h3>Student</h3>
                 {welcomeBoxInfo.student}
                 <br /><br />
-                <a className={styles.link} href={url[1]}>Lær mer</a>
+                <a className={styles.link} target= "_blank" href={url[1]}>Lær mer</a>
               </div>
             </div>
             <Button onClick={doNotShowAgain}>x</Button>
