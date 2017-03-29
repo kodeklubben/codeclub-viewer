@@ -34,7 +34,7 @@ export const  FrontPage = React.createClass({
                 {/* Continue button functionality to be implemented here */}
                 {/*<ButtonItem color='darkblue'>
                   Fortsett...
-                </ButtonItem>}*/}
+                </ButtonItem>*/}
               </div>
             </Row>
           : null}

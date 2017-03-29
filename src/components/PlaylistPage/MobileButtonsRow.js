@@ -21,7 +21,7 @@ const MobileButtonsRow = React.createClass({
       <Row>
         <Col xs={12} smHidden mdHidden lgHidden>
           <Button bsStyle={this.props.isStudentMode ? 'student' : 'teacher'} className={styles.toggleFilter}
-            onClick={() => {this.props.toggle('Filter'); this.changeState()}}>
+            onClick={() => {this.props.toggle('Filter'); this.changeState();}}>
             <Glyphicon glyph={this.state.showFilter ? 'chevron-down' : 'chevron-right'}/>
             Vis/skjul filter
           </Button>
