@@ -66,3 +66,10 @@ export function setLanguage(language) {
     payload: language
   };
 }
+
+export function setUserProgress(userProgress) {
+  return {
+    type: 'SET_USER_PROGRESS',
+    payload: userProgress
+  }
+}
