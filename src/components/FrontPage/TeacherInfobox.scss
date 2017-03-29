@@ -1,25 +1,24 @@
 @import '../../styles/variables';
 
 .link {
+  text-decoration: none !important;
   color: black;
   border-bottom: 1px black dotted;
+}
 
-  &,
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
+.fontInfoBox {
+  font-family: $font-family-roboto;
+  font-weight: 300;
 }
 
 .infoBox {
-  padding: 10px;
+  composes: fontInfoBox;
+  padding: 5px;
+  margin: 0 auto;
   max-width: 700px;
-  background-color: #f7f7f7;
+  background-color: #f7f7f7 !important;
   border: 1px solid #b2b2b2;
   border-radius: 10px;
-  font-family: $font-family-roboto;
-  font-size: 16px;
-  font-weight: 300;
 }
 
 .infoBoxRow {
@@ -31,9 +30,5 @@
   }
   div {
     padding: 5px;
-  }
-
-  .center {
-    text-align: center;
   }
 }

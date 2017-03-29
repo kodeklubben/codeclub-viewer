@@ -38,7 +38,7 @@ const TeacherInfobox = React.createClass({
                 <h3>Veileder</h3>
                 {teacherInfo.assistant}
                 <br /><br />
-                <a cclassName={styles.link} href={url[1]}>Lær mer</a>
+                <a className={styles.link} href={url[1]}>Lær mer</a>
               </div>
             </div>
           </div>
