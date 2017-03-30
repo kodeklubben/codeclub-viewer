@@ -4,7 +4,7 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import {getTeacherInfo} from '../../util';
+import {getInfo} from '../../util';
 
 import styles from './TeacherInfobox.scss';
 
@@ -17,7 +17,7 @@ const TeacherInfobox = React.createClass({
     ];
 
     const teacherInfoContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
-    const teacherInfo = getTeacherInfo(teacherInfoContext);
+    const teacherInfo = getInfo(teacherInfoContext);
 
     return (
       <Collapse in={!this.props.isStudentMode}>

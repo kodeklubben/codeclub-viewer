@@ -89,9 +89,9 @@ export function getLevelName(level) {
   return(levelData[level.toString()]);
 }
 
-export function getTeacherInfo(context) {
+export function getInfo(context) {
   return context.keys().length !== 0
-    ? context(context.keys()[0]).frontmatter.teacherInfo
+    ? context(context.keys()[0]).frontmatter.info
     : {};
 }
 
