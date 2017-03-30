@@ -32,7 +32,7 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {getValuesAsArray, getLoaders, buildDir, publicPath, publicPathWithoutSlash} from './webpack.base.config.babel';
+import baseConfig, {getValuesAsArray, getLoaders, buildDir, publicPath} from './webpack.base.config.babel';
 const webpack = require('webpack');
 
 import path from 'path';
@@ -122,7 +122,7 @@ function getPlugins() {
       filename: '404.html',
       template: 'src/404-template.ejs',
       inject: false,
-      redirectUrl: publicPathWithoutSlash
+      redirectUrl: publicPath
     })
   ];
 

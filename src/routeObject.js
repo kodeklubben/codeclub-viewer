@@ -8,28 +8,8 @@ import store from './store';
 const lessons = store.getState().lessons;
 const courses = store.getState().context['courseContext'].keys();
 
-const getCleanCoursePaths = (courseArray) => {
-  let tempCourses = [];
-
-  for(let count = 0; count < courseArray.length; count++){
-    tempCourses.push(courseArray[count].slice(1).replace(/\/index.md/i, ''));
-  }
-  return tempCourses;
-};
-
-const getLessonPaths = (lessonObject) => {
-  let tempLessons = [];
-
-  for(let innerObject in lessonObject){
-    if (lessonObject.hasOwnProperty(innerObject)) {
-      tempLessons.push(lessonObject[innerObject]['path']);
-    }
-  }
-  return tempLessons;
-};
-
-const lessonArray = getLessonPaths(lessons);
-const courseArray = getCleanCoursePaths(courses);
+const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
+const courseArray = courses.map((course) => course.slice(1).replace(/\/index.md/i, ''));
 
 const validPathTest = (lesson, path) => {
   if(lesson){
@@ -59,7 +39,7 @@ const pathTest = (nextState, replace, callback) => {
 
 const saveURL = (nextState, replace, callback) => {
   const path = nextState.location.query.prevPath;
-  history.pushState(null, null, path);
+  history.replaceState(null, null, path);
   callback();
 };
 
