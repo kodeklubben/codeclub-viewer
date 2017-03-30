@@ -35,7 +35,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 // Use 'subDir' to serve the site from a subdir, e.g. subDir='beta' for http://kodeklubben.github.io/beta
 // The value of subDir is read from the file 'url-path-prefix.config' in the root folder, if it exists.
 const subDirFile = './url-path-prefix.config';
-var subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').trim() : '';
+let subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').trim() : '';
 if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
 if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 

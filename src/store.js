@@ -28,6 +28,7 @@ if (isProduction) {
 
   store = createStore(reducer, initialState, devTools);
 }
+
 store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
