@@ -89,9 +89,9 @@ export function getLevelName(level) {
   return(levelData[level.toString()]);
 }
 
-export function getTeacherInfo(context) {
+export function getInfo(context) {
   return context.keys().length !== 0
-    ? context(context.keys()[0]).frontmatter.teacherInfo
+    ? context(context.keys()[0]).frontmatter.info
     : {};
 }
 
@@ -172,4 +172,10 @@ export function tagsMatchFilter(lessonTags, filter) {
   }
 
   return true; // The lessonTags contained all the checked filterTags
+}
+
+export function removeHtmlFileEnding(lessonPage) {
+  // RegEx for matching and removing parts of text that starts with 
+  // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
+  return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
 }
