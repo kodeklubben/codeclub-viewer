@@ -42,10 +42,10 @@ const TeacherInfobox = React.createClass({
           </Row>
           <Row>
             <Col xs={6} md={6}>
-              <a className={styles.link} href={url[0]}>Lær mer</a>
+              <a className={styles.link} href={url[0]}>Lær mer om programmering i undervisningen</a>
             </Col>
             <Col xs={6} md={6}>
-              <a className={styles.link} href={url[1]}>Lær mer</a>
+              <a className={styles.link} href={url[1]}>Lær mer om å drive en kodeklubb</a>
             </Col>
           </Row>
         </Grid>
