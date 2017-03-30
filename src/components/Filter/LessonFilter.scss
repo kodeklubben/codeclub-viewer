@@ -2,17 +2,17 @@
   &,
   &:hover,
   &:active:focus,
-  	&:focus {
-  		background: transparent;
-	  	text-decoration: none;
-	  	border: none;
-	  	outline: none;
-	  }
+  &:focus {
+  	background: transparent;
+	  text-decoration: none;
+	  border: none;
+	  outline: none;
+	 }
   color: gray;
   font-size: 1.1em;
   float: right;
   margin-top: -9px;
-	margin-right: -14px;
+  margin-right: -14px;
   transition: 0.1s;
 }
 
