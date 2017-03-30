@@ -38,3 +38,35 @@ export const getFilteredAndIndexedLessons = createSelector(
     }, {});
   }
 );
+
+/**
+ * Creates an object containing number of lessons available in each tag given your current filter
+ */
+
+export const getAvailableLessons = createSelector(
+  [getFilter, getFilteredLessons],
+  (current_filter = {}, filteredLessons = {}) => {
+
+    let availableLessons = {};
+
+    Object.keys(current_filter).forEach( groupName => {
+      const group = current_filter[groupName];
+      Object.keys(group).forEach( tagItem => {
+        availableLessons[tagItem] = 0;
+      });
+    });
+
+    Object.keys(filteredLessons).forEach((lessonKey) => {
+      const lesson = filteredLessons[lessonKey];
+      Object.keys(availableLessons).forEach((tag) => {
+        Object.keys(current_filter).forEach((groupName) => {
+          if((lesson.tags[groupName] || []).indexOf(tag)!== -1){
+            availableLessons[tag]++;
+          }
+        });
+      });
+    });
+
+    return availableLessons;
+  }
+);
