@@ -1,9 +1,8 @@
 import React, {PropTypes} from 'react';
-import {LessonFilterContainer} from '../Filter/LessonFilter';
+import {connect} from 'react-redux';
+import Filter from '../FrontPage/Filter';
 import LevelNavigation from './LevelNavigation';
-import MobileButtonsRow from './MobileButtonsRow';
 import Col from 'react-bootstrap/lib/Col';
-import Collapse from 'react-bootstrap/lib/Collapse';
 import Row from 'react-bootstrap/lib/Row';
 
 const MobileComponents = React.createClass({
@@ -18,17 +17,11 @@ const MobileComponents = React.createClass({
   render() {
     return (
       <div>
-        <MobileButtonsRow toggle={this.toggle} />
-
         <Row>
-          {/*Filter mobile*/}
           <Col smHidden mdHidden lgHidden xs={12}>
-
-            <Collapse in={this.state.showFilter}>
-              <div>
-                <LessonFilterContainer/>
-              </div>
-            </Collapse>
+            <div>
+              <Filter isStudentMode={this.props.isStudentMode}/>
+            </div>
 
             {/*Level navigation mobile*/}
             <div>
@@ -44,7 +37,17 @@ const MobileComponents = React.createClass({
 
 MobileComponents.propTypes = {
   showLevelNavigation: PropTypes.bool,
-  levels: PropTypes.array
+  levels: PropTypes.array,
+  isStudentMode: PropTypes.bool
 };
 
-export default MobileComponents;
+function mapStateToProps(state) {
+  return {
+    isStudentMode: state.isStudentMode
+  };
+}
+
+
+export default connect(
+  mapStateToProps
+)(MobileComponents);
