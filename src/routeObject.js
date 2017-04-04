@@ -44,11 +44,13 @@ const saveURL = (nextState, replace, callback) => {
 };
 
 const serverSideRedirectCheck = (nextState, replace, callback) => {
-  let redirect = sessionStorage.redirect;
-  delete sessionStorage.redirect;
+  if(typeof sessionStorage !== 'undefined'){
+    let redirect = sessionStorage.redirect;
+    delete sessionStorage.redirect;
 
-  if (redirect && redirect != nextState.location.pathname) {
-    replace({pathname:'/PageNotFound', state: redirect});
+    if (redirect && redirect != nextState.location.pathname) {
+      replace({pathname:'/PageNotFound', state: redirect});
+    }
   }
   callback();
 };
