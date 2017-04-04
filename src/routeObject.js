@@ -32,14 +32,24 @@ const pathTest = (nextState, replace, callback) => {
   const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect){
-    replace({pathname:'/PageNotFound', query: {prevPath: path}});
+    replace({pathname:'/PageNotFound', state: path});
   }
   callback();
 };
 
 const saveURL = (nextState, replace, callback) => {
-  const path = nextState.location.query.prevPath;
+  const path = nextState.location.state;
   history.replaceState(null, null, path);
+  callback();
+};
+
+const serverSideRedirectCheck = (nextState, replace, callback) => {
+  let redirect = sessionStorage.redirect;
+  delete sessionStorage.redirect;
+
+  if (redirect && redirect != nextState.location.pathname) {
+    replace({pathname:'/PageNotFound', state: redirect});
+  }
   callback();
 };
 
@@ -50,7 +60,7 @@ export default function getRouteObject(
 ) {
   return (
     <Route path="/" component={App}>
-      <IndexRoute getComponent={getComponentFrontPage}/>
+      <IndexRoute getComponent={getComponentFrontPage} onEnter={serverSideRedirectCheck}/>
       <Route path="/PageNotFound" component={NotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
       <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>

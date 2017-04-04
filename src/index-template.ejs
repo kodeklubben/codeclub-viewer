@@ -5,15 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title><%= htmlWebpackPlugin.options.title %></title>
     <%= htmlWebpackPlugin.options.appcss %>
-    <script>
-    (function(){
-      var redirect = sessionStorage.redirect;
-      delete sessionStorage.redirect;
-      if (redirect && redirect != location.href) {
-        history.replaceState(null, null, redirect);
-      }
-    })();
-    </script>
 </head>
 <body>
     <div id="app"><%= htmlWebpackPlugin.options.appcontent %></div>
