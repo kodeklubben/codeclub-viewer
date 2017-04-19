@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+.container {
+	/* temp */
+	background-color: #f7f7f7;
+  border: 1px solid #b2b2b2;
+  border-radius: 10px;
+
+  /* will stay */
+ 
+  max-width: 700px;
+  margin: 10px 0;
+  padding: 20px;
+  
+  
+  font-family: $font-family-roboto;
+  font-size: 16px;
+  font-weight: 300;
+
+
+}
+/*
+
+
+* isStudentMode
+	- bg
+	- border
+
+* glyphicon +-
+
+
+*/
