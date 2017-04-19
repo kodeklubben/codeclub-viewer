@@ -2,6 +2,9 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './TeacherInfobox.scss';
 import {CoursesContainer} from './Courses';
@@ -15,8 +18,7 @@ const WelcomeBox = React.createClass({
 
   render() {
     const url = [
-      'http://kidsakoder.no/kodeklubben/',
-      'http://kidsakoder.no/skole/'
+      'http://kidsakoder.no/kodeklubben/'
     ];
     
     const welcomeBoxContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
@@ -25,33 +27,30 @@ const WelcomeBox = React.createClass({
     if(this.props.userProgress === "false") {
       return (
         <div className={styles.infoBoxContainer}>
-          <div className={styles.infoBox}>
-            <div className={styles.infoBoxRow}>
-              <div className={styles.infoBoxItem}>
-                Du er nå i elevmodus!
+          <Grid className={styles.infoBox} fluid={true}>
+            <Row className={styles.center}>
+              <Col xs={12} md={12}>
+                Du er nå lærermodus!
                 <br /><br />
                 Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
                 Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
-              </div>
-            </div>
-            <div className={styles.infoBoxRow}>
-              <div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={12}>
                 <h3>Elev</h3>
-                {welcomeBoxInfo.student} 
-                <br /><br />
-                <a className={styles.link} target= "_blank" href={url[0]}>Lær mer</a>
-              </div>
-              <div>
-                <h3>Student</h3>
                 {welcomeBoxInfo.student}
-                <br /><br />
-                <a className={styles.link} target= "_blank" href={url[1]}>Lær mer</a>
-              </div>
-            </div>
-            <Button onClick={doNotShowAgain}>x</Button>
-            <Button onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>Start her!</Button>
-            <Button>CONTINUE</Button>
-          </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={12}>
+                <a className={styles.link} href={url[0]} target="_blank">Lær mer om å drive kodeklubb</a>
+              </Col>
+            </Row>
+              <Button onClick={doNotShowAgain}>x</Button>
+              <Button onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>Start her!</Button>
+              <Button>CONTINUE</Button>
+          </Grid>
         </div>
       );
     }

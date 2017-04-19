@@ -1,34 +1,40 @@
 @import '../../styles/variables';
 
 .link {
-  text-decoration: none !important;
   color: black;
   border-bottom: 1px black dotted;
+
+  &,
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
 }
 
-.fontInfoBox {
-  font-family: $font-family-roboto;
-  font-weight: 300;
+.infoBoxContainer {
+  display: flex;
+  justify-content: center;
 }
 
 .infoBox {
-  composes: fontInfoBox;
-  padding: 5px;
-  margin: 0 auto;
+  padding: 10px;
   max-width: 700px;
-  background-color: #f7f7f7 !important;
+  margin: 0 16px;
+  background-color: #f7f7f7;
   border: 1px solid #b2b2b2;
   border-radius: 10px;
-}
-
-.infoBoxRow {
-  display: flex;
-  flex-direction: row;
-
-  .infoBoxItem {
-    text-align: center;
-  }
+  font-family: $font-family-roboto;
+  font-size: 16px;
+  font-weight: 300;
+  
   div {
     padding: 5px;
   }
+
+  .center {
+    text-align: center;
+  }
 }
+
+
+
