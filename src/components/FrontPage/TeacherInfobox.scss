@@ -26,14 +26,20 @@
   font-family: $font-family-roboto;
   font-size: 16px;
   font-weight: 300;
-  
-  div {
-    padding: 5px;
-  }
+  padding: 5px;
 
   .center {
     text-align: center;
   }
+}
+
+.buttonItem {
+  display: flex;
+  justify-content: center;
+}
+
+.tempClass {
+  margin-left: auto;
 }
 
 

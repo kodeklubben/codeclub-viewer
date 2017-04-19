@@ -9,6 +9,7 @@ import {doNotShowAgain} from '../../localStorage';
 import styles from './TeacherInfobox.scss';
 import {CoursesContainer} from './Courses';
 import {getInfo} from '../../util';
+import ButtonItem from '../ButtonItem';
 
 const WelcomeBox = React.createClass({
   
@@ -29,12 +30,14 @@ const WelcomeBox = React.createClass({
         <div className={styles.infoBoxContainer}>
           <Grid className={styles.infoBox} fluid={true}>
             <Row className={styles.center}>
-              <Col xs={12} md={12}>
-                Du er nå lærermodus!
-                <br /><br />
+              <h3 className={styles.tempClass}>
+                Du er nå elevmodus!
+                <Button onClick={doNotShowAgain}>x</Button>
+              </h3>
+              <div>
                 Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
                 Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
-              </Col>
+              </div>
             </Row>
             <Row>
               <Col xs={12} md={12}>
@@ -47,17 +50,31 @@ const WelcomeBox = React.createClass({
                 <a className={styles.link} href={url[0]} target="_blank">Lær mer om å drive kodeklubb</a>
               </Col>
             </Row>
-              <Button onClick={doNotShowAgain}>x</Button>
-              <Button onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>Start her!</Button>
-              <Button>CONTINUE</Button>
+            <Row>
+              <Col xs={12} md={12}>
+                <div className={styles.buttonItem}>
+                  {true ?
+                  <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
+                    Start her!
+                  </ButtonItem>
+                  :
+                  <ButtonItem color='blue'>CONTINUE</ButtonItem>}
+                </div>
+              </Col>
+            </Row>              
           </Grid>
         </div>
       );
     }
     else {
       return (
-      <div>
-        <Button>CONTINUE</Button>
+      <div className={styles.infoBoxContainer}>
+       {true ?
+        <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
+          Start her!
+        </ButtonItem>
+        :
+        <ButtonItem color='blue'>CONTINUE</ButtonItem>}
       </div>);
     }
   }
