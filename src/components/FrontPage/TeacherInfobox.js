@@ -19,15 +19,15 @@ const TeacherInfobox = React.createClass({
     const teacherInfo = getInfo(teacherInfoContext);
 
     return (
-      <div className={styles.infoBoxContainer}>
+      <div className={styles.center}>
        {!this.props.isStudentMode ?
         <Grid className={styles.infoBox} fluid={true}>
-          <Row className={styles.center}>
+          <Row>
             <Col xs={12} md={12}>
-                Du er nå lærermodus!
-                <br /><br />
-                Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
-                Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
+              <h3 className={styles.center}>Hei! Du er nå i lærermodus</h3>
+              <br />
+              Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
+              Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
             </Col>
           </Row>
           <Row>

@@ -2,9 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './TeacherInfobox.scss';
 import {CoursesContainer} from './Courses';
@@ -27,54 +25,41 @@ const WelcomeBox = React.createClass({
 
     if(this.props.userProgress === "false") {
       return (
-        <div className={styles.infoBoxContainer}>
-          <Grid className={styles.infoBox} fluid={true}>
-            <Row className={styles.center}>
-              <h3 className={styles.tempClass}>
-                Du er nå elevmodus!
-                <Button onClick={doNotShowAgain}>x</Button>
-              </h3>
-              <div>
-                Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
-                Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
-              </div>
-            </Row>
-            <Row>
-              <Col xs={12} md={12}>
-                <h3>Elev</h3>
-                {welcomeBoxInfo.student}
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={12}>
-                <a className={styles.link} href={url[0]} target="_blank">Lær mer om å drive kodeklubb</a>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={12}>
-                <div className={styles.buttonItem}>
-                  {true ?
-                  <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
-                    Start her!
-                  </ButtonItem>
-                  :
-                  <ButtonItem color='blue'>CONTINUE</ButtonItem>}
-                </div>
-              </Col>
-            </Row>              
-          </Grid>
+        <div className={styles.center}>
+          <div className={styles.infoBox}>
+            <h3 className={styles.center}>Hei! Du er nå i elevmodus</h3>
+            <Button className={styles.stickToRight} onClick={doNotShowAgain}>
+              <Glyphicon glyph="remove"/>
+            </Button>
+            <br />
+            Er du ikke en elev? Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
+            Du kan også velge å skjule denne boksen for alltid, ved å trykke på krysset i hjørnet
+            <br /><br />
+            {welcomeBoxInfo.student}
+            <br />
+            <a className={styles.link} href={url[0]} target="_blank">Lær mer om å drive kodeklubb</a>
+            <br /><br />
+            <div className={styles.center}>
+              {true ?
+              <ButtonItem color='green' onClick={() => this.context.router.push('scratch')}>
+                Start her!
+              </ButtonItem>
+              :
+              <ButtonItem color='blue'>Fortsett...</ButtonItem>}
+            </div>            
+          </div>
         </div>
       );
     }
     else {
       return (
-      <div className={styles.infoBoxContainer}>
+      <div className={styles.center}>
        {true ?
-        <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
+        <ButtonItem color='green' onClick={() => this.context.router.push('scratch')}>
           Start her!
         </ButtonItem>
         :
-        <ButtonItem color='blue'>CONTINUE</ButtonItem>}
+        <ButtonItem color='blue'>Fortsett...</ButtonItem>}
       </div>);
     }
   }

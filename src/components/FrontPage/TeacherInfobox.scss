@@ -11,7 +11,7 @@
   }
 }
 
-.infoBoxContainer {
+.center {
   display: flex;
   justify-content: center;
 }
@@ -26,21 +26,27 @@
   font-family: $font-family-roboto;
   font-size: 16px;
   font-weight: 300;
-  padding: 5px;
+  position: relative;
+}
 
-  .center {
-    text-align: center;
+
+.stickToRight {
+  &,
+  &:hover,
+  &:active:focus,
+  &:focus {
+    background: transparent;
+    text-decoration: none;
+    border: none;
+    outline: none;
   }
+  color: gray;
+  font-size: 1.1em;
+  float: right;
+  transition: 0.1s;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
-
-.buttonItem {
-  display: flex;
-  justify-content: center;
-}
-
-.tempClass {
-  margin-left: auto;
-}
-
 
 
