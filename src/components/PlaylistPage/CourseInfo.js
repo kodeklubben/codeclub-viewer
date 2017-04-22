@@ -12,19 +12,12 @@ const CourseInfo = React.createClass({
   render() {
     const courseName = this.props.courseName;
     const indexfile = getCourseIndex(courseName);
-
-    /*const indexfilepath = 'https://github.com/kodeklubben/oppgaver/tree/master/src/' + courseName + '/index.md'*/
-    console.log(courseName);
-    console.log(indexfile);
-
-/*______________________________________________________________________________________________*/
-    
     return (
-      /*<Collapse in={!this.props.isStudentMode}>*/
+      <div>
         <div className={styles.container}>
           <div dangerouslySetInnerHTML={{__html: indexfile.content}} />
         </div>
-      /*</Collapse>*/
+      </div>
     );
   }
 });

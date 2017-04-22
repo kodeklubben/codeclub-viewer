@@ -12,10 +12,13 @@ import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import HeadRow from '../components/PlaylistPage/HeadRow';
 import MobileComponents from '../components/PlaylistPage/MobileComponents';
+import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import Collapse from 'react-bootstrap/lib/Collapse';
+import Button from 'react-bootstrap/lib/Button';
 
 export const PlaylistPage = React.createClass({
   getLessonsByLevel(lessons) {
@@ -35,6 +38,14 @@ export const PlaylistPage = React.createClass({
       return res;
     }, {});
   },
+  getInitialState() {
+    return {
+      showCourseInfo: false
+    };
+  },
+  changeState() {
+    this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  },
   render() {
     const lessons = this.props.filteredAndIndexedLessons;
     const playlists = this.props.filteredPlaylists;
@@ -52,10 +63,15 @@ export const PlaylistPage = React.createClass({
 
         {/*Title with course name*/}
         <HeadRow courseName={this.props.params.course}/>
-        
+
+        <div className={styles.classof92}>
+          <HeadRow courseName={this.props.params.course}/>
+          <Button bsSize="large" className={styles.tempclass} onClick={() => this.changeState()}>Start her!</Button>
+        </div>
+
         {/*Components only visible on mobile that can be toggled hidden/visible*/}
         <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
-
+        <hr/>
         <Row>
           {/*Filter desktop*/}
           <Col xsHidden sm={3}>
@@ -64,13 +80,34 @@ export const PlaylistPage = React.createClass({
             </div>
           </Col>
 
+          {/*Course Info*/}
           <Col xs={12} sm={6}>
-            {/*Desktop playlists*/}
-            <PlaylistNavigation playlists={playlists}/>
-            {/*List of lessons grouped by level*/}
-            {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+            <Collapse in={this.state.showCourseInfo}>
+              <div>
+                <CourseInfo courseName={this.props.params.course}/>
+              </div>
+            </Collapse>
           </Col>
+        {/*TODO: fix for index with less content*/}
+          {/*Playlist*/}
+          {/*Set offset on playlist if CourseInfo is shown*/}
+          {this.state.showCourseInfo ?
+            <Col xs={12} sm={6} mdOffset={3}>
+              {/*Desktop playlists*/}
+              <PlaylistNavigation playlists={playlists}/>
+              {/*List of lessons grouped by level*/}
+              {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+            </Col>           
+            :
+            <Col xs={12} sm={6}>
+              {/*Desktop playlists*/}
+              <PlaylistNavigation playlists={playlists}/>
+              {/*List of lessons grouped by level*/}
+              {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+            </Col>         
+          }
 
+          {/*Level Navigation*/}
           <Col xsHidden sm={3}>
             <div className={styles.scrollable}>
               {/*Desktop level navigation*/}
