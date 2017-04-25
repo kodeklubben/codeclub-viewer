@@ -131,7 +131,7 @@ function Gadgets(props) {
   const mode = modes[props.isStudentMode ? 0 : 1];
   // NOTE: Commenting out LanguageDropdown and SearchBox until these are implemented
   return <div className={styles.gadgetGroup}>
-    {/*<LanguageDropdown mode={mode} language={props.language} setLanguage={props.setLanguage}/>*/}
+    <LanguageDropdown mode={mode} language={props.language} setLanguage={props.setLanguage}/>
     <ModeDropdown setModeStudent={props.setModeStudent}
                   setModeTeacher={props.setModeTeacher}
                   mode={mode}/>

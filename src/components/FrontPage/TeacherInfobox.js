@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import {getInfo} from '../../util';
-
 import styles from './TeacherInfobox.scss';
 
 const TeacherInfobox = React.createClass({
@@ -17,6 +17,7 @@ const TeacherInfobox = React.createClass({
 
     const teacherInfoContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
     const teacherInfo = getInfo(teacherInfoContext);
+    const lang = this.props.language;
 
     return (
       <div className={styles.center}>
@@ -24,28 +25,27 @@ const TeacherInfobox = React.createClass({
         <Grid className={styles.infoBox} fluid={true}>
           <Row>
             <Col xs={12} md={12}>
-              <h3 className={styles.center}>Hei! Du er nå i lærermodus</h3>
+              <h3 className={styles.center}>{teacherInfo.welcomeTeacher[lang]}</h3>
               <br />
-              Klikk på elev/lærer knappen i navigasjonsmenyen for å skifte modus.
-              Når du er i lærer-modus vil skoleemner ligge øverst i oppgavefilteret.
+              {teacherInfo.changeModeTeacher[lang]}.
             </Col>
           </Row>
           <Row>
             <Col xs={6} md={6}>
               <h3>Lærer</h3>
-              {teacherInfo.teacher}
+              {teacherInfo.teacher[lang]}
             </Col>
             <Col xs={6} md={6}>
               <h3>Veileder</h3>
-              {teacherInfo.assistant}
+              {teacherInfo.assistant[lang]}
             </Col>
           </Row>
           <Row>
             <Col xs={6} md={6}>
-              <a className={styles.link} href={url[0]} target="_blank">Lær mer om programmering i undervisningen</a>
+              <a className={styles.link} href={url[0]} target="_blank">{teacherInfo.link1[lang]}</a>
             </Col>
             <Col xs={6} md={6}>
-              <a className={styles.link} href={url[1]} target="_blank">Lær mer om å drive en kodeklubb</a>
+              <a className={styles.link} href={url[1]} target="_blank">{teacherInfo.link2[lang]}</a>
             </Col>
           </Row>
         </Grid>
@@ -58,6 +58,15 @@ const TeacherInfobox = React.createClass({
 
 TeacherInfobox.propTypes = {
   isStudentMode: PropTypes.bool,
+  language: PropTypes.string
 };
 
-export default (withStyles(styles)(TeacherInfobox));
+function mapStateToProps(state) {
+  return {
+    language: state.language
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(TeacherInfobox));
