@@ -35,14 +35,17 @@ export function buildPDF() {
       let ratio = (canvas.width/width);
 
       for (let page = 0; page*ratio<(canvas.height/height); page++) {
-        //let canvasTemp = document.createElement('canvas');
-        //canvasTemp.height = height;
-        //canvasTemp.width = width;        
-        //canvasTemp.getContext('2d').drawImage(i, 0, (page*height)*ratio, canvas.width, height*ratio, 0, 0, width, height);
-        //let iTemp = canvasTemp.toDataURL('image/png');
-      
-        i.src = canvas.toDataURL('image/png');
-        converter.addImage(i, 'PNG', 0, 0, width, height);
+        console.log("ratio: " + ratio);
+        console.log("ratio h: " + (canvas.height/height))
+        let canvasTemp = document.createElement('canvas');
+        canvasTemp.height = height;
+        canvasTemp.width = canvas.width;
+        
+        canvasTemp.getContext('2d').drawImage(i, 0, page*height*ratio, canvas.width, height*ratio, 0, 0, canvas.width, height);
+        //canvasTemp.getContext('2d').drawImage(i, 0, 0);
+        //document.body.appendChild(canvasTemp);
+        let iTemp = canvasTemp.toDataURL('image/png');
+        converter.addImage(iTemp, 'PNG', 0, 0, width, height);
         converter.addPage();
       }
 
@@ -62,7 +65,7 @@ export function buildPDF() {
 
       //converter.addImage(i, 'PNG', 0, 0, 10, 10);
       console.log('added'); 
-      document.body.appendChild(canvas);
+      //document.body.appendChild(canvas);
 
       console.log('added child');
       converter.save('a4.pdf');
