@@ -19,6 +19,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Button from 'react-bootstrap/lib/Button';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 export const PlaylistPage = React.createClass({
   getLessonsByLevel(lessons) {
@@ -61,17 +62,21 @@ export const PlaylistPage = React.createClass({
     return (
       <Grid fluid={true}>
 
-        {/*Title with course name*/}
-        <HeadRow courseName={this.props.params.course}/>
-
-        <div className={styles.classof92}>
-          <HeadRow courseName={this.props.params.course}/>
-          <Button bsSize="large" className={styles.tempclass} onClick={() => this.changeState()}>Start her!</Button>
-        </div>
+        {/*Title with course name and course info button*/}
+        <Row>
+          <Col xs={12} sm={6} smOffset={3}>
+            <div className={styles.headerRow}>
+              <HeadRow courseName={this.props.params.course}/>
+              <Button bsStyle="guide" className={styles.courseInfoBtn} onClick={() => this.changeState()}>
+                <Glyphicon className={styles.glyph} glyph={!this.state.showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
+                Informasjon om kurset</Button>
+            </div>
+          </Col>
+        </Row>  
 
         {/*Components only visible on mobile that can be toggled hidden/visible*/}
         <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
-        <hr/>
+
         <Row>
           {/*Filter desktop*/}
           <Col xsHidden sm={3}>
@@ -80,26 +85,20 @@ export const PlaylistPage = React.createClass({
             </div>
           </Col>
 
-          {/*Course Info*/}
-          <Col xs={12} sm={6}>
-            <Collapse in={this.state.showCourseInfo}>
-              <div>
-                <CourseInfo courseName={this.props.params.course}/>
-              </div>
-            </Collapse>
-          </Col>
-        {/*TODO: fix for index with less content*/}
-          {/*Playlist*/}
-          {/*Set offset on playlist if CourseInfo is shown*/}
+          {/*Show both CourseInfo and Playlist if showCourseInfo is clicked*/}
           {this.state.showCourseInfo ?
-            <Col xs={12} sm={6} mdOffset={3}>
+            <Col xs={12} sm={6}>
+              {/*Course Info*/}            
+              <Collapse in={this.state.showCourseInfo}>
+                <CourseInfo courseName={this.props.params.course} isStudentMode={this.props.isStudentMode}/>
+              </Collapse>            
               {/*Desktop playlists*/}
               <PlaylistNavigation playlists={playlists}/>
               {/*List of lessons grouped by level*/}
               {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
             </Col>           
             :
-            <Col xs={12} sm={6}>
+            <Col xs={12} sm={6}>        
               {/*Desktop playlists*/}
               <PlaylistNavigation playlists={playlists}/>
               {/*List of lessons grouped by level*/}
@@ -122,6 +121,7 @@ export const PlaylistPage = React.createClass({
 });
 
 PlaylistPage.propTypes = {
+  isStudentMode: PropTypes.bool,
   filteredPlaylists: PropTypes.object,
   filteredAndIndexedLessons: PropTypes.object,
   params: PropTypes.shape({
@@ -131,6 +131,7 @@ PlaylistPage.propTypes = {
 
 function mapStateToProps(state, props) {
   return {
+    isStudentMode: state.isStudentMode,
     filteredAndIndexedLessons: getFilteredAndIndexedLessons(state, props.params.course),
     filteredPlaylists: getPlaylists(state, props.params.course)
   };

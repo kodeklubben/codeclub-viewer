@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .filterInfoButton {
   &,
   &:hover,
@@ -17,9 +19,9 @@
 }
 
 .bgColorStudent {
-  background-color: rgba(238, 247, 238, 0.9);
+  background-color: $color-green-lighter;
 }
 
 .bgColorTeacher {
-  background-color: rgba(239, 246, 246, 0.9);
+  background-color: $color-blue-lighter;
 }

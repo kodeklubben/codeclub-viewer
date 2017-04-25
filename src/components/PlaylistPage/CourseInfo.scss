@@ -1,27 +1,21 @@
 @import '../../styles/variables';
 
 .container {
-	/* temp */
-	background-color: #f7f7f7;
-  border: 1px solid #b2b2b2;
   border-radius: 10px;
-
-  /* will stay */
- 
   max-width: 700px;
-  margin: 10px 0;
+  margin-top: 63px;
   padding: 20px;
+}
 
+.containerStudent {
+	composes: container;
+  background-color: $color-green-lighter;
+  border: 1px solid $color-green-light;
 
 }
-/*
 
-
-* isStudentMode
-	- bg
-	- border
-
-* glyphicon +-
-
-
-*/
+.containerTeacher {
+	composes: container;
+  background-color: $color-blue-lighter;
+  border: 1px solid $color-blue-light;
+}

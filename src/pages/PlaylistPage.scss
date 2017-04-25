@@ -2,10 +2,36 @@
   margin-top: 63px;
 }
 
-.classof92 {
+.headerRow {
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-top: 22px;
+	margin-bottom: 5px;
 }
 
-.tempclass {
+.courseInfoBtn {
+  &,
+  &:hover,
+  &:active:focus,
+  &:focus {
+    outline: none;
+  }	
+}
 
+.glyph {
+	padding-right: 6px;
+}
+
+/* Media screen */
+@media only screen and (max-width: 1156px) {
+  .courseInfoBtn {
+    margin-top: 10px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+	.headerRow {
+		display: inline-block;
+	}
 }
