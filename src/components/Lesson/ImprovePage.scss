@@ -38,22 +38,26 @@
 }
 
 /* Student / Teacher mode */
+/* Box shadow inset used to highlight box so it differentiates better from other objects */
 .improvePageBoxStudent {
   composes: improvePageBox;
   background-color: $color-green-light;
   box-shadow: inset 0 0 85px #89c785;
 }
 
+/* Works as a <hr/> to differentiate text and links */
 .improvePageBoxStudent .improvePageBoxTextRow {
   box-shadow: 0 8px 6px -6px #89c785;
 }
 
+/* Box shadow inset used to highlight box so it differentiates better from other objects */
 .improvePageBoxTeacher {
   composes: improvePageBox;
   background-color: $color-blue-light;
   box-shadow: inset 0 0 85px #7bb7b6;
 }
 
+/* Works as a <hr/> to differentiate text and links */
 .improvePageBoxTeacher .improvePageBoxTextRow {
   box-shadow: 0 8px 6px -6px #7bb7b6;
 }
