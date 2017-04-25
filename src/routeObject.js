@@ -19,7 +19,12 @@ const validPathTest = (lesson, path) => {
   }
 };
 
-const pathTest = (nextState, replace, callback) => {
+/**
+* Checks if the current path is valid or if it should be treated as a 404
+* When a new Route is added, functionallity for handling of the path should be added here.
+* Some of the handling may be put in the validPathTest function.
+*/
+const pathTest = (nextState, replace) => {
   const params = nextState.params;
   let path = nextState.location.pathname;
   if(path.indexOf('/') !== 0){
@@ -34,16 +39,27 @@ const pathTest = (nextState, replace, callback) => {
   if(!pathCorrect){
     replace({pathname:'/PageNotFound', state: path});
   }
-  callback();
 };
 
-const saveURL = (nextState, replace, callback) => {
+/**
+* Replaces the current URL (/PageNotFound) with the the URL either typed in by the user
+* or the URL given by a broken link.
+* History is used directly because react-router does not provide the necesarry functionallity
+* to replace the URL without a page refresh.
+*/
+const saveURL = (nextState, replace) => {
   const path = nextState.location.state;
-  history.replaceState(null, null, path);
-  callback();
+  if(typeof history.replaceState !== 'undefined'){
+    history.replaceState(null, null, path);
+  }
 };
 
-const serverSideRedirectCheck = (nextState, replace, callback) => {
+/**
+* Checks if there has been passed down a redirect from 404.html.
+* If so, redirects to /PageNotFound with a state that equals the URL that caused a 404.
+* Happens when a server side 404 has occured.
+*/
+const serverSideRedirectCheck = (nextState, replace) => {
   if(typeof sessionStorage !== 'undefined'){
     let redirect = sessionStorage.redirect;
     delete sessionStorage.redirect;
@@ -52,9 +68,14 @@ const serverSideRedirectCheck = (nextState, replace, callback) => {
       replace({pathname:'/PageNotFound', state: redirect});
     }
   }
-  callback();
 };
 
+/**
+* IMPORTANT:
+* When adding new routes, especially dynamic ones (on the form path="/:somePath")
+* remember to add validity testing in pathTest and if needed in validPathTest to make
+* the 404 routing work properly.
+*/
 export default function getRouteObject(
   getComponentFrontPage,
   getComponentPlaylist,

@@ -4,8 +4,11 @@ permalink: /404.html
 <!DOCTYPE html>
 <html>
 <head>
+    <!--Script used to store the pathname in sessionStorage before redirecting to default path-->
     <script>
-      sessionStorage.redirect = location.pathname;
+      if(typeof sessionStorage !== 'undefined'){
+        sessionStorage.redirect = location.pathname;
+      }
     </script>
     <meta charset="utf-8" />
     <meta http-equiv="refresh" content="0;URL='<%= htmlWebpackPlugin.options.redirectUrl %>'"/>
