@@ -33,20 +33,26 @@ export function buildPDF() {
         callback(i);
       };
       let ratio = (canvas.width/width);
+      console.log("ratio: " + ratio);
+      console.log("ratio h: " + (canvas.height/height))
+      let canvasTemp = document.createElement('canvas');
+      canvasTemp.height = height*ratio;
+      canvasTemp.width = canvas.width;
 
-      for (let page = 0; page*ratio<(canvas.height/height); page++) {
-        console.log("ratio: " + ratio);
-        console.log("ratio h: " + (canvas.height/height))
-        let canvasTemp = document.createElement('canvas');
-        canvasTemp.height = height;
-        canvasTemp.width = canvas.width;
+      for (let page = 0; page<4; page++) {
+        if (page != 0) {
+          converter.addPage();
+        }
+        canvasTemp.getContext('2d').clearRect(0, 0, canvasTemp.width, canvasTemp.height);
+
+        console.log("l00p");
         
-        canvasTemp.getContext('2d').drawImage(i, 0, page*height*ratio, canvas.width, height*ratio, 0, 0, canvas.width, height);
+        canvasTemp.getContext('2d').drawImage(i, 0, page*height*ratio, canvas.width, height*ratio, 0, 0, canvas.width, canvasTemp.height);
         //canvasTemp.getContext('2d').drawImage(i, 0, 0);
         //document.body.appendChild(canvasTemp);
         let iTemp = canvasTemp.toDataURL('image/png');
         converter.addImage(iTemp, 'PNG', 0, 0, width, height);
-        converter.addPage();
+        console.log("added imdTemp");
       }
 
       /*let pageHeight = converter.internal.pageSize.height;
