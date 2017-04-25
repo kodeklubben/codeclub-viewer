@@ -10,6 +10,9 @@ import processContent from './processContent';
 import contentStyles from './Content.scss';
 import Button from 'react-bootstrap/lib/Button';
 import {buildPDF} from '../../pdf.js'
+import {ImprovePageContainer} from './ImprovePage.js';
+import Row from 'react-bootstrap/lib/Row';
+import {removeHtmlFileEnding} from '../../util.js';
 
 
 const Lesson = React.createClass({
@@ -27,7 +30,7 @@ const Lesson = React.createClass({
   },
   createMarkup(){
     return {
-      __html: this.props.lesson.content
+      __html: removeHtmlFileEnding(this.props.lesson.content)
     };
   },
   componentWillMount(){
@@ -65,6 +68,11 @@ const Lesson = React.createClass({
         <p><i>av {this.getAuthor()}</i></p>
         <Button onClick={this.pdfLinkClick}>last ned oppgave</Button>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
+        
+        <Row>
+          <ImprovePageContainer courseLessonFileProp={this.props.params}/>
+        </Row>
+
       </div>
     );
   }

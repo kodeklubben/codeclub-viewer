@@ -1,14 +1,11 @@
 @import '../../styles/variables';
 
-.label {
+.item {
+  margin: 0 10px 10px 0;
   text-overflow: ellipsis;
   overflow-x: hidden;
 }
 
-.noLessons {
-  color: $color-gray-light;
-}
-
-.lessons {
-  color: black;
+.remove {
+  padding-right: 2px;
 }

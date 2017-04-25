@@ -10,5 +10,5 @@ export default combineReducers({
   context,
   filter,
   isStudentMode,
-  language
+  language,
 });
