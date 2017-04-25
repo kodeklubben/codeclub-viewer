@@ -1,4 +1,14 @@
+@import '../../styles/variables';
+
 .label {
   text-overflow: ellipsis;
   overflow-x: hidden;
+}
+
+.noLessons {
+  color: $color-gray-light;
+}
+
+.lessons {
+  color: black;
 }
