@@ -28,7 +28,21 @@
   font-weight: 300;
   position: relative;
 }
-
+  
+.glyphicon {
+  &,
+  &:hover,
+  &:active:focus,
+  &:focus {
+    background: transparent;
+    text-decoration: none;
+    border: none;
+    outline: none;
+  }
+  color: gray;
+  font-size: 2em;
+  transition: 0.1s;
+}
 
 .stickToRight {
   &,
@@ -42,11 +56,12 @@
   }
   color: gray;
   font-size: 1.1em;
-  float: right;
   transition: 0.1s;
   position: absolute;
   right: 5px;
   top: 5px;
 }
+
+
 
 
