@@ -74,8 +74,7 @@ export const PlaylistPage = React.createClass({
           </Col>
         </Row>  
 
-        {/*Components only visible on mobile that can be toggled hidden/visible*/}
-        <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
+
 
         <Row>
           {/*Filter desktop*/}
@@ -91,14 +90,18 @@ export const PlaylistPage = React.createClass({
               {/*Course Info*/}            
               <Collapse in={this.state.showCourseInfo}>
                 <CourseInfo courseName={this.props.params.course} isStudentMode={this.props.isStudentMode}/>
-              </Collapse>            
+              </Collapse>         
+              {/*Components only visible on mobile that can be toggled hidden/visible*/}
+              <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>                 
               {/*Desktop playlists*/}
               <PlaylistNavigation playlists={playlists}/>
               {/*List of lessons grouped by level*/}
               {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
             </Col>           
             :
-            <Col xs={12} sm={6}>        
+            <Col xs={12} sm={6}>
+              {/*Components only visible on mobile that can be toggled hidden/visible*/}
+              <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>                    
               {/*Desktop playlists*/}
               <PlaylistNavigation playlists={playlists}/>
               {/*List of lessons grouped by level*/}
