@@ -32,6 +32,19 @@ export function buildPDF() {
       i.onload = function() {
         callback(i);
       };
+      let ratio = (canvas.width/width);
+
+      for (let page = 0; page*ratio<(canvas.height/height); page++) {
+        //let canvasTemp = document.createElement('canvas');
+        //canvasTemp.height = height;
+        //canvasTemp.width = width;        
+        //canvasTemp.getContext('2d').drawImage(i, 0, (page*height)*ratio, canvas.width, height*ratio, 0, 0, width, height);
+        //let iTemp = canvasTemp.toDataURL('image/png');
+      
+        i.src = canvas.toDataURL('image/png');
+        converter.addImage(i, 'PNG', 0, 0, width, height);
+        converter.addPage();
+      }
 
       /*let pageHeight = converter.internal.pageSize.height;
       var height = canvas.height;
@@ -47,8 +60,8 @@ export function buildPDF() {
         y+=1;
       }*/
 
-      converter.addImage(i, 'PNG', 0, 0, width, height);
-      console.log('added');
+      //converter.addImage(i, 'PNG', 0, 0, 10, 10);
+      console.log('added'); 
       document.body.appendChild(canvas);
 
       console.log('added child');
