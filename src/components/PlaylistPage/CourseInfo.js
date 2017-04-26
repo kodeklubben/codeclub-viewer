@@ -1,7 +1,5 @@
 import React, {PropTypes} from 'react';
 import {getCourseIndex} from '../../util';
-import {getInfo} from '../../util';
-import Collapse from 'react-bootstrap/lib/Collapse';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CourseInfo.scss';
 

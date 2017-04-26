@@ -7,14 +7,13 @@
 }
 
 .containerStudent {
-	composes: container;
+  composes: container;
   background-color: $color-green-lighter;
   border: 1px solid $color-green-light;
-
 }
 
 .containerTeacher {
-	composes: container;
+  composes: container;
   background-color: $color-blue-lighter;
   border: 1px solid $color-blue-light;
 }
@@ -29,6 +28,5 @@
   .container {
     margin-top: 5px;
     margin-bottom: 25px;
-    
   }
 }
