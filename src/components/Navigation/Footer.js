@@ -34,7 +34,11 @@ const Footer = React.createClass({
     const url = {
       kidsakoder: 'http://kidsakoder.no/',
       archive: 'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
-      sponsor: 'http://kidsakoder.no/2015/07/03/kodeklubben-trondheim-utvikler-materiell-i-sommer/'
+      sponsor: 'http://kidsakoder.no/2015/07/03/kodeklubben-trondheim-utvikler-materiell-i-sommer/',
+      excited: 'http://www.ntnu.edu/web/excited',
+      ntnu_idi: 'https://www.ntnu.edu/idi/',
+      uio_ifi: 'http://www.mn.uio.no/ifi/',
+      teknograd: 'https://www.teknograd.no/'
     };
 
     return (
@@ -45,11 +49,23 @@ const Footer = React.createClass({
             <a className={styles.inline} href={url.archive}>Last ned alle kurs som zip-fil</a>
         </Row>
         <Row className={styles.center}>
-          <a href={url.sponsor}>
+          <a href={url.sponsor} target="_blank">
             <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}/>
           </a>
-          <a href={url.sponsor}>
+          <a href={url.sponsor} target="_blank">
             <img className={styles.img} src={require('../../assets/graphics/ibok.jpg')}/>
+          </a>
+          <a href={url.teknograd} target="_blank">
+            <img className={styles.img} src={require('../../assets/graphics/teknograd.png')}/>
+          </a>
+          <a href={url.ntnu_idi} target="_blank">
+            <img className={styles.img} src={require('../../assets/graphics/ntnu_idi.png')}/>
+          </a>
+          <a href={url.excited} target="_blank">
+            <img className={styles.img} src={require('../../assets/graphics/excITEd.png')}/>
+          </a>
+          <a href={url.uio_ifi} target="_blank">
+            <img className={styles.img} src={require('../../assets/graphics/uio_ifi.png')}/>
           </a>
         </Row>
       </Grid>
