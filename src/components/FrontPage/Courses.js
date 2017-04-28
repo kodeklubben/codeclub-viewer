@@ -5,15 +5,18 @@ import Row from 'react-bootstrap/lib/Row';
 
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
 import CourseList from '../CourseList/CourseList';
+import {funky} from '../../util.js';
 
 export const Courses = React.createClass({
 
   render() {
+    const language = this.props.language;
+    const coursesHeadline = funky(language, "courses");
     return (
       <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
         <Row>
           <Col xs={12}>
-            <h2>Kurs</h2>
+            <h2>{coursesHeadline}</h2>
             <CourseList courses={this.props.courses}/>
           </Col>
         </Row>
@@ -33,11 +36,13 @@ export const Courses = React.createClass({
 
 Courses.propTypes = {
   courses: PropTypes.object,
-  externalCourses: PropTypes.object
+  externalCourses: PropTypes.object,
+  language: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
+    language: state.language,
     courses: getFilteredCourses(state),
     externalCourses: getFilteredExternalCourses(state)
   };

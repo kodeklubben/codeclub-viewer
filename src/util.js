@@ -95,6 +95,17 @@ export function getInfo(context) {
     : {};
 }
 
+export function funky(language, captionID, level) {
+  const file = require('lessonSrc/language-config.json');
+  // Return the captionID in english if the set language is empty
+  if (!file[language][captionID])
+    return file["en"][captionID];
+  // If level is sent in as a parameter, return level
+  if (captionID == 'level')
+    return file[language][captionID][level];
+  return file[language][captionID];
+}
+
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
