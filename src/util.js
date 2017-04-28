@@ -75,6 +75,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       external: lessonFrontmatter.external || '',
       readmePath: hasReadme ? readmePath : '',
       course: courseName,
+      language: lessonFrontmatter.language,
       tags,
       // Everything between '.' and '.md'
       path: path.slice(1, path.length - 3)

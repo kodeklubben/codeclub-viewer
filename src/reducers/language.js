@@ -8,7 +8,7 @@ export default function(state='nb', action) {
 }
 
 function isLanguageValid(language) {
-  const languages = ['nb','nn','sv','da','en'];
+  const languages = ['nb','nn','sv','da','en', 'hr'];
 
   return languages.indexOf(language) > -1;
 }
