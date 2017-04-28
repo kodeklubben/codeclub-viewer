@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-// import FormControl from 'react-bootstrap/lib/FormControl';
+import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
@@ -131,7 +131,7 @@ function Gadgets(props) {
   const mode = modes[props.isStudentMode ? 0 : 1];
   // NOTE: Commenting out LanguageDropdown and SearchBox until these are implemented
   return <div className={styles.gadgetGroup}>
-    {/*<LanguageDropdown mode={mode} language={props.language} setLanguage={props.setLanguage}/>*/}
+    <LanguageDropdown mode={mode} language={props.language} setLanguage={props.setLanguage}/>
     <ModeDropdown setModeStudent={props.setModeStudent}
                   setModeTeacher={props.setModeTeacher}
                   mode={mode}/>
