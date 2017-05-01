@@ -53,25 +53,48 @@ export const PlaylistPage = React.createClass({
 
         <Row>
           {/*Filter desktop*/}
-          <Col xs={12} sm={3}>
-            <div className={styles.filter}>
-              <Filter isStudentMode={this.props.isStudentMode}/>
-            </div>
+          <Col xsHidden>
+            <Col sm={3}>
+              <div className={styles.filter}>
+                <Filter isStudentMode={this.props.isStudentMode}/>
+              </div>
+            </Col>
+
+
+            <Col sm={6}>
+              {/*Desktop playlists*/}
+              <PlaylistNavigation playlists={playlists}/>
+              {/*List of lessons grouped by level*/}
+              {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+            </Col>
+
+            <Col sm={3}>
+              <div className={styles.scrollable}>
+                {/*Desktop level navigation*/}
+                {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
+              </div>
+            </Col>
           </Col>
 
+          <Col smHidden mdHidden lgHidden>
+            <Col xs={12}>
+              <div className={styles.filter}>
+                <Filter isStudentMode={this.props.isStudentMode}/>
+              </div>
+            </Col>
 
-          <Col xs={12} sm={6}>
-            {/*Desktop playlists*/}
-            <PlaylistNavigation playlists={playlists}/>
-            {/*List of lessons grouped by level*/}
-            {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
-          </Col>
+            <Col xs={12}>
+              <div className={styles.scrollable}>
+                {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
+              </div>
+            </Col>
 
-          <Col xs={12} sm={3}>
-            <div className={styles.scrollable}>
-              {/*Desktop level navigation*/}
-              {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
-            </div>
+            <Col xs={12}>
+              <PlaylistNavigation playlists={playlists}/>
+              {/*List of lessons grouped by level*/}
+              {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+            </Col>
+
           </Col>
 
         </Row>
