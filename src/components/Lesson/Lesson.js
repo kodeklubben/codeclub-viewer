@@ -24,6 +24,7 @@ const Lesson = React.createClass({
     return this.props.lesson.frontmatter.author;
   },
   createMarkup(){
+    console.log(this.props.lesson.content);
     return {
       __html: removeHtmlFileEnding(this.props.lesson.content)
     };
@@ -57,7 +58,7 @@ const Lesson = React.createClass({
         <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
-        
+
         <Row>
           <ImprovePageContainer courseLessonFileProp={this.props.params}/>
         </Row>

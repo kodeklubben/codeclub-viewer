@@ -6,12 +6,11 @@ import styles from './PlaylistPage.scss';
 import {getFilteredAndIndexedLessons} from '../selectors/lesson';
 import {getPlaylists} from '../selectors/playlist';
 
-import {LessonFilterContainer} from '../components/Filter/LessonFilter';
+import Filter from '../components/FrontPage/Filter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import HeadRow from '../components/PlaylistPage/HeadRow';
-import MobileComponents from '../components/PlaylistPage/MobileComponents';
 
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -45,24 +44,21 @@ export const PlaylistPage = React.createClass({
         <LessonList id={'level-' + level} level={level} lessons={lessonsIndexedByLevel[level]}/>
       </div>
     ));
-    const showLevelNavigationMobile = Object.keys(lessons).length > 10 && levels.length > 1;
     const showLevelNavigationDesktop = Object.keys(lessons).length > 15 && levels.length > 1;
     return (
       <Grid fluid={true}>
 
         {/*Title with course name*/}
         <HeadRow courseName={this.props.params.course}/>
-        
-        {/*Components only visible on mobile that can be toggled hidden/visible*/}
-        <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
 
         <Row>
           {/*Filter desktop*/}
-          <Col xsHidden sm={3}>
+          <Col xs={12} sm={3}>
             <div className={styles.filter}>
-              <LessonFilterContainer/>
+              <Filter isStudentMode={this.props.isStudentMode}/>
             </div>
           </Col>
+
 
           <Col xs={12} sm={6}>
             {/*Desktop playlists*/}
@@ -71,7 +67,7 @@ export const PlaylistPage = React.createClass({
             {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
           </Col>
 
-          <Col xsHidden sm={3}>
+          <Col xs={12} sm={3}>
             <div className={styles.scrollable}>
               {/*Desktop level navigation*/}
               {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
@@ -89,13 +85,15 @@ PlaylistPage.propTypes = {
   filteredAndIndexedLessons: PropTypes.object,
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
-  })
+  }),
+  isStudentMode: PropTypes.bool
 };
 
 function mapStateToProps(state, props) {
   return {
     filteredAndIndexedLessons: getFilteredAndIndexedLessons(state, props.params.course),
-    filteredPlaylists: getPlaylists(state, props.params.course)
+    filteredPlaylists: getPlaylists(state, props.params.course),
+    isStudentMode: state.isStudentMode
   };
 }
 
