@@ -15,10 +15,11 @@ const getFilter = (state) => state.filter;
 export const getFilteredLessons = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
+    const currentCourse = window.location.href.split('/').pop();
 
     return Object.keys(lessons).reduce((res, lessonKey) => {
       const lesson = lessons[lessonKey];
-      if (tagsMatchFilter(lesson.tags, filter)) res[lessonKey] = lesson;
+      if (tagsMatchFilter(lesson.tags, filter) && (currentCourse === lesson.course || currentCourse === '')) res[lessonKey] = lesson;
       return res;
     }, {});
 
