@@ -1,5 +1,4 @@
 export function buildPDF() {
-
   const jsPDF = require('jspdf');
   const html2canvas = require('html2canvas');
   
