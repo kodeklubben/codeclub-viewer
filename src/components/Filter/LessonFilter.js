@@ -54,14 +54,15 @@ LessonFilter.propTypes = {
   onFilterCheck: PropTypes.func,
   resetFilter: PropTypes.func,
   isStudentMode: PropTypes.bool,
-  availableLessons: PropTypes.object
+  availableLessons: PropTypes.object,
+  courseName: PropTypes.string,
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     filter: state.filter,
     isStudentMode: state.isStudentMode,
-    availableLessons: getAvailableLessons(state),
+    availableLessons: getAvailableLessons(state, ownProps.courseName),
   };
 }
 
