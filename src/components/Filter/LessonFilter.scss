@@ -1,0 +1,25 @@
+.filterInfoButton {
+  &,
+  &:hover,
+  &:active:focus,
+  &:focus {
+    background: transparent;
+    text-decoration: none;
+    border: none;
+    outline: none;
+  }
+  color: gray;
+  font-size: 1.1em;
+  float: right;
+  margin-top: -9px;
+  margin-right: -14px;
+  transition: 0.1s;
+}
+
+.bgColorStudent {
+  background-color: rgba(238, 247, 238, 0.9);
+}
+
+.bgColorTeacher {
+  background-color: rgba(239, 246, 246, 0.9);
+}

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ImprovePage.scss';
 import {capitalize} from '../../util.js';
-
+import Button from 'react-bootstrap/lib/Button';
 
 const ImprovePage = React.createClass({
 
@@ -14,7 +14,6 @@ const ImprovePage = React.createClass({
     // Link to making a new issue + title,body fill
     const createNewIssueLink = '?title=' + capitalize(courseName) + ': ' + capitalize(lessonName).replace(/_/g, ' ')
      + '&body=Beskriv ditt problem...';
-
     // Link to the problem on github
     const githubLink = courseName + '/' + lessonName;
 
@@ -25,20 +24,20 @@ const ImprovePage = React.createClass({
     return (
       <div className={styles.container}>
         <div className={
-          this.props.isStudentMode ? styles.improvePageBoxStudent : styles.improvePageBoxTeacher}>
+          this.props.isStudentMode ? styles.student : styles.teacher}>
             <div className={styles.improvePageBox}>
-              <div className={styles.improvePageBoxTextRow}>
+              <div className={styles.textRow}>
                 <h2>Forbedre denne siden</h2>
                 <p>Funnet en feil? Kunne noe vært bedre? <br/>
                 Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
                 Vi er takknemlige for enhver tilbakemelding!</p>
               </div>
-              <div className={styles.improvePageBoxLinkRow}>
+              <div className={styles.linkRow}>
                   <div>
-                    <a className={styles.newIssue} href={url.newIssue}>Rapporter et problem</a>
+                    <Button href={url.newIssue} bsStyle="white-grey">Rapporter et problem</Button>
                   </div>
                   <div>
-                    <a className={styles.showCode} href={url.showCode}>Vis koden og fiks selv</a>
+                    <Button href={url.showCode} bsStyle="orange">Vis koden og fiks selv</Button>
                   </div>
               </div>
             </div>
@@ -60,4 +59,3 @@ function mapStateToProps(state) {
 }
 
 export const ImprovePageContainer = connect(mapStateToProps)(withStyles(styles)(ImprovePage));
-

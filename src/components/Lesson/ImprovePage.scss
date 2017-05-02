@@ -1,61 +1,18 @@
 @import '../../styles/variables';
 
-.link {
-  &,
-  &:focus,
-  &:hover {
-    text-decoration: none;
-  }
-  text-align: center;
-  font-size: 1.2em;
-  font-weight: 300;
-  border-radius: 5px;
-  padding: 7px;
-  opacity: 0.85;
-  transition: 0.15s;
-}
-
-/* Css for 'Rapporter et problem' */
-.newIssue {
-  composes: link;
-  background-color: #e6e6ff;
-  color: black;
-}
-
-.newIssue:hover,
-.newIssue:visited {
-  opacity: 1;
-  color: black;
-  box-shadow: inset 0 0 10px #b4c2e4;
-}
-
-/* Css for 'Vis koden og fiks selv' */
-.showCode {
-  composes: link;
-  background-color: #ec971f;
-  color: white;
-}
-
-.showCode:hover,
-.showCode:visited {
-  opacity: 1;
-  color: white;
-  box-shadow: inset 0 0 10px #d38312;
-}
-
-.fontImprovePageBox {
+.font {
   font-family: $font-family-roboto;
   font-weight: 300;
   font-size: 1em;
 }
 
-/* Container for hele improve box */
+/* Container for improve box */
 .container {
   margin: 10px 30px;
 }
 
 .improvePageBox {
-  composes: fontImprovePageBox;
+  composes: font;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -66,12 +23,12 @@
 }
 
 /* Row containing the text */
-.improvePageBoxTextRow {
-  margin: 5px 20px;
+.textRow {
+  margin: 5px 20px 15px;
 }
 
 /* Row containing the links */
-.improvePageBoxLinkRow {
+.linkRow {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -81,25 +38,34 @@
 }
 
 /* Student / Teacher mode */
-.improvePageBoxStudent {
+
+/* Box shadow inset used to highlight box so it differentiates better from other objects */
+.student {
   composes: improvePageBox;
   background-color: $color-green-light;
+  box-shadow: inset 0 0 85px #89c785;
 }
 
-.improvePageBoxTeacher {
+/* Works as a <hr/> to differentiate text and links */
+.student .textRow {
+  box-shadow: 0 8px 6px -6px #89c785;
+}
+
+/* Box shadow inset used to highlight box so it differentiates better from other objects */
+.teacher {
   composes: improvePageBox;
   background-color: $color-blue-light;
+  box-shadow: inset 0 0 85px #7bb7b6;
+}
+
+/* Works as a <hr/> to differentiate text and links */
+.teacher .textRow {
+  box-shadow: 0 8px 6px -6px #7bb7b6;
 }
 
 /* Media screen */
-@media only screen and (max-width: 450px) {
-  .link {
-    font-size: 0.9em;
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  .link {
-    font-size: 0.7em;
+@media only screen and (max-width: 300px) {
+  .textRow {
+    max-width: 150px;
   }
 }

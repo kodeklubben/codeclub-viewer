@@ -18,7 +18,7 @@ const MobileComponents = React.createClass({
   render() {
     return (
       <div>
-        <MobileButtonsRow toggle={this.toggle} />
+        <MobileButtonsRow toggle={this.toggle}/>
 
         <Row>
           {/*Filter mobile*/}
