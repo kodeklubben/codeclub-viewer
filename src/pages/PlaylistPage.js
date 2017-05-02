@@ -60,7 +60,7 @@ export const PlaylistPage = React.createClass({
           {/*Filter desktop*/}
           <Col xsHidden sm={3}>
             <div className={styles.filter}>
-              <LessonFilterContainer/>
+              <LessonFilterContainer courseName={this.props.params.course}/>
             </div>
           </Col>
 
