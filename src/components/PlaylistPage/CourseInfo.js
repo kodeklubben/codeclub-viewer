@@ -10,7 +10,7 @@ const CourseInfo = React.createClass({
     const indexfileLength = indexfile.content.toString().length;
     return (      
       <div className={this.props.isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-        {indexfileLength != 0 ?
+        {indexfileLength !== 0 ?
           <div dangerouslySetInnerHTML={{__html: indexfile.content}} />
         :
         <h4>Oops, her har noen glemt å skrive kursinformasjon!</h4>
