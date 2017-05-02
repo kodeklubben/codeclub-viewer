@@ -1,18 +1,18 @@
 @import '../../styles/variables';
 
-.fontImprovePageBox {
+.font {
   font-family: $font-family-roboto;
   font-weight: 300;
   font-size: 1em;
 }
 
-/* Container for hele improve box */
+/* Container for improve box */
 .container {
   margin: 10px 30px;
 }
 
 .improvePageBox {
-  composes: fontImprovePageBox;
+  composes: font;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -23,12 +23,12 @@
 }
 
 /* Row containing the text */
-.improvePageBoxTextRow {
+.textRow {
   margin: 5px 20px 15px;
 }
 
 /* Row containing the links */
-.improvePageBoxLinkRow {
+.linkRow {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -38,29 +38,34 @@
 }
 
 /* Student / Teacher mode */
-.improvePageBoxStudent {
+
+/* Box shadow inset used to highlight box so it differentiates better from other objects */
+.student {
   composes: improvePageBox;
   background-color: $color-green-light;
   box-shadow: inset 0 0 85px #89c785;
 }
 
-.improvePageBoxStudent .improvePageBoxTextRow {
+/* Works as a <hr/> to differentiate text and links */
+.student .textRow {
   box-shadow: 0 8px 6px -6px #89c785;
 }
 
-.improvePageBoxTeacher {
+/* Box shadow inset used to highlight box so it differentiates better from other objects */
+.teacher {
   composes: improvePageBox;
   background-color: $color-blue-light;
   box-shadow: inset 0 0 85px #7bb7b6;
 }
 
-.improvePageBoxTeacher .improvePageBoxTextRow {
+/* Works as a <hr/> to differentiate text and links */
+.teacher .textRow {
   box-shadow: 0 8px 6px -6px #7bb7b6;
 }
 
 /* Media screen */
 @media only screen and (max-width: 300px) {
-  .improvePageBoxTextRow {
+  .textRow {
     max-width: 150px;
   }
 }

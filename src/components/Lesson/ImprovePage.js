@@ -24,15 +24,15 @@ const ImprovePage = React.createClass({
     return (
       <div className={styles.container}>
         <div className={
-          this.props.isStudentMode ? styles.improvePageBoxStudent : styles.improvePageBoxTeacher}>
+          this.props.isStudentMode ? styles.student : styles.teacher}>
             <div className={styles.improvePageBox}>
-              <div className={styles.improvePageBoxTextRow}>
+              <div className={styles.textRow}>
                 <h2>Forbedre denne siden</h2>
                 <p>Funnet en feil? Kunne noe vært bedre? <br/>
                 Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
                 Vi er takknemlige for enhver tilbakemelding!</p>
               </div>
-              <div className={styles.improvePageBoxLinkRow}>
+              <div className={styles.linkRow}>
                   <div>
                     <Button href={url.newIssue} bsStyle="white-grey">Rapporter et problem</Button>
                   </div>
