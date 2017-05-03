@@ -58,13 +58,15 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const courseFrontmatter = courseContext(coursePath).frontmatter;
     const lessonFrontmatter = lessonContext(path).frontmatter;
 
+    const language = lessonFrontmatter.language;
+
     // Inherit tags from course, and override with lessonTags
     const courseTags = cleanseTags(courseFrontmatter.tags, false);
     const lessonTags = cleanseTags(lessonFrontmatter.tags, false);
     const tags = {...courseTags, ...lessonTags};
 
     // Everything between '.' and last '/'. Add '/README' at the end
-    const readmePath = path.slice(1, path.lastIndexOf('/')) + '/README';
+    const readmePath = path.slice(1, path.lastIndexOf('/')) + '/README_' + language;
     const hasReadme = readmeContext.keys().indexOf('.' + readmePath + '.md') !== -1;
 
     res[path] = {
@@ -75,6 +77,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       external: lessonFrontmatter.external || '',
       readmePath: hasReadme ? readmePath : '',
       course: courseName,
+      language: language,
       tags,
       // Everything between '.' and '.md'
       path: path.slice(1, path.length - 3)

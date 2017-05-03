@@ -14,7 +14,9 @@ export const LessonItem = React.createClass({
     const levelIcon = <LevelIcon level={lesson.level}/>;
     const instructionBtn = !this.props.isStudentMode && lesson.readmePath ?
       <LinkContainer to={lesson.readmePath}>
-        <Button componentClass="div" className={styles.instructionBtn} bsStyle="guide" bsSize="xs">Veiledning</Button>
+        <Button componentClass="div" className={styles.instructionBtn}bsStyle="guide" bsSize="xs">
+          Lærerveiledning
+        </Button>
       </LinkContainer>
       : null;
     return (

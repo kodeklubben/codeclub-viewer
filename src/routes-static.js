@@ -20,7 +20,7 @@ const getComponentLessonPage = (nextState, cb) => {
   // console.log('SERVER: routes lessonContext.keys():');
   // console.log(lessonContext.keys());
   const result = lessonContext('./' + path + '.md');
-  cb(null, props => <Lesson {...props} lesson={result}/>);
+  cb(null, props => <Lesson {...props} path={path} lesson={result}/>);
 };
 
 

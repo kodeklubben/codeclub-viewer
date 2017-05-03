@@ -5,7 +5,7 @@ import styles from './LevelIcon.scss';
 
 const LevelIcon = React.createClass({
   render() {
-    return this.props.level ?
+    return this.props.level && this.props.level > 0 ?
       <img className={styles.levelIcon}
            src={require('../assets/graphics/level-' + this.props.level + '.svg')}/>
       : null;
