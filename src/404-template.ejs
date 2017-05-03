@@ -1,0 +1,24 @@
+---
+permalink: /404.html
+---
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Script used to store the pathname in sessionStorage before redirecting to default path-->
+    <script>
+      if(typeof sessionStorage !== 'undefined'){
+        sessionStorage.redirect = location.pathname;
+      }
+    </script>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0;URL='<%= htmlWebpackPlugin.options.redirectUrl %>'"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+    <!--All this nonsence is used to get the file size above 512 bytes-->
+    <!--This must be done so that it works in IE-->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</body>
+</html>

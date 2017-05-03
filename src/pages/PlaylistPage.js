@@ -76,6 +76,7 @@ export const PlaylistPage = React.createClass({
             </Col>
           </Col>
 
+          {/*Filter mobile*/}
           <Col smHidden mdHidden lgHidden>
             <Col xs={12}>
               <div className={styles.filter}>

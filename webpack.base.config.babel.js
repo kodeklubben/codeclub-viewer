@@ -142,8 +142,9 @@ const baseConfig = {
     }
   },
   'markdown-it': {
-    preset: 'commonmark',
-    //typographer: true,
+    html: true,  // allow html in source
+    linkify: true,  // parse URL-like text to links
+    langPrefix: '',  // no prefix in class for code blocks
     use: [
       MarkdownItAnchor,
       MarkdownItAttrs,

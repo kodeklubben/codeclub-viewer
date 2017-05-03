@@ -13,7 +13,8 @@
       "ignoreAtRules": [
         "value",
         "mixin",
-        "include"
+        "include",
+        "extend"
       ]
     }],
     "declaration-empty-line-before": "never",
