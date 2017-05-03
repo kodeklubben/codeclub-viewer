@@ -22,9 +22,32 @@
   border-radius: 10px;
 }
 
+/* Student / Teacher mode */
+.student {
+  composes: improvePageBox;
+  background-color: $color-green-light;
+}
+
+.teacher {
+  composes: improvePageBox;
+  background-color: $color-blue-light;
+}
+
 /* Row containing the text */
-.textRow {
+
+/* Box-shadow works as a <hr/> to differentiate text and links */
+
+@mixin bottom-line($color) {
   margin: 5px 20px 15px;
+  box-shadow: 0 8px 6px -6px $color;
+}
+
+.textRowStudent {
+  @include bottom-line($color-green-median-light);
+}
+
+.textRowTeacher {
+  @include bottom-line($color-blue-median-light);
 }
 
 /* Row containing the links */
@@ -37,35 +60,10 @@
   }
 }
 
-/* Student / Teacher mode */
-
-/* Box shadow inset used to highlight box so it differentiates better from other objects */
-.student {
-  composes: improvePageBox;
-  background-color: $color-green-light;
-  box-shadow: inset 0 0 85px #89c785;
-}
-
-/* Works as a <hr/> to differentiate text and links */
-.student .textRow {
-  box-shadow: 0 8px 6px -6px #89c785;
-}
-
-/* Box shadow inset used to highlight box so it differentiates better from other objects */
-.teacher {
-  composes: improvePageBox;
-  background-color: $color-blue-light;
-  box-shadow: inset 0 0 85px #7bb7b6;
-}
-
-/* Works as a <hr/> to differentiate text and links */
-.teacher .textRow {
-  box-shadow: 0 8px 6px -6px #7bb7b6;
-}
-
 /* Media screen */
 @media only screen and (max-width: 300px) {
-  .textRow {
+  .textRowStudent,
+  .textRowTeacher {
     max-width: 150px;
   }
 }

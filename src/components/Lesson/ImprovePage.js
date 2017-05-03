@@ -7,7 +7,8 @@ import Button from 'react-bootstrap/lib/Button';
 
 const ImprovePage = React.createClass({
 
-  render() { 
+  render() {
+    const isStudent = this.props.isStudentMode;
     const courseName = this.props.courseLessonFileProp.course;
     const lessonName = this.props.courseLessonFileProp.lesson;
     
@@ -23,10 +24,9 @@ const ImprovePage = React.createClass({
     };
     return (
       <div className={styles.container}>
-        <div className={
-          this.props.isStudentMode ? styles.student : styles.teacher}>
+        <div className={isStudent ? styles.student : styles.teacher}>
             <div className={styles.improvePageBox}>
-              <div className={styles.textRow}>
+              <div className={isStudent ? styles.textRowStudent : styles.textRowTeacher}>
                 <h2>Forbedre denne siden</h2>
                 <p>Funnet en feil? Kunne noe vært bedre? <br/>
                 Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
