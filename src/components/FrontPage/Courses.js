@@ -4,14 +4,23 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
+//import t from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
-import {funky} from '../../util.js';
 
+import {funky} from '../../util';
+import {translate} from '../../util';
 export const Courses = React.createClass({
 
   render() {
     const language = this.props.language;
     const coursesHeadline = funky(language, "courses");
+    console.log("*****************************************");
+
+    const temp = translate('frontpage.nocomputer');
+    console.log(temp);
+
+
+
     return (
       <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
         <Row>
