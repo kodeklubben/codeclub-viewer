@@ -7,7 +7,7 @@ const HeadRow = React.createClass({
   render() {
     return (
       <div>
-        <h1 className={styles.row}>{capitalize(this.props.courseName)} Oppgaver &nbsp;
+        <h1 className={styles.row}>{capitalize(this.props.courseName)} Oppgaver
         </h1>
       </div>
     );

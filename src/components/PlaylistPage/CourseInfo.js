@@ -1,17 +1,16 @@
 import React, {PropTypes} from 'react';
-import {getCourseIndex} from '../../util';
+import {getCourseInfo} from '../../util';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CourseInfo.scss';
 
 const CourseInfo = React.createClass({
   render() {
     const courseName = this.props.courseName;
-    const indexfile = getCourseIndex(courseName);
-    const indexfileLength = indexfile.content.toString().length;
+    const courseInfo = getCourseInfo(courseName);
     return (      
       <div className={this.props.isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-        {indexfileLength !== 0 ?
-          <div dangerouslySetInnerHTML={{__html: indexfile.content}} />
+        {courseInfo ?
+          <div dangerouslySetInnerHTML={{__html: courseInfo}} />
         :
         <h4>Oops, her har noen glemt å skrive kursinformasjon!</h4>
         }

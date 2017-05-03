@@ -89,9 +89,9 @@ export function getLevelName(level) {
   return(levelData[level.toString()]);
 }
 
-export function getCourseIndex(courseName) {
-  const indexfile = require('onlyContent!lessonSrc/' + courseName + '/index.md');
-  return indexfile;
+export function getCourseInfo(courseName) {
+  const courseInfo = require('onlyContent!lessonSrc/' + courseName + '/index.md');
+  return courseInfo.content;
 }
 
 export function getInfo(context) {
