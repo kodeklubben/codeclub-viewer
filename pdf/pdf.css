@@ -1,24 +1,4 @@
-/*@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic);
-@import url(https://fonts.googleapis.com/css?family=Roboto+Mono:100,100italic,300,300italic,400,400italic,500,500italic,700,700italic);
-@import '../src/styles/mixins.scss';
-@import '../src/styles/variables';
-
-@import '../../styles/mixins.scss';
-@import '~bootstrapStyles/mixins/image';
-@import '../../styles/variables';
-
-@import "pre-customizations";
-@import "~bootstrapStyles/variables";
-
-@import 'node_modules/highlight.js/styles/idea';
-
-const bootstrapUtils = require('react-bootstrap/lib/utils/bootstrapUtils');
-
-import Panel from 'react-bootstrap/lib/Panel';
-import Button from 'react-bootstrap/lib/Button';
-
-bootstrapUtils.addStyle(Panel, 'student', 'teacher');
-bootstrapUtils.addStyle(Button, 'student', 'teacher', 'language-student', 'language-teacher', 'guide');*/
+@import '../node_modules/highlight.js/styles/idea';
 
 /*html {
   font-size: $font-size-base;
@@ -39,6 +19,36 @@ bootstrapUtils.addStyle(Button, 'student', 'teacher', 'language-student', 'langu
   display: block;
 }
 
+.icon-2 {
+  background-image: url('../src/assets/graphics/level-2.svg');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 30px;
+  display: block;
+}
+
+.icon-3 {
+  background-image: url('../src/assets/graphics/level-3.svg');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 30px;
+  display: block;
+}
+
+.icon-4 {
+  background-image: url('../src/assets/graphics/level-4.svg');
+  background-repeat: no-repeat;
+  background-size: 20px;
+  padding-left: 30px;
+  display: block;
+}
+
+pre.blocks,
+code.b {
+  background-color: inherit;
+  border: 0;
+}
+
 ul {
   margin-left: -20px;
 }
@@ -49,21 +59,23 @@ code.b {
   border: 0;
 }
 
-.block {
-  color: magenta;
+.blocks {
+  background-color: inherit;
+  border: 0;
 }
 
 .b {
-  color: pink;
+  background-color: inherit;
+  border: 0;
 }
 
-.check {
+/*.check {
   background-image: url('../src/assets/graphics/check.svg');
   background-repeat: no-repeat;
   background-size: 35px;
   padding-left: 45px;
   display: block;
-}
+}*/
 
 .breadcrumb {
   padding-left: 10px;
@@ -116,30 +128,8 @@ body {
   border-radius: 5px;
 }
 
-code {
-  &.blockmotion { background-color: #505fd7; }
-  &.blocklooks { background-color: #9b33d9; }
-  &.blocksound { background-color: #d000c2; }
-  &.blockpen { background-color: #00a16f; }
-  &.blockdata { background-color: #ff7500; }
-  &.blockevents { background-color: #d38117; }
-  &.blockcontrol { background-color: #e9aa00; }
-  &.blocksensing { background-color: #00a3e6; }
-  &.blockoperators { background-color: #00c114; }
-  &.blockmoreblocks { background-color: #71009a; }
-
-  &.blockmotion,
-  &.blocklooks,
-  &.blocksound,
-  &.blockpen,
-  &.blockdata,
-  &.blockevents,
-  &.blockcontrol,
-  &.blocksensing,
-  &.blockoperators,
-  &.blockmoreblocks {
-    color: #fff;
-  }
+span[class^="hljs-"], span[class*=" hljs-"] {
+  background-color: transparent;
 }
 
 .blockmotion { background-color: #505fd7; }
@@ -164,95 +154,61 @@ code {
 .blockoperators,
 .blockmoreblocks {color: #fff;}
 
-@mixin styledList {
-  ul,
-  ol {
-    padding: 0;
-    margin: 0 0 20px;
-  }
-  li {
-    list-style: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    // adjust all elements inside a list item
-    margin-left: 45px;
-  }
-  // check box for list items
-  li::before {
-    content: " ";
-    border-radius: 8px;
-    border: 3px solid #abdbea;
-    padding: 10px;
-    float: left;
-    margin-left: -40px;
-  }
+ul,
+ol {
+  padding: 0;
+  margin: 0 0 20px;
 }
 
-.check,
-.activity,
-.save {
-  @include styledList;
+li {
+  list-style: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 45px;
 }
 
-// scratch code blocks
-pre.blocks,
-code.b {
-  background-color: inherit;
-  border: 0;
-}
-
-// code blocks
-pre > code {
-  // override hljs background
-  background-color: transparent;
-}
-
-@mixin headingStyle {
-  color: #fff;
-  background: #349946;
+li::before {
+  content: " ";
+  border-radius: 8px;
+  border: 3px solid #abdbea;
   padding: 10px;
-  border-radius: 5px;
+  float: left;
+  margin-left: -40px;
 }
 
-// sections
-section.activity {
-  h1 {
-    @include headingStyle;
-  }
-  .subsection h2 {
-    @include styledList;
-    @include headingStyle;
-    font-weight: 300;
-  }
+/*.activity h1 {
+  @include headingStyle;
+}
+.activity .subsection h2 {
+  @include styledList;
+  @include headingStyle;
+  font-weight: 300;
+}*/
+
+h2.check {
+  background-image: url(../src/assets/graphics/check.svg);
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  padding-top: 4px;
+  padding-bottom: 9px;
+  padding-left: 50px;
 }
 
-section.check {
-  // check lists
-  h2 {
-    background-image: url(assets/graphics/check.svg);
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
-    padding-top: 4px;
-    padding-bottom: 9px;
-    padding-left: 50px;
-  }
-}
-
-section.try {
+.try {
   background: #abdbea;
   border-radius: 10px;
   padding: 1px 20px 10px;
-  code {
-    background-color: #fff;
-    color: #007cc9;
-  }
-  li::before {
-    border: 3px solid #fff;
-  }
+}
+code.try {
+  background-color: #fff;
+  color: #007cc9;
+}
+li.try::before {
+  border: 3px solid #fff;
 }
 
-section.protip,
-section.tip {
+.protip,
+.tip {
   border: 3px solid #ff7f00;
   background: #fff99d;
   border-radius: 12px;
@@ -261,82 +217,53 @@ section.tip {
   margin-bottom: 20px;
 }
 
-section.flag {
+.flag {
   border-top: 3px dotted rgb(230, 134, 45);
   padding-bottom: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
-  h2 {
-    color: rgb(54, 161, 55);
-    background-image: url(assets/graphics/flag.svg);
-    background-position: 0 10px;
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-top: 15px;
-    padding-bottom: 10px;
-    padding-left: 60px;
-  }
+}
+h2.flag {
+  color: rgb(54, 161, 55);
+  background-image: url(../src/assets/graphics/flag.svg);
+  background-position: 0 10px;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  padding-left: 60px;
 }
 
-section.save {
+h2.save {
+  color: rgb(36, 90, 154);
+  background-image: url(../src/assets/graphics/save.svg);
+  background-position: 0 10px;
+  background-size: 40px 40px;
+  background-repeat: no-repeat;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  padding-left: 50px;
+}
+.save {
   border-top: 3px solid rgb(36, 90, 154);
   margin: 20px 0;
-  h2 {
-    color: rgb(36, 90, 154);
-    background-image: url(assets/graphics/save.svg);
-    background-position: 0 10px;
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
-    margin: 0;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    padding-left: 50px;
-  }
 }
 
-section.challenge {
+.challenge {
   border: 3px solid #00b1da;
   border-radius: 12px;
   padding-bottom: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
-  h2 {
-    color: #fff;
-    background: #00b1da;
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-top: 0;
-  }
-  > * {
-    padding: 0 20px;
-  }
 }
-
-// horisontal scroll on screens, do not wrap
-// not keyword negate _whole_ media query,
-// making `(not print) and (min-width: @screen-sm)` impossible
-@media aural, braille, handheld, projection, screen, tty, tv, embossed {
-  pre > code {
-    word-wrap: normal;
-    white-space: pre;
-  }
-}
-
-// embedded videos
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; // 16:9
-  height: 0;
-  overflow: hidden;
-  margin: 30px 0 60px;
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+.challenge h2 {
+  color: #fff;
+  background: #00b1da;
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 0;
 }
