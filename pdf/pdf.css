@@ -69,14 +69,6 @@ code.b {
   border: 0;
 }
 
-/*.check {
-  background-image: url('../src/assets/graphics/check.svg');
-  background-repeat: no-repeat;
-  background-size: 35px;
-  padding-left: 45px;
-  display: block;
-}*/
-
 .breadcrumb {
   padding-left: 10px;
   float: left;
@@ -172,6 +164,7 @@ li::before {
   border-radius: 8px;
   border: 3px solid #abdbea;
   padding: 10px;
+  margin-top: 10px;
   float: left;
   margin-left: -40px;
 }
