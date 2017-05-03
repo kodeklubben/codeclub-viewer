@@ -1,4 +1,29 @@
 // Override bootstrap variables that have the !default flag, i.e. the values set here will be used in computing
 // the derived bootstrap variables.
 
+// general colors
+$light-background: #b1daae;
+
+// level colors
+$color-level1: fade(#7dc87d, 100%);
+$color-level2: fade(#1e1eff, 90%);
+$color-level3: fade(#ff1e1e, 90%);
+$color-level4: fade(#000, 80%);
+
+//	Scratch block colors
+$color-scratchblock-motion:     #505fd7;
+$color-scratchblock-looks:      #9b33d9;
+$color-scratchblock-sound:      #d000c2;
+$color-scratchblock-pen:        #00a16f;
+$color-scratchblock-data:       #ff7500;
+$color-scratchblock-events:     #d38117;
+$color-scratchblock-control:    #e9aa00;
+$color-scratchblock-sensing:    #00a3e6;
+$color-scratchblock-operators:  #00c114;
+$color-scratchblock-moreblocks: #71009a;
+
+// table colors
+$table-border-color: #000;
+
+// general
 $font-size-base: 16px; // Override bootstrap's 14px default base
