@@ -24,7 +24,6 @@ const Lesson = React.createClass({
     return this.props.lesson.frontmatter.author;
   },
   createMarkup(){
-    console.log(this.props.lesson.content);
     return {
       __html: removeHtmlFileEnding(this.props.lesson.content)
     };
