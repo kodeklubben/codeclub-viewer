@@ -26,6 +26,7 @@ const TeacherInfobox = React.createClass({
 
     const teacherInfoContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
     const teacherInfo = getInfo(teacherInfoContext);
+
     const lang = this.props.language;
 
     return (

@@ -5,6 +5,9 @@
 // codeclub_lesson_builder/styles/lesson.less
 //////////////////////////////////////////////
 @import '../../../node_modules/highlight.js/styles/idea';
+@import '../../styles/variables';
+@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins';
+@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables';
 
 @mixin styledList {
   ul,
@@ -184,6 +187,13 @@ code {
   &.blockmoreblocks {
     color: #fff;
   }
+}
+
+//// tables
+table {
+  // add table class to all tables, assumes that tables are only used
+  // for listing stuff and is not in use for other components like calendars
+  @extend .table;
 }
 
 // horisontal scroll on screens, do not wrap

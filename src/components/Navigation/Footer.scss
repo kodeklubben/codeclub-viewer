@@ -44,8 +44,8 @@
 }
 
 .img {
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
   margin-bottom: 20px;
   width: auto;
   height: 50px;
@@ -62,5 +62,6 @@
 
 .svg:hover,
 .img:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
+  box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.5);
 }

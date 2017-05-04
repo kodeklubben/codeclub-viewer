@@ -49,8 +49,9 @@ function getStaticSitePaths() {
   const glob = require('glob');
   const absLessonSrc = path.resolve(__dirname, lessonSrc);
 
-  const coursePaths = glob.sync(path.join(absLessonSrc, '*/'), {dot: true})
-    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\/)$`), '$2/'));
+  // Only include folders in lesson src that have an index.md
+  const coursePaths = glob.sync(path.join(absLessonSrc, '*/index.md'), {dot: true})
+    .map(p => p.replace(new RegExp(`^${absLessonSrc}\/(.*)\/index\.md$`), '$1/'));
 
   const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))

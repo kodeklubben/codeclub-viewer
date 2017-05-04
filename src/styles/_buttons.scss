@@ -77,6 +77,33 @@
   @include button-nav(#fff, $color-blue, $color-blue-median, 25%);
 }
 
+.btn-white-grey {
+  @include button-variant(#000, $color-gray-lighter, $color-gray-light);
+  transition: 0.1s;
+  &,
+  &:hover,
+  &:active:focus,
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn-white-grey-lighter {
+  @include button-variant(#000, $color-white-snow, $color-gray-lighter);
+  transition: 0.1s;
+  border-color: $color-gray-light;
+  &:hover,
+  &:active:focus,
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn-orange {
+  @include button-variant(#fff, $color-orange-median, $color-orange-dark);
+  transition: 0.1s;
+}
+
 .btn-guide {
   @include button-variant(#fff, $color-blue-median, $color-blue-dark);
   transition: 0.1s;
@@ -85,4 +112,3 @@
 .btn-sm-fixed-width {
   width: 6em;
 }
-
