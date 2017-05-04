@@ -120,7 +120,7 @@ const getReadMePath = (readmeContext, language, path) => {
     }
   }
   return -1;
-}
+};
 
 /**
  * Fix invalid tags
