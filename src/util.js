@@ -65,9 +65,9 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const lessonTags = cleanseTags(lessonFrontmatter.tags, false);
     const tags = {...courseTags, ...lessonTags};
 
-    // Everything between '.' and last '/'. Add '/README' at the end
-    const readmePath = path.slice(1, path.lastIndexOf('/')) + '/README_' + language;
-    const hasReadme = readmeContext.keys().indexOf('.' + readmePath + '.md') !== -1;
+    // Gets the valid readmePath for the lesson, if it exists
+    const readmePath = getReadMePath(readmeContext, language, path.slice(1, path.lastIndexOf('/')));
+    const hasReadme = readmePath !== -1;
 
     res[path] = {
       title: lessonFrontmatter.title || '',
@@ -101,6 +101,26 @@ export function getInfo(context) {
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
+
+/**
+* Checks if a lesson with a given path has a README-file.
+* Accepts README-files on the form /README or /README_(ISO_CODE).
+**/
+const getReadMePath = (readmeContext, language, path) => {
+  const readmeContextKeys = readmeContext.keys();
+  const readmePathAndLanguageCode = path + '/README_' + language;
+  const readmePathNoLanguageCode = path + '/README';
+
+  if(readmeContextKeys.indexOf('.' + readmePathAndLanguageCode + '.md') !== -1){
+    return readmePathAndLanguageCode;
+  }
+  else if(readmeContextKeys.indexOf('.' + readmePathNoLanguageCode + '.md') !== -1){
+    if(language === readmeContext('.' + readmePathNoLanguageCode + '.md').frontmatter.language){
+      return path + '/README';
+    }
+  }
+  return -1;
+}
 
 /**
  * Fix invalid tags

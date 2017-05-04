@@ -45,7 +45,7 @@ const Lesson = React.createClass({
     if(!lessonOrReadme){
       for(let key in lessons){
         if(lessons[key]['readmePath'] === '/' + path){
-          lessonOrReadme = lessons[key]['path'];
+          lessonOrReadme = lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;
         }
       }
     }
@@ -66,7 +66,7 @@ const Lesson = React.createClass({
   },
   setLanguage(){
     const lessonLanguage = this.getLanguage();
-    if(lessonLanguage && lessonLanguage !== this.props.language) {
+    if(lessonLanguage !== '' && lessonLanguage !== this.props.language) {
       this.props.setLanguage(lessonLanguage);
     }
   },

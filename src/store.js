@@ -11,7 +11,7 @@ const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^\/]*\/pl
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README[^\/]*\.md$)[^\/]*\.md/);
 const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
-  /^\.\/[^\/]*\/[^\/]*\/README_[\w]{2}\.md$/);
+  /^\.\/[^\/]*\/[^\/]*\/README[^\/]{0,3}\.md$/);
 const lessons = getLessons(lessonContext, readmeContext, courseContext);
 
 const initialState = {};
