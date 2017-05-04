@@ -12,10 +12,14 @@ import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import HeadRow from '../components/PlaylistPage/HeadRow';
 import MobileComponents from '../components/PlaylistPage/MobileComponents';
+import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import Collapse from 'react-bootstrap/lib/Collapse';
+import Button from 'react-bootstrap/lib/Button';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 export const PlaylistPage = React.createClass({
   getLessonsByLevel(lessons) {
@@ -35,6 +39,14 @@ export const PlaylistPage = React.createClass({
       return res;
     }, {});
   },
+  getInitialState() {
+    return {
+      showCourseInfo: false
+    };
+  },
+  changeState() {
+    this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  },
   render() {
     const lessons = this.props.filteredAndIndexedLessons;
     const playlists = this.props.filteredPlaylists;
@@ -50,11 +62,17 @@ export const PlaylistPage = React.createClass({
     return (
       <Grid fluid={true}>
 
-        {/*Title with course name*/}
-        <HeadRow courseName={this.props.params.course}/>
-        
-        {/*Components only visible on mobile that can be toggled hidden/visible*/}
-        <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
+        {/*Title with course name and course info button*/}
+        <Row>
+          <Col xs={12} sm={6} smOffset={3}>
+            <div className={styles.headerRow}>
+              <HeadRow courseName={this.props.params.course}/>
+              <Button bsStyle="guide" className={styles.courseInfoBtn} onClick={() => this.changeState()}>
+                <Glyphicon className={styles.glyph} glyph={!this.state.showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
+                Informasjon om kurset</Button>
+            </div>
+          </Col>
+        </Row>  
 
         <Row>
           {/*Filter desktop*/}
@@ -64,13 +82,36 @@ export const PlaylistPage = React.createClass({
             </div>
           </Col>
 
-          <Col xs={12} sm={6}>
-            {/*Desktop playlists*/}
-            <PlaylistNavigation playlists={playlists}/>
-            {/*List of lessons grouped by level*/}
-            {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
-          </Col>
+          {/*Show both CourseInfo and Playlist if showCourseInfo is clicked*/}
+          {this.state.showCourseInfo ?
+            <Col xs={12} sm={6}>
+              {/*Course Info*/}            
+              <Collapse in={this.state.showCourseInfo}>
+                <CourseInfo courseName={this.props.params.course} isStudentMode={this.props.isStudentMode}/>
+              </Collapse>
 
+              {/*Components only visible on mobile that can be toggled hidden/visible*/}
+              <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
+
+              {/*Desktop playlists*/}
+              <PlaylistNavigation playlists={playlists}/>
+              {/*List of lessons grouped by level*/}
+              {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+            </Col>           
+            :
+            <Col xs={12} sm={6}>
+
+              {/*Components only visible on mobile that can be toggled hidden/visible*/}
+              <MobileComponents levels={levels} showLevelNavigation={showLevelNavigationMobile}/>
+
+              {/*Desktop playlists*/}
+              <PlaylistNavigation playlists={playlists}/>
+              {/*List of lessons grouped by level*/}
+              {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+            </Col>         
+          }
+
+          {/*Level Navigation*/}
           <Col xsHidden sm={3}>
             <div className={styles.scrollable}>
               {/*Desktop level navigation*/}
@@ -85,6 +126,7 @@ export const PlaylistPage = React.createClass({
 });
 
 PlaylistPage.propTypes = {
+  isStudentMode: PropTypes.bool,
   filteredPlaylists: PropTypes.object,
   filteredAndIndexedLessons: PropTypes.object,
   params: PropTypes.shape({
@@ -94,6 +136,7 @@ PlaylistPage.propTypes = {
 
 function mapStateToProps(state, props) {
   return {
+    isStudentMode: state.isStudentMode,
     filteredAndIndexedLessons: getFilteredAndIndexedLessons(state, props.params.course),
     filteredPlaylists: getPlaylists(state, props.params.course)
   };
