@@ -1,16 +1,5 @@
 @import '../../styles/variables';
 
-.link {
-  color: black;
-  border-bottom: 1px black dotted;
-
-  &,
-  &:hover,
-  &:focus {
-    text-decoration: none;
-  }
-}
-
 .center {
   display: flex;
   justify-content: center;
@@ -20,7 +9,7 @@
   padding: 10px;
   max-width: 700px;
   margin: 0 16px;
-  background-color: $color-blue-lighter;
+  background-color: $color-green-lighter;
   border: 1px solid #b2b2b2;
   border-radius: 10px;
   font-family: $font-family-roboto;
@@ -28,8 +17,8 @@
   font-weight: 300;
   position: relative;
 }
-  
-.plusSign {
+
+.xSign {
   &,
   &:hover,
   &:active:focus,
@@ -40,9 +29,9 @@
     outline: none;
   }
   color: gray;
-  font-size: 2em;
+  font-size: 1.1em;
   transition: 0.1s;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
-
-
-

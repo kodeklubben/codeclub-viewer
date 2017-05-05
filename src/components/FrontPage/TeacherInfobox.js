@@ -38,7 +38,7 @@ const TeacherInfobox = React.createClass({
             {teacherInfo.changeModeTeacher[lang]}
             <br />
             <div className={styles.center}>
-              <Button className={styles.glyphicon} onClick={() => this.changeState()}>
+              <Button className={styles.plusSign} onClick={() => this.changeState()}>
                 <Glyphicon glyph={!this.state.showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
               </Button>
             </div>

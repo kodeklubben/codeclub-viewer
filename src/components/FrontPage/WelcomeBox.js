@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {doNotShowAgain} from '../../localStorage';
-import styles from './TeacherInfobox.scss';
+import styles from './WelcomeBox.scss';
 import {CoursesContainer} from './Courses';
 import {getInfo} from '../../util';
 import ButtonItem from '../ButtonItem';
@@ -30,7 +30,7 @@ const WelcomeBox = React.createClass({
           <div className={styles.infoBox}>
             <h3 className={styles.center}>
             {welcomeInfo.welcomeStudent[lang]}</h3>
-            <Button className={styles.stickToRight} onClick={doNotShowAgain}>
+            <Button className={styles.xSign} onClick={doNotShowAgain}>
               <Glyphicon glyph="remove"/>
             </Button>
             <br />
