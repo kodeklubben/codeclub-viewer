@@ -42,9 +42,9 @@ function buildPdf(dir) {
     var splitter = split()
     var replacer = through(function (data) {
       //console.log(data)
-      if (data.match(/```[a-zA-Z]/) && inBlock === false) {
+      if (data.match(/```[a-zA-Z]+/) && inBlock === false) {
         console.log("dataMatch");
-        temp[block] = "";
+        temp[block] = data;
         blockType = data.replace(/```([a-zA-Z]+)/, "$1");
         inBlock = true;
       }
@@ -69,13 +69,14 @@ function buildPdf(dir) {
           block += 1;
           inBlock = false;
         }
-        else if (!data.match("```[a-zA-Z]") && data.match("```")) {
-          this.queue(temp[block]);
+        else if (!data.match(/```[a-zA-Z]+/) && data.match("```")) {
+          temp[block] += data;
+          this.queue(generateCodeBlock(temp[block]));
           block += 1;
           inBlock = false;
-        } else {
-          temp[block] += data+"\n";
-          console.log(temp[block])
+        } 
+        else {
+          temp[block] += data+'\n';
         }
       }
 
@@ -111,7 +112,7 @@ function buildPdf(dir) {
         console.log("0: "+data)
         this.queue(data.replace(/\[(\`?[a-zA-Z\s]+\(?\)?\`?)\]:\s?(https?:\/\/.+)/, "[$1]$2")+'\n')
       }
-      else if (data.match(/\[.+\]:?\s?..\/.+/)) {
+      else if (data.match(/\[.+\]+:?\s?..\/.+/)) {
         console.log("1: "+data);
         this.queue(data.replace(/(\[.+\]):\s(..\/.+)/, "[$1]$2") +'\n')
       }
@@ -139,7 +140,7 @@ function buildPdf(dir) {
     var splitter = split()
     block = 0;
     var replacer = through(function (data) {
-      //console.log(data);
+      console.log(data);
       if (data.match(/<code>[æøåÆØÅa-zA-Z\s]*<\/code>\{block[a-z]*\}/g)) {
         //console.log(data);
         this.queue(data.replace(/(<code>)([æøåÆØÅa-zA-Z\s]*)(<\/code>\{)(block[a-z]*)\}/g, '<code class="$4">$2</code>') + '\n');
@@ -160,26 +161,31 @@ function renderScratchBlocks(content) {
   return svg;
 }
 
+function generateCodeBlock(content) {
+  console.log("CB: " + content);
+  return content;
+}
+
 function init() {
   const rootDir = "../oppgaver/src/"
   const dirs = getDirectories(rootDir);
-  buildPdf(rootDir+dirs);
-/*
+  //buildPdf(rootDir+dirs);
+
   for (d in dirs) {
     subDirs = getDirectories(rootDir+dirs[d])
     for (sd in subDirs){
       buildPdf(rootDir+dirs[d]+"/"+subDirs[sd]);
       //console.log(dirs[d]+"/"+subDirs[sd]);
     }
-  }*/
+  }
 }
 
 function getDirectories (rootDir) {
-  return "elm/01_prov_i_nettleser"
-  /*const fs = require('fs')
+  //return "elm/01_prov_i_nettleser"
+  const fs = require('fs')
   const path = require('path')
   return fs.readdirSync(rootDir)
-    .filter(file => fs.statSync(path.join(rootDir, file)).isDirectory())*/
+    .filter(file => fs.statSync(path.join(rootDir, file)).isDirectory())
 }
 
 function getFileName(dir) {
