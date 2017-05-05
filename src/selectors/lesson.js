@@ -44,6 +44,7 @@ export const getFilteredAndIndexedLessons = createSelector(
 
 /**
  * Creates an object containing number of lessons available in each tag given your current filter
+ * Input props: courseName (string, optional)
  */
 
 export const getAvailableLessons = createSelector(

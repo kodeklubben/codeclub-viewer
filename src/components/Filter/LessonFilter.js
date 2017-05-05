@@ -7,6 +7,9 @@ import {getAvailableLessons} from '../../selectors/lesson';
 import FilterGroup from './FilterGroup';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './LessonFilter.scss';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 export const LessonFilter = React.createClass({
   render(){
@@ -26,24 +29,24 @@ export const LessonFilter = React.createClass({
     });
     const tooltip =
       <Tooltip id="filterhelp">
-        <p>I filteret kan man sortere ut de oppgavene man vil løse,
-            etter hvilket operativsystem det skal kjøres på og/eller
-            hvilket tema man vil jobbe med.</p>
+        <p>I filteret kan man sortere ut de oppgavene man vil løse
+            etter hvilke tema man vil jobbe med.</p>
         <p>Bak hvert valg står det antall oppgaver som kan løses,
             etter hvilke valg du gjør i filteret.</p>
       </Tooltip>;
     const title =
         <h3>Filter
           <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
-            <Button style={{ marginTop: -9, marginRight: -14 }} className="pull-right">?</Button>
+            <Button className={styles.filterInfoButton}><Glyphicon glyph="info-sign"/></Button>
           </OverlayTrigger>
         </h3>;
     const bsStyle = (this.props.isStudentMode ? 'student' : 'teacher');
     return (
-        <Panel header={title} bsStyle={bsStyle}>
+        <Panel header={title} bsStyle={bsStyle} className={
+          this.props.isStudentMode ? styles.bgColorStudent : styles.bgColorTeacher}>
           {filterGroups}
           <br/>
-          <Button block onClick={() => this.props.resetFilter()}>Fjern filter</Button>
+          <Button block bsStyle="white-grey-lighter" onClick={() => this.props.resetFilter()}>Fjern filter</Button>
         </Panel>
     );
   }
@@ -54,14 +57,15 @@ LessonFilter.propTypes = {
   onFilterCheck: PropTypes.func,
   resetFilter: PropTypes.func,
   isStudentMode: PropTypes.bool,
-  availableLessons: PropTypes.object
+  availableLessons: PropTypes.object,
+  courseName: PropTypes.string,
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   return {
     filter: state.filter,
     isStudentMode: state.isStudentMode,
-    availableLessons: getAvailableLessons(state),
+    availableLessons: getAvailableLessons(state, ownProps.courseName),
   };
 }
 
@@ -72,4 +76,4 @@ export const LessonFilterContainer = connect(
     resetFilter
   }
 
-)(LessonFilter);
+)(withStyles(styles)(LessonFilter));
