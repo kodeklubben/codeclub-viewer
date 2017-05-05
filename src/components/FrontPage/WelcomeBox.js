@@ -23,8 +23,9 @@ const WelcomeBox = React.createClass({
     const welcomeBoxContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
     const welcomeInfo = getInfo(welcomeBoxContext);
     const lang = this.props.language;
+    const hideWelcomeBox = this.props.localStorage.hideWelcomeBox;
 
-    if(this.props.userProgress === "false") {
+    if(!hideWelcomeBox) {
       return (
         <div className={styles.center}>
           <div className={styles.infoBox}>
@@ -44,7 +45,7 @@ const WelcomeBox = React.createClass({
                 {welcomeInfo.buttonText[lang]}
               </ButtonItem>
               :
-              <ButtonItem color='blue'>{welcomeInfo.continueButton[lang]}</ButtonItem>}
+              <ButtonItem color='green'>{welcomeInfo.continueButton[lang]}</ButtonItem>}
             </div>            
           </div>
         </div>
@@ -58,7 +59,7 @@ const WelcomeBox = React.createClass({
           {welcomeInfo.buttonText[lang]}
         </ButtonItem>
         :
-        <ButtonItem color='blue'>{welcomeInfo.continueButton[lang]}</ButtonItem>}
+        <ButtonItem color='green'>{welcomeInfo.continueButton[lang]}</ButtonItem>}
       </div>);
     }
   }
@@ -69,14 +70,14 @@ WelcomeBox.propTypes = {
   courses: PropTypes.object,
   externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  userProgress: PropTypes.string,
+  localStorage: PropTypes.object,
   language: PropTypes.string
 };
 
 function mapStateToProps(state) {
   return {
     language: state.language,
-    userProgress: state.userProgress
+    localStorage: state.localStorage
   };
 }
 

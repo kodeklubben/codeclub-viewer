@@ -24,35 +24,10 @@ $button-darkblue-hover: #215651;
   transition: all 0.1s ease-in-out;
 }
 
-/* Css for the 'Continue' button on frontpage */
-.darkblue {
-  composes: button;
-  background-color: $button-darkblue;
-  width: 250px;
-  height: 90px;
-  border-radius: 50px;
-  font-style: italic;
-  font-size: 1.8em;
-  &:hover,
-  &:active:focus,
-  &:focus {
-    background-color: $button-darkblue-hover;
-    outline: none;
-  }
-}
-
 .green {
   composes: button;
   background-color: $button-green;
   &:hover {
     background-color: $button-green-hover;
-  }
-}
-
-.blue {
-  composes: button;
-  background-color: $button-blue;
-  &:hover {
-    background-color: $button-blue-hover;
   }
 }

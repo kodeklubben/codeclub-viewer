@@ -67,9 +67,9 @@ export function setLanguage(language) {
   };
 }
 
-export function setUserProgress(userProgress) {
+export function setLocalStorage(localStorage) {
   return {
-    type: 'SET_USER_PROGRESS',
-    payload: userProgress
+    type: 'SET_LOCAL_STORAGE',
+    payload: localStorage
   }
 }

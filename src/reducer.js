@@ -4,7 +4,7 @@ import filter from './reducers/filter';
 import lessons from './reducers/lesson';
 import isStudentMode from './reducers/mode';
 import language from './reducers/language';
-import userProgress from './reducers/userProgress';
+import localStorage from './reducers/localStorage';
 
 export default combineReducers({
   lessons,
@@ -12,5 +12,5 @@ export default combineReducers({
   filter,
   isStudentMode,
   language,
-  userProgress
+  localStorage
 });
