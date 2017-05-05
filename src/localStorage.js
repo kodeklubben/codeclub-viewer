@@ -1,18 +1,13 @@
 import store from './store';
 import {setLocalStorage} from './action_creators';
-const localStorageItems = { 'hideWelcomeBox': false, 'lastLanguage': '', 'lastLesson': 0 };
-console.log(localStorageItems);
+const localStorageItems = { 'hideWelcomeBox': false, 'lastLanguage': 'nb', 'lastLesson': 0 };
 
 //Introduces localStorage
 export function loadLocalStorage() {
   if (typeof(Storage) !== 'undefined') {
-    if (localStorageItems.firstTime === undefined) {
-      localStorageItems.firstTime =  false;
-      localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems));
+    if (localStorage.length === 0) {
+      localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems)); 
     }
-    else {
-      console.log('Ikke første gangen');
-    }  
   }
   else {
     console.log('Støtter ikke localStorage');
@@ -29,12 +24,6 @@ export function doNotShowAgain() {
 
 //Adds language to localStorage
 export function rememberLanguage(language) {
-  if (!language) {
-    localStorageItems.lastLanguage = 'nb';
-    localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems)); 
-  }
-  else {
-    localStorageItems.lastLanguage = language;
-    localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems)); 
-  }
+  localStorageItems.lastLanguage = language;
+  localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems));
 }
