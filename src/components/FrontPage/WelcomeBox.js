@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {doNotShowAgain, rememberLanguage} from '../../localStorage';
+import {doNotShowAgain} from '../../localStorage';
 import styles from './WelcomeBox.scss';
 import {CoursesContainer} from './Courses';
 import {getInfo} from '../../util';
@@ -30,7 +30,6 @@ const WelcomeBox = React.createClass({
         <div className={styles.center}>
           <div className={styles.infoBox}>
             <h3 className={styles.center}>
-            <Button onClick={rememberLanguage(lang)}>test</Button>
             {welcomeInfo.welcomeStudent[lang]}</h3>
             <Button className={styles.xSign} onClick={doNotShowAgain}>
               <Glyphicon glyph="remove"/>
@@ -84,7 +83,6 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  {doNotShowAgain,
-  rememberLanguage}
+  {doNotShowAgain}
 )(withStyles(styles)(WelcomeBox));
       
