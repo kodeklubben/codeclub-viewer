@@ -8,15 +8,15 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const TeacherInfobox = React.createClass({
-  
+
   getInitialState() {
-   return {
-     showCourseInfo: false
-   };
- },
- changeState() {
-   this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
- },
+    return {
+      showCourseInfo: false
+    };
+  },
+  changeState() {
+    this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  },
 
   render() {
     const url = [

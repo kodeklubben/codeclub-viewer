@@ -5,21 +5,16 @@ import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './WelcomeBox.scss';
-import {CoursesContainer} from './Courses';
 import {getInfo} from '../../util';
 import ButtonItem from '../ButtonItem';
 
 const WelcomeBox = React.createClass({
-  
+
   contextTypes: {
     router: React.PropTypes.object
-    },
+  },
 
   render() {
-    const url = [
-      'http://kidsakoder.no/kodeklubben/'
-    ];
-    
     const welcomeBoxContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
     const welcomeInfo = getInfo(welcomeBoxContext);
     const lang = this.props.language;
@@ -46,7 +41,7 @@ const WelcomeBox = React.createClass({
               </ButtonItem>
               :
               <ButtonItem color='green'>{welcomeInfo.continueButton[lang]}</ButtonItem>}
-            </div>            
+            </div>
           </div>
         </div>
       );
@@ -85,4 +80,3 @@ export default connect(
   mapStateToProps,
   {doNotShowAgain}
 )(withStyles(styles)(WelcomeBox));
-      

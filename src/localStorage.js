@@ -6,7 +6,7 @@ const localStorageItems = { 'hideWelcomeBox': false, 'lastLanguage': 'nb', 'last
 export function loadLocalStorage() {
   if (typeof(Storage) !== 'undefined') {
     if (localStorage.length === 0) {
-      localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems)); 
+      localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems));
     }
   }
   else {
@@ -18,7 +18,7 @@ export function loadLocalStorage() {
 //Removes welcomeBox
 export function doNotShowAgain() {
   localStorageItems.hideWelcomeBox = true;
-  localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems)); 
+  localStorage.setItem(localStorageItems, JSON.stringify(localStorageItems));
   store.dispatch(setLocalStorage(localStorageItems));
 }
 
