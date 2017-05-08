@@ -56,7 +56,17 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
 
     const courseFrontmatter = courseContext(coursePath).frontmatter;
-    const lessonFrontmatter = lessonContext(path).frontmatter;
+    let lessonFrontmatter = lessonContext(path).frontmatter;
+
+    const language = lessonFrontmatter.language ? lessonFrontmatter.language : 'undefined language';
+
+    if(language){
+      if(lessonFrontmatter.tags){
+        lessonFrontmatter.tags['language'] = language;
+      }else{
+        lessonFrontmatter.tags = {language: [language]};
+      }
+    }
 
     // Inherit tags from course, and override with lessonTags
     const courseTags = cleanseTags(courseFrontmatter.tags, false);
@@ -170,6 +180,9 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
+    if(groupName === 'language' && checkedTagNames.filter(tagName => lessonGroup.indexOf(tagName) !== -1).length > 0) { // lessonGroup doesn't contain checkedFilterTag
+        return true;
+      }
     for (const checkedFilterTag of checkedTagNames) {
       if (lessonGroup.indexOf(checkedFilterTag) === -1) { // lessonGroup doesn't contain checkedFilterTag
         return false;

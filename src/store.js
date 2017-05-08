@@ -29,12 +29,15 @@ if (isProduction) {
   store = createStore(reducer, initialState, devTools);
 }
 
+let filter = getTags(lessonContext, courseContext);
+filter.language['nb'] = true;
+
 store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setModeStudent());
-store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 store.dispatch(setLanguage('nb'));
+store.dispatch(setFilter(filter));
 
 export default store;
