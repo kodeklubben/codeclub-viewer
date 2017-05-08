@@ -99,7 +99,8 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const instructionBtn = !this.props.isStudentMode ? this.getButton(this.props.path) : null;
+    const instructionBtn = !this.props.isStudentMode || this.isReadme(this.props.path)
+    ? this.getButton(this.props.path) : null;
     return (
       <div className={styles.container}>
         <h1>
