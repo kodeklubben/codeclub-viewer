@@ -43,6 +43,19 @@
   display: block;
 }
 
+i, cite, em, var, address, dfn {
+    font-style: italic;
+}
+
+b, strong {
+    font-weight: bold;
+}
+
+a {
+    color: #337ab7;
+    text-decoration: none;
+}
+
 h1, .h1 {
     font-size: 41px;
 }
@@ -69,21 +82,37 @@ span.hljs-comment {
   font-style: italic;
 }
 
-span.hljs-string {
+span.hljs-string, span.hljs-value {
   color: #008000;
   font-weight: bold;
 }
 
-span.hljs-number {
+span.hljs-number, span.hljs-attribute {
   color: #0000ff;
   font-weight: normal;
 }
 
-span.hljs-keyword {
-  font-weight: bold;
-  color: #000080;
+span.hljs-tag, span.hljs-pi {
+    background: #efefef;
 }
 
+span.hljs-tag, span.hljs-title, span.hljs-id, span.hljs-attr_selector, .span.hljs-pseudo, span.hljs-literal, span.hljs-keyword, span.hljs-hexcolor, span.css, span.hljs-function, span.ini, span.hljs-class, span.hljs-list, span.nginx, span.tex, span.hljs-command, span.hljs-request, span.hljs-status {
+    font-weight: bold;
+    color: #000080;
+}
+
+span.hljs-number {
+    font-weight: normal;
+}
+
+span.hljs-doctype, span.hljs-http {
+  color: #808000;
+}
+
+span.hljs-title {
+    font-weight: normal;
+    color: #000;
+}
 img {
   vertical-align: middle;
   border: 0;
