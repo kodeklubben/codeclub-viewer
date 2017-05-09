@@ -19,17 +19,20 @@
     list-style: none;
     padding-top: 10px;
     padding-bottom: 10px;
-    // adjust all elements inside a list item
     margin-left: 45px;
   }
-  // check box for list items
-  li::before {
+  li:before {
     content: " ";
-    border-radius: 8px;
-    border: 3px solid #abdbea;
-    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid #ABDBEA;
+    padding: 5px;
     float: left;
-    margin-left: -40px;
+    margin-left: -30px;
+    margin-top: 7px;
+  }
+  label {
+    font-weight: normal;
+    margin-left: 6px;
   }
 }
 
@@ -220,4 +223,32 @@ table {
     width: 100%;
     height: 100%;
   }
+}
+
+input[type="checkbox"] {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+input[type="checkbox"] + label {
+  position: relative;
+  margin-left: 10px;
+  font-weight: normal;
+}
+input[type="checkbox"] + label:before {
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  margin: 0 0.8em -0.1em -1em;
+  line-height: 0.8;
+  text-align: center;
+  /* Put checkbox styles here: */
+  border: 3px solid #ABDBEA;
+}
+input[type="checkbox"]:checked + label:before {
+  content: '✔';
+  line-height: 0.8em;
+  text-align: center;
 }
