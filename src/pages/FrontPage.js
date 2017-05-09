@@ -32,6 +32,10 @@ export const  FrontPage = React.createClass({
                 <ButtonItem color='blue' onClick={() => this.props.setModeTeacher()}>
                   Lærer/Veileder
                 </ButtonItem>
+                {/* Continue button functionality to be implemented here */}
+                {/*<ButtonItem color='darkblue'>
+                  Fortsett...
+                </ButtonItem>*/}
               </div>
             </Row>
           : null}

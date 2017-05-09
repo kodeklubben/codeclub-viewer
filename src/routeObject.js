@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
@@ -48,7 +50,8 @@ const pathTest = (nextState, replace) => {
 * to replace the URL without a page refresh.
 */
 const saveURL = (nextState, replace) => {
-  const path = nextState.location.state;
+  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
+  const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
   if(typeof history.replaceState !== 'undefined'){
     history.replaceState(null, null, path);
   }

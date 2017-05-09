@@ -4,6 +4,8 @@ $button-blue: #46cccc;
 $button-blue-hover: #3a9b94;
 $button-green: #46cc46;
 $button-green-hover: #359e37;
+$button-darkblue: #3a9b94;
+$button-darkblue-hover: #215651;
 
 .fontButton {
   font-family: $font-family-roboto;
@@ -20,6 +22,23 @@ $button-green-hover: #359e37;
   border: none;
   display: inline-block;
   transition: all 0.1s ease-in-out;
+}
+
+/* Css for the 'Continue' button on frontpage */
+.darkblue {
+  composes: button;
+  background-color: $button-darkblue;
+  width: 250px;
+  height: 90px;
+  border-radius: 50px;
+  font-style: italic;
+  font-size: 1.8em;
+  &:hover,
+  &:active:focus,
+  &:focus {
+    background-color: $button-darkblue-hover;
+    outline: none;
+  }
 }
 
 .green {
