@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setModeStudent, setLanguage, setLocalStorage} from './action_creators';
+import {setContext, setFilter, setLessons, setMode, setLanguage, setLocalStorage} from './action_creators';
 import reducer from './reducer';
 import * as storage from './localStorage';
 
@@ -35,7 +35,7 @@ store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setLessons(lessons));
-store.dispatch(setModeStudent());
+store.dispatch(setMode(localStorage.studentMode));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 store.dispatch(setLanguage(localStorage.lastLanguage));
 store.dispatch(setLocalStorage(localStorage));

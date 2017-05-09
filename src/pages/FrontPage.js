@@ -9,23 +9,23 @@ import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
 import {setModeTeacher} from '../action_creators';
-import {rememberLanguage} from '../localStorage';
+import {rememberLanguage, rememberMode} from '../localStorage';
 
 export const  FrontPage = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.object
   },
-  
+
   render() {
-    const language = this.props.language;
+    rememberLanguage(this.props.language);
+    rememberMode(this.props.isStudentMode);
     return (
       <Grid fluid={true}>
-        {rememberLanguage(language)}
         {/* Buttons */}
         {this.props.isStudentMode
           ? <Row>
-              <WelcomeBox isStudentMode={false}/>                           
+              <WelcomeBox isStudentMode={false}/>
             </Row>
           : null}
 
@@ -67,6 +67,7 @@ export const FrontPageContainer = connect(
   mapStateToProps,
   {
     setModeTeacher,
-    rememberLanguage
+    rememberLanguage,
+    rememberMode
   }
 )(withStyles(styles)(FrontPage));

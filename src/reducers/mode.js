@@ -6,6 +6,8 @@ export default function(state=true, action) {
       return false;
     case 'CHANGE_MODE':
       return !state;
+    case 'SET_MODE':
+      return action.payload;
   }
 
   return state;
