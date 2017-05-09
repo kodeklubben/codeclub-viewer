@@ -57,6 +57,15 @@ function buildPdf(dir) {
       else if (data.match(/language:/)) {
         this.queue(data.replace(/(language: [a-zA-Z-]*)/, '') +'\n\n')
       }
+      else if (data.match(/logo: /)) {
+          this.queue(data.replace(/(logo: .*)/, '') +'\n\n')
+      }
+      else if (data.match(/license: /)) {
+          this.queue(data.replace(/(license: .*)/, '') +'\n\n')
+      }
+      else if (data.match(/translator: /)) {
+          this.queue(data.replace(/(translator: [a-zA-Z\s]*)/, '') +'\n\n')
+      }
 
       else if (data.match(/```[a-zA-Z]+/) && !data.match(/```[a-zA-Z0-9:./]+```/) && inBlock === false) {
         blockType = data.replace(/(\s?)*```([a-zA-Z]+)/, "$2");
@@ -69,7 +78,7 @@ function buildPdf(dir) {
         inBlock = true;
       }
       else if (inBlock) {
-        if (data.match("```")){ 
+        if (data.match("```")){
           this.queue(codeBlock(data)+'\n');
           block += 1;
           inBlock = false;
@@ -87,7 +96,7 @@ function buildPdf(dir) {
       else if (data.match(/#+\s?\{\.(pro)?tip\}/)) { //needs work
         this.queue(data.replace(/(#+\s?)\{.((pro)?tip)\}/, "$1\u0000 {$2}")+ "\n")
       }
-      else if (data.match(/#+\s\{\.check\}/)) { //needs work 
+      else if (data.match(/#+\s\{\.check\}/)) { //needs work
         this.queue(data.replace(/(#+)\s\{\.check\}/, "$1 \u0000 {check} ") +'\n');
       }
       else if (data.match(/#+[a-zA-ZæøåÆØÅ\s]\{\.[a-zA-Z]+\}/)) {
@@ -143,12 +152,12 @@ function buildPdf(dir) {
     else if (!data.match(/```[a-zA-Z]+/) && data.match("```")) {
       temp[block] += data;
       return(temp[block]);
-    } 
+    }
     else {
       temp[block] += data+'\n';
     }
   }
-  
+
   function preProcessHTML () {
     var splitter = split();
     let section = false;

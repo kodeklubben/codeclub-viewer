@@ -53,12 +53,6 @@ ul {
   margin-left: -20px;
 }
 
-pre.blocks,
-code.b {
-  background-color: inherit;
-  border: 0;
-}
-
 .blocks {
   background-color: inherit;
   border: 0;
