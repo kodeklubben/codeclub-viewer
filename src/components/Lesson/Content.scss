@@ -226,6 +226,7 @@ table {
 }
 
 input[type="checkbox"] {
+  display: block;
   opacity: 0;
   filter: alpha(opacity=0);
 }
@@ -241,7 +242,7 @@ input[type="checkbox"] + label:before {
   left: 0;
   width: 1em;
   height: 1em;
-  margin: 0 0.8em -0.1em -1em;
+  margin: 0 0.8em -0.1em -0.7em;
   line-height: 0.8;
   text-align: center;
   /* Put checkbox styles here: */
