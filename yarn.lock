@@ -3517,6 +3517,12 @@ markdown-it-attrs@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/markdown-it-attrs/-/markdown-it-attrs-0.5.1.tgz#41e7b6cfe03ecd86fef29e84d3b6677089845704"
 
+markdown-it-checkbox@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/markdown-it-checkbox/-/markdown-it-checkbox-1.1.0.tgz#20cff97f33d77d172f9dcf1bcfc92cecc5330fac"
+  dependencies:
+    underscore "^1.8.2"
+
 markdown-it-header-sections@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/markdown-it-header-sections/-/markdown-it-header-sections-0.2.2.tgz#77e47a3e32c7fce6be2aefe3f7a72a4f09a34455"
@@ -5720,7 +5726,7 @@ uncontrollable@^4.0.1:
   dependencies:
     invariant "^2.1.0"
 
-underscore@^1.8.3:
+underscore@^1.8.2, underscore@^1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
