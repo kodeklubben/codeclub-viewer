@@ -10,6 +10,7 @@ export default {
     }
   },
   frontpage: {
+<<<<<<< HEAD
     courses: 'COurses',
     otherwebsitecourses: 'Courses on other webpages',
     cmd: 'Command line',
@@ -32,6 +33,12 @@ export default {
       info2: 'Our assignment sets out make the children work a lot on their own with different projects, but we recommend starting each session with 10-15 minute intro to what to do and what may be new this time. Now you can easily filter tasks on topics, and all assignments have instructions that you can check in preparation for the sessions. For beginners, we recommend block-based programming, where Python / Web / Processing is the most common to proceed with afterwards.',
       link2: 'Learn more about running a code club'
     }
+=======
+    courses: 'Courses',
+    otherwebsitecourses: 'Courses on other webpages',
+    cmd: 'Command line',
+    nocomputer: 'No computer'
+>>>>>>> 7451f4d16f3a2e7069c96717c468bcbdeffa9ae7
   },
   playlist: {
     lessons: 'Lessons',
@@ -71,4 +78,8 @@ export default {
     textline1: 'The webpage you are looking for we can not find.',
     tofrontpage: 'To frontpage'
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 7451f4d16f3a2e7069c96717c468bcbdeffa9ae7
