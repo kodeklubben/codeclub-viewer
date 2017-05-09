@@ -13,7 +13,6 @@ export default {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
     cmd: 'Kommandolinje',
-<<<<<<< HEAD
     nocomputer: 'Uten Datamaskin',
     welcomebox: {
       header: 'Hei! Du er nå i elevmodus',
@@ -32,10 +31,7 @@ export default {
       assistant: 'Veileder',
       info2: 'Våre oppgavesett legger opp til at barna jobber mye på egenhånd med ulike prosjekter, men vi anbefaler å starte hver økt med 10-15 min intro til hva man skal gjøre og hva som eventuelt er nytt denne gangen. Nå kan du enkelt filtrere oppgaver på temaer, og alle oppgavesett har veiledninger du kan sjekke ut som forberedelse til øktene. For nybegynnere så anbefaler vi blokkbasert programmering, hvor Python / Web / Processing er de vanligste å gå videre med etterpå.',
       link2: 'Lær mer om å drive en kodeklubb'
-    }          
-=======
-    nocomputer: 'Uten Datamaskin'
->>>>>>> 7451f4d16f3a2e7069c96717c468bcbdeffa9ae7
+    }
   },
   playlist: {
     lessons: 'Oppgaver',
