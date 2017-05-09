@@ -21,10 +21,10 @@
     padding-bottom: 10px;
     margin-left: 45px;
   }
-  li:before {
+  li::before {
     content: " ";
     border-radius: 20px;
-    border: 3px solid #ABDBEA;
+    border: 3px solid #abdbea;
     padding: 5px;
     float: left;
     margin-left: -30px;
@@ -230,12 +230,14 @@ input[type="checkbox"] {
   opacity: 0;
   filter: alpha(opacity=0);
 }
+
 input[type="checkbox"] + label {
   position: relative;
   margin-left: 10px;
   font-weight: normal;
 }
-input[type="checkbox"] + label:before {
+
+input[type="checkbox"] + label::before {
   content: '';
   display: inline-block;
   visibility: visible;
@@ -245,10 +247,10 @@ input[type="checkbox"] + label:before {
   margin: 0 0.8em -0.1em -0.7em;
   line-height: 0.8;
   text-align: center;
-  /* Put checkbox styles here: */
-  border: 3px solid #ABDBEA;
+  border: 3px solid #abdbea;
 }
-input[type="checkbox"]:checked + label:before {
+
+input[type="checkbox"]:checked + label::before {
   content: '✔';
   line-height: 0.8em;
   text-align: center;
