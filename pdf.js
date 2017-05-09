@@ -156,6 +156,11 @@ function buildPdf(dir) {
     block = 0;
     var replacer = through(function (data) {
       console.log(data);
+      if (section && data.match(/<h[1-4]\sclass=\"/)) {
+        console.log("qwertyuiop")
+        section = false;
+        data = '</section>\n\n'+data;
+      }
       if (data.match(/<code>[æøåÆØÅa-zA-Z\s]*<\/code>\{block[a-z]*\}/g)) {
         //console.log(data);
         this.queue(data.replace(/(<code>)([æøåÆØÅa-zA-Z\s]*)(<\/code>\{)(block[a-z]*)\}/g, '<code class="$4">$2</code>') + '\n');
@@ -171,9 +176,13 @@ function buildPdf(dir) {
         this.queue(data);
         inBlock = false;
       }
-      else if (data.match(/<h3 class=\"(pro)?tip\">/)) {
+      else if (data.match(/<h[1-4] class=\"(pro)?tip\">/)) {
         section = true;
-        this.queue(data.replace(/(<h3) (class=\"(pro)?tip\">)/, '<section $2$1'));
+        this.queue(data.replace(/(<h[1-4]) (class=\"(pro)?tip\">)/, '\n<section $2$1')+'\n');
+      }
+      else if (data.match(/<h[1-4] class=\"challenge\">/)) {
+        section = true;
+        this.queue(data.replace(/(<h[1-4]) (class=\"challenge\">)/, '\n<section $2$1')+'\n');
       }
       else {
         this.queue(data);
