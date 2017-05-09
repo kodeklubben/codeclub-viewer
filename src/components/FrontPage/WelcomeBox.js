@@ -35,7 +35,7 @@ const WelcomeBox = React.createClass({
             {welcomeInfo.student[lang]}
             <br /><br />
             <div className={styles.center}>
-              {true ?
+              {localStorage.lastLesson === 0 ?
               <ButtonItem color='green' onClick={() => this.context.router.push(welcomeInfo.buttonLink[lang])}>
                 {welcomeInfo.buttonText[lang]}
               </ButtonItem>
@@ -49,7 +49,7 @@ const WelcomeBox = React.createClass({
     else {
       return (
       <div className={styles.center}>
-       {true ?
+       {localStorage.lastLesson === 0 ?
         <ButtonItem color='green' onClick={() => this.context.router.push(welcomeInfo.buttonLink[lang])}>
           {welcomeInfo.buttonText[lang]}
         </ButtonItem>
@@ -66,7 +66,8 @@ WelcomeBox.propTypes = {
   externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
   localStorage: PropTypes.object,
-  language: PropTypes.string
+  language: PropTypes.string,
+  lastLesson: PropTypes.number
 };
 
 function mapStateToProps(state) {

@@ -1,12 +1,18 @@
 import store from './store';
 import {setLocalStorage} from './action_creators';
-const defaultLocalStorage = { 'hideWelcomeBox': false, 'lastLanguage': 'nb', 'studentMode': true, 'lastLesson': 0 };
+const defaultLocalStorage = { 'hideWelcomeBox': false, 'lastLanguage': 'nb',
+  'studentMode': true, 'lastLesson': 0 };
+const setItems = () => localStorage.setItem(defaultLocalStorage,
+  JSON.stringify(defaultLocalStorage));
 
 //Introduces localStorage
 export function loadLocalStorage() {
   if (typeof(Storage) !== 'undefined') {
     if (localStorage.length === 0) {
-      localStorage.setItem(defaultLocalStorage, JSON.stringify(defaultLocalStorage));
+      setItems();
+    }
+    else {
+      console.log('Ikke første gangen');
     }
   }
   else {
@@ -18,17 +24,17 @@ export function loadLocalStorage() {
 //Removes welcomeBox
 export function doNotShowAgain() {
   defaultLocalStorage.hideWelcomeBox = true;
-  localStorage.setItem(defaultLocalStorage, JSON.stringify(defaultLocalStorage));
+  setItems();
   store.dispatch(setLocalStorage(defaultLocalStorage));
 }
 
 //Adds language to localStorage
 export function rememberLanguage(language) {
   defaultLocalStorage.lastLanguage = language;
-  localStorage.setItem(defaultLocalStorage, JSON.stringify(defaultLocalStorage));
+  setItems();
 }
 
 export function rememberMode(isStudentMode) {
   defaultLocalStorage.studentMode = isStudentMode;
-  localStorage.setItem(defaultLocalStorage, JSON.stringify(defaultLocalStorage));
+  setItems();
 }
