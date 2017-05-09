@@ -66,8 +66,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const tags = {...courseTags, ...lessonTags};
 
     // Gets the valid readmePath for the lesson, if it exists
-    const readmePath = getReadMePath(readmeContext, language, path.slice(1, path.lastIndexOf('/')));
-    const hasReadme = readmePath !== -1;
+    const readmePath = getReadmePath(readmeContext, language, path);
 
     res[path] = {
       title: lessonFrontmatter.title || '',
@@ -75,7 +74,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       level: lessonFrontmatter.level,
       indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
       external: lessonFrontmatter.external || '',
-      readmePath: hasReadme ? readmePath : '',
+      readmePath: readmePath,
       course: courseName,
       language: language,
       tags,
@@ -106,7 +105,8 @@ export function getInfo(context) {
 * Checks if a lesson with a given path has a README-file.
 * Accepts README-files on the form /README or /README_(ISO_CODE).
 **/
-const getReadMePath = (readmeContext, language, path) => {
+const getReadmePath = (readmeContext, language, path) => {
+  path = path.slice(1, path.lastIndexOf('/'));
   const readmeContextKeys = readmeContext.keys();
   const readmePathAndLanguageCode = path + '/README_' + language;
   const readmePathNoLanguageCode = path + '/README';
@@ -116,10 +116,10 @@ const getReadMePath = (readmeContext, language, path) => {
   }
   else if(readmeContextKeys.indexOf('.' + readmePathNoLanguageCode + '.md') !== -1){
     if(language === readmeContext('.' + readmePathNoLanguageCode + '.md').frontmatter.language){
-      return path + '/README';
+      return readmePathNoLanguageCode;
     }
   }
-  return -1;
+  return '';
 };
 
 /**
@@ -202,3 +202,18 @@ export function removeHtmlFileEnding(lessonPage) {
   // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
   return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
 }
+
+/**
+* Returns the readmePath of a lesson with the given lessonPath
+*
+* @param {Object} lessons
+* @param {String} lessonPath
+* @returns {String or undefined}
+*/
+export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
+  for(let key of Object.keys(lessons)){
+    if(lessons[key].readmePath === lessonPath){
+      return lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;
+    }
+  }
+};

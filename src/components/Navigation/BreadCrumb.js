@@ -46,7 +46,7 @@ function mapStateToProps(state, ownProps) {
     try {
       title = state.context.readmeContext(lessonPath).frontmatter.title;
     }catch(e){
-      title = 'No title';
+      title = '';
     }
   }
   return {

@@ -10,59 +10,52 @@ import processContent from './processContent';
 import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
-import {removeHtmlFileEnding} from '../../util.js';
+import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {connect} from 'react-redux';
 import {setModeTeacher, setLanguage} from '../../action_creators';
 
+const InstructionButton = ({buttonPath, buttonText}) => {
+  return (buttonPath ?
+    <LinkContainer to={buttonPath}>
+      <Button componentClass="div" className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
+        {buttonText}
+      </Button>
+    </LinkContainer> :
+    null);
+};
+
+const ReadmeButton = ({path, lessons}) => {
+  const contextPath = './' + path + '.md';
+  const buttonPath = (lessons[contextPath] || {}).readmePath;
+  return <InstructionButton buttonPath={buttonPath} buttonText={'Til lærerveiledning'}/>;
+};
+
+const LessonButton = ({path, lessons}) => {
+  const lessonPath = '/' + path;
+  const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
+  return <InstructionButton buttonPath={buttonPath} buttonText={'Til oppgave'}/>;
+};
 
 const Lesson = React.createClass({
   getTitle() {
-    return this.props.lesson.frontmatter.title ? this.props.lesson.frontmatter.title : '';
+    return this.props.lesson.frontmatter.title || '';
   },
   getLevel() {
-    return this.props.lesson.frontmatter.level ? this.props.lesson.frontmatter.level : 0;
+    return this.props.lesson.frontmatter.level || 0;
   },
   getAuthor() {
-    return this.props.lesson.frontmatter.author ? this.props.lesson.frontmatter.author : '';
+    return this.props.lesson.frontmatter.author || '';
   },
   getLanguage() {
-    return this.props.lesson.frontmatter.language ? this.props.lesson.frontmatter.language : '';
+    return this.props.lesson.frontmatter.language || '';
   },
   createMarkup(){
     return {
       __html: removeHtmlFileEnding(this.props.lesson.content)
     };
-  },
-  getButton(path){
-    const lessons = this.props.lessons;
-    let lessonOrReadme = typeof(lessons['./' + path + '.md']) !== 'undefined'
-    ? lessons['./' + path + '.md']['readmePath'] : undefined;
-    const buttonText = lessonOrReadme ? 'Til lærerveiledning' : 'Til oppgave';
-
-    if(!lessonOrReadme){
-      for(let key in lessons){
-        if(lessons[key]['readmePath'] === '/' + path){
-          lessonOrReadme = lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;
-        }
-      }
-    }
-    return (lessonOrReadme ?
-      <LinkContainer to={lessonOrReadme}>
-        <Button componentClass="div" className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
-          {buttonText}
-        </Button>
-      </LinkContainer> : null
-    );
-  },
-  isReadme(path){
-    try{
-      return this.props.readmeContext('./' + path + '.md');
-    }catch(e){
-      return;
-    }
   },
   setLanguage(){
     const lessonLanguage = this.getLanguage();
@@ -77,7 +70,7 @@ const Lesson = React.createClass({
     }
     this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
 
-    if(this.isReadme(this.props.path)) this.props.setModeTeacher();
+    if(this.props.isReadme) this.props.setModeTeacher();
     /*Comment this in when language is implemented
     Changes the language state to the language defined in the current lesson or readme-file*/
     //this.setLanguage();
@@ -99,8 +92,9 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const instructionBtn = !this.props.isStudentMode || this.isReadme(this.props.path)
-    ? this.getButton(this.props.path) : null;
+    const {path, lessons, isReadme, isStudentMode} = this.props;
+    const instructionBtn = isReadme ? <LessonButton {...{path, lessons}}/> :
+      isStudentMode ? null : <ReadmeButton {...{path, lessons}}/>;
     return (
       <div className={styles.container}>
         <h1>
@@ -128,19 +122,17 @@ Lesson.propTypes = {
   path: PropTypes.string,
   lessons: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  readmeContext: PropTypes.func,
   setModeTeacher: PropTypes.func,
-  setLanguage: PropTypes.func
+  setLanguage: PropTypes.func,
+  isReadme: PropTypes.bool
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isStudentMode: state.isStudentMode,
-    lessons: state.lessons,
-    readmeContext: state.context.readmeContext,
-    language: state.language
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  isStudentMode: state.isStudentMode,
+  lessons: state.lessons,
+  language: state.language,
+  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1
+});
 
 export default connect(
   mapStateToProps,
