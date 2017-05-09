@@ -131,7 +131,7 @@ function buildPdf(dir) {
       // lines containing no text after tags (/##\s\n/)
 
       else if (data == "#" || data == "##" || data == " ##") {
-        this.queue(data.replace(/\s?#{1,2}/, ""))
+        this.queue(data.replace(/(\s?#{1,4})/, "$1 \u0000")+'\n')
       }
 
       else if (data.match(/(\{)\.([a-zA-Z]*\})/)) {
@@ -165,7 +165,7 @@ function buildPdf(dir) {
     block = 0;
     var replacer = through(function (data) {
       console.log(data);
-      if (section && data.match(/<h[1-4]\sclass=\"/)) {
+      if (section && data.match(/<h[1-4]\sclass=\"/) || data.match(/<h[1-4]>\u0000<\/h[1-4]>/)) {
         console.log("qwertyuiop")
         section = false;
         data = '</section>\n\n'+data;
@@ -192,6 +192,10 @@ function buildPdf(dir) {
       else if (data.match(/<h[1-4] class=\"challenge\">/)) {
         section = true;
         this.queue(data.replace(/(<h[1-4]) (class=\"challenge\">)/, '\n<section $2$1')+'\n');
+      }
+      else if (data.match(/<h[1-4] class=\"try\">/)) {
+        section = true;
+        this.queue(data.replace(/(<h[1-4]) (class=\"try\">)/, '\n<section $2$1')+'\n');
       }
       else {
         this.queue(data);
