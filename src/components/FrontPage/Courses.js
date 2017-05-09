@@ -4,28 +4,18 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
-//import t from '../../selectors/translate';
+import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
 
-import {funky} from '../../util';
-import {translate} from '../../util';
 export const Courses = React.createClass({
 
   render() {
-    const language = this.props.language;
-    const coursesHeadline = funky(language, "courses");
-    console.log("*****************************************");
-
-    const temp = translate('frontpage.nocomputer');
-    console.log(temp);
-
-
-
+    const {courses, externalCourses, t} = this.props;
     return (
       <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
         <Row>
           <Col xs={12}>
-            <h2>{coursesHeadline}</h2>
+            <h2>{t('frontpage.courses')}</h2>
             <CourseList courses={this.props.courses}/>
           </Col>
         </Row>
@@ -46,12 +36,12 @@ export const Courses = React.createClass({
 Courses.propTypes = {
   courses: PropTypes.object,
   externalCourses: PropTypes.object,
-  language: PropTypes.string
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    language: state.language,
+    t: getTranslator(state),
     courses: getFilteredCourses(state),
     externalCourses: getFilteredExternalCourses(state)
   };
