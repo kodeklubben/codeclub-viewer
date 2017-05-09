@@ -67,10 +67,10 @@ function buildPdf(dir) {
           this.queue(data.replace(/(translator: [a-zA-Z\s]*)/, '') +'\n\n')
       }
 
-      else if (data.match(/```[a-zA-Z]+/) && !data.match(/```[a-zA-Z0-9:./]+```/) && inBlock === false) {
-        blockType = data.replace(/(\s?)*```([a-zA-Z]+)/, "$2");
+      else if (data.match(/\s*```[a-zA-Z]+/) && !data.match(/```[a-zA-Z0-9:./]+```/) && inBlock === false) {
+        blockType = data.replace(/(\s*)```([a-zA-Z]+)/, "$2");
         if (blockType != "blocks") {
-          temp[block] = data+" \n";
+          temp[block] = data.replace(/\s*(```[a-zA-Z]+)/, '$1')+" \n";
         }
         else {
           temp[block] = "\n"
@@ -119,8 +119,9 @@ function buildPdf(dir) {
       //[`on_key_down()`]: https://pygame-zero.readthedocs.org/en/latest/hooks.html?highlight=on_key_down#on_key_down
       //[`animate()`]: https://pygame-zero.readthedocs.org/en/latest/builtins.html?highlight=rect#animations
 
-      else if (data.match(/\[`?[a-zA-Z\s_-]+\(?\)?`?\]:\s?https?:\/\/.+/)) {
-        this.queue(data.replace(/\[(\`?[a-zA-Z\s]+\(?\)?\`?)\]:\s?(https?:\/\/.+)/, "[$1]$2")+'\n')
+      else if (data.match(/\[`?[a-zA-Z\s\._-]+\(?\)?`?\]:\s?https?:\/\/.+/)) {
+        console.log("asdfghjkl");
+        this.queue(data.replace(/\[(\`?[a-zA-Z\s\._-]+\(?\)?\`?)\]:\s?(https?:\/\/.+)/, "[$1]($2)")+'\n');
       }
       else if (data.match(/\[.+\]:\s?..\/.+/)) {
         this.queue(data.replace(/(\[.+\]):\s(..\/.+)/, "$1$2\n") +'\n')
@@ -165,7 +166,7 @@ function buildPdf(dir) {
     block = 0;
     var replacer = through(function (data) {
       console.log(data);
-      if (section && data.match(/<h[1-4]\sclass=\"/) || data.match(/<h[1-4]>\u0000<\/h[1-4]>/)) {
+      if (section && data.match(/<h[1-4]/)) {
         console.log("qwertyuiop")
         section = false;
         data = '</section>\n\n'+data;
@@ -185,17 +186,9 @@ function buildPdf(dir) {
         this.queue(data);
         inBlock = false;
       }
-      else if (data.match(/<h[1-4] class=\"(pro)?tip\">/)) {
+      else if (generateSection(data) != "") {
         section = true;
-        this.queue(data.replace(/(<h[1-4]) (class=\"(pro)?tip\">)/, '\n<section $2$1')+'\n');
-      }
-      else if (data.match(/<h[1-4] class=\"challenge\">/)) {
-        section = true;
-        this.queue(data.replace(/(<h[1-4]) (class=\"challenge\">)/, '\n<section $2$1')+'\n');
-      }
-      else if (data.match(/<h[1-4] class=\"try\">/)) {
-        section = true;
-        this.queue(data.replace(/(<h[1-4]) (class=\"try\">)/, '\n<section $2$1')+'\n');
+        this.queue(generateSection(data));
       }
       else {
         this.queue(data);
@@ -217,6 +210,19 @@ function renderScratchBlocks(content) {
 function generateCodeBlock(content) {
   console.log("CB: " + content);
   return content;
+}
+
+function generateSection(data) {
+  if (data.match(/<h[1-4] class=\"(pro)?tip\">/)) {
+    return(data.replace(/(<h[1-4]) (class=\"(pro)?tip\">)/, '\n<section $2$1>')+'\n');
+  }
+  else if (data.match(/<h[1-4] class=\"challenge\">/)) {
+    return(data.replace(/(<h[1-4]) (class=\"challenge\">)/, '\n<section $2$1>')+'\n');
+  }
+  else if (data.match(/<h[1-4] class=\"try\">/)) {
+    return(data.replace(/(<h[1-4]) (class=\"try\">)/, '\n<section $2$1>')+'\n');
+  }
+  return "";
 }
 
 function init() {
@@ -243,7 +249,7 @@ function getDirectories (rootDir) {
 
 function getFileName(dir) {
   let subDirName = dir.split("/").pop().toLowerCase();
-  const re = new RegExp(subDirName + "[0-9]*\.md")
+  const re = new RegExp(/(?!README(_[a-zA-Z]{2})?\.md$)[^\/]*\.md/);
   const fs = require('fs');
 
   return fs.readdirSync(dir)
