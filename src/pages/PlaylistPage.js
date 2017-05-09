@@ -15,9 +15,6 @@ import HeadRow from '../components/PlaylistPage/HeadRow';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
-import Collapse from 'react-bootstrap/lib/Collapse';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 export const PlaylistPage = React.createClass({
   getLessonsByLevel(lessons) {
@@ -122,7 +119,6 @@ PlaylistPage.propTypes = {
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }),
-  isStudentMode: PropTypes.bool
 };
 
 function mapStateToProps(state, props) {
@@ -130,7 +126,6 @@ function mapStateToProps(state, props) {
     isStudentMode: state.isStudentMode,
     filteredAndIndexedLessons: getFilteredAndIndexedLessons(state, props.params.course),
     filteredPlaylists: getPlaylists(state, props.params.course),
-    isStudentMode: state.isStudentMode
   };
 }
 
