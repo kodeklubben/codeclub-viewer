@@ -43,6 +43,101 @@
   display: block;
 }
 
+h1, .h1 {
+    font-size: 41px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+    margin-top: 22px;
+    margin-bottom: 11px;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: -10.9;
+    color: inherit;
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+span.hljs-comment {
+  color: #808080;
+  font-style: italic;
+}
+
+span.hljs-string {
+  color: #008000;
+  font-weight: bold;
+}
+
+span.hljs-number {
+  color: #0000ff;
+  font-weight: normal;
+}
+
+span.hljs-keyword {
+  font-weight: bold;
+  color: #000080;
+}
+
+img {
+  vertical-align: middle;
+  border: 0;
+}
+
+pre {
+  display: block;
+  padding: 10.5px;
+  margin: 0 0 11px;
+  font-size: 15px;
+  line-height: 1.42857;
+  word-break: break-all;
+  word-wrap: break-word;
+  color: #333333;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+figure {
+  margin: 0;
+}
+
+figure > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
+  display: block;
+}
+
+pre > code {
+  background-color: transparent;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+pre code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+code, kbd, pre, samp {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
 pre.blocks,
 code.b {
   background-color: inherit;
@@ -87,6 +182,10 @@ ul {
 body {
   padding-left: 15px;
   padding-right: 15px;
+  line-height: 1.42857;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #333333;
+  background-color: #fff;
 }
 
 .intro {
@@ -106,12 +205,10 @@ body {
 }
 
 .activity {
-  background-color: #349946;
-  padding-left: 10px;
-  margin-left: -10px;
-  margin-right: -10px;
-  color: white;
-  border-radius: 5px;
+    color: #fff;
+    background: #349946;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 span[class^="hljs-"], span[class*=" hljs-"] {
@@ -191,8 +288,11 @@ h2.check {
   padding: 1px 20px 10px;
 }
 code {
-  background-color: #fff;
-  color: #007cc9;
+    padding: 2px 4px;
+    font-size: 90%;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+    color: #c7254e;
 }
 li.try::before {
   border: 3px solid #fff;
