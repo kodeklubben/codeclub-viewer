@@ -42,54 +42,56 @@ function buildPdf(dir) {
     var splitter = split()
     var replacer = through(function (data) {
       //console.log(data)
-      if (data.match(/```[a-zA-Z]+/) && inBlock === false) {
-        console.log("dataMatch");
-        temp[block] = data;
-        blockType = data.replace(/```([a-zA-Z]+)/, "$1");
-        inBlock = true;
-      }
-      else if (data.match(/---/)) {
+      if (data.match(/---/)) {
         this.queue(data.replace(/---/, '') +'\n')
       }
       else if (data.match(/title: /)) {
-        this.queue(data.replace(/(title: )\"?([æøåÆØÅa-zA-Z\s]+)\"?/, '$2{title}') +'\n\n')
-      } 
+        this.queue(data.replace(/(title: )\"?([^"]+)\"?/, '$2{title}') +'\n\n')
+      }
       else if (data.match(/level: /)) {
-        this.queue(data.replace(/(level: )([0-9])/, 'Level $2{icon-$2}') +'\n\n')
-      } 
+        this.queue(data.replace(/(level: )\"?([0-9])\"?/, 'Level $2{icon-$2}') +'\n\n')
+      }
       else if (data.match(/author: /)) {
-        this.queue(data.replace(/(author: )/, 'av ') +'{author}\n')
-      } 
+        this.queue(data.replace(/(author: )\"?/, 'av ') +'{author}\n\n')
+      }
       else if (data.match(/language:/)) {
-        this.queue(data.replace(/(language: [a-zA-Z]*)/, '') +'\n')
+        this.queue(data.replace(/(language: [a-zA-Z-]*)/, '') +'\n\n')
+      }
+
+      else if (data.match(/```[a-zA-Z]+/) && !data.match(/```[a-zA-Z0-9:./]+```/) && inBlock === false) {
+        blockType = data.replace(/(\s?)*```([a-zA-Z]+)/, "$2");
+        if (blockType != "blocks") {
+          temp[block] = data+" \n";
+        }
+        else {
+          temp[block] = "\n"
+        }
+        inBlock = true;
       }
       else if (inBlock) {
-        if (blockType == "blocks" && data.match("```")) {
-          this.queue(renderScratchBlocks(temp[block]))
+        if (data.match("```")){ 
+          this.queue(codeBlock(data)+'\n');
           block += 1;
           inBlock = false;
         }
-        else if (!data.match(/```[a-zA-Z]+/) && data.match("```")) {
-          temp[block] += data;
-          this.queue(generateCodeBlock(temp[block]));
-          block += 1;
-          inBlock = false;
-        } 
         else {
-          temp[block] += data+'\n';
+          codeBlock(data);
         }
       }
 
       // find a solution for any tag/ line with format
       // /#\s\{\.[a-zA-Z]*\}/
-      else if (data.match(/#*\s\{\.[a-zA-Z]*\}/)) {
-        this.queue(data.replace(/#*\s\{\.[a-zA-Z]*\}/, ""))
+      else if (data.match(/#\sIntroduksjon\s\{\.intro\}/)) {
+        this.queue(data.replace(/\{.intro\}/, "{intro} \n")+'\n');
       }
-      else if (data.match(/#*\s\{\.protip\}/)) { //needs work
-        this.queue(data.replace(/#*\s\{.protip\}/, ""))
+      else if (data.match(/#+\s?\{\.(pro)?tip\}/)) { //needs work
+        this.queue(data.replace(/(#+\s?)\{.((pro)?tip)\}/, "$1\u0000 {$2}")+ "\n")
       }
-      else if (data.match(/#*\s\{\.check\}/)) { //needs work 
-	      this.queue(data.replace(/#*\s\{\.check\}/, ""));
+      else if (data.match(/#+\s\{\.check\}/)) { //needs work 
+        this.queue(data.replace(/(#+)\s\{\.check\}/, "$1 \u0000 {check} ") +'\n');
+      }
+      else if (data.match(/#+[a-zA-ZæøåÆØÅ\s]\{\.[a-zA-Z]+\}/)) {
+        this.queue(data.replace(/([a-zA-ZæøåÆØÅ\s])\{\.([a-zA-Z]*)\}/, "$1{$2} \n")+'\n')
       }
 
       // Links need some pre-processing
@@ -108,13 +110,11 @@ function buildPdf(dir) {
       //[`on_key_down()`]: https://pygame-zero.readthedocs.org/en/latest/hooks.html?highlight=on_key_down#on_key_down
       //[`animate()`]: https://pygame-zero.readthedocs.org/en/latest/builtins.html?highlight=rect#animations
 
-      else if (data.match(/^\[`?[a-zA-Z\s]+\(?\)?`?\]:\s?https?:\/\/.+/)) {
-        console.log("0: "+data)
+      else if (data.match(/\[`?[a-zA-Z\s_-]+\(?\)?`?\]:\s?https?:\/\/.+/)) {
         this.queue(data.replace(/\[(\`?[a-zA-Z\s]+\(?\)?\`?)\]:\s?(https?:\/\/.+)/, "[$1]$2")+'\n')
       }
-      else if (data.match(/\[.+\]+:?\s?..\/.+/)) {
-        console.log("1: "+data);
-        this.queue(data.replace(/(\[.+\]):\s(..\/.+)/, "[$1]$2") +'\n')
+      else if (data.match(/\[.+\]:\s?..\/.+/)) {
+        this.queue(data.replace(/(\[.+\]):\s(..\/.+)/, "$1$2\n") +'\n')
       }
       //[Gjør oppgaven Hvor er HTML? Jeg ser den ikke!](../../web/hvor_er_html/hvor_er_html.html)
 
@@ -135,15 +135,45 @@ function buildPdf(dir) {
     splitter.pipe(replacer)
     return duplexer(splitter, replacer)
   }
+
+  function codeBlock(data) {
+    if (blockType == "blocks" && data.match("```")) {
+      return(renderScratchBlocks(temp[block]))
+    }
+    else if (!data.match(/```[a-zA-Z]+/) && data.match("```")) {
+      temp[block] += data;
+      return(temp[block]);
+    } 
+    else {
+      temp[block] += data+'\n';
+    }
+  }
   
   function preProcessHTML () {
-    var splitter = split()
+    var splitter = split();
+    let section = false;
+    inBlock = false;
     block = 0;
     var replacer = through(function (data) {
       console.log(data);
       if (data.match(/<code>[æøåÆØÅa-zA-Z\s]*<\/code>\{block[a-z]*\}/g)) {
         //console.log(data);
         this.queue(data.replace(/(<code>)([æøåÆØÅa-zA-Z\s]*)(<\/code>\{)(block[a-z]*)\}/g, '<code class="$4">$2</code>') + '\n');
+      }
+      else if (data.match('<pre><code class="language-')) {
+        inBlock = true;
+        this.queue(data.replace(/\n/g, '<br>')+'\n');
+      }
+      else if (inBlock && !data.match("</code></pre>")) {
+        this.queue(data.replace(/\n/g, '<br>')+'\n');
+      }
+      else if (inBlock && data.match("</code></pre>")) {
+        this.queue(data);
+        inBlock = false;
+      }
+      else if (data.match(/<h3 class=\"(pro)?tip\">/)) {
+        section = true;
+        this.queue(data.replace(/(<h3) (class=\"(pro)?tip\">)/, '<section $2$1'));
       }
       else {
         this.queue(data);
@@ -155,6 +185,7 @@ function buildPdf(dir) {
 }
 
 function renderScratchBlocks(content) {
+  console.log("scratch render: " + content);
   var scratchblocks = require('scratchblocks');
   var svg = scratchblocks(content);
 

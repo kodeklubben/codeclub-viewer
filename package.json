@@ -42,7 +42,9 @@
     ]
   },
   "dependencies": {
+    "canvas": "^1.6.5",
     "history": "^2.1.2",
+    "markdown-pdf": "^7.0.0",
     "posthtml-parser": "^0.2.0",
     "posthtml-render": "^1.0.6",
     "react": "^15.1.0",
@@ -53,8 +55,10 @@
     "react-router-bootstrap": "^0.23.1",
     "react-router-scroll": "^0.2.0",
     "redux": "^3.5.2",
+    "remarkable-classy": "^0.0.1",
     "reselect": "^2.5.1",
-    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
+    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1",
+    "split": "^1.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -111,4 +115,3 @@
     "yaml-front-matter": "^3.4.0"
   }
 }
->>>>>>> master
