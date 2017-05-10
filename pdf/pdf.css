@@ -113,6 +113,32 @@ span.hljs-title {
     font-weight: normal;
     color: #000;
 }
+
+span.hljs-variable, span.hljs-envvar, span.apache, span.hljs-sqbracket, span.nginx, span.hljs-built_in, span.hljs-name {
+    color: #660e7a;
+}
+
+section.check ul, section.check ol, section.activity ul, section.activity ol, section.save ul, section.save ol {
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+section.check li, section.activity li, section.save li {
+    list-style: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 45px;
+}
+
+.check li::before, .activity li::before, .save li::before {
+    content: " ";
+    border-radius: 8px;
+    border: 3px solid #abdbea;
+    padding: 10px;
+    float: left;
+    margin-left: -40px;
+}
+
 img {
   vertical-align: middle;
   border: 0;
@@ -148,6 +174,15 @@ article, aside, details, figcaption, figure, footer, header, main, menu, nav, se
   display: block;
 }
 
+pre code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+}
+
 pre > code {
   background-color: transparent;
   word-wrap: normal;
@@ -161,6 +196,17 @@ pre code {
     white-space: pre-wrap;
     background-color: transparent;
     border-radius: 0;
+}
+
+section.try {
+    background: #abdbea;
+    border-radius: 10px;
+    padding: 1px 20px 10px;
+}
+
+section.try code {
+    background-color: #fff;
+    color: #007cc9;
 }
 
 code, kbd, pre, samp {
