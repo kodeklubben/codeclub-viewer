@@ -171,6 +171,8 @@ export function fixNonArrayTagList(tagItems) {
 export function tagsMatchFilter(lessonTags, filter) {
   // lessonTags is e.g. {'tema': ['spill'], 'fag': ['naturfag']}
   // filter is e.g. {'tema': {'spill':false, 'animasjon': true}, 'utstyr': {'ipad': false, 'arduino': true}}}
+  const languageTags = Object.keys(filter['language']);
+  const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
   for (const groupName of Object.keys(filter)) { // groupName is e.g. 'tema'
     const filterGroup = filter[groupName]; // the whole filter group, e.g. {'spill':false, 'animasjon': true}
     const tagNames = Object.keys(filter[groupName]); // all tags in this filter group, e.g. ['spill','animasjon']
@@ -180,11 +182,11 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    if(groupName === 'language' && checkedTagNames.filter(tagName => lessonGroup.indexOf(tagName) !== -1).length > 0) { // lessonGroup doesn't contain checkedFilterTag
-        return true;
-      }
+    if(groupName === 'language' && (checkedLanguageTags.filter(tagName => lessonGroup.indexOf(tagName) !== -1).length === 0)){
+      return false;
+    }
     for (const checkedFilterTag of checkedTagNames) {
-      if (lessonGroup.indexOf(checkedFilterTag) === -1) { // lessonGroup doesn't contain checkedFilterTag
+      if (groupName !== 'language' && lessonGroup.indexOf(checkedFilterTag) === -1) { // lessonGroup doesn't contain checkedFilterTag
         return false;
       }
     }

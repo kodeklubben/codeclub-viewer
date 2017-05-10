@@ -49,7 +49,7 @@ export const getFilteredAndIndexedLessons = createSelector(
  */
 
 export const getAvailableLessons = createSelector(
-  [getFilter, getFilteredLessons, getLessons],
+  [getFilter, getFilteredAndIndexedLessons, getLessons],
   (current_filter = {}, filteredLessons = {}, lessons = {}) => {
 
     let availableLessons = {};
@@ -61,24 +61,11 @@ export const getAvailableLessons = createSelector(
       });
     });
 
-    Object.keys(current_filter).forEach(groupName => {
-      if(groupName === 'language'){
-        Object.keys(availableLessons).forEach(tag => {
-          Object.keys(lessons).forEach(lessonKey => {
-            const lesson = lessons[lessonKey];
-            if(groupName === 'language' && (lesson.tags[groupName] || []).indexOf(tag)!== -1){
-              availableLessons[tag]++;
-            }
-          })
-        })
-      }
-    });
-
     Object.keys(filteredLessons).forEach((lessonKey) => {
       const lesson = filteredLessons[lessonKey];
       Object.keys(availableLessons).forEach((tag) => {
         Object.keys(current_filter).forEach((groupName) => {
-          if(groupName !== 'language' &&(lesson.tags[groupName] || []).indexOf(tag)!== -1){
+          if((lesson.tags[groupName] || []).indexOf(tag)!== -1){
             availableLessons[tag]++;
           }
         });
