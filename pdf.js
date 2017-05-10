@@ -17,10 +17,12 @@ function buildPdf(dir) {
     preProcessMd: preProcessMD,
     preProcessHtml: preProcessHTML,
     remarkable: {
-        html: true,
-        breaks: true,
-        plugins: [ require('remarkable-classy') ],
-    syntax: [ 'footnote', 'sup', 'sub' ]
+      preset: "commonmark",
+      linkify: true,
+      html: true,
+      breaks: true,
+      plugins: [ require('remarkable-classy') ],
+      syntax: [ 'footnote', 'sup', 'sub' ]
     }
   }
 
@@ -35,14 +37,35 @@ function buildPdf(dir) {
       markdownpdf(options)
         .from(dir+"/"+oppg[o])
         .to(to, function () { console.log("Done") })
-      }
     }
+  }
 
   function preProcessMD () {
     var splitter = split()
     var replacer = through(function (data) {
       //console.log(data)
-      if (data.match(/---/)) {
+      if (inBlock) {
+        if (data.match("```")){
+          this.queue(codeBlock(data)+'\n');
+          block += 1;
+          inBlock = false;
+        }
+        else {
+          codeBlock(data);
+        }
+      }
+      else if (data.match(/\s*```[a-zA-Z]+/) && !data.match(/```[a-zA-Z0-9\.:/]+```/) && inBlock === false) {
+        blockType = data.replace(/(\s*)```([a-zA-Z]+)/, "$2");
+        if (blockType != "blocks") {
+          temp[block] = data.replace(/\s*(```[a-zA-Z]+)/, '$1')+" \n";
+        }
+        else {
+          temp[block] = "\n"
+        }
+        inBlock = true;
+      }
+
+      else if (data.match(/---/)) {
         this.queue(data.replace(/---/, '') +'\n')
       }
       else if (data.match(/title: /)) {
@@ -65,27 +88,6 @@ function buildPdf(dir) {
       }
       else if (data.match(/translator: /)) {
           this.queue(data.replace(/(translator: [a-zA-Z\s]*)/, '') +'\n\n')
-      }
-
-      else if (data.match(/\s*```[a-zA-Z]+/) && !data.match(/```[a-zA-Z0-9:./]+```/) && inBlock === false) {
-        blockType = data.replace(/(\s*)```([a-zA-Z]+)/, "$2");
-        if (blockType != "blocks") {
-          temp[block] = data.replace(/\s*(```[a-zA-Z]+)/, '$1')+" \n";
-        }
-        else {
-          temp[block] = "\n"
-        }
-        inBlock = true;
-      }
-      else if (inBlock) {
-        if (data.match("```")){
-          this.queue(codeBlock(data)+'\n');
-          block += 1;
-          inBlock = false;
-        }
-        else {
-          codeBlock(data);
-        }
       }
 
       // find a solution for any tag/ line with format
@@ -185,6 +187,12 @@ function buildPdf(dir) {
       else if (inBlock && data.match("</code></pre>")) {
         this.queue(data);
         inBlock = false;
+      }
+      else if (data.match(/```[a-zA-Z]+/)) {
+        this.queue(data.replace(/```[a-zA-Z]+/, "<pre><code>"));
+      }
+      else if (data == "```") {
+        this.queue(data.replace("```", "</code></pre>"))
       }
       else if (generateSection(data) != "") {
         section = true;
