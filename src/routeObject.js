@@ -10,8 +10,8 @@ const courses = store.getState().context['courseContext'].keys();
 const readmePaths = store.getState().context['readmeContext'].keys();
 
 const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
-const courseArray = courses.map((course) => course.slice(1).replace(/\/index.md/i, ''));
-const readmeArray = readmePaths.map((course) => course.slice(1).replace(/\.md/i, ''));
+const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));
+const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, ''));
 
 const validPathTest = (lesson, path) => {
   if(lesson){
