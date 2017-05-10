@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './WelcomeBox.scss';
-import {getInfo} from '../../util';
 import ButtonItem from '../ButtonItem';
 
 const WelcomeBox = React.createClass({
@@ -15,9 +14,6 @@ const WelcomeBox = React.createClass({
   },
 
   render() {
-    const welcomeBoxContext = require.context('onlyFrontmatter!lessonSrc/', false, /index\.md/);
-    const welcomeInfo = getInfo(welcomeBoxContext);
-    const lang = this.props.language;
     const localStorage = this.props.localStorage;
 
     if(!localStorage.hideWelcomeBox) {
@@ -25,22 +21,29 @@ const WelcomeBox = React.createClass({
         <div className={styles.center}>
           <div className={styles.infoBox}>
             <h3 className={styles.center}>
-            {welcomeInfo.welcomeStudent[lang]}</h3>
+            Hei! Du er nå i elevmodus</h3>
             <Button className={styles.xSign} onClick={doNotShowAgain}>
               <Glyphicon glyph="remove"/>
             </Button>
             <br />
-            {welcomeInfo.changeModeStudent[lang]}
+            Er du ikke er en elev? Klikk elev / lærer-knappen i
+            navigasjonsmenyen for å bytte modus. Du kan også velge å skjule
+            denne boksen for alltid, ved å trykke på X i hjørnet
             <br /><br />
-            {welcomeInfo.student[lang]}
+            Velkommen til Kodeklubbens oppgavesider! Her finner du mange
+            veiledninger som du kan bruke som inspirasjon for å lære deg
+            programmering og lage dine egne spill, apper og nettsider. For
+            nybegynnere anbefaler vi å ta en titt på de blokkbaserte oppgavene i
+            Code Studio eller Scratch. Bruk gjerne filtrene på venstre side til 
+            å finne oppgaver som passer for deg!
             <br /><br />
             <div className={styles.center}>
               {localStorage.lastLesson === 0 ?
-              <ButtonItem color='green' onClick={() => this.context.router.push(welcomeInfo.buttonLink[lang])}>
-                {welcomeInfo.buttonText[lang]}
+              <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
+                Start her!
               </ButtonItem>
               :
-              <ButtonItem color='green'>{welcomeInfo.continueButton[lang]}</ButtonItem>}
+              <ButtonItem color='green'>Fortsett...</ButtonItem>}
             </div>
           </div>
         </div>
@@ -50,11 +53,11 @@ const WelcomeBox = React.createClass({
       return (
       <div className={styles.center}>
        {localStorage.lastLesson === 0 ?
-        <ButtonItem color='green' onClick={() => this.context.router.push(welcomeInfo.buttonLink[lang])}>
-          {welcomeInfo.buttonText[lang]}
+        <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
+          Start her!
         </ButtonItem>
         :
-        <ButtonItem color='green'>{welcomeInfo.continueButton[lang]}</ButtonItem>}
+        <ButtonItem color='green'>Fortsett...</ButtonItem>}
       </div>);
     }
   }
