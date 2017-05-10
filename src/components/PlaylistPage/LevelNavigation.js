@@ -1,11 +1,14 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import {getLevelName} from '../../util';
+import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 const LevelNavigation = React.createClass({
   render() {
+    const {t} = this.props;
     const levels = this.props.levels || [];
     const levelListItems = levels.map((level, idx) => (
       <ListGroupItem key={idx}>
@@ -14,7 +17,7 @@ const LevelNavigation = React.createClass({
     ));
     return (
       <div>
-        <h3>Hopp til</h3>
+        <h3>{t('playlist.levelnavigation')}</h3>
         <div style={{fontSize: '1.25em'}}>
           <ListGroup>
             {levelListItems}
@@ -26,7 +29,14 @@ const LevelNavigation = React.createClass({
 });
 
 LevelNavigation.propTypes = {
-  levels: PropTypes.array
+  levels: PropTypes.array,
+  t: PropTypes.func
 };
 
-export default LevelNavigation;
+function mapStateToProps(state) {
+  return {
+    t: getTranslator(state)
+  }
+}
+
+export default connect(mapStateToProps)(LevelNavigation);

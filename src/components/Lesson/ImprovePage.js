@@ -3,11 +3,13 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ImprovePage.scss';
 import {capitalize} from '../../util.js';
+import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 
 const ImprovePage = React.createClass({
 
   render() {
+    const {t} = this.props;
     const isStudent = this.props.isStudentMode;
     const courseName = this.props.courseLessonFileProp.course;
     const lessonName = this.props.courseLessonFileProp.lesson;
@@ -27,17 +29,16 @@ const ImprovePage = React.createClass({
         <div className={isStudent ? styles.student : styles.teacher}>
             <div className={styles.improvePageBox}>
               <div className={isStudent ? styles.textRowStudent : styles.textRowTeacher}>
-                <h2>Forbedre denne siden</h2>
-                <p>Funnet en feil? Kunne noe vært bedre? <br/>
-                Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
-                Vi er takknemlige for enhver tilbakemelding!</p>
+                <h2>{t('lessons.improvepage.header')}</h2>
+                <p>{t('lessons.improvepage.textline1')} <br/>
+                {t('lessons.improvepage.textline2')}</p>
               </div>
               <div className={styles.linkRow}>
                   <div>
-                    <Button href={url.newIssue} bsStyle="white-grey">Rapporter et problem</Button>
+                    <Button href={url.newIssue} bsStyle="white-grey">{t('lessons.improvepage.newissue')}</Button>
                   </div>
                   <div>
-                    <Button href={url.showCode} bsStyle="orange">Vis koden og fiks selv</Button>
+                    <Button href={url.showCode} bsStyle="orange">{t('lessons.improvepage.showcode')}</Button>
                   </div>
               </div>
             </div>
@@ -49,12 +50,14 @@ const ImprovePage = React.createClass({
 
 ImprovePage.propTypes = {
   isStudentMode: PropTypes.bool,
-  courseLessonFileProp: PropTypes.object
+  courseLessonFileProp: PropTypes.object,
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state)
   };
 }
 

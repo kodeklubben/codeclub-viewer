@@ -2,7 +2,8 @@ export default {
   general: {
     student: 'Elev',
     teacher: 'Lærer',
-    level: {
+    level: 'Level',
+    levels: {
       1: 'Introduksjon',
       2: 'Nybegynner',
       3: 'Erfaren',
@@ -12,8 +13,6 @@ export default {
   frontpage: {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    cmd: 'Kommandolinje',
-    nocomputer: 'Uten Datamaskin',
     welcomebox: {
       header: 'Hei! Du er nå i elevmodus',
       changemode: 'Er du ikke er en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. Du kan også velge å skjule denne boksen for alltid, ved å trykke på X i hjørnet',
@@ -31,39 +30,53 @@ export default {
       assistant: 'Veileder',
       info2: 'Våre oppgavesett legger opp til at barna jobber mye på egenhånd med ulike prosjekter, men vi anbefaler å starte hver økt med 10-15 min intro til hva man skal gjøre og hva som eventuelt er nytt denne gangen. Nå kan du enkelt filtrere oppgaver på temaer, og alle oppgavesett har veiledninger du kan sjekke ut som forberedelse til øktene. For nybegynnere så anbefaler vi blokkbasert programmering, hvor Python / Web / Processing er de vanligste å gå videre med etterpå.',
       link2: 'Lær mer om å drive en kodeklubb'
-    }
+    },
+    showhidefilter: 'Vis/skjul filter'
   },
   playlist: {
     lessons: 'Oppgaver',
     courseinfo: 'Informasjon om kurset',
     courseinfonotfound: 'Oops, her har noen glemt å skrive kursinformasjon!',
     levelnavigation: 'Hopp til',
-    lessoncollections: 'Oppgavesamlinger'
+    lessoncollections: 'Oppgavesamlinger',
+    nomatchinglessons: 'Ingen oppgaver passer til filteret'
   },
   lessons: {
     writtenby: 'av',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',
-      textline2: 'Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. Vi er takknemlige for enhver tilbakemelding!'
+      textline2: 'Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. Vi er takknemlige for enhver tilbakemelding!',
+      newissue: 'Rapporter et problem',
+      showcode: 'Vis koden og fiks selv'
     }
   },
-  filter: {
+  filter: {//
     header: 'Filter',
     tooltip: {
       textline1: 'I filteret kan man sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
       textline2: 'Bak hvert valg står det antall oppgaver som kan løses, etter hvilke valg du gjør i filteret.'
     },
-    topic: 'Tema',
     removefilter: 'Fjern filter'
   },
-  navbar: {
-    mode: 'Modus'
+  navbar: {//
+    mode: 'Modus',
+    lkknav: {
+      aboutlkk: 'Om LKK',
+      news: 'Nyheter',
+      lessons: 'Oppgaver',
+      findcodeclub: 'Finn kodeklubb',
+      codeclub: 'Kodeklubben',
+      school: 'Skole',
+      codehour: 'Kodetimen',
+      contribute: 'Bidra?'
+    },
+    menu: 'Meny'
   },
-  search: {
+  search: {//
     placeholder: 'Søk'
   },
-  footer: {
+  footer: {//
     downloadZIP:  'Last ned alle kurs som zip-fil'
   },
   404: {

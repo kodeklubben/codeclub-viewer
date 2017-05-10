@@ -22,7 +22,7 @@ export const Courses = React.createClass({
         {Object.keys(this.props.externalCourses).length > 0 ?
           <Row>
             <Col xs={12}>
-              <h2>Kurs på andre nettsider</h2>
+              <h2>{t('frontpage.otherwebsitecourses')}</h2>
               <CourseList courses={this.props.externalCourses}/>
             </Col>
           </Row>
@@ -41,9 +41,9 @@ Courses.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    t: getTranslator(state),
     courses: getFilteredCourses(state),
-    externalCourses: getFilteredExternalCourses(state)
+    externalCourses: getFilteredExternalCourses(state),
+    t: getTranslator(state)
   };
 }
 

@@ -1,14 +1,17 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 import Badge from 'react-bootstrap/lib/Badge';
 import {LessonItemContainer} from './LessonItem';
+import {getTranslator} from '../../selectors/translate';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PlaylistNavigation.scss';
 
 const PlaylistNavigation = React.createClass({
   render() {
+    const {t} = this.props;
     const playlists = this.props.playlists || {};
     const playlistListItems = Object.keys(playlists).map((playlistName, idx) => {
       const panelHeader = <h4 role="presentation" className={styles.header + ' panel-title'}>
@@ -29,7 +32,7 @@ const PlaylistNavigation = React.createClass({
 
     return playlistListItems.length ?
       <div>
-        <h3>Oppgavesamlinger</h3>
+        <h3>{t('playlist.lessoncollections')}</h3>
         <Accordion>
           {playlistListItems}
         </Accordion>
@@ -40,7 +43,13 @@ const PlaylistNavigation = React.createClass({
 });
 
 PlaylistNavigation.propTypes = {
-  playLists: PropTypes.object
+  playLists: PropTypes.object,
+  t: PropTypes.func
 };
 
-export default withStyles(styles)(PlaylistNavigation);
+function mapStateToProps(state) {
+  return {
+    t: getTranslator(state)
+  }
+}
+export default connect(mapStateToProps)(withStyles(styles)(PlaylistNavigation));

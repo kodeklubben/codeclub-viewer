@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Lesson.scss';
@@ -11,6 +12,7 @@ import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {removeHtmlFileEnding} from '../../util.js';
+import {getTranslator} from '../../selectors/translate';
 
 
 const Lesson = React.createClass({
@@ -52,10 +54,11 @@ const Lesson = React.createClass({
     }
   },
   render() {
+    const {t} = this.props;
     return (
       <div className={styles.container}>
-        <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
-        <p><i>av {this.getAuthor()}</i></p>
+        <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - {t('general.level')} {this.getLevel()}</h1>
+        <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
         
         <Row>
@@ -71,7 +74,14 @@ Lesson.propTypes = {
   lesson: PropTypes.shape({
     frontmatter: PropTypes.object,
     content: PropTypes.string
-  })
+  }),
+  t: PropTypes.func
 };
 
-export default withStyles(styles, contentStyles)(Lesson);
+function mapStateToProps(state) {
+  return {
+    t: getTranslator(state)
+  };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Lesson));

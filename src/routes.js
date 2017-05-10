@@ -9,6 +9,12 @@ const getComponentFrontPage = (nextState, cb) => {
   }, 'FrontPageContainer');
 };
 
+const getComponentNotFound = (nextState, cb) => {
+  require.ensure([], require => {
+    cb(null, require('./pages/NotFound').NotFoundContainer);
+  }, 'NotFoundContainer');
+};
+
 const getComponentPlaylist = (nextState, cb) => {
   require.ensure([], (require) => {
     cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
@@ -56,5 +62,5 @@ const getComponentLessonPage = (nextState, cb) => {
 
 
 const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
-  getComponentLessonPage);
+  getComponentLessonPage, getComponentNotFound);
 export default routes;

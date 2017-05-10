@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import {getTranslator} from '../../selectors/translate';
 
 import styles from './Footer.scss';
 
@@ -31,6 +32,7 @@ const Footer = React.createClass({
   },
 
   render() {
+    const {isStudentMode, t} = this.props;
     const url = {
       kidsakoder: 'http://kidsakoder.no/',
       archive: 'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
@@ -46,7 +48,7 @@ const Footer = React.createClass({
         {this.props.isStudentMode ? null : this.getGitHubLink()}
         <Row className={styles.center}>
             <a className={styles.inline} href={url.kidsakoder}>kidsakoder.no</a>
-            <a className={styles.inline} href={url.archive}>Last ned alle kurs som zip-fil</a>
+            <a className={styles.inline} href={url.archive}>{t('footer.downloadZIP')}</a>
         </Row>
         <Row className={styles.center}>
           <a href={url.sponsor} target="_blank">
@@ -75,12 +77,15 @@ const Footer = React.createClass({
 });
 
 Footer.propTypes = {
-  isStudentMode: PropTypes.bool
+  isStudentMode: PropTypes.bool,
+  t: PropTypes.func
+
 };
 
 function mapStateToProps(state) {
   return {
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state)
   };
 }
 

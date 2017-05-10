@@ -11,6 +11,7 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
+import {getTranslator} from '../../selectors/translate';
 
 import styles from './NavBar.scss';
 
@@ -73,14 +74,14 @@ LanguageDropdown.propTypes = {
 };
 
 function ModeDropdown(props) {
-  const texts = {'student': 'ELEV', 'teacher': 'LÆRER'};
+  const texts = {'student': props.t('general.student'), 'teacher': props.t('general.teacher')};
   const setMode = mode => mode === 'student' ? props.setModeStudent() : props.setModeTeacher();
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='mode-dropdown'
                     noCaret
                     pullRight
                     bsStyle={props.mode}
-                    title={'Modus: ' + texts[props.mode]}
+                    title={props.t('navbar.mode') + ': ' + texts[props.mode]}
                     onSelect={setMode}>
       {
         modes.map(k =>
@@ -96,9 +97,9 @@ ModeDropdown.propTypes = {
   mode: PropTypes.oneOf(modes).isRequired
 };
 
-// function SearchBox() {
+// function SearchBox(props) {
 //   return <div className={styles.gadgetContainer}>
-//     <FormControl type='text' placeholder='Søk'/>
+//     <FormControl type='text' placeholder={props.t('search.placeholder')}/>
 //   </div>;
 // }
 
@@ -110,19 +111,19 @@ function LkkBrand() {
   </Navbar.Brand>;
 }
 
-function LkkNav() {
+function LkkNav(props) {
   return <div className={styles.navContainer}>
     <Nav>
-      <NavItem href="http://kidsakoder.no/om-lkk/">Om LKK</NavItem>
-      <NavItem href="http://kidsakoder.no/nyheter/">Nyheter</NavItem>
+      <NavItem href="http://kidsakoder.no/om-lkk/">{props.t('navbar.lkknav.aboutlkk')}</NavItem>
+      <NavItem href="http://kidsakoder.no/nyheter/">{props.t('navbar.lkknav.news')}</NavItem>
       <LinkContainer to='/'>
-        <NavItem>Oppgaver</NavItem>
+        <NavItem>{props.t('navbar.lkknav.lessons')}</NavItem>
       </LinkContainer>
-      <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">Finn kodeklubb</NavItem>
-      <NavItem href="http://kidsakoder.no/kodeklubben/">Kodeklubben</NavItem>
-      <NavItem href="http://kidsakoder.no/skole/">Skole</NavItem>
-      <NavItem href="http://kidsakoder.no/kodetimen/">Kodetimen</NavItem>
-      <NavItem href="http://kidsakoder.no/bidra/">Bidra?</NavItem>
+      <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">{props.t('navbar.lkknav.findcodeclub')}</NavItem>
+      <NavItem href="http://kidsakoder.no/kodeklubben/">{props.t('navbar.lkknav.codeclub')}</NavItem>
+      <NavItem href="http://kidsakoder.no/skole/">{props.t('navbar.lkknav.school')}</NavItem>
+      <NavItem href="http://kidsakoder.no/kodetimen/">{props.t('navbar.lkknav.codehour')}</NavItem>
+      <NavItem href="http://kidsakoder.no/bidra/">{props.t('navbar.lkknav.contribute')}</NavItem>
     </Nav>
   </div>;
 }
@@ -134,8 +135,9 @@ function Gadgets(props) {
     <LanguageDropdown mode={mode} language={props.language} setLanguage={props.setLanguage}/>
     <ModeDropdown setModeStudent={props.setModeStudent}
                   setModeTeacher={props.setModeTeacher}
-                  mode={mode}/>
-    {/*<SearchBox/>*/}
+                  mode={mode}
+                  t={props.t}/>
+    {/*<SearchBox t={props.t}/>*/}
   </div>;
 }
 Gadgets.propTypes = {
@@ -146,7 +148,7 @@ Gadgets.propTypes = {
   isStudentMode: PropTypes.bool
 };
 
-function MenuToggle() {
+function MenuToggle(props) {
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
     <span className={styles.toggleContent}>
@@ -154,7 +156,7 @@ function MenuToggle() {
       <span className="icon-bar"/>
       <span className="icon-bar"/>
     </span>
-    <span className={styles.toggleContent}>Meny</span>
+    <span className={styles.toggleContent}>{props.t('navbar.menu')}</span>
   </Navbar.Toggle>;
 }
 
@@ -165,11 +167,11 @@ export function NavBar(props) {
       <Navbar.Header>
         <LkkBrand/>
         <Clearfix visibleXsBlock/>
-        <MenuToggle/>
+        <MenuToggle t={props.t}/>
       </Navbar.Header>
       <Navbar.Collapse>
         <div className={styles.spacing}/>
-        <LkkNav/>
+        <LkkNav t={props.t}/>
       </Navbar.Collapse>
       <div className={styles.widgets + ' ' + widgetClass}>
         <BreadCrumb params={props.params}/>
@@ -177,7 +179,8 @@ export function NavBar(props) {
                  setLanguage={props.setLanguage}
                  setModeStudent={props.setModeStudent}
                  setModeTeacher={props.setModeTeacher}
-                 isStudentMode={props.isStudentMode}/>
+                 isStudentMode={props.isStudentMode}
+                 t={props.t}/>
       </div>
     </Navbar>
   );
@@ -192,13 +195,15 @@ NavBar.propTypes = {
   setLanguage: PropTypes.func,
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
-  isStudentMode: PropTypes.bool
+  isStudentMode: PropTypes.bool,
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
     isStudentMode: state.isStudentMode,
-    language: state.language
+    language: state.language,
+    t: getTranslator(state)
   };
 }
 
