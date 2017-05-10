@@ -45,7 +45,7 @@ function buildPdf(dir) {
     var replacer = through(function (data) {
       //console.log(data)
       if (inBlock) {
-        if (data.match("```")){
+        if (data.match(/\s*```/)){
           this.queue(codeBlock(data)+'\n');
           block += 1;
           inBlock = false;
@@ -152,7 +152,7 @@ function buildPdf(dir) {
     if (blockType == "blocks" && data.match("```")) {
       return(renderScratchBlocks(temp[block]))
     }
-    else if (!data.match(/```[a-zA-Z]+/) && data.match("```")) {
+    else if (!data.match(/```[a-zA-Z]+/) && data.match(/\s*```/)) {
       temp[block] += data;
       return(temp[block]);
     }
@@ -164,12 +164,12 @@ function buildPdf(dir) {
   function preProcessHTML () {
     var splitter = split();
     let section = false;
+    let headingType = 0;
     inBlock = false;
     block = 0;
     var replacer = through(function (data) {
       console.log(data);
-      if (section && data.match(/<h[1-4]/)) {
-        console.log("qwertyuiop")
+      if (section && headingType >= Number(data.replace(/<h([1-4]).*/, '$1'))) {
         section = false;
         data = '</section>\n\n'+data;
       }
@@ -189,13 +189,14 @@ function buildPdf(dir) {
         inBlock = false;
       }
       else if (data.match(/```[a-zA-Z]+/)) {
-        this.queue(data.replace(/```[a-zA-Z]+/, "<pre><code>"));
+        this.queue(data.replace(/```([a-zA-Z]+)/, '<pre><code class="language-$1">'));
       }
       else if (data == "```") {
         this.queue(data.replace("```", "</code></pre>"))
       }
       else if (generateSection(data) != "") {
         section = true;
+        headingType = Number(data.replace(/<h([1-4]).*/, '$1'));
         this.queue(generateSection(data));
       }
       else {

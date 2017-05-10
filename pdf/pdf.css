@@ -376,6 +376,8 @@ h2.save {
   border: 3px solid #00b1da;
   border-radius: 12px;
   padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
