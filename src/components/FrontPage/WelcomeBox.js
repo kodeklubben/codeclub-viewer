@@ -43,7 +43,9 @@ const WelcomeBox = React.createClass({
                 Start her!
               </ButtonItem>
               :
-              <ButtonItem color='green'>Fortsett...</ButtonItem>}
+              <ButtonItem color='green' onClick={() => this.context.router.push(localStorage.lastLesson)}>
+                Fortsett...
+              </ButtonItem>}
             </div>
           </div>
         </div>
@@ -57,7 +59,9 @@ const WelcomeBox = React.createClass({
           Start her!
         </ButtonItem>
         :
-        <ButtonItem color='green'>Fortsett...</ButtonItem>}
+        <ButtonItem color='green' onClick={() => this.context.router.push(localStorage.lastLesson)}>
+          Fortsett...
+        </ButtonItem>}
       </div>);
     }
   }
