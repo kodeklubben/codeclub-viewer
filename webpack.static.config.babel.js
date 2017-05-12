@@ -54,7 +54,7 @@ function getStaticSitePaths() {
     .map(p => p.replace(new RegExp(`^${absLessonSrc}\/(.*)\/index\.md$`), '$1/'));
 
   const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
-    .filter(p => !p.endsWith('index.md') && !p.endsWith('README.md'))
+    .filter(p => !p.endsWith('index.md'))
     .filter(p => {
       const {title, external} = yamlFront.loadFront(p);
       if (external) { console.log('Skipping external course "' + title + '" (' + p + ')'); }
