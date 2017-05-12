@@ -144,15 +144,17 @@ function buildPdf(dir) {
     inBlock = false;
     block = 0;
     var replacer = through(function(data) {
-      console.log(data);
+      console.log(oppg)
+      console.log(section)
+      console.log(Number(data.replace(/<h([1-4]).*/, '$1')));
       if (section && headingType >= Number(data.replace(/<h([1-4]).*/, '$1'))) {
         section = false;
-        data = '</section>\n\n' + data;
+        this.queue('</section>\n');//+data+'\n');
       }
       if (data.match(/<code>[æøåÆØÅa-zA-Z\s]*<\/code>\{block[a-z]*\}/g)) {
         //console.log(data);
         this.queue(data.replace(/(<code>)([æøåÆØÅa-zA-Z\s]*)(<\/code>\{)(block[a-z]*)\}/g, '<code class="$4">$2</code>') + '\n');
-      } else if (generateSection(data) != "") {
+      } else if (!section && generateSection(data) != "") {
         section = true;
         headingType = Number(data.replace(/<h([1-4]).*/, '$1'));
         this.queue(generateSection(data));
