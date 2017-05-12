@@ -22,7 +22,7 @@ const WelcomeBox = React.createClass({
           <div className={styles.infoBox}>
             <h3 className={styles.center}>
             Hei! Du er nå i elevmodus</h3>
-            <Button className={styles.xSign} onClick={doNotShowAgain}>
+            <Button className={styles.xSign} onClick={() => doNotShowAgain()}>
               <Glyphicon glyph="remove"/>
             </Button>
             <br />
@@ -34,11 +34,11 @@ const WelcomeBox = React.createClass({
             veiledninger som du kan bruke som inspirasjon for å lære deg
             programmering og lage dine egne spill, apper og nettsider. For
             nybegynnere anbefaler vi å ta en titt på de blokkbaserte oppgavene i
-            Code Studio eller Scratch. Bruk gjerne filtrene på venstre side til 
+            Code Studio eller Scratch. Bruk gjerne filtrene på venstre side til
             å finne oppgaver som passer for deg!
             <br /><br />
             <div className={styles.center}>
-              {localStorage.lastLesson === 0 ?
+              {localStorage.lastLesson === '' ?
               <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
                 Start her!
               </ButtonItem>
@@ -52,7 +52,7 @@ const WelcomeBox = React.createClass({
     else {
       return (
       <div className={styles.center}>
-       {localStorage.lastLesson === 0 ?
+       {localStorage.lastLesson === '' ?
         <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
           Start her!
         </ButtonItem>

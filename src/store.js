@@ -4,7 +4,7 @@ import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
 import {setContext, setFilter, setLessons, setMode, setLanguage, setLocalStorage} from './action_creators';
 import reducer from './reducer';
-import * as storage from './localStorage';
+import {loadLocalStorage} from './localStorage';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
@@ -18,7 +18,7 @@ const lessons = getLessons(lessonContext, readmeContext, courseContext);
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
 let store;
-const localStorage = storage.loadLocalStorage();
+const localStorage = loadLocalStorage();
 
 if (isProduction) {
   store = createStore(reducer, initialState);
