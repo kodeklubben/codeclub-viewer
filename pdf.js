@@ -17,7 +17,7 @@ function buildPdf(dir) {
     preProcessMd: preProcessMD,
     preProcessHtml: preProcessHTML,
     remarkable: {
-      preset: "commonmark",
+      preset: "full",
       linkify: true,
       html: true,
       breaks: true,
