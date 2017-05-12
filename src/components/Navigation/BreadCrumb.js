@@ -39,10 +39,16 @@ BreadCrumb.propTypes = {
 function mapStateToProps(state, ownProps) {
   const {course, lesson, file} = ownProps.params;
   const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
+  const isReadme = (file && /README(_[a-z]{2})?/.test(file));
+  let title = '';
+
+  if(isReadme){
+    title = state.context.readmeContext(lessonPath).frontmatter.title || '';
+  }
   return {
     iconContext: state.context.iconContext,
-    lessonLevel: lessonPath ? state.lessons[lessonPath].level : 0,
-    lessonTitle: lessonPath ? state.lessons[lessonPath].title : '',
+    lessonLevel: lessonPath && !isReadme ? state.lessons[lessonPath].level : 0,
+    lessonTitle: lessonPath && !isReadme ? state.lessons[lessonPath].title : title,
   };
 }
 
