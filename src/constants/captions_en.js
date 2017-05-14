@@ -2,7 +2,8 @@ export default {
   general: {
     student: 'Student',
     teacher: 'Teacher',
-    level: {
+    level: 'Level',
+    levels: {
       1: 'Introduction',
       2: 'Beginner',
       3: 'Experienced',
@@ -12,8 +13,6 @@ export default {
   frontpage: {
     courses: 'Courses',
     otherwebsitecourses: 'Courses on other webpages',
-    cmd: 'Command line',
-    nocomputer: 'Without computer',
     welcomebox: {
       header: 'Hello! You are now in studentmode',
       changemode: 'Are you not a student? Click the student / teacher button in the navigation menu to switch mode. You can also choose to hide this box forever, by pressing X in the corner',
@@ -31,21 +30,25 @@ export default {
       assistant: 'Supervisor',
       info2: 'Our assignment sets out make the children work a lot on their own with different projects, but we recommend starting each session with 10-15 minute intro to what to do and what may be new this time. Now you can easily filter tasks on topics, and all assignments have instructions that you can check in preparation for the sessions. For beginners, we recommend block-based programming, where Python / Web / Processing is the most common to proceed with afterwards.',
       link2: 'Learn more about running a code club'
-    }
+    },
+    showhidefilter: 'Show/hide filter'
   },
   playlist: {
     lessons: 'Lessons',
     courseinfo: 'Information about the course',
-    courseinfonotfound: 'Oops, someone forgot to write courseinformation!',
+    courseinfonotfound: 'Oops, someone forgot to write course information!',
     levelnavigation: 'Jump to',
-    lessoncollections: 'Lessoncollections'
+    lessoncollections: 'Collections of Lessons',
+    nomatchinglessons: 'No matching lessons for this combination'
   },
   lessons: {
     writtenby: 'by',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',
-      textline2: 'If yes, please give us feedback by making an issue on Github or fix the error by yourself. We are grateful for any feedback!'
+      textline2: 'If yes, please give us feedback by making an issue on Github or fix the error by yourself. We are grateful for any feedback!',
+      newissue: 'Report a problem',
+      showcode: 'Show code and fix yourself'      
     }
   },
   filter: {
@@ -54,11 +57,21 @@ export default {
       textline1: 'The filter allows you to sort out the lessons you want to solve according to the topics you want to work with.',
       textline2: 'Behind each choice there are the number of lessons that can be solved, according to the choices you make in the filter.'
     },
-    topic: 'Topic',
     removefilter: 'Remove filter'
   },
   navbar: {
-    mode: 'Mode'
+    mode: 'Mode',
+    lkknav: {
+      aboutlkk: 'About LKK',
+      news: 'News',
+      lessons: 'Lessons',
+      findcodeclub: 'Find a kodeklubb',
+      codeclub: 'Kodeklubben',
+      school: 'School',
+      codehour: 'Kodetimen',
+      contribute: 'Contribute?'
+    },
+    menu: 'Menu'    
   },
   search: {
     placeholder: 'Search'

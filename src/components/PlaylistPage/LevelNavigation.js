@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {getLevelName} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
@@ -12,7 +11,7 @@ const LevelNavigation = React.createClass({
     const levels = this.props.levels || [];
     const levelListItems = levels.map((level, idx) => (
       <ListGroupItem key={idx}>
-        <a href={'#level-' + level}><LevelIcon level={level}/>{getLevelName(level)}</a>
+        <a href={'#level-' + level}><LevelIcon level={level}/>{t('general.levels.' + level)}</a>
       </ListGroupItem>
     ));
     return (
