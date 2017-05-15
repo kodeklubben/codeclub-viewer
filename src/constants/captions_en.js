@@ -65,7 +65,7 @@ export default {
       aboutlkk: 'About LKK',
       news: 'News',
       lessons: 'Lessons',
-      findcodeclub: 'Find a kodeklubb',
+      findcodeclub: 'Find kodeklubb',
       codeclub: 'Kodeklubben',
       school: 'School',
       codehour: 'Kodetimen',
