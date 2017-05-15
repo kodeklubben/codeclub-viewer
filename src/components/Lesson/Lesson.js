@@ -8,11 +8,12 @@ import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
+import Button from 'react-bootstrap/lib/Button';
+import {buildPDF} from '../../pdf.js'
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
-import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {connect} from 'react-redux';
 import {setModeTeacher, setLanguage} from '../../action_creators';
@@ -51,6 +52,9 @@ const Lesson = React.createClass({
   },
   getLanguage() {
     return this.props.lesson.frontmatter.language || '';
+  },
+  getLanguageTag() {
+    return this.prop.lesson.frontmatter.languageTag;
   },
   createMarkup(){
     return {
@@ -91,6 +95,10 @@ const Lesson = React.createClass({
       ReactDOM.unmountComponentAtNode(node);
     }
   },
+  pdfLinkClick() {
+    buildPDF(this.state);
+    return false;
+  },
   render() {
     const {path, lessons, isReadme, isStudentMode} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons}}/> :
@@ -103,6 +111,7 @@ const Lesson = React.createClass({
         </h1>
         {this.getAuthor() !== '' ? <p><i>av {this.getAuthor()}</i></p> : ''}
         {instructionBtn}
+	<Button onClick={this.pdfLinkClick}>last ned oppgave</Button>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
         <Row>
