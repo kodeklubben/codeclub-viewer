@@ -74,6 +74,11 @@ export const PlaylistPage = React.createClass({
         {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
       </div>;
 
+    const courseInfo =
+      <Collapse in={this.state.showCourseInfo}>
+        <CourseInfo courseName={this.props.params.course} isStudentMode={this.props.isStudentMode}/>
+      </Collapse>;
+
     return (
       <Grid fluid={true}>
 
@@ -94,18 +99,14 @@ export const PlaylistPage = React.createClass({
           {/*Filter desktop*/}
           <Col xsHidden>
             <Col sm={3}>{filter}</Col>
-
             {this.state.showCourseInfo ?
               <Col sm={6}>
-                <Collapse in={this.state.showCourseInfo}>
-                   <CourseInfo courseName={this.props.params.course} isStudentMode={this.props.isStudentMode}/>
-                </Collapse>
+                {courseInfo}
                 {playlistsAndLessons}
               </Col>
             :
               <Col sm={6}>{playlistsAndLessons}</Col>
             }
-
             <Col sm={3}>{jumpTo}</Col>
           </Col>
 
@@ -113,12 +114,11 @@ export const PlaylistPage = React.createClass({
           <Col smHidden mdHidden lgHidden>
             {this.state.showCourseInfo ?
               <Col xs={12}>
-                <Collapse in={this.state.showCourseInfo}>
-                   <CourseInfo courseName={this.props.params.course} isStudentMode={this.props.isStudentMode}/>
-                </Collapse>
-              {filter}</Col>
+                {courseInfo}
+                {filter}
+              </Col>
             :
-            <Col xs={12}>{filter}</Col>
+              <Col xs={12}>{filter}</Col>
             }
             <Col xs={12}>{jumpTo}</Col>
             <Col xs={12}>{playlistsAndLessons}</Col>
