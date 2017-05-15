@@ -11,10 +11,14 @@ import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import HeadRow from '../components/PlaylistPage/HeadRow';
+import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import Button from 'react-bootstrap/lib/Button';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Collapse from 'react-bootstrap/lib/Collapse';
 
 export const PlaylistPage = React.createClass({
   getLessonsByLevel(lessons) {
@@ -70,23 +74,52 @@ export const PlaylistPage = React.createClass({
         {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
       </div>;
 
+    const courseInfo =
+      <Collapse in={this.state.showCourseInfo}>
+        <CourseInfo courseName={this.props.params.course} isStudentMode={this.props.isStudentMode}/>
+      </Collapse>;
+
     return (
       <Grid fluid={true}>
 
-        {/*Title with course name*/}
-        <HeadRow courseName={this.props.params.course}/>
+        {/*Title with course name and get started button*/}
+        <Row>
+          <Col xs={12} sm={6} smOffset={3}>
+            <div className={styles.headerRow}>
+              <HeadRow courseName={this.props.params.course}/>
+              <Button bsStyle="guide" className={styles.courseInfoBtn} onClick={() => this.changeState()}>
+                <Glyphicon className={styles.glyph} glyph={!this.state.showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
+                Informasjon om kurset
+              </Button>
+            </div>
+          </Col>
+        </Row>
 
         <Row>
           {/*Filter desktop*/}
           <Col xsHidden>
             <Col sm={3}>{filter}</Col>
-            <Col sm={6}>{playlistsAndLessons}</Col>
+            {this.state.showCourseInfo ?
+              <Col sm={6}>
+                {courseInfo}
+                {playlistsAndLessons}
+              </Col>
+            :
+              <Col sm={6}>{playlistsAndLessons}</Col>
+            }
             <Col sm={3}>{jumpTo}</Col>
           </Col>
 
           {/*Filter mobile*/}
           <Col smHidden mdHidden lgHidden>
-            <Col xs={12}>{filter}</Col>
+            {this.state.showCourseInfo ?
+              <Col xs={12}>
+                {courseInfo}
+                {filter}
+              </Col>
+            :
+              <Col xs={12}>{filter}</Col>
+            }
             <Col xs={12}>{jumpTo}</Col>
             <Col xs={12}>{playlistsAndLessons}</Col>
           </Col>
