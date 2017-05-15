@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
@@ -7,9 +9,11 @@ import store from './store';
 
 const lessons = store.getState().lessons;
 const courses = store.getState().context['courseContext'].keys();
+const readmePaths = store.getState().context['readmeContext'].keys();
 
 const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
-const courseArray = courses.map((course) => course.slice(1).replace(/\/index.md/i, ''));
+const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));
+const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, ''));
 
 const validPathTest = (lesson, path) => {
   if(lesson){
@@ -33,10 +37,10 @@ const pathTest = (nextState, replace) => {
   if(path.lastIndexOf('/') === path.length-1){
     path = path.slice(0, -1);
   }
-  
+  const isReadme = readmeArray.indexOf(path) > -1;
   const pathCorrect = validPathTest(params.lesson, path);
 
-  if(!pathCorrect){
+  if(!pathCorrect && !isReadme){
     replace({pathname:'/PageNotFound', state: path});
   }
 };
@@ -48,7 +52,8 @@ const pathTest = (nextState, replace) => {
 * to replace the URL without a page refresh.
 */
 const saveURL = (nextState, replace) => {
-  const path = nextState.location.state;
+  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
+  const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
   if(typeof history.replaceState !== 'undefined'){
     history.replaceState(null, null, path);
   }
