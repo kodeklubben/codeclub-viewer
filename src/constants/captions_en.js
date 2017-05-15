@@ -37,7 +37,7 @@ export default {
     lessons: 'Lessons',
     courseinfo: 'Information about the course',
     courseinfonotfound: 'Oops, someone forgot to write course information!',
-    levelnavigation: 'Jump to',
+    levelnavigation: 'Navigate to',
     lessoncollections: 'Collections of Lessons',
     nomatchinglessons: 'No matching lessons for this combination'
   },
@@ -57,7 +57,7 @@ export default {
       textline1: 'The filter allows you to sort out the lessons you want to solve according to the topics you want to work with.',
       textline2: 'Behind each choice there are the number of lessons that can be solved, according to the choices you make in the filter.'
     },
-    removefilter: 'Remove filter'
+    removefilter: 'Clear filter'
   },
   navbar: {
     mode: 'Mode',

@@ -15,7 +15,7 @@ import {getTranslator} from '../../selectors/translate';
 
 import styles from './NavBar.scss';
 
-const languages = ['nb', 'nn', 'sv', 'da'];
+const languages = ['nb', 'nn', 'sv', 'da', 'en'];
 const modes = ['student', 'teacher'];
 
 function LanguageItem(props) {
@@ -35,7 +35,11 @@ function LanguageItem(props) {
     'da': {
       name: 'Dansk',
       url: require('../../assets/graphics/denmark.svg')
-    }
+    },
+    'en': {
+      name: 'English',
+      url: require('../../assets/graphics/english.svg')
+    }    
   };
   // Note that the block with "float" (the flag) must be first in the containing div
   return (
