@@ -15,6 +15,9 @@
     padding: 0;
     margin: 0 0 20px;
   }
+  ul.task-list li.task-list-item::before {
+    display: none !important;
+  }
   li {
     list-style: none;
     padding-top: 10px;
@@ -233,8 +236,8 @@ input[type="checkbox"] {
 
 input[type="checkbox"] + label {
   position: relative;
-  margin-left: 10px;
   font-weight: normal;
+  margin-left: 0;
 }
 
 input[type="checkbox"] + label::before {
@@ -244,7 +247,7 @@ input[type="checkbox"] + label::before {
   left: 0;
   width: 1em;
   height: 1em;
-  margin: 0 0.8em -0.1em -0.7em;
+  margin: 0 0.8em -0.1em -2.2em;
   line-height: 0.8;
   text-align: center;
   border: 3px solid #abdbea;
