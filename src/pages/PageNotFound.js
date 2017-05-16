@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './NotFound.scss';
+import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';
 
 const NotFound = (props) => {

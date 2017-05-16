@@ -11,24 +11,58 @@ import processContent from './processContent';
 import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
-import {removeHtmlFileEnding} from '../../util.js';
 import {getTranslator} from '../../selectors/translate';
+import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
+import lessonStyles from '../PlaylistPage/LessonItem.scss';
+import Button from 'react-bootstrap/lib/Button';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+import {setModeTeacher, setLanguage} from '../../action_creators';
 
+const InstructionButton = ({buttonPath, buttonText}) => {
+  return (buttonPath ?
+    <LinkContainer to={buttonPath}>
+      <Button componentClass="div" className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
+        {buttonText}
+      </Button>
+    </LinkContainer> :
+    null);
+};
+
+const ReadmeButton = ({path, lessons, t}) => {
+  const contextPath = './' + path + '.md';
+  const buttonPath = (lessons[contextPath] || {}).readmePath;
+  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.toteacherinstruction')}/>;
+};
+
+const LessonButton = ({path, lessons, t}) => {
+  const lessonPath = '/' + path;
+  const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
+  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
+};
 
 const Lesson = React.createClass({
   getTitle() {
-    return this.props.lesson.frontmatter.title;
+    return this.props.lesson.frontmatter.title || '';
   },
   getLevel() {
-    return this.props.lesson.frontmatter.level;
+    return this.props.lesson.frontmatter.level || 0;
   },
   getAuthor() {
-    return this.props.lesson.frontmatter.author;
+    return this.props.lesson.frontmatter.author || '';
+  },
+  getLanguage() {
+    return this.props.lesson.frontmatter.language || '';
   },
   createMarkup(){
     return {
       __html: removeHtmlFileEnding(this.props.lesson.content)
     };
+  },
+  setLanguage(){
+    const lessonLanguage = this.getLanguage();
+    if(lessonLanguage !== '' && lessonLanguage !== this.props.language) {
+      this.props.setLanguage(lessonLanguage);
+    }
   },
   componentWillMount(){
     if (typeof document === 'undefined') {
@@ -36,6 +70,11 @@ const Lesson = React.createClass({
       return;
     }
     this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
+
+    if(this.props.isReadme) this.props.setModeTeacher();
+    /*Comment this in when language is implemented
+    Changes the language state to the language defined in the current lesson or readme-file*/
+    //this.setLanguage();
   },
   componentDidMount() {
     const nodes = document.getElementsByClassName('togglebutton');
@@ -54,13 +93,19 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {t} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode} = this.props;
+    const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
+      isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
     return (
       <div className={styles.container}>
-        <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - {t('general.level')} {this.getLevel()}</h1>
-        <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p>
+        <h1>
+          <LevelIcon level={this.getLevel()}/>
+          {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
+        </h1>
+        {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
+        {instructionBtn}
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
-        
+
         <Row>
           <ImprovePageContainer courseLessonFileProp={this.props.params}/>
         </Row>
@@ -75,13 +120,27 @@ Lesson.propTypes = {
     frontmatter: PropTypes.object,
     content: PropTypes.string
   }),
+  path: PropTypes.string,
+  lessons: PropTypes.object,
+  isStudentMode: PropTypes.bool,
+  setModeTeacher: PropTypes.func,
+  setLanguage: PropTypes.func,
+  isReadme: PropTypes.bool,
   t: PropTypes.func
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state, ownProps) => ({
+  t: getTranslator(state),
+  isStudentMode: state.isStudentMode,
+  lessons: state.lessons,
+  language: state.language,
+  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1
+});
 
-export default connect(mapStateToProps)(withStyles(styles)(Lesson));
+export default connect(
+  mapStateToProps,
+  {
+    setModeTeacher,
+    setLanguage
+  }
+  )(withStyles(styles, contentStyles)(Lesson));

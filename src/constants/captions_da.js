@@ -37,12 +37,15 @@ export default {
     lessons: 'Oppgaver',
     courseinfo: 'Informasjon om kurset',
     courseinfonotfound: 'Oops, her har noen glemt å skrive kursinformasjon!',
+    instructionbutton: 'Lærerveiledning',
     levelnavigation: 'Hopp til',
     lessoncollections: 'Oppgavesamlinger',
     nomatchinglessons: 'Ingen oppgaver passer til filteret'
   },
   lessons: {
     writtenby: 'av',
+    toteacherinstruction: 'Til lærerveiledning',
+    tolesson: 'Til oppgave',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',

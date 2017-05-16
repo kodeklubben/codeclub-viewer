@@ -1,15 +1,19 @@
+/* eslint-env node */
+
 import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
 import App from './pages/App';
-import {NotFoundContainer} from './pages/NotFound';
+import {NotFoundContainer} from './pages/PageNotFound';
 import store from './store';
 
 const lessons = store.getState().lessons;
 const courses = store.getState().context['courseContext'].keys();
+const readmePaths = store.getState().context['readmeContext'].keys();
 
 const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
-const courseArray = courses.map((course) => course.slice(1).replace(/\/index.md/i, ''));
+const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));
+const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, ''));
 
 const validPathTest = (lesson, path) => {
   if(lesson){
@@ -33,22 +37,23 @@ const pathTest = (nextState, replace) => {
   if(path.lastIndexOf('/') === path.length-1){
     path = path.slice(0, -1);
   }
-  
+  const isReadme = readmeArray.indexOf(path) > -1;
   const pathCorrect = validPathTest(params.lesson, path);
 
-  if(!pathCorrect){
-    replace({pathname:'/NotFound', state: path});
+  if(!pathCorrect && !isReadme){
+    replace({pathname:'/PageNotFound', state: path});
   }
 };
 
 /**
-* Replaces the current URL (/NotFound) with the the URL either typed in by the user
+* Replaces the current URL (/PageNotFound) with the the URL either typed in by the user
 * or the URL given by a broken link.
 * History is used directly because react-router does not provide the necesarry functionallity
 * to replace the URL without a page refresh.
 */
 const saveURL = (nextState, replace) => {
-  const path = nextState.location.state;
+  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
+  const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
   if(typeof history.replaceState !== 'undefined'){
     history.replaceState(null, null, path);
   }
@@ -56,7 +61,7 @@ const saveURL = (nextState, replace) => {
 
 /**
 * Checks if there has been passed down a redirect from 404.html.
-* If so, redirects to /NotFound with a state that equals the URL that caused a 404.
+* If so, redirects to /PageNotFound with a state that equals the URL that caused a 404.
 * Happens when a server side 404 has occured.
 */
 const serverSideRedirectCheck = (nextState, replace) => {
@@ -65,7 +70,7 @@ const serverSideRedirectCheck = (nextState, replace) => {
     delete sessionStorage.redirect;
 
     if (redirect && redirect != nextState.location.pathname) {
-      replace({pathname:'/NotFound', state: redirect});
+      replace({pathname:'/PageNotFound', state: redirect});
     }
   }
 };
@@ -85,7 +90,7 @@ export default function getRouteObject(
   return (
     <Route path="/" component={App}>
       <IndexRoute getComponent={getComponentFrontPage} onEnter={serverSideRedirectCheck}/>
-      <Route path="/NotFound" getComponent={getComponentNotFound} onEnter={saveURL}/>
+      <Route path="/PageNotFound" getComponent={getComponentNotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
       <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>
       <Route path="*" getComponent={getComponentNotFound}/>

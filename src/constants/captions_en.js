@@ -37,12 +37,15 @@ export default {
     lessons: 'Lessons',
     courseinfo: 'Information about the course',
     courseinfonotfound: 'Oops, someone forgot to write course information!',
+    instructionbutton: 'Teacher Instructions',    
     levelnavigation: 'Navigate to',
     lessoncollections: 'Collections of Lessons',
     nomatchinglessons: 'No matching lessons for this combination'
   },
   lessons: {
     writtenby: 'by',
+    toteacherinstruction: 'To Teacher Instructions',
+    tolesson: 'To Lesson',    
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',

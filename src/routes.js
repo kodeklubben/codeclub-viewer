@@ -11,7 +11,7 @@ const getComponentFrontPage = (nextState, cb) => {
 
 const getComponentNotFound = (nextState, cb) => {
   require.ensure([], require => {
-    cb(null, require('./pages/NotFound').NotFoundContainer);
+    cb(null, require('./pages/PageNotFound').NotFoundContainer);
   }, 'NotFoundContainer');
 };
 
@@ -31,7 +31,7 @@ const getComponentLessonPage = (nextState, cb) => {
   bundle(result => {
     // How to pass props directly to component,
     // see https://stackoverflow.com/questions/33571734/with-getcomponent-how-to-pass-props/33578098#33578098
-    cb(null, props => <Lesson {...props} lesson={result}/>);
+    cb(null, props => <Lesson {...props} path={path} lesson={result}/>);
   });
 
   // The following code was an attempt to make it look more like routes-static.js,

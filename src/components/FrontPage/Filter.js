@@ -42,13 +42,12 @@ const Filter = React.createClass({
     return (
       <div>
         {/*Filter desktop*/}
-        <Col xsHidden sm={4} md={3} lg={2}>
-          <br/>
+        <Col xsHidden>
           <LessonFilterContainer/>
         </Col>
 
         {/*Filter mobile*/}
-        <Col smHidden mdHidden lgHidden xs={12}>
+        <Col smHidden mdHidden lgHidden>
           {filterGroups}
           <br/>
           <Button className={this.props.isStudentMode ? 'btn-student' : 'btn-teacher'}
