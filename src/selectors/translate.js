@@ -35,5 +35,5 @@ export const getTranslator = (state) => {
       }
     }
     return cap;
-  }
+  };
 };

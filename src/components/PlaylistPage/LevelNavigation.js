@@ -35,7 +35,7 @@ LevelNavigation.propTypes = {
 function mapStateToProps(state) {
   return {
     t: getTranslator(state)
-  }
+  };
 }
 
 export default connect(mapStateToProps)(LevelNavigation);

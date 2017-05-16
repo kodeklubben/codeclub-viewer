@@ -7,7 +7,7 @@ import styles from './HeadRow.scss';
 
 const HeadRow = React.createClass({
   render() {
-  	const {t} = this.props;
+    const {t} = this.props;
     return (
       <div>
         <h1 className={styles.row}>{capitalize(this.props.courseName)} {t('playlist.lessons')}
@@ -22,9 +22,9 @@ HeadRow.propTypes = {
 };
 
 function mapStateToProps(state) {
-	return {
-		t: getTranslator(state)
-	}
+  return {
+    t: getTranslator(state)
+  };
 }
 
 export default connect(mapStateToProps)(withStyles(styles)(HeadRow));

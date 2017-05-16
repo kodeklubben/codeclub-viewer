@@ -10,7 +10,7 @@ import CourseList from '../CourseList/CourseList';
 export const Courses = React.createClass({
 
   render() {
-    const {courses, externalCourses, t} = this.props;
+    const {t} = this.props;
     return (
       <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
         <Row>

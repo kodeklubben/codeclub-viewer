@@ -14,7 +14,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 export const LessonFilter = React.createClass({
   render(){
-    const {onFilterCheck, resetFilter, isStudentMode, availableLessons, courseName, t} = this.props;
+    const {t} = this.props;
     const filter = this.props.filter || {};
 
     const filterGroups = Object.keys(filter).map((groupName) => {
@@ -46,7 +46,9 @@ export const LessonFilter = React.createClass({
           this.props.isStudentMode ? styles.bgColorStudent : styles.bgColorTeacher}>
           {filterGroups}
           <br/>
-          <Button block bsStyle="white-grey-lighter" onClick={() => this.props.resetFilter()}>{t('filter.removefilter')}</Button>
+          <Button block bsStyle="white-grey-lighter" onClick={() => this.props.resetFilter()}>
+            {t('filter.removefilter')}
+          </Button>
         </Panel>
     );
   }

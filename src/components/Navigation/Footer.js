@@ -32,7 +32,7 @@ const Footer = React.createClass({
   },
 
   render() {
-    const {isStudentMode, t} = this.props;
+    const {t} = this.props;
     const url = {
       kidsakoder: 'http://kidsakoder.no/',
       archive: 'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',

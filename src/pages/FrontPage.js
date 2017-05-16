@@ -20,7 +20,6 @@ export const  FrontPage = React.createClass({
   },
 
   render() {
-    const {t} = this.props;
     return (
       <Grid fluid={true}>
 

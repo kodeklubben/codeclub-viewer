@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-import FormControl from 'react-bootstrap/lib/FormControl';
+//import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
@@ -123,7 +123,9 @@ function LkkNav(props) {
       <LinkContainer to='/'>
         <NavItem>{props.t('navbar.lkknav.lessons')}</NavItem>
       </LinkContainer>
-      <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">{props.t('navbar.lkknav.findcodeclub')}</NavItem>
+      <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">
+        {props.t('navbar.lkknav.findcodeclub')}
+      </NavItem>
       <NavItem href="http://kidsakoder.no/kodeklubben/">{props.t('navbar.lkknav.codeclub')}</NavItem>
       <NavItem href="http://kidsakoder.no/skole/">{props.t('navbar.lkknav.school')}</NavItem>
       <NavItem href="http://kidsakoder.no/kodetimen/">{props.t('navbar.lkknav.codehour')}</NavItem>
