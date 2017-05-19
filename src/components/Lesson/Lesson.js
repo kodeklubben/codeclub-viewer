@@ -57,7 +57,7 @@ const Lesson = React.createClass({
         <h1><LevelIcon level={this.getLevel()}/>{this.getTitle()} - Level {this.getLevel()}</h1>
         <p><i>av {this.getAuthor()}</i></p>
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
-
+        
         <Row>
           <ImprovePageContainer courseLessonFileProp={this.props.params}/>
         </Row>
