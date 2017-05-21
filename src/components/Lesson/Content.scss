@@ -9,27 +9,35 @@
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins';
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables';
 
+$checkbox-blue: #abdbea;
+
 @mixin styledList {
   ul,
   ol {
     padding: 0;
     margin: 0 0 20px;
   }
+  ul.task-list li.task-list-item::before {
+    display: none;
+  }
   li {
     list-style: none;
     padding-top: 10px;
     padding-bottom: 10px;
-    // adjust all elements inside a list item
     margin-left: 45px;
   }
-  // check box for list items
   li::before {
     content: " ";
-    border-radius: 8px;
-    border: 3px solid #abdbea;
-    padding: 10px;
+    border-radius: 20px;
+    border: 3px solid $checkbox-blue;
+    padding: 8px;
     float: left;
     margin-left: -40px;
+    margin-top: 6px;
+  }
+  label {
+    font-weight: normal;
+    margin-left: 6px;
   }
 }
 
@@ -220,4 +228,33 @@ table {
     width: 100%;
     height: 100%;
   }
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"] + label {
+  position: relative;
+  font-weight: normal;
+  margin-left: 0;
+}
+
+input[type="checkbox"] + label::before {
+  content: '\a0'; // non-breaking space
+  display: inline-block;
+  visibility: visible;
+  width: 1.3em;
+  height: 1.3em;
+  margin: 0 0.6em 0 -2.2em;
+  line-height: 1.1em;
+  text-align: center;
+  border: 3px solid $checkbox-blue;
+  border-radius: 3px;
+}
+
+input[type="checkbox"]:checked + label::before {
+  content: '\2714'; // checkmark
+  line-height: 1.1em;
+  padding-left: 0.1em;
 }

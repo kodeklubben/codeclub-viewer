@@ -24,6 +24,7 @@ import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
+import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
 import highlight from './src/highlighting.js';
 const fs = require('fs');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
@@ -149,7 +150,8 @@ const baseConfig = {
       MarkdownItAnchor,
       MarkdownItAttrs,
       MarkdownItHeaderSections,
-      MarkdownItImplicitFigures
+      MarkdownItImplicitFigures,
+      [MarkdownItTaskCheckbox, {disabled: false}]
     ],
     highlight
   },

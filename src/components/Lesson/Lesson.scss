@@ -16,8 +16,5 @@
   }
 
   // responsive font
-  & p,
-  & li {
-    @include responsiveFontSizes;
-  }
+  @include responsiveFontSizes;
 }
