@@ -9,7 +9,9 @@ import styles from './FrontPage.scss';
 import Filter from '../components/FrontPage/Filter';
 import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
-import ButtonItem from '../components/ButtonItem';
+import Button from 'react-bootstrap/lib/Button';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+
 import {setModeTeacher} from '../action_creators';
 
 export const  FrontPage = React.createClass({
@@ -26,16 +28,14 @@ export const  FrontPage = React.createClass({
         {this.props.isStudentMode
           ? <Row>
               <div className={styles.center}>
-                <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
-                  Kom i gang!
-                </ButtonItem>
-                <ButtonItem color='blue' onClick={() => this.props.setModeTeacher()}>
+                <LinkContainer to='/scratch/astrokatt/astrokatt'>
+                  <Button bsStyle='student-frontpage'>
+                    Kom i gang!
+                  </Button>
+                </LinkContainer>
+                <Button bsStyle='teacher-frontpage' onClick={() => this.props.setModeTeacher()}>
                   Lærer/Veileder
-                </ButtonItem>
-                {/* Continue button functionality to be implemented here */}
-                {/*<ButtonItem color='darkblue'>
-                  Fortsett...
-                </ButtonItem>*/}
+                </Button>
               </div>
             </Row>
           : null}
