@@ -64,8 +64,14 @@ export default {
       textline1: 'Found an error? Could anything be better?',
       textline2: 'If yes, please give us feedback by making an issue on Github or fix the error by yourself. ' +
                  'We are grateful for any feedback!',
-      newissue: 'Report a problem',
-      showcode: 'Show code and fix yourself'      
+      newissuebutton: 'Report a problem',
+      newissuelink: {
+        title: 'Problem with',
+        lesson: 'Lesson',
+        sourcecode: 'The lesson\'s source code',
+        info: 'Describe the problem. Adding your operating system, browser and any code you have written will help.'
+      },
+      showcodebutton: 'Show code and fix yourself'      
     }
   },
   filter: {

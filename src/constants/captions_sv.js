@@ -65,8 +65,14 @@ export default {
       textline1: 'Funnet en feil? Kunne noe vært bedre?',
       textline2: 'Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github ' +
                   'eller fiks feilen selv om du kan. Vi er takknemlige for enhver tilbakemelding!',
-      newissue: 'Rapporter et problem',
-      showcode: 'Vis koden og fiks selv'
+      newissuebutton: 'Rapporter et problem',
+      newissuelink: {
+        title: 'Problem med',
+        lesson: 'Oppgave',
+        sourcecode: 'Oppgavens kildekode',
+        info: 'Beskriv ditt problem her. Ta gjerne med operativsystem, nettleser og eventuell kode du har skrevet.'
+      },
+      showcodebutton: 'Vis koden og fiks selv'
     }
   },
   filter: {
