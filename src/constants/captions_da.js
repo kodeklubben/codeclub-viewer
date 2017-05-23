@@ -105,7 +105,7 @@ export default {
   },
   404: {
     header: 'Noe gikk galt',
-    textline1: 'Siden du leter etter klarer vi ikke å finne.',
+    textline1: 'Vi finner ikke siden du leter etter.',
     tofrontpage: 'Til forsiden'
   }
 };

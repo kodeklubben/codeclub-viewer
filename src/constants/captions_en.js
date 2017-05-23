@@ -106,7 +106,7 @@ export default {
   },
   404: {
     header: 'Something went wrong',
-    textline1: 'The webpage you are looking for we can not find.',
+    textline1: 'We can\'t find the page you are looking for.',
     tofrontpage: 'To frontpage'
   }
 };

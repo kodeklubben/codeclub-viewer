@@ -5,13 +5,13 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';
 
-const NotFound = (props) => {
+const NotFound = ({t}) => {
   return (
     <div className={styles.center}>
-      <h3>{props.t('404.header')}</h3>
-      <p>{props.t('404.textline1')}</p>
+      <h3>{t('404.header')}</h3>
+      <p>{t('404.textline1')}</p>
       <p>(404)</p>
-      <p><Link to="/">{props.t('404.tofrontpage')}</Link></p>
+      <p><Link to="/">{t('404.tofrontpage')}</Link></p>
     </div>
   );
 };

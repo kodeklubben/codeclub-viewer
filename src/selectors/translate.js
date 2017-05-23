@@ -8,13 +8,12 @@
 export const getTranslator = (state) => {
   return (captionPath, replacements) => {
     const captions = require('../constants/captions_' + state.language + '.js').default;
-    const caps = captions;
     if (!captionPath || (typeof captionPath !== 'string')) {
       console.error(`ERROR: path should be string (was ${typeof captionPath})`);
       return null;
     }
     const keyArr = captionPath.split('.');
-    let cap = caps;
+    let cap = captions;
     for(let key of keyArr) {
       if (cap) {
         cap = cap[key];
