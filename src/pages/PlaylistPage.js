@@ -4,6 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PlaylistPage.scss';
 
 import {getFilteredAndIndexedLessons} from '../selectors/lesson';
+import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
 
 import Filter from '../components/FrontPage/Filter';
@@ -47,6 +48,7 @@ export const PlaylistPage = React.createClass({
     this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
   },
   render() {
+    const {t} = this.props;
     const lessons = this.props.filteredAndIndexedLessons;
     const playlists = this.props.filteredPlaylists;
     const lessonsIndexedByLevel = this.getLessonsByLevel(lessons);
@@ -66,7 +68,7 @@ export const PlaylistPage = React.createClass({
     const playlistsAndLessons =
       <div>
         <PlaylistNavigation playlists={playlists}/>
-        {lessonLists.length ? lessonLists : 'Ingen oppgaver passer til filteret'}
+        {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
       </div>;
 
     const jumpTo =
@@ -89,7 +91,7 @@ export const PlaylistPage = React.createClass({
               <HeadRow courseName={this.props.params.course}/>
               <Button bsStyle="guide" className={styles.courseInfoBtn} onClick={() => this.changeState()}>
                 <Glyphicon className={styles.glyph} glyph={!this.state.showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
-                Informasjon om kurset
+                {t('playlist.courseinfo')}
               </Button>
             </div>
           </Col>
@@ -136,6 +138,7 @@ PlaylistPage.propTypes = {
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }),
+  t: PropTypes.func
 };
 
 function mapStateToProps(state, props) {
@@ -143,6 +146,7 @@ function mapStateToProps(state, props) {
     isStudentMode: state.isStudentMode,
     filteredAndIndexedLessons: getFilteredAndIndexedLessons(state, props.params.course),
     filteredPlaylists: getPlaylists(state, props.params.course),
+    t: getTranslator(state)
   };
 }
 
