@@ -5,6 +5,7 @@ import styles from './TeacherInfobox.scss';
 import Button from 'react-bootstrap/lib/Button';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {getTranslator} from '../../selectors/translate';
 
 const TeacherInfobox = React.createClass({
 
@@ -18,6 +19,7 @@ const TeacherInfobox = React.createClass({
   },
 
   render() {
+    const {t} = this.props;
     const url = [
       'http://kidsakoder.no/skole/valgfag/',
       'http://kidsakoder.no/kodeklubben/'
@@ -27,10 +29,9 @@ const TeacherInfobox = React.createClass({
       <div className={styles.center}>
         {!this.props.isStudentMode ?
           <div className={styles.infoBox}>
-            <h3 className={styles.center}>Hei! Du er nå i lærermodus</h3>
+            <h3 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h3>
             <br />
-            Er du ikke er en lærer eller veileder? Klikk elev / lærer-knappen i
-            navigasjonsmenyen for å bytte modus. Du kan få mer informasjon ved å trykke på plusstegnet under
+            {t('frontpage.teacherinfobox.changemode')}
             <br />
             <div className={styles.center}>
               <Button className={styles.plusSign} onClick={() => this.changeState()}>
@@ -39,23 +40,19 @@ const TeacherInfobox = React.createClass({
             </div>
             <Collapse in={this.state.showCourseInfo}>
               <div>
-                <h3>Lærer</h3>
-                Sjekk ut våre filtre og oppgaveveiledninger. På venstre side kan du filtrere
-                på ulike skole-fag, for å finne relevante oppgaver til din undervisning. Når
-                du har huket av for fag så vil du kun se kun de oppgavene som våre lærere har vurdert
-                som relevante, og du kan velge hvilket språk du vil undervise i. Hvert oppgavesett har en
-                veiledning, og der finner du bl.a. hvilke konkrete læreplanmål man kan jobbe med i de ulike fagene.
+                <h3>{t('frontpage.teacherinfobox.teacher')}</h3>
+                {t('frontpage.teacherinfobox.info1')}
                 <br />
-                <a className={styles.link} href={url[0]} target="_blank">Lær mer om programmering i undervisningen</a>
+                <a className={styles.link} href={url[0]} target="_blank">
+                  {t('frontpage.teacherinfobox.link1')}
+                </a>
                 <br />
-                <h3>Veileder</h3>
-                Våre oppgavesett legger opp til at barna jobber mye på egenhånd med ulike prosjekter,
-                men vi anbefaler å starte hver økt  med 10-15 min intro til hva man skal gjøre og hva som
-                eventuelt er nytt denne gangen. Nå kan du enkelt filtrere oppgaver på temaer, og alle oppgavesett
-                har veiledninger du kan sjekke ut som forberedelse til øktene. For nybegynnere så anbefaler vi
-                blokkbasert programmering, hvor Python / Web / Processing er de vanligste å gå videre med etterpå.
+                <h3>{t('frontpage.teacherinfobox.assistant')}</h3>
+                {t('frontpage.teacherinfobox.info2')}
                 <br />
-                <a className={styles.link} href={url[1]} target="_blank">Lær mer om å drive en kodeklubb</a>
+                <a className={styles.link} href={url[1]} target="_blank">
+                  {t('frontpage.teacherinfobox.link2')}
+                </a>
               </div>
             </Collapse>
           </div>
@@ -68,12 +65,12 @@ const TeacherInfobox = React.createClass({
 
 TeacherInfobox.propTypes = {
   isStudentMode: PropTypes.bool,
-  language: PropTypes.string
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    language: state.language
+    t: getTranslator(state)
   };
 }
 

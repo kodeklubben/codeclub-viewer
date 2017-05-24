@@ -21,18 +21,18 @@ export const  FrontPage = React.createClass({
   render() {
     return (
       <Grid fluid={true}>
-        {/* Buttons */}
+      
+        {/*WelcomeBox*/}
         {this.props.isStudentMode
           ? <Row>
               <WelcomeBox isStudentMode={false}/>
             </Row>
           : null}
 
-        {/* Teacher infobox */}
+        {/*TeacherInfobox*/}
         <Row>
           <TeacherInfobox isStudentMode={this.props.isStudentMode}/>
         </Row>
-
         <hr/>
 
         {/* Filter and courses */}
