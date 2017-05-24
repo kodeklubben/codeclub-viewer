@@ -7,15 +7,16 @@ import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
+import {getTranslator} from '../../selectors/translate';
 
 export const LessonItem = React.createClass({
   render() {
-    const lesson = this.props.lesson;
+    const {t, lesson} = this.props;
     const levelIcon = <LevelIcon level={lesson.level}/>;
     const instructionBtn = !this.props.isStudentMode && lesson.readmePath ?
       <LinkContainer to={lesson.readmePath}>
         <Button componentClass="div" className={styles.instructionBtn}bsStyle="guide" bsSize="xs">
-          Lærerveiledning
+          {t('playlist.instructionbutton')}
         </Button>
       </LinkContainer>
       : null;
@@ -41,12 +42,14 @@ export const LessonItem = React.createClass({
 
 LessonItem.propTypes = {
   lesson: PropTypes.object,
-  isStudentMode: PropTypes.bool
+  isStudentMode: PropTypes.bool,
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state)
   };
 }
 

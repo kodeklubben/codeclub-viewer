@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Lesson.scss';
@@ -10,11 +11,11 @@ import processContent from './processContent';
 import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
+import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {connect} from 'react-redux';
 import {setModeTeacher, setLanguage} from '../../action_creators';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
@@ -27,16 +28,16 @@ const InstructionButton = ({buttonPath, buttonText}) => {
     null);
 };
 
-const ReadmeButton = ({path, lessons}) => {
+const ReadmeButton = ({path, lessons, t}) => {
   const contextPath = './' + path + '.md';
   const buttonPath = (lessons[contextPath] || {}).readmePath;
-  return <InstructionButton buttonPath={buttonPath} buttonText={'Til lærerveiledning'}/>;
+  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.toteacherinstruction')}/>;
 };
 
-const LessonButton = ({path, lessons}) => {
+const LessonButton = ({path, lessons, t}) => {
   const lessonPath = '/' + path;
   const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
-  return <InstructionButton buttonPath={buttonPath} buttonText={'Til oppgave'}/>;
+  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
 const Lesson = React.createClass({
@@ -92,16 +93,16 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {path, lessons, isReadme, isStudentMode} = this.props;
-    const instructionBtn = isReadme ? <LessonButton {...{path, lessons}}/> :
-      isStudentMode ? null : <ReadmeButton {...{path, lessons}}/>;
+    const {t, path, lessons, isReadme, isStudentMode} = this.props;
+    const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
+      isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
     return (
       <div className={styles.container}>
         <h1>
           <LevelIcon level={this.getLevel()}/>
-          {this.getTitle()}{this.getLevel > 0 ? '- Level ' + this.getLevel() : ''}
+          {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
         </h1>
-        {this.getAuthor() !== '' ? <p><i>av {this.getAuthor()}</i></p> : ''}
+        {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
         {instructionBtn}
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
@@ -124,10 +125,12 @@ Lesson.propTypes = {
   isStudentMode: PropTypes.bool,
   setModeTeacher: PropTypes.func,
   setLanguage: PropTypes.func,
-  isReadme: PropTypes.bool
+  isReadme: PropTypes.bool,
+  t: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
+  t: getTranslator(state),
   isStudentMode: state.isStudentMode,
   lessons: state.lessons,
   language: state.language,
