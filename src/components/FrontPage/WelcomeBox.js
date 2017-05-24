@@ -5,8 +5,8 @@ import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {doNotShowAgain} from '../../localStorage';
 import styles from './WelcomeBox.scss';
-import ButtonItem from '../ButtonItem';
 import {getTranslator} from '../../selectors/translate';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
 const WelcomeBox = React.createClass({
 
@@ -34,13 +34,17 @@ const WelcomeBox = React.createClass({
             <br /><br />
             <div className={styles.center}>
               {localStorage.lastLesson === '' ?
-              <ButtonItem color='green' onClick={() => this.context.router.push(t('frontpage.welcomebox.buttonlink'))}>
-                {t('frontpage.welcomebox.startbutton')}
-              </ButtonItem>
+              <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
+                <Button bsStyle='student-frontpage'>
+                  {t('frontpage.welcomebox.startbutton')}
+                </Button>
+              </LinkContainer>
               :
-              <ButtonItem color='green' onClick={() => this.context.router.push(localStorage.lastLesson)}>
-                {t('frontpage.welcomebox.continuebutton')}
-              </ButtonItem>}
+              <LinkContainer to={localStorage.lastLesson}>
+                <Button bsStyle='student-frontpage'>
+                  {t('frontpage.welcomebox.continuebutton')}
+                </Button>
+              </LinkContainer>}
             </div>
           </div>
         </div>
@@ -50,13 +54,17 @@ const WelcomeBox = React.createClass({
       return (
       <div className={styles.center}>
        {localStorage.lastLesson === '' ?
-        <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
-          {t('frontpage.welcomebox.startbutton')}
-        </ButtonItem>
+       <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
+         <Button bsStyle='student-frontpage'>
+           {t('frontpage.welcomebox.startbutton')}
+         </Button>
+       </LinkContainer>
         :
-        <ButtonItem color='green' onClick={() => this.context.router.push(localStorage.lastLesson)}>
-          {t('frontpage.welcomebox.continuebutton')}
-        </ButtonItem>}
+        <LinkContainer to={localStorage.lastLesson}>
+          <Button bsStyle='student-frontpage'>
+            {t('frontpage.welcomebox.continuebutton')}
+          </Button>
+        </LinkContainer>}
       </div>);
     }
   }
