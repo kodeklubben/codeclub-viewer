@@ -71,3 +71,28 @@ export const getAvailableLessons = createSelector(
     return availableLessons;
   }
 );
+
+
+/**
+ * Creates an object {<level>: [lessonA, lessonB, ...], ...}
+ * where the lessons available given your current filter are sorted according to level
+ * Input props: courseName (string, optional)
+ */
+export const getLessonsByLevel = createSelector(
+  [getFilteredAndIndexedLessons],
+  (lessons = {}) => {
+    // Get lessons grouped by level
+    return Object.keys(lessons).reduce((res, lessonId) => {
+      const lesson = lessons[lessonId];
+      const level = lesson.level;
+
+      // Ignore lessons without level
+      if (level != null) {
+        if (res.hasOwnProperty(level)) res[level].push(lesson);
+        else res[level] = [lesson];
+      }
+
+      return res;
+    }, {});
+  }
+);

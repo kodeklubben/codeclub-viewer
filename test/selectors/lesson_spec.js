@@ -1,57 +1,73 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
-import {getFilteredLessons, getFilteredAndIndexedLessons} from '../../src/selectors/lesson';
+import {
+  getFilteredLessons,
+  getFilteredAndIndexedLessons,
+  getLessonsByLevel,
+} from '../../src/selectors/lesson';
+
+const lessonAsteroids = {
+  author: 'Bill Gates',
+  course: 'scratch',
+  level: 3,
+  path: 'scratch/asteroids/asteroids',
+  indexed: true,
+  tags: {
+    platform: ['windows', 'mac'],
+    category: ['create game'],
+    subject: ['reading']
+  },
+  title: 'Asteroids'
+};
+
+const lessonHeiVerden = {
+  author: 'Bill Gates',
+  course: 'scratch',
+  level: 1,
+  path: 'scratch/hei_verden/hei_verden',
+  indexed: false,
+  tags: {
+    platform: ['windows', 'browser'],
+    category: ['create game', 'get started'],
+    subject: ['physics']
+  },
+  title: 'Hei verden'
+};
+
+const lessonPyHeiVerden = {
+  author: 'Ola Nordmann',
+  course: 'python',
+  level: 1,
+  path: 'python/hei_verden/hei_verden',
+  indexed: true,
+  tags: {
+    platform: ['windows', 'ios', 'linux'],
+    category: ['create game', 'get started'],
+    subject: ['math']
+  },
+  title: 'Hei verden'
+};
+
+const lessonNettside = {
+  author: 'Ola Nordmann',
+  course: 'web',
+  level: 2,
+  path: 'web/nettside/nettside',
+  indexed: false,
+  tags: {},
+  title: 'Nettside'
+};
 
 describe('lesson selector', () => {
   describe('getFilteredLessons', () => {
 
     it('should create an object containing filtered lessons', () => {
       const lessons = {
-        './scratch/asteroids/asteroids': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 3,
-          path: 'scratch/asteroids/asteroids',
-          tags: {
-            platform: ['windows', 'mac'],
-            category: ['create game'],
-            subject: ['reading']
-          },
-          title: 'Asteroids'
-        },
-        './scratch/hei_verden/hei_verden': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 1,
-          path: 'scratch/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'browser'],
-            category: ['create game', 'get started'],
-            subject: ['physics']
-          },
-          title: 'Hei verden'
-        },
-        './python/hei_verden/hei_verden': {
-          author: 'Ola Nordmann',
-          course: 'python',
-          level: 1,
-          path: 'python/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'ios', 'linux'],
-            category: ['create game', 'get started'],
-            subject: ['math']
-          },
-          title: 'Hei verden'
-        },
-        './web/nettside/nettside': {
-          author: 'Ola Nordmann',
-          course: 'web',
-          level: 2,
-          path: 'web/nettside/nettside',
-          tags: {},
-          title: 'Nettside'
-        }
+        [`./${lessonAsteroids.path}`]: lessonAsteroids,
+        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
+        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
+        [`./${lessonNettside.path}`]: lessonNettside,
       };
       const filter = {
         platform: {
@@ -65,159 +81,29 @@ describe('lesson selector', () => {
       deepFreeze(lessons);
       deepFreeze(filter);
       expect(getFilteredLessons.resultFunc(filter, lessons)).to.eql({
-        './python/hei_verden/hei_verden': {
-          author: 'Ola Nordmann',
-          course: 'python',
-          level: 1,
-          path: 'python/hei_verden/hei_verden',
-          tags: {
-            category: [
-              'create game',
-              'get started'
-            ],
-            platform: [
-              'windows',
-              'ios',
-              'linux'
-            ],
-            subject: [
-              'math'
-            ]
-          },
-          title: 'Hei verden'
-        },
-        './scratch/asteroids/asteroids': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 3,
-          path: 'scratch/asteroids/asteroids',
-          tags: {
-            category: [
-              'create game'
-            ],
-            platform: [
-              'windows',
-              'mac'
-            ],
-            subject: [
-              'reading'
-            ]
-          },
-          title: 'Asteroids'
-        },
-        './scratch/hei_verden/hei_verden': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 1,
-          path: 'scratch/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'browser'],
-            category: ['create game', 'get started'],
-            subject: ['physics']
-          },
-          title: 'Hei verden'
-        }
+        [`./${lessonAsteroids.path}`]: lessonAsteroids,
+        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
+        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
       });
     });
 
     it('should create an object containing all lessons if filter is undefined', () => {
       const lessons = {
-        './scratch/asteroids/asteroids': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 3,
-          path: 'scratch/asteroids/asteroids',
-          tags: {
-            platform: ['windows', 'mac'],
-            category: ['create game'],
-            subject: ['reading']
-          },
-          title: 'Asteroids'
-        },
-        './scratch/hei_verden/hei_verden': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 1,
-          path: 'scratch/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'browser'],
-            category: ['create game', 'get started'],
-            subject: ['physics']
-          },
-          title: 'Hei verden'
-        },
-        './python/hei_verden/hei_verden': {
-          author: 'Ola Nordmann',
-          course: 'python',
-          level: 1,
-          path: 'python/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'ios', 'linux'],
-            category: ['create game', 'get started'],
-            subject: ['math']
-          },
-          title: 'Hei verden'
-        },
-        './web/nettside/nettside': {
-          author: 'Ola Nordmann',
-          course: 'web',
-          level: 2,
-          path: 'web/nettside/nettside',
-          tags: {},
-          title: 'Nettside'
-        }
+        [`./${lessonAsteroids.path}`]: lessonAsteroids,
+        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
+        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
+        [`./${lessonNettside.path}`]: lessonNettside,
       };
-
       deepFreeze(lessons);
       expect(getFilteredLessons.resultFunc(undefined, lessons)).to.eql(lessons);
     });
 
     it('should create an object containing all lessons if filter is an empty object', () => {
       const lessons = {
-        './scratch/asteroids/asteroids': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 3,
-          path: 'scratch/asteroids/asteroids',
-          tags: {
-            platform: ['windows', 'mac'],
-            category: ['create game'],
-            subject: ['reading']
-          },
-          title: 'Asteroids'
-        },
-        './scratch/hei_verden/hei_verden': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 1,
-          path: 'scratch/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'browser'],
-            category: ['create game', 'get started'],
-            subject: ['physics']
-          },
-          title: 'Hei verden'
-        },
-        './python/hei_verden/hei_verden': {
-          author: 'Ola Nordmann',
-          course: 'python',
-          level: 1,
-          path: 'python/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'ios', 'linux'],
-            category: ['create game', 'get started'],
-            subject: ['math']
-          },
-          title: 'Hei verden'
-        },
-        './web/nettside/nettside': {
-          author: 'Ola Nordmann',
-          course: 'web',
-          level: 2,
-          path: 'web/nettside/nettside',
-          tags: {},
-          title: 'Nettside'
-        }
+        [`./${lessonAsteroids.path}`]: lessonAsteroids,
+        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
+        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
+        [`./${lessonNettside.path}`]: lessonNettside,
       };
       const filter = {};
 
@@ -228,50 +114,13 @@ describe('lesson selector', () => {
 
     it('should create an empty object if no lessons in any course match the filter', () => {
       const lessons = {
-        'id0': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 3,
-          path: 'scratch/asteroids/asteroids',
-          tags: {
-            platform: ['windows', 'mac'],
-            category: ['create game'],
-            subject: ['reading']
-          },
-          title: 'Asteroids'
-        },
-        'id1': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          level: 1,
-          path: 'scratch/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'browser'],
-            category: ['create game', 'get started'],
-            subject: ['physics']
-          },
-          title: 'Hei verden'
-        },
+        'id0': lessonAsteroids,
+        'id1': lessonHeiVerden,
         'id2': {
-          author: 'Ola Nordmann',
-          course: 'python',
-          level: 1,
-          path: 'python/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'ios', 'linux'],
-            category: ['create game', 'get started'],
-            subject: ['science']
-          },
-          title: 'Hei verden'
+          ...lessonPyHeiVerden,
+          tags: {...lessonPyHeiVerden.tags, subject: ['science']}
         },
-        'id3': {
-          author: 'Ola Nordmann',
-          course: 'web',
-          level: 2,
-          path: 'web/nettside/nettside',
-          tags: {},
-          title: 'Nettside'
-        }
+        'id3': lessonNettside,
       };
       const filter = {
         platform: {
@@ -299,7 +148,7 @@ describe('lesson selector', () => {
         category: {'create game': true},
         subject: {
           'reading': false,
-          'math': true
+          'science': true
         }
       };
 
@@ -333,101 +182,18 @@ describe('lesson selector', () => {
   describe('getFilteredAndIndexedLessons', () => {
 
     it('should create an object only containing indexed lessons', () => {
+
       const lessons = {
-        './scratch/asteroids/asteroids': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          indexed: true,
-          level: 3,
-          path: 'scratch/asteroids/asteroids',
-          tags: {
-            platform: ['windows', 'mac'],
-            category: ['create game'],
-            subject: ['reading']
-          },
-          title: 'Asteroids'
-        },
-        './scratch/hei_verden/hei_verden': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          indexed: false,
-          level: 1,
-          path: 'scratch/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'browser'],
-            category: ['create game', 'get started'],
-            subject: ['physics']
-          },
-          title: 'Hei verden'
-        },
-        './python/hei_verden/hei_verden': {
-          author: 'Ola Nordmann',
-          course: 'python',
-          indexed: true,
-          level: 1,
-          path: 'python/hei_verden/hei_verden',
-          tags: {
-            platform: ['windows', 'ios', 'linux'],
-            category: ['create game', 'get started'],
-            subject: ['math']
-          },
-          title: 'Hei verden'
-        },
-        './web/nettside/nettside': {
-          author: 'Ola Nordmann',
-          course: 'web',
-          indexed: false,
-          level: 2,
-          path: 'web/nettside/nettside',
-          tags: {},
-          title: 'Nettside'
-        }
+        [`./${lessonAsteroids.path}`]: lessonAsteroids,
+        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
+        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
+        [`./${lessonNettside.path}`]: lessonNettside,
       };
 
       deepFreeze(lessons);
       expect(getFilteredAndIndexedLessons.resultFunc(lessons)).to.eql({
-        './python/hei_verden/hei_verden': {
-          author: 'Ola Nordmann',
-          course: 'python',
-          indexed: true,
-          level: 1,
-          path: 'python/hei_verden/hei_verden',
-          tags: {
-            category: [
-              'create game',
-              'get started'
-            ],
-            platform: [
-              'windows',
-              'ios',
-              'linux'
-            ],
-            subject: [
-              'math'
-            ]
-          },
-          title: 'Hei verden'
-        },
-        './scratch/asteroids/asteroids': {
-          author: 'Bill Gates',
-          course: 'scratch',
-          indexed: true,
-          level: 3,
-          path: 'scratch/asteroids/asteroids',
-          tags: {
-            category: [
-              'create game'
-            ],
-            platform: [
-              'windows',
-              'mac'
-            ],
-            subject: [
-              'reading'
-            ]
-          },
-          title: 'Asteroids'
-        }
+        [`./${lessonAsteroids.path}`]: lessonAsteroids,
+        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
       });
     });
 
@@ -443,4 +209,26 @@ describe('lesson selector', () => {
     });
 
   });
+
+
+  describe('getLessonsByLevel', () => {
+
+    it('should group lessons by level', () => {
+      const lessons = {
+        [`./${lessonAsteroids.path}`]: lessonAsteroids,
+        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
+        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
+        [`./${lessonNettside.path}`]: lessonNettside,
+      };
+      deepFreeze(lessons);
+      expect(getLessonsByLevel.resultFunc(lessons)).to.eql({
+        1: [lessonHeiVerden, lessonPyHeiVerden],
+        2: [lessonNettside],
+        3: [lessonAsteroids],
+      });
+
+    });
+
+  });
+
 });

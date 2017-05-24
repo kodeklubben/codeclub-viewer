@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PlaylistPage.scss';
 
-import {getFilteredAndIndexedLessons} from '../selectors/lesson';
+import {getFilteredAndIndexedLessons, getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
 
@@ -22,23 +22,6 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Collapse from 'react-bootstrap/lib/Collapse';
 
 export const PlaylistPage = React.createClass({
-  getLessonsByLevel(lessons) {
-    if (lessons == null) return {};
-
-    // Get lessons grouped by level
-    return Object.keys(lessons).reduce((res, lessonId) => {
-      const lesson = lessons[lessonId];
-      const level = lesson.level;
-
-      // Ignore lessons without level
-      if (level != null) {
-        if (res.hasOwnProperty(level)) res[level].push(lesson);
-        else res[level] = [lesson];
-      }
-
-      return res;
-    }, {});
-  },
   getInitialState() {
     return {
       showCourseInfo: false
@@ -48,14 +31,16 @@ export const PlaylistPage = React.createClass({
     this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
   },
   render() {
-    const {t} = this.props;
-    const lessons = this.props.filteredAndIndexedLessons;
-    const playlists = this.props.filteredPlaylists;
-    const lessonsIndexedByLevel = this.getLessonsByLevel(lessons);
-    const levels = Object.keys(lessonsIndexedByLevel);
+    const {
+      lessons,
+      lessonsByLevel,
+      playlists,
+      t,
+    } = this.props;
+    const levels = Object.keys(lessonsByLevel);
     const lessonLists = levels.map((level, idx) => (
       <div key={idx} className='col-xs-12'>
-        <LessonList id={'level-' + level} level={level} lessons={lessonsIndexedByLevel[level]}/>
+        <LessonList id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
       </div>
     ));
     const showLevelNavigationDesktop = Object.keys(lessons).length > 15 && levels.length > 1;
@@ -101,27 +86,19 @@ export const PlaylistPage = React.createClass({
           {/*Filter desktop*/}
           <Col xsHidden>
             <Col sm={3}>{filter}</Col>
-            {this.state.showCourseInfo ?
-              <Col sm={6}>
-                {courseInfo}
-                {playlistsAndLessons}
-              </Col>
-            :
-              <Col sm={6}>{playlistsAndLessons}</Col>
-            }
+            <Col sm={6}>
+              {this.state.showCourseInfo ? courseInfo : null}
+              {playlistsAndLessons}
+            </Col>
             <Col sm={3}>{jumpTo}</Col>
           </Col>
 
           {/*Filter mobile*/}
           <Col smHidden mdHidden lgHidden>
-            {this.state.showCourseInfo ?
-              <Col xs={12}>
-                {courseInfo}
-                {filter}
-              </Col>
-            :
-              <Col xs={12}>{filter}</Col>
-            }
+            <Col xs={12}>
+              {this.state.showCourseInfo ? courseInfo : null}
+              {filter}
+            </Col>
             <Col xs={12}>{jumpTo}</Col>
             <Col xs={12}>{playlistsAndLessons}</Col>
           </Col>
@@ -133,8 +110,9 @@ export const PlaylistPage = React.createClass({
 
 PlaylistPage.propTypes = {
   isStudentMode: PropTypes.bool,
-  filteredPlaylists: PropTypes.object,
-  filteredAndIndexedLessons: PropTypes.object,
+  lessons: PropTypes.object.isRequired,
+  lessonsByLevel: PropTypes.object.isRequired,
+  playlists: PropTypes.object.isRequired,
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }),
@@ -142,10 +120,12 @@ PlaylistPage.propTypes = {
 };
 
 function mapStateToProps(state, props) {
+  const {course} = props.params;
   return {
     isStudentMode: state.isStudentMode,
-    filteredAndIndexedLessons: getFilteredAndIndexedLessons(state, props.params.course),
-    filteredPlaylists: getPlaylists(state, props.params.course),
+    lessons: getFilteredAndIndexedLessons(state, course),
+    lessonsByLevel: getLessonsByLevel(state, course),
+    playlists: getPlaylists(state, course),
     t: getTranslator(state)
   };
 }
