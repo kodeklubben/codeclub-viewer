@@ -21,7 +21,7 @@ import {setModeTeacher, setLanguage} from '../../action_creators';
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
-      <Button componentClass="div" className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
+      <Button className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
         {buttonText}
       </Button>
     </LinkContainer> :

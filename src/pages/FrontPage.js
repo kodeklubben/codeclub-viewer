@@ -9,6 +9,8 @@ import Filter from '../components/FrontPage/Filter';
 import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
+import Button from 'react-bootstrap/lib/Button';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher} from '../action_creators';
 import {getTranslator} from '../selectors/translate';
 
@@ -21,7 +23,7 @@ export const  FrontPage = React.createClass({
   render() {
     return (
       <Grid fluid={true}>
-      
+
         {/*WelcomeBox*/}
         {this.props.isStudentMode
           ? <Row>
