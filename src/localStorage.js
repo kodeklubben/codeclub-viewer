@@ -1,17 +1,12 @@
-import store from './store';
-import {setLocalStorage} from './action_creators';
-
-const defaultLocalStorage = { 'hideWelcomeBox': false, 'lastLanguage': 'nb',
-  'studentMode': true, 'lastLesson': '' };
-const setItems = () => {
-  localStorage.setItem(defaultLocalStorage, JSON.stringify(defaultLocalStorage));
-};
-
 //Introduces localStorage
 export const loadLocalStorage = () => {
   if (typeof(Storage) !== 'undefined') {
     if (localStorage.length === 0) {
-      setItems();
+      localStorage.setItem('hideWelcomeBox', 'false');
+      localStorage.setItem('lastLanguage', 'nb');
+      localStorage.setItem('studentMode', 'true');
+      localStorage.setItem('lastLesson', '');
+
     }
     else {
       console.log('Ikke første gangen');
@@ -20,26 +15,21 @@ export const loadLocalStorage = () => {
   else {
     console.log('Støtter ikke localStorage');
   }
-  return JSON.parse(localStorage.getItem(defaultLocalStorage));
+  return localStorage;
 };
 
 export const doNotShowAgain = () => {
-  defaultLocalStorage.hideWelcomeBox = true;
-  setItems();
-  store.dispatch(setLocalStorage(defaultLocalStorage));
+  localStorage.setItem('hideWelcomeBox', 'true');
 };
 
 export const rememberLanguage = (language) => {
-  defaultLocalStorage.lastLanguage = language;
-  setItems();
+  localStorage.setItem('lastLanguage', language);
 };
 
 export const rememberMode = (isStudentMode) => {
-  defaultLocalStorage.studentMode = isStudentMode;
-  setItems();
+  localStorage.setItem('studentMode', isStudentMode);
 };
 
 export const rememberLesson = (lessonPath) => {
-  defaultLocalStorage.studentMode = lessonPath;
-  setItems();
+  localStorage.setItem('lastLesson', lessonPath);
 };

@@ -73,10 +73,3 @@ export function setLanguage(language) {
     payload: language
   };
 }
-
-export function setLocalStorage(localStorage) {
-  return {
-    type: 'SET_LOCAL_STORAGE',
-    payload: localStorage
-  };
-}

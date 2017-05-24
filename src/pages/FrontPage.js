@@ -9,7 +9,6 @@ import Filter from '../components/FrontPage/Filter';
 import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
-import {setModeTeacher} from '../action_creators';
 import {getTranslator} from '../selectors/translate';
 
 export const  FrontPage = React.createClass({
@@ -52,7 +51,6 @@ FrontPage.propTypes = {
   courses: PropTypes.object,
   externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  setModeTeacher: PropTypes.func,
   t: PropTypes.func
 };
 
@@ -64,8 +62,5 @@ function mapStateToProps(state) {
 }
 
 export const FrontPageContainer = connect(
-  mapStateToProps,
-  {
-    setModeTeacher
-  }
+  mapStateToProps
 )(withStyles(styles)(FrontPage));

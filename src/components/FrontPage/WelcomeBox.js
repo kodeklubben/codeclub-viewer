@@ -3,10 +3,10 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {doNotShowAgain} from '../../localStorage';
 import styles from './WelcomeBox.scss';
 import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+import {doNotShowAgain} from '../../localStorage';
 
 const WelcomeBox = React.createClass({
 
@@ -16,9 +16,8 @@ const WelcomeBox = React.createClass({
 
   render() {
     const {t} = this.props;
-    const localStorage = this.props.localStorage;
 
-    if(!localStorage.hideWelcomeBox) {
+    if(localStorage.hideWelcomeBox === 'false') {
       return (
         <div className={styles.center}>
           <div className={styles.infoBox}>
@@ -75,19 +74,15 @@ WelcomeBox.propTypes = {
   courses: PropTypes.object,
   externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  localStorage: PropTypes.object,
-  t: PropTypes.func,
-  lastLesson: PropTypes.number
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
     t: getTranslator(state),
-    localStorage: state.localStorage
   };
 }
 
 export default connect(
-  mapStateToProps,
-  {doNotShowAgain}
+  mapStateToProps
 )(withStyles(styles)(WelcomeBox));
