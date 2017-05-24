@@ -86,11 +86,6 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
   }, {});
 }
 
-export function getLevelName(level) {
-  const levelData = require('lessonSrc/level-config.json');
-  return(levelData[level.toString()]);
-}
-
 export function getCourseInfo(courseName) {
   const courseInfo = require('onlyContent!lessonSrc/' + courseName + '/index.md');
   return courseInfo.content;
