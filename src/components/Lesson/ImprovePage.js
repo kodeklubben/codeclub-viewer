@@ -3,41 +3,50 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ImprovePage.scss';
 import {capitalize} from '../../util.js';
+import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 
 const ImprovePage = React.createClass({
 
   render() {
+    const {t} = this.props;
     const isStudent = this.props.isStudentMode;
     const courseName = this.props.courseLessonFileProp.course;
     const lessonName = this.props.courseLessonFileProp.lesson;
     
-    // Link to making a new issue + title,body fill
-    const createNewIssueLink = '?title=' + capitalize(courseName) + ': ' + capitalize(lessonName).replace(/_/g, ' ')
-     + '&body=Beskriv ditt problem...';
-    // Link to the problem on github
-    const githubLink = courseName + '/' + lessonName;
+    const linkToSourceCode = 'https://github.com/kodeklubben/oppgaver/tree/master/src/' + 
+                             courseName + '/' + lessonName;
+
+    const linkToLesson = 'http://oppgaver.kidsakoder.no/beta/' + //'/beta' should be removed when the site goes live
+                         courseName + '/' + lessonName + '/' + lessonName;
+
+    const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' + 
+                         capitalize(courseName) + ': ' + capitalize(lessonName).replace(/_/g, ' ') + '\'' +
+                         '&body=' + t('lessons.improvepage.newissuelink.lesson') + ': ' + linkToLesson +
+                         '%0A' + t('lessons.improvepage.newissuelink.sourcecode') + ': ' + linkToSourceCode +
+                         '%0A%0A' + t('lessons.improvepage.newissuelink.info') + '%0A';
 
     const url = {
-      newIssue: 'https://github.com/kodeklubben/oppgaver/issues/new/' + createNewIssueLink,
-      showCode: 'https://github.com/kodeklubben/oppgaver/tree/master/src/' + githubLink
+      // Link to making a new issue + title and body fill
+      newIssue: 'https://github.com/kodeklubben/oppgaver/issues/new/' + newIssueFill,
+      // Link to source code
+      showCode: linkToSourceCode
     };
     return (
       <div className={styles.container}>
         <div className={isStudent ? styles.student : styles.teacher}>
             <div className={styles.improvePageBox}>
               <div className={isStudent ? styles.textRowStudent : styles.textRowTeacher}>
-                <h2>Forbedre denne siden</h2>
-                <p>Funnet en feil? Kunne noe vært bedre? <br/>
-                Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github eller fiks feilen selv om du kan. 
-                Vi er takknemlige for enhver tilbakemelding!</p>
+                <h2>{t('lessons.improvepage.header')}</h2>
+                <p>{t('lessons.improvepage.textline1')} <br/>
+                {t('lessons.improvepage.textline2')}</p>
               </div>
               <div className={styles.linkRow}>
                   <div>
-                    <Button href={url.newIssue} bsStyle="white-grey">Rapporter et problem</Button>
+                    <Button href={url.newIssue} bsStyle="white-grey">{t('lessons.improvepage.newissuebutton')}</Button>
                   </div>
                   <div>
-                    <Button href={url.showCode} bsStyle="orange">Vis koden og fiks selv</Button>
+                    <Button href={url.showCode} bsStyle="orange">{t('lessons.improvepage.showcodebutton')}</Button>
                   </div>
               </div>
             </div>
@@ -49,12 +58,14 @@ const ImprovePage = React.createClass({
 
 ImprovePage.propTypes = {
   isStudentMode: PropTypes.bool,
-  courseLessonFileProp: PropTypes.object
+  courseLessonFileProp: PropTypes.object,
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
-    isStudentMode: state.isStudentMode
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state)
   };
 }
 

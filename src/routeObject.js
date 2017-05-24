@@ -4,14 +4,15 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router';
 
 import App from './pages/App';
-import NotFound from './pages/PageNotFound';
 import store from './store';
 
 const lessons = store.getState().lessons;
 const courses = store.getState().context['courseContext'].keys();
+const readmePaths = store.getState().context['readmeContext'].keys();
 
 const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
-const courseArray = courses.map((course) => course.slice(1).replace(/\/index.md/i, ''));
+const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));
+const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, ''));
 
 const validPathTest = (lesson, path) => {
   if(lesson){
@@ -35,10 +36,10 @@ const pathTest = (nextState, replace) => {
   if(path.lastIndexOf('/') === path.length-1){
     path = path.slice(0, -1);
   }
-  
+  const isReadme = readmeArray.indexOf(path) > -1;
   const pathCorrect = validPathTest(params.lesson, path);
 
-  if(!pathCorrect){
+  if(!pathCorrect && !isReadme){
     replace({pathname:'/PageNotFound', state: path});
   }
 };
@@ -82,15 +83,16 @@ const serverSideRedirectCheck = (nextState, replace) => {
 export default function getRouteObject(
   getComponentFrontPage,
   getComponentPlaylist,
-  getComponentLessonPage
+  getComponentLessonPage,
+  getComponentNotFound
 ) {
   return (
     <Route path="/" component={App}>
       <IndexRoute getComponent={getComponentFrontPage} onEnter={serverSideRedirectCheck}/>
-      <Route path="/PageNotFound" component={NotFound} onEnter={saveURL}/>
+      <Route path="/PageNotFound" getComponent={getComponentNotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
       <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>
-      <Route path="*" component={NotFound}/>
+      <Route path="*" getComponent={getComponentNotFound}/>
     </Route>
   );
 }
