@@ -1,4 +1,3 @@
-//Introduces localStorage
 export const loadLocalStorage = () => {
   if (typeof(Storage) !== 'undefined') {
     if (localStorage.length === 0) {
@@ -6,14 +5,7 @@ export const loadLocalStorage = () => {
       localStorage.setItem('lastLanguage', 'nb');
       localStorage.setItem('studentMode', 'true');
       localStorage.setItem('lastLesson', '');
-
     }
-    else {
-      console.log('Ikke første gangen');
-    }
-  }
-  else {
-    console.log('Støtter ikke localStorage');
   }
   return localStorage;
 };

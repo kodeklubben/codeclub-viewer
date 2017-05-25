@@ -10,10 +10,6 @@ import {doNotShowAgain} from '../../localStorage';
 
 const WelcomeBox = React.createClass({
 
-  contextTypes: {
-    router: React.PropTypes.object
-  },
-
   render() {
     const {t} = this.props;
 
@@ -71,9 +67,6 @@ const WelcomeBox = React.createClass({
 });
 
 WelcomeBox.propTypes = {
-  courses: PropTypes.object,
-  externalCourses: PropTypes.object,
-  isStudentMode: PropTypes.bool,
   t: PropTypes.func
 };
 

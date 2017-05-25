@@ -13,10 +13,6 @@ import {getTranslator} from '../selectors/translate';
 
 export const  FrontPage = React.createClass({
 
-  contextTypes: {
-    router: React.PropTypes.object
-  },
-
   render() {
     return (
       <Grid fluid={true}>
@@ -48,8 +44,6 @@ export const  FrontPage = React.createClass({
 });
 
 FrontPage.propTypes = {
-  courses: PropTypes.object,
-  externalCourses: PropTypes.object,
   isStudentMode: PropTypes.bool,
   t: PropTypes.func
 };
