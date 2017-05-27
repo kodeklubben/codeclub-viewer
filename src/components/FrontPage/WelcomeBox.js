@@ -70,11 +70,10 @@ WelcomeBox.propTypes = {
   t: PropTypes.func
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state),
-  };
-}
+const mapStateToProps = (state) => ({
+  t: getTranslator(state)
+});
+
 
 export default connect(
   mapStateToProps

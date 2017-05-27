@@ -19,7 +19,8 @@ const TeacherInfobox = React.createClass({
   },
 
   render() {
-    const {t} = this.props;
+    const {t, isStudentMode} = this.props;
+    const {showCourseInfo} = this.state;
     const url = [
       'http://kidsakoder.no/skole/valgfag/',
       'http://kidsakoder.no/kodeklubben/'
@@ -27,7 +28,7 @@ const TeacherInfobox = React.createClass({
 
     return (
       <div className={styles.center}>
-        {!this.props.isStudentMode ?
+        {!isStudentMode ?
           <div className={styles.infoBox}>
             <h3 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h3>
             <br />
@@ -35,10 +36,10 @@ const TeacherInfobox = React.createClass({
             <br />
             <div className={styles.center}>
               <Button className={styles.plusSign} onClick={() => this.changeState()}>
-                <Glyphicon glyph={!this.state.showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
+                <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
               </Button>
             </div>
-            <Collapse in={this.state.showCourseInfo}>
+            <Collapse in={showCourseInfo}>
               <div>
                 <h3>{t('frontpage.teacherinfobox.teacher')}</h3>
                 {t('frontpage.teacherinfobox.info1')}
@@ -68,11 +69,10 @@ TeacherInfobox.propTypes = {
   t: PropTypes.func
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  t: getTranslator(state)
+});
+
 
 export default connect(
   mapStateToProps
