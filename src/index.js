@@ -2,7 +2,9 @@
 
 import React from 'react';
 import {render} from 'react-dom';
-import {applyRouterMiddleware, Router, useRouterHistory} from 'react-router';
+import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
+import Router from 'react-router/lib/Router';
+import useRouterHistory from 'react-router/lib/useRouterHistory';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'react-router-scroll';
 import {Provider} from 'react-redux';

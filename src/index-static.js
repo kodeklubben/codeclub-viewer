@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {Provider} from 'react-redux';
-import { createMemoryHistory, RouterContext, match } from 'react-router';
+import createMemoryHistory from 'react-router/lib/createMemoryHistory';
+import RouterContext from 'react-router/lib/RouterContext';
+import match from 'react-router/lib/match';
 import routes from './routes-static';
 import WithStylesContext from './WithStylesContext';
 import store from './store';
