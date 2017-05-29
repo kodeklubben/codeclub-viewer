@@ -73,3 +73,15 @@ export function setLanguage(language) {
     payload: language
   };
 }
+
+export function setWelcomeBox() {
+  return {
+    type: 'SET_WELCOMEBOX'
+  };
+}
+
+export function setButton() {
+  return {
+    type: 'SET_BUTTON'
+  };
+}

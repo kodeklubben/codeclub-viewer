@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setMode, setLanguage} from './action_creators';
+import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox, setButton} from './action_creators';
 import reducer from './reducer';
 import {loadLocalStorage} from './localStorage';
 
@@ -39,5 +39,6 @@ store.dispatch(setLessons(lessons));
 store.dispatch(setMode(JSON.parse(localStorage.studentMode)));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 store.dispatch(setLanguage(localStorage.lastLanguage));
+JSON.parse(localStorage.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
 
 export default store;

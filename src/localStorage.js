@@ -1,7 +1,7 @@
 export const loadLocalStorage = () => {
   if (typeof(Storage) !== 'undefined') {
     if (localStorage.length === 0) {
-      localStorage.setItem('hideWelcomeBox', 'false');
+      localStorage.setItem('welcomeBox', 'true');
       localStorage.setItem('lastLanguage', 'nb');
       localStorage.setItem('studentMode', 'true');
       localStorage.setItem('lastLesson', '');
@@ -11,7 +11,7 @@ export const loadLocalStorage = () => {
 };
 
 export const doNotShowAgain = () => {
-  localStorage.setItem('hideWelcomeBox', 'true');
+  localStorage.setItem('welcomeBox', false);
 };
 
 export const rememberLanguage = (language) => {

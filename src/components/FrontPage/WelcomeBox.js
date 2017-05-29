@@ -6,20 +6,20 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './WelcomeBox.scss';
 import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {doNotShowAgain} from '../../localStorage';
+import {setButton} from '../../action_creators';
 
 const WelcomeBox = React.createClass({
 
   render() {
-    const {t} = this.props;
+    const {t, welcomeBox, setButton} = this.props;
 
-    if(localStorage.hideWelcomeBox === 'false') {
+    if(welcomeBox) {
       return (
         <div className={styles.center}>
           <div className={styles.infoBox}>
             <h3 className={styles.center}>
             {t('frontpage.welcomebox.header')}</h3>
-            <Button className={styles.xSign} onClick={() => doNotShowAgain()}>
+            <Button className={styles.xSign} onClick={() => setButton()}>
               <Glyphicon glyph="remove"/>
             </Button>
             <br />
@@ -67,14 +67,18 @@ const WelcomeBox = React.createClass({
 });
 
 WelcomeBox.propTypes = {
-  t: PropTypes.func
+  t: PropTypes.func,
+  welcomeBox: PropTypes.bool,
+  setButton: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  t: getTranslator(state)
+  t: getTranslator(state),
+  welcomeBox: state.welcomeBox
 });
 
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  {setButton}
 )(withStyles(styles)(WelcomeBox));
