@@ -36,9 +36,16 @@ store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
-store.dispatch(setMode(JSON.parse(localStorage.studentMode)));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
-store.dispatch(setLanguage(localStorage.lastLanguage));
-JSON.parse(localStorage.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
+if (localStorage.length === 0) {
+  store.dispatch(setMode(true));
+  store.dispatch(setLanguage('nb'));
+  store.dispatch(setWelcomeBox());
+}
+else {
+  store.dispatch(setMode(JSON.parse(localStorage.studentMode)));
+  store.dispatch(setLanguage(localStorage.lastLanguage));
+  JSON.parse(localStorage.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
+}
 
 export default store;
