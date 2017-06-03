@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './WelcomeBox.scss';
 import {getTranslator} from '../../selectors/translate';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+//import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setButton} from '../../action_creators';
 
 const WelcomeBox = React.createClass({
@@ -28,6 +28,7 @@ const WelcomeBox = React.createClass({
             {t('frontpage.welcomebox.info')}
             <br /><br />
             <div className={styles.center}>
+              {/*
               {localStorage.lastLesson === '' ?
               <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
                 <Button bsStyle='student-frontpage'>
@@ -40,6 +41,7 @@ const WelcomeBox = React.createClass({
                   {t('frontpage.welcomebox.continuebutton')}
                 </Button>
               </LinkContainer>}
+              */}
             </div>
           </div>
         </div>
@@ -48,6 +50,7 @@ const WelcomeBox = React.createClass({
     else {
       return (
       <div className={styles.center}>
+        {/*
        {localStorage.lastLesson === '' ?
        <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
          <Button bsStyle='student-frontpage'>
@@ -60,6 +63,7 @@ const WelcomeBox = React.createClass({
             {t('frontpage.welcomebox.continuebutton')}
           </Button>
         </LinkContainer>}
+        */}
       </div>);
     }
   }

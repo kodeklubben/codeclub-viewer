@@ -4,7 +4,6 @@ import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
 import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox, setButton} from './action_creators';
 import reducer from './reducer';
-import {loadLocalStorage} from './localStorage';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
@@ -18,11 +17,6 @@ const lessons = getLessons(lessonContext, readmeContext, courseContext);
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
 let store;
-const local = loadLocalStorage();
-
-/*This is allways 4, even if I localStorage.clear() on chrome.
-On Edge this is 1...*/
-console.log(local.length);
 
 if (isProduction) {
   store = createStore(reducer, initialState);
@@ -43,17 +37,15 @@ store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 /*localStorage*/
-if (local.length < 3) {
-  console.log('first time');
+if (localStorage.length === 0) {
   store.dispatch(setMode(true));
   store.dispatch(setLanguage('nb'));
   store.dispatch(setWelcomeBox());
 }
 else {
-  console.log('test');
-  store.dispatch(setMode(JSON.parse(local.studentMode)));
-  store.dispatch(setLanguage(local.lastLanguage));
-  //JSON.parse(local.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
+  store.dispatch(setMode(JSON.parse(localStorage.studentMode)));
+  store.dispatch(setLanguage(localStorage.lastLanguage));
+  JSON.parse(localStorage.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
 }
 
 

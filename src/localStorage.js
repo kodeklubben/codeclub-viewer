@@ -10,6 +10,10 @@ export const loadLocalStorage = () => {
   return localStorage;
 };
 
+export const showWelcomeBox = () => {
+  localStorage.setItem('welcomeBox', true);
+};
+
 export const doNotShowAgain = () => {
   localStorage.setItem('welcomeBox', false);
 };
