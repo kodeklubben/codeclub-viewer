@@ -18,7 +18,11 @@ const lessons = getLessons(lessonContext, readmeContext, courseContext);
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
 let store;
-const localStorage = loadLocalStorage();
+const local = loadLocalStorage();
+
+/*This is allways 4, even if I localStorage.clear() on chrome.
+On Edge this is 1...*/
+console.log(local.length);
 
 if (isProduction) {
   store = createStore(reducer, initialState);
@@ -37,15 +41,21 @@ store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
-if (localStorage.length === 0) {
+
+/*localStorage*/
+if (local.length < 3) {
+  console.log('first time');
   store.dispatch(setMode(true));
   store.dispatch(setLanguage('nb'));
   store.dispatch(setWelcomeBox());
 }
 else {
-  store.dispatch(setMode(JSON.parse(localStorage.studentMode)));
-  store.dispatch(setLanguage(localStorage.lastLanguage));
-  JSON.parse(localStorage.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
+  console.log('test');
+  store.dispatch(setMode(JSON.parse(local.studentMode)));
+  store.dispatch(setLanguage(local.lastLanguage));
+  //JSON.parse(local.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
 }
+
+
 
 export default store;
