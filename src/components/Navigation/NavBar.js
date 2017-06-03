@@ -169,26 +169,28 @@ function MenuToggle(props) {
 export function NavBar(props) {
   const widgetClass = props.isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
-    <Navbar fluid={true} staticTop>
-      <Navbar.Header>
-        <LkkBrand/>
-        <Clearfix visibleXsBlock/>
-        <MenuToggle t={props.t}/>
-      </Navbar.Header>
-      <Navbar.Collapse>
-        <div className={styles.spacing}/>
-        <LkkNav t={props.t}/>
-      </Navbar.Collapse>
-      <div className={styles.widgets + ' ' + widgetClass}>
-        <BreadCrumb params={props.params}/>
-        <Gadgets language={props.language}
-                 setLanguage={props.setLanguage}
-                 setModeStudent={props.setModeStudent}
-                 setModeTeacher={props.setModeTeacher}
-                 isStudentMode={props.isStudentMode}
-                 t={props.t}/>
-      </div>
-    </Navbar>
+    <div className={styles.navbarWrapper}>
+      <Navbar fluid={true} staticTop>
+        <Navbar.Header>
+          <LkkBrand/>
+          <Clearfix visibleXsBlock/>
+          <MenuToggle t={props.t}/>
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <div className={styles.spacing}/>
+          <LkkNav t={props.t}/>
+        </Navbar.Collapse>
+        <div className={styles.widgets + ' ' + widgetClass}>
+          <BreadCrumb params={props.params}/>
+          <Gadgets language={props.language}
+                   setLanguage={props.setLanguage}
+                   setModeStudent={props.setModeStudent}
+                   setModeTeacher={props.setModeTeacher}
+                   isStudentMode={props.isStudentMode}
+                   t={props.t}/>
+        </div>
+      </Navbar>
+    </div>
   );
 }
 NavBar.propTypes = {
