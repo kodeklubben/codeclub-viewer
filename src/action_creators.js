@@ -74,14 +74,9 @@ export function setLanguage(language) {
   };
 }
 
-export function setWelcomeBox() {
+export function setWelcomeBox(welcomeBox) {
   return {
-    type: 'SET_WELCOMEBOX'
-  };
-}
-
-export function setButton() {
-  return {
-    type: 'SET_BUTTON'
+    type: 'SET_WELCOMEBOX',
+    payload: welcomeBox
   };
 }

@@ -1,18 +1,18 @@
-import {rememberMode} from '../localStorage';
+import {localstorageStoreMode} from '../localStorage';
 
 export default function(state=true, action) {
   switch(action.type) {
     case 'SET_MODE_STUDENT':
-      rememberMode(true);
+      localstorageStoreMode(true);
       return true;
     case 'SET_MODE_TEACHER':
-      rememberMode(false);
+      localstorageStoreMode(false);
       return false;
     case 'CHANGE_MODE':
-      rememberMode(!state);
+      localstorageStoreMode(!state);
       return !state;
     case 'SET_MODE':
-      rememberMode(action.payload);
+      localstorageStoreMode(action.payload);
       return action.payload;
   }
 

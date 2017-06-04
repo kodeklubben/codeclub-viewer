@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox, setButton} from './action_creators';
+import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -40,12 +40,12 @@ store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 if (localStorage.length === 0) {
   store.dispatch(setMode(true));
   store.dispatch(setLanguage('nb'));
-  store.dispatch(setWelcomeBox());
+  store.dispatch(setWelcomeBox(true));
 }
 else {
-  store.dispatch(setMode(JSON.parse(localStorage.studentMode)));
-  store.dispatch(setLanguage(localStorage.lastLanguage));
-  JSON.parse(localStorage.welcomeBox) ? store.dispatch(setWelcomeBox()) : store.dispatch(setButton());
+  store.dispatch(setMode(JSON.parse(localStorage.isStudentMode)));
+  store.dispatch(setLanguage(localStorage.language));
+  store.dispatch(setWelcomeBox(JSON.parse(localStorage.welcomeBox)));
 }
 
 

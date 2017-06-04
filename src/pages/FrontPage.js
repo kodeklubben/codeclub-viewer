@@ -14,20 +14,10 @@ export const  FrontPage = React.createClass({
     const {isStudentMode} = this.props;
     return (
       <Grid fluid={true}>
-
-        {/*WelcomeBox*/}
-        {isStudentMode
-          ? <Row>
-              <WelcomeBox isStudentMode={false}/>
-            </Row>
-          : null}
-
-        {/*TeacherInfobox*/}
-        <Row>
-          <TeacherInfobox isStudentMode={isStudentMode}/>
-        </Row>
+        {/*WelcomeBox and TeacherInfobox*/}
+        {isStudentMode ? <WelcomeBox /> : <TeacherInfobox />}
+        
         <hr/>
-
         {/* Filter and courses */}
         <Row>
           <Col sm={4} md={3} lg={2}>

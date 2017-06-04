@@ -1,11 +1,11 @@
-export const showWelcomeBox = (welcomeBox) => {
+export const localstorageStoreWelcomeBox = (welcomeBox) => {
   localStorage.setItem('welcomeBox', welcomeBox);
 };
 
-export const rememberLanguage = (language) => {
-  localStorage.setItem('lastLanguage', language);
+export const localstorageStoreLanguage = (language) => {
+  localStorage.setItem('language', language);
 };
 
-export const rememberMode = (isStudentMode) => {
-  localStorage.setItem('studentMode', isStudentMode);
+export const localstorageStoreMode = (isStudentMode) => {
+  localStorage.setItem('isStudentMode', isStudentMode);
 };

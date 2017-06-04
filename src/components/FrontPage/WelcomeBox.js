@@ -6,12 +6,12 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './WelcomeBox.scss';
 import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setButton} from '../../action_creators';
+import {setWelcomeBox} from '../../action_creators';
 
 const WelcomeBox = React.createClass({
 
   render() {
-    const {t, welcomeBox, setButton} = this.props;
+    const {t, welcomeBox, setWelcomeBox} = this.props;
 
     if(welcomeBox) {
       return (
@@ -19,7 +19,7 @@ const WelcomeBox = React.createClass({
           <div className={styles.infoBox}>
             <h3 className={styles.center}>
             {t('frontpage.welcomebox.header')}</h3>
-            <Button className={styles.xSign} onClick={() => setButton()}>
+            <Button className={styles.xSign} onClick={() => setWelcomeBox(false)}>
               <Glyphicon glyph="remove"/>
             </Button>
             <br />
@@ -69,7 +69,7 @@ const WelcomeBox = React.createClass({
 WelcomeBox.propTypes = {
   t: PropTypes.func,
   welcomeBox: PropTypes.bool,
-  setButton: PropTypes.func
+  setWelcomeBox: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
@@ -80,5 +80,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-  {setButton}
+  {setWelcomeBox}
 )(withStyles(styles)(WelcomeBox));
