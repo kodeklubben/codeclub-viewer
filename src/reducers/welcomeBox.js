@@ -1,12 +1,12 @@
-import {showWelcomeBox, doNotShowAgain} from '../localStorage';
+import {showWelcomeBox} from '../localStorage';
 
 export default function(state=true, action) {
   switch(action.type) {
     case 'SET_WELCOMEBOX':
-      showWelcomeBox();
+      showWelcomeBox(true);
       return true;
     case 'SET_BUTTON':
-      doNotShowAgain();
+      showWelcomeBox(false);
       return false;
   }
   return state;

@@ -1,9 +1,5 @@
-export const showWelcomeBox = () => {
-  localStorage.setItem('welcomeBox', true);
-};
-
-export const doNotShowAgain = () => {
-  localStorage.setItem('welcomeBox', false);
+export const showWelcomeBox = (welcomeBox) => {
+  localStorage.setItem('welcomeBox', welcomeBox);
 };
 
 export const rememberLanguage = (language) => {
