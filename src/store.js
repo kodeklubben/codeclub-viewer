@@ -35,19 +35,8 @@ store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
-
-/*localStorage*/
-if (localStorage.length === 0) {
-  store.dispatch(setMode(true));
-  store.dispatch(setLanguage('nb'));
-  store.dispatch(setWelcomeBox(true));
-}
-else {
-  store.dispatch(setMode(JSON.parse(localStorage.isStudentMode)));
-  store.dispatch(setLanguage(localStorage.language));
-  store.dispatch(setWelcomeBox(JSON.parse(localStorage.welcomeBox)));
-}
-
-
+store.dispatch(setMode(localStorage.isStudentMode ? JSON.parse(localStorage.isStudentMode) : true));
+store.dispatch(setLanguage(localStorage.language ? localStorage.language : 'nb'));
+store.dispatch(setWelcomeBox(localStorage.welcomeBox ? JSON.parse(localStorage.welcomeBox) :  true));
 
 export default store;
