@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import styles from './CourseItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-import {Link} from 'react-router';
+import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
