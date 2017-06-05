@@ -36,10 +36,13 @@ store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
-if (typeof Storage !== 'undefined') {
+try {
   store.dispatch(setMode(localStorage.isStudentMode ? JSON.parse(localStorage.isStudentMode) : true));
   store.dispatch(setLanguage(localStorage.language ? localStorage.language : 'nb'));
   store.dispatch(setWelcomeBox(localStorage.welcomeBox ? JSON.parse(localStorage.welcomeBox) :  true));
+}
+catch(e) {
+  console.error(e);
 }
 
 export default store;
