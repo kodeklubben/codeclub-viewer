@@ -19,7 +19,7 @@ const TeacherInfobox = React.createClass({
   },
 
   render() {
-    const {t, isStudentMode} = this.props;
+    const {t} = this.props;
     const {showCourseInfo} = this.state;
     const url = [
       'http://kidsakoder.no/skole/valgfag/',
@@ -28,36 +28,34 @@ const TeacherInfobox = React.createClass({
 
     return (
       <div className={styles.center}>
-        {!isStudentMode ?
-          <div className={styles.infoBox}>
-            <h3 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h3>
-            <br />
-            {t('frontpage.teacherinfobox.changemode')}
-            <br />
-            <div className={styles.center}>
-              <Button className={styles.plusSign} onClick={() => this.changeState()}>
-                <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
-              </Button>
-            </div>
-            <Collapse in={showCourseInfo}>
-              <div>
-                <h3>{t('frontpage.teacherinfobox.teacher')}</h3>
-                {t('frontpage.teacherinfobox.info1')}
-                <br />
-                <a className={styles.link} href={url[0]} target="_blank">
-                  {t('frontpage.teacherinfobox.link1')}
-                </a>
-                <br />
-                <h3>{t('frontpage.teacherinfobox.assistant')}</h3>
-                {t('frontpage.teacherinfobox.info2')}
-                <br />
-                <a className={styles.link} href={url[1]} target="_blank">
-                  {t('frontpage.teacherinfobox.link2')}
-                </a>
-              </div>
-            </Collapse>
+        <div className={styles.infoBox}>
+          <h3 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h3>
+          <br />
+          {t('frontpage.teacherinfobox.changemode')}
+          <br />
+          <div className={styles.center}>
+            <Button className={styles.plusSign} onClick={() => this.changeState()}>
+              <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
+            </Button>
           </div>
-          : null}
+          <Collapse in={showCourseInfo}>
+            <div>
+              <h3>{t('frontpage.teacherinfobox.teacher')}</h3>
+              {t('frontpage.teacherinfobox.info1')}
+              <br />
+              <a className={styles.link} href={url[0]} target="_blank">
+                {t('frontpage.teacherinfobox.link1')}
+              </a>
+              <br />
+              <h3>{t('frontpage.teacherinfobox.assistant')}</h3>
+              {t('frontpage.teacherinfobox.info2')}
+              <br />
+              <a className={styles.link} href={url[1]} target="_blank">
+                {t('frontpage.teacherinfobox.link2')}
+              </a>
+            </div>
+          </Collapse>
+        </div>
       </div>
     );
   }
@@ -65,7 +63,6 @@ const TeacherInfobox = React.createClass({
 });
 
 TeacherInfobox.propTypes = {
-  isStudentMode: PropTypes.bool,
   t: PropTypes.func
 };
 
