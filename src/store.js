@@ -43,6 +43,9 @@ try {
 }
 catch(e) {
   console.error(e);
+  store.dispatch(setMode(true));
+  store.dispatch(setLanguage('nb'));
+  store.dispatch(setWelcomeBox(true));
 }
 
 export default store;

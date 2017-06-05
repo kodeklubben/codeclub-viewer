@@ -13,7 +13,7 @@
     "build:prod:travis": "cross-env NODE_ENV=production webpack -p && webpack --config=webpack.static.config.babel.js",
     "serve": "ws -p 8080 -c -d ./dist -s index.html",
     "servejs": "node ./server.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\" -r mock-local-storage",
+    "test": "mocha --compilers js:babel-core/register --require mock-local-storage --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "yarn run test -- --watch",
     "eslint": "eslint src/ test/ --ext .js,.jsx",
     "stylelint": "stylelint 'src/**/*.scss'",
