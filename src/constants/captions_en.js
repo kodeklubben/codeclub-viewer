@@ -22,7 +22,7 @@ export default {
             'taking a look at the block-based tasks in Code Studio or Scratch. Please use the filters on the left ' +
             'side to find tasks that are right for you!',
       startbutton: 'Start here!',
-      buttonlink: '',
+      buttonlink: '/scratch/astrokatt/astrokatt',
       continuebutton: 'Continue...',
     },
     teacherinfobox: {
@@ -50,7 +50,7 @@ export default {
     lessons: 'Lessons',
     courseinfo: 'Information about the course',
     courseinfonotfound: 'Oops, someone forgot to write course information!',
-    instructionbutton: 'Teacher Instructions',    
+    instructionbutton: 'Teacher Instructions',
     levelnavigation: 'Navigate to',
     lessoncollections: 'Collections of Lessons',
     nomatchinglessons: 'No matching lessons for this combination'
@@ -58,7 +58,7 @@ export default {
   lessons: {
     writtenby: 'by',
     toteacherinstruction: 'To Teacher Instructions',
-    tolesson: 'To Lesson',    
+    tolesson: 'To Lesson',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',
@@ -71,7 +71,7 @@ export default {
         sourcecode: 'The lesson\'s source code',
         info: 'Describe the problem. Adding your operating system, browser and any code you have written will help.'
       },
-      showcodebutton: 'Show code and fix yourself'      
+      showcodebutton: 'Show code and fix yourself'
     }
   },
   filter: {
@@ -96,7 +96,7 @@ export default {
       codehour: 'Kodetimen',
       contribute: 'Contribute?'
     },
-    menu: 'Menu'    
+    menu: 'Menu'
   },
   search: {
     placeholder: 'Search'

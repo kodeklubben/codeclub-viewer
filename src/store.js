@@ -36,16 +36,17 @@ store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
-try {
-  store.dispatch(setMode(localStorage.isStudentMode ? JSON.parse(localStorage.isStudentMode) : true));
-  store.dispatch(setLanguage(localStorage.language ? localStorage.language : 'nb'));
-  store.dispatch(setWelcomeBox(localStorage.welcomeBox ? JSON.parse(localStorage.welcomeBox) :  true));
+let initialMode = true;
+let initialLanguage = 'nb';
+let initialWelcomeBox = true;
+
+if (typeof localStorage !== 'undefined') {
+  if (localStorage.isStudentMode) { initialMode = JSON.parse(localStorage.isStudentMode); }
+  if (localStorage.language) { initialLanguage = localStorage.language; }
+  if (localStorage.welcomeBox) { initialWelcomeBox = JSON.parse(localStorage.welcomeBox); }
 }
-catch(e) {
-  console.error(e);
-  store.dispatch(setMode(true));
-  store.dispatch(setLanguage('nb'));
-  store.dispatch(setWelcomeBox(true));
-}
+store.dispatch(setMode(initialMode));
+store.dispatch(setLanguage(initialLanguage));
+store.dispatch(setWelcomeBox(initialWelcomeBox));
 
 export default store;

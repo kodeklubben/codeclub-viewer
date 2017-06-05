@@ -28,19 +28,11 @@ const WelcomeBox = React.createClass({
             {t('frontpage.welcomebox.info')}
             <br /><br />
             <div className={styles.center}>
-            {/*Everything with LinkContainer will be fixed in another issue*/}
-              {!localStorage.lastLesson ?
               <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
                 <Button bsStyle='student-frontpage'>
                   {t('frontpage.welcomebox.startbutton')}
                 </Button>
               </LinkContainer>
-              :
-              <LinkContainer to={'/scratch'}>
-                <Button bsStyle='student-frontpage'>
-                  {t('frontpage.welcomebox.continuebutton')}
-                </Button>
-              </LinkContainer>}
             </div>
           </div>
         </div>
@@ -49,19 +41,11 @@ const WelcomeBox = React.createClass({
     else {
       return (
       <div className={styles.center}>
-      {/*Everything with LinkContainer will be fixed in another issue*/}
-       {!localStorage.lastLesson ?
        <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
          <Button bsStyle='student-frontpage'>
            {t('frontpage.welcomebox.startbutton')}
          </Button>
        </LinkContainer>
-        :
-        <LinkContainer to={'/scratch'}>
-          <Button bsStyle='student-frontpage'>
-            {t('frontpage.welcomebox.continuebutton')}
-          </Button>
-        </LinkContainer>}
       </div>);
     }
   }
