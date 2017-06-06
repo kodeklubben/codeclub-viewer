@@ -91,12 +91,6 @@ export function getCourseInfo(courseName) {
   return courseInfo.content;
 }
 
-export function getInfo(context) {
-  return context.keys().length !== 0
-    ? context(context.keys()[0]).frontmatter.info
-    : {};
-}
-
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
@@ -198,7 +192,7 @@ export function tagsMatchFilter(lessonTags, filter) {
 }
 
 export function removeHtmlFileEnding(lessonPage) {
-  // RegEx for matching and removing parts of text that starts with 
+  // RegEx for matching and removing parts of text that starts with
   // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
   return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
 }
