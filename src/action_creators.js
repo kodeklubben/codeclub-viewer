@@ -60,9 +60,23 @@ export function changeMode() {
   };
 }
 
+export function setMode(mode) {
+  return {
+    type: 'SET_MODE',
+    payload: mode
+  };
+}
+
 export function setLanguage(language) {
   return {
     type: 'SET_LANGUAGE',
     payload: language
+  };
+}
+
+export function setWelcomeBox(welcomeBox) {
+  return {
+    type: 'SET_WELCOMEBOX',
+    payload: welcomeBox
   };
 }
