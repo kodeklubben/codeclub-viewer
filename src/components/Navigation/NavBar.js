@@ -11,10 +11,11 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
+import {getAvailableLanguages} from '../../util';
 
 import styles from './NavBar.scss';
 
-const languages = ['nb', 'nn', 'sv', 'da', 'en', 'hr'];
+const languages = Object.keys(getAvailableLanguages());
 const modes = ['student', 'teacher'];
 
 function LanguageItem(props) {
@@ -38,10 +39,6 @@ function LanguageItem(props) {
     'en': {
       name: 'English',
       url: require('../../assets/graphics/united_kingdom.svg')
-    },
-    'hr': {
-      name: ' Hrvatski',
-      url: require('../../assets/graphics/croatia.svg')
     }
   };
   // Note that the block with "float" (the flag) must be first in the containing div

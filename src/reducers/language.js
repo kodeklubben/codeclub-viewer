@@ -1,3 +1,5 @@
+import {getAvailableLanguages} from '../util';
+
 export default function(state='nb', action) {
   switch (action.type) {
     case 'SET_LANGUAGE':
@@ -8,7 +10,7 @@ export default function(state='nb', action) {
 }
 
 function isLanguageValid(language) {
-  const languages = ['nb','nn','sv','da','en', 'hr'];
+  const languages = getAvailableLanguages();
 
-  return languages.indexOf(language) > -1;
+  return Object.keys(languages).indexOf(language) > -1;
 }

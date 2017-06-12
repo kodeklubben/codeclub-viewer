@@ -182,11 +182,14 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    if(groupName === 'language' && (checkedLanguageTags.filter(tagName => lessonGroup.indexOf(tagName) !== -1).length === 0)){
+    // OR-testing language-tags
+    if(groupName === 'language' && checkedLanguageTags.length !== 0
+      && (checkedLanguageTags.filter(tagName => lessonGroup.indexOf(tagName) !== -1).length === 0)){
       return false;
     }
+    // AND-testing all other tags
     for (const checkedFilterTag of checkedTagNames) {
-      if (groupName !== 'language' && lessonGroup.indexOf(checkedFilterTag) === -1) { // lessonGroup doesn't contain checkedFilterTag
+      if (groupName !== 'language' && lessonGroup.indexOf(checkedFilterTag) === -1) {
         return false;
       }
     }
@@ -200,3 +203,7 @@ export function removeHtmlFileEnding(lessonPage) {
   // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
   return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
 }
+
+export const getAvailableLanguages = () => {
+  return {nb: 'norsk bokmål', nn: 'nynorsk', sv: 'svenska', da: 'dansk', en: 'english'};
+};

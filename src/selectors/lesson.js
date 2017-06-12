@@ -44,13 +44,46 @@ export const getFilteredAndIndexedLessons = createSelector(
 );
 
 /**
+ * Creates an object containing indexed lessons that have tags matching the filter
+ * Where the filter is considered as having all languages selected
+ * Only in use to show all available lessons for every language, given the constraints in "tema"
+ */
+export const getFilteredAndIndexedLessonsLanguagesSelected = createSelector(
+  [getFilter, getLessons],
+  (filter = {}, lessons = {}) => {
+
+    let languageFilter = {};
+    
+    for(const groupName of Object.keys(filter)){
+      languageFilter[groupName] = {};
+      for(const tag of Object.keys(filter[groupName])){
+        if(groupName === 'language'){
+          languageFilter[groupName][tag] = true;
+        }
+        else if(filter[groupName][tag]){
+          languageFilter[groupName][tag] = true;
+        }
+        else{
+          languageFilter[groupName][tag] = false;
+        }
+      }
+    }
+
+    return Object.keys(lessons).reduce((res, lessonKey) => {
+      const lesson = lessons[lessonKey];
+      if (tagsMatchFilter(lesson.tags, languageFilter) && lesson.indexed) res[lessonKey] = lesson;
+      return res;
+    }, {});
+  }
+);
+
+/**
  * Creates an object containing number of lessons available in each tag given your current filter
  * Input props: courseName (string, optional)
  */
-
 export const getAvailableLessons = createSelector(
-  [getFilter, getFilteredAndIndexedLessons, getLessons],
-  (current_filter = {}, filteredLessons = {}, lessons = {}) => {
+  [getFilter, getFilteredAndIndexedLessons, getFilteredAndIndexedLessonsLanguagesSelected],
+  (current_filter = {}, filteredLessons = {}, filteredLessonsLanguagesSelected = {}) => {
 
     let availableLessons = {};
 
@@ -65,13 +98,23 @@ export const getAvailableLessons = createSelector(
       const lesson = filteredLessons[lessonKey];
       Object.keys(availableLessons).forEach((tag) => {
         Object.keys(current_filter).forEach((groupName) => {
-          if((lesson.tags[groupName] || []).indexOf(tag)!== -1){
+          if(groupName !== 'language' && (lesson.tags[groupName] || []).indexOf(tag)!== -1){
             availableLessons[tag]++;
           }
         });
       });
     });
 
+    Object.keys(filteredLessonsLanguagesSelected).forEach((lessonKey) => {
+      const lesson = filteredLessonsLanguagesSelected[lessonKey];
+      Object.keys(availableLessons).forEach((tag) => {
+        Object.keys(current_filter).forEach((groupName) => {
+          if(groupName === 'language' && (lesson.tags[groupName] || []).indexOf(tag)!== -1){
+            availableLessons[tag]++;
+          }
+        });
+      });
+    });
     return availableLessons;
   }
 );
