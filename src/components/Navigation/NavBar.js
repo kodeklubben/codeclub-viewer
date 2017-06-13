@@ -5,17 +5,18 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-// import FormControl from 'react-bootstrap/lib/FormControl';
+//import FormControl from 'react-bootstrap/lib/FormControl';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
+import {getTranslator} from '../../selectors/translate';
 import {getAvailableLanguages} from '../../util';
-
 import styles from './NavBar.scss';
 
 const languages = Object.keys(getAvailableLanguages());
+
 const modes = ['student', 'teacher'];
 
 function LanguageItem(props) {
@@ -38,7 +39,7 @@ function LanguageItem(props) {
     },
     'en': {
       name: 'English',
-      url: require('../../assets/graphics/united_kingdom.svg')
+      url: require('../../assets/graphics/english.svg')
     }
   };
   // Note that the block with "float" (the flag) must be first in the containing div
@@ -64,11 +65,11 @@ const setFilterAndLanguage = (props, eventKey) => {
       }else{
         filter[group][tag] = false;
       }
-    })
+    });
   });
   props.resetFilter();
   props.setFilter(filter);
-}
+};
 
 function LanguageDropdown(props) {
   return <div className={styles.gadgetContainer}>
@@ -98,14 +99,14 @@ LanguageDropdown.propTypes = {
 };
 
 function ModeDropdown(props) {
-  const texts = {'student': 'ELEV', 'teacher': 'LÆRER'};
+  const texts = {'student': props.t('general.student'), 'teacher': props.t('general.teacher')};
   const setMode = mode => mode === 'student' ? props.setModeStudent() : props.setModeTeacher();
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='mode-dropdown'
                     noCaret
                     pullRight
                     bsStyle={props.mode}
-                    title={'Modus: ' + texts[props.mode]}
+                    title={props.t('navbar.mode') + ': ' + texts[props.mode]}
                     onSelect={setMode}>
       {
         modes.map(k =>
@@ -121,9 +122,9 @@ ModeDropdown.propTypes = {
   mode: PropTypes.oneOf(modes).isRequired
 };
 
-// function SearchBox() {
+// function SearchBox(props) {
 //   return <div className={styles.gadgetContainer}>
-//     <FormControl type='text' placeholder='Søk'/>
+//     <FormControl type='text' placeholder={props.t('search.placeholder')}/>
 //   </div>;
 // }
 
@@ -135,19 +136,21 @@ function LkkBrand() {
   </Navbar.Brand>;
 }
 
-function LkkNav() {
+function LkkNav(props) {
   return <div className={styles.navContainer}>
     <Nav>
-      <NavItem href="http://kidsakoder.no/om-lkk/">Om LKK</NavItem>
-      <NavItem href="http://kidsakoder.no/nyheter/">Nyheter</NavItem>
+      <NavItem href="http://kidsakoder.no/om-lkk/">{props.t('navbar.lkknav.aboutlkk')}</NavItem>
+      <NavItem href="http://kidsakoder.no/nyheter/">{props.t('navbar.lkknav.news')}</NavItem>
       <LinkContainer to='/'>
-        <NavItem>Oppgaver</NavItem>
+        <NavItem>{props.t('navbar.lkknav.lessons')}</NavItem>
       </LinkContainer>
-      <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">Finn kodeklubb</NavItem>
-      <NavItem href="http://kidsakoder.no/kodeklubben/">Kodeklubben</NavItem>
-      <NavItem href="http://kidsakoder.no/skole/">Skole</NavItem>
-      <NavItem href="http://kidsakoder.no/kodetimen/">Kodetimen</NavItem>
-      <NavItem href="http://kidsakoder.no/bidra/">Bidra?</NavItem>
+      <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">
+        {props.t('navbar.lkknav.findcodeclub')}
+      </NavItem>
+      <NavItem href="http://kidsakoder.no/kodeklubben/">{props.t('navbar.lkknav.codeclub')}</NavItem>
+      <NavItem href="http://kidsakoder.no/skole/">{props.t('navbar.lkknav.school')}</NavItem>
+      <NavItem href="http://kidsakoder.no/kodetimen/">{props.t('navbar.lkknav.codehour')}</NavItem>
+      <NavItem href="http://kidsakoder.no/bidra/">{props.t('navbar.lkknav.contribute')}</NavItem>
     </Nav>
   </div>;
 }
@@ -160,8 +163,9 @@ function Gadgets(props) {
       setLanguage={props.setLanguage} resetFilter={props.resetFilter} filter={props.filter}/>}
     <ModeDropdown setModeStudent={props.setModeStudent}
                   setModeTeacher={props.setModeTeacher}
-                  mode={mode}/>
-    {/*<SearchBox/>*/}
+                  mode={mode}
+                  t={props.t}/>
+    {/*<SearchBox t={props.t}/>*/}
   </div>;
 }
 Gadgets.propTypes = {
@@ -175,7 +179,7 @@ Gadgets.propTypes = {
   resetFilter: PropTypes.func
 };
 
-function MenuToggle() {
+function MenuToggle(props) {
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
     <span className={styles.toggleContent}>
@@ -183,35 +187,38 @@ function MenuToggle() {
       <span className="icon-bar"/>
       <span className="icon-bar"/>
     </span>
-    <span className={styles.toggleContent}>Meny</span>
+    <span className={styles.toggleContent}>{props.t('navbar.menu')}</span>
   </Navbar.Toggle>;
 }
 
 export function NavBar(props) {
   const widgetClass = props.isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
-    <Navbar fluid={true} staticTop>
-      <Navbar.Header>
-        <LkkBrand/>
-        <Clearfix visibleXsBlock/>
-        <MenuToggle/>
-      </Navbar.Header>
-      <Navbar.Collapse>
-        <div className={styles.spacing}/>
-        <LkkNav/>
-      </Navbar.Collapse>
-      <div className={styles.widgets + ' ' + widgetClass}>
-        <BreadCrumb params={props.params}/>
-        <Gadgets language={props.language}
-                 setLanguage={props.setLanguage}
-                 setModeStudent={props.setModeStudent}
-                 setModeTeacher={props.setModeTeacher}
-                 isStudentMode={props.isStudentMode}
-                 setFilter={props.setFilter}
-                 resetFilter={props.resetFilter}
-                 filter = {props.filter}/>
-      </div>
-    </Navbar>
+    <div className={styles.navbarWrapper}>
+      <Navbar fluid={true} staticTop>
+        <Navbar.Header>
+          <LkkBrand/>
+          <Clearfix visibleXsBlock/>
+          <MenuToggle t={props.t}/>
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <div className={styles.spacing}/>
+          <LkkNav t={props.t}/>
+        </Navbar.Collapse>
+        <div className={styles.widgets + ' ' + widgetClass}>
+          <BreadCrumb params={props.params}/>
+          <Gadgets language={props.language}
+                   setLanguage={props.setLanguage}
+                   setModeStudent={props.setModeStudent}
+                   setModeTeacher={props.setModeTeacher}
+                   isStudentMode={props.isStudentMode}
+                   setFilter={props.setFilter}
+                   resetFilter={props.resetFilter}
+                   filter = {props.filter}
+                   t={props.t}/>
+        </div>
+      </Navbar>
+    </div>
   );
 }
 NavBar.propTypes = {
@@ -227,14 +234,16 @@ NavBar.propTypes = {
   setLanguage: PropTypes.func,
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
-  isStudentMode: PropTypes.bool
+  isStudentMode: PropTypes.bool,
+  t: PropTypes.func
 };
 
 function mapStateToProps(state) {
   return {
     isStudentMode: state.isStudentMode,
     language: state.language,
-    filter: state.filter
+    filter: state.filter,
+    t: getTranslator(state)
   };
 }
 

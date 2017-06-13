@@ -1,54 +1,28 @@
 import React, {PropTypes} from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {connect} from 'react-redux';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
-
-import styles from './FrontPage.scss';
+import Col from 'react-bootstrap/lib/Col';
 import Filter from '../components/FrontPage/Filter';
 import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
-import ButtonItem from '../components/ButtonItem';
-import {setModeTeacher} from '../action_creators';
+import WelcomeBox from '../components/FrontPage/WelcomeBox';
 
 export const  FrontPage = React.createClass({
 
-  contextTypes: {
-    router: React.PropTypes.object
-  },
-
   render() {
+    const {isStudentMode} = this.props;
     return (
       <Grid fluid={true}>
-
-        {/* Buttons */}
-        {this.props.isStudentMode
-          ? <Row>
-              <div className={styles.center}>
-                <ButtonItem color='green' onClick={() => this.context.router.push('/scratch/astrokatt/astrokatt')}>
-                  Kom i gang!
-                </ButtonItem>
-                <ButtonItem color='blue' onClick={() => this.props.setModeTeacher()}>
-                  Lærer/Veileder
-                </ButtonItem>
-                {/* Continue button functionality to be implemented here */}
-                {/*<ButtonItem color='darkblue'>
-                  Fortsett...
-                </ButtonItem>*/}
-              </div>
-            </Row>
-          : null}
-
-        {/* Teacher infobox */}
-        <Row>
-          <TeacherInfobox isStudentMode={this.props.isStudentMode}/>
-        </Row>
-
+        {/*WelcomeBox and TeacherInfobox*/}
+        {isStudentMode ? <WelcomeBox /> : <TeacherInfobox />}
+        
         <hr/>
-
         {/* Filter and courses */}
         <Row>
-          <Filter isStudentMode={this.props.isStudentMode}/>
+          <Col sm={4} md={3} lg={2}>
+            <Filter isStudentMode={isStudentMode}/>
+          </Col>
           <CoursesContainer/>
         </Row>
       </Grid>
@@ -58,21 +32,13 @@ export const  FrontPage = React.createClass({
 });
 
 FrontPage.propTypes = {
-  courses: PropTypes.object,
-  externalCourses: PropTypes.object,
-  isStudentMode: PropTypes.bool,
-  setModeTeacher: PropTypes.func
+  isStudentMode: PropTypes.bool
 };
 
-function mapStateToProps(state) {
-  return {
-    isStudentMode: state.isStudentMode
-  };
-}
+const mapStateToProps = (state) => ({
+  isStudentMode: state.isStudentMode
+});
 
 export const FrontPageContainer = connect(
-  mapStateToProps,
-  {
-    setModeTeacher
-  }
-)(withStyles(styles)(FrontPage));
+  mapStateToProps
+)(FrontPage);

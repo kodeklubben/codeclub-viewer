@@ -1,17 +1,30 @@
-import React from 'react';
-import {Link} from 'react-router';
+import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import Link from 'react-router/lib/Link';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PageNotFound.scss';
+import {getTranslator} from '../selectors/translate';
 
-const NotFound = () => {
+const NotFound = ({t}) => {
   return (
     <div className={styles.center}>
-      <h3>Noe gikk galt.</h3>
-      <p>Siden du leter etter klarer vi ikke å finne.</p>
+      <h3>{t('404.header')}</h3>
+      <p>{t('404.textline1')}</p>
       <p>(404)</p>
-      <p><Link to="/">Til forsiden</Link></p>
+      <p><Link to="/">{t('404.tofrontpage')}</Link></p>
     </div>
   );
 };
 
-export default (withStyles(styles)(NotFound));
+NotFound.propTypes = {
+  t: PropTypes.func
+};
+
+function mapStateToProps(state) {
+  return {
+    t: getTranslator(state)
+  };
+}
+
+export const NotFoundContainer = connect(
+	mapStateToProps)(withStyles(styles)(NotFound));

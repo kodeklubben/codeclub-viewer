@@ -58,6 +58,8 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const courseFrontmatter = courseContext(coursePath).frontmatter;
     let lessonFrontmatter = lessonContext(path).frontmatter;
 
+    // The 'undefined language' tag is added because some courses (e.g. external courses)
+    // does not have language defined. May be removed when no longer necessary.
     const language = lessonFrontmatter.language ? lessonFrontmatter.language : 'undefined language';
 
     if(language){
@@ -73,9 +75,8 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const lessonTags = cleanseTags(lessonFrontmatter.tags, false);
     const tags = {...courseTags, ...lessonTags};
 
-    // Everything between '.' and last '/'. Add '/README' at the end
-    const readmePath = path.slice(1, path.lastIndexOf('/')) + '/README';
-    const hasReadme = readmeContext.keys().indexOf('.' + readmePath + '.md') !== -1;
+    // Gets the valid readmePath for the lesson, if it exists
+    const readmePath = getReadmePath(readmeContext, language, path);
 
     res[path] = {
       title: lessonFrontmatter.title || '',
@@ -83,9 +84,9 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       level: lessonFrontmatter.level,
       indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
       external: lessonFrontmatter.external || '',
-      readmePath: hasReadme ? readmePath : '',
+      readmePath: readmePath,
       course: courseName,
-      language: lessonFrontmatter.language,
+      language: language,
       tags,
       // Everything between '.' and '.md'
       path: path.slice(1, path.length - 3)
@@ -95,25 +96,35 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
   }, {});
 }
 
-export function getLevelName(level) {
-  const levelData = require('lessonSrc/level-config.json');
-  return(levelData[level.toString()]);
-}
-
 export function getCourseInfo(courseName) {
   const courseInfo = require('onlyContent!lessonSrc/' + courseName + '/index.md');
   return courseInfo.content;
 }
 
-export function getInfo(context) {
-  return context.keys().length !== 0
-    ? context(context.keys()[0]).frontmatter.info
-    : {};
-}
-
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
+
+/**
+* Checks if a lesson with a given path has a README-file.
+* Accepts README-files on the form /README or /README_(ISO_CODE).
+**/
+const getReadmePath = (readmeContext, language, path) => {
+  path = path.slice(1, path.lastIndexOf('/'));
+  const readmeContextKeys = readmeContext.keys();
+  const readmePathAndLanguageCode = path + '/README_' + language;
+  const readmePathNoLanguageCode = path + '/README';
+
+  if(readmeContextKeys.indexOf('.' + readmePathAndLanguageCode + '.md') !== -1){
+    return readmePathAndLanguageCode;
+  }
+  else if(readmeContextKeys.indexOf('.' + readmePathNoLanguageCode + '.md') !== -1){
+    if(language === readmeContext('.' + readmePathNoLanguageCode + '.md').frontmatter.language){
+      return readmePathNoLanguageCode;
+    }
+  }
+  return '';
+};
 
 /**
  * Fix invalid tags
@@ -171,7 +182,7 @@ export function fixNonArrayTagList(tagItems) {
 export function tagsMatchFilter(lessonTags, filter) {
   // lessonTags is e.g. {'tema': ['spill'], 'fag': ['naturfag']}
   // filter is e.g. {'tema': {'spill':false, 'animasjon': true}, 'utstyr': {'ipad': false, 'arduino': true}}}
-  const languageTags = Object.keys(filter['language']);
+  const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
   const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
   for (const groupName of Object.keys(filter)) { // groupName is e.g. 'tema'
     const filterGroup = filter[groupName]; // the whole filter group, e.g. {'spill':false, 'animasjon': true}
@@ -199,11 +210,32 @@ export function tagsMatchFilter(lessonTags, filter) {
 }
 
 export function removeHtmlFileEnding(lessonPage) {
-  // RegEx for matching and removing parts of text that starts with 
+  // RegEx for matching and removing parts of text that starts with
   // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
   return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
 }
 
+/**
+* IMPORTANT:
+* Returns languages defined as available
+* All available languages must be defined here
+* @returns {Object}
+*/
 export const getAvailableLanguages = () => {
   return {nb: 'norsk bokmål', nn: 'nynorsk', sv: 'svenska', da: 'dansk', en: 'english'};
+};
+
+/**
+* Returns the readmePath of a lesson with the given lessonPath
+*
+* @param {Object} lessons
+* @param {String} lessonPath
+* @returns {String or undefined}
+*/
+export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
+  for(let key of Object.keys(lessons)){
+    if(lessons[key].readmePath === lessonPath){
+      return lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;
+    }
+  }
 };

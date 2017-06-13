@@ -44,11 +44,11 @@ export const getFilteredAndIndexedLessons = createSelector(
 );
 
 /**
- * Creates an object containing indexed lessons that have tags matching the filter
- * Where the filter is considered as having all languages selected
+ * Creates an object containing lessons that have tags matching the filter
+ * where the filter is considered as having all languages selected
  * Only in use to show all available lessons for every language, given the constraints in "tema"
  */
-export const getFilteredAndIndexedLessonsLanguagesSelected = createSelector(
+export const getFilteredLessonsLanguagesSelected = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
 
@@ -71,8 +71,24 @@ export const getFilteredAndIndexedLessonsLanguagesSelected = createSelector(
 
     return Object.keys(lessons).reduce((res, lessonKey) => {
       const lesson = lessons[lessonKey];
-      if (tagsMatchFilter(lesson.tags, languageFilter) && lesson.indexed) res[lessonKey] = lesson;
+      if (tagsMatchFilter(lesson.tags, languageFilter)) res[lessonKey] = lesson;
       return res;
+    }, {});
+
+  }
+);
+
+/**
+ * Creates an object containing indexed lessons that have tags matching the filter
+ * where the filter is considered as having all languages selected
+ * Only in use to show all available lessons for every language, given the constraints in "tema"
+ */
+export const getFilteredAndIndexedLessonsLanguagesSelected = createSelector(
+  [getFilteredLessonsLanguagesSelected],
+  (filteredLessons = {}) => {
+    return Object.keys(filteredLessons).reduce((res, lessonPath) => {
+      const lesson = filteredLessons[lessonPath];
+      return lesson.indexed ? {...res, [lessonPath]: lesson} : res;
     }, {});
   }
 );
@@ -116,5 +132,30 @@ export const getAvailableLessons = createSelector(
       });
     });
     return availableLessons;
+  }
+);
+
+
+/**
+ * Creates an object {<level>: [lessonA, lessonB, ...], ...}
+ * where the lessons available given your current filter are sorted according to level
+ * Input props: courseName (string, optional)
+ */
+export const getLessonsByLevel = createSelector(
+  [getFilteredAndIndexedLessons],
+  (lessons = {}) => {
+    // Get lessons grouped by level
+    return Object.keys(lessons).reduce((res, lessonId) => {
+      const lesson = lessons[lessonId];
+      const level = lesson.level;
+
+      // Ignore lessons without level
+      if (level != null) {
+        if (res.hasOwnProperty(level)) res[level].push(lesson);
+        else res[level] = [lesson];
+      }
+
+      return res;
+    }, {});
   }
 );

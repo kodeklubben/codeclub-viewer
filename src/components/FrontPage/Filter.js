@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/lib/Button';
 import ActiveFilterItem from '../Filter/ActiveFilterItem';
 import {connect} from 'react-redux';
 import {onFilterCheck} from '../../action_creators';
+import {getTranslator} from '../../selectors/translate';
 
 
 import {LessonFilterContainer} from '../Filter/LessonFilter';
@@ -19,6 +20,7 @@ const Filter = React.createClass({
   },
 
   render() {
+    const {t} = this.props;
     const filter = this.props.filter || {};
 
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
@@ -40,19 +42,18 @@ const Filter = React.createClass({
     return (
       <div>
         {/*Filter desktop*/}
-        <Col xsHidden sm={4} md={3} lg={2}>
-          <br/>
+        <Col xsHidden>
           <LessonFilterContainer/>
         </Col>
 
         {/*Filter mobile*/}
-        <Col smHidden mdHidden lgHidden xs={12}>
+        <Col smHidden mdHidden lgHidden>
           {filterGroups}
           <br/>
           <Button className={this.props.isStudentMode ? 'btn-student' : 'btn-teacher'}
             onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
             <Glyphicon glyph={this.state.showMobileFilter ? 'chevron-down' : 'chevron-right'}/>
-            Vis/skjul filter
+            {t('frontpage.showhidefilter')}
           </Button>
           <br/>
 
@@ -72,10 +73,12 @@ Filter.propTypes = {
   onFilterCheck: PropTypes.func,
   filter: PropTypes.object,
   isStudentMode: PropTypes.bool,
+  t: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   filter: state.filter,
+  t: getTranslator(state)
 });
 
 const mapDispatchToProps = {

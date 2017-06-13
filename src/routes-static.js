@@ -11,19 +11,24 @@ const getComponentFrontPage = (nextState, cb) => {
   cb(null, require('./pages/FrontPage').FrontPageContainer);
 };
 
+const getComponentNotFound = (nextState, cb) => {
+  cb(null, require('./pages/PageNotFound').NotFoundContainer);
+};
+
 const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
   const path = params.file ? `${params.course}/${params.lesson}/${params.file}`
     : nextState.location.pathname;
 
   const lessonContext = require.context('frontAndContent!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$|README\.md$)[^\/]*\.md/);
+    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
   // console.log('SERVER: routes lessonContext.keys():');
   // console.log(lessonContext.keys());
   const result = lessonContext('./' + path + '.md');
-  cb(null, props => <Lesson {...props} lesson={result}/>);
+  cb(null, props => <Lesson {...props} path={path} lesson={result}/>);
 };
 
 
-const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist, getComponentLessonPage);
+const routes = getRouteObject(
+  getComponentFrontPage, getComponentPlaylist, getComponentLessonPage, getComponentNotFound);
 export default routes;

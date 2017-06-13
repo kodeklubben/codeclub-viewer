@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setModeStudent, setLanguage} from './action_creators';
+import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -29,15 +29,28 @@ if (isProduction) {
   store = createStore(reducer, initialState, devTools);
 }
 
-let filter = getTags(lessonContext, courseContext);
-filter.language['nb'] = true;
-
 store.dispatch(setContext('iconContext', iconContext));
 store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
+store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
-store.dispatch(setModeStudent());
-store.dispatch(setLanguage('nb'));
+
+let initialMode = true;
+let initialLanguage = 'nb';
+let initialWelcomeBox = true;
+
+if (typeof localStorage !== 'undefined') {
+  if (localStorage.isStudentMode) { initialMode = JSON.parse(localStorage.isStudentMode); }
+  if (localStorage.language) { initialLanguage = localStorage.language; }
+  if (localStorage.welcomeBox) { initialWelcomeBox = JSON.parse(localStorage.welcomeBox); }
+}
+
+let filter = getTags(lessonContext, courseContext);
+filter.language[initialLanguage] = true;
+
 store.dispatch(setFilter(filter));
+store.dispatch(setMode(initialMode));
+store.dispatch(setLanguage(initialLanguage));
+store.dispatch(setWelcomeBox(initialWelcomeBox));
 
 export default store;

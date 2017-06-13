@@ -1,4 +1,5 @@
 @import '~bootstrapStyles/mixins/buttons';
+@import './variables';
 
 @mixin button-nav($color, $background, $border, $darken) {
   color: $color;
@@ -53,6 +54,19 @@
   }
 }
 
+@mixin button-frontpage($color, $background) {
+  @include button-variant($color, $background, transparent);
+  font-family: $font-family-roboto;
+  font-weight: 300;
+  font-size: 1.5em;
+  margin: 10px 20px;
+  width: 250px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border: none;
+  transition: all 0.1s ease-in-out;
+}
+
 .btn-student {
   @include button-variant(#fff, $color-green, $color-green-median);
 }
@@ -69,12 +83,12 @@
   @include button-variant($color-blue-dark, transparent, $color-blue-dark);
 }
 
-.btn-student-nav {
-  @include button-nav(#fff, $color-green, $color-green-median, 25%);
+.btn-student-frontpage {
+  @include button-frontpage(white, $color-green);
 }
 
-.btn-teacher-nav {
-  @include button-nav(#fff, $color-blue, $color-blue-median, 25%);
+.btn-teacher-frontpage {
+  @include button-frontpage(white, $color-blue);
 }
 
 .btn-white-grey {
