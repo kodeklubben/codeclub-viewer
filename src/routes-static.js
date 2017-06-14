@@ -17,8 +17,7 @@ const getComponentNotFound = (nextState, cb) => {
 
 const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
-  const path = params.file ? `${params.course}/${params.lesson}/${params.file}`
-    : nextState.location.pathname;
+  const path = `${params.course}/${params.lesson}/${params.file}`;
 
   const lessonContext = require.context('frontAndContent!lessonSrc/', true,
     /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);

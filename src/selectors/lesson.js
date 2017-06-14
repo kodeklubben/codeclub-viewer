@@ -4,10 +4,6 @@ import {tagsMatchFilter} from '../util';
 const getLessons = (state, courseName = '') => {
   return Object.keys(state.lessons).reduce((res, lessonPath) => {
     return lessonPath.startsWith('./' + courseName) ? {...res, [lessonPath]: state.lessons[lessonPath]} : res;
-    /*if(state.lessons[lessonPath].language === state.language || !(state.lessons[lessonPath].language)){
-      return lessonPath.startsWith('./' + courseName) ? {...res, [lessonPath]: state.lessons[lessonPath]} : res;
-    }
-    return res;*/
   }, {});
 };
 const getFilter = (state) => state.filter;

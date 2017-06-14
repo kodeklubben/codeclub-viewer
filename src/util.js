@@ -200,6 +200,7 @@ export function tagsMatchFilter(lessonTags, filter) {
     }
     // AND-testing all other tags
     for (const checkedFilterTag of checkedTagNames) {
+      // lessonGroup doesn't contain checkedFilterTag
       if (groupName !== 'language' && lessonGroup.indexOf(checkedFilterTag) === -1) {
         return false;
       }

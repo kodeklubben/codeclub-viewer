@@ -72,9 +72,9 @@ const Lesson = React.createClass({
     this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
 
     if(this.props.isReadme) this.props.setModeTeacher();
-    /*Comment this in when language is implemented
-    Changes the language state to the language defined in the current lesson or readme-file*/
-    //this.setLanguage();
+
+    //Changes the language state to the language defined in the current lesson or readme-file
+    this.setLanguage();
   },
   componentDidMount() {
     const nodes = document.getElementsByClassName('togglebutton');
