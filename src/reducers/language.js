@@ -1,7 +1,10 @@
+import {localstorageStoreLanguage} from '../localStorage';
+
 export default function(state='nb', action) {
+  const newLanguage =  isLanguageValid(action.payload) ? action.payload : state;
   switch (action.type) {
     case 'SET_LANGUAGE':
-      return isLanguageValid(action.payload) ? action.payload : state;
+      return localstorageStoreLanguage(newLanguage);
   }
 
   return state;
