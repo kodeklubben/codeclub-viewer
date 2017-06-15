@@ -1,29 +1,17 @@
-export const localstorageStoreWelcomeBox = (welcomeBox) => {
+const storeItem = (key, val) => {
   try {
-    localStorage.setItem('welcomeBox', welcomeBox);
+    localStorage.setItem(key, val);
   }
-  catch(e) {
-    console.error(e);
+  catch (e) {
+    // If we get here, localStorage is not defined.
+    // This will always be the case during server side rendering,
+    // and also for some old browsers.
+    // If so, we won't be able to remember changes in localStorage for later sessions,
+    // but the app should work fine anyway.
   }
-  return welcomeBox;
+  return val;
 };
 
-export const localstorageStoreLanguage = (language) => {
-  try {
-    localStorage.setItem('language', language);
-  }
-  catch(e) {
-    console.error(e);
-  }
-  return language;
-};
-
-export const localstorageStoreMode = (isStudentMode) => {
-  try {
-    localStorage.setItem('isStudentMode', isStudentMode);
-  }
-  catch(e) {
-    console.error(e);
-  }
-  return isStudentMode;
-};
+export const localstorageStoreWelcomeBox = (welcomeBox) => storeItem('welcomeBox', welcomeBox);
+export const localstorageStoreLanguage = (language) => storeItem('language', language);
+export const localstorageStoreMode = (isStudentMode) => storeItem('isStudentMode', isStudentMode);
