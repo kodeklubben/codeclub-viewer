@@ -86,9 +86,19 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
   }, {});
 }
 
-export function getCourseInfo(courseName) {
-  const courseInfo = require('onlyContent!lessonSrc/' + courseName + '/index.md');
-  return courseInfo.content;
+/**
+* Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
+**/
+export function getCourseInfo(courseName, language) {
+    try {
+        var path = require('onlyContent!lessonSrc/' + courseName + '/index_' + language + '.md').content;
+    }
+    catch(err) {
+        var path = require('onlyContent!lessonSrc/' + courseName + '/index.md').content;
+    }
+    finally {
+        return path;
+    }
 }
 
 ///////////////////////////////////
