@@ -90,15 +90,11 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfo(courseName, language) {
-  var path;
   try {
-    path = require('onlyContent!lessonSrc/' + courseName + '/index_' + language + '.md').content;
+    return require('onlyContent!lessonSrc/' + courseName + '/index_' + language + '.md').content;
   }
   catch(err) {
-    path = require('onlyContent!lessonSrc/' + courseName + '/index.md').content;
-  }
-  finally {
-    return path;
+    return require('onlyContent!lessonSrc/' + courseName + '/index.md').content;
   }
 }
 
