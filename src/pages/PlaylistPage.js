@@ -47,7 +47,7 @@ export const PlaylistPage = React.createClass({
 
     const filter =
       <div className={styles.filter}>
-        <Filter isStudentMode={this.props.isStudentMode}/>
+        <Filter isStudentMode={this.props.isStudentMode} courseName={this.props.params.course}/>
       </div>;
 
     const playlistsAndLessons =

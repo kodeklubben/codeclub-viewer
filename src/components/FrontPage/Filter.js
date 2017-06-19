@@ -43,7 +43,7 @@ const Filter = React.createClass({
       <div>
         {/*Filter desktop*/}
         <Col xsHidden>
-          <LessonFilterContainer/>
+          <LessonFilterContainer courseName={this.props.courseName}/>
         </Col>
 
         {/*Filter mobile*/}
@@ -60,7 +60,7 @@ const Filter = React.createClass({
           <br/>
           <Collapse in={this.state.showMobileFilter}>
             <div>
-              <LessonFilterContainer/>
+              <LessonFilterContainer courseName={this.props.courseName}/>
             </div>
           </Collapse>
         </Col>
