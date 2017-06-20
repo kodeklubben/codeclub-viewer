@@ -16,7 +16,7 @@ import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage} from '../../action_creators';
+import {setModeTeacher, setLanguage, setCheckBoxes} from '../../action_creators';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -38,6 +38,25 @@ const LessonButton = ({path, lessons, t}) => {
   const lessonPath = '/' + path;
   const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
+};
+
+/*
+const changeHandler = (e) => {
+  console.log('test');
+  if(e.target.checked){ checkboxProgress[checkboxes[i].id] = true; setCheckBoxes(checkboxProgress);
+    console.log('checked'); }
+  else{ checkboxProgress[checkboxes[i].id] = false; setCheckBoxes(checkboxProgress);
+    console.log('unchecked'); }
+};
+*/
+
+const addOnChangeAttribute = () => {
+  const checkboxes = document.getElementsByTagName('input');
+  for (let i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].type === 'checkbox') {
+      checkboxes[i].setAttribute('onChange', 'changeHandler');
+    }
+  }
 };
 
 const Lesson = React.createClass({
@@ -77,6 +96,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
+    addOnChangeAttribute();
     const nodes = document.getElementsByClassName('togglebutton');
     for (let node of nodes) {
       const strongNode = node.getElementsByTagName('strong')[0];

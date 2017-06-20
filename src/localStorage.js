@@ -15,3 +15,4 @@ const storeItem = (key, val) => {
 export const localstorageStoreWelcomeBox = (welcomeBox) => storeItem('welcomeBox', welcomeBox);
 export const localstorageStoreLanguage = (language) => storeItem('language', language);
 export const localstorageStoreMode = (isStudentMode) => storeItem('isStudentMode', isStudentMode);
+export const localstorageStoreCheckboxes = (checkboxes) => storeItem('checkboxes', JSON.stringify(checkboxes));
