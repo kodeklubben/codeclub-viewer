@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox, /*setCheckboxes*/} from './action_creators';
+import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox, setCheckboxes} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -39,19 +39,20 @@ store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 let initialMode = true;
 let initialLanguage = 'nb';
 let initialWelcomeBox = true;
-let initialCheckbox = '';
+let initialPath = '/scratch/astrokatt/astrokatt';
+let initialCheckboxes = {};
 
 if (typeof localStorage !== 'undefined') {
   if (localStorage.isStudentMode) { initialMode = JSON.parse(localStorage.isStudentMode); }
   if (localStorage.language) { initialLanguage = localStorage.language; }
   if (localStorage.welcomeBox) { initialWelcomeBox = JSON.parse(localStorage.welcomeBox); }
   for (let key of Object.keys(lessons)) {
-    if (localStorage[lessons[key]['path']]) { initialCheckbox = JSON.parse(localStorage[lessons[key]['path']]); }
+    if (localStorage[lessons[key]['path']]) { initialCheckboxes = JSON.parse(localStorage[lessons[key]['path']]); }
   }
 }
 store.dispatch(setMode(initialMode));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
-//store.dispatch(setCheckboxes(initialCheckbox));
+store.dispatch(setCheckboxes(initialPath, initialCheckboxes));
 
 export default store;
