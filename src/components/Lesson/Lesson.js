@@ -16,7 +16,8 @@ import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage, setCheckBoxes} from '../../action_creators';
+import {setModeTeacher, setLanguage} from '../../action_creators';
+import {localstorageStoreCheckboxes} from '../../localStorage';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -40,21 +41,24 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
-/*
-const changeHandler = (e) => {
-  console.log('test');
-  if(e.target.checked){ checkboxProgress[checkboxes[i].id] = true; setCheckBoxes(checkboxProgress);
-    console.log('checked'); }
-  else{ checkboxProgress[checkboxes[i].id] = false; setCheckBoxes(checkboxProgress);
-    console.log('unchecked'); }
-};
-*/
 
 const addOnChangeAttribute = () => {
+  const checkboxProgress = {};
   const checkboxes = document.getElementsByTagName('input');
   for (let i = 0; i < checkboxes.length; i++) {
+    checkboxProgress[checkboxes[i].id] = false;
+    const myStore = (e) => {
+      if (e.target.checked) {
+        checkboxProgress[checkboxes[i].id] = true;
+        localstorageStoreCheckboxes(checkboxProgress);
+      }
+      else {
+        checkboxProgress[checkboxes[i].id] = false;
+        localstorageStoreCheckboxes(checkboxProgress);
+      }
+    };
     if (checkboxes[i].type === 'checkbox') {
-      checkboxes[i].setAttribute('onChange', 'changeHandler');
+      checkboxes[i].onclick = myStore;
     }
   }
 };
