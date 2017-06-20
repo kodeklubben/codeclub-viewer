@@ -41,8 +41,8 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
-
-const addOnChangeAttribute = () => {
+const addOnChangeAttribute = (path) => {
+  const lessonPath = '/' + path;
   const checkboxProgress = {};
   const checkboxes = document.getElementsByTagName('input');
   for (let i = 0; i < checkboxes.length; i++) {
@@ -50,11 +50,11 @@ const addOnChangeAttribute = () => {
     const myStore = (e) => {
       if (e.target.checked) {
         checkboxProgress[checkboxes[i].id] = true;
-        localstorageStoreCheckboxes(checkboxProgress);
+        localstorageStoreCheckboxes(lessonPath, checkboxProgress);
       }
       else {
         checkboxProgress[checkboxes[i].id] = false;
-        localstorageStoreCheckboxes(checkboxProgress);
+        localstorageStoreCheckboxes(lessonPath, checkboxProgress);
       }
     };
     if (checkboxes[i].type === 'checkbox') {
@@ -100,7 +100,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
-    addOnChangeAttribute();
+    addOnChangeAttribute(this.props.path);
     const nodes = document.getElementsByClassName('togglebutton');
     for (let node of nodes) {
       const strongNode = node.getElementsByTagName('strong')[0];
