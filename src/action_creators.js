@@ -80,13 +80,3 @@ export function setWelcomeBox(welcomeBox) {
     payload: welcomeBox
   };
 }
-
-export function setCheckboxes(path, checkboxes) {
-  return {
-    type: 'SET_CHECKBOXES',
-    payload: {
-      path,
-      checkboxes
-    }
-  };
-}

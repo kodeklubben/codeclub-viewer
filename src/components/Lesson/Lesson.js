@@ -16,7 +16,8 @@ import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage, setCheckboxes} from '../../action_creators';
+import {setModeTeacher, setLanguage} from '../../action_creators';
+import {localstorageStoreCheckboxes} from '../../localStorage';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -40,7 +41,7 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
-const addOnChangeAttribute = (path) => {
+const onclickCheckboxes = (path) => {
   const lessonPath = '/' + path;
   const checkboxProgress = {};
   const checkboxes = document.getElementsByTagName('input');
@@ -49,11 +50,11 @@ const addOnChangeAttribute = (path) => {
     const myStore = (e) => {
       if (e.target.checked) {
         checkboxProgress[checkboxes[i].id] = true;
-        setCheckboxes(lessonPath, checkboxProgress);
+        localstorageStoreCheckboxes(lessonPath, checkboxProgress);
       }
       else {
         checkboxProgress[checkboxes[i].id] = false;
-        setCheckboxes(lessonPath, checkboxProgress);
+        localstorageStoreCheckboxes(lessonPath, checkboxProgress);
       }
     };
     if (checkboxes[i].type === 'checkbox') {
@@ -99,7 +100,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
-    addOnChangeAttribute(this.props.path);
+    onclickCheckboxes(this.props.path);
     const nodes = document.getElementsByClassName('togglebutton');
     for (let node of nodes) {
       const strongNode = node.getElementsByTagName('strong')[0];
@@ -149,8 +150,7 @@ Lesson.propTypes = {
   setModeTeacher: PropTypes.func,
   setLanguage: PropTypes.func,
   isReadme: PropTypes.bool,
-  t: PropTypes.func,
-  setCheckboxes: PropTypes.func
+  t: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -165,7 +165,6 @@ export default connect(
   mapStateToProps,
   {
     setModeTeacher,
-    setLanguage,
-    setCheckboxes
+    setLanguage
   }
   )(withStyles(styles, contentStyles)(Lesson));
