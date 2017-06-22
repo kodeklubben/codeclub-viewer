@@ -50,16 +50,10 @@ if (typeof localStorage !== 'undefined') {
   for (let i in localStorage) {
     if(i !== 'isStudentMode' && i !== 'language' && i !== 'welcomeBox') {
       initialPath = i;
+      initialCheckboxes = localStorage.getItem(i);
+      console.log(initialCheckboxes === {}); //Dette er false pga stringify i localStorage.js
     }
   }
-  /*
-  for (let key of Object.keys(lessons)) {
-    if (localStorage[lessons[key]['path']]) {
-      initialPath = localStorage[lessons[key]['path']];
-      console.log(initialPath);
-    }
-  }
-  */
 }
 store.dispatch(setMode(initialMode));
 store.dispatch(setLanguage(initialLanguage));
