@@ -16,8 +16,7 @@ import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage} from '../../action_creators';
-import {localstorageStoreCheckboxes} from '../../localStorage';
+import {setModeTeacher, setLanguage, setCheckboxes} from '../../action_creators';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -50,11 +49,11 @@ const onclickCheckboxes = (path) => {
     const myStore = (e) => {
       if (e.target.checked) {
         checkboxProgress[checkboxes[i].id] = true;
-        localstorageStoreCheckboxes(lessonPath, checkboxProgress);
+        setCheckboxes(lessonPath, checkboxProgress);
       }
       else {
         checkboxProgress[checkboxes[i].id] = false;
-        localstorageStoreCheckboxes(lessonPath, checkboxProgress);
+        setCheckboxes(lessonPath, checkboxProgress);
       }
     };
     if (checkboxes[i].type === 'checkbox') {
@@ -150,7 +149,8 @@ Lesson.propTypes = {
   setModeTeacher: PropTypes.func,
   setLanguage: PropTypes.func,
   isReadme: PropTypes.bool,
-  t: PropTypes.func
+  t: PropTypes.func,
+  setCheckboxes: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -165,6 +165,7 @@ export default connect(
   mapStateToProps,
   {
     setModeTeacher,
-    setLanguage
+    setLanguage,
+    setCheckboxes
   }
   )(withStyles(styles, contentStyles)(Lesson));

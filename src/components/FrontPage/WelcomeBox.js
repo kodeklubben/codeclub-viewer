@@ -7,12 +7,23 @@ import styles from './WelcomeBox.scss';
 import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
+import {lessons} from '../../store';
 
 const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
-  const startButton = <div className={styles.center}>
-    <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
+
+  for (let key of Object.keys(lessons)) {
+    lessons[key]['path'];
+  }
+
+  const bigButton = <div className={styles.center}>
+    <LinkContainer to={
+      localStorage['/scratch/astrokatt/astrokatt'] === '{}'
+      ? t('frontpage.welcomebox.buttonlink')
+      : localStorage}>
       <Button bsStyle='student-frontpage'>
-        {t('frontpage.welcomebox.startbutton')}
+        {localStorage['/scratch/astrokatt/astrokatt'] === '{}'
+        ? t('frontpage.welcomebox.startbutton')
+        : t('frontpage.welcomebox.continuebutton')}
       </Button>
     </LinkContainer>
   </div>;
@@ -30,10 +41,10 @@ const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
         <br /><br />
         {t('frontpage.welcomebox.info')}
         <br /><br />
-        {startButton}
+        {bigButton}
       </div>
     </div> :
-    startButton;
+    bigButton;
 };
 
 WelcomeBox.propTypes = {

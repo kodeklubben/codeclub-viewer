@@ -2,7 +2,8 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox} from './action_creators';
+import {setContext, setFilter, setLessons,
+   setMode, setLanguage, setWelcomeBox, setCheckboxes} from './action_creators';
 import reducer from './reducer';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
@@ -12,7 +13,7 @@ const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README(_[a-z]{2})?\.md$)[^\/]*\.md/);
 const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
-const lessons = getLessons(lessonContext, readmeContext, courseContext);
+export const lessons = getLessons(lessonContext, readmeContext, courseContext);
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -39,18 +40,23 @@ store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 let initialMode = true;
 let initialLanguage = 'nb';
 let initialWelcomeBox = true;
-//let initialPath;
-//let initialCheckboxes;
+let initialPath = '/scratch/astrokatt/astrokatt';
+let initialCheckboxes = {};
 
 if (typeof localStorage !== 'undefined') {
   if (localStorage.isStudentMode) { initialMode = JSON.parse(localStorage.isStudentMode); }
   if (localStorage.language) { initialLanguage = localStorage.language; }
   if (localStorage.welcomeBox) { initialWelcomeBox = JSON.parse(localStorage.welcomeBox); }
+  for (let i in localStorage) {
+    if(i !== 'isStudentMode' && i !== 'language' && i !== 'welcomeBox') {
+      initialPath = i;
+    }
+  }
   /*
   for (let key of Object.keys(lessons)) {
     if (localStorage[lessons[key]['path']]) {
-      initialPath = JSON.parse(localStorage[lessons[key]['path']]);
-      initialCheckboxes = JSON.parse(localStorage[lessons[key]['checkboxes']]);
+      initialPath = localStorage[lessons[key]['path']];
+      console.log(initialPath);
     }
   }
   */
@@ -58,6 +64,6 @@ if (typeof localStorage !== 'undefined') {
 store.dispatch(setMode(initialMode));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
-//store.dispatch(setCheckboxes(initialPath, initialCheckboxes));
+store.dispatch(setCheckboxes(initialPath, initialCheckboxes));
 
 export default store;
