@@ -40,7 +40,7 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
-const onclickCheckboxes = (path) => {
+const onclickCheckboxes = (path, setCheckboxes) => {
   const lessonPath = '/' + path;
   const checkboxProgress = {};
   const checkboxes = document.getElementsByTagName('input');
@@ -99,7 +99,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
-    onclickCheckboxes(this.props.path);
+    onclickCheckboxes(this.props.path, this.props.setCheckboxes);
     const nodes = document.getElementsByClassName('togglebutton');
     for (let node of nodes) {
       const strongNode = node.getElementsByTagName('strong')[0];
