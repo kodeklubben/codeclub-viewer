@@ -50,8 +50,8 @@ if (typeof localStorage !== 'undefined') {
   for (let i in localStorage) {
     if(i !== 'isStudentMode' && i !== 'language' && i !== 'welcomeBox') {
       initialPath = i;
-      initialCheckboxes = localStorage.getItem(i);
-      //console.log(initialCheckboxes === {}); Dette er false pga stringify i localStorage.js
+      initialCheckboxes = JSON.parse(localStorage[i]);
+      //console.log(initialCheckboxes === {}); Denne gir false pga stringify i localStorage.js
     }
   }
 }
