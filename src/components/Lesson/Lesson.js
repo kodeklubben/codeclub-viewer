@@ -42,12 +42,12 @@ const LessonButton = ({path, lessons, t}) => {
 };
 
 const checkboxes = document.getElementsByTagName('input');
-const checkCheckboxes = (path) => {
+const checkCheckboxes = (path, setCheckboxes) => {
   const lessonPath = '/' + path;
   for (let i = 0; i < checkboxes.length; i++) {
     const keyNames = checkboxes[i].id;
     if (localStorage[lessonPath] === undefined) {
-      localstorageStoreCheckboxes(lessonPath, {});
+      setCheckboxes(lessonPath, {});
     }
     const checkboxKeys = JSON.parse(localStorage[lessonPath]);
     if (checkboxes[i].type === 'checkbox') {
@@ -117,7 +117,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
-    checkCheckboxes(this.props.path);
+    checkCheckboxes(this.props.path, this.props.setCheckboxes);
     onclickCheckboxes(this.props.path, this.props.setCheckboxes);
     const nodes = document.getElementsByClassName('togglebutton');
     for (let node of nodes) {
