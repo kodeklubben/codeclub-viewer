@@ -17,7 +17,6 @@ import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckboxes} from '../../action_creators';
-import {localstorageStoreCheckboxes} from '../../localStorage';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
