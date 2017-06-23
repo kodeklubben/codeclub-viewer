@@ -8,15 +8,17 @@ import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
 
-const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
+const WelcomeBox = ({t, welcomeBox, setWelcomeBox, checkboxes}) => {
+
+  const lastLesson = Object.keys(checkboxes);
 
   const bigButton = <div className={styles.center}>
     <LinkContainer to={
-      localStorage['/scratch/astrokatt/astrokatt'] === '{}' //Bare objekt senere
+      (localStorage['/scratch/astrokatt/astrokatt'] === '{}' && localStorage.length < 5)
       ? t('frontpage.welcomebox.buttonlink')
-      : 'Sendes til siste oppgave'}>
+      : lastLesson[lastLesson.length-1]}>
       <Button bsStyle='student-frontpage'>
-        {localStorage['/scratch/astrokatt/astrokatt'] === '{}' //Bare objekt senere
+        {(localStorage['/scratch/astrokatt/astrokatt'] === '{}' && localStorage.length < 5)
         ? t('frontpage.welcomebox.startbutton')
         : t('frontpage.welcomebox.continuebutton')}
       </Button>
@@ -45,12 +47,14 @@ const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
 WelcomeBox.propTypes = {
   t: PropTypes.func,
   welcomeBox: PropTypes.bool,
-  setWelcomeBox: PropTypes.func
+  setWelcomeBox: PropTypes.func,
+  checkboxes: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
-  welcomeBox: state.welcomeBox
+  welcomeBox: state.welcomeBox,
+  checkboxes: state.checkboxes
 });
 
 

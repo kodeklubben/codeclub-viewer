@@ -51,7 +51,6 @@ if (typeof localStorage !== 'undefined') {
     if(i !== 'isStudentMode' && i !== 'language' && i !== 'welcomeBox') {
       initialPath = i;
       initialCheckboxes = JSON.parse(localStorage[i]);
-      //console.log(initialCheckboxes === {}); Denne gir false pga stringify i localStorage.js
     }
   }
 }
