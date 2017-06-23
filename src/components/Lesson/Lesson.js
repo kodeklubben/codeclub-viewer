@@ -68,12 +68,11 @@ const onclickCheckboxes = (path, setCheckboxes) => {
     const myStore = (e) => {
       if (e.target.checked) {
         checkboxProgress[checkboxes[i].id] = true;
-        setCheckboxes(lessonPath, checkboxProgress);
       }
       else {
         checkboxProgress[checkboxes[i].id] = false;
-        setCheckboxes(lessonPath, checkboxProgress);
       }
+      setCheckboxes(lessonPath, checkboxProgress);
     };
     if (checkboxes[i].type === 'checkbox') {
       checkboxes[i].onclick = myStore;
