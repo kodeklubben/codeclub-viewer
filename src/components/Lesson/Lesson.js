@@ -52,10 +52,8 @@ const checkCheckboxes = (path) => {
     const checkboxKeys = JSON.parse(localStorage[lessonPath]);
     if (checkboxes[i].type === 'checkbox') {
       for (let j = 0; j < localStorage.length; j++) {
-        if (lessonPath === localStorage.key(j)) {
-          if (checkboxKeys[keyNames] === true) {
-            checkboxes[i].setAttribute('checked','true');
-          }
+        if (lessonPath === localStorage.key(j) && checkboxKeys[keyNames] === true) {
+          checkboxes[i].setAttribute('checked','true');
         }
       }
     }
