@@ -17,6 +17,7 @@ import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckboxes} from '../../action_creators';
+import {localstorageStoreCheckboxes} from '../../localStorage';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -40,10 +41,30 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
+const checkboxes = document.getElementsByTagName('input');
+const checkCheckboxes = (path) => {
+  const lessonPath = '/' + path;
+  for (let i = 0; i < checkboxes.length; i++) {
+    const keyNames = checkboxes[i].id;
+    if (localStorage[lessonPath] === undefined) {
+      localstorageStoreCheckboxes(lessonPath, {});
+    }
+    const checkboxKeys = JSON.parse(localStorage[lessonPath]);
+    if (checkboxes[i].type === 'checkbox') {
+      for (let j = 0; j < localStorage.length; j++) {
+        if (lessonPath === localStorage.key(j)) {
+          if (checkboxKeys[keyNames] === true) {
+            checkboxes[i].setAttribute('checked','true');
+          }
+        }
+      }
+    }
+  }
+};
+
 const onclickCheckboxes = (path, setCheckboxes) => {
   const lessonPath = '/' + path;
   const checkboxProgress = {};
-  const checkboxes = document.getElementsByTagName('input');
   for (let i = 0; i < checkboxes.length; i++) {
     checkboxProgress[checkboxes[i].id] = false;
     const myStore = (e) => {
@@ -99,6 +120,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
+    checkCheckboxes(this.props.path);
     onclickCheckboxes(this.props.path, this.props.setCheckboxes);
     const nodes = document.getElementsByClassName('togglebutton');
     for (let node of nodes) {
