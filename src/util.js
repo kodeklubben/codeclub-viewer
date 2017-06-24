@@ -89,12 +89,12 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 /**
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
-export function getCourseInfo(courseName, language) {
+export function getCourseInfoMarkup(courseName, language) {
   try {
-    return require('onlyContent!lessonSrc/' + courseName + '/index_' + language + '.md').content;
+    return {__html: require('onlyContent!lessonSrc/' + courseName + '/index_' + language + '.md').content};
   }
   catch(err) {
-    return require('onlyContent!lessonSrc/' + courseName + '/index.md').content;
+    return {__html: require('onlyContent!lessonSrc/' + courseName + '/index.md').content};
   }
 }
 
