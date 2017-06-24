@@ -39,13 +39,14 @@ store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);
-const initialLanguage = loadFromLocalStorage('language', 'nb');
+const initialLanguage = loadFromLocalStorage('language', 'nb'); //TODO:FIX så det hentes ordentlig
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
-const initialPath = '/scratch/astrokatt/astrokatt';
-const initialCheckboxes = {};
+const initialCheckboxes = loadFromLocalStorage('', {}); //TODO:Trenger vel ikke initialCheckboxes??
 store.dispatch(setMode(initialMode));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
-store.dispatch(setCheckboxes(initialPath, initialCheckboxes));
+if(localStorage.length > 3) {//TODO:Her skal det magiske skje
+  store.dispatch(setCheckboxes(initialCheckboxes));
+}
 
 export default store;

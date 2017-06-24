@@ -9,14 +9,14 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
 
 const WelcomeBox = ({t, welcomeBox, setWelcomeBox, checkboxes}) => {
-  const lastLesson = Object.keys(checkboxes);
+  //TODO: This button should send the user to the lesson where the last checkbox was checked.
+  //If every checkbox in that lesson is checked the button should send the user to the course of the last lesson
   const bigButton = <div className={styles.center}>
-    <LinkContainer to={
-      (checkboxes['/scratch/astrokatt/astrokatt'] === '{}' && lastLesson.length === 1)
+    <LinkContainer to={checkboxes === {}
       ? t('frontpage.welcomebox.buttonlink')
-      : lastLesson[lastLesson.length-1]}>
+      : t('frontpage.welcomebox.buttonlink')}>
       <Button bsStyle='student-frontpage'>
-        {(checkboxes['/scratch/astrokatt/astrokatt'] === '{}' && lastLesson.length === 1)
+        {checkboxes === {}
         ? t('frontpage.welcomebox.startbutton')
         : t('frontpage.welcomebox.continuebutton')}
       </Button>
