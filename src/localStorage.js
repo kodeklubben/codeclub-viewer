@@ -14,7 +14,12 @@ export const storeItem = (key, val) => {
 
 export const loadFromLocalStorage = (key, defaultValue) => {
   try {
-    return JSON.parse(localStorage[key]);
+    if (JSON.parse(localStorage[key]) === true || JSON.parse(localStorage[key]) === false) {
+      return JSON.parse(localStorage[key]);
+    }
+    else {
+      return localStorage[key];
+    }
   }
   catch (e) {
     return defaultValue;

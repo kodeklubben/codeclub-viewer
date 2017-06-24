@@ -14,7 +14,7 @@ const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/(?!README(_[a-z]{2})?\.md$)[^\/]*\.md/);
 const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
-export const lessons = getLessons(lessonContext, readmeContext, courseContext);
+const lessons = getLessons(lessonContext, readmeContext, courseContext);
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -39,14 +39,13 @@ store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);
-const initialLanguage = loadFromLocalStorage('language', 'nb'); //TODO:FIX så det hentes ordentlig
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
-const initialCheckboxes = loadFromLocalStorage('', {}); //TODO:Trenger vel ikke initialCheckboxes??
+let initialLanguage = loadFromLocalStorage('language', 'nb');
+if (localStorage.language) { initialLanguage = localStorage.language; }
+
 store.dispatch(setMode(initialMode));
-store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
-if(localStorage.length > 3) {//TODO:Her skal det magiske skje
-  store.dispatch(setCheckboxes(initialCheckboxes));
-}
+store.dispatch(setLanguage(initialLanguage));
+store.dispatch(setCheckboxes('', {}));
 
 export default store;
