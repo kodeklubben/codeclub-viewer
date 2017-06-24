@@ -59,6 +59,7 @@ export default {
     writtenby: 'by',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
+    notsupported: 'This lesson is not supported in the chosen language.',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',

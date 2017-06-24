@@ -60,6 +60,7 @@ export default {
     writtenby: 'av',
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
+    notsupported: 'Denne oppgaven finnes ikke på valgt språk.',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',
