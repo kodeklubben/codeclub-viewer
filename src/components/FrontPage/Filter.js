@@ -73,7 +73,8 @@ Filter.propTypes = {
   onFilterCheck: PropTypes.func,
   filter: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  t: PropTypes.func
+  t: PropTypes.func,
+  courseName: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
