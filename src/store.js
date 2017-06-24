@@ -5,6 +5,7 @@ import {getLessons, getTags} from './util';
 import {setContext, setFilter, setLessons,
    setMode, setLanguage, setWelcomeBox, setCheckboxes} from './action_creators';
 import reducer from './reducer';
+import {loadFromLocalStorage} from './localStorage';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
@@ -37,23 +38,11 @@ store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
 store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
-let initialMode = true;
-let initialLanguage = 'nb';
-let initialWelcomeBox = true;
-let initialPath = '/scratch/astrokatt/astrokatt';
-let initialCheckboxes = {};
-
-if (typeof localStorage !== 'undefined') {
-  if (localStorage.isStudentMode) { initialMode = JSON.parse(localStorage.isStudentMode); }
-  if (localStorage.language) { initialLanguage = localStorage.language; }
-  if (localStorage.welcomeBox) { initialWelcomeBox = JSON.parse(localStorage.welcomeBox); }
-  for (let i in localStorage) {
-    if(i !== 'isStudentMode' && i !== 'language' && i !== 'welcomeBox') {
-      initialPath = i;
-      initialCheckboxes = JSON.parse(localStorage[i]);
-    }
-  }
-}
+const initialMode = loadFromLocalStorage('isStudentMode', true);
+const initialLanguage = loadFromLocalStorage('language', 'nb');
+const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
+const initialPath = '/scratch/astrokatt/astrokatt';
+const initialCheckboxes = {};
 store.dispatch(setMode(initialMode));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
