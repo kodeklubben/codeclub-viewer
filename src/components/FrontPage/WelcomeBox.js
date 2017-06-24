@@ -9,16 +9,14 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
 
 const WelcomeBox = ({t, welcomeBox, setWelcomeBox, checkboxes}) => {
-
   const lastLesson = Object.keys(checkboxes);
-
   const bigButton = <div className={styles.center}>
     <LinkContainer to={
-      (localStorage['/scratch/astrokatt/astrokatt'] === '{}' && localStorage.length < 5)
+      (checkboxes['/scratch/astrokatt/astrokatt'] === '{}' && lastLesson.length === 1)
       ? t('frontpage.welcomebox.buttonlink')
       : lastLesson[lastLesson.length-1]}>
       <Button bsStyle='student-frontpage'>
-        {(localStorage['/scratch/astrokatt/astrokatt'] === '{}' && localStorage.length < 5)
+        {(checkboxes['/scratch/astrokatt/astrokatt'] === '{}' && lastLesson.length === 1)
         ? t('frontpage.welcomebox.startbutton')
         : t('frontpage.welcomebox.continuebutton')}
       </Button>
