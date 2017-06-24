@@ -20,7 +20,7 @@ const Filter = React.createClass({
   },
 
   render() {
-    const {t} = this.props;
+    const {t, courseName, isStudentMode} = this.props;
     const filter = this.props.filter || {};
 
     const filterGroups = Object.keys(filter).map((groupName, idx) => {
@@ -43,14 +43,14 @@ const Filter = React.createClass({
       <div>
         {/*Filter desktop*/}
         <Col xsHidden>
-          <LessonFilterContainer/>
+          <LessonFilterContainer courseName={courseName}/>
         </Col>
 
         {/*Filter mobile*/}
         <Col smHidden mdHidden lgHidden>
           {filterGroups}
           <br/>
-          <Button className={this.props.isStudentMode ? 'btn-student' : 'btn-teacher'}
+          <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
             onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
             <Glyphicon glyph={this.state.showMobileFilter ? 'chevron-down' : 'chevron-right'}/>
             {t('frontpage.showhidefilter')}
@@ -60,7 +60,7 @@ const Filter = React.createClass({
           <br/>
           <Collapse in={this.state.showMobileFilter}>
             <div>
-              <LessonFilterContainer/>
+              <LessonFilterContainer courseName={courseName}/>
             </div>
           </Collapse>
         </Col>
@@ -73,7 +73,8 @@ Filter.propTypes = {
   onFilterCheck: PropTypes.func,
   filter: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  t: PropTypes.func
+  t: PropTypes.func,
+  courseName: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
