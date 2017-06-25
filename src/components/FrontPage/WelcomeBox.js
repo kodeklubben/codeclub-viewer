@@ -8,17 +8,11 @@ import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
 
-const WelcomeBox = ({t, welcomeBox, setWelcomeBox, checkboxes}) => {
-  //TODO: This button should send the user to the lesson where the last checkbox was checked.
-  //If every checkbox in that lesson is checked the button should send the user to the course of the last lesson
-  const bigButton = <div className={styles.center}>
-    <LinkContainer to={checkboxes === {}
-      ? t('frontpage.welcomebox.buttonlink')
-      : t('frontpage.welcomebox.buttonlink')}>
+const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
+  const startButton = <div className={styles.center}>
+    <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
       <Button bsStyle='student-frontpage'>
-        {checkboxes === {}
-        ? t('frontpage.welcomebox.startbutton')
-        : t('frontpage.welcomebox.continuebutton')}
+        {t('frontpage.welcomebox.startbutton')}
       </Button>
     </LinkContainer>
   </div>;
@@ -36,10 +30,10 @@ const WelcomeBox = ({t, welcomeBox, setWelcomeBox, checkboxes}) => {
         <br /><br />
         {t('frontpage.welcomebox.info')}
         <br /><br />
-        {bigButton}
+        {startButton}
       </div>
     </div> :
-    bigButton;
+    startButton;
 };
 
 WelcomeBox.propTypes = {

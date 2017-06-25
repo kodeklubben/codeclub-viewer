@@ -17,6 +17,7 @@ import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckboxes} from '../../action_creators';
+import {loadFromLocalStorage} from '../../localStorage';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -41,31 +42,22 @@ const LessonButton = ({path, lessons, t}) => {
 };
 
 const onclickAndSetCheckboxes = (path, setCheckboxes) => {
-  const checkboxes = document.getElementsByTagName('input');
+  const inputs = document.getElementsByTagName('input');
   const lessonPath = '/' + path;
-  let checkboxProgress = {};
-  if (localStorage[lessonPath] === undefined) {
-    setCheckboxes(lessonPath, checkboxProgress);
-  }
-  for (let i = 0; i < checkboxes.length; i++) {
-    checkboxProgress = JSON.parse(localStorage[lessonPath]);
-    if (checkboxes[i].type === 'checkbox') {
-      if (checkboxProgress[checkboxes[i].id] === undefined) {
-        checkboxProgress[checkboxes[i].id] = false;
+  const checkboxProgress = loadFromLocalStorage(lessonPath, {});
+  for (let i = 0; i < inputs.length; i++) {
+    if (inputs[i].type === 'checkbox') {
+      if (checkboxProgress[inputs[i].id] === undefined) {
+        checkboxProgress[inputs[i].id] = false;
       }
-      if (checkboxProgress[checkboxes[i].id] === true) {
-        checkboxes[i].setAttribute('checked','true');
+      else if (checkboxProgress[inputs[i].id] === true) {
+        inputs[i].setAttribute('checked','true');
       }
       const myStore = (e) => {
-        if (e.target.checked) {
-          checkboxProgress[checkboxes[i].id] = e.target.checked;
-        }
-        else {
-          checkboxProgress[checkboxes[i].id] = !!e.target.checked;
-        }
+        checkboxProgress[inputs[i].id] = !!e.target.checked;
         setCheckboxes(lessonPath, checkboxProgress);
       };
-      checkboxes[i].onclick = myStore;
+      inputs[i].onclick = myStore;
     }
   }
 };
