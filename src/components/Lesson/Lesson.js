@@ -43,31 +43,28 @@ const LessonButton = ({path, lessons, t}) => {
 const onclickAndSetCheckboxes = (path, setCheckboxes) => {
   const checkboxes = document.getElementsByTagName('input');
   const lessonPath = '/' + path;
-  const checkboxProgress = {};
+  let checkboxProgress = {};
+  if (localStorage[lessonPath] === undefined) {
+    setCheckboxes(lessonPath, checkboxProgress);
+  }
   for (let i = 0; i < checkboxes.length; i++) {
-    const keyNames = checkboxes[i].id;
-    if (localStorage[lessonPath] === undefined) {
-      setCheckboxes(lessonPath, {});
-    }
-    const checkboxKeys = JSON.parse(localStorage[lessonPath]);
+    checkboxProgress = JSON.parse(localStorage[lessonPath]);
     if (checkboxes[i].type === 'checkbox') {
-      for (let j = 0; j < localStorage.length; j++) {
-        if (lessonPath === localStorage.key(j) && checkboxKeys[keyNames] === true) {
-          checkboxes[i].setAttribute('checked','true');
+      if (checkboxProgress[checkboxes[i].id] === undefined) {
+        checkboxProgress[checkboxes[i].id] = false;
+      }
+      if (checkboxProgress[checkboxes[i].id] === true) {
+        checkboxes[i].setAttribute('checked','true');
+      }
+      const myStore = (e) => {
+        if (e.target.checked) {
+          checkboxProgress[checkboxes[i].id] = e.target.checked;
         }
-      }
-    }
-    checkboxProgress[checkboxes[i].id] = false;
-    const myStore = (e) => {
-      if (e.target.checked) {
-        checkboxProgress[checkboxes[i].id] = e.target.checked;
-      }
-      else {
-        checkboxProgress[checkboxes[i].id] = !!e.target.checked;
-      }
-      setCheckboxes(lessonPath, checkboxProgress);
-    };
-    if (checkboxes[i].type === 'checkbox') {
+        else {
+          checkboxProgress[checkboxes[i].id] = !!e.target.checked;
+        }
+        setCheckboxes(lessonPath, checkboxProgress);
+      };
       checkboxes[i].onclick = myStore;
     }
   }
