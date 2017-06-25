@@ -39,14 +39,12 @@ const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
 WelcomeBox.propTypes = {
   t: PropTypes.func,
   welcomeBox: PropTypes.bool,
-  setWelcomeBox: PropTypes.func,
-  checkboxes: PropTypes.object
+  setWelcomeBox: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
-  welcomeBox: state.welcomeBox,
-  checkboxes: state.checkboxes
+  welcomeBox: state.welcomeBox
 });
 
 
