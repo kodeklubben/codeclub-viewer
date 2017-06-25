@@ -1,6 +1,6 @@
 export const storeItem = (key, val) => {
   try {
-    localStorage.setItem(key, val);
+    localStorage.setItem(key, JSON.stringify(val));
   }
   catch (e) {
     // If we get here, localStorage is not defined.
@@ -14,12 +14,7 @@ export const storeItem = (key, val) => {
 
 export const loadFromLocalStorage = (key, defaultValue) => {
   try {
-    if (JSON.parse(localStorage[key]) === true || JSON.parse(localStorage[key]) === false) {
-      return JSON.parse(localStorage[key]);
-    }
-    else {
-      return localStorage[key];
-    }
+    return JSON.parse(localStorage[key]);
   }
   catch (e) {
     return defaultValue;

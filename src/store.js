@@ -3,7 +3,7 @@
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
 import {setContext, setFilter, setLessons,
-   setMode, setLanguage, setWelcomeBox, setCheckboxes} from './action_creators';
+   setMode, setLanguage, setWelcomeBox} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
@@ -40,12 +40,9 @@ store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
-let initialLanguage = loadFromLocalStorage('language', 'nb');
-if (localStorage.language) { initialLanguage = localStorage.language; }
-
+const initialLanguage = loadFromLocalStorage('language', 'nb');
 store.dispatch(setMode(initialMode));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
 store.dispatch(setLanguage(initialLanguage));
-store.dispatch(setCheckboxes('', {}));
 
 export default store;
