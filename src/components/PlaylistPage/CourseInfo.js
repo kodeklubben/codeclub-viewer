@@ -23,14 +23,12 @@ const CourseInfo = React.createClass({
 CourseInfo.propTypes = {
   isStudentMode: PropTypes.bool,
   t: PropTypes.func,
-  language: PropTypes.string,
   courseName: PropTypes.string
 };
 
 function mapStateToProps(state, props) {
   return {
     t: getTranslator(state),
-    language: state.language,
     courseInfo: getCourseInfoMarkup(props.courseName, state.language)
   };
 }
