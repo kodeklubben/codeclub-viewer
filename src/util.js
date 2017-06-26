@@ -91,6 +91,13 @@ export function getCourseInfo(courseName) {
   return courseInfo.content;
 }
 
+export function getLessonIntro(lesson) {
+  let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
+  lessonContent = lessonContent.substring(lessonContent.indexOf('<section id="introduksjon"'), 1000);
+  const text = lessonContent.substring(lessonContent.indexOf('<p>'), lessonContent.indexOf('</p>'));
+  return text;
+}
+
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////

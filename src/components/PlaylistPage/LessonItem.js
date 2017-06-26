@@ -10,6 +10,7 @@ import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
+import {getLessonIntro} from '../../util';
 
 export const LessonItem = React.createClass({
   render() {
@@ -22,20 +23,19 @@ export const LessonItem = React.createClass({
         </Button>
       </LinkContainer>
       : null;
+    const tooltipContent = getLessonIntro(lesson.path.slice(1));
     const tooltip =
       <Tooltip id="lessonIntro">
-        <p>TEST</p>
+        <div dangerouslySetInnerHTML={{__html: tooltipContent}} />
       </Tooltip>;
     return (
       lesson.external ?
-        <OverlayTrigger animation={true} delayShow={300} placement="bottom" overlay={tooltip}>
-          <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
-            {levelIcon}
-            <div className={styles.title}>{lesson.title}</div>
-            {instructionBtn}
-            &nbsp;<Glyphicon glyph="new-window"/>
-          </ListGroupItem>
-        </OverlayTrigger>
+        <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+          {levelIcon}
+          <div className={styles.title}>{lesson.title}</div>
+          {instructionBtn}
+          &nbsp;<Glyphicon glyph="new-window"/>
+        </ListGroupItem>
         :
         <OverlayTrigger animation={true} delayShow={300} placement="bottom" overlay={tooltip}>
           <LinkContainer to={lesson.path}>
