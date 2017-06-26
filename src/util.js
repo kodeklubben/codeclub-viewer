@@ -86,9 +86,26 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
   }, {});
 }
 
-export function getCourseInfo(courseName) {
-  const courseInfo = require('onlyContent!lessonSrc/' + courseName + '/index.md');
-  return courseInfo.content;
+/**
+* Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
+**/
+export function getCourseInfoMarkup(courseName, language) {
+  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^\/]*\/index[^.]*\.md/);
+  const withLanguage = `./${courseName}/index_${language}.md`;
+  const withoutLanguage = `./${courseName}/index.md`;
+
+  const hasFile = (path) => req.keys().indexOf(path) !== -1;
+  const createMarkupFrom = (path) => ({__html: req(path).content});
+
+  if (hasFile(withLanguage)) {
+    return createMarkupFrom(withLanguage);
+  }
+
+  if (hasFile(withoutLanguage)) {
+    return createMarkupFrom(withoutLanguage);
+  }
+
+  return null;
 }
 
 ///////////////////////////////////
