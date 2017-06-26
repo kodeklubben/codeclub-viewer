@@ -2,7 +2,8 @@
 
 import {createStore} from 'redux';
 import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox} from './action_creators';
+import {setContext, setFilter, setLessons,
+  setMode, setLanguage, setWelcomeBox, setCheckboxes} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
@@ -43,5 +44,17 @@ const initialLanguage = loadFromLocalStorage('language', 'nb');
 store.dispatch(setMode(initialMode));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
 store.dispatch(setLanguage(initialLanguage));
+
+let lessonPath = Object.keys(lessons);
+let checkboxes = {};
+for (let i = 0; i < lessonPath.length; i++) {
+  lessonPath[i] = lessonPath[i].substring(1, lessonPath[i].indexOf('.md'));
+  checkboxes = loadFromLocalStorage(lessonPath[i], {});
+  if(Object.keys(checkboxes).length !== 0) {
+    console.log('test');
+    store.dispatch(setCheckboxes(lessonPath[i], checkboxes));
+  }
+}
+
 
 export default store;
