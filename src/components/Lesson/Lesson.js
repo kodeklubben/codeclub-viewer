@@ -101,7 +101,7 @@ const Lesson = React.createClass({
 
     return (
       <div className={styles.container}>
-        {frontmatterLanguage == language ?
+        {frontmatterLanguage === language ?
           <div>
             <h1>
               <LevelIcon level={this.getLevel()}/>
