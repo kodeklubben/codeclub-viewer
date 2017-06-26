@@ -51,7 +51,6 @@ for (let i = 0; i < lessonPath.length; i++) {
   lessonPath[i] = lessonPath[i].substring(1, lessonPath[i].indexOf('.md'));
   checkboxes = loadFromLocalStorage(lessonPath[i], {});
   if(Object.keys(checkboxes).length !== 0) {
-    console.log('test');
     store.dispatch(setCheckboxes(lessonPath[i], checkboxes));
   }
 }
