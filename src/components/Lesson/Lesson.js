@@ -41,20 +41,33 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
+String.prototype.hashCode = function() {
+  let hash = 0, i, chr;
+  if (this.length === 0) return hash;
+  for (i = 0; i < this.length; i++) {
+    chr   = this.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
 const onclickAndSetCheckboxes = (path, setCheckboxes) => {
   const inputs = document.getElementsByTagName('input');
   const lessonPath = '/' + path;
   const checkboxProgress = loadFromLocalStorage(lessonPath, {});
   for (let i = 0; i < inputs.length; i++) {
     if (inputs[i].type === 'checkbox') {
-      if (checkboxProgress[inputs[i].id] === undefined) {
-        checkboxProgress[inputs[i].id] = false;
+      const labels = document.getElementsByTagName('label');
+      let hashCode = labels[i].textContent.hashCode();
+      if (checkboxProgress[hashCode] === undefined) {
+        checkboxProgress[hashCode] = false;
       }
-      else if (checkboxProgress[inputs[i].id] === true) {
+      else if (checkboxProgress[hashCode] === true) {
         inputs[i].setAttribute('checked','true');
       }
       const myStore = (e) => {
-        checkboxProgress[inputs[i].id] = !!e.target.checked;
+        checkboxProgress[hashCode] = !!e.target.checked;
         setCheckboxes(lessonPath, checkboxProgress);
       };
       inputs[i].onclick = myStore;
