@@ -12,12 +12,11 @@ import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util.js';
+import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util.js';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage, setCheckboxes} from '../../action_creators';
-import {loadFromLocalStorage} from '../../localStorage';
+import {setModeTeacher, setLanguage, setCheckbox} from '../../action_creators';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -41,37 +40,30 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
-String.prototype.hashCode = function() {
-  let hash = 0, i, chr;
-  if (this.length === 0) return hash;
-  for (i = 0; i < this.length; i++) {
-    chr   = this.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    hash |= 0; // Convert to 32bit integer
+const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
+  const labels = document.getElementsByTagName('label');
+  for (let label of labels) {
+    const input = document.getElementById(label.htmlFor);
+    if (input && input.type === 'checkbox') {
+      let hash = hashCode(label.textContent);
+      if (checkboxes[hash]) {
+        input.setAttribute('checked','true');
+      }
+      input.onclick = (e) => {
+        setCheckbox(path, hash, !!e.target.checked);
+      };
+    }
   }
-  return hash;
 };
 
-const onclickAndSetCheckboxes = (path, setCheckboxes) => {
-  const inputs = document.getElementsByTagName('input');
-  const lessonPath = '/' + path;
-  const checkboxProgress = loadFromLocalStorage(lessonPath, {});
-  for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].type === 'checkbox') {
-      const labels = document.getElementsByTagName('label');
-      let hashCode = labels[i].textContent.hashCode();
-      if (checkboxProgress[hashCode] === undefined) {
-        checkboxProgress[hashCode] = false;
-      }
-      else if (checkboxProgress[hashCode] === true) {
-        inputs[i].setAttribute('checked','true');
-      }
-      const myStore = (e) => {
-        checkboxProgress[hashCode] = !!e.target.checked;
-        setCheckboxes(lessonPath, checkboxProgress);
-      };
-      inputs[i].onclick = myStore;
-    }
+const renderToggleButtons = () => {
+  const nodes = document.getElementsByClassName('togglebutton');
+  for (let node of nodes) {
+    const strongNode = node.getElementsByTagName('strong')[0];
+    const buttonText = strongNode ? strongNode.textContent : 'Hint';
+    const hiddenNode = node.getElementsByTagName('hide')[0];
+    const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
+    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
   }
 };
 
@@ -112,15 +104,9 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
-    onclickAndSetCheckboxes(this.props.path, this.props.setCheckboxes);
-    const nodes = document.getElementsByClassName('togglebutton');
-    for (let node of nodes) {
-      const strongNode = node.getElementsByTagName('strong')[0];
-      const buttonText = strongNode ? strongNode.textContent : 'Hint';
-      const hiddenNode = node.getElementsByTagName('hide')[0];
-      const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-      ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
-    }
+    const {path, checkboxes, setCheckbox} = this.props;
+    onclickAndSetCheckboxes(path, checkboxes, setCheckbox);
+    renderToggleButtons();
   },
   componentWillUnmount() {
     const nodes = document.getElementsByClassName('togglebutton');
@@ -163,7 +149,8 @@ Lesson.propTypes = {
   setLanguage: PropTypes.func,
   isReadme: PropTypes.bool,
   t: PropTypes.func,
-  setCheckboxes: PropTypes.func
+  setCheckbox: PropTypes.func,
+  checkboxes: PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -171,7 +158,8 @@ const mapStateToProps = (state, ownProps) => ({
   isStudentMode: state.isStudentMode,
   lessons: state.lessons,
   language: state.language,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1
+  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1,
+  checkboxes: state.checkboxes[createCheckboxesKey(ownProps.path)] || {}
 });
 
 export default connect(
@@ -179,6 +167,6 @@ export default connect(
   {
     setModeTeacher,
     setLanguage,
-    setCheckboxes
+    setCheckbox
   }
   )(withStyles(styles, contentStyles)(Lesson));

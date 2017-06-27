@@ -1,5 +1,6 @@
 /* eslint-env node */
 
+import './polyfills';
 import React from 'react';
 import {render} from 'react-dom';
 import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
