@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PlaylistPage.scss';
+import {capitalize} from '../util';
 
 import {getFilteredAndIndexedLessons, getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
@@ -29,6 +30,9 @@ export const PlaylistPage = React.createClass({
   },
   changeState() {
     this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  },
+  componentDidMount() {
+    document.title = capitalize(this.props.params.course) + ' | Kodeklubben';
   },
   render() {
     const {

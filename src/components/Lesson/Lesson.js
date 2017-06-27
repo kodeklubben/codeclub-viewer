@@ -77,6 +77,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
+    document.title = this.getTitle() + ' | Kodeklubben';
     const nodes = document.getElementsByClassName('togglebutton');
     for (let node of nodes) {
       const strongNode = node.getElementsByTagName('strong')[0];
