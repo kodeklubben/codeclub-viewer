@@ -8,21 +8,13 @@ import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
 
-const WelcomeBox = ({t, welcomeBox, setWelcomeBox, checkboxes}) => {
-  const checkboxKeys = Object.keys(checkboxes);
+const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
   const startButton = <div className={styles.center}>
-    {checkboxKeys.length === 0 ?
     <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
       <Button bsStyle='student-frontpage'>
         {t('frontpage.welcomebox.startbutton')}
       </Button>
     </LinkContainer>
-    :
-    <LinkContainer to={checkboxKeys[checkboxKeys.length - 1]}>
-      <Button bsStyle='student-frontpage'>
-        {t('frontpage.welcomebox.continuebutton')}
-      </Button>
-    </LinkContainer>}
   </div>;
 
   return welcomeBox ?
@@ -47,14 +39,12 @@ const WelcomeBox = ({t, welcomeBox, setWelcomeBox, checkboxes}) => {
 WelcomeBox.propTypes = {
   t: PropTypes.func,
   welcomeBox: PropTypes.bool,
-  setWelcomeBox: PropTypes.func,
-  checkboxes: PropTypes.object
+  setWelcomeBox: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
-  welcomeBox: state.welcomeBox,
-  checkboxes: state.checkboxes
+  welcomeBox: state.welcomeBox
 });
 
 
