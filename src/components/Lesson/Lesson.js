@@ -46,9 +46,8 @@ const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
     const input = document.getElementById(label.htmlFor);
     if (input && input.type === 'checkbox') {
       let hash = hashCode(label.textContent);
-      if (checkboxes[hash]) {
-        input.setAttribute('checked','true');
-      }
+      input.checked = !!checkboxes[hash];
+      setCheckbox(path, hash, !!checkboxes[hash]);
       input.onclick = (e) => {
         setCheckbox(path, hash, !!e.target.checked);
       };
