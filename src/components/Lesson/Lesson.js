@@ -108,7 +108,7 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
-    const {path, checkboxes, setCheckbox} = this.props;
+    const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     onclickAndSetCheckboxes(path, checkboxes, setCheckbox);
     rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
