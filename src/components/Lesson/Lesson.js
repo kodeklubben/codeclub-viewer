@@ -16,7 +16,7 @@ import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheck
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage, setCheckbox} from '../../action_creators';
+import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -66,6 +66,11 @@ const renderToggleButtons = () => {
   }
 };
 
+const rememberLastLesson = (path, setLastLesson) => {
+  const lessonPath = '/' + path;
+  setLastLesson(lessonPath);
+};
+
 const Lesson = React.createClass({
   getTitle() {
     return this.props.lesson.frontmatter.title || '';
@@ -105,6 +110,7 @@ const Lesson = React.createClass({
   componentDidMount() {
     const {path, checkboxes, setCheckbox} = this.props;
     onclickAndSetCheckboxes(path, checkboxes, setCheckbox);
+    rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
   },
   componentWillUnmount() {
@@ -149,7 +155,8 @@ Lesson.propTypes = {
   isReadme: PropTypes.bool,
   t: PropTypes.func,
   setCheckbox: PropTypes.func,
-  checkboxes: PropTypes.object
+  checkboxes: PropTypes.object,
+  setLastLesson: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -166,6 +173,7 @@ export default connect(
   {
     setModeTeacher,
     setLanguage,
-    setCheckbox
+    setCheckbox,
+    setLastLesson
   }
   )(withStyles(styles, contentStyles)(Lesson));

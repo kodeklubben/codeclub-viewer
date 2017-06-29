@@ -3,7 +3,7 @@
 import {createStore} from 'redux';
 import {getLessons, getTags, createCheckboxesKey} from './util';
 import {setContext, setFilter, setLessons,
-  setMode, setLanguage, setWelcomeBox, setCheckboxes} from './action_creators';
+  setMode, setLanguage, setWelcomeBox, setCheckboxes, setLastLesson} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
@@ -41,9 +41,11 @@ store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 const initialMode = loadFromLocalStorage('isStudentMode', true);
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
 const initialLanguage = loadFromLocalStorage('language', 'nb');
+const initialLastLesson = loadFromLocalStorage('lastLesson', '');
 store.dispatch(setMode(initialMode));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
 store.dispatch(setLanguage(initialLanguage));
+store.dispatch(setLastLesson(initialLastLesson));
 
 for (let path of Object.keys(lessons)) {
   const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), {});
