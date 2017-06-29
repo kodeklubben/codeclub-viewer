@@ -105,6 +105,6 @@ export function setCheckboxes(path, checkboxes) {
 export function setLastLesson(path) {
   return  {
     type: 'SET_LASTLESSON',
-    payload: path
+    path
   };
 }
