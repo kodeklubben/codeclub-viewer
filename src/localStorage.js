@@ -1,6 +1,6 @@
-const storeItem = (key, val) => {
+export const storeItem = (key, val) => {
   try {
-    localStorage.setItem(key, val);
+    localStorage.setItem(key, JSON.stringify(val));
   }
   catch (e) {
     // If we get here, localStorage is not defined.
@@ -12,6 +12,11 @@ const storeItem = (key, val) => {
   return val;
 };
 
-export const localstorageStoreWelcomeBox = (welcomeBox) => storeItem('welcomeBox', welcomeBox);
-export const localstorageStoreLanguage = (language) => storeItem('language', language);
-export const localstorageStoreMode = (isStudentMode) => storeItem('isStudentMode', isStudentMode);
+export const loadFromLocalStorage = (key, defaultValue) => {
+  try {
+    return JSON.parse(localStorage[key]);
+  }
+  catch (e) {
+    return defaultValue;
+  }
+};

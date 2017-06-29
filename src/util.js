@@ -228,3 +228,21 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
     }
   }
 };
+
+/**
+ * Based on an implementation of Java's string to integer hashCode function.
+ * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+ */
+export function hashCode(str) {
+  let hash = 0, i, chr;
+  for (i = 0; i < str.length; i++) {
+    chr   = str.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+  }
+  return Math.abs(hash);
+}
+
+export function createCheckboxesKey(path) {
+  path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
+  return 'checkboxes_' + path;
+}
