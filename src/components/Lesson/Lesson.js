@@ -114,18 +114,29 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode, language} = this.props;
+    const frontmatterLanguage = this.props.lesson.frontmatter.language;
+
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
+
     return (
       <div className={styles.container}>
-        <h1>
-          <LevelIcon level={this.getLevel()}/>
-          {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
-        </h1>
-        {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
-        {instructionBtn}
-        <div dangerouslySetInnerHTML={this.createMarkup()}/>
+        {frontmatterLanguage === language ?
+          <div>
+            <h1>
+              <LevelIcon level={this.getLevel()}/>
+              {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
+            </h1>
+            {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
+            {instructionBtn}
+            <div dangerouslySetInnerHTML={this.createMarkup()}/>
+          </div>
+         :
+          <div className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+            <p>{t('lessons.notsupported')}</p>
+          </div>
+        }
 
         <Row>
           <ImprovePageContainer courseLessonFileProp={this.props.params}/>
@@ -148,6 +159,7 @@ Lesson.propTypes = {
   setLanguage: PropTypes.func,
   isReadme: PropTypes.bool,
   t: PropTypes.func,
+  language: PropTypes.string,
   setCheckbox: PropTypes.func,
   checkboxes: PropTypes.object
 };
