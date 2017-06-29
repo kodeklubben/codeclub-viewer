@@ -1,21 +1,19 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {getCourseInfo} from '../../util';
+import {getCourseInfoMarkup} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CourseInfo.scss';
 
 const CourseInfo = React.createClass({
   render() {
-    const {t} = this.props;
-    const courseName = this.props.courseName;
-    const courseInfo = getCourseInfo(courseName);
-    return (      
-      <div className={this.props.isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+    const {t, isStudentMode, courseInfo} = this.props;
+    return (
+      <div className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
         {courseInfo ?
-          <div dangerouslySetInnerHTML={{__html: courseInfo}} />
+          <div dangerouslySetInnerHTML={courseInfo} />
         :
-        <h4>{t('playlist.courseinfonotfound')}</h4>
+          <h4>{t('playlist.courseinfonotfound')}</h4>
         }
       </div>
     );
@@ -24,12 +22,14 @@ const CourseInfo = React.createClass({
 
 CourseInfo.propTypes = {
   isStudentMode: PropTypes.bool,
-  t: PropTypes.func
+  t: PropTypes.func,
+  courseName: PropTypes.string
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, props) {
   return {
-    t: getTranslator(state)
+    t: getTranslator(state),
+    courseInfo: getCourseInfoMarkup(props.courseName, state.language)
   };
 }
 
