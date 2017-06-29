@@ -9,10 +9,11 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
 
 const WelcomeBox = ({t, welcomeBox, setWelcomeBox, lastLesson}) => {
+  const hasLastLesson = lastLesson === '';
   const startButton = <div className={styles.center}>
-    <LinkContainer to={lastLesson === '' ? t('frontpage.welcomebox.buttonlink') : lastLesson}>
+    <LinkContainer to={hasLastLesson ? t('frontpage.welcomebox.buttonlink') : lastLesson}>
       <Button bsStyle='student-frontpage'>
-        {lastLesson === '' ? t('frontpage.welcomebox.startbutton') : t('frontpage.welcomebox.continuebutton')}
+        {hasLastLesson ? t('frontpage.welcomebox.startbutton') : t('frontpage.welcomebox.continuebutton')}
       </Button>
     </LinkContainer>
   </div>;
