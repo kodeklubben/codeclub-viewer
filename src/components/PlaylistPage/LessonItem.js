@@ -9,6 +9,20 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
 
+const divStyle = {
+  backgroundColor: 'green'
+};
+
+const getCheckboxes = (path, checkboxes) => {
+  let checkboxKeys = Object.keys(checkboxes);
+  for (let i = 0; i < checkboxKeys.length; i++) {
+    checkboxKeys[i] = checkboxKeys[i].replace('checkboxes_','/');
+    if (checkboxKeys[i] === path) {
+      console.log('hei');
+    }
+  }
+};
+
 export const LessonItem = React.createClass({
   render() {
     const {t, lesson} = this.props;
@@ -30,7 +44,8 @@ export const LessonItem = React.createClass({
         </ListGroupItem>
         :
         <LinkContainer to={lesson.path}>
-          <ListGroupItem className={styles.row}>
+          <ListGroupItem style={divStyle} className={styles.row}>
+            {getCheckboxes(this.props.lesson.path, this.props.checkboxes)}
             {levelIcon}
             <div className={styles.title}>{lesson.title}</div>
             {instructionBtn}
@@ -43,13 +58,15 @@ export const LessonItem = React.createClass({
 LessonItem.propTypes = {
   lesson: PropTypes.object,
   isStudentMode: PropTypes.bool,
-  t: PropTypes.func
+  t: PropTypes.func,
+  checkboxes: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
     isStudentMode: state.isStudentMode,
-    t: getTranslator(state)
+    t: getTranslator(state),
+    checkboxes: state.checkboxes
   };
 }
 
