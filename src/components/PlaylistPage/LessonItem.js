@@ -15,12 +15,19 @@ const divStyle = {
 
 const getCheckboxes = (path, checkboxes) => {
   let checkboxKeys = Object.keys(checkboxes);
+  console.log(checkboxKeys);
+  //let trueCheckboxes = 0;
   for (let i = 0; i < checkboxKeys.length; i++) {
     checkboxKeys[i] = checkboxKeys[i].replace('checkboxes_','/');
     if (checkboxKeys[i] === path) {
-      console.log('hei');
+      let checkboxObject = Object.values(checkboxes[checkboxKeys[i]]);
+      console.log(checkboxObject);
+      if (checkboxObject === true) {
+        //trueCheckboxes++;
+      }
     }
   }
+  //console.log(trueCheckboxes/checkboxObject.length);
 };
 
 export const LessonItem = React.createClass({
