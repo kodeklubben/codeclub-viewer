@@ -5,7 +5,7 @@ import reducer from '../../src/reducers/lastLesson';
 
 describe('lastLesson reducer', () => {
   describe('SET_LASTLESSON', () => {
-    it('Sets last lesson in state to empty string', () => {
+    it('Should set last lesson in state to empty string', () => {
       const initialState = '';
       const action = {
         type: 'SET_LASTLESSON',
@@ -19,7 +19,7 @@ describe('lastLesson reducer', () => {
       expect(nextState).to.equal(action.path);
     });
 
-    it('Sets last lesson in state to /scratch/astrokatt/astrokatt', () => {
+    it('Should set last lesson in state to /scratch/astrokatt/astrokatt', () => {
       const initialState = '';
       const action = {
         type: 'SET_LASTLESSON',
@@ -33,7 +33,7 @@ describe('lastLesson reducer', () => {
       expect(nextState).to.equal(action.path);
     });
 
-    it('Missing type', () => {
+    it('Should return initial state, if type is missing', () => {
       const initialState = '';
       const action = {
         path: '/scratch/astrokatt/astrokatt'
@@ -41,12 +41,12 @@ describe('lastLesson reducer', () => {
 
       deepFreeze(initialState);
       deepFreeze(action);
-      const nextState = reducer(initialState, action);
+      const nextState = initialState;
 
-      expect(nextState).to.equal(action.path);
+      expect(nextState).to.equal(initialState);
     });
 
-    it('Type unknown', () => {
+    it('Should return initial state, if type is unknown', () => {
       const initialState = '';
       const action = {
         type: 'unknown',
@@ -57,10 +57,10 @@ describe('lastLesson reducer', () => {
       deepFreeze(action);
       const nextState = reducer(initialState, action);
 
-      expect(nextState).to.equal(action.path);
+      expect(nextState).to.equal(initialState);
     });
 
-    it('Missing path', () => {
+    it('Should throw error if path is missing', () => {
       const initialState = '';
       const action = {
         type: 'SET_LASTLESSON'
@@ -68,16 +68,16 @@ describe('lastLesson reducer', () => {
 
       deepFreeze(initialState);
       deepFreeze(action);
-      const nextState = reducer(initialState, action);
+      const nextState = () =>{ throw new TypeError(reducer(initialState, action)); };
 
-      expect(nextState).to.equal(action.path);
+      expect(nextState).to.throw(TypeError);
     });
 
-    it('Path unknown', () => {
+    it('Should set last lesson in state to path regardless of initialState', () => {
       const initialState = '';
       const action = {
         type: 'SET_LASTLESSON',
-        path: 'unknown'
+        path: null
       };
 
       deepFreeze(initialState);
