@@ -70,7 +70,8 @@ export default {
         title: 'Problem med',
         lesson: 'Oppgåve',
         sourcecode: 'Kjeldekoda til oppgåva',
-        info: 'Beskriv problemet ditt her. Ta gjerne med operativsystemet ditt, nettlesaren din og eventuell kode du har skrive.'
+        info: 'Beskriv problemet ditt her. Ta gjerne med operativsystemet ditt, nettlesaren din ' +
+              'og eventuell kode du har skrive.'
       },
       showcodebutton: 'Vis koden og fiks det sjølv'
     }
