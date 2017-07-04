@@ -32,11 +32,11 @@ const getCheckboxProgress = (path, checkboxes) => {
 
 export const LessonItem = React.createClass({
   render() {
-    const {t, lesson} = this.props;
+    const {t, lesson, isStudentMode, checkboxes} = this.props;
     const levelIcon = <LevelIcon level={lesson.level}/>;
     const progress = <div className={styles.progress}>
-      {getCheckboxProgress(this.props.lesson.path, this.props.checkboxes)}</div>;
-    const instructionBtn = !this.props.isStudentMode && lesson.readmePath ?
+      {getCheckboxProgress(lesson.path, checkboxes)}</div>;
+    const instructionBtn = !isStudentMode && lesson.readmePath ?
       <LinkContainer to={lesson.readmePath}>
         <Button componentClass="div" className={styles.instructionBtn} bsStyle="guide" bsSize="xs">
           {t('playlist.instructionbutton')}
