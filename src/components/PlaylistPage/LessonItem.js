@@ -13,7 +13,7 @@ const divStyle = {
   backgroundColor: 'green'
 };
 
-const getCheckboxes = (path, checkboxes) => {
+const getCheckboxProgress = (path, checkboxes) => {
   let checkboxKeys = Object.keys(checkboxes);
   let trueCheckboxes = 0;
   let checkboxObject = {};
@@ -28,11 +28,10 @@ const getCheckboxes = (path, checkboxes) => {
           trueCheckboxes++;
         }
       }
-      const percent = (trueCheckboxes/Object.keys(checkboxObject).length)*100;
-      console.log(percent);
+      const percent = Math.floor((trueCheckboxes/Object.keys(checkboxObject).length)*100);
+      console.log(path + ': ' + percent + '% done!');
     }
   }
-
 };
 
 export const LessonItem = React.createClass({
@@ -57,7 +56,7 @@ export const LessonItem = React.createClass({
         :
         <LinkContainer to={lesson.path}>
           <ListGroupItem style={divStyle} className={styles.row}>
-            {getCheckboxes(this.props.lesson.path, this.props.checkboxes)}
+            {getCheckboxProgress(this.props.lesson.path, this.props.checkboxes)}
             {levelIcon}
             <div className={styles.title}>{lesson.title}</div>
             {instructionBtn}
