@@ -1,15 +1,6 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 
-.lessonItem {
-  &:hover {
-    cursor: pointer;
-    color: darken($brand-primary, 20%);
-  }
-
-  @include responsiveFontSizes;
-}
-
 .row {
   display: flex;
   align-items: center;
@@ -21,4 +12,8 @@
 
 .title {
   padding: 2px 0;
+}
+
+.progress {
+  opacity: 0.5;
 }

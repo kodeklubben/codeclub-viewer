@@ -9,10 +9,6 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
 
-const divStyle = {
-  backgroundColor: 'green'
-};
-
 const getCheckboxProgress = (path, checkboxes) => {
   let checkboxKeys = Object.keys(checkboxes);
   let trueCheckboxes = 0;
@@ -29,7 +25,7 @@ const getCheckboxProgress = (path, checkboxes) => {
         }
       }
       const percent = Math.floor((trueCheckboxes/Object.keys(checkboxObject).length)*100);
-      console.log(path + ': ' + percent + '% done!');
+      return '(' + percent + '%)';
     }
   }
 };
@@ -38,6 +34,8 @@ export const LessonItem = React.createClass({
   render() {
     const {t, lesson} = this.props;
     const levelIcon = <LevelIcon level={lesson.level}/>;
+    const progress = <div className={styles.progress}>
+      {getCheckboxProgress(this.props.lesson.path, this.props.checkboxes)}</div>;
     const instructionBtn = !this.props.isStudentMode && lesson.readmePath ?
       <LinkContainer to={lesson.readmePath}>
         <Button componentClass="div" className={styles.instructionBtn} bsStyle="guide" bsSize="xs">
@@ -55,10 +53,10 @@ export const LessonItem = React.createClass({
         </ListGroupItem>
         :
         <LinkContainer to={lesson.path}>
-          <ListGroupItem style={divStyle} className={styles.row}>
-            {getCheckboxProgress(this.props.lesson.path, this.props.checkboxes)}
+          <ListGroupItem className={styles.row}>
             {levelIcon}
             <div className={styles.title}>{lesson.title}</div>
+            {progress}
             {instructionBtn}
           </ListGroupItem>
         </LinkContainer>
