@@ -129,8 +129,8 @@ const Lesson = React.createClass({
     const {t, path, lessons, isReadme, isStudentMode, setCheckbox} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
-    const resetButton = <Button className={styles.resetButton}  bsStyle="warning" bsSize="xs"
-      onClick={() => resetLesson(path, setCheckbox)}>TILBAKESTILLE</Button>;
+    const resetButton = <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
+      onClick={() => resetLesson(path, setCheckbox)}>{t('lessons.reset')}</Button>;
     return (
       <div className={styles.container}>
         <h1>
@@ -138,8 +138,8 @@ const Lesson = React.createClass({
           {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
         </h1>
         {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
-        {instructionBtn}
         {resetButton}
+        {instructionBtn}
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
         <Row>
