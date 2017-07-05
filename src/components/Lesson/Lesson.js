@@ -117,6 +117,7 @@ const Lesson = React.createClass({
     const {t, path, lessons, isReadme, isStudentMode} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
+    const resetButton = <Button onClick={() => console.log('test')} bsStyle="warning" bsSize="xs">X</Button>;
     return (
       <div className={styles.container}>
         <h1>
@@ -125,6 +126,7 @@ const Lesson = React.createClass({
         </h1>
         {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
         {instructionBtn}
+        {resetButton}
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
         <Row>
