@@ -58,9 +58,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const courseFrontmatter = courseContext(coursePath).frontmatter;
     let lessonFrontmatter = lessonContext(path).frontmatter;
 
-    // The 'undefined language' tag is added because some courses (e.g. external courses)
-    // does not have language defined. May be removed when no longer necessary.
-    const language = lessonFrontmatter.language ? lessonFrontmatter.language : 'undefined language';
+    const language = lessonFrontmatter.language;
 
     if(language){
       if(lessonFrontmatter.tags){
@@ -182,8 +180,23 @@ export function fixNonArrayTagList(tagItems) {
 export function tagsMatchFilter(lessonTags, filter) {
   // lessonTags is e.g. {'tema': ['spill'], 'fag': ['naturfag']}
   // filter is e.g. {'tema': {'spill':false, 'animasjon': true}, 'utstyr': {'ipad': false, 'arduino': true}}}
-  const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
-  const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
+
+  // Getting pre-defined OR-tagged groups
+  const OrTaggedGroups = getOrTaggedGroups();
+
+  // Sorts out which OR-tagged groups that have corresponding lessons
+  let OrTags = {};
+  OrTaggedGroups.map(groupName => {
+    OrTags[groupName] = filter[groupName] ? Object.keys(filter[groupName]) : [];
+  });
+  const OrTagsAsArray = Object.keys(OrTags);
+
+  // Keeps track of which tags for each OR-tagged group that is tagged
+  let checkedOrTags = {};
+  OrTagsAsArray.map(groupName => {
+    checkedOrTags[groupName] = OrTags[groupName].filter(tag => filter[groupName][tag]);
+  });
+
   for (const groupName of Object.keys(filter)) { // groupName is e.g. 'tema'
     const filterGroup = filter[groupName]; // the whole filter group, e.g. {'spill':false, 'animasjon': true}
     const tagNames = Object.keys(filter[groupName]); // all tags in this filter group, e.g. ['spill','animasjon']
@@ -193,15 +206,15 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    // OR-testing language-tags
-    if(groupName === 'language' && checkedLanguageTags.length !== 0
-      && (checkedLanguageTags.filter(tagName => lessonGroup.indexOf(tagName) !== -1).length === 0)){
+    // OR-tests OR-tagged groups
+    if(OrTagsAsArray.indexOf(groupName) !== -1 && checkedOrTags[groupName].length !== 0
+      && checkedOrTags[groupName].filter(tagName => lessonGroup.indexOf(tagName) !== -1).length === 0){
       return false;
     }
-    // AND-testing all other tags
+    // AND-tests everything else
     for (const checkedFilterTag of checkedTagNames) {
       // lessonGroup doesn't contain checkedFilterTag
-      if (groupName !== 'language' && lessonGroup.indexOf(checkedFilterTag) === -1) {
+      if (OrTagsAsArray.indexOf(groupName) === -1 && lessonGroup.indexOf(checkedFilterTag) === -1) {
         return false;
       }
     }
@@ -220,10 +233,47 @@ export function removeHtmlFileEnding(lessonPage) {
 * IMPORTANT:
 * Returns languages defined as available
 * All available languages must be defined here
-* @returns {Object}
+* Dummy argument needed as tests does not allow require statements
+* @param {Dummy argument} noUrl
+* @returns {Array or Object}
 */
-export const getAvailableLanguages = () => {
-  return {nb: 'norsk bokmål', nn: 'nynorsk', sv: 'svenska', da: 'dansk', en: 'english'};
+export const getAvailableLanguages = (onlyKeys) => {
+  return onlyKeys ? ['nb', 'nn', 'sv', 'da', 'en'] : {
+    'nb': {
+      name: 'Norsk bokmål',
+      url: require('./assets/graphics/norway.svg')
+    },
+    'nn': {
+      name: 'Norsk nynorsk',
+      url: require('./assets/graphics/norway.svg')
+    },
+    'sv': {
+      name: 'Svenska',
+      url: require('./assets/graphics/sweden.svg')
+    },
+    'da': {
+      name: 'Dansk',
+      url: require('./assets/graphics/denmark.svg')
+    },
+    'en': {
+      name: 'English',
+      url: require('./assets/graphics/english.svg')
+    }
+  };
+};
+
+/**
+* Returns groupNames with tags that should be considered as logical OR
+* in the filter.
+* @returns {Array}
+*/
+export const getOrTaggedGroups = () => {
+  return ['language', 'subject', 'level'];
+};
+
+export const getLanguageName = (tagItem) => {
+  const languages = getAvailableLanguages();
+  return languages[tagItem] ? languages[tagItem].name : undefined;
 };
 
 /**

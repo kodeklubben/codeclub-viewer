@@ -12,7 +12,7 @@ export default function(state='nb', action) {
 }
 
 function isLanguageValid(language) {
-  const languages = getAvailableLanguages();
+  const languages = getAvailableLanguages(true);
 
-  return Object.keys(languages).indexOf(language) > -1;
+  return languages.indexOf(language) !== -1;
 }
