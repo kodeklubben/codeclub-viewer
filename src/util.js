@@ -94,13 +94,13 @@ export function getCourseInfo(courseName) {
 export function getLessonIntro(lesson) {
   let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'), 10000);
-  let text = lessonContent.substring(lessonContent.indexOf('<p>'), lessonContent.indexOf('<figure'));
-  let picture = lessonContent.substring(lessonContent.indexOf('<figure'), lessonContent.indexOf('</section>'));
+  let text = lessonContent.substring(lessonContent.indexOf('<p>'), lessonContent.indexOf('</p>'));
+  //let picture = lessonContent.substring(lessonContent.indexOf('<figure'), lessonContent.indexOf('</section>'));
   if (text.length > 300) {
     text = text.substring(text.indexOf('<p>'), 300) + '...';
-    picture = lessonContent.substring(lessonContent.indexOf('<figure'), lessonContent.indexOf('</section>'));
+    //picture = lessonContent.substring(lessonContent.indexOf('<figure'), lessonContent.indexOf('</section>'));
   }
-  return picture + text;
+  return text;
 }
 
 ///////////////////////////////////
