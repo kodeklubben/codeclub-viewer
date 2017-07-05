@@ -30,14 +30,16 @@ export const LessonItem = React.createClass({
       </Tooltip>;
     return (
       lesson.external ?
-        <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
-          {levelIcon}
-          <div className={styles.title}>{lesson.title}</div>
-          {instructionBtn}
-          &nbsp;<Glyphicon glyph="new-window"/>
-        </ListGroupItem>
+        <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
+          <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+            {levelIcon}
+            <div className={styles.title}>{lesson.title}</div>
+            {instructionBtn}
+            &nbsp;<Glyphicon glyph="new-window"/>
+          </ListGroupItem>
+        </OverlayTrigger>
         :
-        <OverlayTrigger animation={true} delayShow={300} placement="bottom" overlay={tooltip}>
+        <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
           <LinkContainer to={lesson.path}>
             <ListGroupItem className={styles.row}>
               {levelIcon}
