@@ -94,9 +94,26 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
   }, {});
 }
 
-export function getCourseInfo(courseName) {
-  const courseInfo = require('onlyContent!lessonSrc/' + courseName + '/index.md');
-  return courseInfo.content;
+/**
+* Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
+**/
+export function getCourseInfoMarkup(courseName, language) {
+  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^\/]*\/index[^.]*\.md/);
+  const withLanguage = `./${courseName}/index_${language}.md`;
+  const withoutLanguage = `./${courseName}/index.md`;
+
+  const hasFile = (path) => req.keys().indexOf(path) !== -1;
+  const createMarkupFrom = (path) => ({__html: req(path).content});
+
+  if (hasFile(withLanguage)) {
+    return createMarkupFrom(withLanguage);
+  }
+
+  if (hasFile(withoutLanguage)) {
+    return createMarkupFrom(withoutLanguage);
+  }
+
+  return null;
 }
 
 ///////////////////////////////////
@@ -290,3 +307,21 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
     }
   }
 };
+
+/**
+ * Based on an implementation of Java's string to integer hashCode function.
+ * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+ */
+export function hashCode(str) {
+  let hash = 0, i, chr;
+  for (i = 0; i < str.length; i++) {
+    chr   = str.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+  }
+  return Math.abs(hash);
+}
+
+export function createCheckboxesKey(path) {
+  path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
+  return 'checkboxes_' + path;
+}

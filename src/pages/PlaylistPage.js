@@ -36,6 +36,7 @@ export const PlaylistPage = React.createClass({
       lessonsByLevel,
       playlists,
       t,
+      isStudentMode
     } = this.props;
     const levels = Object.keys(lessonsByLevel);
     const lessonLists = levels.map((level, idx) => (
@@ -47,7 +48,7 @@ export const PlaylistPage = React.createClass({
 
     const filter =
       <div className={styles.filter}>
-        <Filter isStudentMode={this.props.isStudentMode}/>
+        <Filter courseName={this.props.params.course} isStudentMode={isStudentMode}/>
       </div>;
 
     const playlistsAndLessons =

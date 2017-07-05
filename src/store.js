@@ -1,9 +1,11 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getLessons, getTags} from './util';
-import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox} from './action_creators';
+import {getLessons, getTags, createCheckboxesKey} from './util';
+import {setContext, setFilter, setLessons,
+  setMode, setLanguage, setWelcomeBox, setCheckboxes} from './action_creators';
 import reducer from './reducer';
+import {loadFromLocalStorage} from './localStorage';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
 const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
@@ -35,22 +37,24 @@ store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
 
-let initialMode = true;
-let initialLanguage = 'nb';
-let initialWelcomeBox = true;
+const initialMode = loadFromLocalStorage('isStudentMode', true);
+const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
+const initialLanguage = loadFromLocalStorage('language', 'nb');
 
-if (typeof localStorage !== 'undefined') {
-  if (localStorage.isStudentMode) { initialMode = JSON.parse(localStorage.isStudentMode); }
-  if (localStorage.language) { initialLanguage = localStorage.language; }
-  if (localStorage.welcomeBox) { initialWelcomeBox = JSON.parse(localStorage.welcomeBox); }
-}
+store.dispatch(setMode(initialMode));
+store.dispatch(setWelcomeBox(initialWelcomeBox));
+store.dispatch(setLanguage(initialLanguage));
 
 let filter = getTags(lessonContext, courseContext);
 filter.language[initialLanguage] = true;
 
 store.dispatch(setFilter(filter));
-store.dispatch(setMode(initialMode));
-store.dispatch(setLanguage(initialLanguage));
-store.dispatch(setWelcomeBox(initialWelcomeBox));
+
+for (let path of Object.keys(lessons)) {
+  const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), {});
+  if(Object.keys(checkboxes).length !== 0) {
+    store.dispatch(setCheckboxes(path, checkboxes));
+  }
+}
 
 export default store;

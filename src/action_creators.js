@@ -84,3 +84,24 @@ export function setWelcomeBox(welcomeBox) {
     payload: welcomeBox
   };
 }
+
+export function setCheckbox(path, hash, value) {
+  return {
+    type: 'SET_CHECKBOX',
+    payload: {
+      path,
+      hash,
+      value
+    }
+  };
+}
+
+export function setCheckboxes(path, checkboxes) {
+  return {
+    type: 'SET_CHECKBOXES',
+    payload: {
+      path,
+      checkboxes
+    }
+  };
+}
