@@ -67,6 +67,16 @@ const resetLesson = (path, setCheckbox) => {
   }
 };
 
+const checkboxTrue = (checkboxes) => {
+  let counter = 0;
+  for (let i in checkboxes) {
+    if (checkboxes[i] === true) {
+      counter++;
+    }
+  }
+  return counter === 0 ? false : true;
+};
+
 const renderToggleButtons = () => {
   const nodes = document.getElementsByClassName('togglebutton');
   for (let node of nodes) {
@@ -126,11 +136,13 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, setCheckbox} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
-    const resetButton = <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
-      onClick={() => resetLesson(path, setCheckbox)}>{t('lessons.reset')}</Button>;
+    const resetButton = checkboxTrue(checkboxes) === true ?
+      <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
+      onClick={() => resetLesson(path, setCheckbox)}>{t('lessons.reset')}</Button>
+      : null;
     return (
       <div className={styles.container}>
         <h1>
