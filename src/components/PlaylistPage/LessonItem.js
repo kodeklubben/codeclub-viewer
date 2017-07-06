@@ -24,30 +24,31 @@ export const LessonItem = React.createClass({
       </LinkContainer>
       : null;
     const tooltipContent = getLessonIntro(lesson.path.slice(1));
+    const createMarkup = () => {
+      return {__html: tooltipContent};
+    };
     const tooltip =
-      <Tooltip id="lessonIntro">
-        <div dangerouslySetInnerHTML={{__html: tooltipContent}} />
+      <Tooltip className={styles.tooltip} id={lesson.title}>
+        <div dangerouslySetInnerHTML={createMarkup()}/>
       </Tooltip>;
     return (
-      lesson.external ?
-        <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
-          <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+      <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
+        {lesson.external ?
+        <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+          {levelIcon}
+          <div className={styles.title}>{lesson.title}</div>
+          {instructionBtn}
+          &nbsp;<Glyphicon glyph="new-window"/>
+        </ListGroupItem>
+      :
+        <LinkContainer to={lesson.path}>
+          <ListGroupItem className={styles.row}>
             {levelIcon}
             <div className={styles.title}>{lesson.title}</div>
             {instructionBtn}
-            &nbsp;<Glyphicon glyph="new-window"/>
           </ListGroupItem>
-        </OverlayTrigger>
-        :
-        <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
-          <LinkContainer to={lesson.path}>
-            <ListGroupItem className={styles.row}>
-              {levelIcon}
-              <div className={styles.title}>{lesson.title}</div>
-              {instructionBtn}
-            </ListGroupItem>
-          </LinkContainer>
-        </OverlayTrigger>
+        </LinkContainer>}
+      </OverlayTrigger>
     );
   }
 });
