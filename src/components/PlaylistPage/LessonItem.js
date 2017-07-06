@@ -40,7 +40,7 @@ export const LessonItem = React.createClass({
           {instructionBtn}
           &nbsp;<Glyphicon glyph="new-window"/>
         </ListGroupItem>
-      :
+        :
         <LinkContainer to={lesson.path}>
           <ListGroupItem className={styles.row}>
             {levelIcon}
