@@ -254,8 +254,8 @@ export function removeHtmlFileEnding(lessonPage) {
 * @param {Dummy argument} noUrl
 * @returns {Array or Object}
 */
-export const getAvailableLanguages = (onlyKeys) => {
-  return onlyKeys ? ['nb', 'nn', 'sv', 'da', 'en'] : {
+export const getAvailableLanguages = () => {
+  return {
     'nb': {
       name: 'Norsk bokmål',
       url: require('./assets/graphics/norway.svg')

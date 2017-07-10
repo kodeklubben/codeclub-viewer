@@ -6,7 +6,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {getLanguageName} from '../../util';
 
 const translateGroupName = (groupName, t) => {
-  return t('filter.group.' + groupName);
+  return groupName === 'language' ? t('filter.language') : groupName;
 };
 
 const FilterGroup = React.createClass({

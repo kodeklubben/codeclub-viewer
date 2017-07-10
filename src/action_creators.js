@@ -16,13 +16,9 @@ export function setFilter(filter) {
   };
 }
 
-export function resetFilter(groupName = {}, tagName = {}) {
+export function resetFilter(groupName, tagName) {
   return {
-    type: 'RESET_FILTER',
-    payload: {
-      groupName,
-      tagName
-    }
+    type: 'RESET_FILTER'
   };
 }
 

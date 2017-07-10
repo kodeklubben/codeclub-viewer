@@ -12,7 +12,5 @@ export default function(state='nb', action) {
 }
 
 function isLanguageValid(language) {
-  const languages = getAvailableLanguages(true);
-
-  return languages.indexOf(language) !== -1;
+  return getAvailableLanguages().hasOwnProperty(language);
 }
