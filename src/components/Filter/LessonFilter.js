@@ -12,7 +12,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-export const LessonFilter =({t, availableLessons, onFilterCheck, isStudentMode, resetFilter, filter = {}}) => {
+export const LessonFilter =
+({t, availableLessons, onFilterCheck, isStudentMode, language, resetFilter, filter = {}}) => {
   const filterGroups = Object.keys(filter).map((groupName) => {
     const tagItems = filter[groupName];
     return (
@@ -43,7 +44,8 @@ export const LessonFilter =({t, availableLessons, onFilterCheck, isStudentMode, 
         isStudentMode ? styles.bgColorStudent : styles.bgColorTeacher}>
         {filterGroups}
         <br/>
-        <Button block bsStyle="white-grey-lighter" onClick={() => resetFilter()}>
+        <Button block bsStyle="white-grey-lighter"
+          onClick={() => resetFilter('language', language)}>
           {t('filter.removefilter')}
         </Button>
       </Panel>
@@ -57,11 +59,13 @@ LessonFilter.propTypes = {
   isStudentMode: PropTypes.bool,
   availableLessons: PropTypes.object,
   courseName: PropTypes.string,
-  t: PropTypes.func
+  t: PropTypes.func,
+  language: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
   return {
+    language: state.language,
     filter: state.filter,
     isStudentMode: state.isStudentMode,
     availableLessons: getAvailableLessons(state, ownProps.courseName),
