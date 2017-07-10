@@ -12,7 +12,7 @@ const modes = ['student', 'teacher'];
 
 function LanguageItem(props) {
   const nativeLanguages = getAvailableLanguages();
-  
+
   // Note that the block with "float" (the flag) must be first in the containing div
   return (
     <div>
