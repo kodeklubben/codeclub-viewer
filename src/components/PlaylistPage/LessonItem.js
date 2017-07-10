@@ -24,8 +24,7 @@ const getCheckboxProgress = (path, checkboxes) => {
           trueCheckboxes++;
         }
       }
-      const percent = Math.floor((trueCheckboxes/Object.keys(checkboxObject).length)*100);
-      return '(' + percent + '%)';
+      return '(' + trueCheckboxes + '/' + Object.keys(checkboxObject).length + ')';
     }
   }
 };
