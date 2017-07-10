@@ -3,10 +3,10 @@ import FilterItem from './FilterItem';
 import {capitalize} from '../../util';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {getLanguageName} from '../../util';
+import {getLanguageName, groupNameIsLanguage} from '../../util';
 
 const translateGroupName = (groupName, t) => {
-  return groupName === 'language' ? t('filter.language') : groupName;
+  return groupNameIsLanguage(groupName) ? t('filter.language') : groupName;
 };
 
 const FilterGroup = React.createClass({
@@ -16,7 +16,7 @@ const FilterGroup = React.createClass({
     const filterItems = Object.keys(filterTags).map((tagItem) => {
       const onCheck = () => this.props.onFilterCheck(this.props.groupName, tagItem);
       const availableLessonsForTag = this.props.availableLessonsForTag[tagItem];
-      const tagName = this.props.groupName === 'language' ? getLanguageName(tagItem) : tagItem;
+      const tagName = groupNameIsLanguage(this.props.groupName) ? getLanguageName(tagItem) : tagItem;
 
       return tagName ? (
         <FilterItem

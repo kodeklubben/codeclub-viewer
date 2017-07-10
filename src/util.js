@@ -325,3 +325,7 @@ export function createCheckboxesKey(path) {
   path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
   return 'checkboxes_' + path;
 }
+
+export const groupNameIsLanguage = (groupName) => {
+  return groupName === 'language' ? true : false;
+};
