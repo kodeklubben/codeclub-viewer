@@ -9,6 +9,7 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
 
+const percentArray = {}; //Use this for styling
 const getCheckboxProgress = (path, checkboxes) => {
   let checkboxKeys = Object.keys(checkboxes);
   let trueCheckboxes = 0;
@@ -24,9 +25,18 @@ const getCheckboxProgress = (path, checkboxes) => {
           trueCheckboxes++;
         }
       }
+      percentArray[path]= trueCheckboxes/Object.keys(checkboxObject).length ;
       return '(' + trueCheckboxes + '/' + Object.keys(checkboxObject).length + ')';
     }
   }
+  const lessonContent = require('onlyContent!lessonSrc/' + path.slice(1) + '.md').content;
+  let totalCheckboxes = 0;
+  for (let j = 0; j < lessonContent.length; j++) {
+    if (lessonContent.indexOf('<input type="checkbox"') !== -1) { //Hvorfor fungerer ikke denne?
+      totalCheckboxes++;
+    }
+  }
+  return totalCheckboxes !== 0 ? '(0/' + totalCheckboxes + ')' : '';
 };
 
 export const LessonItem = React.createClass({
