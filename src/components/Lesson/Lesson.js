@@ -42,10 +42,10 @@ const LessonButton = ({path, lessons, t}) => {
 
 const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = document.getElementsByTagName('label');
-  for (let label of labels) {
-    const input = document.getElementById(label.htmlFor);
+  for (let i = 0; i < labels.length; i++) {
+    const input = document.getElementById([labels[i].htmlFor]);
     if (input && input.type === 'checkbox') {
-      let hash = hashCode(label.textContent);
+      let hash = hashCode(labels[i].textContent);
       input.checked = !!checkboxes[hash];
       setCheckbox(path, hash, !!checkboxes[hash]);
       input.onclick = (e) => {
