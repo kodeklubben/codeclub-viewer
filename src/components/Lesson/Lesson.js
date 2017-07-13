@@ -57,7 +57,7 @@ const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
 
 const renderToggleButtons = () => {
   const nodes = document.getElementsByClassName('togglebutton');
-  for (let node of nodes) {
+  for (let [node] of Object.entries(nodes)) {
     const strongNode = node.getElementsByTagName('strong')[0];
     const buttonText = strongNode ? strongNode.textContent : 'Hint';
     const hiddenNode = node.getElementsByTagName('hide')[0];
@@ -109,7 +109,7 @@ const Lesson = React.createClass({
   },
   componentWillUnmount() {
     const nodes = document.getElementsByClassName('togglebutton');
-    for (let node of nodes) {
+    for (let [node] of Object.entries(nodes))  {
       ReactDOM.unmountComponentAtNode(node);
     }
   },
