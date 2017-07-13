@@ -57,12 +57,12 @@ const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
 
 const renderToggleButtons = () => {
   const nodes = document.getElementsByClassName('togglebutton');
-  for (let [node] of Object.entries(nodes)) {
-    const strongNode = node.getElementsByTagName('strong')[0];
+  for (let j = 0; j < nodes.length; j++) {
+    const strongNode = nodes[j].getElementsByTagName('strong')[0];
     const buttonText = strongNode ? strongNode.textContent : 'Hint';
-    const hiddenNode = node.getElementsByTagName('hide')[0];
+    const hiddenNode = nodes[j].getElementsByTagName('hide')[0];
     const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
+    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,nodes[j]);
   }
 };
 
