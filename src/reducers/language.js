@@ -1,3 +1,9 @@
+/*
+  Example state:
+
+  language: "nb"
+ */
+
 import {getAvailableLanguages} from '../util';
 import {storeItem} from '../localStorage';
 

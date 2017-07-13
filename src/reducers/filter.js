@@ -1,3 +1,25 @@
+/*
+  Example state:
+  
+  filter: {
+    language: {
+      nb: true,
+      nb-no: true,
+      hr: false,
+      en: false
+    },
+    tema: {
+      app: true,
+      elektronikk: false,
+      interaktiv: false,
+      minecraft: false,
+      nettside: false,
+      spill: true,
+      robot: false,
+      animasjon: false
+    }
+  }
+ */
 function handleCheckFilter(state, groupName, tagName){
   if(groupName == null || tagName == null) return state;
 
