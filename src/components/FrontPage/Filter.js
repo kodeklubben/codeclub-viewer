@@ -9,7 +9,7 @@ import {onFilterCheck} from '../../action_creators';
 import {getTranslator} from '../../selectors/translate';
 
 
-import {LessonFilterContainer} from '../Filter/LessonFilter';
+import LessonFilter from '../Filter/LessonFilter';
 
 const Filter = React.createClass({
 
@@ -43,7 +43,7 @@ const Filter = React.createClass({
       <div>
         {/*Filter desktop*/}
         <Col xsHidden>
-          <LessonFilterContainer courseName={courseName}/>
+          <LessonFilter courseName={courseName}/>
         </Col>
 
         {/*Filter mobile*/}
@@ -60,7 +60,7 @@ const Filter = React.createClass({
           <br/>
           <Collapse in={this.state.showMobileFilter}>
             <div>
-              <LessonFilterContainer courseName={courseName}/>
+              <LessonFilter courseName={courseName}/>
             </div>
           </Collapse>
         </Col>

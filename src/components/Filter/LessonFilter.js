@@ -12,7 +12,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-export const LessonFilter =
+const LessonFilter =
 ({t, availableLessons, onFilterCheck, isStudentMode, language, resetFilter, filter = {}}) => {
   const filterGroups = Object.keys(filter).map((groupName) => {
     const tagItems = filter[groupName];
@@ -73,7 +73,7 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export const LessonFilterContainer = connect(
+export default connect(
   mapStateToProps,
   {
     onFilterCheck,
