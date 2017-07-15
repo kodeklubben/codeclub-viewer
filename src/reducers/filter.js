@@ -4,8 +4,7 @@
   filter: {
     language: {
       nb: true,
-      nb-no: true,
-      hr: false,
+      nn: true,
       en: false
     },
     tema: {
@@ -19,7 +18,8 @@
       animasjon: false
     }
   }
- */
+*/
+
 function handleCheckFilter(state, groupName, tagName){
   if(groupName == null || tagName == null) return state;
 

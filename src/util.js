@@ -258,23 +258,27 @@ export const getAvailableLanguages = () => {
   return {
     'nb': {
       name: 'Norsk bokmål',
-      url: require('./assets/graphics/norway.svg')
+      url: require('./assets/graphics/norwegian.svg')
     },
     'nn': {
       name: 'Norsk nynorsk',
-      url: require('./assets/graphics/norway.svg')
+      url: require('./assets/graphics/norwegian.svg')
     },
     'sv': {
       name: 'Svenska',
-      url: require('./assets/graphics/sweden.svg')
+      url: require('./assets/graphics/swedish.svg')
     },
     'da': {
       name: 'Dansk',
-      url: require('./assets/graphics/denmark.svg')
+      url: require('./assets/graphics/danish.svg')
     },
     'en': {
       name: 'English',
       url: require('./assets/graphics/english.svg')
+    },
+    'hr': {
+      name: 'Hrvatski',
+      url: require('./assets/graphics/croatian.svg')
     }
   };
 };
