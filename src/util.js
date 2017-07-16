@@ -294,9 +294,6 @@ export function createCheckboxesKey(path) {
   return 'checkboxes_' + path;
 }
 
-// TODO: Remove use of this function
-export const groupNameIsLanguage = (groupKey) => groupKey === 'language';
-
 /**
  *
  * @param {function} t translator function

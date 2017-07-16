@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {tagsMatchFilter, getOrTaggedGroups, groupNameIsLanguage} from '../util';
+import {tagsMatchFilter, getOrTaggedGroups} from '../util';
 
 const getLessons = (state, courseName = '') => {
   return Object.keys(state.lessons).reduce((res, lessonPath) => {
@@ -53,7 +53,7 @@ export const getFilteredLessonsOrTagsSelected = createSelector(
       orTaggedFilter[groupKey] = {};
       for(const tagKey of Object.keys(filter[groupKey])){
         //if(orTaggedGroups.indexOf(groupKey) !== -1){
-        if(groupNameIsLanguage(groupKey)){
+        if(groupKey === 'language'){
           orTaggedFilter[groupKey][tagKey] = true;
         }else{
           orTaggedFilter[groupKey][tagKey] = !!filter[groupKey][tagKey];
