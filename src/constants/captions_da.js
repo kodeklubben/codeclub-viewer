@@ -15,7 +15,7 @@ export default {
     otherwebsitecourses: 'Kurs på andre nettsider',
     welcomebox: {
       header: 'Hei! Du er nå i elevmodus',
-      changemode: 'Er du ikke en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. ' + 
+      changemode: 'Er du ikke en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. ' +
                   'Du kan også velge å skjule denne boksen for alltid, ved å trykke på X i hjørnet',
       info: 'Velkommen til Kodeklubbens oppgavesider! Her finner du mange veiledninger som du kan ' +
             'bruke som inspirasjon for å lære deg programmering og lage dine egne spill, apper og nettsider. ' +
@@ -125,6 +125,7 @@ export default {
       textline1: 'I filteret kan man sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
       textline2: 'Bak hvert valg står det antall oppgaver som kan løses, etter hvilke valg du gjør i filteret.'
     },
+    language: 'Språk',
     removefilter: 'Fjern filter'
   },
   navbar: {

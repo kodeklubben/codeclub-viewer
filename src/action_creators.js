@@ -14,11 +14,21 @@ export function setFilter(filter) {
   };
 }
 
+<<<<<<< HEAD
 export function resetFilter(groupKey, tagKey) {
   return {
     type: 'RESET_FILTER',
     groupKey,
     tagKey
+=======
+export function resetFilter(groupName = {}, tagName = {}) {
+  return {
+    type: 'RESET_FILTER',
+    payload: {
+      groupName,
+      tagName
+    }
+>>>>>>> master
   };
 }
 

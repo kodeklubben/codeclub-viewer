@@ -15,7 +15,7 @@ export default {
     otherwebsitecourses: 'Kurs på andre nettsider',
     welcomebox: {
       header: 'Hei! Du er no i elevmodus',
-      changemode: 'Er du ikkje elev? Klikk elev/lærar-knappen i navigasjonsmenyen for å bytte modus. ' + 
+      changemode: 'Er du ikkje elev? Klikk elev/lærar-knappen i navigasjonsmenyen for å bytte modus. ' +
                   'Du kan også velje å skjule denne boksen for alltid, ved å trykkje på X i hjørnet',
       info: 'Velkomen til Kodeklubben sine oppgåvesider! Her finn du mange rettleiingar som du kan ' +
             'bruke som inspirasjon for å lære deg programmering og lage dine eigne spel, appar og nettsider. ' +
