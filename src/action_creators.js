@@ -14,11 +14,11 @@ export function setFilter(filter) {
   };
 }
 
-export function resetFilter(groupName, tagName) {
+export function resetFilter(groupKey, tagKey) {
   return {
     type: 'RESET_FILTER',
-    groupName,
-    tagName
+    groupKey,
+    tagKey
   };
 }
 
@@ -32,11 +32,11 @@ export function setContext(contextName, context) {
   };
 }
 
-export function onFilterCheck(groupName, tagName) {
+export function onFilterCheck(groupKey, tagKey) {
   return {
     type: 'FILTER_CHECKED',
-    groupName,
-    tagName
+    groupKey,
+    tagKey
   };
 }
 

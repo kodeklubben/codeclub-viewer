@@ -12,13 +12,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-const LessonFilter =
-({t, availableLessons, isStudentMode, language, resetFilter, filterGroupNames}) => {
-  const filterGroups = filterGroupNames.map((groupName) => {
+const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys}) => {
+  const filterGroups = filterGroupKeys.map((groupKey) => {
     return (
       <FilterGroup
-        key={groupName}
-        groupName={groupName}
+        key={groupKey}
+        groupKey={groupKey}
         availableLessonsForTag={availableLessons}
         t={t}
       />
@@ -50,20 +49,20 @@ const LessonFilter =
 };
 
 LessonFilter.propTypes = {
-  filterGroupNames: PropTypes.arrayOf(PropTypes.string),
+  filterGroupKeys: PropTypes.arrayOf(PropTypes.string),
   onFilterCheck: PropTypes.func,
   resetFilter: PropTypes.func,
   isStudentMode: PropTypes.bool,
   availableLessons: PropTypes.object,
   courseName: PropTypes.string,
-  t: PropTypes.func,
+  t: PropTypes.func.isRequired,
   language: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
   return {
     language: state.language,
-    filterGroupNames: Object.keys(state.filter),
+    filterGroupKeys: Object.keys(state.filter),
     isStudentMode: state.isStudentMode,
     availableLessons: getAvailableLessons(state, ownProps.courseName),
     t: getTranslator(state)

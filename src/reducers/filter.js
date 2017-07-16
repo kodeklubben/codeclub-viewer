@@ -20,37 +20,35 @@
   }
 */
 
-function handleCheckFilter(state, groupName, tagName){
-  if(groupName == null || tagName == null) return state;
-
-  groupName = groupName.toLowerCase();
-  tagName = tagName.toLowerCase();
+function handleCheckFilter(state, groupKey, tagKey){
+  if(groupKey == null || tagKey == null) return state;
 
   // Check if state contains the filterItem that was checked
   // This should always be false, but it's better to be safe than sorry
-  if(!state.hasOwnProperty(groupName) ||
-    !state[groupName].hasOwnProperty(tagName))return state;
+  if(!state.hasOwnProperty(groupKey) || !state[groupKey].hasOwnProperty(tagKey)) {
+    return state;
+  }
 
   // Create next state
-  const checked = state[groupName][tagName];
+  const checked = state[groupKey][tagKey];
   return {
     ...state,
-    [groupName]: {
-      ...state[groupName],
-      [tagName]: !checked
+    [groupKey]: {
+      ...state[groupKey],
+      [tagKey]: !checked
     }
   };
 
 }
 
 // Set all tags to false
-function resetFilter(state, groupName, tagName) {
+function resetFilter(state, groupKey, tagKey) {
   const filterGroups = Object.keys(state);
   return filterGroups.reduce((res, filterGroup) => {
     const tags = state[filterGroup];
     res[filterGroup] = Object.keys(tags).reduce((tagsRes, tag) => ({...tagsRes, [tag]: false}), {});
-    if(groupName && tagName){
-      res[groupName][tagName] = true;
+    if(groupKey && tagKey){
+      res[groupKey][tagKey] = true;
     }
     return res;
   },{});
@@ -61,9 +59,9 @@ export default function(state={}, action) {
     case 'SET_FILTER':
       return action.filter;
     case 'RESET_FILTER':
-      return resetFilter(state, action.groupName, action.tagName);
+      return resetFilter(state, action.groupKey, action.tagKey);
     case 'FILTER_CHECKED':
-      return handleCheckFilter(state, action.groupName, action.tagName);
+      return handleCheckFilter(state, action.groupKey, action.tagKey);
   }
   return state;
 }

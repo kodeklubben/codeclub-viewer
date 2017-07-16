@@ -6,19 +6,21 @@ import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {translateGroup, translateTag} from '../../util';
 
-const FilterGroup = ({groupName, availableLessonsForTag, t, filterTags, translatedGroupName, onFilterCheck}) => {
-  if (translatedGroupName) {
-    const filterItems = Object.keys(filterTags).map((tagName) => {
-      const onCheck = () => onFilterCheck(groupName, tagName);
-      const numberOfLessonsForTag = availableLessonsForTag[tagName];
-      const translatedTagName = translateTag(t, groupName, tagName);
+const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, onFilterCheck}) => {
+  const groupName = translateGroup(t, groupKey);
 
-      return translatedTagName ? (
+  if (groupName) {
+    const filterItems = Object.keys(filterTags).map((tagKey) => {
+      const onCheck = () => onFilterCheck(groupKey, tagKey);
+      const numberOfLessonsForTag = availableLessonsForTag[tagKey];
+      const tagName = translateTag(t, groupKey, tagKey);
+
+      return tagName ? (
         <FilterItem
-          key={tagName}
-          tagName={translatedTagName}
+          key={tagKey}
+          tagName={tagName}
           numberOfLessons={numberOfLessonsForTag}
-          checked={filterTags[tagName]}
+          checked={filterTags[tagKey]}
           onCheck={onCheck}
         />
       ) : null;
@@ -26,7 +28,7 @@ const FilterGroup = ({groupName, availableLessonsForTag, t, filterTags, translat
 
     return (
       <div className={styles.filterGroup}>
-        <h4>{translatedGroupName}</h4>
+        <h4>{groupName}</h4>
         {filterItems}
       </div>
     );
@@ -37,21 +39,19 @@ const FilterGroup = ({groupName, availableLessonsForTag, t, filterTags, translat
 
 FilterGroup.propTypes = {
   // ownProps:
-  groupName: PropTypes.string,
+  groupKey: PropTypes.string,
   availableLessonsForTag: PropTypes.object.isRequired,
   t: PropTypes.func,
 
   // mapStateToProps:
   filterTags: PropTypes.object,
-  translatedGroupName: PropTypes.string,
-  
+
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  filterTags: state.filter[ownProps.groupName],
-  translatedGroupName: translateGroup(ownProps.t, ownProps.groupName)
+  filterTags: state.filter[ownProps.groupKey],
 });
 
 const mapDispatchToProps = {

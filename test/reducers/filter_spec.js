@@ -18,9 +18,7 @@ describe('filter reducer', () => {
       };
       const action = {
         type: 'SET_FILTER',
-        payload: {
-          filter
-        }
+        filter
       };
       
       deepFreeze(initialState);
@@ -50,9 +48,7 @@ describe('filter reducer', () => {
       };
       const action = {
         type: 'SET_FILTER',
-        payload: {
-          filter
-        }
+        filter
       };
       
       deepFreeze(initialState);
@@ -119,10 +115,8 @@ describe('filter reducer', () => {
       };
       const action = {
         type: 'FILTER_CHECKED',
-        payload: {
-          groupName: 'platform',
-          tagName: 'mac'
-        }
+        groupKey: 'platform',
+        tagKey: 'mac'
       };
       
       deepFreeze(initialState);
@@ -139,7 +133,7 @@ describe('filter reducer', () => {
       });
     });
 
-    it('does nothing if groupName does not already exist in filter', () => {
+    it('does nothing if groupKey does not already exist in filter', () => {
       const initialState = {
         platform: {
           'windows': true,
@@ -150,10 +144,8 @@ describe('filter reducer', () => {
       };
       const action = {
         type: 'FILTER_CHECKED',
-        payload: {
-          groupName: 'something',
-          tagName: 'mac'
-        }
+        groupKey: 'something',
+        tagKey: 'mac'
       };
       
       deepFreeze(initialState);
@@ -163,7 +155,7 @@ describe('filter reducer', () => {
       expect(nextState).to.eql(initialState);
     });
 
-    it('does nothing if tagName does not already exist in filter', () => {
+    it('does nothing if tagKey does not already exist in filter', () => {
       const initialState = {
         platform: {
           'windows': true,
@@ -174,10 +166,8 @@ describe('filter reducer', () => {
       };
       const action = {
         type: 'FILTER_CHECKED',
-        payload: {
-          groupName: 'platform',
-          tagName: 'browser'
-        }
+        groupKey: 'platform',
+        tagKey: 'browser'
       };
       
       deepFreeze(initialState);
