@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {onFilterCheck, resetFilter} from '../../action_creators';
+import {resetFilter} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getAvailableLessons} from '../../selectors/lesson';
@@ -12,17 +12,13 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-export const LessonFilter =
-({t, availableLessons, onFilterCheck, isStudentMode, language, resetFilter, filter = {}}) => {
-  const filterGroups = Object.keys(filter).map((groupName) => {
-    const tagItems = filter[groupName];
+const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys}) => {
+  const filterGroups = filterGroupKeys.map((groupKey) => {
     return (
       <FilterGroup
-        key={groupName}
-        groupName={groupName}
+        key={groupKey}
+        groupKey={groupKey}
         availableLessonsForTag={availableLessons}
-        tagItems={tagItems}
-        onFilterCheck={onFilterCheck}
         t={t}
       />
     );
@@ -53,31 +49,31 @@ export const LessonFilter =
 };
 
 LessonFilter.propTypes = {
-  filter: PropTypes.object,
+  filterGroupKeys: PropTypes.arrayOf(PropTypes.string),
   onFilterCheck: PropTypes.func,
   resetFilter: PropTypes.func,
   isStudentMode: PropTypes.bool,
   availableLessons: PropTypes.object,
   courseName: PropTypes.string,
-  t: PropTypes.func,
+  t: PropTypes.func.isRequired,
   language: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
   return {
     language: state.language,
-    filter: state.filter,
+    filterGroupKeys: Object.keys(state.filter),
     isStudentMode: state.isStudentMode,
     availableLessons: getAvailableLessons(state, ownProps.courseName),
     t: getTranslator(state)
   };
 }
 
-export const LessonFilterContainer = connect(
-  mapStateToProps,
-  {
-    onFilterCheck,
-    resetFilter
-  }
+const mapDispatchToProps = {
+  resetFilter
+};
 
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(withStyles(styles)(LessonFilter));

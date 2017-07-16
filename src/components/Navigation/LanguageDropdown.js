@@ -4,68 +4,75 @@ import {setLanguage, resetFilter} from '../../action_creators';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import {getAvailableLanguages} from '../../util';
+import {getAvailableLanguages, translateTag} from '../../util';
 import styles from './LanguageDropdown.scss';
+import {getTranslator} from '../../selectors/translate';
 
-const languages = Object.keys(getAvailableLanguages());
+const availableLanguages = getAvailableLanguages();
 const modes = ['student', 'teacher'];
 
-function LanguageItem(props) {
-  const nativeLanguages = getAvailableLanguages();
-
+const LanguageItem = ({language, t}) => {
   // Note that the block with "float" (the flag) must be first in the containing div
   return (
     <div>
-      <img className={styles.flag} src={nativeLanguages[props.language].url}/>
-      <div className={styles.language}>{nativeLanguages[props.language].name}</div>
+      <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/>
+      <div className={styles.language}>{translateTag(t, 'language', language)}</div>
     </div>
   );
-}
+};
 LanguageItem.propTypes = {
-  language: PropTypes.oneOf(languages).isRequired
+  language: PropTypes.oneOf(availableLanguages).isRequired,
+  t: PropTypes.func.isRequired
 };
 
-export function LanguageDropdown(props) {
+const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='language-dropdown'
                     noCaret
                     pullRight
-                    bsStyle={'language-' + props.mode}
-                    title={<LanguageItem language={props.language}/>}
+                    bsStyle={'language-' + mode}
+                    title={<LanguageItem language={language} t={t}/>}
                     onSelect={(eventKey) => {
-                      props.resetFilter('language', eventKey);
-                      props.setLanguage(eventKey);
+                      resetFilter('language', eventKey);
+                      setLanguage(eventKey);
                     }}>
       {
-        languages.map(k =>
-          <MenuItem key={k} eventKey={k} active={props.language === k}>
-            <LanguageItem language={k}/>
+        availableLanguages.map(k =>
+          <MenuItem key={k} eventKey={k} active={language === k}>
+            <LanguageItem language={k} t={t}/>
           </MenuItem>
         )
       }
     </DropdownButton>
   </div>;
-}
+};
 
 LanguageDropdown.propTypes = {
-  filter: PropTypes.object,
+  // ownProps:
   mode: PropTypes.oneOf(modes).isRequired,
-  language: PropTypes.oneOf(languages).isRequired,
-  resetFilter: PropTypes.func,
-  setLanguage: PropTypes.func.isRequired
+
+  // mapStateToProps:
+  language: PropTypes.oneOf(availableLanguages).isRequired,
+  t: PropTypes.func.isRequired,
+
+  // mapDispatchToProps:
+  setLanguage: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
     language: state.language,
-    filter: state.filter,
+    t: getTranslator(state)
   };
 }
 
-export const LanguageDropdownContainer = connect(
+const mapDispatchToProps = {
+  setLanguage,
+  resetFilter
+};
+
+export default connect(
   mapStateToProps,
-  {
-    setLanguage,
-    resetFilter
-  }
+  mapDispatchToProps
 )(withStyles(styles)(LanguageDropdown));
