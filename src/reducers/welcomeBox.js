@@ -1,3 +1,8 @@
+/*
+  Example state:
+
+  welcomeBox: true
+ */
 import {storeItem} from '../localStorage';
 
 export default function(state=true, action) {

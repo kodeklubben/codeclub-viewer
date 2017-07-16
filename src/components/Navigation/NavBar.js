@@ -11,7 +11,7 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
-import {LanguageDropdownContainer as LanguageDropdown} from './LanguageDropdown';
+import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
 

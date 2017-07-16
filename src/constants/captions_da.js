@@ -15,7 +15,7 @@ export default {
     otherwebsitecourses: 'Kurs på andre nettsider',
     welcomebox: {
       header: 'Hei! Du er nå i elevmodus',
-      changemode: 'Er du ikke er en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. ' + 
+      changemode: 'Er du ikke en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. ' +
                   'Du kan også velge å skjule denne boksen for alltid, ved å trykke på X i hjørnet',
       info: 'Velkommen til Kodeklubbens oppgavesider! Her finner du mange veiledninger som du kan ' +
             'bruke som inspirasjon for å lære deg programmering og lage dine egne spill, apper og nettsider. ' +
@@ -76,14 +76,54 @@ export default {
     }
   },
   filter: {
+    group: {
+      grade: 'Klassetrinn',
+      language: 'Språk',
+      subject: 'Fag',
+      topic: 'Tema',
+    },
+    tags_grade: {
+      preschool: 'Barnehage',
+      primary: '1.-4. klasse',
+      secondary: '5.-7. klasse',
+      junior: '8.-10. klasse',
+      senior: 'Videregående skole'
+    },
+    tags_language: {
+      nb: 'Norsk bokmål',
+      nn: 'Norsk nynorsk',
+      sv: 'Svenska',
+      da: 'Dansk',
+      en: 'English',
+      hr: 'Hrvatski',
+    },
+    tags_subject: {
+      mathematics: 'Matematikk',
+      science: 'Vitenskap',
+      programming: 'Programmering',
+      technology: 'Teknologi',
+      music: 'Musikk',
+      norwegian: 'Norsk',
+      english: 'Engelsk',
+      arts_and_crafts: 'Kunst og håndverk',
+      social_science: 'Samfunnsfag',
+    },
+    tags_topic: {
+      app: 'App',
+      electronics: 'Elektronikk',
+      step_based: 'Stegbasert',
+      block_based: 'Blokkbasert',
+      text_based: 'Tekstbasert',
+      minecraft: 'Minecraft',
+      web: 'Nettside',
+      game: 'Spill',
+      robot: 'Robot',
+      animation: 'Animasjon',
+    },
     header: 'Filter',
     tooltip: {
       textline1: 'I filteret kan man sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
       textline2: 'Bak hvert valg står det antall oppgaver som kan løses, etter hvilke valg du gjør i filteret.'
-    },
-    group: {
-      language: 'Språk',
-      tema: 'Tema'
     },
     removefilter: 'Fjern filter'
   },
