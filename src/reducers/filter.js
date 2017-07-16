@@ -1,6 +1,5 @@
 /*
   Example state:
-
   filter: {
     language: {
       nb: true,

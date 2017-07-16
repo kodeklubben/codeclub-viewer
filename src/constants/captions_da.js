@@ -125,7 +125,6 @@ export default {
       textline1: 'I filteret kan man sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
       textline2: 'Bak hvert valg står det antall oppgaver som kan løses, etter hvilke valg du gjør i filteret.'
     },
-    language: 'Språk',
     removefilter: 'Fjern filter'
   },
   navbar: {
