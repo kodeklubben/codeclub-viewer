@@ -55,8 +55,6 @@ function resetFilter(state, groupKey, tagKey) {
 }
 
 export default function(state={}, action) {
-  const groupName = action.payload ? action.payload.groupName : undefined;
-  const tagName = action.payload ? action.payload.tagName : undefined;
 
   switch(action.type) {
     case 'SET_FILTER':
