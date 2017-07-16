@@ -63,7 +63,9 @@ export const getFilteredLessonsOrTagsSelected = createSelector(
 
     return Object.keys(lessons).reduce((res, lessonKey) => {
       const lesson = lessons[lessonKey];
-      if (tagsMatchFilter(lesson.tags, orTaggedFilter)) res[lessonKey] = lesson;
+      if (tagsMatchFilter(lesson.tags, orTaggedFilter)) {
+        res[lessonKey] = lesson;
+      }
       return res;
     }, {});
   }

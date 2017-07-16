@@ -75,6 +75,50 @@ export default {
     }
   },
   filter: {
+    group: {
+      grade: 'Grade',
+      language: 'Language',
+      subject: 'Subject',
+      topic: 'Topic',
+    },
+    tags_grade: {
+      preschool: 'Preschool',
+      primary: 'Primary',
+      secondary: 'Secondary',
+      junior: 'Junior',
+      senior: 'Senior',
+    },
+    tags_language: {
+      nb: 'Norsk bokmål',
+      nn: 'Norsk nynorsk',
+      sv: 'Svenska',
+      da: 'Dansk',
+      en: 'English',
+      hr: 'Hrvatski',
+    },
+    tags_subject: {
+      mathematics: 'Mathematics',
+      science: 'Science',
+      programming: 'Programming',
+      technology: 'Technology',
+      music: 'Music',
+      norwegian: 'Norwegian',
+      english: 'English',
+      arts_and_crafts: 'Arts and crafts',
+      social_science: 'Social science',
+    },
+    tags_topic: {
+      app: 'App',
+      electronics: 'Electronics',
+      step_based: 'Step based',
+      block_based: 'Block based',
+      text_based: 'Text based',
+      minecraft: 'Minecraft',
+      web: 'Web',
+      game: 'Game',
+      robot: 'Robot',
+      animation: 'Animation',
+    },
     header: 'Filter',
     tooltip: {
       textline1: 'The filter allows you to sort out the lessons you want to solve according to the topics you ' +
@@ -82,7 +126,6 @@ export default {
       textline2: 'Behind each choice there are the number of lessons that can be solved, according to the choices ' +
                  'you make in the filter.'
     },
-    language: 'Language',
     removefilter: 'Clear filter'
   },
   navbar: {

@@ -5,7 +5,7 @@
  * @returns {string}
  */
 export function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 }
 
 /**
@@ -247,54 +247,18 @@ export function removeHtmlFileEnding(lessonPage) {
 }
 
 /**
-* IMPORTANT:
 * Returns languages defined as available
 * All available languages must be defined here
-* Dummy argument needed as tests does not allow require statements
-* @param {Dummy argument} noUrl
-* @returns {Array or Object}
+* @returns {Array} An array of available languages
 */
-export const getAvailableLanguages = () => {
-  return {
-    'nb': {
-      name: 'Norsk bokmål',
-      url: require('./assets/graphics/norwegian.svg')
-    },
-    'nn': {
-      name: 'Norsk nynorsk',
-      url: require('./assets/graphics/norwegian.svg')
-    },
-    'sv': {
-      name: 'Svenska',
-      url: require('./assets/graphics/swedish.svg')
-    },
-    'da': {
-      name: 'Dansk',
-      url: require('./assets/graphics/danish.svg')
-    },
-    'en': {
-      name: 'English',
-      url: require('./assets/graphics/english.svg')
-    },
-    'hr': {
-      name: 'Hrvatski',
-      url: require('./assets/graphics/croatian.svg')
-    }
-  };
-};
+export const getAvailableLanguages = () => ['nb', 'nn', 'sv', 'da', 'en', 'hr'];
 
 /**
-* Returns groupNames with tags that should be considered as logical OR
-* in the filter.
+* Returns groupNames with tags that should be considered as logical OR in the filter.
 * @returns {Array}
 */
 export const getOrTaggedGroups = () => {
   return ['language', 'subject', 'level'];
-};
-
-export const getLanguageName = (tagItem) => {
-  const languages = getAvailableLanguages();
-  return languages[tagItem] ? languages[tagItem].name : undefined;
 };
 
 /**
@@ -330,6 +294,38 @@ export function createCheckboxesKey(path) {
   return 'checkboxes_' + path;
 }
 
-export const groupNameIsLanguage = (groupName) => {
-  return groupName === 'language' ? true : false;
-};
+// TODO: Remove use of this function
+export const groupNameIsLanguage = (groupName) => groupName === 'language';
+
+/**
+ *
+ * @param {function} t translator function
+ * @param {string} groupName
+ * @returns {string} Translated filter group name, or blank string if not found.
+ */
+export function translateGroup(t, groupName) {
+  const captionPath = `filter.group.${groupName}`;
+  const translatedGroupName = t(captionPath);
+  if (translatedGroupName === captionPath) {
+    console.warn(`Could not translate filter group '${captionPath}'`);
+    return '';
+  }
+  return translatedGroupName;
+}
+
+/**
+ *
+ * @param {function} t translator function
+ * @param {string} groupName
+ * @param {string} tagItem
+ * @returns {string} Translated filter tag name, or blank string if not found.
+ */
+export function translateTag(t, groupName, tagItem) {
+  const captionPath = `filter.tags_${groupName}.${tagItem}`;
+  const translatedTagName = t(captionPath);
+  if (translatedTagName === captionPath) {
+    console.warn(`Could not translate filter tag '${captionPath}'`);
+    return '';
+  }
+  return translatedTagName;
+}

@@ -9,13 +9,13 @@
     },
     tema: {
       app: true,
-      elektronikk: false,
-      interaktiv: false,
+      electronics: false,
+      block_based: false,
       minecraft: false,
-      nettside: false,
-      spill: true,
+      web: false,
+      game: true,
       robot: false,
-      animasjon: false
+      animation: false
     }
   }
 */
@@ -57,16 +57,13 @@ function resetFilter(state, groupName, tagName) {
 }
 
 export default function(state={}, action) {
-  const groupName = action.payload ? action.payload.groupName : undefined;
-  const tagName = action.payload ? action.payload.tagName : undefined;
-  
   switch(action.type) {
     case 'SET_FILTER':
-      return action.payload.filter;
+      return action.filter;
     case 'RESET_FILTER':
-      return resetFilter(state, groupName, tagName);
+      return resetFilter(state, action.groupName, action.tagName);
     case 'FILTER_CHECKED':
-      return handleCheckFilter(state, groupName, tagName);
+      return handleCheckFilter(state, action.groupName, action.tagName);
   }
   return state;
 }

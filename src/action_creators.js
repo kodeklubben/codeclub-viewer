@@ -10,19 +10,15 @@ export function setLessons(lessons) {
 export function setFilter(filter) {
   return {
     type: 'SET_FILTER',
-    payload: {
-      filter
-    }
+    filter
   };
 }
 
 export function resetFilter(groupName, tagName) {
   return {
     type: 'RESET_FILTER',
-    payload: {
-      groupName,
-      tagName
-    }
+    groupName,
+    tagName
   };
 }
 
@@ -39,10 +35,8 @@ export function setContext(contextName, context) {
 export function onFilterCheck(groupName, tagName) {
   return {
     type: 'FILTER_CHECKED',
-    payload: {
-      groupName,
-      tagName
-    }
+    groupName,
+    tagName
   };
 }
 
@@ -74,7 +68,7 @@ export function setMode(mode) {
 export function setLanguage(language) {
   return {
     type: 'SET_LANGUAGE',
-    payload: language
+    language
   };
 }
 

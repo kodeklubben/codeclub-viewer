@@ -1,29 +1,24 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {onFilterCheck} from '../../action_creators';
 import FilterItem from './FilterItem';
-import {capitalize} from '../../util';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {getLanguageName, groupNameIsLanguage} from '../../util';
+import {translateGroup, translateTag} from '../../util';
 
-const translateGroupName = (groupName, t) => {
-  return groupNameIsLanguage(groupName) ? t('filter.language') : groupName;
-};
+const FilterGroup = ({groupName, availableLessonsForTag, t, filterTags, translatedGroupName, onFilterCheck}) => {
+  if (translatedGroupName) {
+    const filterItems = Object.keys(filterTags).map((tagName) => {
+      const onCheck = () => onFilterCheck(groupName, tagName);
+      const numberOfLessonsForTag = availableLessonsForTag[tagName];
+      const translatedTagName = translateTag(t, groupName, tagName);
 
-const FilterGroup = React.createClass({
-  render(){
-    const groupName = capitalize(translateGroupName(this.props.groupName, this.props.t));
-    const filterTags = this.props.tagItems;
-    const filterItems = Object.keys(filterTags).map((tagItem) => {
-      const onCheck = () => this.props.onFilterCheck(this.props.groupName, tagItem);
-      const availableLessonsForTag = this.props.availableLessonsForTag[tagItem];
-      const tagName = groupNameIsLanguage(this.props.groupName) ? getLanguageName(tagItem) : tagItem;
-
-      return tagName ? (
+      return translatedTagName ? (
         <FilterItem
-          key={tagItem}
-          tagItem={tagName}
-          numberOfLessons={availableLessonsForTag}
-          checked={filterTags[tagItem]}
+          key={tagName}
+          tagName={translatedTagName}
+          numberOfLessons={numberOfLessonsForTag}
+          checked={filterTags[tagName]}
           onCheck={onCheck}
         />
       ) : null;
@@ -31,19 +26,39 @@ const FilterGroup = React.createClass({
 
     return (
       <div className={styles.filterGroup}>
-        <h4>{groupName}</h4>
+        <h4>{translatedGroupName}</h4>
         {filterItems}
       </div>
     );
+  } else {
+    return null;
   }
-});
-
-FilterGroup.propTypes = {
-  groupName: PropTypes.string,
-  tagItems: PropTypes.object,
-  onCheck: PropTypes.func,
-  availableLessonsForTag: PropTypes.object.isRequired,
-  t: PropTypes.func
 };
 
-export default withStyles(styles)(FilterGroup);
+FilterGroup.propTypes = {
+  // ownProps:
+  groupName: PropTypes.string,
+  availableLessonsForTag: PropTypes.object.isRequired,
+  t: PropTypes.func,
+
+  // mapStateToProps:
+  filterTags: PropTypes.object,
+  translatedGroupName: PropTypes.string,
+  
+  // mapDispatchToProps:
+  onFilterCheck: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state, ownProps) => ({
+  filterTags: state.filter[ownProps.groupName],
+  translatedGroupName: translateGroup(ownProps.t, ownProps.groupName)
+});
+
+const mapDispatchToProps = {
+  onFilterCheck
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(FilterGroup));

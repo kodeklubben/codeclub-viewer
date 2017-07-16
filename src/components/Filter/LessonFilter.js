@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {onFilterCheck, resetFilter} from '../../action_creators';
+import {resetFilter} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getAvailableLessons} from '../../selectors/lesson';
@@ -13,16 +13,13 @@ import styles from './LessonFilter.scss';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const LessonFilter =
-({t, availableLessons, onFilterCheck, isStudentMode, language, resetFilter, filter = {}}) => {
-  const filterGroups = Object.keys(filter).map((groupName) => {
-    const tagItems = filter[groupName];
+({t, availableLessons, isStudentMode, language, resetFilter, filterGroupNames}) => {
+  const filterGroups = filterGroupNames.map((groupName) => {
     return (
       <FilterGroup
         key={groupName}
         groupName={groupName}
         availableLessonsForTag={availableLessons}
-        tagItems={tagItems}
-        onFilterCheck={onFilterCheck}
         t={t}
       />
     );
@@ -53,7 +50,7 @@ const LessonFilter =
 };
 
 LessonFilter.propTypes = {
-  filter: PropTypes.object,
+  filterGroupNames: PropTypes.arrayOf(PropTypes.string),
   onFilterCheck: PropTypes.func,
   resetFilter: PropTypes.func,
   isStudentMode: PropTypes.bool,
@@ -66,18 +63,18 @@ LessonFilter.propTypes = {
 function mapStateToProps(state, ownProps) {
   return {
     language: state.language,
-    filter: state.filter,
+    filterGroupNames: Object.keys(state.filter),
     isStudentMode: state.isStudentMode,
     availableLessons: getAvailableLessons(state, ownProps.courseName),
     t: getTranslator(state)
   };
 }
 
+const mapDispatchToProps = {
+  resetFilter
+};
+
 export default connect(
   mapStateToProps,
-  {
-    onFilterCheck,
-    resetFilter
-  }
-
+  mapDispatchToProps
 )(withStyles(styles)(LessonFilter));

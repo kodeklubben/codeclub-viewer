@@ -1,8 +1,9 @@
 /**
- * @param captionPath (string) A dot-separated path to the caption, e.g. 'myPage.firstPanel.btnText'
- * @param replacements (object) Key-value pairs of replacements in the caption,
- *   e.g. cap='{{one}} or {{two}}' and replacement={one:'cat', two:'dog'} gives cap='cat or dog'
- * @returns {*}
+ * @param {object} state
+ * @returns {function} with params (captionPath, replacements), where
+ *   param {string} captionPath A dot-separated path to the caption, e.g. 'myPage.firstPanel.btnText'
+ *   param {object} replacements Key-value pairs of replacements in the caption,
+ *     e.g. cap='{{one}} or {{two}}' and replacement={one:'cat', two:'dog'} gives cap='cat or dog'
  */
 
 export const getTranslator = (state) => {
