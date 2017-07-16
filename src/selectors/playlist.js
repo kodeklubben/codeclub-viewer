@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {getFilteredLessons} from './lesson';
+import {getFilteredAndIndexedLessons} from './lesson';
 import {capitalize} from '../util';
 
 const getPlaylistPaths = (state, courseName = '') => {
@@ -12,7 +12,7 @@ const getPlaylistContext = (state) => state.context.playlistContext;
  * Input props: courseName (string, optional)
  */
 export const getPlaylists = createSelector(
-  [getFilteredLessons, getPlaylistContext, getPlaylistPaths],
+  [getFilteredAndIndexedLessons, getPlaylistContext, getPlaylistPaths],
   (filteredLessons, playlistContext, playlistPaths) => {
     return playlistPaths.reduce((res, path) => {
       

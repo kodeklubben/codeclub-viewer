@@ -56,9 +56,17 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
 
     const courseFrontmatter = courseContext(coursePath).frontmatter;
-    const lessonFrontmatter = lessonContext(path).frontmatter;
+    let lessonFrontmatter = lessonContext(path).frontmatter;
 
     const language = lessonFrontmatter.language;
+
+    if(language){
+      if(lessonFrontmatter.tags){
+        lessonFrontmatter.tags['language'] = language;
+      }else{
+        lessonFrontmatter.tags = {language: [language]};
+      }
+    }
 
     // Inherit tags from course, and override with lessonTags
     const courseTags = cleanseTags(courseFrontmatter.tags, false);
@@ -189,6 +197,23 @@ export function fixNonArrayTagList(tagItems) {
 export function tagsMatchFilter(lessonTags, filter) {
   // lessonTags is e.g. {'tema': ['spill'], 'fag': ['naturfag']}
   // filter is e.g. {'tema': {'spill':false, 'animasjon': true}, 'utstyr': {'ipad': false, 'arduino': true}}}
+
+  // Getting pre-defined OR-tagged groups
+  const OrTaggedGroups = getOrTaggedGroups();
+
+  // Sorts out which OR-tagged groups that have corresponding lessons
+  let OrTags = {};
+  OrTaggedGroups.map(groupName => {
+    OrTags[groupName] = filter[groupName] ? Object.keys(filter[groupName]) : [];
+  });
+  const OrTagsAsArray = Object.keys(OrTags);
+
+  // Keeps track of which tags for each OR-tagged group that is tagged
+  let checkedOrTags = {};
+  OrTagsAsArray.map(groupName => {
+    checkedOrTags[groupName] = OrTags[groupName].filter(tag => filter[groupName][tag]);
+  });
+
   for (const groupName of Object.keys(filter)) { // groupName is e.g. 'tema'
     const filterGroup = filter[groupName]; // the whole filter group, e.g. {'spill':false, 'animasjon': true}
     const tagNames = Object.keys(filter[groupName]); // all tags in this filter group, e.g. ['spill','animasjon']
@@ -198,8 +223,15 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
+    // OR-tests OR-tagged groups
+    if(OrTagsAsArray.indexOf(groupName) !== -1 && checkedOrTags[groupName].length !== 0
+      && checkedOrTags[groupName].filter(tagName => lessonGroup.indexOf(tagName) !== -1).length === 0){
+      return false;
+    }
+    // AND-tests everything else
     for (const checkedFilterTag of checkedTagNames) {
-      if (lessonGroup.indexOf(checkedFilterTag) === -1) { // lessonGroup doesn't contain checkedFilterTag
+      // lessonGroup doesn't contain checkedFilterTag
+      if (OrTagsAsArray.indexOf(groupName) === -1 && lessonGroup.indexOf(checkedFilterTag) === -1) {
         return false;
       }
     }
@@ -213,6 +245,53 @@ export function removeHtmlFileEnding(lessonPage) {
   // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
   return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
 }
+
+/**
+* IMPORTANT:
+* Returns languages defined as available
+* All available languages must be defined here
+* Dummy argument needed as tests does not allow require statements
+* @param {Dummy argument} noUrl
+* @returns {Array or Object}
+*/
+export const getAvailableLanguages = (onlyKeys) => {
+  return onlyKeys ? ['nb', 'nn', 'sv', 'da', 'en'] : {
+    'nb': {
+      name: 'Norsk bokmål',
+      url: require('./assets/graphics/norway.svg')
+    },
+    'nn': {
+      name: 'Norsk nynorsk',
+      url: require('./assets/graphics/norway.svg')
+    },
+    'sv': {
+      name: 'Svenska',
+      url: require('./assets/graphics/sweden.svg')
+    },
+    'da': {
+      name: 'Dansk',
+      url: require('./assets/graphics/denmark.svg')
+    },
+    'en': {
+      name: 'English',
+      url: require('./assets/graphics/english.svg')
+    }
+  };
+};
+
+/**
+* Returns groupNames with tags that should be considered as logical OR
+* in the filter.
+* @returns {Array}
+*/
+export const getOrTaggedGroups = () => {
+  return ['language', 'subject', 'level'];
+};
+
+export const getLanguageName = (tagItem) => {
+  const languages = getAvailableLanguages();
+  return languages[tagItem] ? languages[tagItem].name : undefined;
+};
 
 /**
 * Returns the readmePath of a lesson with the given lessonPath

@@ -31,7 +31,7 @@ const Filter = React.createClass({
 
         if (group[tagItem]){
           return (
-              <ActiveFilterItem key={idx} tagItem={tagItem} onClick={onClick}/>
+              <ActiveFilterItem key={idx} tagItem={tagItem} groupName={groupName} onClick={onClick}/>
           );
         }
       });

@@ -1,3 +1,4 @@
+import {getAvailableLanguages} from '../util';
 import {storeItem} from '../localStorage';
 
 export default function(state='nb', action) {
@@ -11,7 +12,7 @@ export default function(state='nb', action) {
 }
 
 function isLanguageValid(language) {
-  const languages = ['nb','nn','sv','da','en'];
+  const languages = getAvailableLanguages(true);
 
-  return languages.indexOf(language) > -1;
+  return languages.indexOf(language) !== -1;
 }

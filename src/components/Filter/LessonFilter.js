@@ -22,6 +22,7 @@ export const LessonFilter =({t, availableLessons, onFilterCheck, isStudentMode, 
         availableLessonsForTag={availableLessons}
         tagItems={tagItems}
         onFilterCheck={onFilterCheck}
+        t={t}
       />
     );
   });

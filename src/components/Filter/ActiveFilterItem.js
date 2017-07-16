@@ -1,12 +1,14 @@
 import React, {PropTypes} from 'react';
-import {capitalize} from '../../util';
+import {capitalize, getLanguageName} from '../../util';
 import styles from './ActiveFilterItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const ActiveFilterItem = (props) => {
-  const tagItem = capitalize(props.tagItem);
+  let tagItem = props.groupName === 'language' ?
+   getLanguageName(props.tagItem) : props.tagItem;
+  tagItem = capitalize(tagItem);
 
   return (
     <span>

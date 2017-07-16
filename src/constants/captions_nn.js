@@ -82,6 +82,10 @@ export default {
       textline1: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
       textline2: 'Bak kvart val står det kor mange oppgaver som passar til filteret du legg på.'
     },
+    group: {
+      language: 'Språk',
+      tema: 'Tema'
+    },
     removefilter: 'Fjern filter'
   },
   navbar: {

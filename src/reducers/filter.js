@@ -22,23 +22,29 @@ function handleCheckFilter(state, groupName, tagName){
 }
 
 // Set all tags to false
-function resetFilter(state) {
+function resetFilter(state, groupName, tagName) {
   const filterGroups = Object.keys(state);
   return filterGroups.reduce((res, filterGroup) => {
     const tags = state[filterGroup];
     res[filterGroup] = Object.keys(tags).reduce((tagsRes, tag) => ({...tagsRes, [tag]: false}), {});
+    if(groupName && tagName){
+      res[groupName][tagName] = true;
+    }
     return res;
   },{});
 }
 
 export default function(state={}, action) {
+  const groupName = action.payload ? action.payload.groupName : undefined;
+  const tagName = action.payload ? action.payload.tagName : undefined;
+  
   switch(action.type) {
     case 'SET_FILTER':
       return action.payload.filter;
     case 'RESET_FILTER':
-      return resetFilter(state);
+      return resetFilter(state, groupName, tagName);
     case 'FILTER_CHECKED':
-      return handleCheckFilter(state, action.payload.groupName, action.payload.tagName);
+      return handleCheckFilter(state, groupName, tagName);
   }
   return state;
 }
