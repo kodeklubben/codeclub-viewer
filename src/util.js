@@ -258,7 +258,7 @@ export const getAvailableLanguages = () => ['nb', 'nn', 'sv', 'da', 'en', 'hr'];
 * @returns {Array}
 */
 export const getOrTaggedGroups = () => {
-  return ['language', 'subject', 'level'];
+  return ['language', 'subject', 'grade'];
 };
 
 /**
