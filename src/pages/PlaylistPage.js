@@ -32,7 +32,8 @@ export const PlaylistPage = React.createClass({
     this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
   },
   componentDidMount() {
-    document.title = capitalize(this.props.params.course) + ' | Kodeklubben';
+    document.title = this.props.params.course === ''
+    ? 'Kurs' : capitalize(this.props.params.course) + ' | Kodeklubben';
   },
   render() {
     const {
