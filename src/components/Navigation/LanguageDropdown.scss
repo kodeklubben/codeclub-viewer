@@ -9,11 +9,10 @@ $space-between-text-and-flag: 10px;
 }
 
 .onlyFlag {
-  margin-right: $flag-width + $space-between-text-and-flag;
-  
   @media (max-width: $screen-xs-max) {
     display: none;
   }
+  margin-right: $flag-width + $space-between-text-and-flag;
 }
 
 .flag {
