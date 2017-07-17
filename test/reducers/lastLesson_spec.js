@@ -6,7 +6,7 @@ import reducer from '../../src/reducers/lastLesson';
 describe('lastLesson reducer', () => {
   describe('SET_LASTLESSON', () => {
     it('Should set last lesson in state to empty string', () => {
-      const initialState = '';
+      const initialState = '/scratch/astrokatt/astrokatt';
       const action = {
         type: 'SET_LASTLESSON',
         path: ''
@@ -41,7 +41,7 @@ describe('lastLesson reducer', () => {
 
       deepFreeze(initialState);
       deepFreeze(action);
-      const nextState = initialState;
+      const nextState = reducer(initialState);
 
       expect(nextState).to.equal(initialState);
     });
@@ -68,9 +68,8 @@ describe('lastLesson reducer', () => {
 
       deepFreeze(initialState);
       deepFreeze(action);
-      const nextState = () =>{ throw new TypeError(reducer(initialState, action)); };
 
-      expect(nextState).to.throw(TypeError);
+      expect(() => reducer(initialState, action)).to.throw(TypeError);
     });
 
     it('Should set last lesson in state to path regardless of initialState', () => {
