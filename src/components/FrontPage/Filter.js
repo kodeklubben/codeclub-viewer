@@ -30,7 +30,6 @@ const Filter = React.createClass({
         {/*Filter mobile*/}
         <Col smHidden mdHidden lgHidden>
           <FilterLabels t={t}/>
-          <br/>
           <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
             onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
             <Glyphicon glyph={this.state.showMobileFilter ? 'chevron-down' : 'chevron-right'}/>
