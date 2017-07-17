@@ -116,6 +116,24 @@ export function getCourseInfoMarkup(courseName, language) {
   return null;
 }
 
+export function getLessonIntro(lesson) {
+  let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
+  let text, picture = '';
+  lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
+  const p = lessonContent.indexOf('<p>');
+  const closingP = lessonContent.indexOf('</p>');
+  const img = lessonContent.indexOf('<img');
+  const closingFig = lessonContent.indexOf('</figure');
+  if (p < closingP) {
+    text = lessonContent.substring(p, closingP);
+    if (text.length > 300) {
+      text = lessonContent.substring(p, 300) + '...';
+    }
+    picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';    
+  }
+  return picture + text;
+}
+
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
