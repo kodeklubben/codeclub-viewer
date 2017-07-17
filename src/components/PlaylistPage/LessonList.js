@@ -4,13 +4,17 @@ import {LessonItemContainer} from './LessonItem';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
-  
+import styles from './LessonList.scss';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+
 const LessonList = React.createClass({
   render() {
     const {lessons, level, t} = this.props;
     return (
       <div id={this.props.id}>
-        <h3><LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}</h3>
+        <h3 className={styles.row}>
+          <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
+        </h3>
         <ListGroup>
           {lessons.map((lesson, idx) =>
             lesson.indexed ?
@@ -35,4 +39,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(LessonList);
+export default connect(mapStateToProps)(withStyles(styles)(LessonList));

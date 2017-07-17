@@ -5,12 +5,12 @@ import styles from './PlaylistPage.scss';
 
 import {getFilteredAndIndexedLessons, getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
-//import {getPlaylists} from '../selectors/playlist';
+import {getPlaylists} from '../selectors/playlist';
 
 import Filter from '../components/FrontPage/Filter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
-//import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
+import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import HeadRow from '../components/PlaylistPage/HeadRow';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
@@ -34,7 +34,7 @@ export const PlaylistPage = React.createClass({
     const {
       lessons,
       lessonsByLevel,
-      /*playlists,*/
+      playlists,
       t,
       isStudentMode
     } = this.props;
@@ -50,7 +50,7 @@ export const PlaylistPage = React.createClass({
 
     const playlistsAndLessons =
       <div>
-        {/*<PlaylistNavigation playlists={playlists}/>*/}
+        <PlaylistNavigation playlists={playlists}/>
         {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
       </div>;
 
@@ -110,7 +110,7 @@ PlaylistPage.propTypes = {
   isStudentMode: PropTypes.bool,
   lessons: PropTypes.object.isRequired,
   lessonsByLevel: PropTypes.object.isRequired,
-  //playlists: PropTypes.object.isRequired,
+  playlists: PropTypes.object.isRequired,
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }),
@@ -123,7 +123,7 @@ function mapStateToProps(state, props) {
     isStudentMode: state.isStudentMode,
     lessons: getFilteredAndIndexedLessons(state, course),
     lessonsByLevel: getLessonsByLevel(state, course),
-    //playlists: getPlaylists(state, course),
+    playlists: getPlaylists(state, course),
     t: getTranslator(state)
   };
 }
