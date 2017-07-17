@@ -37,8 +37,8 @@ export const LessonItem = React.createClass({
         <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
           {levelIcon}
           <div className={styles.title}>{lesson.title}</div>
-          {instructionBtn}
           &nbsp;<Glyphicon glyph="new-window"/>
+          {instructionBtn}
         </ListGroupItem>
         :
         <LinkContainer to={lesson.path}>
