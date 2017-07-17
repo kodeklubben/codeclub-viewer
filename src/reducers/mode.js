@@ -1,3 +1,9 @@
+/*
+  Example state:
+
+  isStudentMode: true
+ */
+
 import {storeItem} from '../localStorage';
 
 export default function(state=true, action) {

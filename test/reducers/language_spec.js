@@ -9,7 +9,7 @@ describe('language reducer', () => {
       const initialState = 'sv';
       const action = {
         type: 'SET_LANGUAGE',
-        payload: 'nn'
+        language: 'nn'
       };
 
       deepFreeze(initialState);
