@@ -129,7 +129,7 @@ export function getLessonIntro(lesson) {
     if (text.length > 300) {
       text = lessonContent.substring(p, 300) + '...';
     }
-    picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';    
+    picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
   }
   return picture + text;
 }
@@ -269,7 +269,7 @@ export function removeHtmlFileEnding(lessonPage) {
 * All available languages must be defined here
 * @returns {Array} An array of available languages
 */
-export const getAvailableLanguages = () => ['nb', 'nn', 'sv', 'da', 'en', 'hr'];
+export const getAvailableLanguages = () => ['nb', 'nn', 'sv', 'da', 'en'];
 
 /**
 * Returns groupNames with tags that should be considered as logical OR in the filter.
