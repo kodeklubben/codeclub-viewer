@@ -1,33 +1,26 @@
 import React, {PropTypes} from 'react';
-import {capitalize} from '../../util';
 import styles from './FilterItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-const FilterItem = React.createClass({
-  render(){
-    const tagItem = capitalize(this.props.tagItem);
-    const numberOfLessons = this.props.numberOfLessons;
-
-
-    return (
-      <div className="checkbox">
-        <label className={styles.label}>
-          <input type="checkbox"
-                 checked={this.props.checked}
-                 onChange={this.props.onCheck}
-          />
-          <span className={numberOfLessons ? styles.lessons : styles.noLessons}> {tagItem} ({numberOfLessons}) </span>
-        </label>
-      </div>
-    );
-  }
-});
+const FilterItem = ({tagName, checked, onCheck, numberOfLessons}) => {
+  return (
+    <div className="checkbox">
+      <label className={styles.label}>
+        <input type="checkbox"
+               checked={checked}
+               onChange={onCheck}
+        />
+        <span className={numberOfLessons ? styles.lessons : styles.noLessons}> {tagName} ({numberOfLessons}) </span>
+      </label>
+    </div>
+  );
+};
 
 FilterItem.propTypes = {
-  tagItem: PropTypes.string,
+  tagName: PropTypes.string.isRequired,
   checked: PropTypes.bool,
-  onCheck: PropTypes.func,
-  numberOfLessons: PropTypes.number
+  onCheck: PropTypes.func.isRequired,
+  numberOfLessons: PropTypes.number.isRequired
 };
 
 export default withStyles(styles)(FilterItem);

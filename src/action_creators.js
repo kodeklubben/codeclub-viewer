@@ -10,15 +10,15 @@ export function setLessons(lessons) {
 export function setFilter(filter) {
   return {
     type: 'SET_FILTER',
-    payload: {
-      filter
-    }
+    filter
   };
 }
 
-export function resetFilter() {
+export function resetFilter(groupKey, tagKey) {
   return {
-    type: 'RESET_FILTER'
+    type: 'RESET_FILTER',
+    groupKey,
+    tagKey
   };
 }
 
@@ -32,13 +32,11 @@ export function setContext(contextName, context) {
   };
 }
 
-export function onFilterCheck(groupName, tagName) {
+export function onFilterCheck(groupKey, tagKey) {
   return {
     type: 'FILTER_CHECKED',
-    payload: {
-      groupName,
-      tagName
-    }
+    groupKey,
+    tagKey
   };
 }
 
@@ -70,7 +68,7 @@ export function setMode(mode) {
 export function setLanguage(language) {
   return {
     type: 'SET_LANGUAGE',
-    payload: language
+    language
   };
 }
 
@@ -78,5 +76,26 @@ export function setWelcomeBox(welcomeBox) {
   return {
     type: 'SET_WELCOMEBOX',
     payload: welcomeBox
+  };
+}
+
+export function setCheckbox(path, hash, value) {
+  return {
+    type: 'SET_CHECKBOX',
+    payload: {
+      path,
+      hash,
+      value
+    }
+  };
+}
+
+export function setCheckboxes(path, checkboxes) {
+  return {
+    type: 'SET_CHECKBOXES',
+    payload: {
+      path,
+      checkboxes
+    }
   };
 }

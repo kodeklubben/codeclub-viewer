@@ -1,8 +1,5 @@
 @import '../../styles/variables';
 
-$flag-width: 30px;
-$flag-height: 20px;
-$space-between-text-and-flag: 10px;
 $logo-height: 127px;
 $widget-height: 50px;
 
@@ -118,16 +115,6 @@ $widget-height: 50px;
 .navContainer {
   background-color: $lkk-dark-grey;
   padding: 0 20px;
-}
-
-.language {
-  margin-right: $flag-width + $space-between-text-and-flag;
-}
-
-.flag {
-  width: $flag-width;
-  height: $flag-height;
-  float: right;
 }
 
 .logo {
