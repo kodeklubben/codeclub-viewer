@@ -36,16 +36,21 @@ store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
-store.dispatch(setFilter(getTags(lessonContext, courseContext)));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
 const initialLanguage = loadFromLocalStorage('language', 'nb');
 const initialLastLesson = loadFromLocalStorage('lastLesson', '');
+
 store.dispatch(setMode(initialMode));
 store.dispatch(setWelcomeBox(initialWelcomeBox));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setLastLesson(initialLastLesson));
+
+let filter = getTags(lessonContext, courseContext);
+filter.language[initialLanguage] = true;
+
+store.dispatch(setFilter(filter));
 
 for (let path of Object.keys(lessons)) {
   const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), {});
