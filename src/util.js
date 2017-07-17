@@ -60,11 +60,13 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 
     const language = lessonFrontmatter.language;
 
-    if(language){
-      if(lessonFrontmatter.tags){
-        lessonFrontmatter.tags['language'] = language;
-      }else{
-        lessonFrontmatter.tags = {language: [language]};
+    if (language){
+      if (lessonFrontmatter.indexed !== false) {
+        if (lessonFrontmatter.tags) {
+          lessonFrontmatter.tags['language'] = language;
+        } else {
+          lessonFrontmatter.tags = {language: [language]};
+        }
       }
     }
 
