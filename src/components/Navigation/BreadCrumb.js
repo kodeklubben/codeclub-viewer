@@ -5,20 +5,21 @@ import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {capitalize} from '../../util';
 
-export function BreadCrumb(props) {
-  const params = props.params;
+export function BreadCrumb({params, iconContext, lessonLevel, lessonTitle}) {
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
   const courseLink = params.course ?
-    <NavLink to={`/${params.course}`}>
-      <img className={styles.courseIcon} src={props.iconContext('./' + params.course + '/logo-black.png')}/>
+    <NavLink to={`/${params.course}`} className={styles.lessonLink}>
+      <img className={styles.courseIcon} src={iconContext('./' + params.course + '/logo-black.png')}/>
+      <span className={styles.lesson}>{capitalize(params.course)}</span>
     </NavLink> : null;
   const lessonLink = params.course && params.lesson && params.file ?
     <NavLink to={`/${params.course}/${params.lesson}/${params.file}`} className={styles.lessonLink}>
-      <LevelIcon level={props.lessonLevel}/>
-      <span className={styles.lesson}>{props.lessonTitle}</span>
+      <LevelIcon level={lessonLevel}/>
+      <span className={styles.lesson}>{lessonTitle}</span>
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
     {homeLink}

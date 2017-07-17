@@ -11,12 +11,12 @@ import {getTranslator} from '../../selectors/translate';
 const availableLanguages = getAvailableLanguages();
 const modes = ['student', 'teacher'];
 
-const LanguageItem = ({language, t}) => {
+const LanguageItem = ({language, t, style}) => {
   // Note that the block with "float" (the flag) must be first in the containing div
   return (
     <div>
       <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/>
-      <div className={styles.language}>{translateTag(t, 'language', language)}</div>
+      <div className={styles[style]}>{translateTag(t, 'language', language)}</div>
     </div>
   );
 };
@@ -31,7 +31,7 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
                     noCaret
                     pullRight
                     bsStyle={'language-' + mode}
-                    title={<LanguageItem language={language} t={t}/>}
+                    title={<LanguageItem style={'onlyFlag'} language={language} t={t}/>}
                     onSelect={(eventKey) => {
                       resetFilter('language', eventKey);
                       setLanguage(eventKey);
@@ -39,7 +39,7 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
       {
         availableLanguages.map(k =>
           <MenuItem key={k} eventKey={k} active={language === k}>
-            <LanguageItem language={k} t={t}/>
+            <LanguageItem style={'language'} language={k} t={t}/>
           </MenuItem>
         )
       }
