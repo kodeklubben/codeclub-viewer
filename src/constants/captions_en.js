@@ -44,7 +44,8 @@ export default {
              'programming, where Python / Web / Processing is the most common to proceed with afterwards.',
       link2: 'Learn more about running a code club'
     },
-    showhidefilter: 'Show/hide filter'
+    showhidefilter: 'Show/hide filter',
+    forumbutton: 'Go to forum'
   },
   playlist: {
     lessons: 'Lessons',
