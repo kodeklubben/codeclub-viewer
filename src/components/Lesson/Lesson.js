@@ -103,6 +103,8 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
+    document.title = this.getTitle() === ''
+      ? 'Oppgave' : this.getTitle() + ' | Kodeklubben';
     const {path, checkboxes, setCheckbox} = this.props;
     onclickAndSetCheckboxes(path, checkboxes, setCheckbox);
     renderToggleButtons();

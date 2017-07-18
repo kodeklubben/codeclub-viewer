@@ -9,14 +9,16 @@ import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
 
 export const  FrontPage = React.createClass({
-
+  componentDidMount() {
+    document.title = 'Kodeklubben';
+  },
   render() {
     const {isStudentMode} = this.props;
     return (
       <Grid fluid={true}>
         {/*WelcomeBox and TeacherInfobox*/}
         {isStudentMode ? <WelcomeBox /> : <TeacherInfobox />}
-        
+
         <hr/>
         {/* Filter and courses */}
         <Row>
