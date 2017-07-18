@@ -74,7 +74,21 @@ const Lesson = React.createClass({
     return this.props.lesson.frontmatter.level || 0;
   },
   getAuthor() {
-    return this.props.lesson.frontmatter.author || '';
+    let author = this.props.lesson.frontmatter.author || '';
+    if (author.indexOf('(') !== -1) {
+      author = author.substring(0, author.indexOf('('));
+    }
+    return author || '';
+  },
+  getLink() {
+    const author = this.props.lesson.frontmatter.author || '';
+    if (author.indexOf('//') !== -1) {
+      const link =  author.substring(author.indexOf('//') + 2, author.indexOf(')'));
+      return link;
+    }
+    else {
+      return '';
+    }
   },
   getLanguage() {
     return this.props.lesson.frontmatter.language || '';
@@ -123,7 +137,10 @@ const Lesson = React.createClass({
           <LevelIcon level={this.getLevel()}/>
           {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
         </h1>
-        {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
+        {this.getLink() !== '' ?
+          <p><a href={'http://' + this.getLink()} target='_blank'>{this.getAuthor()}</a></p> :
+          this.getAuthor() !== '' ?
+          <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
         {instructionBtn}
         <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
