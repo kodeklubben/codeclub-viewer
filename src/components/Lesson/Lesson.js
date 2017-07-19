@@ -13,11 +13,11 @@ import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, getReadmepathFromLessonpath} from '../../util';
+import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage} from '../../action_creators';
+import {setModeTeacher, setLanguage, setCheckbox} from '../../action_creators';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -39,6 +39,32 @@ const LessonButton = ({path, lessons, t}) => {
   const lessonPath = '/' + path;
   const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
+};
+
+const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
+  const labels = document.getElementsByTagName('label');
+  for (let label of labels) {
+    const input = document.getElementById(label.htmlFor);
+    if (input && input.type === 'checkbox') {
+      let hash = hashCode(label.textContent);
+      input.checked = !!checkboxes[hash];
+      setCheckbox(path, hash, !!checkboxes[hash]);
+      input.onclick = (e) => {
+        setCheckbox(path, hash, !!e.target.checked);
+      };
+    }
+  }
+};
+
+const renderToggleButtons = () => {
+  const nodes = document.getElementsByClassName('togglebutton');
+  for (let node of nodes) {
+    const strongNode = node.getElementsByTagName('strong')[0];
+    const buttonText = strongNode ? strongNode.textContent : 'Hint';
+    const hiddenNode = node.getElementsByTagName('hide')[0];
+    const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
+    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
+  }
 };
 
 const Lesson = React.createClass({
@@ -73,19 +99,14 @@ const Lesson = React.createClass({
     this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
 
     if(this.props.isReadme) this.props.setModeTeacher();
-    /*Comment this in when language is implemented
-    Changes the language state to the language defined in the current lesson or readme-file*/
+
+    //Changes the language state to the language defined in the current lesson or readme-file
     //this.setLanguage();
   },
   componentDidMount() {
-    const nodes = document.getElementsByClassName('togglebutton');
-    for (let node of nodes) {
-      const strongNode = node.getElementsByTagName('strong')[0];
-      const buttonText = strongNode ? strongNode.textContent : 'Hint';
-      const hiddenNode = node.getElementsByTagName('hide')[0];
-      const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-      ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
-    }
+    const {path, checkboxes, setCheckbox} = this.props;
+    onclickAndSetCheckboxes(path, checkboxes, setCheckbox);
+    renderToggleButtons();
   },
   componentWillUnmount() {
     const nodes = document.getElementsByClassName('togglebutton');
@@ -132,7 +153,9 @@ Lesson.propTypes = {
   setModeTeacher: PropTypes.func,
   setLanguage: PropTypes.func,
   isReadme: PropTypes.bool,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  setCheckbox: PropTypes.func,
+  checkboxes: PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -140,13 +163,15 @@ const mapStateToProps = (state, ownProps) => ({
   isStudentMode: state.isStudentMode,
   lessons: state.lessons,
   language: state.language,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1
+  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1,
+  checkboxes: state.checkboxes[createCheckboxesKey(ownProps.path)] || {}
 });
 
 export default connect(
   mapStateToProps,
   {
     setModeTeacher,
-    setLanguage
+    setLanguage,
+    setCheckbox
   }
   )(withStyles(styles, contentStyles)(Lesson));

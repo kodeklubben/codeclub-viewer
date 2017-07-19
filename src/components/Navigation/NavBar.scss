@@ -1,106 +1,105 @@
 @import '../../styles/variables';
 
-$flag-width: 30px;
-$flag-height: 20px;
-$space-between-text-and-flag: 10px;
 $logo-height: 127px;
 $widget-height: 50px;
 
-:global {
-  .navbar > .container-fluid {
-    padding: 0;
-    & .navbar-header {
-      margin: 0;
-    }
-    & .navbar-collapse {
-      margin: 0;
+.navbarWrapper {
+  :global {
+    .navbar > .container-fluid {
       padding: 0;
-    }
-  }
-
-  .navbar-nav {
-    margin: 0;
-  }
-
-  .navbar-brand {
-    padding: 0 10px;
-  }
-
-  .navbar-default {
-    background-color: $lkk-offwhite;
-    & .navbar-nav {
-      background-color: transparent;
-      & > li > a {
-        color: $lkk-grey;
-        &:focus {
-          color: $lkk-green;
-          background-color: transparent;
-        }
-        &:hover {
-          color: $lkk-green;
-          background-color: transparent;
-        }
+      & .navbar-header {
+        margin: 0;
       }
-      & > .active > a {
-        &,
-        &:focus,
-        &:hover {
-          color: $lkk-green;
-          background-color: transparent;
-        }
+      & .navbar-collapse {
+        margin: 0;
+        padding: 0;
       }
     }
-  }
 
-  .navbar-toggle.navbar-toggle { // write twice to increase specificity
-    float: none;
-    border: 0;
-    border-radius: 0;
-    margin: 0;
-    width: 100%;
-    color: white;
-    font-size: 1.2em;
-    &,
-    &:focus {
-      background-color: $lkk-dark-grey;
+    .navbar-nav {
+      margin: 0;
     }
-    &:hover {
-      background-color: $lkk-green;
-    }
-    & .icon-bar {
-      background-color: white;
-    }
-  }
 
-  @media (max-width: $screen-xs-max) {
-    .navbar-header {
-      text-align: center;
-    }
     .navbar-brand {
-      float: none;
-      display: inline-block;
-      padding: 0;
+      padding: 0 10px;
     }
+
     .navbar-default {
+      background-color: $lkk-offwhite;
       & .navbar-nav {
-        background-color: $lkk-dark-grey;
+        background-color: transparent;
         & > li > a {
-          color: white;
+          color: $lkk-grey;
           &:focus {
-            color: white;
-            background-color: $lkk-dark-grey;
+            color: $lkk-green;
+            background-color: transparent;
           }
           &:hover {
-            color: white;
-            background-color: $lkk-green;
+            color: $lkk-green;
+            background-color: transparent;
           }
         }
         & > .active > a {
           &,
           &:focus,
           &:hover {
+            color: $lkk-green;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+
+    .navbar-toggle.navbar-toggle { // write twice to increase specificity
+      float: none;
+      border: 0;
+      border-radius: 0;
+      margin: 0;
+      width: 100%;
+      color: white;
+      font-size: 1.2em;
+      &,
+      &:focus {
+        background-color: $lkk-dark-grey;
+      }
+      &:hover {
+        background-color: $lkk-green;
+      }
+      & .icon-bar {
+        background-color: white;
+      }
+    }
+
+    @media (max-width: $screen-xs-max) {
+      .navbar-header {
+        text-align: center;
+      }
+      .navbar-brand {
+        float: none;
+        display: inline-block;
+        padding: 0;
+      }
+      .navbar-default {
+        & .navbar-nav {
+          background-color: $lkk-dark-grey;
+          & > li > a {
             color: white;
-            background-color: $lkk-green;
+            &:focus {
+              color: white;
+              background-color: $lkk-dark-grey;
+            }
+            &:hover {
+              color: white;
+              background-color: $lkk-green;
+            }
+          }
+          & > .active > a {
+            &,
+            &:focus,
+            &:hover {
+              color: white;
+              background-color: $lkk-green;
+            }
           }
         }
       }
@@ -116,16 +115,6 @@ $widget-height: 50px;
 .navContainer {
   background-color: $lkk-dark-grey;
   padding: 0 20px;
-}
-
-.language {
-  margin-right: $flag-width + $space-between-text-and-flag;
-}
-
-.flag {
-  width: $flag-width;
-  height: $flag-height;
-  float: right;
 }
 
 .logo {

@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {setModeStudent, setModeTeacher, setLanguage} from '../../action_creators';
+import {setModeStudent, setModeTeacher} from '../../action_creators';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -11,71 +11,11 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
+import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
-
 import styles from './NavBar.scss';
 
-const languages = ['nb', 'nn', 'sv', 'da', 'en'];
 const modes = ['student', 'teacher'];
-
-function LanguageItem(props) {
-  const nativeLanguages = {
-    'nb': {
-      name: 'Norsk bokmål',
-      url: require('../../assets/graphics/norway.svg')
-    },
-    'nn': {
-      name: 'Norsk nynorsk',
-      url: require('../../assets/graphics/norway.svg')
-    },
-    'sv': {
-      name: 'Svenska',
-      url: require('../../assets/graphics/sweden.svg')
-    },
-    'da': {
-      name: 'Dansk',
-      url: require('../../assets/graphics/denmark.svg')
-    },
-    'en': {
-      name: 'English',
-      url: require('../../assets/graphics/english.svg')
-    }    
-  };
-  // Note that the block with "float" (the flag) must be first in the containing div
-  return (
-    <div>
-      <img className={styles.flag} src={nativeLanguages[props.language].url}/>
-      <div className={styles.language}>{nativeLanguages[props.language].name}</div>
-    </div>
-  );
-}
-LanguageItem.propTypes = {
-  language: PropTypes.oneOf(languages).isRequired
-};
-
-function LanguageDropdown(props) {
-  return <div className={styles.gadgetContainer}>
-    <DropdownButton id='language-dropdown'
-                    noCaret
-                    pullRight
-                    bsStyle={'language-' + props.mode}
-                    title={<LanguageItem language={props.language}/>}
-                    onSelect={(eventKey) => props.setLanguage(eventKey)}>
-      {
-        languages.map(k =>
-          <MenuItem key={k} eventKey={k} active={props.language === k}>
-            <LanguageItem language={k}/>
-          </MenuItem>
-        )
-      }
-    </DropdownButton>
-  </div>;
-}
-LanguageDropdown.propTypes = {
-  mode: PropTypes.oneOf(modes).isRequired,
-  language: PropTypes.oneOf(languages).isRequired,
-  setLanguage: PropTypes.func.isRequired
-};
 
 function ModeDropdown(props) {
   const texts = {'student': props.t('general.student'), 'teacher': props.t('general.teacher')};
@@ -136,9 +76,9 @@ function LkkNav(props) {
 
 function Gadgets(props) {
   const mode = modes[props.isStudentMode ? 0 : 1];
-  // NOTE: Commenting out LanguageDropdown and SearchBox until these are implemented
+  // NOTE: Commenting out SearchBox until it is implemented
   return <div className={styles.gadgetGroup}>
-    <LanguageDropdown mode={mode} language={props.language} setLanguage={props.setLanguage}/>
+    {<LanguageDropdown mode={mode}/>}
     <ModeDropdown setModeStudent={props.setModeStudent}
                   setModeTeacher={props.setModeTeacher}
                   mode={mode}
@@ -147,8 +87,6 @@ function Gadgets(props) {
   </div>;
 }
 Gadgets.propTypes = {
-  language: PropTypes.oneOf(languages),
-  setLanguage: PropTypes.func,
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
   isStudentMode: PropTypes.bool
@@ -169,26 +107,26 @@ function MenuToggle(props) {
 export function NavBar(props) {
   const widgetClass = props.isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
-    <Navbar fluid={true} staticTop>
-      <Navbar.Header>
-        <LkkBrand/>
-        <Clearfix visibleXsBlock/>
-        <MenuToggle t={props.t}/>
-      </Navbar.Header>
-      <Navbar.Collapse>
-        <div className={styles.spacing}/>
-        <LkkNav t={props.t}/>
-      </Navbar.Collapse>
-      <div className={styles.widgets + ' ' + widgetClass}>
-        <BreadCrumb params={props.params}/>
-        <Gadgets language={props.language}
-                 setLanguage={props.setLanguage}
-                 setModeStudent={props.setModeStudent}
-                 setModeTeacher={props.setModeTeacher}
-                 isStudentMode={props.isStudentMode}
-                 t={props.t}/>
-      </div>
-    </Navbar>
+    <div className={styles.navbarWrapper}>
+      <Navbar fluid={true} staticTop>
+        <Navbar.Header>
+          <LkkBrand/>
+          <Clearfix visibleXsBlock/>
+          <MenuToggle t={props.t}/>
+        </Navbar.Header>
+        <Navbar.Collapse>
+          <div className={styles.spacing}/>
+          <LkkNav t={props.t}/>
+        </Navbar.Collapse>
+        <div className={styles.widgets + ' ' + widgetClass}>
+          <BreadCrumb params={props.params}/>
+          <Gadgets setModeStudent={props.setModeStudent}
+                   setModeTeacher={props.setModeTeacher}
+                   isStudentMode={props.isStudentMode}
+                   t={props.t}/>
+        </div>
+      </Navbar>
+    </div>
   );
 }
 NavBar.propTypes = {
@@ -197,8 +135,6 @@ NavBar.propTypes = {
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
-  language: PropTypes.oneOf(languages).isRequired,
-  setLanguage: PropTypes.func,
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
   isStudentMode: PropTypes.bool,
@@ -208,7 +144,6 @@ NavBar.propTypes = {
 function mapStateToProps(state) {
   return {
     isStudentMode: state.isStudentMode,
-    language: state.language,
     t: getTranslator(state)
   };
 }
@@ -216,7 +151,6 @@ function mapStateToProps(state) {
 export const NavBarContainer = connect(
   mapStateToProps,
   {
-    setLanguage,
     setModeStudent,
     setModeTeacher
   }

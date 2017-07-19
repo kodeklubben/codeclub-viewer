@@ -1,11 +1,22 @@
+/*
+  Example state:
+
+  isStudentMode: true
+ */
+
+import {storeItem} from '../localStorage';
+
 export default function(state=true, action) {
+  const isStudentMode = 'isStudentMode';
   switch(action.type) {
     case 'SET_MODE_STUDENT':
-      return true;
+      return storeItem(isStudentMode, true);
     case 'SET_MODE_TEACHER':
-      return false;
+      return storeItem(isStudentMode, false);
     case 'CHANGE_MODE':
-      return !state;
+      return storeItem(isStudentMode, !state);
+    case 'SET_MODE':
+      return storeItem(isStudentMode, action.payload);
   }
 
   return state;

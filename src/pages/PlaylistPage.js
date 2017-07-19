@@ -40,7 +40,7 @@ export const PlaylistPage = React.createClass({
       lessons,
       lessonsByLevel,
       playlists,
-      t,
+      t
     } = this.props;
     const levels = Object.keys(lessonsByLevel);
     const lessonLists = levels.map((level, idx) => (
@@ -50,10 +50,7 @@ export const PlaylistPage = React.createClass({
     ));
     const showLevelNavigationDesktop = Object.keys(lessons).length > 15 && levels.length > 1;
 
-    const filter =
-      <div className={styles.filter}>
-        <Filter isStudentMode={isStudentMode}/>
-      </div>;
+    const filter = <Filter courseName={params.course} isStudentMode={isStudentMode}/>;
 
     const playlistsAndLessons =
       <div>
@@ -89,7 +86,7 @@ export const PlaylistPage = React.createClass({
       <Row>
         {/*Filter desktop*/}
         <Col xsHidden>
-          <Col sm={3}>{filter}</Col>
+          <Col sm={3} className={styles.filter}>{filter}</Col>
           <Col sm={6}>
             {this.state.showCourseInfo ? courseInfo : null}
             {playlistsAndLessons}

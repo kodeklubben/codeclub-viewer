@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
+import Link from 'react-router/lib/Link';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';

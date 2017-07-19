@@ -104,7 +104,7 @@ function getPlugins() {
     new HtmlWebpackPlugin({
       title: 'Kodeklubben',
       template: 'src/index-template.ejs',
-      inject: 'body',
+      inject: false,
       chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
     }),
     // Create template for the static non-root index.html files
@@ -114,7 +114,7 @@ function getPlugins() {
       appcss: '<%= appCss %>',
       appcontent: '<%= appHtml %>',
       template: 'src/index-template.ejs',
-      inject: 'body',
+      inject: false,
       chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
     }),
     new HtmlWebpackPlugin({
