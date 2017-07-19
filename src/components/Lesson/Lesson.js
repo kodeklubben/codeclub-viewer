@@ -42,10 +42,10 @@ const LessonButton = ({path, lessons, t}) => {
 
 const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = document.getElementsByTagName('label');
-  for (let label of labels) {
-    const input = document.getElementById(label.htmlFor);
+  for (let i = 0; i < labels.length; i++) {
+    const input = document.getElementById([labels[i].htmlFor]);
     if (input && input.type === 'checkbox') {
-      let hash = hashCode(label.textContent);
+      let hash = hashCode(labels[i].textContent);
       input.checked = !!checkboxes[hash];
       setCheckbox(path, hash, !!checkboxes[hash]);
       input.onclick = (e) => {
@@ -57,12 +57,12 @@ const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
 
 const renderToggleButtons = () => {
   const nodes = document.getElementsByClassName('togglebutton');
-  for (let node of nodes) {
-    const strongNode = node.getElementsByTagName('strong')[0];
+  for (let i = 0; i < nodes.length; i++) {
+    const strongNode = nodes[i].getElementsByTagName('strong')[0];
     const buttonText = strongNode ? strongNode.textContent : 'Hint';
-    const hiddenNode = node.getElementsByTagName('hide')[0];
+    const hiddenNode = nodes[i].getElementsByTagName('hide')[0];
     const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
+    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,nodes[i]);
   }
 };
 
@@ -109,8 +109,8 @@ const Lesson = React.createClass({
   },
   componentWillUnmount() {
     const nodes = document.getElementsByClassName('togglebutton');
-    for (let node of nodes) {
-      ReactDOM.unmountComponentAtNode(node);
+    for (let i = 0; i < nodes.length; i++) {
+      ReactDOM.unmountComponentAtNode(nodes[i]);
     }
   },
   render() {
