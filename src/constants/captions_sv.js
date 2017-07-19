@@ -72,7 +72,8 @@ export default {
         sourcecode: 'Oppgavens kildekode',
         info: 'Beskriv ditt problem her. Ta gjerne med operativsystem, nettleser og eventuell kode du har skrevet.'
       },
-      showcodebutton: 'Vis koden og fiks selv'
+      showcodebutton: 'Vis koden og fiks selv',
+      forumbutton: 'Gå til forumet'
     }
   },
   filter: {

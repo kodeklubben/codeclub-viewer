@@ -73,7 +73,8 @@ export default {
         info: 'Beskriv problemet ditt her. Ta gjerne med operativsystemet ditt, nettlesaren din ' +
               'og eventuell kode du har skrive.'
       },
-      showcodebutton: 'Vis koden og fiks det sjølv'
+      showcodebutton: 'Vis koden og fiks det sjølv',
+      forumbutton: 'Gå til forumet'
     }
   },
   filter: {
