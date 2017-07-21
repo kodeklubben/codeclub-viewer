@@ -11,7 +11,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 export const FilterGroup = React.createClass({
   getInitialState() {
     return {
-      showFilterTags: true
+      showFilterTags: false
     };
   },
   changeState() {
@@ -39,11 +39,12 @@ export const FilterGroup = React.createClass({
       });
       return (
         <div className={styles.filterGroup}>
-          <h4 className={styles.name} onClick={() => this.changeState()}>
-            <Glyphicon className={styles.glyph} glyph={!showFilterTags ? 'chevron-right' : 'chevron-down'}/>{groupName}
+          <h4 className={styles.name} onClick={this.changeState}>
+            <Glyphicon className={styles.glyph} glyph={!showFilterTags ? 'chevron-right' : 'chevron-down'}/>
+            {groupName}
           </h4>
           <Collapse in={showFilterTags}>
-            <div>{filterItems}</div>
+            <div className={styles.filterItems}>{filterItems}</div>
           </Collapse>
         </div>
       );

@@ -9,6 +9,10 @@
   }
 }
 
+.filterItems {
+  overflow: hidden; // Avoid margin collapse
+}
+
 .name {
   &:hover {
     cursor: pointer;
@@ -20,4 +24,5 @@
     cursor: pointer;
   }
   font-size: 0.8em;
+  padding-right: 0.5em
 }
