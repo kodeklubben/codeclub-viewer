@@ -124,6 +124,7 @@ $widget-height: 50px;
 .spacing {
   width: 100%;
   height: $logo-height - $widget-height;
+  
   @media (max-width: $screen-xs-max) {
     height: 0;
     width: 0;

@@ -23,6 +23,7 @@
 
 .lesson {
   margin-left: 7px;
+  
   @media (max-width: $screen-xs-max) {
     display: none;
   }
