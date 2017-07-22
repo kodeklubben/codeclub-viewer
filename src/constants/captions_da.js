@@ -15,7 +15,7 @@ export default {
     otherwebsitecourses: 'Kurs på andre nettsider',
     welcomebox: {
       header: 'Hei! Du er nå i elevmodus',
-      changemode: 'Er du ikke er en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. ' + 
+      changemode: 'Er du ikke er en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. ' +
                   'Du kan også velge å skjule denne boksen for alltid, ved å trykke på X i hjørnet',
       info: 'Velkommen til Kodeklubbens oppgavesider! Her finner du mange veiledninger som du kan ' +
             'bruke som inspirasjon for å lære deg programmering og lage dine egne spill, apper og nettsider. ' +
@@ -60,7 +60,7 @@ export default {
     writtenby: 'av',
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
-    reset: 'Start på nytt',
+    reset: 'Fjern avkrysninger',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',

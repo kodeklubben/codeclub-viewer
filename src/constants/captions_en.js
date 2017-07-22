@@ -59,7 +59,7 @@ export default {
     writtenby: 'by',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
-    reset: 'Start over',
+    reset: 'Clear checkboxes',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',

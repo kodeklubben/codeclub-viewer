@@ -60,7 +60,7 @@ export default {
     writtenby: 'av',
     toteacherinstruction: 'Til lærarrettleiing',
     tolesson: 'Til oppgåve',
-    reset: 'Start på nytt',
+    reset: 'Fjern avkrysninger',
     improvepage: {
       header: 'Gjer denne sida betre',
       textline1: 'Fann du ein feil? Kunne noko vore betre?',

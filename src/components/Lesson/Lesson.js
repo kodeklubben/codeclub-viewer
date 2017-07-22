@@ -40,7 +40,7 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
-const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
+const setCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = document.getElementsByTagName('label');
   for (let label of labels) {
     const input = document.getElementById(label.htmlFor);
@@ -55,26 +55,13 @@ const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
   }
 };
 
-const resetLesson = (path, setCheckbox) => {
-  const labels = document.getElementsByTagName('label');
-  for (let label of labels) {
-    const input = document.getElementById(label.htmlFor);
-    if (input && input.type === 'checkbox') {
-      let hash = hashCode(label.textContent);
-      setCheckbox(path, hash, false);
-      location.reload();
-    }
-  }
-};
-
-const checkboxTrue = (checkboxes) => {
-  let counter = 0;
-  for (let i in checkboxes) {
+const anyCheckboxTrue = (checkboxes) => {
+  for (let i of Object.keys(checkboxes)) {
     if (checkboxes[i] === true) {
-      counter++;
+      return true;
     }
   }
-  return counter === 0 ? false : true;
+  return false;
 };
 
 const renderToggleButtons = () => {
@@ -126,7 +113,7 @@ const Lesson = React.createClass({
   },
   componentDidMount() {
     const {path, checkboxes, setCheckbox} = this.props;
-    onclickAndSetCheckboxes(path, checkboxes, setCheckbox);
+    setCheckboxes(path, checkboxes, setCheckbox);
     renderToggleButtons();
   },
   componentWillUnmount() {
@@ -139,9 +126,9 @@ const Lesson = React.createClass({
     const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
-    const resetButton = checkboxTrue(checkboxes) === true ?
+    const resetButton = anyCheckboxTrue(checkboxes) === true ?
       <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
-      onClick={() => resetLesson(path, setCheckbox)}>{t('lessons.reset')}</Button>
+      onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
       : null;
     return (
       <div className={styles.container}>
