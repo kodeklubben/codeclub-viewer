@@ -34,6 +34,22 @@ const getCheckboxProgress = (path, checkboxes) => {
   }
 };
 
+const lessonColor = (level) => {
+  if (level === 1) {
+    return '#46cc46';
+  }
+  else if (level === 2) {
+
+    return '#368BD8';
+  }
+  else if (level === 3) {
+    return '#D63838';
+  }
+  else if (level === 4) {
+    return '#333333';
+  }
+};
+
 export const LessonItem = React.createClass({
   render() {
     const {t, lesson, isStudentMode, checkboxes} = this.props;
@@ -67,7 +83,8 @@ export const LessonItem = React.createClass({
         :
         <LinkContainer to={lesson.path}>
           <ListGroupItem className={styles.row}>
-            <span className={styles.progressBar} style={{width: percentObject[lesson.path] + '%'}}></span>
+            <span className={styles.progressBar}
+              style={{width: percentObject[lesson.path] + '%', backgroundColor: lessonColor(lesson.level)}}></span>
             {levelIcon}
             <div className={styles.title}>{lesson.title}</div>
             {progress}
