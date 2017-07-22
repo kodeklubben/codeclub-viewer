@@ -34,7 +34,10 @@ BreadCrumb.propTypes = {
     course: PropTypes.string,
     lesson: PropTypes.string,
     file: PropTypes.string
-  })
+  }),
+  iconContext: PropTypes.func,
+  lessonLevel: PropTypes.number,
+  lessonTitle: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {

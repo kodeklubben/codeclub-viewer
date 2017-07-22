@@ -16,7 +16,7 @@ const LanguageItem = ({language, t, style}) => {
   return (
     <div>
       <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/>
-      <div className={styles[style]}>{translateTag(t, 'language', language)}</div>
+      <div className={style}>{translateTag(t, 'language', language)}</div>
     </div>
   );
 };
@@ -31,7 +31,8 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
                     noCaret
                     pullRight
                     bsStyle={'language-' + mode}
-                    title={<LanguageItem style={'onlyFlag'} language={language} t={t}/>}
+                    title={<LanguageItem style={[styles.language, styles.onlyFlag].join(' ')}
+                      language={language} t={t}/>}
                     onSelect={(eventKey) => {
                       resetFilter('language', eventKey);
                       setLanguage(eventKey);
@@ -39,7 +40,7 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
       {
         availableLanguages.map(k =>
           <MenuItem key={k} eventKey={k} active={language === k}>
-            <LanguageItem style={'language'} language={k} t={t}/>
+            <LanguageItem style={styles.language} language={k} t={t}/>
           </MenuItem>
         )
       }
@@ -50,6 +51,7 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
 LanguageDropdown.propTypes = {
   // ownProps:
   mode: PropTypes.oneOf(modes).isRequired,
+  style: PropTypes.string,
 
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
