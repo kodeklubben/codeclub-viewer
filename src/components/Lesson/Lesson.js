@@ -41,7 +41,7 @@ const LessonButton = ({path, lessons, t}) => {
 };
 
 const setCheckboxes = (path, checkboxes, setCheckbox) => {
-  const labels = document.getElementsByTagName('label');
+  const labels = [...document.getElementsByTagName('label')];
   for (let label of labels) {
     const input = document.getElementById(label.htmlFor);
     if (input && input.type === 'checkbox') {
@@ -65,7 +65,7 @@ const anyCheckboxTrue = (checkboxes) => {
 };
 
 const renderToggleButtons = () => {
-  const nodes = document.getElementsByClassName('togglebutton');
+  const nodes = [...document.getElementsByClassName('togglebutton')];
   for (let node of nodes) {
     const strongNode = node.getElementsByTagName('strong')[0];
     const buttonText = strongNode ? strongNode.textContent : 'Hint';
@@ -107,8 +107,8 @@ const Lesson = React.createClass({
     this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
 
     if(this.props.isReadme) this.props.setModeTeacher();
-    /*Comment this in when language is implemented
-    Changes the language state to the language defined in the current lesson or readme-file*/
+
+    //Changes the language state to the language defined in the current lesson or readme-file
     //this.setLanguage();
   },
   componentDidMount() {
@@ -117,7 +117,7 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   componentWillUnmount() {
-    const nodes = document.getElementsByClassName('togglebutton');
+    const nodes = [...document.getElementsByClassName('togglebutton')];
     for (let node of nodes) {
       ReactDOM.unmountComponentAtNode(node);
     }

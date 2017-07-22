@@ -1,42 +1,82 @@
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {onFilterCheck} from '../../action_creators';
 import FilterItem from './FilterItem';
-import {capitalize} from '../../util';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {translateGroup, translateTag} from '../../util';
+import Collapse from 'react-bootstrap/lib/Collapse';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-const FilterGroup = React.createClass({
-  render(){
-    const groupName = capitalize(this.props.groupName);
-    const filterTags = this.props.tagItems;
-    const filterItems = Object.keys(filterTags).map((tagItem) => {
-      const onCheck = () => this.props.onFilterCheck(groupName, tagItem);
-      const availableLessonsForTag = this.props.availableLessonsForTag[tagItem];
+export const FilterGroup = React.createClass({
+  getInitialState() {
+    return {
+      showFilterTags: false
+    };
+  },
+  changeState() {
+    this.setState({['showFilterTags']: !this.state['showFilterTags']});
+  },
+  render() {
+    const {groupKey, availableLessonsForTag, t, filterTags, onFilterCheck} = this.props;
+    const {showFilterTags} = this.state;
+    const groupName = translateGroup(t, groupKey);
+    if (groupName) {
+      const filterItems = Object.keys(filterTags).map((tagKey) => {
+        const onCheck = () => onFilterCheck(groupKey, tagKey);
+        const numberOfLessonsForTag = availableLessonsForTag[tagKey];
+        const tagName = translateTag(t, groupKey, tagKey);
 
+        return tagName ? (
+          <FilterItem
+            key={tagKey}
+            tagName={tagName}
+            numberOfLessons={numberOfLessonsForTag}
+            checked={filterTags[tagKey]}
+            onCheck={onCheck}
+          />
+        ) : null;
+      });
       return (
-        <FilterItem
-          key={tagItem}
-          tagItem={tagItem}
-          numberOfLessons={availableLessonsForTag}
-          checked={filterTags[tagItem]}
-          onCheck={onCheck}
-        />
+        <div className={styles.filterGroup}>
+          <h4 className={styles.name} onClick={this.changeState}>
+            <Glyphicon className={styles.glyph} glyph={!showFilterTags ? 'chevron-right' : 'chevron-down'}/>
+            {groupName}
+          </h4>
+          <Collapse in={showFilterTags}>
+            <div className={styles.filterItems}>{filterItems}</div>
+          </Collapse>
+        </div>
       );
-    });
-
-    return (
-      <div className={styles.filterGroup}>
-        <h4>{groupName}</h4>
-        {filterItems}
-      </div>
-    );
+    }
+    else {
+      return null;
+    }
   }
 });
 
 FilterGroup.propTypes = {
-  groupName: PropTypes.string,
-  tagItems: PropTypes.object,
-  onCheck: PropTypes.func,
-  availableLessonsForTag: PropTypes.object.isRequired
+  // ownProps:
+  groupKey: PropTypes.string,
+  availableLessonsForTag: PropTypes.object.isRequired,
+  t: PropTypes.func,
+
+  // mapStateToProps:
+  filterTags: PropTypes.object,
+
+  // mapDispatchToProps:
+  onFilterCheck: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(FilterGroup);
+const mapStateToProps = (state, ownProps) => ({
+  filterTags: state.filter[ownProps.groupKey],
+});
+
+const mapDispatchToProps = {
+  onFilterCheck
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(FilterGroup));

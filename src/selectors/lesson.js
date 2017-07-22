@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {tagsMatchFilter} from '../util';
+import {tagsMatchFilter, getOrTaggedGroups} from '../util';
 
 const getLessons = (state, courseName = '') => {
   return Object.keys(state.lessons).reduce((res, lessonPath) => {
@@ -40,34 +40,90 @@ export const getFilteredAndIndexedLessons = createSelector(
 );
 
 /**
+ * Creates an object containing lessons that have tags matching the filter
+ * where the filter is considered as having all OR-tags selected
+ */
+export const getFilteredLessonsOrTagsSelected = createSelector(
+  [getFilter, getLessons],
+  (filter = {}, lessons = {}) => {
+    //const orTaggedGroups = getOrTaggedGroups();
+    let orTaggedFilter = {};
+
+    for(const groupKey of Object.keys(filter)){
+      orTaggedFilter[groupKey] = {};
+      for(const tagKey of Object.keys(filter[groupKey])){
+        //if(orTaggedGroups.indexOf(groupKey) !== -1){
+        if(groupKey === 'language'){
+          orTaggedFilter[groupKey][tagKey] = true;
+        }else{
+          orTaggedFilter[groupKey][tagKey] = !!filter[groupKey][tagKey];
+        }
+      }
+    }
+
+    return Object.keys(lessons).reduce((res, lessonKey) => {
+      const lesson = lessons[lessonKey];
+      if (tagsMatchFilter(lesson.tags, orTaggedFilter)) {
+        res[lessonKey] = lesson;
+      }
+      return res;
+    }, {});
+  }
+);
+
+/**
+ * Creates an object containing indexed lessons that have tags matching the filter
+ * where the filter is considered as having all OR-tags selected
+ */
+export const getFilteredAndIndexedLessonsOrTagsSelected = createSelector(
+  [getFilteredLessonsOrTagsSelected],
+  (filteredLessons = {}) => {
+    return Object.keys(filteredLessons).reduce((res, lessonPath) => {
+      const lesson = filteredLessons[lessonPath];
+      return lesson.indexed ? {...res, [lessonPath]: lesson} : res;
+    }, {});
+  }
+);
+
+/**
  * Creates an object containing number of lessons available in each tag given your current filter
  * Input props: courseName (string, optional)
  */
-
 export const getAvailableLessons = createSelector(
-  [getFilter, getFilteredLessons],
-  (current_filter = {}, filteredLessons = {}) => {
+  [getFilter, getFilteredAndIndexedLessons, getFilteredAndIndexedLessonsOrTagsSelected],
+  (current_filter = {}, filteredLessons = {}, filteredLessonsOrTagsSelected = {}) => {
 
+    const OrTaggedGroups = getOrTaggedGroups();
     let availableLessons = {};
 
-    Object.keys(current_filter).forEach( groupName => {
-      const group = current_filter[groupName];
-      Object.keys(group).forEach( tagItem => {
-        availableLessons[tagItem] = 0;
+    Object.keys(current_filter).forEach( groupKey => {
+      const group = current_filter[groupKey];
+      Object.keys(group).forEach( tagKey => {
+        availableLessons[tagKey] = 0;
       });
     });
 
     Object.keys(filteredLessons).forEach((lessonKey) => {
       const lesson = filteredLessons[lessonKey];
       Object.keys(availableLessons).forEach((tag) => {
-        Object.keys(current_filter).forEach((groupName) => {
-          if((lesson.tags[groupName] || []).indexOf(tag)!== -1){
+        Object.keys(current_filter).forEach((groupKey) => {
+          if(OrTaggedGroups.indexOf(groupKey) === -1 && (lesson.tags[groupKey] || []).indexOf(tag)!== -1){
             availableLessons[tag]++;
           }
         });
       });
     });
 
+    Object.keys(filteredLessonsOrTagsSelected).forEach((lessonKey) => {
+      const lesson = filteredLessonsOrTagsSelected[lessonKey];
+      Object.keys(availableLessons).forEach((tag) => {
+        Object.keys(current_filter).forEach((groupKey) => {
+          if(OrTaggedGroups.indexOf(groupKey) !== -1 && (lesson.tags[groupKey] || []).indexOf(tag)!== -1){
+            availableLessons[tag]++;
+          }
+        });
+      });
+    });
     return availableLessons;
   }
 );

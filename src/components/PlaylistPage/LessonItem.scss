@@ -22,3 +22,12 @@
 .title {
   padding: 2px 0;
 }
+
+.tooltip {
+  :global(.tooltip-inner) {
+    max-width: 360px;
+  }
+  img {
+    max-height: 180px;
+  }
+}

@@ -74,10 +74,55 @@ export default {
         info: 'Beskriv problemet ditt her. Ta gjerne med operativsystemet ditt, nettlesaren din ' +
               'og eventuell kode du har skrive.'
       },
-      showcodebutton: 'Vis koden og fiks det sjølv'
+      showcodebutton: 'Vis koden og fiks det sjølv',
+      forumbutton: 'Gå til forumet'
     }
   },
   filter: {
+    group: {
+      grade: 'Klassetrinn',
+      language: 'Språk',
+      subject: 'Fag',
+      topic: 'Tema',
+    },
+    tags_grade: {
+      preschool: 'Barnehage',
+      primary: '1.-4. klasse',
+      secondary: '5.-7. klasse',
+      junior: '8.-10. klasse',
+      senior: 'Videregående skole',
+    },
+    tags_language: {
+      nb: 'Norsk bokmål',
+      nn: 'Norsk nynorsk',
+      sv: 'Svenska',
+      da: 'Dansk',
+      en: 'English',
+      hr: 'Hrvatski',
+    },
+    tags_subject: {
+      mathematics: 'Matematikk',
+      science: 'Vitenskap',
+      programming: 'Programmering',
+      technology: 'Teknologi',
+      music: 'Musikk',
+      norwegian: 'Norsk',
+      english: 'Engelsk',
+      arts_and_crafts: 'Kunst og håndverk',
+      social_science: 'Samfunnsfag',
+    },
+    tags_topic: {
+      app: 'App',
+      electronics: 'Elektronikk',
+      step_based: 'Stegbasert',
+      block_based: 'Blokkbasert',
+      text_based: 'Tekstbasert',
+      minecraft: 'Minecraft',
+      web: 'Nettside',
+      game: 'Spill',
+      robot: 'Robot',
+      animation: 'Animasjon',
+    },
     header: 'Filter',
     tooltip: {
       textline1: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',

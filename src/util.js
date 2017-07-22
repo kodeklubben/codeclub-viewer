@@ -5,7 +5,7 @@
  * @returns {string}
  */
 export function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 }
 
 /**
@@ -40,10 +40,10 @@ function extractTags(context) {
  */
 export function mergeTags(tagsA, tagsB){
   const groups = [...new Set(Object.keys(tagsA).concat(Object.keys(tagsB)))];
-  return groups.reduce((res, groupName) => {
-    const tagsFromA = tagsA[groupName];
-    const tagsFromB = tagsB[groupName];
-    return {...res, [groupName]: {...tagsFromA, ...tagsFromB}};
+  return groups.reduce((res, groupKey) => {
+    const tagsFromA = tagsA[groupKey];
+    const tagsFromB = tagsB[groupKey];
+    return {...res, [groupKey]: {...tagsFromA, ...tagsFromB}};
   }, {});
 }
 
@@ -56,9 +56,17 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
 
     const courseFrontmatter = courseContext(coursePath).frontmatter;
-    const lessonFrontmatter = lessonContext(path).frontmatter;
+    let lessonFrontmatter = lessonContext(path).frontmatter;
 
     const language = lessonFrontmatter.language;
+
+    if (language){
+      if (lessonFrontmatter.tags) {
+        lessonFrontmatter.tags['language'] = language;
+      } else {
+        lessonFrontmatter.tags = {language: [language]};
+      }
+    }
 
     // Inherit tags from course, and override with lessonTags
     const courseTags = cleanseTags(courseFrontmatter.tags, false);
@@ -108,6 +116,24 @@ export function getCourseInfoMarkup(courseName, language) {
   return null;
 }
 
+export function getLessonIntro(lesson) {
+  let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
+  let text, picture = '';
+  lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
+  const p = lessonContent.indexOf('<p>');
+  const closingP = lessonContent.indexOf('</p>');
+  const img = lessonContent.indexOf('<img');
+  const closingFig = lessonContent.indexOf('</figure');
+  if (p < closingP) {
+    text = lessonContent.substring(p, closingP);
+    if (text.length > 300) {
+      text = lessonContent.substring(p, 300) + '...';
+    }
+    picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
+  }
+  return picture + text;
+}
+
 ///////////////////////////////////
 //////// HELPER FUNCTIONS /////////
 ///////////////////////////////////
@@ -142,18 +168,18 @@ const getReadmePath = (readmeContext, language, path) => {
 export function cleanseTags(tags, toObject = false) {
   if (tags == null) return {};
 
-  return Object.keys(tags).reduce((result, groupName) => {
-    let tagItemsArray = fixNonArrayTagList(tags[groupName]).filter(item => item.length > 0);
+  return Object.keys(tags).reduce((result, groupKey) => {
+    let tagItemsArray = fixNonArrayTagList(tags[groupKey]).filter(item => item.length > 0);
 
-    // Make groupName and all tags lowerCase
-    tagItemsArray = tagItemsArray.map(tagItem => tagItem.toLowerCase());
-    groupName = groupName.toLowerCase();
+    // Make groupKey and all tags lowerCase
+    tagItemsArray = tagItemsArray.map(tagKey => tagKey.toLowerCase());
+    groupKey = groupKey.toLowerCase();
 
     // Ignore tagGroups with no tagItems
     if (tagItemsArray.length === 0) return result;
 
     // Add tagItems
-    result[groupName] = toObject ? convertTagItemsArrayToObject(tagItemsArray) : tagItemsArray;
+    result[groupKey] = toObject ? convertTagItemsArrayToObject(tagItemsArray) : tagItemsArray;
     return result;
   }, {});
 }
@@ -167,8 +193,8 @@ function convertTagItemsArrayToObject(tagItemsArray) {
 
 /**
  * Make sure tagItems is an array. Try to convert to array if it is not.
- * This happens if tags is created as string or numbers (e.g. someGroupName: tag1, tag2, 12345)
- * instead of list (e.g. someGroupName: [tag1, tag2, 12345]) in YAML
+ * This happens if tags is created as string or numbers (e.g. someGroupKey: tag1, tag2, 12345)
+ * instead of list (e.g. someGroupKey: [tag1, tag2, 12345]) in YAML
  * @param tagItems
  * @returns {Array}
  */
@@ -187,19 +213,43 @@ export function fixNonArrayTagList(tagItems) {
  * @returns {boolean}
  */
 export function tagsMatchFilter(lessonTags, filter) {
-  // lessonTags is e.g. {'tema': ['spill'], 'fag': ['naturfag']}
-  // filter is e.g. {'tema': {'spill':false, 'animasjon': true}, 'utstyr': {'ipad': false, 'arduino': true}}}
-  for (const groupName of Object.keys(filter)) { // groupName is e.g. 'tema'
-    const filterGroup = filter[groupName]; // the whole filter group, e.g. {'spill':false, 'animasjon': true}
-    const tagNames = Object.keys(filter[groupName]); // all tags in this filter group, e.g. ['spill','animasjon']
-    const checkedTagNames = tagNames.filter(tag => filterGroup[tag]); // only the checked tags; e.g. ['animasjon']
-    const lessonGroup = lessonTags[groupName]; // e.g. ['spill']
-    if (checkedTagNames.length > 0 && !lessonGroup) {
+  // lessonTags is e.g. {topic: ['game'], subject: ['science']}
+  // filter is e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
+
+  // Getting pre-defined OR-tagged groups
+  const OrTaggedGroups = getOrTaggedGroups();
+
+  // Sorts out which OR-tagged groups that have corresponding lessons
+  let OrTags = {};
+  OrTaggedGroups.map(groupKey => {
+    OrTags[groupKey] = filter[groupKey] ? Object.keys(filter[groupKey]) : [];
+  });
+  const OrTagsAsArray = Object.keys(OrTags);
+
+  // Keeps track of which tags for each OR-tagged group that is tagged
+  let checkedOrTags = {};
+  OrTagsAsArray.map(groupKey => {
+    checkedOrTags[groupKey] = OrTags[groupKey].filter(tag => filter[groupKey][tag]);
+  });
+
+  for (const groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
+    const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
+    const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
+    const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
+    const lessonGroup = lessonTags[groupKey]; // e.g. ['game']
+    if (checkedTagKeys.length > 0 && !lessonGroup) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    for (const checkedFilterTag of checkedTagNames) {
-      if (lessonGroup.indexOf(checkedFilterTag) === -1) { // lessonGroup doesn't contain checkedFilterTag
+    // OR-tests OR-tagged groups
+    if(OrTagsAsArray.indexOf(groupKey) !== -1 && checkedOrTags[groupKey].length !== 0
+      && checkedOrTags[groupKey].filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
+      return false;
+    }
+    // AND-tests everything else
+    for (const checkedTagKey of checkedTagKeys) {
+      // lessonGroup doesn't contain checkedFilterTag
+      if (OrTagsAsArray.indexOf(groupKey) === -1 && lessonGroup.indexOf(checkedTagKey) === -1) {
         return false;
       }
     }
@@ -211,8 +261,23 @@ export function tagsMatchFilter(lessonTags, filter) {
 export function removeHtmlFileEnding(lessonPage) {
   // RegEx for matching and removing parts of text that starts with
   // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
-  return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(">)/g, '$1$2');
+  return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(")/g, '$1$2');
 }
+
+/**
+* Returns languages defined as available
+* All available languages must be defined here
+* @returns {Array} An array of available languages
+*/
+export const getAvailableLanguages = () => ['nb', 'nn', 'sv', 'da', 'en'];
+
+/**
+* Returns groupNames with tags that should be considered as logical OR in the filter.
+* @returns {Array}
+*/
+export const getOrTaggedGroups = () => {
+  return ['language', 'subject', 'grade'];
+};
 
 /**
 * Returns the readmePath of a lesson with the given lessonPath
@@ -236,8 +301,8 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 export function hashCode(str) {
   let hash = 0, i, chr;
   for (i = 0; i < str.length; i++) {
-    chr   = str.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
+    chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
   }
   return Math.abs(hash);
 }
@@ -245,4 +310,37 @@ export function hashCode(str) {
 export function createCheckboxesKey(path) {
   path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
   return 'checkboxes_' + path;
+}
+
+/**
+ *
+ * @param {function} t translator function
+ * @param {string} groupKey
+ * @returns {string} Translated filter group name, or blank string if not found.
+ */
+export function translateGroup(t, groupKey) {
+  const captionPath = `filter.group.${groupKey}`;
+  const translatedGroupName = t(captionPath);
+  if (translatedGroupName === captionPath) {
+    console.warn(`Could not translate filter group '${captionPath}'`);
+    return '';
+  }
+  return translatedGroupName;
+}
+
+/**
+ *
+ * @param {function} t translator function
+ * @param {string} groupKey
+ * @param {string} tagKey
+ * @returns {string} Translated filter tag name, or blank string if not found.
+ */
+export function translateTag(t, groupKey, tagKey) {
+  const captionPath = `filter.tags_${groupKey}.${tagKey}`;
+  const tagName = t(captionPath);
+  if (tagName === captionPath) {
+    console.warn(`Could not translate filter tag '${captionPath}'`);
+    return '';
+  }
+  return tagName;
 }

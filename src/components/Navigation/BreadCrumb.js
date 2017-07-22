@@ -41,13 +41,15 @@ function mapStateToProps(state, ownProps) {
   const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
   const isReadme = (file && /README(_[a-z]{2})?/.test(file));
   let title = '';
+  let level = 0;
 
   if(isReadme){
     title = state.context.readmeContext(lessonPath).frontmatter.title || '';
+    level = state.context.readmeContext(lessonPath).frontmatter.level || 0;
   }
   return {
     iconContext: state.context.iconContext,
-    lessonLevel: lessonPath && !isReadme ? state.lessons[lessonPath].level : 0,
+    lessonLevel: lessonPath && !isReadme ? state.lessons[lessonPath].level : level,
     lessonTitle: lessonPath && !isReadme ? state.lessons[lessonPath].title : title,
   };
 }
