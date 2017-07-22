@@ -8,11 +8,12 @@ import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setWelcomeBox} from '../../action_creators';
 
-const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
+const WelcomeBox = ({t, welcomeBox, setWelcomeBox, lastLesson}) => {
+  const hasLastLesson = lastLesson !== '';
   const startButton = <div className={styles.center}>
-    <LinkContainer to={t('frontpage.welcomebox.buttonlink')}>
+    <LinkContainer to={hasLastLesson ? lastLesson : t('frontpage.welcomebox.buttonlink')}>
       <Button bsStyle='student-frontpage'>
-        {t('frontpage.welcomebox.startbutton')}
+        {hasLastLesson ? t('frontpage.welcomebox.continuebutton') : t('frontpage.welcomebox.startbutton')}
       </Button>
     </LinkContainer>
   </div>;
@@ -39,12 +40,14 @@ const WelcomeBox = ({t, welcomeBox, setWelcomeBox}) => {
 WelcomeBox.propTypes = {
   t: PropTypes.func,
   welcomeBox: PropTypes.bool,
-  setWelcomeBox: PropTypes.func
+  setWelcomeBox: PropTypes.func,
+  lastLesson: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
-  welcomeBox: state.welcomeBox
+  welcomeBox: state.welcomeBox,
+  lastLesson: state.lastLesson
 });
 
 
