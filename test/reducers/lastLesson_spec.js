@@ -68,8 +68,9 @@ describe('lastLesson reducer', () => {
 
       deepFreeze(initialState);
       deepFreeze(action);
+      const nextState = reducer(initialState, action);
 
-      expect((initialState, action) => reducer(initialState, action)).to.throw(TypeError);
+      expect(nextState).to.equal(undefined);
     });
 
     it('Should set last lesson in state to path regardless of initialState', () => {
