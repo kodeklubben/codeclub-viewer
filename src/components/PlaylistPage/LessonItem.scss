@@ -4,6 +4,15 @@
 .row {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.progressBar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 9px;
+  background-color: $color-green-light;
 }
 
 .instructionBtn {

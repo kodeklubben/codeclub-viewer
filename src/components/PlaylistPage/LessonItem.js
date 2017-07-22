@@ -12,7 +12,7 @@ import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonIntro} from '../../util';
 
-const percentObject = {}; //Use this for styling??
+const percentObject = {};
 const getCheckboxProgress = (path, checkboxes) => {
   let checkboxKeys = Object.keys(checkboxes);
   let trueCheckboxes = 0;
@@ -28,19 +28,10 @@ const getCheckboxProgress = (path, checkboxes) => {
           trueCheckboxes++;
         }
       }
-      percentObject[path] = trueCheckboxes/Object.keys(checkboxObject).length ;
+      percentObject[path] = (trueCheckboxes/Object.keys(checkboxObject).length)*100;
       return '(' + trueCheckboxes + '/' + Object.keys(checkboxObject).length + ')';
     }
   }
-  const lessonContent = require('onlyContent!lessonSrc/' + path.slice(1) + '.md').content;
-  let totalCheckboxes = 0;
-  for (let j = 0; j < lessonContent.length; j++) {
-    if (lessonContent.indexOf('<input type="checkbox"') !== -1) {
-      totalCheckboxes++;
-    }
-  }
-  return totalCheckboxes !== 0 ? '(0/' + totalCheckboxes + ')' : '';
-  //Denne returnerer bare lengden av lessonContent. Altså totalCheckboxes = lessonContent.length. Hvorfor?
 };
 
 export const LessonItem = React.createClass({
@@ -76,6 +67,7 @@ export const LessonItem = React.createClass({
         :
         <LinkContainer to={lesson.path}>
           <ListGroupItem className={styles.row}>
+            <span className={styles.progressBar} style={{width: percentObject[lesson.path] + '%'}}></span>
             {levelIcon}
             <div className={styles.title}>{lesson.title}</div>
             {progress}
