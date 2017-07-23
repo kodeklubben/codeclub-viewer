@@ -109,7 +109,7 @@ function getPlugins() {
     }),
     // Create template for the static non-root index.html files
     new HtmlWebpackPlugin({
-      title: 'Kodeklubben (server)',
+      title: '<%= title %>',
       filename: 'index-html-template.ejs',
       appcss: '<%= appCss %>',
       appcontent: '<%= appHtml %>',

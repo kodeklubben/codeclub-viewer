@@ -4,6 +4,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import DocumentTitle from 'react-document-title';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
@@ -12,11 +13,11 @@ import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util.js';
+import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage, setCheckbox} from '../../action_creators';
+import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -75,9 +76,14 @@ const renderToggleButtons = () => {
   }
 };
 
+const rememberLastLesson = (path, setLastLesson) => {
+  const lessonPath = '/' + path;
+  setLastLesson(lessonPath);
+};
+
 const Lesson = React.createClass({
   getTitle() {
-    return this.props.lesson.frontmatter.title || '';
+    return this.props.lesson.frontmatter.title || this.props.params.file;
   },
   getLevel() {
     return this.props.lesson.frontmatter.level || 0;
@@ -112,8 +118,9 @@ const Lesson = React.createClass({
     //this.setLanguage();
   },
   componentDidMount() {
-    const {path, checkboxes, setCheckbox} = this.props;
+    const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
+    rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
   },
   componentWillUnmount() {
@@ -131,26 +138,31 @@ const Lesson = React.createClass({
       onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
       : null;
     return (
-      <div className={styles.container}>
-        <h1>
-          <LevelIcon level={this.getLevel()}/>
-          {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
-        </h1>
-        {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
-        {resetButton}
-        {instructionBtn}
-        <div dangerouslySetInnerHTML={this.createMarkup()}/>
+      <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
+        <div className={styles.container}>
+          <h1>
+            <LevelIcon level={this.getLevel()}/>
+            {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
+          </h1>
+          {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
+          {resetButton}
+          {instructionBtn}
+          <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
-        <Row>
-          <ImprovePageContainer courseLessonFileProp={this.props.params}/>
-        </Row>
+          <Row>
+            <ImprovePageContainer courseLessonFileProp={this.props.params}/>
+          </Row>
 
-      </div>
+        </div>
+      </DocumentTitle>
     );
   }
 });
 
 Lesson.propTypes = {
+  params: PropTypes.shape({
+    file: PropTypes.string.isRequired
+  }).isRequired,
   lesson: PropTypes.shape({
     frontmatter: PropTypes.object,
     content: PropTypes.string
@@ -161,9 +173,10 @@ Lesson.propTypes = {
   setModeTeacher: PropTypes.func,
   setLanguage: PropTypes.func,
   isReadme: PropTypes.bool,
-  t: PropTypes.func,
+  t: PropTypes.func.isRequired,
   setCheckbox: PropTypes.func,
-  checkboxes: PropTypes.object
+  checkboxes: PropTypes.object,
+  setLastLesson: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -180,6 +193,7 @@ export default connect(
   {
     setModeTeacher,
     setLanguage,
-    setCheckbox
+    setCheckbox,
+    setLastLesson
   }
   )(withStyles(styles, contentStyles)(Lesson));

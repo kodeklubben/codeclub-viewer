@@ -10,6 +10,9 @@ export default {
       4: 'Ekspert'
     }
   },
+  title: {
+    codeclub: 'Kodeklubben',
+  },
   frontpage: {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
