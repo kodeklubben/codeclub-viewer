@@ -2,7 +2,7 @@ export default {
   general: {
     student: 'Elev',
     teacher: 'Lærer',
-    level: 'Level',
+    level: 'Nivå',
     levels: {
       1: 'Introduksjon',
       2: 'Nybegynner',
@@ -63,6 +63,7 @@ export default {
     writtenby: 'av',
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
+    reset: 'Fjern avkrysninger',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',

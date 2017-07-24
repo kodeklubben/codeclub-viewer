@@ -41,7 +41,7 @@ const LessonButton = ({path, lessons, t}) => {
   return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
 };
 
-const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
+const setCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = [...document.getElementsByTagName('label')];
   for (let label of labels) {
     const input = document.getElementById(label.htmlFor);
@@ -54,6 +54,15 @@ const onclickAndSetCheckboxes = (path, checkboxes, setCheckbox) => {
       };
     }
   }
+};
+
+const anyCheckboxTrue = (checkboxes) => {
+  for (let i of Object.keys(checkboxes)) {
+    if (checkboxes[i] === true) {
+      return true;
+    }
+  }
+  return false;
 };
 
 const renderToggleButtons = () => {
@@ -110,7 +119,7 @@ const Lesson = React.createClass({
   },
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
-    onclickAndSetCheckboxes(path, checkboxes, setCheckbox);
+    setCheckboxes(path, checkboxes, setCheckbox);
     rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
   },
@@ -121,9 +130,13 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
+    const resetButton = anyCheckboxTrue(checkboxes) === true ?
+      <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
+      onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
+      : null;
     return (
       <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -132,6 +145,7 @@ const Lesson = React.createClass({
             {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
           </h1>
           {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
+          {resetButton}
           {instructionBtn}
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
