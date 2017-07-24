@@ -21,6 +21,7 @@ export const FilterGroup = React.createClass({
     const {groupKey, availableLessonsForTag, t, filterTags, onFilterCheck} = this.props;
     const {showFilterTags} = this.state;
     const groupName = translateGroup(t, groupKey);
+    const numberOfCheckedFilterItems = <span className={styles.number}>(0)</span>;
     if (groupName) {
       const filterItems = Object.keys(filterTags).map((tagKey) => {
         const onCheck = () => onFilterCheck(groupKey, tagKey);
@@ -42,6 +43,7 @@ export const FilterGroup = React.createClass({
           <h4 className={styles.name} onClick={this.changeState}>
             <Glyphicon className={styles.glyph} glyph={!showFilterTags ? 'chevron-right' : 'chevron-down'}/>
             {groupName}
+            {showFilterTags ? '' : numberOfCheckedFilterItems}
           </h4>
           <Collapse in={showFilterTags}>
             <div className={styles.filterItems}>{filterItems}</div>
