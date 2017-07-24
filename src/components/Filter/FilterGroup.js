@@ -21,12 +21,15 @@ export const FilterGroup = React.createClass({
     const {groupKey, availableLessonsForTag, t, filterTags, onFilterCheck} = this.props;
     const {showFilterTags} = this.state;
     const groupName = translateGroup(t, groupKey);
-    const numberOfCheckedFilterItems = <span className={styles.number}>(0)</span>;
+    let filterItemsNumber = 0;
     if (groupName) {
       const filterItems = Object.keys(filterTags).map((tagKey) => {
         const onCheck = () => onFilterCheck(groupKey, tagKey);
         const numberOfLessonsForTag = availableLessonsForTag[tagKey];
         const tagName = translateTag(t, groupKey, tagKey);
+        if(filterTags[tagKey]){
+          filterItemsNumber++;
+        }
 
         return tagName ? (
           <FilterItem
@@ -38,6 +41,8 @@ export const FilterGroup = React.createClass({
           />
         ) : null;
       });
+
+      const numberOfCheckedFilterItems = <span className={styles.number}>({filterItemsNumber})</span>;
       return (
         <div className={styles.filterGroup}>
           <h4 className={styles.name} onClick={this.changeState}>
