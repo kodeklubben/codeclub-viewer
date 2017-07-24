@@ -1,9 +1,17 @@
+@import '../../styles/variables';
+
 $flag-width: 30px;
 $flag-height: 20px;
 $space-between-text-and-flag: 10px;
 
 .language {
   margin-right: $flag-width + $space-between-text-and-flag;
+}
+
+.onlyFlag {
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
 }
 
 .flag {
