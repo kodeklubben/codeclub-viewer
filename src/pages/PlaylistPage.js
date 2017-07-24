@@ -44,9 +44,7 @@ export const PlaylistPage = React.createClass({
     } = this.props;
     const levels = Object.keys(lessonsByLevel);
     const lessonLists = levels.map((level, idx) => (
-      <div key={idx} className='col-xs-12'>
-        <LessonList id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
-      </div>
+      <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
     ));
     const showLevelNavigationDesktop = Object.keys(lessons).length > 15 && levels.length > 1;
 
