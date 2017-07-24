@@ -11,8 +11,8 @@ const LessonList = React.createClass({
   render() {
     const {lessons, level, t} = this.props;
     return (
-      <div id={this.props.id}>
-        <h3 className={styles.row}>
+      <div id={this.props.id} className={styles.list}>
+        <h3>
           <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
         </h3>
         <ListGroup>
