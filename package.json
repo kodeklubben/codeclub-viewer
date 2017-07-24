@@ -53,6 +53,7 @@
     "markdown-it-task-checkbox": "^1.0.3",
     "posthtml-parser": "^0.2.0",
     "posthtml-render": "^1.0.6",
+    "re-reselect": "^0.5.0",
     "react": "^15.1.0",
     "react-bootstrap": "^0.30.6",
     "react-document-title": "^2.0.3",

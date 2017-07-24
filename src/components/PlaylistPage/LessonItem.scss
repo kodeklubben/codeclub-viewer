@@ -1,19 +1,24 @@
 @import '../../styles/variables.scss';
 @import '../../styles/mixins.scss';
 
-.lessonItem {
-  &:hover {
-    cursor: pointer;
-    color: darken($brand-primary, 20%);
-  }
-
-  @include responsiveFontSizes;
-}
-
 .row {
   display: flex;
   align-items: center;
+  position: relative;
 }
+
+@mixin progressBar($color) {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 8px;
+  background-color: $color;
+}
+
+.progressBarLevel1 { @include progressBar($color-level1); }
+.progressBarLevel2 { @include progressBar($color-level2); }
+.progressBarLevel3 { @include progressBar($color-level3); }
+.progressBarLevel4 { @include progressBar($color-level4); }
 
 .instructionBtn {
   margin-left: auto;
@@ -21,6 +26,11 @@
 
 .title {
   padding: 2px 0;
+  margin-right: 3px;
+}
+
+.progress {
+  opacity: 0.5;
 }
 
 .tooltip {
