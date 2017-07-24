@@ -42,13 +42,15 @@ export const FilterGroup = React.createClass({
         ) : null;
       });
 
-      const numberOfCheckedFilterItems = <span className={styles.number}>({filterItemsNumber})</span>;
+      const numberOfCheckedFilterItems = showFilterTags ? '' :
+        <span className={styles.number}>({filterItemsNumber})</span>;
+
       return (
         <div className={styles.filterGroup}>
           <h4 className={styles.name} onClick={this.changeState}>
             <Glyphicon className={styles.glyph} glyph={!showFilterTags ? 'chevron-right' : 'chevron-down'}/>
             {groupName}
-            {showFilterTags ? '' : numberOfCheckedFilterItems}
+            {numberOfCheckedFilterItems}
           </h4>
           <Collapse in={showFilterTags}>
             <div className={styles.filterItems}>{filterItems}</div>
