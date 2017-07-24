@@ -10,6 +10,9 @@ export default {
       4: 'Expert'
     }
   },
+  title: {
+    codeclub: 'Code club',
+  },
   frontpage: {
     courses: 'Courses',
     otherwebsitecourses: 'Courses on other webpages',
@@ -44,7 +47,8 @@ export default {
              'programming, where Python / Web / Processing is the most common to proceed with afterwards.',
       link2: 'Learn more about running a code club'
     },
-    showhidefilter: 'Show/hide filter'
+    showhidefilter: 'Show/hide filter',
+    forumbutton: 'Go to forum'
   },
   playlist: {
     lessons: 'Lessons',
@@ -59,6 +63,7 @@ export default {
     writtenby: 'by',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
+    reset: 'Clear checkboxes',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',

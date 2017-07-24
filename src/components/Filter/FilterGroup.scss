@@ -8,3 +8,21 @@
     border-bottom: 1px solid $color-gray-light;
   }
 }
+
+.filterItems {
+  overflow: hidden; // Avoid margin collapse
+}
+
+.name {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.glyph {
+  &:hover {
+    cursor: pointer;
+  }
+  font-size: 0.8em;
+  padding-right: 0.5em;
+}

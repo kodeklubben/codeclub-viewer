@@ -10,6 +10,9 @@ export default {
       4: 'Ekspert'
     }
   },
+  title: {
+    codeclub: 'Kodeklubben',
+  },
   frontpage: {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
@@ -60,6 +63,7 @@ export default {
     writtenby: 'av',
     toteacherinstruction: 'Til lærarrettleiing',
     tolesson: 'Til oppgåve',
+    reset: 'Fjern avkrysninger',
     improvepage: {
       header: 'Gjer denne sida betre',
       textline1: 'Fann du ein feil? Kunne noko vore betre?',
@@ -73,7 +77,8 @@ export default {
         info: 'Beskriv problemet ditt her. Ta gjerne med operativsystemet ditt, nettlesaren din ' +
               'og eventuell kode du har skrive.'
       },
-      showcodebutton: 'Vis koden og fiks det sjølv'
+      showcodebutton: 'Vis koden og fiks det sjølv',
+      forumbutton: 'Gå til forumet'
     }
   },
   filter: {

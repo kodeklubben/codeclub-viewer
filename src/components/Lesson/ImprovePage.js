@@ -13,14 +13,14 @@ const ImprovePage = React.createClass({
     const isStudent = this.props.isStudentMode;
     const courseName = this.props.courseLessonFileProp.course;
     const lessonName = this.props.courseLessonFileProp.lesson;
-    
-    const linkToSourceCode = 'https://github.com/kodeklubben/oppgaver/tree/master/src/' + 
+
+    const linkToSourceCode = 'https://github.com/kodeklubben/oppgaver/tree/master/src/' +
                              courseName + '/' + lessonName;
 
     const linkToLesson = 'http://oppgaver.kidsakoder.no/beta/' + //'/beta' should be removed when the site goes live
                          courseName + '/' + lessonName + '/' + lessonName;
 
-    const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' + 
+    const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' +
                          capitalize(courseName) + ': ' + capitalize(lessonName).replace(/_/g, ' ') + '\'' +
                          '&body=' + t('lessons.improvepage.newissuelink.lesson') + ': ' + linkToLesson +
                          '%0A' + t('lessons.improvepage.newissuelink.sourcecode') + ': ' + linkToSourceCode +
@@ -30,7 +30,9 @@ const ImprovePage = React.createClass({
       // Link to making a new issue + title and body fill
       newIssue: 'https://github.com/kodeklubben/oppgaver/issues/new/' + newIssueFill,
       // Link to source code
-      showCode: linkToSourceCode
+      showCode: linkToSourceCode,
+      //Link to forum
+      forum: 'https://forum.kidsakoder.no/c/oppgaver'
     };
     return (
       <div className={styles.container}>
@@ -43,12 +45,18 @@ const ImprovePage = React.createClass({
               </div>
               <div className={styles.linkRow}>
                   <div>
-                    <Button href={url.newIssue} bsStyle="white-grey">{t('lessons.improvepage.newissuebutton')}</Button>
+                    <Button href={url.newIssue} bsStyle="white-grey" target="_blank">
+                    {t('lessons.improvepage.newissuebutton')}</Button>
                   </div>
                   <div>
-                    <Button href={url.showCode} bsStyle="orange">{t('lessons.improvepage.showcodebutton')}</Button>
+                    <Button href={url.forum} bsStyle="guide" target="_blank">
+                    {t('lessons.improvepage.forumbutton')}</Button>
                   </div>
-              </div>
+                  <div>
+                    <Button href={url.showCode} bsStyle="orange" target="_blank">
+                    {t('lessons.improvepage.showcodebutton')}</Button>
+                  </div>
+                </div>
             </div>
         </div>
       </div>

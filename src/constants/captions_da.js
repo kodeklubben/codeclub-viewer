@@ -2,13 +2,16 @@ export default {
   general: {
     student: 'Elev',
     teacher: 'Lærer',
-    level: 'Level',
+    level: 'Nivå',
     levels: {
       1: 'Introduksjon',
       2: 'Nybegynner',
       3: 'Erfaren',
       4: 'Ekspert'
     }
+  },
+  title: {
+    codeclub: 'Kodeklubben',
   },
   frontpage: {
     courses: 'Kurs',
@@ -60,6 +63,7 @@ export default {
     writtenby: 'av',
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
+    reset: 'Fjern avkrysninger',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',
@@ -72,7 +76,8 @@ export default {
         sourcecode: 'Oppgavens kildekode',
         info: 'Beskriv ditt problem her. Ta gjerne med operativsystem, nettleser og eventuell kode du har skrevet.'
       },
-      showcodebutton: 'Vis koden og fiks selv'
+      showcodebutton: 'Vis koden og fiks selv',
+      forumbutton: 'Gå til forumet'
     }
   },
   filter: {

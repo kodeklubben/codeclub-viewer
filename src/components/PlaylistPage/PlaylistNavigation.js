@@ -14,7 +14,7 @@ const PlaylistNavigation = React.createClass({
     const {t} = this.props;
     const playlists = this.props.playlists || {};
     const playlistListItems = Object.keys(playlists).map((playlistName, idx) => {
-      const panelHeader = <h4 role="presentation" className={styles.header + ' panel-title'}>
+      const panelHeader = <h4 role="presentation">
         <Badge pullRight>{playlists[playlistName].length}</Badge>
         <span className={styles.link}>{playlistName}</span>
       </h4>;
