@@ -7,12 +7,18 @@
   position: relative;
 }
 
-.progressBar {
+@mixin progressBar($color) {
   position: absolute;
   left: 0;
   bottom: 0;
   height: 8px;
+  background-color: $color;
 }
+
+.progressBarLevel1 { @include progressBar($color-level1); }
+.progressBarLevel2 { @include progressBar($color-level2); }
+.progressBarLevel3 { @include progressBar($color-level3); }
+.progressBarLevel4 { @include progressBar($color-level4); }
 
 .instructionBtn {
   margin-left: auto;
