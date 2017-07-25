@@ -1,3 +1,10 @@
+/*
+  Example state:
+  collapsedFilter: {
+    mainfilter: false
+  }
+ */
+
 const collapseObject = (state, key) => ({...state, [key]: !!state});
 
 export default function(state=false, action) {
