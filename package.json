@@ -41,11 +41,6 @@
       "stage-2"
     ]
   },
-  "local-web-server": {
-    "port": 8080,
-    "directory": "./dist",
-    "compress": true
-  },
   "dependencies": {
     "highlight.js": "^9.11.0",
     "history": "^2.1.2",
@@ -98,6 +93,7 @@
     "isomorphic-style-loader": "^1.0.0",
     "jsdom": "^9.2.1",
     "json-loader": "^0.5.4",
+    "local-web-server": "^2.2.2",
     "markdown-it-anchor": "^2.5.0",
     "markdown-it-attrs": "^0.5.1",
     "markdown-it-header-sections": "^0.2.2",
