@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DocumentTitle from 'react-document-title';
 
+import Col from 'react-bootstrap/lib/Col';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+
 import styles from './PlaylistPage.scss';
 
 import {getFilteredAndIndexedLessons, getLessonsByLevel} from '../selectors/lesson';
@@ -14,105 +18,72 @@ import Filter from '../components/FrontPage/Filter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
-import HeadRow from '../components/PlaylistPage/HeadRow';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-import Col from 'react-bootstrap/lib/Col';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import Collapse from 'react-bootstrap/lib/Collapse';
 
-export const PlaylistPage = React.createClass({
-  getInitialState() {
-    return {
-      showCourseInfo: false
-    };
-  },
-  changeState() {
-    this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
-  },
-  render() {
-    const {
-      params,
-      isStudentMode,
-      lessons,
-      lessonsByLevel,
-      playlists,
-      t
-    } = this.props;
-    const levels = Object.keys(lessonsByLevel);
-    const lessonLists = levels.map((level, idx) => (
-      <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
-    ));
-    const showLevelNavigationDesktop = Object.keys(lessons).length > 15 && levels.length > 1;
+export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, playlists, t}) => {
+  const levels = Object.keys(lessonsByLevel);
 
-    const filter = <Filter courseName={params.course} isStudentMode={isStudentMode}/>;
+  const lessonLists = levels.map((level, idx) => (
+    <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
+  ));
 
-    const playlistsAndLessons =
-      <div>
-        <PlaylistNavigation playlists={playlists}/>
-        {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
-      </div>;
+  const showLevelNavigationDesktop = Object.keys(lessons).length > 15 && levels.length > 1;
 
-    const jumpTo =
-      <div className={styles.scrollable}>
-        {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
-      </div>;
+  const filter = <Filter courseName={params.course} isStudentMode={isStudentMode}/>;
 
-    const courseInfo =
-      <Collapse in={this.state.showCourseInfo}>
-        <CourseInfo courseName={params.course} isStudentMode={isStudentMode}/>
-      </Collapse>;
+  const playlistsAndLessons =
+    <div>
+      <PlaylistNavigation playlists={playlists}/>
+      {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
+    </div>;
 
-    // Title with course name and get started button
-    const heading =
-      <Row>
-        <Col xs={12} sm={6} smOffset={3}>
-          <div className={styles.headerRow}>
-            <HeadRow courseName={params.course}/>
-            <Button bsStyle="guide" className={styles.courseInfoBtn} onClick={() => this.changeState()}>
-              <Glyphicon className={styles.glyph} glyph={!this.state.showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
-              {t('playlist.courseinfo')}
-            </Button>
-          </div>
+  const jumpTo =
+    <div>
+      {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
+    </div>;
+
+  const courseInfo =
+    <CourseInfo courseName={params.course} isStudentMode={isStudentMode}/>;
+
+  // Title with course name and get started button
+  const heading =
+    <Row>
+      <Col xs={12} sm={6} smOffset={3}>
+        <h1>{capitalize(params.course)} {t('playlist.lessons')}</h1>
+      </Col>
+    </Row>;
+
+  const body =
+    <Row>
+      {/*Filter desktop*/}
+      <Col xsHidden>
+        <Col sm={3} className={styles.filter}>{filter}</Col>
+        <Col sm={6}>
+          {courseInfo}
+          {playlistsAndLessons}
         </Col>
-      </Row>;
+        <Col sm={3} className={styles.jumpTo}>{jumpTo}</Col>
+      </Col>
 
-    const body =
-      <Row>
-        {/*Filter desktop*/}
-        <Col xsHidden>
-          <Col sm={3} className={styles.filter}>{filter}</Col>
-          <Col sm={6}>
-            {this.state.showCourseInfo ? courseInfo : null}
-            {playlistsAndLessons}
-          </Col>
-          <Col sm={3}>{jumpTo}</Col>
-        </Col>
+      {/*Filter mobile*/}
+      <Col smHidden mdHidden lgHidden>
+        <Col xs={12}>{courseInfo}</Col>
+        <Col xs={12}>{filter}</Col>
+        <Col xs={12}>{jumpTo}</Col>
+        <Col xs={12}>{playlistsAndLessons}</Col>
+      </Col>
+    </Row>;
 
-        {/*Filter mobile*/}
-        <Col smHidden mdHidden lgHidden>
-          <Col xs={12}>
-            {this.state.showCourseInfo ? courseInfo : null}
-            {filter}
-          </Col>
-          <Col xs={12}>{jumpTo}</Col>
-          <Col xs={12}>{playlistsAndLessons}</Col>
-        </Col>
-      </Row>;
-
-    return (
-      <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
-        <Grid fluid={true}>
-          {heading}
-          {body}
-        </Grid>
-      </DocumentTitle>
-    );
-  }
-});
+  return (
+    <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
+      <Grid fluid={true}>
+        {heading}
+        {body}
+      </Grid>
+    </DocumentTitle>
+  );
+};
 
 PlaylistPage.propTypes = {
   isStudentMode: PropTypes.bool,

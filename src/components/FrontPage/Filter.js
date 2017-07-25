@@ -29,7 +29,6 @@ const Filter = React.createClass({
 
         {/*Filter mobile*/}
         <Col smHidden mdHidden lgHidden>
-          <FilterLabels t={t}/>
           <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
             onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
             <Glyphicon glyph={this.state.showMobileFilter ? 'chevron-down' : 'chevron-right'}/>
@@ -43,6 +42,7 @@ const Filter = React.createClass({
               <LessonFilter courseName={courseName}/>
             </div>
           </Collapse>
+          <FilterLabels t={t}/>
         </Col>
       </div>
     );
