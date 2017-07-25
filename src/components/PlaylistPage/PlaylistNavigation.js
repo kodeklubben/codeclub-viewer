@@ -19,7 +19,7 @@ const PlaylistNavigation = React.createClass({
         <span className={styles.link}>{playlistName}</span>
       </h4>;
       //const panelHeader = playlistName;
-      return <Panel key={idx} eventKey={idx} header={panelHeader}>
+      return playlists[playlistName].length ? <Panel key={idx} eventKey={idx} header={panelHeader}>
         <ListGroup fill>
           {
             playlists[playlistName].map((lesson, idx) => {
@@ -27,7 +27,7 @@ const PlaylistNavigation = React.createClass({
             })
           }
         </ListGroup>
-      </Panel>;
+      </Panel> : null;
     });
 
     return playlistListItems.length ?
