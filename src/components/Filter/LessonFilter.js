@@ -36,8 +36,7 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
       </h3>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   return (
-      <Panel header={title} bsStyle={bsStyle} className={
-        isStudentMode ? styles.bgColorStudent : styles.bgColorTeacher}>
+      <Panel header={title} bsStyle={bsStyle}>
         {filterGroups}
         <br/>
         <Button block bsStyle="white-grey-lighter"

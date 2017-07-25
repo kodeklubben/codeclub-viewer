@@ -21,7 +21,6 @@ const Filter = ({isStudentMode, courseName, t, setCollapsedFilter, collapsedFilt
 
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
-        <FilterLabels t={t}/>
         <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
           onClick={() => setCollapsedFilter('mainfilter')}>
           <Glyphicon className={styles.glyph} glyph={collapsedFilter.mainfilter ? 'chevron-down' : 'chevron-right'}/>
@@ -35,11 +34,11 @@ const Filter = ({isStudentMode, courseName, t, setCollapsedFilter, collapsedFilt
             <LessonFilter courseName={courseName}/>
           </div>
         </Collapse>
+        <FilterLabels t={t}/>
       </Col>
     </div>
   );
 };
-
 
 Filter.propTypes = {
   // ownProps:
