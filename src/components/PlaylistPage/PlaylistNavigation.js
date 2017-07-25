@@ -31,7 +31,7 @@ const PlaylistNavigation = React.createClass({
     });
 
     return playlistListItems.length ?
-      <div>
+      <div className={styles.container}>
         <h3>{t('playlist.lessoncollections')}</h3>
         <Accordion>
           {playlistListItems}

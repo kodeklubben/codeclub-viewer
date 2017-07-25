@@ -43,13 +43,14 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
       {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
     </div>;
 
+  const courseInfo =
+    <CourseInfo courseName={params.course} isStudentMode={isStudentMode}/>;
 
   // Title with course name and get started button
   const heading =
     <Row>
       <Col xs={12} sm={6} smOffset={3}>
         <h1>{capitalize(params.course)} {t('playlist.lessons')}</h1>
-        <CourseInfo courseName={params.course} isStudentMode={isStudentMode}/>
       </Col>
     </Row>;
 
@@ -58,12 +59,16 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
       {/*Filter desktop*/}
       <Col xsHidden>
         <Col sm={3} className={styles.filter}>{filter}</Col>
-        <Col sm={6}>{playlistsAndLessons}</Col>
-        <Col sm={3}>{jumpTo}</Col>
+        <Col sm={6}>
+          {courseInfo}
+          {playlistsAndLessons}
+        </Col>
+        <Col sm={3} className={styles.jumpTo}>{jumpTo}</Col>
       </Col>
 
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
+        <Col xs={12}>{courseInfo}</Col>
         <Col xs={12}>{filter}</Col>
         <Col xs={12}>{jumpTo}</Col>
         <Col xs={12}>{playlistsAndLessons}</Col>
