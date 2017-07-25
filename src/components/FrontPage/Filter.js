@@ -4,50 +4,40 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import {connect} from 'react-redux';
-
+import {setCollapsedFilter} from '../../action_creators';
 import {getTranslator} from '../../selectors/translate';
 import FilterLabels from '../Filter/FilterLabels';
 import LessonFilter from '../Filter/LessonFilter';
 
-const Filter = React.createClass({
+const Filter = ({isStudentMode, courseName, t, setCollapsedFilter, collapsedFilter}) => {
+  return (
+    <div>
+      {/*Filter desktop*/}
+      <Col xsHidden>
+        <LessonFilter courseName={courseName}/>
+      </Col>
 
-  getInitialState() {
-    return {
-      showMobileFilter: false
-    };
-  },
+      {/*Filter mobile*/}
+      <Col smHidden mdHidden lgHidden>
+        <FilterLabels t={t}/>
+        <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
+          onClick={() => setCollapsedFilter()}>
+          <Glyphicon glyph={collapsedFilter ? 'chevron-down' : 'chevron-right'}/>
+          {t('frontpage.showhidefilter')}
+        </Button>
+        <br/>
 
-  render() {
-    const {isStudentMode, courseName, t} = this.props;
+        <br/>
+        <Collapse in={collapsedFilter}>
+          <div>
+            <LessonFilter courseName={courseName}/>
+          </div>
+        </Collapse>
+      </Col>
+    </div>
+  );
+};
 
-    return (
-      <div>
-        {/*Filter desktop*/}
-        <Col xsHidden>
-          <LessonFilter courseName={courseName}/>
-        </Col>
-
-        {/*Filter mobile*/}
-        <Col smHidden mdHidden lgHidden>
-          <FilterLabels t={t}/>
-          <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
-            onClick={() => this.setState({showMobileFilter: !this.state.showMobileFilter})}>
-            <Glyphicon glyph={this.state.showMobileFilter ? 'chevron-down' : 'chevron-right'}/>
-            {t('frontpage.showhidefilter')}
-          </Button>
-          <br/>
-
-          <br/>
-          <Collapse in={this.state.showMobileFilter}>
-            <div>
-              <LessonFilter courseName={courseName}/>
-            </div>
-          </Collapse>
-        </Col>
-      </div>
-    );
-  }
-});
 
 Filter.propTypes = {
   // ownProps:
@@ -55,13 +45,17 @@ Filter.propTypes = {
   courseName: PropTypes.string,
 
   // mapStateToProps:
-  t: PropTypes.func
+  t: PropTypes.func,
+  collapsedFilter: PropTypes.bool,
+  setCollapsedFilter: PropTypes.func
 };
 
 const mapStateToProps = (state) => ({
-  t: getTranslator(state)
+  t: getTranslator(state),
+  collapsedFilter: state.collapsedFilter
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  {setCollapsedFilter}
 )(Filter);

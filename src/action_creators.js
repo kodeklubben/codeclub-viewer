@@ -106,3 +106,9 @@ export function setLastLesson(path) {
     path
   };
 }
+
+export function setCollapsedFilter() {
+  return {
+    type: 'SET_COLLAPSEDFILTER'
+  };
+}
