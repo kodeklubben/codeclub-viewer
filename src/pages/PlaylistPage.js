@@ -70,7 +70,7 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
       <Col smHidden mdHidden lgHidden>
         <Col xs={12}>{courseInfo}</Col>
         <Col xs={12}>{filter}</Col>
-        <Col xs={12}>{jumpTo}</Col>
+        {/*<Col xs={12}>{jumpTo}</Col>*/}
         <Col xs={12}>{playlistsAndLessons}</Col>
       </Col>
     </Row>;

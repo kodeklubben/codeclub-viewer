@@ -5,27 +5,24 @@ import LevelIcon from '../LevelIcon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
-const LevelNavigation = React.createClass({
-  render() {
-    const {t} = this.props;
-    const levels = this.props.levels || [];
-    const levelListItems = levels.map((level, idx) => (
-      <ListGroupItem key={idx}>
-        <a href={'#level-' + level}><LevelIcon level={level}/>{t('general.levels.' + level)}</a>
-      </ListGroupItem>
-    ));
-    return (
-      <div>
-        <h3>{t('playlist.levelnavigation')}</h3>
-        <div style={{fontSize: '1.25em'}}>
-          <ListGroup>
-            {levelListItems}
-          </ListGroup>
-        </div>
+const LevelNavigation = ({t, levels}) => {
+  const levelListItems = levels.map((level, idx) => (
+    <ListGroupItem key={idx} onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
+      <LevelIcon level={level}/>{t('general.levels.' + level)}
+    </ListGroupItem>
+  ));
+  return (
+    <div>
+      <h3>{t('playlist.levelnavigation')}</h3>
+      <div style={{fontSize: '1.25em'}}>
+        <ListGroup>
+          {levelListItems}
+        </ListGroup>
       </div>
-    );
-  }
-});
+    </div>
+  );
+};
+
 
 LevelNavigation.propTypes = {
   levels: PropTypes.array,
