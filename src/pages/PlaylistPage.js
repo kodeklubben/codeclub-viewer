@@ -28,8 +28,6 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
     <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
   ));
 
-  const showLevelNavigationDesktop = levels.length > 0;
-
   const filter = <Filter courseName={params.course} isStudentMode={isStudentMode}/>;
 
   const playlistsAndLessons =
@@ -40,7 +38,7 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
 
   const jumpTo =
     <div>
-      {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
+      {levels.length > 0 ? <LevelNavigation levels={levels}/> : null}
     </div>;
 
   const courseInfo =
