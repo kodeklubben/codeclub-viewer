@@ -8,6 +8,8 @@ import {setCollapsedFilter} from '../../action_creators';
 import {getTranslator} from '../../selectors/translate';
 import FilterLabels from '../Filter/FilterLabels';
 import LessonFilter from '../Filter/LessonFilter';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './Filter.scss';
 
 const Filter = ({isStudentMode, courseName, t, setCollapsedFilter, collapsedFilter}) => {
   return (
@@ -22,7 +24,7 @@ const Filter = ({isStudentMode, courseName, t, setCollapsedFilter, collapsedFilt
         <FilterLabels t={t}/>
         <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
           onClick={() => setCollapsedFilter()}>
-          <Glyphicon glyph={collapsedFilter ? 'chevron-down' : 'chevron-right'}/>
+          <Glyphicon className={styles.glyph} glyph={collapsedFilter ? 'chevron-down' : 'chevron-right'}/>
           {t('frontpage.showhidefilter')}
         </Button>
         <br/>
@@ -58,4 +60,4 @@ const mapStateToProps = (state) => ({
 export default connect(
   mapStateToProps,
   {setCollapsedFilter}
-)(Filter);
+)(withStyles(styles)(Filter));
