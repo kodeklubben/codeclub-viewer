@@ -1,7 +1,9 @@
-export default function(state=true, action) {
+const collapseObject = (state, key) => ({...state, [key]: !!state});
+
+export default function(state=false, action) {
   switch(action.type) {
     case 'SET_COLLAPSEDFILTER':
-      return !state;
+      return collapseObject(state, action.name);
   }
   return state;
 }

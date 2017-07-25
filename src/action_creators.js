@@ -107,8 +107,9 @@ export function setLastLesson(path) {
   };
 }
 
-export function setCollapsedFilter() {
+export function setCollapsedFilter(name) {
   return {
-    type: 'SET_COLLAPSEDFILTER'
+    type: 'SET_COLLAPSEDFILTER',
+    name
   };
 }

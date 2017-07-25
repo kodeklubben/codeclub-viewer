@@ -36,7 +36,7 @@ store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
-store.dispatch(setCollapsedFilter());
+store.dispatch(setCollapsedFilter('mainfilter'));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);

@@ -23,14 +23,14 @@ const Filter = ({isStudentMode, courseName, t, setCollapsedFilter, collapsedFilt
       <Col smHidden mdHidden lgHidden>
         <FilterLabels t={t}/>
         <Button className={isStudentMode ? 'btn-student' : 'btn-teacher'}
-          onClick={() => setCollapsedFilter()}>
-          <Glyphicon className={styles.glyph} glyph={collapsedFilter ? 'chevron-down' : 'chevron-right'}/>
+          onClick={() => setCollapsedFilter('mainfilter')}>
+          <Glyphicon className={styles.glyph} glyph={collapsedFilter.mainfilter ? 'chevron-down' : 'chevron-right'}/>
           {t('frontpage.showhidefilter')}
         </Button>
         <br/>
 
         <br/>
-        <Collapse in={collapsedFilter}>
+        <Collapse in={collapsedFilter.mainfilter}>
           <div>
             <LessonFilter courseName={courseName}/>
           </div>
@@ -48,7 +48,9 @@ Filter.propTypes = {
 
   // mapStateToProps:
   t: PropTypes.func,
-  collapsedFilter: PropTypes.bool,
+  collapsedFilter: PropTypes.object,
+
+  //mapDispatchToProps
   setCollapsedFilter: PropTypes.func
 };
 
@@ -57,7 +59,11 @@ const mapStateToProps = (state) => ({
   collapsedFilter: state.collapsedFilter
 });
 
+const mapDispatchToProps = {
+  setCollapsedFilter
+};
+
 export default connect(
   mapStateToProps,
-  {setCollapsedFilter}
+  mapDispatchToProps
 )(withStyles(styles)(Filter));
