@@ -64,6 +64,7 @@ export default {
     toteacherinstruction: 'Til lærarrettleiing',
     tolesson: 'Til oppgåve',
     reset: 'Fjern avkrysninger',
+    tomainlanguage: 'På ditt språk',
     improvepage: {
       header: 'Gjer denne sida betre',
       textline1: 'Fann du ein feil? Kunne noko vore betre?',

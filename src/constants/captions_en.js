@@ -64,6 +64,7 @@ export default {
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
+    tomainlanguage: 'In your language',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',

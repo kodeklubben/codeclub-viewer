@@ -14,7 +14,6 @@ import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
-import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
@@ -22,11 +21,19 @@ import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../act
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
-      <Button className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
+      <Button className={styles.buttonMargin} bsStyle="guide" bsSize="small">
         {buttonText}
       </Button>
     </LinkContainer> :
     null);
+};
+
+const MainLanguageButton = ({t}) => {
+  return <LinkContainer to={'/scratch/astrokatt/astrokatt'}>
+    <Button className={styles.buttonMargin} bsStyle="info" bsSize="small">
+      {t('lessons.tomainlanguage')}
+    </Button>
+  </LinkContainer>;
 };
 
 const ReadmeButton = ({path, lessons, t}) => {
@@ -130,13 +137,18 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes, lesson, language} = this.props;
+
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
+
     const resetButton = anyCheckboxTrue(checkboxes) === true ?
-      <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
+      <Button className={styles.buttonMargin}  bsStyle="warning" bsSize="small"
       onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
       : null;
+
+    const mainLanguageBtn = language === lesson.frontmatter.language ? null : <MainLanguageButton t={t}/>;
+
     return (
       <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -145,6 +157,7 @@ const Lesson = React.createClass({
             {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
           </h1>
           {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
+          {mainLanguageBtn}
           {resetButton}
           {instructionBtn}
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
@@ -176,7 +189,8 @@ Lesson.propTypes = {
   t: PropTypes.func.isRequired,
   setCheckbox: PropTypes.func,
   checkboxes: PropTypes.object,
-  setLastLesson: PropTypes.func
+  setLastLesson: PropTypes.func,
+  language: PropTypes.string,
 };
 
 const mapStateToProps = (state, ownProps) => ({
