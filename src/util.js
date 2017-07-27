@@ -295,6 +295,29 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 };
 
 /**
+* Returns the readmePath of a lesson with the given lessonPath
+*
+* @param {String} path
+* @param {String} language
+* @returns {String or undefined}
+*/
+export const getReadmeFromOtherLanguage = (path, language) => {
+  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^\/]*\/index[^.]*\.md/);
+  const hasFile = (path) => req.keys().indexOf(path) !== -1;
+  const course = path.substring(0, path.indexOf('/'));
+  const lesson = path.substring(path.lastIndexOf('/') + 1);
+  const readmePath = `./${course}/${lesson}/README.md`;
+  const readmePathWithLanguage = `./${course}/${lesson}/README_${language}.md`;
+  if (hasFile(readmePathWithLanguage)) {
+    return readmePathWithLanguage;
+  }
+  if (hasFile(readmePath) && language !== 'nb') {
+    return readmePath;
+  }
+  return null;
+};
+
+/**
  * Based on an implementation of Java's string to integer hashCode function.
  * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
  */

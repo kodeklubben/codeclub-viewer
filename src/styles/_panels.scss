@@ -1,4 +1,5 @@
 @import '~bootstrapStyles/mixins/panels';
+@import './variables.scss';
 
 .panel-student {
   @include panel-variant(
