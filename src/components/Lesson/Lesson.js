@@ -28,8 +28,12 @@ const InstructionButton = ({buttonPath, buttonText}) => {
     null);
 };
 
-const MainLanguageButton = ({t}) => {
-  return <LinkContainer to={'/scratch/astrokatt/astrokatt'}>
+const MainLanguageButton = ({path, lessons, t, isReadme}) => {
+  const contextPath = './' + path + '.md';
+  const lessonPath = '/' + path;
+  const readmePath = (lessons[contextPath] || {}).readmePath;
+  const buttonPath = isReadme ? getReadmepathFromLessonpath(lessons, lessonPath) : readmePath;
+  return <LinkContainer to={buttonPath}>
     <Button className={styles.buttonMargin} bsStyle="info" bsSize="small">
       {t('lessons.tomainlanguage')}
     </Button>
@@ -147,7 +151,8 @@ const Lesson = React.createClass({
       onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
       : null;
 
-    const mainLanguageBtn = language === lesson.frontmatter.language ? null : <MainLanguageButton t={t}/>;
+    const mainLanguageBtn = language === lesson.frontmatter.language ? null :
+      <MainLanguageButton {...{path, lessons, t, isReadme}}/>;
 
     return (
       <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
