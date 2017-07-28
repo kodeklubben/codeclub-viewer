@@ -2,8 +2,6 @@
 
 .listGroupItem {
   position: static; // To avoid bottom part of outline from being overwritten by the next element
-  font-size: 1.125em;
-  font-weight: bold;
   &:hover {
     box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.1);
   }
