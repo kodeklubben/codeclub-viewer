@@ -17,9 +17,9 @@ const LevelNavigation = ({t, levels, isStudentMode}) => {
       <LevelIcon level={level}/>{t('general.levels.' + level)}
     </ListGroupItem>
   ));
-  const title = <h3>{t('playlist.levelnavigation')}</h3>;
+  const header = <h3>{t('playlist.levelnavigation')}</h3>;
   return (
-    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={title}>
+    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={header}>
       <ListGroup fill>
         {levelListItems}
       </ListGroup>
