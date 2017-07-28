@@ -11,7 +11,7 @@ import LevelIcon from '../LevelIcon';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map((level, idx) => (
-    <ListGroupItem className={styles.listGroupItem}
+    <ListGroupItem className={styles.listGroupItem + ' ' + (isStudentMode ? styles.student : styles.teacher)}
                    key={idx}
                    onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
       <LevelIcon level={level}/>{t('general.levels.' + level)}
