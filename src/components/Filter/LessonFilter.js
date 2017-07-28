@@ -11,6 +11,8 @@ import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
@@ -28,21 +30,26 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
       <p>{t('filter.tooltip.textline1')}</p>
       <p>{t('filter.tooltip.textline2')}</p>
     </Tooltip>;
-  const title =
-      <h3>{t('filter.header')}
+  const header =
+      <div className={styles.header}>{t('filter.header')}
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
           <Button className={styles.filterInfoButton}><Glyphicon glyph="info-sign"/></Button>
         </OverlayTrigger>
-      </h3>;
+      </div>;
+  const clearFilter =
+    <ListGroupItem>
+      <Button block bsStyle="white-grey-lighter"
+              onClick={() => resetFilter('language', language)}>
+        {t('filter.removefilter')}
+      </Button>
+    </ListGroupItem>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   return (
-      <Panel header={title} bsStyle={bsStyle}>
-        {filterGroups}
-        <br/>
-        <Button block bsStyle="white-grey-lighter"
-          onClick={() => resetFilter('language', language)}>
-          {t('filter.removefilter')}
-        </Button>
+      <Panel header={<div>{header}</div>} bsStyle={bsStyle}>
+        <ListGroup fill>
+          {filterGroups}
+          {clearFilter}
+        </ListGroup>
       </Panel>
   );
 };

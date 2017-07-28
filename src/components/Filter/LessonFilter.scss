@@ -1,5 +1,10 @@
 @import '../../styles/variables';
 
+.header {
+  font-size: 1.125em;
+  font-weight: bold;
+}
+
 .filterInfoButton {
   &,
   &:hover,
@@ -13,7 +18,6 @@
   color: gray;
   font-size: 1.1em;
   float: right;
-  margin-top: -9px;
-  margin-right: -14px;
+  padding: 0;
   transition: 0.1s;
 }

@@ -1,28 +1,14 @@
 @import '../../styles/variables';
 
-.filterGroup {
-  &:first-child > h4 {
-    margin-top: 0;
-  }
-  &:not(:last-child) {
-    border-bottom: 1px solid $color-gray-light;
-  }
-}
-
-.filterItems {
-  overflow: hidden; // Avoid margin collapse
-}
-
 .name {
+  font-size: 1.125em;
+  font-weight: bold;
   &:hover {
     cursor: pointer;
   }
 }
 
 .glyph {
-  &:hover {
-    cursor: pointer;
-  }
   font-size: 0.8em;
   padding-right: 0.5em;
 }
