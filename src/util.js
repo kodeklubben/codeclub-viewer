@@ -295,25 +295,40 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 };
 
 /**
-* Returns the readmePath of a lesson with the given lessonPath
+* Returns the readmePath for the language in state
 *
 * @param {String} path
 * @param {String} language
-* @returns {String or undefined}
+* @returns {String or null}
 */
-export const getReadmeFromOtherLanguage = (path, language) => {
-  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^\/]*\/index[^.]*\.md/);
+export const getReadmeForMainLanguage = (path, language) => {
+  const req = require.context('onlyFrontmatter!lessonSrc/', true,
+    /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
   const hasFile = (path) => req.keys().indexOf(path) !== -1;
   const course = path.substring(0, path.indexOf('/'));
   const lesson = path.substring(path.lastIndexOf('/') + 1);
-  const readmePath = `./${course}/${lesson}/README.md`;
-  const readmePathWithLanguage = `./${course}/${lesson}/README_${language}.md`;
-  if (hasFile(readmePathWithLanguage)) {
-    return readmePathWithLanguage;
+  if (path.indexOf('/') !== -1 && path.lastIndexOf('/') !== -1) {
+    const readmePath = `./${course}/${lesson}/README.md`;
+    const readmePathWithLanguage = `./${course}/${lesson}/README_${language}.md`;
+    if (hasFile(readmePathWithLanguage)) {
+      return readmePathWithLanguage;
+    }
+    if (hasFile(readmePath)) {
+      return readmePath;
+    }
   }
-  if (hasFile(readmePath) && language !== 'nb') {
-    return readmePath;
-  }
+  return null;
+};
+
+
+/**
+* Returns the lesson for the language in state
+*
+* @param {String} path
+* @param {String} language
+* @returns {String or null}
+*/
+export const getLessonForMainLanguage = (path, language) => {
   return null;
 };
 

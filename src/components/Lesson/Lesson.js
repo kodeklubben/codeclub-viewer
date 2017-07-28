@@ -14,7 +14,7 @@ import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey,
-  getReadmeFromOtherLanguage} from '../../util';
+  getReadmeForMainLanguage, getLessonForMainLanguage} from '../../util';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
@@ -29,10 +29,8 @@ const InstructionButton = ({buttonPath, buttonText}) => {
     null);
 };
 
-const MainLanguageButton = ({path, lessons, t, isReadme, language}) => {
-  const contextPath = './' + path + '.md';
-  const readmePath = (lessons[contextPath] || {}).readmePath;
-  const buttonPath = isReadme ? getReadmeFromOtherLanguage(path, language) : readmePath;
+const MainLanguageButton = ({path, t, isReadme, language}) => {
+  const buttonPath = isReadme ? getReadmeForMainLanguage(path, language) : getLessonForMainLanguage(path, language);
   return buttonPath !== null ?  <LinkContainer to={buttonPath}>
     <Button className={styles.buttonMargin} bsStyle="info" bsSize="small">
       {t('lessons.tomainlanguage')}
@@ -152,7 +150,7 @@ const Lesson = React.createClass({
       : null;
 
     const mainLanguageBtn = language === lesson.frontmatter.language ? null :
-      <MainLanguageButton {...{path, lessons, t, isReadme, language}}/>;
+      <MainLanguageButton {...{path, t, isReadme, language}}/>;
 
     return (
       <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
