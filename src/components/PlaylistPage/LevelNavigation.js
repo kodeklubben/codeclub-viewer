@@ -9,7 +9,7 @@ import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 
 
-const LevelNavigation = ({t, levels}) => {
+const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map((level, idx) => (
     <ListGroupItem className={styles.listGroupItem}
                    key={idx}
@@ -17,9 +17,9 @@ const LevelNavigation = ({t, levels}) => {
       <LevelIcon level={level}/>{t('general.levels.' + level)}
     </ListGroupItem>
   ));
-  const header = <span className={styles.header}>{t('playlist.levelnavigation')}</span>;
+  const title = <h3>{t('playlist.levelnavigation')}</h3>;
   return (
-    <Panel header={<div>{header}</div>}>
+    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={title}>
       <ListGroup fill>
         {levelListItems}
       </ListGroup>
@@ -29,13 +29,13 @@ const LevelNavigation = ({t, levels}) => {
 
 LevelNavigation.propTypes = {
   levels: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  isStudentMode: PropTypes.bool
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  t: getTranslator(state),
+  isStudentMode: state.isStudentMode
+});
 
 export default connect(mapStateToProps)(withStyles(styles)(LevelNavigation));
