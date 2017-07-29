@@ -31,11 +31,12 @@ const InstructionButton = ({buttonPath, buttonText}) => {
 
 const MainLanguageButton = ({path, t, isReadme, language}) => {
   const buttonPath = isReadme ? getReadmeForMainLanguage(path, language) : getLessonForMainLanguage(path, language);
-  return buttonPath !== null ?  <LinkContainer to={buttonPath}>
-    <Button className={styles.buttonMargin} bsStyle="info" bsSize="small">
-      {t('lessons.tomainlanguage')}
-    </Button>
-  </LinkContainer> : null;
+  return buttonPath === null ? null :
+    <LinkContainer to={buttonPath}>
+      <Button className={styles.buttonMargin} bsStyle="info" bsSize="small">
+        {t('lessons.tomainlanguage')}
+      </Button>
+    </LinkContainer>;
 };
 
 const ReadmeButton = ({path, lessons, t}) => {

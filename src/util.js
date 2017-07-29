@@ -302,21 +302,10 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * @returns {String or null}
 */
 export const getReadmeForMainLanguage = (path, language) => {
-  const req = require.context('onlyFrontmatter!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
-  const hasFile = (path) => req.keys().indexOf(path) !== -1;
-  const course = path.substring(0, path.indexOf('/'));
-  const lesson = path.substring(path.lastIndexOf('/') + 1);
-  if (path.indexOf('/') !== -1 && path.lastIndexOf('/') !== -1) {
-    const readmePath = `./${course}/${lesson}/README.md`;
-    const readmePathWithLanguage = `./${course}/${lesson}/README_${language}.md`;
-    if (hasFile(readmePathWithLanguage)) {
-      return readmePathWithLanguage;
-    }
-    if (hasFile(readmePath)) {
-      return readmePath;
-    }
-  }
+  //const course = path.substring(0, path.indexOf('/'));
+  //const lesson = path.substring(path.indexOf(course) + course.length + 1, path.lastIndexOf('/'));
+  //const regex = new RegExp('^\.\/' + course + '\/' + lesson + '\/README(_[a-z]{2})?\.md$');
+  //const req = require.context('lessonSrc/', true, regex);
   return null;
 };
 
