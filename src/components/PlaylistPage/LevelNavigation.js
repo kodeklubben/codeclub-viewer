@@ -1,41 +1,41 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {getTranslator} from '../../selectors/translate';
-import LevelIcon from '../LevelIcon';
+import Panel from 'react-bootstrap/lib/Panel';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './LevelNavigation.scss';
+import {getTranslator} from '../../selectors/translate';
+import LevelIcon from '../LevelIcon';
 
-const LevelNavigation = React.createClass({
-  render() {
-    const {t} = this.props;
-    const levels = this.props.levels || [];
-    const levelListItems = levels.map((level, idx) => (
-      <ListGroupItem key={idx}>
-        <a href={'#level-' + level}><LevelIcon level={level}/>{t('general.levels.' + level)}</a>
-      </ListGroupItem>
-    ));
-    return (
-      <div>
-        <h3>{t('playlist.levelnavigation')}</h3>
-        <div style={{fontSize: '1.25em'}}>
-          <ListGroup>
-            {levelListItems}
-          </ListGroup>
-        </div>
-      </div>
-    );
-  }
-});
+
+const LevelNavigation = ({t, levels, isStudentMode}) => {
+  const levelListItems = levels.map((level, idx) => (
+    <ListGroupItem className={styles.listGroupItem + ' ' + (isStudentMode ? styles.student : styles.teacher)}
+                   key={idx}
+                   onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
+      <LevelIcon level={level}/>{t('general.levels.' + level)}
+    </ListGroupItem>
+  ));
+  const header = <h3>{t('playlist.levelnavigation')}</h3>;
+  return (
+    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={header}>
+      <ListGroup fill>
+        {levelListItems}
+      </ListGroup>
+    </Panel>
+  );
+};
 
 LevelNavigation.propTypes = {
   levels: PropTypes.array,
-  t: PropTypes.func
+  t: PropTypes.func,
+  isStudentMode: PropTypes.bool
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  t: getTranslator(state),
+  isStudentMode: state.isStudentMode
+});
 
-export default connect(mapStateToProps)(LevelNavigation);
+export default connect(mapStateToProps)(withStyles(styles)(LevelNavigation));
