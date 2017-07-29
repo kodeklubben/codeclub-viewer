@@ -31,7 +31,8 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
       <p>{t('filter.tooltip.textline2')}</p>
     </Tooltip>;
   const header =
-      <div className={styles.header}>{t('filter.header')}
+      <div>
+        {t('filter.header')}
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
           <Button className={styles.filterInfoButton}><Glyphicon glyph="info-sign"/></Button>
         </OverlayTrigger>
@@ -45,7 +46,7 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
     </ListGroupItem>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   return (
-      <Panel header={<div>{header}</div>} bsStyle={bsStyle}>
+      <Panel header={header} bsStyle={bsStyle}>
         <ListGroup fill>
           {filterGroups}
           {clearFilter}

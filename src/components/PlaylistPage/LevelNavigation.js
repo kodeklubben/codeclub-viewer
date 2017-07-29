@@ -3,23 +3,19 @@ import {connect} from 'react-redux';
 import Panel from 'react-bootstrap/lib/Panel';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './LevelNavigation.scss';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map((level, idx) => (
-    <ListGroupItem className={styles.listGroupItem + ' ' + (isStudentMode ? styles.student : styles.teacher)}
-                   key={idx}
+    <ListGroupItem key={idx}
                    onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
       <LevelIcon level={level}/>{t('general.levels.' + level)}
     </ListGroupItem>
   ));
-  const header = <h3>{t('playlist.levelnavigation')}</h3>;
   return (
-    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={header}>
+    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={t('playlist.levelnavigation')}>
       <ListGroup fill>
         {levelListItems}
       </ListGroup>
@@ -38,4 +34,4 @@ const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(LevelNavigation));
+export default connect(mapStateToProps)(LevelNavigation);
