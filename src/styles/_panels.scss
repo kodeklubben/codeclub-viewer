@@ -1,17 +1,11 @@
 @import '~bootstrapStyles/mixins/panels';
 @import './variables';
 
-
 @mixin panel-kodeklubben($dark, $light, $lighter) {
-  @include panel-variant(
-                  $light,
-                  $dark,
-                  $light,
-                  darken(adjust-hue($light, -10), 5%)
-  );
+  @include panel-variant($light, $dark, $light, darken(adjust-hue($light, -10), 5%));
   background-color: $lighter;
 
-  :global .panel-heading {
+  :global(.panel-heading) {
     // It is semantically incorrect to use heading-tags like h3 just to bold and enlarge the heading
     font-weight: bold;
     font-size: 1.25em;
@@ -23,11 +17,12 @@
     }
   }
 
-  :global .list-group-item {
+  :global(.list-group-item) {
     background-color: $lighter;
   }
 
-  :global a.list-group-item, button.list-group-item {
+  :global(a.list-group-item),
+  :global(button.list-group-item) {
     &:focus {
       background-color: $lighter;
     }
@@ -40,7 +35,6 @@
 
 .panel-student {
   @include panel-kodeklubben($color-green-dark, $color-green-light, $color-green-lighter);
-
 }
 
 .panel-teacher {
