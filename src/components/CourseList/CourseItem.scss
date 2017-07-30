@@ -34,8 +34,11 @@
 }
 
 .courseName {
-  font-size: 1.4em;
+  @media screen and (min-width: $screen-xs-max) {
+    font-size: 1.3em;
+  }
   white-space: nowrap;
+  font-size: 1.15em;
 }
 
 .lessonCount {
