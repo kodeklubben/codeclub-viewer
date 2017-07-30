@@ -5,13 +5,16 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './LevelNavigation.scss';
 
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map((level, idx) => (
-    <ListGroupItem key={idx}
-                   onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
-      <LevelIcon level={level}/>{t('general.levels.' + level)}
+    <ListGroupItem key={idx} onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
+      <span className={styles.name}>
+        <LevelIcon level={level}/>{t('general.levels.' + level)}
+      </span>
     </ListGroupItem>
   ));
   return (
@@ -34,4 +37,4 @@ const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode
 });
 
-export default connect(mapStateToProps)(LevelNavigation);
+export default connect(mapStateToProps)(withStyles(styles)(LevelNavigation));

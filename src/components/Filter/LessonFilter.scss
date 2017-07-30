@@ -1,16 +1,16 @@
-.filterInfoButton {
-  &,
-  &:hover,
-  &:active:focus,
-  &:focus {
-    background: transparent;
-    text-decoration: none;
-    border: none;
-    outline: none;
-  }
-  color: gray;
+@import '../../styles/variables';
+
+.filterInfo {
   font-size: 1.1em;
   float: right;
-  padding: 0;
-  transition: 0.1s;
+  padding-top: 1px;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-gray;
+  }
+
+  &:active {
+    color: black;
+  }
 }

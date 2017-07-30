@@ -34,7 +34,7 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
       <div>
         {t('filter.header')}
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
-          <Button className={styles.filterInfoButton}><Glyphicon glyph="info-sign"/></Button>
+          <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
         </OverlayTrigger>
       </div>;
   const clearFilter =
