@@ -56,12 +56,12 @@ export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, 
     <Row>
       {/*Filter desktop*/}
       <Col xsHidden>
-        <Col sm={3} className={styles.filter}>{filter}</Col>
+        <Col sm={3} className={styles.topMargin}>{filter}</Col>
         <Col sm={6}>
           {courseInfo}
           {playlistsAndLessons}
         </Col>
-        <Col sm={3} className={styles.jumpTo}>{jumpTo}</Col>
+        <Col sm={3} className={styles.topMargin}>{jumpTo}</Col>
       </Col>
 
       {/*Filter mobile*/}
