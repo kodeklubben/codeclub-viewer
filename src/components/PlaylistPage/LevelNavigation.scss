@@ -1,16 +1,3 @@
-@import '../../styles/variables';
-
-.listGroupItem {
-  position: static; // To avoid bottom part of outline from being overwritten by the next element
-  &:hover {
-    box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.student {
-  background-color: $color-green-lighter;
-}
-
-.teacher {
-  background-color: $color-blue-lighter;
+.name {
+  font-size: 1.125em;
 }

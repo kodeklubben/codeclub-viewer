@@ -3,23 +3,22 @@ import {connect} from 'react-redux';
 import Panel from 'react-bootstrap/lib/Panel';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './LevelNavigation.scss';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './LevelNavigation.scss';
 
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map((level, idx) => (
-    <ListGroupItem className={styles.listGroupItem + ' ' + (isStudentMode ? styles.student : styles.teacher)}
-                   key={idx}
-                   onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
-      <LevelIcon level={level}/>{t('general.levels.' + level)}
+    <ListGroupItem key={idx} onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
+      <span className={styles.name}>
+        <LevelIcon level={level}/>{t('general.levels.' + level)}
+      </span>
     </ListGroupItem>
   ));
-  const header = <h3>{t('playlist.levelnavigation')}</h3>;
   return (
-    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={header}>
+    <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={t('playlist.levelnavigation')}>
       <ListGroup fill>
         {levelListItems}
       </ListGroup>
