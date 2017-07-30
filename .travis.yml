@@ -7,3 +7,4 @@ script:
   - yarn run stylelint
   - yarn run test
   - ./travis_build_prod.sh
+  - yarn run test:links
