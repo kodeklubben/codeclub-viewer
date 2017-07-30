@@ -15,7 +15,7 @@
     "servejs": "node ./server.js",
     "test": "mocha --compilers js:babel-core/register --require mock-local-storage --require ignore-styles --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "yarn run test -- --watch",
-    "eslint": "eslint src/ test/ --ext .js,.jsx",
+    "eslint": "eslint *.js src/ test/ --ext .js,.jsx",
     "stylelint": "stylelint 'src/**/*.scss'",
     "testall": "yarn run eslint && yarn run stylelint && yarn run test"
   },
