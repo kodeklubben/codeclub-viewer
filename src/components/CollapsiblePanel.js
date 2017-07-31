@@ -30,7 +30,7 @@ const CollapsiblePanel = React.createClass({
 CollapsiblePanel.propTypes = {
   initiallyExpanded: PropTypes.bool,
   header: PropTypes.string,
-  bsStyle: PropTypes.string,
+  bsStyle: PropTypes.oneOf(['student', 'teacher']),
 };
 
 export default withStyles(styles)(CollapsiblePanel);

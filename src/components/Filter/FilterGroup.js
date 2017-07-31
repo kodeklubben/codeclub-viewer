@@ -7,6 +7,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 export const FilterGroup = React.createClass({
   getInitialState() {
@@ -38,15 +39,15 @@ export const FilterGroup = React.createClass({
         ) : null;
       });
       return (
-        <div className={styles.filterGroup}>
-          <h4 className={styles.name} onClick={this.changeState}>
+        <ListGroupItem>
+          <div className={styles.name} onClick={this.changeState}>
             <Glyphicon className={styles.glyph} glyph={!showFilterTags ? 'chevron-right' : 'chevron-down'}/>
             {groupName}
-          </h4>
+          </div>
           <Collapse in={showFilterTags}>
-            <div className={styles.filterItems}>{filterItems}</div>
+            <div>{filterItems}</div>
           </Collapse>
-        </div>
+        </ListGroupItem>
       );
     }
     else {

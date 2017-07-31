@@ -1,22 +1,43 @@
 @import '~bootstrapStyles/mixins/panels';
-@import './variables.scss';
+@import './variables';
+
+@mixin panel-kodeklubben($dark, $light, $lighter) {
+  @include panel-variant($light, $dark, $light, darken(adjust-hue($light, -10), 5%));
+  background-color: $lighter;
+
+  :global(.panel-heading) {
+    // It is semantically incorrect to use heading-tags like h3 just to bold and enlarge the heading
+    font-weight: bold;
+    font-size: 1.25em;
+
+    // bootstrap adds classname panel-title to outermost tag if header html and not just plain text,
+    // and .panel-title has font-size hardcoded to $font-size-base*1.125
+    :global(.panel-title) {
+      font-size: inherit; // boot-strap add
+    }
+  }
+
+  :global(.list-group-item) {
+    background-color: $lighter;
+  }
+
+  :global(a.list-group-item),
+  :global(button.list-group-item) {
+    &:focus {
+      background-color: $lighter;
+    }
+    &:hover {
+      background-color: darken($lighter, 5%);
+    }
+    position: static; // To avoid bottom part of outline from being overwritten by the next element
+  }
+}
+>>>>>>> master
 
 .panel-student {
-  @include panel-variant(
-    $color-green-light,
-    $color-green-dark,
-    $color-green-light,
-    darken(adjust-hue($color-green-light, -10), 5%)
-  );
-  background-color: $color-green-lighter;
+  @include panel-kodeklubben($color-green-dark, $color-green-light, $color-green-lighter);
 }
 
 .panel-teacher {
-  @include panel-variant(
-    $color-blue-light,
-    $color-blue-dark,
-    $color-blue-light,
-    darken(adjust-hue($color-blue-light, -10), 5%)
-  );
-  background-color: $color-blue-lighter;
+  @include panel-kodeklubben($color-blue-dark, $color-blue-light, $color-blue-lighter);
 }
