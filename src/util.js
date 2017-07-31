@@ -302,10 +302,14 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * @returns {String or null}
 */
 export const getReadmeForMainLanguage = (path, language) => {
+  //Her vil jeg hente ut READMEfilen som er lik språket på siden
+  //Først finne alle filene som starter med README i samme mappe som den andre READMEfilen
+  //Hvis frontmatter.language er lik language så skal den returnere pathen
+
   //const course = path.substring(0, path.indexOf('/'));
   //const lesson = path.substring(path.indexOf(course) + course.length + 1, path.lastIndexOf('/'));
   //const regex = new RegExp('^\.\/' + course + '\/' + lesson + '\/README(_[a-z]{2})?\.md$');
-  //const req = require.context('lessonSrc/', true, regex);
+
   return null;
 };
 
@@ -318,6 +322,12 @@ export const getReadmeForMainLanguage = (path, language) => {
 * @returns {String or null}
 */
 export const getLessonForMainLanguage = (path, language) => {
+  //Her vil jeg hente ut alle markdownfilene som ikke er README-filer
+  //og har frontmatter.language lik language. Hvis det finnes en slik fil så
+  //skal den returnere pathen
+  //Denne funksjonen og getReadmeForMainLanguage kan garantert slås sammen,
+  //men jeg klarer ikke hente ut alle oppgavene fra en mappe
+  
   return null;
 };
 

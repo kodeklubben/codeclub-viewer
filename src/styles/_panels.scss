@@ -32,7 +32,6 @@
     position: static; // To avoid bottom part of outline from being overwritten by the next element
   }
 }
->>>>>>> master
 
 .panel-student {
   @include panel-kodeklubben($color-green-dark, $color-green-light, $color-green-lighter);
