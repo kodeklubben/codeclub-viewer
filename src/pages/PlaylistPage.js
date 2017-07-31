@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/lib/Row';
 
 import styles from './PlaylistPage.scss';
 
-import {getFilteredAndIndexedLessons, getLessonsByLevel} from '../selectors/lesson';
+import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
 import {capitalize} from '../util';
@@ -21,14 +21,12 @@ import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
 
-export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, playlists, t}) => {
+export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
 
   const lessonLists = levels.map((level, idx) => (
     <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
   ));
-
-  const showLevelNavigationDesktop = Object.keys(lessons).length > 15 && levels.length > 1;
 
   const filter = <Filter courseName={params.course} isStudentMode={isStudentMode}/>;
 
@@ -40,7 +38,7 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
 
   const jumpTo =
     <div>
-      {showLevelNavigationDesktop ? <LevelNavigation levels={levels}/> : null}
+      {levels.length > 0 ? <LevelNavigation levels={levels}/> : null}
     </div>;
 
   const courseInfo =
@@ -58,19 +56,19 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
     <Row>
       {/*Filter desktop*/}
       <Col xsHidden>
-        <Col sm={3} className={styles.filter}>{filter}</Col>
+        <Col sm={3} className={styles.topMargin}>{filter}</Col>
         <Col sm={6}>
           {courseInfo}
           {playlistsAndLessons}
         </Col>
-        <Col sm={3} className={styles.jumpTo}>{jumpTo}</Col>
+        <Col sm={3} className={styles.topMargin}>{jumpTo}</Col>
       </Col>
 
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
         <Col xs={12}>{courseInfo}</Col>
         <Col xs={12}>{filter}</Col>
-        <Col xs={12}>{jumpTo}</Col>
+        {/*<Col xs={12}>{jumpTo}</Col>*/}
         <Col xs={12}>{playlistsAndLessons}</Col>
       </Col>
     </Row>;
@@ -87,7 +85,6 @@ export const PlaylistPage = ({params, isStudentMode, lessons, lessonsByLevel, pl
 
 PlaylistPage.propTypes = {
   isStudentMode: PropTypes.bool,
-  lessons: PropTypes.object.isRequired,
   lessonsByLevel: PropTypes.object.isRequired,
   playlists: PropTypes.object.isRequired,
   params: PropTypes.shape({
@@ -100,7 +97,6 @@ function mapStateToProps(state, props) {
   const {course} = props.params;
   return {
     isStudentMode: state.isStudentMode,
-    lessons: getFilteredAndIndexedLessons(state, course),
     lessonsByLevel: getLessonsByLevel(state, course),
     playlists: getPlaylists(state, course),
     t: getTranslator(state)

@@ -8,6 +8,7 @@ import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {setCollapsedFilter} from '../../action_creators';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
   setCollapsedFilter, collapsedFilter}) => {
@@ -29,15 +30,15 @@ export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, on
       ) : null;
     });
     return (
-      <div className={styles.filterGroup}>
-        <h4 className={styles.name} onClick={() => setCollapsedFilter(groupKey)}>
+      <ListGroupItem>
+        <div className={styles.name} onClick={() => setCollapsedFilter(groupKey)}>
           <Glyphicon className={styles.glyph} glyph={collapsedFilter[groupKey] ? 'chevron-down' : 'chevron-right'}/>
           {groupName}
-        </h4>
+        </div>
         <Collapse in={collapsedFilter[groupKey]}>
           <div className={styles.filterItems}>{filterItems}</div>
         </Collapse>
-      </div>
+      </ListGroupItem>
     );
   }
   else {
