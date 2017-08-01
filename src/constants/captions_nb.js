@@ -104,7 +104,7 @@ export default {
     },
     tags_subject: {
       mathematics: 'Matematikk',
-      science: 'Vitenskap',
+      science: 'Naturfag',
       programming: 'Programmering',
       technology: 'Teknologi',
       music: 'Musikk',
