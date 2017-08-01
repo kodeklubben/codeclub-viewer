@@ -60,7 +60,8 @@ export default {
     nomatchinglessons: 'No matching lessons for this combination'
   },
   lessons: {
-    writtenby: 'by',
+    writtenby: 'Written by:',
+    translatedby: 'translated by:',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',

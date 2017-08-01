@@ -60,7 +60,8 @@ export default {
     nomatchinglessons: 'Ingen oppgaver passer til filteret'
   },
   lessons: {
-    writtenby: 'av',
+    writtenby: 'Skrevet av:',
+    translatedby: 'Oversatt av:',
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
     reset: 'Fjern avkrysninger',
