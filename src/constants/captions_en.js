@@ -77,7 +77,8 @@ export default {
         sourcecode: 'The lesson\'s source code',
         info: 'Describe the problem. Adding your operating system, browser and any code you have written will help.'
       },
-      showcodebutton: 'Show code and fix yourself'
+      showcodebutton: 'Show code and fix yourself',
+      forumbutton: 'Go to forum'
     }
   },
   filter: {
