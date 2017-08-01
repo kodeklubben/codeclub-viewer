@@ -14,7 +14,7 @@ import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
 import {capitalize} from '../util';
 
-import Filter from '../components/FrontPage/Filter';
+import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
@@ -28,7 +28,7 @@ export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, 
     <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
   ));
 
-  const filter = <Filter courseName={params.course} isStudentMode={isStudentMode}/>;
+  const filter = <LessonFilter courseName={params.course}/>;
 
   const playlistsAndLessons =
     <div>
