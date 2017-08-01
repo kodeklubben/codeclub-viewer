@@ -19,20 +19,20 @@ export const FilterGroup = React.createClass({
     this.setState({['showFilterTags']: !this.state['showFilterTags']});
   },
   render() {
-    const {groupKey, availableLessonsForTag, t, filterTags, onFilterCheck} = this.props;
+    const {groupKey, /*availableLessonsForTag,*/ t, filterTags, onFilterCheck} = this.props;
     const {showFilterTags} = this.state;
     const groupName = translateGroup(t, groupKey);
     if (groupName) {
       const filterItems = Object.keys(filterTags).map((tagKey) => {
         const onCheck = () => onFilterCheck(groupKey, tagKey);
-        const numberOfLessonsForTag = availableLessonsForTag[tagKey];
+        //const numberOfLessonsForTag = availableLessonsForTag[tagKey];
         const tagName = translateTag(t, groupKey, tagKey);
 
         return tagName ? (
           <FilterItem
             key={tagKey}
             tagName={tagName}
-            numberOfLessons={numberOfLessonsForTag}
+            //numberOfLessons={numberOfLessonsForTag}
             checked={filterTags[tagKey]}
             onCheck={onCheck}
           />
@@ -59,7 +59,7 @@ export const FilterGroup = React.createClass({
 FilterGroup.propTypes = {
   // ownProps:
   groupKey: PropTypes.string,
-  availableLessonsForTag: PropTypes.object.isRequired,
+  //availableLessonsForTag: PropTypes.object.isRequired,
   t: PropTypes.func,
 
   // mapStateToProps:

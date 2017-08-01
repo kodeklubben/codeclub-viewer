@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {resetFilter} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
-import {getAvailableLessons} from '../../selectors/lesson';
+//import {getAvailableLessons} from '../../selectors/lesson';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
@@ -14,13 +14,13 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
-const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys}) => {
+const LessonFilter = ({t, /*availableLessons,*/ isStudentMode, language, resetFilter, filterGroupKeys}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
     return (
       <FilterGroup
         key={groupKey}
         groupKey={groupKey}
-        availableLessonsForTag={availableLessons}
+        //availableLessonsForTag={availableLessons}
         t={t}
       />
     );
@@ -60,7 +60,7 @@ LessonFilter.propTypes = {
   onFilterCheck: PropTypes.func,
   resetFilter: PropTypes.func,
   isStudentMode: PropTypes.bool,
-  availableLessons: PropTypes.object,
+  //availableLessons: PropTypes.object,
   courseName: PropTypes.string,
   t: PropTypes.func.isRequired,
   language: PropTypes.string
@@ -71,7 +71,7 @@ function mapStateToProps(state, ownProps) {
     language: state.language,
     filterGroupKeys: Object.keys(state.filter),
     isStudentMode: state.isStudentMode,
-    availableLessons: getAvailableLessons(state, ownProps.courseName),
+    //availableLessons: getAvailableLessons(state, ownProps.courseName),
     t: getTranslator(state)
   };
 }

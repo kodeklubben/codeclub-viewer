@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import styles from './FilterItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-const FilterItem = ({tagName, checked, onCheck, numberOfLessons}) => {
+const FilterItem = ({tagName, checked, onCheck/*, numberOfLessons*/}) => {
   return (
     <div className="checkbox">
       <label className={styles.label}>
@@ -10,7 +10,8 @@ const FilterItem = ({tagName, checked, onCheck, numberOfLessons}) => {
                checked={checked}
                onChange={onCheck}
         />
-        <span className={numberOfLessons ? styles.lessons : styles.noLessons}> {tagName} ({numberOfLessons}) </span>
+        <span /*className={numberOfLessons ? styles.lessons : styles.noLessons}*/>
+          {tagName}{/* ({numberOfLessons}) */}</span>
       </label>
     </div>
   );
@@ -20,7 +21,7 @@ FilterItem.propTypes = {
   tagName: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   onCheck: PropTypes.func.isRequired,
-  numberOfLessons: PropTypes.number.isRequired
+  //numberOfLessons: PropTypes.number.isRequired
 };
 
 export default withStyles(styles)(FilterItem);
