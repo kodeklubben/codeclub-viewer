@@ -8,9 +8,9 @@ import Button from 'react-bootstrap/lib/Button';
 import {getAvailableLessons} from '../../selectors/lesson';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
-//import Tooltip from 'react-bootstrap/lib/Tooltip';
-//import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-//import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Tooltip from 'react-bootstrap/lib/Tooltip';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import CollapsiblePanel from '../CollapsiblePanel';
@@ -25,16 +25,19 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
         t={t}
       />
     );
-  });/*
-  const tooltipContent =
+  });
+  const tooltip =
     <Tooltip id="filterhelp">
       <p>{t('filter.tooltip.textline1')}</p>
       <p>{t('filter.tooltip.textline2')}</p>
     </Tooltip>;
-  const tooltip =
-        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltipContent}>
+  const header =
+      <span>
+        {t('filter.header')}
+        <OverlayTrigger animation={true} delayShow={300}placement="bottom" overlay={tooltip}>
           <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
-        </OverlayTrigger>;*/
+        </OverlayTrigger>
+      </span>;
   const clearFilter =
     <ListGroupItem>
       <Button block bsStyle="white-grey-lighter"
@@ -44,19 +47,20 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
     </ListGroupItem>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   return (
-    <CollapsiblePanel initiallyExpanded={false} header={t('filter.header')} bsStyle={bsStyle}>
+    <CollapsiblePanel initiallyExpanded={false} header={header} bsStyle={bsStyle}>
       <ListGroup fill>
         {filterGroups}
         {clearFilter}
       </ListGroup>
-    </CollapsiblePanel>/*
+    </CollapsiblePanel>
+  );/*
     <Panel header={header} bsStyle={bsStyle}>
       <ListGroup fill>
         {filterGroups}
         {clearFilter}
       </ListGroup>
-    </Panel>*/
-  );
+    </Panel>}
+  );*/
 };
 
 LessonFilter.propTypes = {
