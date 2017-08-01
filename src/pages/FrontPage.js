@@ -8,7 +8,7 @@ import {CoursesContainer} from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
 
-export const  FrontPage = ({isStudentMode, courseName}) => {
+export const  FrontPage = ({isStudentMode}) => {
   return (
     <Grid fluid={true}>
       {/*WelcomeBox and TeacherInfobox*/}
