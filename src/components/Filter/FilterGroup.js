@@ -7,11 +7,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {setCollapsedFilter} from '../../action_creators';
+import {showFilterGroups} from '../../action_creators';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
-  setCollapsedFilter, collapsedFilter}) => {
+  showFilterGroups, filterGroupsCollapse}) => {
   const groupName = translateGroup(t, groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map((tagKey) => {
@@ -31,11 +31,12 @@ export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, on
     });
     return (
       <ListGroupItem>
-        <div className={styles.name} onClick={() => setCollapsedFilter(groupKey)}>
-          <Glyphicon className={styles.glyph} glyph={collapsedFilter[groupKey] ? 'chevron-down' : 'chevron-right'}/>
+        <div className={styles.name} onClick={() => showFilterGroups(groupKey, !filterGroupsCollapse[groupKey])}>
+          <Glyphicon className={styles.glyph}
+            glyph={filterGroupsCollapse[groupKey] ? 'chevron-down' : 'chevron-right'}/>
           {groupName}
         </div>
-        <Collapse in={collapsedFilter[groupKey]}>
+        <Collapse in={filterGroupsCollapse[groupKey]}>
           <div className={styles.filterItems}>{filterItems}</div>
         </Collapse>
       </ListGroupItem>
@@ -54,21 +55,21 @@ FilterGroup.propTypes = {
 
   // mapStateToProps:
   filterTags: PropTypes.object,
-  collapsedFilter: PropTypes.object,
+  filterGroupsCollapse: PropTypes.object,
 
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
-  setCollapsedFilter: PropTypes.func
+  showFilterGroups: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
   filterTags: state.filter[ownProps.groupKey],
-  collapsedFilter: state.collapsedFilter
+  filterGroupsCollapse: state.filterGroupsCollapse
 });
 
 const mapDispatchToProps = {
   onFilterCheck,
-  setCollapsedFilter
+  showFilterGroups
 };
 
 export default connect(

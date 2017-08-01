@@ -7,7 +7,7 @@ import language from './reducers/language';
 import welcomeBox from './reducers/welcomeBox';
 import checkboxes from './reducers/checkboxes';
 import lastLesson from './reducers/lastLesson';
-import collapsedFilter from './reducers/collapsedFilter';
+import filterGroupsCollapse from './reducers/filterGroupsCollapse';
 
 export default combineReducers({
   lessons,
@@ -18,5 +18,5 @@ export default combineReducers({
   welcomeBox,
   checkboxes,
   lastLesson,
-  collapsedFilter
+  filterGroupsCollapse
 });

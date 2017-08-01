@@ -3,7 +3,7 @@
 import {createStore} from 'redux';
 import {getLessons, getTags, createCheckboxesKey} from './util';
 import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
-  setCheckboxes, setLastLesson, setCollapsedFilter} from './action_creators';
+  setCheckboxes, setLastLesson, showFilterGroups} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
@@ -36,7 +36,7 @@ store.dispatch(setContext('playlistContext', playlistContext));
 store.dispatch(setContext('courseContext', courseContext));
 store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
-store.dispatch(setCollapsedFilter('mainfilter'));
+store.dispatch(showFilterGroups('language', false));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
