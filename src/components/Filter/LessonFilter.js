@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import {resetFilter} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
-//import Panel from 'react-bootstrap/lib/Panel';
+import Panel from 'react-bootstrap/lib/Panel';
 import {getAvailableLessons} from '../../selectors/lesson';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
@@ -14,6 +14,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import CollapsiblePanel from '../CollapsiblePanel';
+import FilterLabels from './FilterLabels';
+import Col from 'react-bootstrap/lib/Col';
 
 const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
@@ -47,20 +49,28 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
     </ListGroupItem>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   return (
-    <CollapsiblePanel initiallyExpanded={false} header={header} bsStyle={bsStyle}>
-      <ListGroup fill>
-        {filterGroups}
-        {clearFilter}
-      </ListGroup>
-    </CollapsiblePanel>
-  );/*
-    <Panel header={header} bsStyle={bsStyle}>
-      <ListGroup fill>
-        {filterGroups}
-        {clearFilter}
-      </ListGroup>
-    </Panel>}
-  );*/
+    <div>
+      {/*Filter desktop*/}
+      <Col xsHidden>
+        <Panel header={header} bsStyle={bsStyle}>
+          <ListGroup fill>
+            {filterGroups}
+            {clearFilter}
+          </ListGroup>
+        </Panel>
+      </Col>
+      {/*Filter mobile*/}
+      <Col smHidden mdHidden lgHidden>
+        <CollapsiblePanel initiallyExpanded={false} header={header} bsStyle={bsStyle}>
+          <ListGroup fill>
+            {filterGroups}
+            {clearFilter}
+          </ListGroup>
+        </CollapsiblePanel>
+        <FilterLabels t={t}/>
+      </Col>
+    </div>
+  );
 };
 
 LessonFilter.propTypes = {
