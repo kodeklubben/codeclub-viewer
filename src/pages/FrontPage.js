@@ -18,7 +18,7 @@ export const  FrontPage = ({isStudentMode, courseName}) => {
       {/* Filter and courses */}
       <Row>
         <Col sm={4} md={3} lg={2}>
-          <LessonFilter courseName={courseName}/>
+          <LessonFilter/>
         </Col>
         <CoursesContainer/>
       </Row>
@@ -27,8 +27,7 @@ export const  FrontPage = ({isStudentMode, courseName}) => {
 };
 
 FrontPage.propTypes = {
-  isStudentMode: PropTypes.bool,
-  courseName: PropTypes.string,
+  isStudentMode: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({

@@ -28,7 +28,7 @@ export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, 
     <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
   ));
 
-  const filter = <LessonFilter courseName={params.courseName}/>;
+  const filter = <LessonFilter courseName={params.course}/>;
 
   const playlistsAndLessons =
     <div>
