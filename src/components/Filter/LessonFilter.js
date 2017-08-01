@@ -14,7 +14,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
-const LessonFilter = ({t, /*availableLessons,*/ isStudentMode, language, resetFilter, filterGroupKeys}) => {
+const LessonFilter = ({t, /*availableLessons,*/ isStudentMode, language, resetFilter, filterGroupKeys, filter}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
     return (
       <FilterGroup
@@ -37,7 +37,21 @@ const LessonFilter = ({t, /*availableLessons,*/ isStudentMode, language, resetFi
           <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
         </OverlayTrigger>
       </div>;
-  const clearFilter =
+
+  const hasCheckedItems = (filter, language) => {
+    let counter = 0;
+    for (let i of Object.keys(filter)) {
+      for (let j of Object.keys(filter[i])) {
+        filter[i][j] === true ? counter++ : null;
+      }
+    }
+    if (filter.language[language] && counter === 1) {
+      return true;
+    }
+    return false;
+  };
+
+  const clearFilter = hasCheckedItems(filter, language) ? null :
     <ListGroupItem>
       <Button block bsStyle="white-grey-lighter"
               onClick={() => resetFilter('language', language)}>
@@ -63,7 +77,8 @@ LessonFilter.propTypes = {
   //availableLessons: PropTypes.object,
   courseName: PropTypes.string,
   t: PropTypes.func.isRequired,
-  language: PropTypes.string
+  language: PropTypes.string,
+  filter: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
@@ -72,7 +87,8 @@ function mapStateToProps(state, ownProps) {
     filterGroupKeys: Object.keys(state.filter),
     isStudentMode: state.isStudentMode,
     //availableLessons: getAvailableLessons(state, ownProps.courseName),
-    t: getTranslator(state)
+    t: getTranslator(state),
+    filter: state.filter
   };
 }
 
