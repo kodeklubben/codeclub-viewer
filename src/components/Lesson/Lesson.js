@@ -18,6 +18,7 @@ import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
+import MarkdownRenderer from '../MarkdownRenderer';
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
@@ -89,7 +90,10 @@ const Lesson = React.createClass({
     return this.props.lesson.frontmatter.level || 0;
   },
   getAuthor() {
-    return this.props.lesson.frontmatter.author || '';
+    const author = this.props.lesson.frontmatter.author || '';
+    return author ?
+      <p><i>{this.props.t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> :
+      null;
   },
   getLanguage() {
     return this.props.lesson.frontmatter.language || '';
@@ -144,7 +148,7 @@ const Lesson = React.createClass({
             <LevelIcon level={this.getLevel()}/>
             {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
           </h1>
-          {this.getAuthor() !== '' ? <p><i>{t('lessons.writtenby')} {this.getAuthor()}</i></p> : ''}
+          {this.getAuthor()}
           {resetButton}
           {instructionBtn}
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
