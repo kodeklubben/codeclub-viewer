@@ -1,18 +1,19 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './LessonFilter.scss';
 import {resetFilter} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
-import Panel from 'react-bootstrap/lib/Panel';
+//import Panel from 'react-bootstrap/lib/Panel';
 import {getAvailableLessons} from '../../selectors/lesson';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './LessonFilter.scss';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+//import Tooltip from 'react-bootstrap/lib/Tooltip';
+//import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+//import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import CollapsiblePanel from '../CollapsiblePanel';
 
 const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
@@ -24,19 +25,16 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
         t={t}
       />
     );
-  });
-  const tooltip =
+  });/*
+  const tooltipContent =
     <Tooltip id="filterhelp">
       <p>{t('filter.tooltip.textline1')}</p>
       <p>{t('filter.tooltip.textline2')}</p>
     </Tooltip>;
-  const header =
-      <div>
-        {t('filter.header')}
-        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}>
+  const tooltip =
+        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltipContent}>
           <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
-        </OverlayTrigger>
-      </div>;
+        </OverlayTrigger>;*/
   const clearFilter =
     <ListGroupItem>
       <Button block bsStyle="white-grey-lighter"
@@ -46,12 +44,18 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
     </ListGroupItem>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   return (
-      <Panel header={header} bsStyle={bsStyle}>
-        <ListGroup fill>
-          {filterGroups}
-          {clearFilter}
-        </ListGroup>
-      </Panel>
+    <CollapsiblePanel initiallyExpanded={false} header={t('filter.header')} bsStyle={bsStyle}>
+      <ListGroup fill>
+        {filterGroups}
+        {clearFilter}
+      </ListGroup>
+    </CollapsiblePanel>/*
+    <Panel header={header} bsStyle={bsStyle}>
+      <ListGroup fill>
+        {filterGroups}
+        {clearFilter}
+      </ListGroup>
+    </Panel>*/
   );
 };
 
