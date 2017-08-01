@@ -11,14 +11,17 @@ import {showFilterGroups} from '../../action_creators';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
-  showFilterGroups, filterGroupsCollapse}) => {
+  showFilterGroups, filterGroupsCollapse, language}) => {
   const groupName = translateGroup(t, groupKey);
+  let filterItemsNumber = 0;
   if (groupName) {
     const filterItems = Object.keys(filterTags).map((tagKey) => {
       const onCheck = () => onFilterCheck(groupKey, tagKey);
       const numberOfLessonsForTag = availableLessonsForTag[tagKey];
       const tagName = translateTag(t, groupKey, tagKey);
-
+      if (filterTags[tagKey]) {
+        filterItemsNumber++;
+      }
       return tagName ? (
         <FilterItem
           key={tagKey}
@@ -29,9 +32,20 @@ export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, on
         />
       ) : null;
     });
+    const hasCheckedFilterGroup = (filterItemsNumber, filterTags, language) => {
+      if (filterItemsNumber === 0) {
+        return true;
+      }
+      else if (filterTags[language] && filterItemsNumber === 1) {
+        return true;
+      }
+      return false;
+    };
     return (
       <ListGroupItem>
-        <div className={styles.name} onClick={() => showFilterGroups(groupKey, !filterGroupsCollapse[groupKey])}>
+        <div className={styles.name} onClick={() =>
+          hasCheckedFilterGroup(filterItemsNumber, filterTags, language) ?
+          showFilterGroups(groupKey, !filterGroupsCollapse[groupKey]) : null}>
           <Glyphicon className={styles.glyph}
             glyph={filterGroupsCollapse[groupKey] ? 'chevron-down' : 'chevron-right'}/>
           {groupName}
@@ -56,6 +70,7 @@ FilterGroup.propTypes = {
   // mapStateToProps:
   filterTags: PropTypes.object,
   filterGroupsCollapse: PropTypes.object,
+  language: PropTypes.string,
 
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
@@ -64,7 +79,8 @@ FilterGroup.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   filterTags: state.filter[ownProps.groupKey],
-  filterGroupsCollapse: state.filterGroupsCollapse
+  filterGroupsCollapse: state.filterGroupsCollapse,
+  language: state.language
 });
 
 const mapDispatchToProps = {
