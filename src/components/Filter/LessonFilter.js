@@ -36,7 +36,8 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
   const header =
       <span>
         {t('filter.header')}
-        <OverlayTrigger animation={true} delayShow={300}placement="bottom" overlay={tooltip}>
+        <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}
+                        onClick={(e) => e.stopPropagation()}>
           <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
         </OverlayTrigger>
       </span>;
