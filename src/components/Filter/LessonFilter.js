@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
-import {resetFilter} from '../../action_creators';
+import {resetFilter, showFilterGroups} from '../../action_creators';
 import Button from 'react-bootstrap/lib/Button';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getAvailableLessons} from '../../selectors/lesson';
@@ -17,7 +17,8 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import FilterLabels from './FilterLabels';
 import Col from 'react-bootstrap/lib/Col';
 
-const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys}) => {
+const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter, filterGroupKeys,
+  showFilterGroups, filterGroupsCollapse, filter}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
     return (
       <FilterGroup
@@ -41,10 +42,31 @@ const LessonFilter = ({t, availableLessons, isStudentMode, language, resetFilter
           <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
         </OverlayTrigger>
       </span>;
-  const clearFilter =
+
+  const isShowingFilterGroup = (filterGroup) => {
+    for (let key of Object.keys(filterGroup)) {
+      if (filterGroup[key]) {
+        showFilterGroups(key, false);
+      }
+    }
+  };
+  const hasCheckedItems = (filter, language) => {
+    let counter = 0;
+    for (let i of Object.keys(filter)) {
+      for (let j of Object.keys(filter[i])) {
+        filter[i][j] === true ? counter++ : null;
+      }
+    }
+    if (filter.language[language] && counter === 1) {
+      return true;
+    }
+    return false;
+  };
+  const clearFilter =  hasCheckedItems(filter, language) ? null :
     <ListGroupItem>
       <Button block bsStyle="white-grey-lighter"
-              onClick={() => resetFilter('language', language)}>
+              onClick={() => {resetFilter('language', language);
+                isShowingFilterGroup(filterGroupsCollapse);}}>
         {t('filter.removefilter')}
       </Button>
     </ListGroupItem>;
@@ -82,7 +104,10 @@ LessonFilter.propTypes = {
   availableLessons: PropTypes.object,
   courseName: PropTypes.string,
   t: PropTypes.func.isRequired,
-  language: PropTypes.string
+  language: PropTypes.string,
+  showFilterGroups: PropTypes.func,
+  filterGroupsCollapse: PropTypes.object,
+  filter: PropTypes.object
 };
 
 function mapStateToProps(state, ownProps) {
@@ -91,12 +116,15 @@ function mapStateToProps(state, ownProps) {
     filterGroupKeys: Object.keys(state.filter),
     isStudentMode: state.isStudentMode,
     availableLessons: getAvailableLessons(state, ownProps.courseName),
-    t: getTranslator(state)
+    t: getTranslator(state),
+    filterGroupsCollapse: state.filterGroupsCollapse,
+    filter: state.filter
   };
 }
 
 const mapDispatchToProps = {
-  resetFilter
+  resetFilter,
+  showFilterGroups
 };
 
 export default connect(

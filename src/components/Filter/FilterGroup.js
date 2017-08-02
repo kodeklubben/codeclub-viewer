@@ -7,54 +7,59 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {showFilterGroups} from '../../action_creators';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
-export const FilterGroup = React.createClass({
-  getInitialState() {
-    return {
-      showFilterTags: false
+export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
+  showFilterGroups, filterGroupsCollapse, language}) => {
+  const groupName = translateGroup(t, groupKey);
+  let filterItemsNumber = 0;
+  if (groupName) {
+    const filterItems = Object.keys(filterTags).map((tagKey) => {
+      const onCheck = () => onFilterCheck(groupKey, tagKey);
+      const numberOfLessonsForTag = availableLessonsForTag[tagKey];
+      const tagName = translateTag(t, groupKey, tagKey);
+      if (filterTags[tagKey]) {
+        filterItemsNumber++;
+      }
+      return tagName ? (
+        <FilterItem
+          key={tagKey}
+          tagName={tagName}
+          numberOfLessons={numberOfLessonsForTag}
+          checked={filterTags[tagKey]}
+          onCheck={onCheck}
+        />
+      ) : null;
+    });
+    const hasCheckedFilterGroup = (filterItemsNumber, filterTags, language) => {
+      if (filterItemsNumber === 0) {
+        return true;
+      }
+      else if (filterTags[language] && filterItemsNumber === 1) {
+        return true;
+      }
+      return false;
     };
-  },
-  changeState() {
-    this.setState({['showFilterTags']: !this.state['showFilterTags']});
-  },
-  render() {
-    const {groupKey, availableLessonsForTag, t, filterTags, onFilterCheck} = this.props;
-    const {showFilterTags} = this.state;
-    const groupName = translateGroup(t, groupKey);
-    if (groupName) {
-      const filterItems = Object.keys(filterTags).map((tagKey) => {
-        const onCheck = () => onFilterCheck(groupKey, tagKey);
-        const numberOfLessonsForTag = availableLessonsForTag[tagKey];
-        const tagName = translateTag(t, groupKey, tagKey);
-
-        return tagName ? (
-          <FilterItem
-            key={tagKey}
-            tagName={tagName}
-            numberOfLessons={numberOfLessonsForTag}
-            checked={filterTags[tagKey]}
-            onCheck={onCheck}
-          />
-        ) : null;
-      });
-      return (
-        <ListGroupItem>
-          <div className={styles.name} onClick={this.changeState}>
-            <Glyphicon className={styles.glyph} glyph={!showFilterTags ? 'chevron-right' : 'chevron-down'}/>
-            {groupName}
-          </div>
-          <Collapse in={showFilterTags}>
-            <div>{filterItems}</div>
-          </Collapse>
-        </ListGroupItem>
-      );
-    }
-    else {
-      return null;
-    }
+    return (
+      <ListGroupItem>
+        <div className={styles.name} onClick={() =>
+          hasCheckedFilterGroup(filterItemsNumber, filterTags, language) ?
+          showFilterGroups(groupKey, !filterGroupsCollapse[groupKey]) : null}>
+          <Glyphicon className={styles.glyph}
+            glyph={filterGroupsCollapse[groupKey] ? 'chevron-down' : 'chevron-right'}/>
+          {groupName}
+        </div>
+        <Collapse in={filterGroupsCollapse[groupKey]}>
+          <div className={styles.filterItems}>{filterItems}</div>
+        </Collapse>
+      </ListGroupItem>
+    );
   }
-});
+  else {
+    return null;
+  }
+};
 
 FilterGroup.propTypes = {
   // ownProps:
@@ -64,17 +69,23 @@ FilterGroup.propTypes = {
 
   // mapStateToProps:
   filterTags: PropTypes.object,
+  filterGroupsCollapse: PropTypes.object,
+  language: PropTypes.string,
 
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
+  showFilterGroups: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => ({
   filterTags: state.filter[ownProps.groupKey],
+  filterGroupsCollapse: state.filterGroupsCollapse,
+  language: state.language
 });
 
 const mapDispatchToProps = {
-  onFilterCheck
+  onFilterCheck,
+  showFilterGroups
 };
 
 export default connect(

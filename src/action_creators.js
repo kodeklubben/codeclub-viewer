@@ -106,3 +106,13 @@ export function setLastLesson(path) {
     path
   };
 }
+
+export function showFilterGroups(name, bool) {
+  return {
+    type: 'SHOW_FILTERGROUPS',
+    payload: {
+      name,
+      bool
+    }
+  };
+}
