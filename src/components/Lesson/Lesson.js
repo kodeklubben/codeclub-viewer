@@ -91,10 +91,10 @@ const Lesson = React.createClass({
   },
   getAuthor() {
     const author = this.props.lesson.frontmatter.author || '';
-    const translator = this.props.lesson.frontmatter.translator || '';
+    const link = author.indexOf('//');
     return author ?
-      <p><i>{translator === '' ?
-        this.props.t('lessons.writtenby') : ''} <MarkdownRenderer src={author} inline={true} /></i></p> :
+      <p><i>{link !== -1 ? '' :
+        this.props.t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> :
       null;
   },
   getTranslator() {
