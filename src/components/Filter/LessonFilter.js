@@ -17,7 +17,7 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import FilterLabels from './FilterLabels';
 import Col from 'react-bootstrap/lib/Col';
 
-const LessonFilter = ({t, /*availableLessons,*/ isStudentMode, language, resetFilter, filterGroupKeys, filter}) => {
+const LessonFilter = ({t, /*availableLessons,*/ isStudentMode, language, resetFilter, filterGroupKeys}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
     return (
       <FilterGroup
@@ -41,21 +41,7 @@ const LessonFilter = ({t, /*availableLessons,*/ isStudentMode, language, resetFi
           <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
         </OverlayTrigger>
       </span>;
-
-  const hasCheckedItems = (filter, language) => {
-    let counter = 0;
-    for (let i of Object.keys(filter)) {
-      for (let j of Object.keys(filter[i])) {
-        filter[i][j] === true ? counter++ : null;
-      }
-    }
-    if (filter.language[language] && counter === 1) {
-      return true;
-    }
-    return false;
-  };
-
-  const clearFilter = hasCheckedItems(filter, language) ? null :
+  const clearFilter =
     <ListGroupItem>
       <Button block bsStyle="white-grey-lighter"
               onClick={() => resetFilter('language', language)}>
@@ -96,8 +82,7 @@ LessonFilter.propTypes = {
   //availableLessons: PropTypes.object,
   courseName: PropTypes.string,
   t: PropTypes.func.isRequired,
-  language: PropTypes.string,
-  filter: PropTypes.object
+  language: PropTypes.string
 };
 
 function mapStateToProps(state, ownProps) {
@@ -106,8 +91,7 @@ function mapStateToProps(state, ownProps) {
     filterGroupKeys: Object.keys(state.filter),
     isStudentMode: state.isStudentMode,
     //availableLessons: getAvailableLessons(state, ownProps.courseName),
-    t: getTranslator(state),
-    filter: state.filter
+    t: getTranslator(state)
   };
 }
 
