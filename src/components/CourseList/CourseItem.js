@@ -9,9 +9,10 @@ import {getTranslator} from '../../selectors/translate';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
-const CourseItem = ({course, t}) => {
+const CourseItem = ({course, t, language}) => {
   const coursePath = course.path || null;
-  const tooltipContent = coursePath === null ? null : getLessonIntro(coursePath + '/index');
+  const tooltipContent = coursePath === null ? null :
+    getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
   const createMarkup = () => {
     return {__html: tooltipContent};
   };
@@ -47,13 +48,13 @@ CourseItem.propTypes = {
     externalLink: PropTypes.string,
     iconPath: PropTypes.string,
     lessonCount: PropTypes.int
-  })
+  }),
+  language: PropTypes.string
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  t: getTranslator(state),
+  language: state.language
+});
 
 export default connect(mapStateToProps)(withStyles(styles)(CourseItem));
