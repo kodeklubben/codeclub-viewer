@@ -10,8 +10,9 @@ import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 const CourseItem = ({course, t, language}) => {
-  const coursePath = course.path || null;
-  const tooltipContent = coursePath === null ? null :
+  const coursePath = course.name.replace(/ /g, '_').toLowerCase();
+  const isExternal = course.hasOwnProperty('externalLink');
+  const tooltipContent = isExternal ? getLessonIntro(coursePath + '/index') :
     getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
   const createMarkup = () => {
     return {__html: tooltipContent};
@@ -20,8 +21,6 @@ const CourseItem = ({course, t, language}) => {
     <Tooltip className={styles.tooltip} id={course.name}>
       <div dangerouslySetInnerHTML={createMarkup()}/>
     </Tooltip>;
-
-  const isExternal = course.hasOwnProperty('externalLink');
   return (
     <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
       {isExternal ?
