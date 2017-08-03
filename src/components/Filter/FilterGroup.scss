@@ -9,6 +9,9 @@
 
 .somethingChecked {
   color: $color-gray-medium;
+  &:hover {
+    cursor: not-allowed;
+  }
 }
 
 .glyph {

@@ -9,19 +9,18 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {collapseFilterGroup} from '../../action_creators';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import {somethingCheckedInGroup} from '../../selectors/filter';
 
-export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
-  collapseFilterGroup, filterGroupsCollapsed, language}) => {
+export const FilterGroup = ({
+  groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
+  collapseFilterGroup, filterGroupsCollapsed, somethingChecked
+}) => {
   const groupName = translateGroup(t, groupKey);
-  let filterItemsNumber = 0;
   if (groupName) {
     const filterItems = Object.keys(filterTags).map((tagKey) => {
       const onCheck = () => onFilterCheck(groupKey, tagKey);
       const numberOfLessonsForTag = availableLessonsForTag[tagKey];
       const tagName = translateTag(t, groupKey, tagKey);
-      if (filterTags[tagKey]) {
-        filterItemsNumber++;
-      }
       return tagName ? (
         <FilterItem
           key={tagKey}
@@ -33,12 +32,9 @@ export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, on
       ) : null;
     });
 
-    const isLanguage = groupKey === 'language';
-    const nothingChecked = (!isLanguage && filterItemsNumber === 0) ||
-      (isLanguage && filterTags[language] && filterItemsNumber === 1);
+    const nothingChecked = !somethingChecked;
     const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
-
-    const headingStyle = styles.name + (nothingChecked ? '' : ' ' + styles.somethingChecked);
+    const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
     const onGroupClick = () => {
       if (nothingChecked) {
         collapseFilterGroup(groupKey, !isCollapsed);
@@ -70,7 +66,7 @@ FilterGroup.propTypes = {
   // mapStateToProps:
   filterTags: PropTypes.object,
   filterGroupsCollapsed: PropTypes.object,
-  language: PropTypes.string,
+  somethingChecked: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
@@ -80,7 +76,7 @@ FilterGroup.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   filterTags: state.filter[ownProps.groupKey],
   filterGroupsCollapsed: state.filterGroupsCollapsed,
-  language: state.language
+  somethingChecked: somethingCheckedInGroup(state, ownProps.groupKey),
 });
 
 const mapDispatchToProps = {

@@ -114,3 +114,10 @@ export function collapseFilterGroup(name, collapsed) {
     collapsed
   };
 }
+
+export function collapseAllFilterGroups(collapsed) {
+  return {
+    type: 'COLLAPSE_ALL_FILTERGROUPS',
+    collapsed
+  };
+}
