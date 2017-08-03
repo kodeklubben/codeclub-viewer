@@ -7,11 +7,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {showFilterGroups} from '../../action_creators';
+import {collapseFilterGroup} from '../../action_creators';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 
 export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
-  showFilterGroups, filterGroupsCollapse, language}) => {
+  collapseFilterGroup, filterGroupsCollapsed, language}) => {
   const groupName = translateGroup(t, groupKey);
   let filterItemsNumber = 0;
   if (groupName) {
@@ -32,26 +32,26 @@ export const FilterGroup = ({groupKey, availableLessonsForTag, t, filterTags, on
         />
       ) : null;
     });
-    const hasCheckedFilterGroup = (filterItemsNumber, filterTags, language) => {
-      if (filterItemsNumber === 0) {
-        return true;
+
+    const isLanguage = groupKey === 'language';
+    const nothingChecked = (!isLanguage && filterItemsNumber === 0) ||
+      (isLanguage && filterTags[language] && filterItemsNumber === 1);
+    const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
+
+    const headingStyle = styles.name + (nothingChecked ? '' : ' ' + styles.somethingChecked);
+    const onGroupClick = () => {
+      if (nothingChecked) {
+        collapseFilterGroup(groupKey, !isCollapsed);
       }
-      else if (filterTags[language] && filterItemsNumber === 1) {
-        return true;
-      }
-      return false;
     };
     return (
       <ListGroupItem>
-        <div className={styles.name} onClick={() =>
-          hasCheckedFilterGroup(filterItemsNumber, filterTags, language) ?
-          showFilterGroups(groupKey, !filterGroupsCollapse[groupKey]) : null}>
-          <Glyphicon className={styles.glyph}
-            glyph={filterGroupsCollapse[groupKey] ? 'chevron-down' : 'chevron-right'}/>
+        <div className={headingStyle} onClick={onGroupClick}>
+          <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
           {groupName}
         </div>
-        <Collapse in={filterGroupsCollapse[groupKey]}>
-          <div className={styles.filterItems}>{filterItems}</div>
+        <Collapse in={!isCollapsed}>
+          <div>{filterItems}</div>
         </Collapse>
       </ListGroupItem>
     );
@@ -65,27 +65,27 @@ FilterGroup.propTypes = {
   // ownProps:
   groupKey: PropTypes.string,
   availableLessonsForTag: PropTypes.object.isRequired,
-  t: PropTypes.func,
+  t: PropTypes.func.isRequired,
 
   // mapStateToProps:
   filterTags: PropTypes.object,
-  filterGroupsCollapse: PropTypes.object,
+  filterGroupsCollapsed: PropTypes.object,
   language: PropTypes.string,
 
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
-  showFilterGroups: PropTypes.func
+  collapseFilterGroup: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => ({
   filterTags: state.filter[ownProps.groupKey],
-  filterGroupsCollapse: state.filterGroupsCollapse,
+  filterGroupsCollapsed: state.filterGroupsCollapsed,
   language: state.language
 });
 
 const mapDispatchToProps = {
   onFilterCheck,
-  showFilterGroups
+  collapseFilterGroup,
 };
 
 export default connect(

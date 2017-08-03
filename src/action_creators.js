@@ -107,12 +107,10 @@ export function setLastLesson(path) {
   };
 }
 
-export function showFilterGroups(name, bool) {
+export function collapseFilterGroup(name, collapsed) {
   return {
-    type: 'SHOW_FILTERGROUPS',
-    payload: {
-      name,
-      bool
-    }
+    type: 'COLLAPSE_FILTERGROUP',
+    name,
+    collapsed
   };
 }
