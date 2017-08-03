@@ -2,15 +2,27 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import styles from './CourseItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
+import {getLessonIntro} from '../../util';
 import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
+import Tooltip from 'react-bootstrap/lib/Tooltip';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 const CourseItem = ({course, t}) => {
+  const coursePath = course.path || null;
+  const tooltipContent = coursePath === null ? null : getLessonIntro(coursePath + '/index');
+  const createMarkup = () => {
+    return {__html: tooltipContent};
+  };
+  const tooltip =
+    <Tooltip className={styles.tooltip} id={course.name}>
+      <div dangerouslySetInnerHTML={createMarkup()}/>
+    </Tooltip>;
+
   const isExternal = course.hasOwnProperty('externalLink');
   return (
-    <div>
+    <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
       {isExternal ?
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
           <img className={styles.courseLogo} src={course.iconPath}/>
@@ -23,7 +35,7 @@ const CourseItem = ({course, t}) => {
           <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
         </Link>
       }
-    </div>
+    </OverlayTrigger>
   );
 };
 
