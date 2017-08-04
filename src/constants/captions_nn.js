@@ -60,7 +60,8 @@ export default {
     nomatchinglessons: 'Ingen oppgåver passar til filteret'
   },
   lessons: {
-    writtenby: 'av',
+    writtenby: 'Skrevet av:',
+    translatedby: 'Oversatt av:',
     toteacherinstruction: 'Til lærarrettleiing',
     tolesson: 'Til oppgåve',
     reset: 'Fjern avkrysninger',
@@ -132,7 +133,7 @@ export default {
       textline1: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
       textline2: 'Bak kvart val står det kor mange oppgaver som passar til filteret du legg på.'
     },
-    removefilter: 'Fjern filter'
+    removefilter: 'Nullstill filter'
   },
   navbar: {
     mode: 'Modus',

@@ -105,6 +105,12 @@ const Lesson = React.createClass({
       <p><i>{this.props.t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> :
       null;
   },
+  getTranslator() {
+    const translator = this.props.lesson.frontmatter.translator || '';
+    return translator ?
+      <p><i>{this.props.t('lessons.translatedby')} <MarkdownRenderer src={translator} inline={true} /></i></p> :
+      null;
+  },
   getLanguage() {
     return this.props.lesson.frontmatter.language || '';
   },
@@ -165,6 +171,7 @@ const Lesson = React.createClass({
             {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
           </h1>
           {this.getAuthor()}
+          {this.getTranslator()}
           {mainLanguageBtn}
           {resetButton}
           {instructionBtn}
