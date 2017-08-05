@@ -6,40 +6,15 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 //import FormControl from 'react-bootstrap/lib/FormControl';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
+import ToggleButton from './ToggleButton';
 
 const modes = ['student', 'teacher'];
-
-function ModeDropdown(props) {
-  const texts = {'student': props.t('general.student'), 'teacher': props.t('general.teacher')};
-  const setMode = mode => mode === 'student' ? props.setModeStudent() : props.setModeTeacher();
-  return <div className={styles.gadgetContainer}>
-    <DropdownButton id='mode-dropdown'
-                    noCaret
-                    pullRight
-                    bsStyle={props.mode}
-                    title={props.t('navbar.mode') + ': ' + texts[props.mode]}
-                    onSelect={setMode}>
-      {
-        modes.map(k =>
-          <MenuItem key={k} eventKey={k} active={props.mode === k}>{texts[k]}</MenuItem>
-        )
-      }
-    </DropdownButton>
-  </div>;
-}
-ModeDropdown.propTypes = {
-  setModeStudent: PropTypes.func,
-  setModeTeacher: PropTypes.func,
-  mode: PropTypes.oneOf(modes).isRequired
-};
 
 // function SearchBox(props) {
 //   return <div className={styles.gadgetContainer}>
@@ -79,7 +54,7 @@ function Gadgets(props) {
   // NOTE: Commenting out SearchBox until it is implemented
   return <div className={styles.gadgetGroup}>
     {<LanguageDropdown mode={mode}/>}
-    <ModeDropdown setModeStudent={props.setModeStudent}
+    <ToggleButton setModeStudent={props.setModeStudent}
                   setModeTeacher={props.setModeTeacher}
                   mode={mode}
                   t={props.t}/>
