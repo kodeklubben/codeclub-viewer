@@ -6,23 +6,15 @@ import {getLessonIntro} from '../../util';
 import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import TooltipComponent from '../TooltipComponent';
 
 const CourseItem = ({course, t, language}) => {
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const isExternal = course.hasOwnProperty('externalLink');
   const tooltipContent = isExternal ? getLessonIntro(coursePath + '/index') :
     getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
-  const createMarkup = () => {
-    return {__html: tooltipContent};
-  };
-  const tooltip =
-    <Tooltip className={styles.tooltip} id={course.name}>
-      <div dangerouslySetInnerHTML={createMarkup()}/>
-    </Tooltip>;
   return (
-    <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
+    <TooltipComponent id={course.name} tooltipContent={tooltipContent}>
       {isExternal ?
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
           <img className={styles.courseLogo} src={course.iconPath}/>
@@ -35,7 +27,7 @@ const CourseItem = ({course, t, language}) => {
           <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
         </Link>
       }
-    </OverlayTrigger>
+    </TooltipComponent>
   );
 };
 

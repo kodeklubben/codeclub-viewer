@@ -6,12 +6,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
+import TooltipComponent from '../TooltipComponent';
 
 export const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
   const levelIcon = <LevelIcon level={lesson.level}/>;
@@ -33,21 +32,12 @@ export const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCh
 
   const tooltipContent = getLessonIntro(lesson.path.slice(1));
 
-  const createMarkup = () => {
-    return {__html: tooltipContent};
-  };
-
-  const tooltip =
-    <Tooltip className={styles.tooltip} id={lesson.title}>
-      <div dangerouslySetInnerHTML={createMarkup()}/>
-    </Tooltip>;
-
   const progressBar = lesson.level > 0 ?
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
     null;
 
   return (
-    <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
+    <TooltipComponent id={lesson.title} tooltipContent={tooltipContent}>
       {lesson.external ?
       <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
         {levelIcon}
@@ -65,7 +55,7 @@ export const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCh
           {instructionBtn}
         </ListGroupItem>
       </LinkContainer>}
-    </OverlayTrigger>
+    </TooltipComponent>
   );
 };
 

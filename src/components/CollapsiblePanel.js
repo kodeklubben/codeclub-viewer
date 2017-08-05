@@ -34,6 +34,7 @@ CollapsiblePanel.propTypes = {
     PropTypes.object
   ]),
   bsStyle: PropTypes.oneOf(['student', 'teacher']),
+  children: PropTypes.object
 };
 
 export default withStyles(styles)(CollapsiblePanel);
