@@ -10,7 +10,7 @@ const FilterItem = ({tagName, checked, onCheck, numberOfLessons}) => {
                checked={checked}
                onChange={onCheck}
         />
-        <span className={numberOfLessons ? styles.lessons : styles.noLessons}> {tagName} ({numberOfLessons}) </span>
+        <span className={numberOfLessons ? styles.lessons : styles.noLessons}>{tagName}</span>
       </label>
     </div>
   );
