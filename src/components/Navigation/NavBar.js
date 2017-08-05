@@ -56,7 +56,7 @@ const Gadgets = ({isStudentMode, t}) => {
   const mode = modes[isStudentMode ? 0 : 1];
   return <div className={styles.gadgetGroup}>
     {<LanguageDropdown mode={mode}/>}
-    <ModeButton mode={mode} t={t}/>
+    <ModeButton t={t} isStudentMode={isStudentMode}/>
     {/*<SearchBox t={t}/>*/}
   </div>;
 };

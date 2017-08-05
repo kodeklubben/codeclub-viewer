@@ -5,16 +5,13 @@ import styles from './ModeButton.scss';
 import Button from 'react-bootstrap/lib/Button';
 import {setModeStudent, setModeTeacher} from '../../action_creators';
 
-const modes = ['student', 'teacher'];
-
-const ModeButton = ({t, mode}) => {
-  const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
-  const setMode = (mode) => {
-    mode === 'student' ? setModeStudent() : setModeTeacher();
-  };
+const ModeButton = ({t, isStudentMode}) => {
+  const bsStyle = isStudentMode ? 'student' : 'teacher';
+  const texts = isStudentMode ? t('general.student') : t('general.teacher');
+  const setMode = isStudentMode ? setModeStudent() : setModeTeacher();
   return <div className={styles.gadgetContainer}>
-    <Button bsStyle={mode} onClick={setMode}>
-      {t('navbar.mode') + ': ' + texts[mode]}
+    <Button bsStyle={bsStyle} onClick={setMode}>
+      {t('navbar.mode') + ': ' + texts}
     </Button>
   </div>;
 };
@@ -22,8 +19,8 @@ const ModeButton = ({t, mode}) => {
 ModeButton.propTypes = {
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
-  mode: PropTypes.oneOf(modes).isRequired,
-  t: PropTypes.func
+  t: PropTypes.func,
+  isStudentMode: PropTypes.bool
 };
 
 const mapDispatchToProps = {
