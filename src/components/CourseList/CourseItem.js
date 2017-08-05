@@ -9,10 +9,12 @@ import {getTranslator} from '../../selectors/translate';
 import TooltipComponent from '../TooltipComponent';
 
 const CourseItem = ({course, t, language}) => {
-  const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const isExternal = course.hasOwnProperty('externalLink');
+
+  const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const tooltipContent = isExternal ? getLessonIntro(coursePath + '/index') :
     getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
+    
   return (
     <TooltipComponent id={course.name} tooltipContent={tooltipContent}>
       {isExternal ?
