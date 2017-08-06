@@ -15,23 +15,20 @@ import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
 
-const modes = ['student', 'teacher'];
-
-const ModeDropdown = ({t, mode, setModeStudent, setModeTeacher}) => {
-  const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
-  const setMode = mode => mode === 'student' ? setModeStudent() : setModeTeacher();
+const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
+  const texts = isStudentMode ? t('general.student') : t('general.teacher');
+  const bsStyle = isStudentMode ? 'student' : 'teacher';
+  const setMode = (isStudentMode) => {
+    isStudentMode ? setModeStudent() : setModeTeacher();
+  };
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='mode-dropdown'
                     noCaret
                     pullRight
-                    bsStyle={mode}
-                    title={t('navbar.mode') + ': ' + texts[mode]}
+                    bsStyle={bsStyle}
+                    title={t('navbar.mode') + ': ' + texts}
                     onSelect={setMode}>
-      {
-        modes.map(k =>
-          <MenuItem key={k} eventKey={k} active={mode === k}>{texts[k]}</MenuItem>
-        )
-      }
+      <MenuItem>{texts}</MenuItem>
     </DropdownButton>
   </div>;
 };
@@ -39,7 +36,8 @@ const ModeDropdown = ({t, mode, setModeStudent, setModeTeacher}) => {
 ModeDropdown.propTypes = {
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
-  mode: PropTypes.oneOf(modes).isRequired
+  isStudentMode: PropTypes.bool,
+  t: PropTypes.func
 };
 
 // const SearchBox = ({t}) => {
@@ -84,13 +82,12 @@ LkkNav.propTypes = {
 };
 
 const Gadgets = ({isStudentMode, t, setModeStudent, setModeTeacher}) => {
-  const mode = modes[isStudentMode ? 0 : 1];
   // NOTE: Commenting out SearchBox until it is implemented
   return <div className={styles.gadgetGroup}>
-    {<LanguageDropdown mode={mode}/>}
+    {<LanguageDropdown/>}
     <ModeDropdown setModeStudent={setModeStudent}
                   setModeTeacher={setModeTeacher}
-                  mode={mode}
+                  isStudentMode={isStudentMode}
                   t={t}/>
     {/*<SearchBox t={t}/>*/}
   </div>;
