@@ -6,8 +6,7 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 //import FormControl from 'react-bootstrap/lib/FormControl';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import Button from 'react-bootstrap/lib/Button';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
@@ -15,25 +14,20 @@ import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
 
-const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
-  const texts = isStudentMode ? t('general.student') : t('general.teacher');
+const ModeButton = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
+  const text = isStudentMode ? t('general.student') : t('general.teacher');
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   const setMode = (isStudentMode) => {
     isStudentMode ? setModeStudent() : setModeTeacher();
   };
   return <div className={styles.gadgetContainer}>
-    <DropdownButton id='mode-dropdown'
-                    noCaret
-                    pullRight
-                    bsStyle={bsStyle}
-                    title={t('navbar.mode') + ': ' + texts}
-                    onSelect={setMode}>
-      <MenuItem>{texts}</MenuItem>
-    </DropdownButton>
+    <Button bsStyle={bsStyle} onClick={setMode}>
+      {t('navbar.mode') + ': ' + text}
+    </Button>
   </div>;
 };
 
-ModeDropdown.propTypes = {
+ModeButton.propTypes = {
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
   isStudentMode: PropTypes.bool,
@@ -85,7 +79,7 @@ const Gadgets = ({isStudentMode, t, setModeStudent, setModeTeacher}) => {
   // NOTE: Commenting out SearchBox until it is implemented
   return <div className={styles.gadgetGroup}>
     {<LanguageDropdown/>}
-    <ModeDropdown setModeStudent={setModeStudent}
+    <ModeButton setModeStudent={setModeStudent}
                   setModeTeacher={setModeTeacher}
                   isStudentMode={isStudentMode}
                   t={t}/>
