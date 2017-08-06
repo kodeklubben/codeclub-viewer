@@ -14,16 +14,47 @@ import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
-import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
+const PdfButton = ({lesson, t}) => {
+  const downloadContent = () => {
+    const element = document.getElementsByTagName('body');
+    html2canvas(element, {
+      onrendered: function(canvas) {
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 210;
+        const pageHeight = 295;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        let position = 0;
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+        pdf.save(lesson.frontmatter.title + '.pdf');
+      }
+    });
+  };
+  return <Button className={styles.buttonMargin} bsSize="small" bsStyle="danger"
+    onClick={() => downloadContent()}>
+      {t('lessons.pdf')}
+    </Button>;
+};
 
 const InstructionButton = ({buttonPath, buttonText}) => {
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
-      <Button className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
+      <Button className={styles.buttonMargin} bsStyle="guide" bsSize="small">
         {buttonText}
       </Button>
     </LinkContainer> :
@@ -140,13 +171,14 @@ const Lesson = React.createClass({
     }
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes, lesson} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
     const resetButton = anyCheckboxTrue(checkboxes) === true ?
-      <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
+      <Button className={styles.buttonMargin} bsStyle="warning" bsSize="small"
       onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
       : null;
+    const DownloadBtn = <PdfButton lesson={lesson} t={t}/>;
     return (
       <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -156,6 +188,7 @@ const Lesson = React.createClass({
           </h1>
           {this.getAuthor()}
           {this.getTranslator()}
+          {DownloadBtn}
           {resetButton}
           {instructionBtn}
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
