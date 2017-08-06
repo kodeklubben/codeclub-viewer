@@ -18,11 +18,11 @@ import Col from 'react-bootstrap/lib/Col';
 const ModeButton = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   const text = isStudentMode ? t('general.student') : t('general.teacher');
   const bsStyle = isStudentMode ? 'student' : 'teacher';
-  const setMode = (isStudentMode) => {
-    isStudentMode ? setModeStudent() : setModeTeacher();
+  const setMode = (isStudent) => {
+    isStudent ? setModeTeacher() : setModeStudent();
   };
   return <div className={styles.gadgetContainer}>
-    <Button bsStyle={bsStyle} onClick={setMode}>
+    <Button bsStyle={bsStyle} onClick={() => setMode(isStudentMode)}>
       <Col xsHidden>
         {t('navbar.mode') + ': ' + text}
       </Col>
