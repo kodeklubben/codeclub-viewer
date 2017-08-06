@@ -13,6 +13,7 @@ import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
+import Col from 'react-bootstrap/lib/Col';
 
 const ModeButton = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   const text = isStudentMode ? t('general.student') : t('general.teacher');
@@ -22,7 +23,12 @@ const ModeButton = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   };
   return <div className={styles.gadgetContainer}>
     <Button bsStyle={bsStyle} onClick={setMode}>
-      {t('navbar.mode') + ': ' + text}
+      <Col xsHidden>
+        {t('navbar.mode') + ': ' + text}
+      </Col>
+      <Col smHidden mdHidden lgHidden>
+        {text}
+      </Col>
     </Button>
   </div>;
 };
@@ -40,7 +46,7 @@ ModeButton.propTypes = {
 //   </div>;
 // };
 
-// SearchBox.propTypes ? {
+// SearchBox.propTypes = {
 //  t: PropTypes.func
 // };
 
