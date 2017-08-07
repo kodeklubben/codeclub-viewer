@@ -23,7 +23,7 @@ import html2canvas from 'html2canvas';
 
 const PdfButton = ({lesson, t}) => {
   const downloadContent = () => {
-    const element = document.getElementsByTagName('body');
+    const element = document.getElementById('lessonContainer');
     html2canvas(element, {
       onrendered: function(canvas) {
         const imgData = canvas.toDataURL('image/png');
@@ -181,7 +181,7 @@ const Lesson = React.createClass({
     const DownloadBtn = <PdfButton lesson={lesson} t={t}/>;
     return (
       <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
-        <div className={styles.container}>
+        <div id="lessonContainer" className={styles.container}>
           <h1>
             <LevelIcon level={this.getLevel()}/>
             {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
