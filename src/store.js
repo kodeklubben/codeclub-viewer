@@ -16,6 +16,9 @@ const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
   /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
 const lessons = getLessons(lessonContext, readmeContext, courseContext);
 
+// Add all resources, i.e. all files in lessonSrc that does not end in '.md':
+require.context('lessonSrc/', true, /\.(?!md$)[^.]+$/);
+
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
 let store;
