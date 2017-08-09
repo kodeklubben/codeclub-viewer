@@ -2898,14 +2898,14 @@ html-encoding-sniffer@^1.0.1:
   dependencies:
     whatwg-encoding "^1.0.1"
 
-html-loader@^0.4.3:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/html-loader/-/html-loader-0.4.4.tgz#f2b5b9acd5e035ff3ab5fd369c13c97a7bb014da"
+html-loader@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/html-loader/-/html-loader-0.5.0.tgz#55653aea10937854de2610f43060d040505a0fd3"
   dependencies:
     es6-templates "^0.2.2"
     fastparse "^1.1.1"
     html-minifier "^3.0.1"
-    loader-utils "^0.2.15"
+    loader-utils "^1.0.2"
     object-assign "^4.1.0"
 
 html-minifier@^3.0.1, html-minifier@^3.2.3:
@@ -3774,7 +3774,7 @@ loader-utils@0.2.x, loader-utils@^0.2.11, loader-utils@^0.2.14, loader-utils@^0.
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-loader-utils@^1.1.0:
+loader-utils@^1.0.2, loader-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
   dependencies:
@@ -4158,6 +4158,10 @@ markdown-it-loader@^0.6.0:
   resolved "https://registry.yarnpkg.com/markdown-it-loader/-/markdown-it-loader-0.6.0.tgz#874f0fafdc635e80ac4a120685170b3167635ea3"
   dependencies:
     loader-utils "^1.1.0"
+
+markdown-it-modify-token@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/markdown-it-modify-token/-/markdown-it-modify-token-1.0.2.tgz#542471a323270a5c102a635b07fe3b47c278eea0"
 
 markdown-it-task-checkbox@^1.0.3:
   version "1.0.3"

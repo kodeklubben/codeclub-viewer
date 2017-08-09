@@ -13,7 +13,10 @@ import contentStyles from './Content.scss';
 import {ImprovePageContainer} from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
+import {
+  removeHtmlFileEnding, useDataSrcAsHref,
+  getReadmepathFromLessonpath, hashCode, createCheckboxesKey
+} from '../../util';
 import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
@@ -106,7 +109,7 @@ const Lesson = React.createClass({
   },
   createMarkup(){
     return {
-      __html: removeHtmlFileEnding(this.props.lesson.content)
+      __html: useDataSrcAsHref(removeHtmlFileEnding(this.props.lesson.content))
     };
   },
   setLanguage(){

@@ -25,6 +25,7 @@ import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
+import MarkdownItModifyToken from 'markdown-it-modify-token';
 import highlight from './src/highlighting.js';
 const fs = require('fs');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
@@ -44,15 +45,18 @@ export const buildDir = path.join('dist', subDir);
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
 const publicPathWithoutSlash = '/' + subDir;
 export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
-export const lessonSrc = '../oppgaver/src';
-const assets = './src/assets';
-const bootstrapStyles = './node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+export const lessonSrc = path.resolve(__dirname, '../oppgaver/src');
+const assets = path.resolve(__dirname, './src/assets');
+const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap');
 
 // Loaders for lesson files written in markdown (.md)
 const frontmatterLoaders = ['json-loader', 'front-matter-loader?onlyAttributes'];
-const contentLoaders = ['html-loader', 'markdown-it-loader', 'front-matter-loader?onlyBody'];
+const contentLoaders = ['html-loader?attrs=img:src a:data-src', 'markdown-it-loader', 'front-matter-loader?onlyBody'];
 
 const cssModuleLoaderStr = 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
+
+//console.log('lessonSrc =', lessonSrc);
+//console.log('__dirname =', __dirname);
 
 /////////////////////
 // Helper function //
@@ -60,6 +64,8 @@ const cssModuleLoaderStr = 'css-loader?modules&importLoaders=1&localIdentName=[n
 export function getValuesAsArray(obj) {
   return Object.keys(obj).map(k => obj[k]);
 }
+
+const inCurrentRepo = (extRegexp) => new RegExp('^' + __dirname + '.*\\.' + extRegexp + '$');
 
 //////////////////////////
 // Loaders as an object //
@@ -70,36 +76,41 @@ export function getValuesAsArray(obj) {
 export function getLoaders() {
   return {
     js: {
-      test: /\.jsx?$/,
+      test: inCurrentRepo('js'),
       exclude: /node_modules/,
       loader: 'babel-loader'
     },
     css: {
-      test: /\.css$/,
+      test: inCurrentRepo('css'),
       exclude: /node_modules/,
       loaders: ['isomorphic-style-loader', cssModuleLoaderStr, 'postcss-loader']
     },
     scss: {
-      test: /\.scss$/,
+      test: inCurrentRepo('scss'),
       exclude: /node_modules/,
       loaders: ['isomorphic-style-loader', cssModuleLoaderStr, 'postcss-loader', 'sass-loader']
     },
     image: {
-      test: /\.(png|jpg|jpeg|gif)$/,
+      test: inCurrentRepo('(png|jpg|jpeg|gif)'),
       loader: 'url-loader?limit=5000&name=[path][name].[hash:6].[ext]'
     },
     fonturl: {
-      test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      test: inCurrentRepo('woff2?(\\?v=[0-9]\\.[0-9]\\.[0-9])?'),
       loader: 'url-loader?limit=10000'
     },
     fontfile: {
-      test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+      test: inCurrentRepo('(ttf|eot|svg)(\\?[\\s\\S]+)?'),
       loader: 'file-loader'
     },
     json: {
       // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
-      test: /\.json$/,
+      test: inCurrentRepo('json'),
       loader: 'json-loader'
+    },
+    resources: {
+      test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
+      exclude: /\.md$/,
+      loader: 'file-loader?name=[path][name].[hash:6].[ext]'
     }
   };
 }
@@ -118,11 +129,11 @@ const baseConfig = {
     publicPath: publicPath
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js'],
     alias: {
-      lessonSrc: path.resolve(__dirname, lessonSrc),
-      assets: path.resolve(__dirname, assets),
-      bootstrapStyles: path.resolve(__dirname, bootstrapStyles)
+      lessonSrc,
+      assets,
+      bootstrapStyles,
     }
   },
   resolveLoader: {
@@ -146,12 +157,42 @@ const baseConfig = {
     html: true,  // allow html in source
     linkify: true,  // parse URL-like text to links
     langPrefix: '',  // no prefix in class for code blocks
+    modifyToken: (token, env) => {
+      // see API https://markdown-it.github.io/markdown-it/#Token
+      // token will also have an attrObj property added for convenience
+      // which allows easy get and set of attribute values.
+      // It is prepopulated with the current attr values.
+      // Values returned in token.attrObj will override existing attr values.
+      // env will contain any properties passed to markdown-it's render
+      // Token can be modified in place, no return is necessary
+
+      if (token.type === 'link_open') {
+        const href = token.attrObj.href;
+        if (typeof href !== 'string' || !href) { return; }
+
+        if (href.startsWith('//') || href.startsWith('http')) { return; }
+
+        // If there is a #, ?, : or @ it means it a url, mailto, or similar, and not a local file:
+        if (/[#?:@]/.test(href)) { return; }
+
+        // Ignore any links that ends with .html (and possibly followed by # or ?)
+        if (/\.html([#?].*)*$/.test(href)) { return; }
+
+        // Only consider links that end with an extension (after passing the previous tests):
+        if (/\.\w+$/.test(href)) {
+          console.log('Token', token);
+          token.attrObj['data-src'] = decodeURI(href);
+          console.log('\nAdded data-src:', token.attrObj['data-src']);
+        }
+      }
+    },
     use: [
       MarkdownItAnchor,
       MarkdownItAttrs,
       MarkdownItHeaderSections,
       MarkdownItImplicitFigures,
-      [MarkdownItTaskCheckbox, {disabled: false}]
+      [MarkdownItTaskCheckbox, {disabled: false}],
+      MarkdownItModifyToken,
     ],
     highlight
   },

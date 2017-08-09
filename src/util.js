@@ -258,11 +258,16 @@ export function tagsMatchFilter(lessonTags, filter) {
   return true; // The lessonTags contained all the checked filterTags
 }
 
-export function removeHtmlFileEnding(lessonPage) {
-  // RegEx for matching and removing parts of text that starts with
-  // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
-  return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(")/g, '$1$2');
-}
+// RegEx for matching and removing parts of text that starts with
+// <a href= ../ followed by anything not containing whitespaces, and ends with .html">
+export const removeHtmlFileEnding = (content) => content.replace(/(<a href="\.\.\/[^\s]*)\.html(")/g, '$1$2');
+
+// If an anchor tag has both href and data-src, use value of data-src as href, and remove data-src.
+// Note that there are two replaces, one if href is before data-src, and one if data-src if before href.
+export const useDataSrcAsHref = (content) => content
+  .replace(/(<a[^>]*?\shref=")[^"]*?("[^>]*?)\sdata-src="([^"]*?)"([^>]*?>)/g, '$1$3$2$4')
+  .replace(/(<a[^>]*?)\sdata-src="([^"]*?)"([^>]*?\shref=")[^"]*?("[^>]*?>)/g, '$1$3$2$4');
+
 
 /**
 * Returns languages defined as available
