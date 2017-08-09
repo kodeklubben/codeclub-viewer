@@ -106,3 +106,18 @@ export function setLastLesson(path) {
     path
   };
 }
+
+export function collapseFilterGroup(name, collapsed) {
+  return {
+    type: 'COLLAPSE_FILTERGROUP',
+    name,
+    collapsed
+  };
+}
+
+export function collapseAllFilterGroups(collapsed) {
+  return {
+    type: 'COLLAPSE_ALL_FILTERGROUPS',
+    collapsed
+  };
+}

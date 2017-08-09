@@ -40,7 +40,7 @@ function handleCheckFilter(state, groupKey, tagKey){
 
 }
 
-// Set all tags to false
+// Set all tags to false except filter[groupKey][tagKey]
 function resetFilter(state, groupKey, tagKey) {
   const filterGroups = Object.keys(state);
   return filterGroups.reduce((res, filterGroup) => {

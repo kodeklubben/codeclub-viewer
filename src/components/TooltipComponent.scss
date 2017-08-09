@@ -1,0 +1,21 @@
+@import '../styles/variables';
+
+.tooltip {
+  :global(.tooltip-inner) {
+    max-width: 400px;
+    font-size: 1.4em;
+  }
+  img {
+    max-height: 200px;
+  }
+
+  @media screen and (max-width: $screen-xs-max) {
+    :global(.tooltip-inner) {
+      max-width: 320px;
+      font-size: 1em;
+    }
+    img {
+      max-height: 180px;
+    }
+  }
+}

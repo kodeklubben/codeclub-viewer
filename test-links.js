@@ -5,14 +5,14 @@
  */
 const assert = require('assert');
 const http = require('http');
-const package = require('./package.json');
+const packageFile = require('./package.json');
 const Spider = require('node-spider');
 const Static = require('node-static');
 
 const PORT = 3000;
 const start = 'http://localhost:' + PORT;
 const buildRoot = 'dist';
-const repo = package.repository.url.replace('git+', '').replace('.git', '');
+const repo = packageFile.repository.url.replace('git+', '').replace('.git', '');
 
 /**
 * test-links.js crawls all pages and check that href and src attributes does

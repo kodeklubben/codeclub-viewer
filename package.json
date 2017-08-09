@@ -17,7 +17,7 @@
     "test:links": "node test-links.js",
     "test:watch": "yarn run test -- --watch",
     "eslint": "eslint *.js src/ test/ --ext .js,.jsx",
-    "stylelint": "stylelint 'src/**/*.scss'",
+    "stylelint": "stylelint \"src/**/*.scss\"",
     "testall": "yarn run eslint && yarn run stylelint && yarn run test && yarn run build && yarn run test:links"
   },
   "repository": {
