@@ -25,7 +25,7 @@ const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
   const path = `${params.course}/${params.lesson}/${params.file}`;
 
-  const bundledLessonContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
+  const bundledLessonContext = require.context('bundleLessons!frontAndContent!lessonSrc/', true,
     /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
   const bundle = bundledLessonContext('./' + path + '.md');
   bundle(result => {
@@ -35,7 +35,7 @@ const getComponentLessonPage = (nextState, cb) => {
   });
 
   // The following code was an attempt to make it look more like routes-static.js,
-  // but alas it won't split the code into separate chunks / js-files per oppgave:
+  // but alas it won't split the code into separate chunks / js-files per lesson:
   //
   // require.ensure([], require => {
   //   const lessonContext = require.context('frontAndContent!lessonSrc/', true,
@@ -47,18 +47,6 @@ const getComponentLessonPage = (nextState, cb) => {
   // });
 };
 
-/*const getComponentLessonInstructionPage = (nextState, cb) => {
-  const params = nextState.params;
-  const path = `${params.course}/${params.lesson}/${params.file}`;
-
-  const bundledLessonInstructionContext = require.context('bundle?name=[path][name]!frontAndContent!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/README\.md$/);
-  const bundle = bundledLessonInstructionContext('./' + path + '.md');
-  bundle(result => {
-    cb(null, props => <Lesson {...props} lesson={result}/>);
-  });
-
-};*/
 
 
 const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,

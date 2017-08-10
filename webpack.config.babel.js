@@ -53,7 +53,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 console.log(`isProduction=${isProduction}`);
 console.log();
 
-const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
+const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
 
 // Small hack to avoid having to type a slash at the end of the url if there is a subdir in publicPath:
 const newPublicPath = (isHot && publicPath.length > 1 && publicPath.slice(-1) === '/') ?
@@ -174,7 +174,8 @@ const config = {
     chunkFilename: `${filenameBase}.js`
   },
   devServer: {
-    historyApiFallback: true // needed when using browserHistory (instead of hashHistory)
+    historyApiFallback: true, // needed when using browserHistory (instead of hashHistory)
+    outputPath: path.resolve(__dirname, buildDir) // needed for copy-webpack-plugin when "to" is an abs. path
   },
   historyApiFallback: {
     index: publicPath

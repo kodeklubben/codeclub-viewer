@@ -47,20 +47,19 @@ const locals = {};
 
 function getStaticSitePaths() {
   const glob = require('glob');
-  const absLessonSrc = path.resolve(__dirname, lessonSrc);
 
   // Only include folders in lesson src that have an index.md
-  const coursePaths = glob.sync(path.join(absLessonSrc, '*/index.md'), {dot: true})
-    .map(p => p.replace(new RegExp(`^${absLessonSrc}\/(.*)\/index\.md$`), '$1/'));
+  const coursePaths = glob.sync(path.join(lessonSrc, '*/index.md'), {dot: true})
+    .map(p => p.replace(new RegExp(`^${lessonSrc}\/(.*)\/index\.md$`), '$1/'));
 
-  const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
+  const lessonPaths = glob.sync(path.join(lessonSrc, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md'))
     .filter(p => {
       const {title, external} = yamlFront.loadFront(p);
       if (external) { console.log('Skipping external course "' + title + '" (' + p + ')'); }
       return !external;
     })
-    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2/'));
+    .map(p => p.replace(new RegExp(`^(${lessonSrc}\/)(.*)(\.md)$`), '$2/'));
 
   const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
 
