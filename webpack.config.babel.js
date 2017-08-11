@@ -35,7 +35,6 @@
 import baseConfig, {getValuesAsArray, getLoaders, buildDir, publicPath} from './webpack.base.config.babel';
 const webpack = require('webpack');
 
-import path from 'path';
 import autoprefixer from 'autoprefixer';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -146,9 +145,7 @@ function getPlugins() {
 
   if (!isHot) {
     plugins = plugins.concat([
-      new CleanWebpackPlugin([buildDir], {
-        root: path.resolve(__dirname)
-      }),
+      new CleanWebpackPlugin(buildDir),
       new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
@@ -175,7 +172,7 @@ const config = {
   },
   devServer: {
     historyApiFallback: true, // needed when using browserHistory (instead of hashHistory)
-    outputPath: path.resolve(__dirname, buildDir) // needed for copy-webpack-plugin when "to" is an abs. path
+    outputPath: buildDir // needed for copy-webpack-plugin when "to" is an abs. path
   },
   historyApiFallback: {
     index: publicPath

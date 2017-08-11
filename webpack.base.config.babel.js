@@ -41,8 +41,7 @@ let subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').tri
 if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
 if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 
-export const buildDir = path.join('dist', subDir);
-const absBuildDir = path.join(__dirname, buildDir);
+export const buildDir = path.join(__dirname, 'dist', subDir);
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
 const publicPathWithoutSlash = '/' + subDir;
 export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
@@ -131,7 +130,7 @@ const baseConfig = {
     loaders: getValuesAsArray(getLoaders())
   },
   output: {
-    path: absBuildDir,
+    path: buildDir,
     publicPath: publicPath
   },
   resolve: {
@@ -178,7 +177,7 @@ const baseConfig = {
       context: lessonSrc,
       from: lessonSrc + '/**/*',
       ignore: '*.md',
-      to: absBuildDir + '/[path][name].[ext]'
+      to: buildDir + '/[path][name].[ext]'
     }]),
     new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({

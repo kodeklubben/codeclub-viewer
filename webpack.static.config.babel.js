@@ -98,7 +98,7 @@ const config = {
     ...baseConfig.resolve,
     alias: {
       ...baseConfig.resolve.alias,
-      buildDir: path.resolve(__dirname, buildDir)
+      buildDir
     }
   },
   plugins: [
