@@ -69,7 +69,10 @@ export function getValuesAsArray(obj) {
   return Object.keys(obj).map(k => obj[k]);
 }
 
-const inCurrentRepo = (extRegexp) => new RegExp('^' + __dirname + '.*\\.' + extRegexp + '$');
+// All RegExps that involve paths must have the path parts surrounded by regexpCompPath
+const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
+
+const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
 
 //////////////////////////
 // Loaders as an object //
@@ -126,7 +129,7 @@ export function getLoaders() {
 const baseConfig = {
   context: __dirname,
   module: {
-    noParse: /node_modules\/scratchblocks\/browser\/scratchblocks\.(min\.)?js/,
+    noParse: new RegExp(regexpCompPath('node_modules/scratchblocks/browser/scratchblocks') + '\\.(min\\.)?js'),
     loaders: getValuesAsArray(getLoaders())
   },
   output: {
