@@ -28,6 +28,7 @@ import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
 import highlight from './src/highlighting.js';
 const fs = require('fs');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 ///////////////
 // CONSTANTS //
@@ -40,17 +41,24 @@ let subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').tri
 if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
 if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 
-export const buildDir = path.join('dist', subDir);
+export const buildDir = path.join(__dirname, 'dist', subDir);
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
 const publicPathWithoutSlash = '/' + subDir;
 export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
-export const lessonSrc = '../oppgaver/src';
-const assets = './src/assets';
-const bootstrapStyles = './node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+export const lessonSrc = path.resolve(__dirname, '../oppgaver/src');
+const assets = path.resolve(__dirname, './src/assets');
+const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap');
 
 // Loaders for lesson files written in markdown (.md)
-const frontmatterLoaders = ['json-loader', 'front-matter-loader?onlyAttributes'];
-const contentLoaders = ['html-loader', 'markdown-it-loader', 'front-matter-loader?onlyBody'];
+const frontmatterLoaders = [
+  'json-loader',
+  'front-matter-loader?onlyAttributes'
+];
+const contentLoaders = [
+  'html-loader?attrs=false',
+  'markdown-it-loader',
+  'front-matter-loader?onlyBody'
+];
 
 const cssModuleLoaderStr = 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]__[hash:base64:5]';
 
@@ -61,6 +69,11 @@ export function getValuesAsArray(obj) {
   return Object.keys(obj).map(k => obj[k]);
 }
 
+// All RegExps that involve paths must have the path parts surrounded by regexpCompPath
+const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
+
+const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
+
 //////////////////////////
 // Loaders as an object //
 //////////////////////////
@@ -70,36 +83,41 @@ export function getValuesAsArray(obj) {
 export function getLoaders() {
   return {
     js: {
-      test: /\.jsx?$/,
+      test: inCurrentRepo('js'),
       exclude: /node_modules/,
       loader: 'babel-loader'
     },
     css: {
-      test: /\.css$/,
+      test: inCurrentRepo('css'),
       exclude: /node_modules/,
       loaders: ['isomorphic-style-loader', cssModuleLoaderStr, 'postcss-loader']
     },
     scss: {
-      test: /\.scss$/,
+      test: inCurrentRepo('scss'),
       exclude: /node_modules/,
       loaders: ['isomorphic-style-loader', cssModuleLoaderStr, 'postcss-loader', 'sass-loader']
     },
     image: {
-      test: /\.(png|jpg|jpeg|gif)$/,
-      loader: 'url-loader?limit=5000&name=[path][name].[hash:6].[ext]'
+      test: inCurrentRepo('(png|jpg|jpeg|gif)'),
+      loader: 'file-loader?name=CCV-assets/[name].[hash:6].[ext]',
     },
     fonturl: {
-      test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      loader: 'url-loader?limit=10000'
+      test: inCurrentRepo('woff2?(\\?v=[0-9]\\.[0-9]\\.[0-9])?'),
+      loader: 'file-loader?name=CCV-assets/[name].[hash:6].[ext]',
     },
     fontfile: {
-      test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-      loader: 'file-loader'
+      test: inCurrentRepo('(ttf|eot|svg)(\\?[\\s\\S]+)?'),
+      loader: 'file-loader?name=CCV-assets/[name].[hash:6].[ext]',
     },
     json: {
       // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
-      test: /\.json$/,
+      test: inCurrentRepo('json'),
       loader: 'json-loader'
+    },
+    resources: {
+      test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
+      exclude: /\.md$/,
+      loader: 'file-loader?name=[path][name].[hash:6].[ext]&context='+lessonSrc
     }
   };
 }
@@ -109,20 +127,21 @@ export function getLoaders() {
 /////////////////////
 
 const baseConfig = {
+  context: __dirname,
   module: {
-    noParse: /node_modules\/scratchblocks\/browser\/scratchblocks\.(min\.)?js/,
+    noParse: new RegExp(regexpCompPath('node_modules/scratchblocks/browser/scratchblocks') + '\\.(min\\.)?js'),
     loaders: getValuesAsArray(getLoaders())
   },
   output: {
-    path: path.resolve(__dirname, buildDir),
+    path: buildDir,
     publicPath: publicPath
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js'],
     alias: {
-      lessonSrc: path.resolve(__dirname, lessonSrc),
-      assets: path.resolve(__dirname, assets),
-      bootstrapStyles: path.resolve(__dirname, bootstrapStyles)
+      lessonSrc,
+      assets,
+      bootstrapStyles
     }
   },
   resolveLoader: {
@@ -134,12 +153,13 @@ const baseConfig = {
       // 2) Since the lessons create a lot of data, we want to be sure that we only load
       //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
       //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
-      'onlyFrontmatter': 'combine?' + JSON.stringify({frontmatter: frontmatterLoaders}),
-      'onlyContent': 'combine?' + JSON.stringify({content: contentLoaders}),
-      'frontAndContent': 'combine?' + JSON.stringify({
+      onlyFrontmatter: 'combine?' + JSON.stringify({frontmatter: frontmatterLoaders}),
+      onlyContent: 'combine?' + JSON.stringify({content: contentLoaders}),
+      frontAndContent: 'combine?' + JSON.stringify({
         frontmatter: frontmatterLoaders,
         content: contentLoaders
-      })
+      }),
+      bundleLessons: 'bundle?name=[path][name]&context='+lessonSrc,
     }
   },
   'markdown-it': {
@@ -156,13 +176,22 @@ const baseConfig = {
     highlight
   },
   plugins: [
+    new CopyWebpackPlugin([{
+      context: lessonSrc,
+      from: lessonSrc + '/**/*',
+      ignore: '*.md',
+      to: buildDir + '/[path][name].[ext]'
+    }]),
     new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
       }
     }),
-    new FaviconsWebpackPlugin('./src/assets/graphics/favicon.png')
+    new FaviconsWebpackPlugin({
+      logo: './src/assets/graphics/favicon.png',
+      prefix: 'CCV-icons-[hash:6]/'
+    })
   ]
 };
 

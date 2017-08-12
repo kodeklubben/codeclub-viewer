@@ -35,7 +35,6 @@
 import baseConfig, {getValuesAsArray, getLoaders, buildDir, publicPath} from './webpack.base.config.babel';
 const webpack = require('webpack');
 
-import path from 'path';
 import autoprefixer from 'autoprefixer';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -53,7 +52,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 console.log(`isProduction=${isProduction}`);
 console.log();
 
-const filenameBase = isHot ? '[name]' : '[name].[chunkhash]';
+const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
 
 // Small hack to avoid having to type a slash at the end of the url if there is a subdir in publicPath:
 const newPublicPath = (isHot && publicPath.length > 1 && publicPath.slice(-1) === '/') ?
@@ -146,9 +145,7 @@ function getPlugins() {
 
   if (!isHot) {
     plugins = plugins.concat([
-      new CleanWebpackPlugin([buildDir], {
-        root: path.resolve(__dirname)
-      }),
+      new CleanWebpackPlugin(buildDir),
       new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
@@ -174,7 +171,8 @@ const config = {
     chunkFilename: `${filenameBase}.js`
   },
   devServer: {
-    historyApiFallback: true // needed when using browserHistory (instead of hashHistory)
+    historyApiFallback: true, // needed when using browserHistory (instead of hashHistory)
+    outputPath: buildDir // needed for copy-webpack-plugin when "to" is an abs. path
   },
   historyApiFallback: {
     index: publicPath
