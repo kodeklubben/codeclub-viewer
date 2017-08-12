@@ -85,10 +85,7 @@ const Gadgets = ({isStudentMode, t, setModeStudent, setModeTeacher}) => {
   // NOTE: Commenting out SearchBox until it is implemented
   return <div className={styles.gadgetGroup}>
     {<LanguageDropdown/>}
-    <ModeButton setModeStudent={setModeStudent}
-                  setModeTeacher={setModeTeacher}
-                  isStudentMode={isStudentMode}
-                  t={t}/>
+    <ModeButton {...{setModeStudent, setModeTeacher ,isStudentMode, t}}/>
     {/*<SearchBox t={t}/>*/}
   </div>;
 };
