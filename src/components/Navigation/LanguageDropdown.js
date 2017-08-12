@@ -28,12 +28,12 @@ LanguageItem.propTypes = {
 };
 
 const LanguageDropdown = ({isStudentMode, language, resetFilter, setLanguage, t}) => {
-  const modes = isStudentMode ? 'student' : 'teacher';
+  const mode = isStudentMode ? 'student' : 'teacher';
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='language-dropdown'
                     noCaret
                     pullRight
-                    bsStyle={'language-' + modes}
+                    bsStyle={'language-' + mode}
                     title={<LanguageItem onlyFlag={true} language={language} t={t}/>}
                     onSelect={(eventKey) => {
                       resetFilter('language', eventKey);
