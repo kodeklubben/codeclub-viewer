@@ -6,93 +6,96 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 //import FormControl from 'react-bootstrap/lib/FormControl';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import Button from 'react-bootstrap/lib/Button';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
+import Col from 'react-bootstrap/lib/Col';
 
-const modes = ['student', 'teacher'];
-
-function ModeDropdown(props) {
-  const texts = {'student': props.t('general.student'), 'teacher': props.t('general.teacher')};
-  const setMode = mode => mode === 'student' ? props.setModeStudent() : props.setModeTeacher();
+const ModeButton = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
+  const text = isStudentMode ? t('general.student') : t('general.teacher');
+  const bsStyle = isStudentMode ? 'student' : 'teacher';
+  const setMode = isStudent => isStudent ? setModeTeacher() : setModeStudent();
   return <div className={styles.gadgetContainer}>
-    <DropdownButton id='mode-dropdown'
-                    noCaret
-                    pullRight
-                    bsStyle={props.mode}
-                    title={props.t('navbar.mode') + ': ' + texts[props.mode]}
-                    onSelect={setMode}>
-      {
-        modes.map(k =>
-          <MenuItem key={k} eventKey={k} active={props.mode === k}>{texts[k]}</MenuItem>
-        )
-      }
-    </DropdownButton>
+    <Button bsStyle={bsStyle} onClick={() => setMode(isStudentMode)}>
+      <Col xsHidden>
+        {t('navbar.mode') + ': ' + text}
+      </Col>
+      <Col smHidden mdHidden lgHidden>
+        {text}
+      </Col>
+    </Button>
   </div>;
-}
-ModeDropdown.propTypes = {
-  setModeStudent: PropTypes.func,
-  setModeTeacher: PropTypes.func,
-  mode: PropTypes.oneOf(modes).isRequired
 };
 
-// function SearchBox(props) {
-//   return <div className={styles.gadgetContainer}>
-//     <FormControl type='text' placeholder={props.t('search.placeholder')}/>
-//   </div>;
-// }
+ModeButton.propTypes = {
+  setModeStudent: PropTypes.func,
+  setModeTeacher: PropTypes.func,
+  isStudentMode: PropTypes.bool,
+  t: PropTypes.func
+};
 
-function LkkBrand() {
+// const SearchBox = ({t}) => {
+//   return <div className={styles.gadgetContainer}>
+//     <FormControl type='text' placeholder={t('search.placeholder')}/>
+//   </div>;
+// };
+
+// SearchBox.propTypes = {
+//  t: PropTypes.func
+// };
+
+const LkkBrand = () => {
   return <Navbar.Brand>
     <a href="http://kidsakoder.no" className={styles.logo}>
       <img src={require('../../assets/graphics/LKK_small.png')}/>
     </a>
   </Navbar.Brand>;
-}
+};
 
-function LkkNav(props) {
+const LkkNav = ({t}) => {
   return <div className={styles.navContainer}>
     <Nav>
-      <NavItem href="http://kidsakoder.no/om-lkk/">{props.t('navbar.lkknav.aboutlkk')}</NavItem>
-      <NavItem href="http://kidsakoder.no/nyheter/">{props.t('navbar.lkknav.news')}</NavItem>
+      <NavItem href="http://kidsakoder.no/om-lkk/">{t('navbar.lkknav.aboutlkk')}</NavItem>
+      <NavItem href="http://kidsakoder.no/nyheter/">{t('navbar.lkknav.news')}</NavItem>
       <LinkContainer to='/'>
-        <NavItem>{props.t('navbar.lkknav.lessons')}</NavItem>
+        <NavItem>{t('navbar.lkknav.lessons')}</NavItem>
       </LinkContainer>
       <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">
-        {props.t('navbar.lkknav.findcodeclub')}
+        {t('navbar.lkknav.findcodeclub')}
       </NavItem>
-      <NavItem href="http://kidsakoder.no/kodeklubben/">{props.t('navbar.lkknav.codeclub')}</NavItem>
-      <NavItem href="http://kidsakoder.no/skole/">{props.t('navbar.lkknav.school')}</NavItem>
-      <NavItem href="http://kidsakoder.no/kodetimen/">{props.t('navbar.lkknav.codehour')}</NavItem>
-      <NavItem href="http://kidsakoder.no/bidra/">{props.t('navbar.lkknav.contribute')}</NavItem>
+      <NavItem href="http://kidsakoder.no/kodeklubben/">{t('navbar.lkknav.codeclub')}</NavItem>
+      <NavItem href="http://kidsakoder.no/skole/">{t('navbar.lkknav.school')}</NavItem>
+      <NavItem href="http://kidsakoder.no/kodetimen/">{t('navbar.lkknav.codehour')}</NavItem>
+      <NavItem href="http://kidsakoder.no/bidra/">{t('navbar.lkknav.contribute')}</NavItem>
     </Nav>
   </div>;
-}
+};
 
-function Gadgets(props) {
-  const mode = modes[props.isStudentMode ? 0 : 1];
+LkkNav.propTypes = {
+  t: PropTypes.func
+};
+
+const Gadgets = ({isStudentMode, t, setModeStudent, setModeTeacher}) => {
   // NOTE: Commenting out SearchBox until it is implemented
   return <div className={styles.gadgetGroup}>
-    {<LanguageDropdown mode={mode}/>}
-    <ModeDropdown setModeStudent={props.setModeStudent}
-                  setModeTeacher={props.setModeTeacher}
-                  mode={mode}
-                  t={props.t}/>
-    {/*<SearchBox t={props.t}/>*/}
+    <LanguageDropdown/>
+    <ModeButton {...{setModeStudent, setModeTeacher ,isStudentMode, t}}/>
+    {/*<SearchBox t={t}/>*/}
   </div>;
-}
+};
+
 Gadgets.propTypes = {
   setModeStudent: PropTypes.func,
   setModeTeacher: PropTypes.func,
-  isStudentMode: PropTypes.bool
+  isStudentMode: PropTypes.bool,
+  t: PropTypes.func
 };
 
-function MenuToggle(props) {
+const MenuToggle = ({t}) => {
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
     <span className={styles.toggleContent}>
@@ -100,35 +103,37 @@ function MenuToggle(props) {
       <span className="icon-bar"/>
       <span className="icon-bar"/>
     </span>
-    <span className={styles.toggleContent}>{props.t('navbar.menu')}</span>
+    <span className={styles.toggleContent}>{t('navbar.menu')}</span>
   </Navbar.Toggle>;
-}
+};
 
-export function NavBar(props) {
-  const widgetClass = props.isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
+MenuToggle.propTypes = {
+  t: PropTypes.func
+};
+
+export const NavBar = ({isStudentMode, t, setModeStudent, setModeTeacher, params}) => {
+  const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
     <div className={styles.navbarWrapper}>
       <Navbar fluid={true} staticTop>
         <Navbar.Header>
           <LkkBrand/>
           <Clearfix visibleXsBlock/>
-          <MenuToggle t={props.t}/>
+          <MenuToggle t={t}/>
         </Navbar.Header>
         <Navbar.Collapse>
           <div className={styles.spacing}/>
-          <LkkNav t={props.t}/>
+          <LkkNav t={t}/>
         </Navbar.Collapse>
         <div className={styles.widgets + ' ' + widgetClass}>
-          <BreadCrumb params={props.params}/>
-          <Gadgets setModeStudent={props.setModeStudent}
-                   setModeTeacher={props.setModeTeacher}
-                   isStudentMode={props.isStudentMode}
-                   t={props.t}/>
+          <BreadCrumb params={params}/>
+          <Gadgets {...{setModeStudent, setModeTeacher ,isStudentMode, t}}/>
         </div>
       </Navbar>
     </div>
   );
-}
+};
+
 NavBar.propTypes = {
   params: PropTypes.shape({
     course: PropTypes.string,
@@ -141,17 +146,17 @@ NavBar.propTypes = {
   t: PropTypes.func
 };
 
-function mapStateToProps(state) {
-  return {
-    isStudentMode: state.isStudentMode,
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  isStudentMode: state.isStudentMode,
+  t: getTranslator(state)
+});
+
+const mapDispatchToProps = {
+  setModeStudent,
+  setModeTeacher
+};
 
 export const NavBarContainer = connect(
   mapStateToProps,
-  {
-    setModeStudent,
-    setModeTeacher
-  }
+  mapDispatchToProps
 )(withStyles(styles)(NavBar));

@@ -9,7 +9,6 @@ import styles from './LanguageDropdown.scss';
 import {getTranslator} from '../../selectors/translate';
 
 const availableLanguages = getAvailableLanguages();
-const modes = ['student', 'teacher'];
 
 const LanguageItem = ({language, t, onlyFlag}) => {
   // Note that the block with "float" (the flag) must be first in the containing div
@@ -28,7 +27,8 @@ LanguageItem.propTypes = {
   onlyFlag: PropTypes.bool.isRequired
 };
 
-const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
+const LanguageDropdown = ({isStudentMode, language, resetFilter, setLanguage, t}) => {
+  const mode = isStudentMode ? 'student' : 'teacher';
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='language-dropdown'
                     noCaret
@@ -51,24 +51,21 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
 };
 
 LanguageDropdown.propTypes = {
-  // ownProps:
-  mode: PropTypes.oneOf(modes).isRequired,
-
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
   t: PropTypes.func.isRequired,
+  isStudentMode: PropTypes.bool,
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    language: state.language,
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  language: state.language,
+  t: getTranslator(state),
+  isStudentMode: state.isStudentMode
+});
 
 const mapDispatchToProps = {
   setLanguage,
