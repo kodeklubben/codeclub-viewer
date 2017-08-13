@@ -7,7 +7,7 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 
-export function BreadCrumb({params, iconContext, lessonLevel, lessonTitle}) {
+export const BreadCrumb = ({params, iconContext, lessonLevel, lessonTitle}) => {
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
@@ -28,7 +28,8 @@ export function BreadCrumb({params, iconContext, lessonLevel, lessonTitle}) {
     {lessonLink ? <span> / </span> : null}
     {lessonLink ? lessonLink : null}
   </div>;
-}
+};
+
 BreadCrumb.propTypes = {
   params: PropTypes.shape({
     course: PropTypes.string,

@@ -63,7 +63,8 @@ const TeacherInfobox = React.createClass({
 });
 
 TeacherInfobox.propTypes = {
-  t: PropTypes.func
+  // mapStateToProps
+  t: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

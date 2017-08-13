@@ -22,10 +22,14 @@ const LanguageItem = ({language, t, onlyFlag}) => {
     </div>
   );
 };
+
 LanguageItem.propTypes = {
+  // ownProps
+  onlyFlag: PropTypes.bool.isRequired,
+
+  // mapStateToProps
   language: PropTypes.oneOf(availableLanguages).isRequired,
-  t: PropTypes.func.isRequired,
-  onlyFlag: PropTypes.bool.isRequired
+  t: PropTypes.func.isRequired
 };
 
 const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
@@ -34,7 +38,7 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
                     noCaret
                     pullRight
                     bsStyle={'language-' + mode}
-                    title={<LanguageItem onlyFlag={true} language={language} t={t}/>}
+                    title={<LanguageItem onlyFlag={true} {...{language, t}}/>}
                     onSelect={(eventKey) => {
                       resetFilter('language', eventKey);
                       setLanguage(eventKey);
@@ -63,12 +67,10 @@ LanguageDropdown.propTypes = {
   resetFilter: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    language: state.language,
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  language: state.language,
+  t: getTranslator(state)
+});
 
 const mapDispatchToProps = {
   setLanguage,

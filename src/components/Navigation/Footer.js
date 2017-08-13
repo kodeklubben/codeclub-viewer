@@ -77,17 +77,15 @@ const Footer = React.createClass({
 });
 
 Footer.propTypes = {
-  isStudentMode: PropTypes.bool,
-  t: PropTypes.func
-
+  // mapStateToProps
+  isStudentMode: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    isStudentMode: state.isStudentMode,
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  isStudentMode: state.isStudentMode,
+  t: getTranslator(state)
+});
 
 export const FooterContainer = connect(
   mapStateToProps
