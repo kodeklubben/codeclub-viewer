@@ -18,9 +18,7 @@ import Col from 'react-bootstrap/lib/Col';
 const ModeButton = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   const text = isStudentMode ? t('general.student') : t('general.teacher');
   const bsStyle = isStudentMode ? 'student' : 'teacher';
-  const setMode = (isStudent) => {
-    isStudent ? setModeTeacher() : setModeStudent();
-  };
+  const setMode = isStudent => isStudent ? setModeTeacher() : setModeStudent();
   return <div className={styles.gadgetContainer}>
     <Button bsStyle={bsStyle} onClick={() => setMode(isStudentMode)}>
       <Col xsHidden>
@@ -84,7 +82,7 @@ LkkNav.propTypes = {
 const Gadgets = ({isStudentMode, t, setModeStudent, setModeTeacher}) => {
   // NOTE: Commenting out SearchBox until it is implemented
   return <div className={styles.gadgetGroup}>
-    {<LanguageDropdown/>}
+    <LanguageDropdown/>
     <ModeButton {...{setModeStudent, setModeTeacher ,isStudentMode, t}}/>
     {/*<SearchBox t={t}/>*/}
   </div>;
@@ -129,10 +127,7 @@ export const NavBar = ({isStudentMode, t, setModeStudent, setModeTeacher, params
         </Navbar.Collapse>
         <div className={styles.widgets + ' ' + widgetClass}>
           <BreadCrumb params={params}/>
-          <Gadgets setModeStudent={setModeStudent}
-                   setModeTeacher={setModeTeacher}
-                   isStudentMode={isStudentMode}
-                   t={t}/>
+          <Gadgets {...{setModeStudent, setModeTeacher ,isStudentMode, t}}/>
         </div>
       </Navbar>
     </div>
