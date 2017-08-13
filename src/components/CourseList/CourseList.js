@@ -25,6 +25,7 @@ const CourseList = ({courses}) => {
 };
 
 CourseList.propTypes = {
+  // ownProps
   courses: PropTypes.object
 };
 

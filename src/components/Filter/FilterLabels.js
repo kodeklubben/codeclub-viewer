@@ -22,13 +22,13 @@ const FilterLabels = ({t, filter, onFilterCheck}) => {
   return <div>{labels}</div>;
 };
 FilterLabels.propTypes = {
-  // ownProps:
+  // ownProps
   t: PropTypes.func.isRequired,
 
-  // mapStateToProps:
+  // mapStateToProps
   filter: PropTypes.object.isRequired,
 
-  // mapDispatchToProps:
+  // mapDispatchToProps
   onFilterCheck: PropTypes.func.isRequired
 };
 

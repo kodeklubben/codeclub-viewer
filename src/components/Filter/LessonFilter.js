@@ -17,9 +17,7 @@ import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 import {somethingCheckedInFilter} from '../../selectors/filter';
 
-const LessonFilter = ({
-  filterGroupKeys, isStudentMode, availableLessons, t, somethingChecked
-}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, somethingChecked}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
     return (
       <FilterGroup
@@ -71,9 +69,13 @@ const LessonFilter = ({
 };
 
 LessonFilter.propTypes = {
-  filterGroupKeys: PropTypes.arrayOf(PropTypes.string),
-  isStudentMode: PropTypes.bool,
-  availableLessons: PropTypes.object,
+  // ownProps
+  courseName: PropTypes.string,
+
+  // mapStateToProps
+  filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isStudentMode: PropTypes.bool.isRequired,
+  availableLessons: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
   somethingChecked: PropTypes.bool.isRequired,
 };

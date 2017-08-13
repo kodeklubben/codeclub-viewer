@@ -17,6 +17,7 @@ const FilterItem = ({tagName, checked, onCheck, numberOfLessons}) => {
 };
 
 FilterItem.propTypes = {
+  // ownProps
   tagName: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   onCheck: PropTypes.func.isRequired,

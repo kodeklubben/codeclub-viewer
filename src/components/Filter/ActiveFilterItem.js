@@ -15,6 +15,7 @@ const ActiveFilterItem = ({tagName, onClick}) => {
 };
 
 ActiveFilterItem.propTypes = {
+  // ownProps
   tagName: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 };

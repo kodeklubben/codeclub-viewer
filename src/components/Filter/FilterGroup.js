@@ -64,8 +64,8 @@ FilterGroup.propTypes = {
   t: PropTypes.func.isRequired,
 
   // mapStateToProps:
-  filterTags: PropTypes.object,
-  filterGroupsCollapsed: PropTypes.object,
+  filterTags: PropTypes.object.isRequired,
+  filterGroupsCollapsed: PropTypes.object.isRequired,
   somethingChecked: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
