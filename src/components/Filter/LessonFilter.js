@@ -47,7 +47,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, some
     <div>
       {/*Filter desktop*/}
       <Col xsHidden>
-        <Panel header={header} bsStyle={bsStyle}>
+        <Panel {...{header, bsStyle}}>
           <ListGroup fill>
             {filterGroups}
             {clearFilter}
@@ -56,7 +56,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, some
       </Col>
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
-        <CollapsiblePanel initiallyExpanded={false} header={header} bsStyle={bsStyle}>
+        <CollapsiblePanel initiallyExpanded={false} {...{header, bsStyle}}>
           <ListGroup fill>
             {filterGroups}
             {clearFilter}
@@ -80,9 +80,6 @@ LessonFilter.propTypes = {
   somethingChecked: PropTypes.bool.isRequired,
 };
 
-/**
- * Input props: courseName
- */
 const mapStateToProps = (state, ownProps) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,

@@ -8,7 +8,6 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
 const TeacherInfobox = React.createClass({
-
   getInitialState() {
     return {
       showCourseInfo: false
@@ -17,7 +16,6 @@ const TeacherInfobox = React.createClass({
   changeState() {
     this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
   },
-
   render() {
     const {t} = this.props;
     const {showCourseInfo} = this.state;

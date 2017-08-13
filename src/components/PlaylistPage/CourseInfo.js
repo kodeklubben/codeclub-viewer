@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import CollapsiblePanel from '../CollapsiblePanel';
-
 import {getCourseInfoMarkup} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 
@@ -21,20 +20,18 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
 CourseInfo.propTypes = {
   // ownProps:
   isStudentMode: PropTypes.bool,
+  courseName: PropTypes.string,
 
   // mapStateToProps:
   t: PropTypes.func,
   courseInfo: PropTypes.object
 };
 
-/**
- * Input props: courseName
- */
-function mapStateToProps(state, props) {
-  return {
-    t: getTranslator(state),
-    courseInfo: getCourseInfoMarkup(props.courseName, state.language)
-  };
-}
+const mapStateToProps = (state, ownProps) => ({
+  t: getTranslator(state),
+  courseInfo: getCourseInfoMarkup(ownProps.courseName, state.language)
+});
 
-export default connect(mapStateToProps)(CourseInfo);
+export default connect(
+  mapStateToProps
+)(CourseInfo);

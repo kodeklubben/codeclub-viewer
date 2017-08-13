@@ -20,6 +20,7 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
 };
 
 TooltipComponent.propTypes = {
+  // ownProps
   id: PropTypes.string,
   children: PropTypes.object,
   tooltipContent: PropTypes.string

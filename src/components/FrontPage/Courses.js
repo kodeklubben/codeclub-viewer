@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';

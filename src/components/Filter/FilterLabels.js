@@ -21,6 +21,7 @@ const FilterLabels = ({t, filter, onFilterCheck}) => {
   }
   return <div>{labels}</div>;
 };
+
 FilterLabels.propTypes = {
   // ownProps
   t: PropTypes.func.isRequired,

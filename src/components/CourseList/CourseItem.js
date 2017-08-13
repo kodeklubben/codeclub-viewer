@@ -53,4 +53,6 @@ const mapStateToProps = (state) => ({
   language: state.language
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(CourseItem));
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(CourseItem));

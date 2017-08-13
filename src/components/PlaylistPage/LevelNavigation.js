@@ -8,7 +8,6 @@ import LevelIcon from '../LevelIcon';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LevelNavigation.scss';
 
-
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map((level, idx) => (
     <ListGroupItem key={idx} onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
@@ -27,9 +26,12 @@ const LevelNavigation = ({t, levels, isStudentMode}) => {
 };
 
 LevelNavigation.propTypes = {
+  // ownProps
   levels: PropTypes.array,
-  t: PropTypes.func,
-  isStudentMode: PropTypes.bool
+
+  // mapStateToProps
+  t: PropTypes.func.isRequired,
+  isStudentMode: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -37,4 +39,6 @@ const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(LevelNavigation));
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(LevelNavigation));

@@ -31,14 +31,17 @@ export const BreadCrumb = ({params, iconContext, lessonLevel, lessonTitle}) => {
 };
 
 BreadCrumb.propTypes = {
+  // ownProps
   params: PropTypes.shape({
     course: PropTypes.string,
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
-  iconContext: PropTypes.func,
-  lessonLevel: PropTypes.number,
-  lessonTitle: PropTypes.string
+
+  // mapStateToProps
+  iconContext: PropTypes.func.isRequired,
+  lessonLevel: PropTypes.number.isRequired,
+  lessonTitle: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state, ownProps) {

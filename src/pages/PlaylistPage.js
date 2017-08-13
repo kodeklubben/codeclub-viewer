@@ -2,24 +2,19 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DocumentTitle from 'react-document-title';
-
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
-
 import styles from './PlaylistPage.scss';
-
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
 import {capitalize} from '../util';
-
 import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
-
 
 export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
@@ -84,24 +79,24 @@ export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, 
 };
 
 PlaylistPage.propTypes = {
-  isStudentMode: PropTypes.bool,
-  lessonsByLevel: PropTypes.object.isRequired,
-  playlists: PropTypes.object.isRequired,
+  // ownProps
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }).isRequired,
+
+  // mapStateToProps
+  isStudentMode: PropTypes.bool,
+  lessonsByLevel: PropTypes.object.isRequired,
+  playlists: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, props) {
-  const {course} = props.params;
-  return {
-    isStudentMode: state.isStudentMode,
-    lessonsByLevel: getLessonsByLevel(state, course),
-    playlists: getPlaylists(state, course),
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state, ownProps) => ({
+  isStudentMode: state.isStudentMode,
+  lessonsByLevel: getLessonsByLevel(state, ownProps.course),
+  playlists: getPlaylists(state, ownProps.course),
+  t: getTranslator(state)
+});
 
 export const PlaylistPageContainer = connect(
   mapStateToProps

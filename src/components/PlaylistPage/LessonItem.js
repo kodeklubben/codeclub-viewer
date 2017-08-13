@@ -60,22 +60,23 @@ export const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCh
 };
 
 LessonItem.propTypes = {
+  // ownProps
   lesson: PropTypes.object,
-  isStudentMode: PropTypes.bool,
-  t: PropTypes.func,
+
+  // mapStateToProps
+  isStudentMode: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
 };
 
-function mapStateToProps(state, ownProps) {
-  const lessonCheckboxesKey = createCheckboxesKey(ownProps.lesson.path);
-  return {
-    isStudentMode: state.isStudentMode,
-    t: getTranslator(state),
-    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, lessonCheckboxesKey),
-    totalCheckboxes: getTotalNumberOfCheckboxes(state, lessonCheckboxesKey),
-  };
-}
+const mapStateToProps = (state, ownProps) => ({
+  isStudentMode: state.isStudentMode,
+  t: getTranslator(state),
+  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(ownProps.lesson.path)),
+  totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(ownProps.lesson.path)),
+});
+
 
 export const LessonItemContainer = connect(
   mapStateToProps

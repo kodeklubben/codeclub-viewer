@@ -4,11 +4,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-
 import styles from './Footer.scss';
 
 const Footer = React.createClass({
-
   getGitHubLink() {
     const url = {
       oppgaver: 'https://github.com/kodeklubben/oppgaver/'
@@ -32,7 +30,7 @@ const Footer = React.createClass({
   },
 
   render() {
-    const {t} = this.props;
+    const {t, isStudentMode} = this.props;
     const url = {
       kidsakoder: 'http://kidsakoder.no/',
       archive: 'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
@@ -44,8 +42,8 @@ const Footer = React.createClass({
     };
 
     return (
-      <Grid fluid={true} className={this.props.isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-        {this.props.isStudentMode ? null : this.getGitHubLink()}
+      <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+        {isStudentMode ? null : this.getGitHubLink()}
         <Row className={styles.center}>
             <a className={styles.inline} href={url.kidsakoder}>kidsakoder.no</a>
             <a className={styles.inline} href={url.archive}>{t('footer.downloadZIP')}</a>

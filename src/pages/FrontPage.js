@@ -27,6 +27,7 @@ export const  FrontPage = ({isStudentMode}) => {
 };
 
 FrontPage.propTypes = {
+  // mapStateToProps
   isStudentMode: PropTypes.bool
 };
 

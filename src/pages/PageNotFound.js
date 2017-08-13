@@ -17,14 +17,14 @@ const NotFound = ({t}) => {
 };
 
 NotFound.propTypes = {
-  t: PropTypes.func
+  // mapStateToProps
+  t: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  t: getTranslator(state)
+});
 
 export const NotFoundContainer = connect(
-	mapStateToProps)(withStyles(styles)(NotFound));
+	mapStateToProps
+)(withStyles(styles)(NotFound));
