@@ -14,7 +14,7 @@ const CourseItem = ({course, t, language}) => {
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const tooltipContent = isExternal ? getLessonIntro(coursePath + '/index') :
     getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
-    
+
   return (
     <TooltipComponent id={course.name} tooltipContent={tooltipContent}>
       {isExternal ?
@@ -34,7 +34,7 @@ const CourseItem = ({course, t, language}) => {
 };
 
 CourseItem.propTypes = {
-  t: PropTypes.func,
+  t: PropTypes.func.isRequired,
   course: PropTypes.shape({
     name: PropTypes.string,
     path: PropTypes.string,
@@ -42,7 +42,7 @@ CourseItem.propTypes = {
     iconPath: PropTypes.string,
     lessonCount: PropTypes.int
   }),
-  language: PropTypes.string
+  language: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
