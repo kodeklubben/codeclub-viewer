@@ -91,10 +91,10 @@ PlaylistPage.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, {course}) => ({
+const mapStateToProps = (state, {params}) => ({
   isStudentMode: state.isStudentMode,
-  lessonsByLevel: getLessonsByLevel(state, course),
-  playlists: getPlaylists(state, course),
+  lessonsByLevel: getLessonsByLevel(state, params.course),
+  playlists: getPlaylists(state, params.course),
   t: getTranslator(state)
 });
 

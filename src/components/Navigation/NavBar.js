@@ -127,7 +127,7 @@ MenuToggle.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-export const NavBar = ({isStudentMode, t, params, setModeStudent, setModeTeacher}) => {
+const NavBar = ({isStudentMode, t, params, setModeStudent, setModeTeacher}) => {
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
     <div className={styles.navbarWrapper}>
