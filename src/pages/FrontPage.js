@@ -8,7 +8,7 @@ import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
 
-export const FrontPage = ({isStudentMode}) => {
+const FrontPage = ({isStudentMode}) => {
   return (
     <Grid fluid={true}>
       {/*WelcomeBox and TeacherInfobox*/}
@@ -35,6 +35,6 @@ const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode
 });
 
-export const FrontPageContainer = connect(
+export default connect(
   mapStateToProps
 )(FrontPage);

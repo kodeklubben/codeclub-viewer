@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';
 
-export const NotFound = ({t}) => {
+const PageNotFound = ({t}) => {
   return (
     <div className={styles.center}>
       <h3>{t('404.header')}</h3>
@@ -16,7 +16,7 @@ export const NotFound = ({t}) => {
   );
 };
 
-NotFound.propTypes = {
+PageNotFound.propTypes = {
   // mapStateToProps
   t: PropTypes.func.isRequired
 };
@@ -25,6 +25,6 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-export const NotFoundContainer = connect(
+export default connect(
 	mapStateToProps
-)(withStyles(styles)(NotFound));
+)(withStyles(styles)(PageNotFound));

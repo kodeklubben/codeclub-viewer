@@ -16,7 +16,7 @@ import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => {
+const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
 
   const lessonLists = levels.map((level, idx) => (
@@ -98,6 +98,6 @@ const mapStateToProps = (state, {params}) => ({
   t: getTranslator(state)
 });
 
-export const PlaylistPageContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(PlaylistPage));
