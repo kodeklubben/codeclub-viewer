@@ -37,7 +37,7 @@ const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => 
     </div>;
 
   const courseInfo =
-    <CourseInfo courseName={params.course} isStudentMode={isStudentMode}/>;
+    <CourseInfo courseName={params.course}/>;
 
   // Title with course name and get started button
   const heading =

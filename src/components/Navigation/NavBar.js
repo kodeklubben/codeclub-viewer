@@ -94,7 +94,7 @@ LkkNav.propTypes = {
 const Gadgets = ({isStudentMode, setModeStudent, setModeTeacher, t}) => {
   const mode = modes[isStudentMode ? 0 : 1];
   return <div className={styles.gadgetGroup}>
-    {<LanguageDropdown mode={mode}/>}
+    {<LanguageDropdown/>}
     <ModeDropdown {...{setModeStudent, setModeTeacher, mode, t}}/>
     {/*<SearchBox t={t}/>*/}
   </div>;

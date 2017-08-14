@@ -18,17 +18,16 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
 };
 
 CourseInfo.propTypes = {
-  // ownProps:
-  isStudentMode: PropTypes.bool,
-
   // mapStateToProps:
-  t: PropTypes.func,
-  courseInfo: PropTypes.object
+  t: PropTypes.func.isRequired,
+  courseInfo: PropTypes.object.isRequired,
+  isStudentMode: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, {courseName}) => ({
   t: getTranslator(state),
-  courseInfo: getCourseInfoMarkup(courseName, state.language)
+  courseInfo: getCourseInfoMarkup(courseName, state.language),
+  isStudentMode: state.isStudentMode
 });
 
 export default connect(
