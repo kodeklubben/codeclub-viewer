@@ -7,8 +7,7 @@ import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 
 const ImprovePage = ({t, isStudentMode, courseLessonFileProp}) => {
-  const courseName = courseLessonFileProp.course;
-  const lessonName = courseLessonFileProp.lesson;
+  const {course: courseName, lesson: lessonName} = courseLessonFileProp;
 
   const linkToSourceCode = 'https://github.com/kodeklubben/oppgaver/tree/master/src/' +
                            courseName + '/' + lessonName;

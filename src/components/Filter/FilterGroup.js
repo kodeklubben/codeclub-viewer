@@ -73,10 +73,10 @@ FilterGroup.propTypes = {
   collapseFilterGroup: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  filterTags: state.filter[ownProps.groupKey],
+const mapStateToProps = (state, {groupKey}) => ({
+  filterTags: state.filter[groupKey],
   filterGroupsCollapsed: state.filterGroupsCollapsed,
-  somethingChecked: somethingCheckedInGroup(state, ownProps.groupKey),
+  somethingChecked: somethingCheckedInGroup(state, groupKey),
 });
 
 const mapDispatchToProps = {

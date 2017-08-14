@@ -44,8 +44,8 @@ BreadCrumb.propTypes = {
   lessonTitle: PropTypes.string.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  const {course, lesson, file} = ownProps.params;
+function mapStateToProps(state, {params}) {
+  const {course, lesson, file} = params;
   const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
   const isReadme = (file && /README(_[a-z]{2})?/.test(file));
   let title = '';

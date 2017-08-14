@@ -6,10 +6,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
 const CourseList = ({courses}) => {
-  const sortCourses = (a, b) => {
-    return courses[b].lessonCount - courses[a].lessonCount;
-  };
-  const courseNames = Object.keys(courses).sort(sortCourses);
+  const courseNames = Object.keys(courses).sort((a, b) => courses[b].lessonCount - courses[a].lessonCount);
 
   return (
     <Row>

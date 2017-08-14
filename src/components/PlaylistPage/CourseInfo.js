@@ -20,16 +20,15 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
 CourseInfo.propTypes = {
   // ownProps:
   isStudentMode: PropTypes.bool,
-  courseName: PropTypes.string,
 
   // mapStateToProps:
   t: PropTypes.func,
   courseInfo: PropTypes.object
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, {courseName}) => ({
   t: getTranslator(state),
-  courseInfo: getCourseInfoMarkup(ownProps.courseName, state.language)
+  courseInfo: getCourseInfoMarkup(courseName, state.language)
 });
 
 export default connect(

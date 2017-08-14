@@ -216,13 +216,13 @@ Lesson.propTypes = {
   setLastLesson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
   isStudentMode: state.isStudentMode,
   lessons: state.lessons,
   language: state.language,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1,
-  checkboxes: state.checkboxes[createCheckboxesKey(ownProps.path)] || {}
+  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
+  checkboxes: state.checkboxes[createCheckboxesKey(path)] || {}
 });
 
 const mapDispatchToProps = {

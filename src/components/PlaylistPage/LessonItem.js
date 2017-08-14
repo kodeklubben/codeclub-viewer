@@ -70,11 +70,11 @@ LessonItem.propTypes = {
   totalCheckboxes: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, {lesson}) => ({
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
-  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(ownProps.lesson.path)),
-  totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(ownProps.lesson.path)),
+  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(lesson.path)),
+  totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(lesson.path)),
 });
 
 

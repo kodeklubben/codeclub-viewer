@@ -69,9 +69,6 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, some
 };
 
 LessonFilter.propTypes = {
-  // ownProps
-  courseName: PropTypes.string,
-
   // mapStateToProps
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
@@ -80,10 +77,10 @@ LessonFilter.propTypes = {
   somethingChecked: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, {courseName}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
-  availableLessons: getAvailableLessons(state, ownProps.courseName),
+  availableLessons: getAvailableLessons(state, courseName),
   t: getTranslator(state),
   somethingChecked: somethingCheckedInFilter(state),
 });
