@@ -10,7 +10,7 @@ import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
 import processContent from './processContent';
 import contentStyles from './Content.scss';
-import {ImprovePageContainer} from './ImprovePage.js';
+import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
@@ -181,7 +181,7 @@ const Lesson = React.createClass({
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
           <Row>
-            <ImprovePageContainer courseLessonFileProp={this.props.params}/>
+            <ImprovePage courseLessonFileProp={this.props.params}/>
           </Row>
 
         </div>

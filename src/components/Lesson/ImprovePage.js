@@ -72,6 +72,6 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-export const ImprovePageContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(ImprovePage));

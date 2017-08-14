@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';
 
-const NotFound = ({t}) => {
+export const NotFound = ({t}) => {
   return (
     <div className={styles.center}>
       <h3>{t('404.header')}</h3>

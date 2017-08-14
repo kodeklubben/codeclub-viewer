@@ -7,7 +7,7 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 
-export const BreadCrumb = ({params, iconContext, lessonLevel, lessonTitle}) => {
+const BreadCrumb = ({params, iconContext, lessonLevel, lessonTitle}) => {
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
@@ -62,6 +62,6 @@ function mapStateToProps(state, {params}) {
   };
 }
 
-export const BreadCrumbContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(BreadCrumb));

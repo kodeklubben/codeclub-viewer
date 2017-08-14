@@ -12,7 +12,7 @@ import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import TooltipComponent from '../TooltipComponent';
 
-export const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
+const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
   const levelIcon = <LevelIcon level={lesson.level}/>;
 
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
@@ -78,6 +78,6 @@ const mapStateToProps = (state, {lesson}) => ({
 });
 
 
-export const LessonItemContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(LessonItem));

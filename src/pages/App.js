@@ -4,17 +4,17 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DocumentTitle from 'react-document-title';
 
 import {getTranslator} from '../selectors/translate';
-import {NavBarContainer} from '../components/Navigation/NavBar';
-import {FooterContainer} from '../components/Navigation/Footer';
+import NavBar from '../components/Navigation/NavBar';
+import Footer from '../components/Navigation/Footer';
 import styles from './App.scss';
 import '../styles/customBootstrapStyles';
 
 const App = ({t, params, children}) => {
   return <DocumentTitle title={t('title.codeclub')}>
     <div className={styles.appContainer}>
-      <NavBarContainer params={params}/>
+      <NavBar params={params}/>
       {children}
-      <FooterContainer/>
+      <Footer/>
     </div>
   </DocumentTitle>;
 };

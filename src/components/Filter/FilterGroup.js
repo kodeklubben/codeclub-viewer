@@ -1,17 +1,16 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {onFilterCheck} from '../../action_creators';
+import {onFilterCheck, collapseFilterGroup} from '../../action_creators';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {collapseFilterGroup} from '../../action_creators';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 
-export const FilterGroup = ({
+const FilterGroup = ({
   groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
   collapseFilterGroup, filterGroupsCollapsed, somethingChecked
 }) => {

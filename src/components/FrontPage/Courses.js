@@ -6,7 +6,7 @@ import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/co
 import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
 
-export const Courses = ({t, courses, externalCourses}) => {
+const Courses = ({t, courses, externalCourses}) => {
   return (
     <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
       <Row>
@@ -40,6 +40,6 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-export const CoursesContainer = connect(
+export default connect(
   mapStateToProps
 )(Courses);

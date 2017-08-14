@@ -4,7 +4,7 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 import Badge from 'react-bootstrap/lib/Badge';
-import {LessonItemContainer} from './LessonItem';
+import LessonItem from './LessonItem';
 import {getTranslator} from '../../selectors/translate';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PlaylistNavigation.scss';
@@ -20,7 +20,7 @@ const PlaylistNavigation = ({t, playlists}) => {
       <ListGroup fill>
         {
           playlistsObject[playlistName].map((lesson, idx) => {
-            return <LessonItemContainer key={idx} lesson={lesson}/>;
+            return <LessonItem key={idx} lesson={lesson}/>;
           })
         }
       </ListGroup>

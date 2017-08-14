@@ -36,7 +36,7 @@ const Footer = ({t, isStudentMode}) => {
             <div className={styles.divider}/>
           </Row>
         </div>}
-        
+
         <Row className={styles.center}>
             <a className={styles.inline} href={url.kidsakoder}>kidsakoder.no</a>
             <a className={styles.inline} href={url.archive}>{t('footer.downloadZIP')}</a>
@@ -77,6 +77,6 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-export const FooterContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(Footer));

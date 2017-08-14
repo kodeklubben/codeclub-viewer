@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {LessonItemContainer} from './LessonItem';
+import LessonItem from './LessonItem';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
@@ -16,7 +16,7 @@ const LessonList = ({lessons, level, t, id}) => {
       <ListGroup>
         {lessons.map((lesson, idx) =>
           lesson.indexed ?
-            <LessonItemContainer key={idx} lesson={lesson}/>
+            <LessonItem key={idx} lesson={lesson}/>
             : null
         )}
       </ListGroup>

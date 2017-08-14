@@ -10,7 +10,7 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {BreadCrumbContainer as BreadCrumb} from './BreadCrumb';
+import BreadCrumb from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
@@ -177,7 +177,7 @@ const mapDispatchToProps = {
   setModeTeacher
 };
 
-export const NavBarContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(NavBar));
