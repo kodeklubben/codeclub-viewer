@@ -1,20 +1,17 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {setModeStudent, setModeTeacher} from '../../action_creators';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './NavBar.scss';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 //import FormControl from 'react-bootstrap/lib/FormControl';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+import {getTranslator} from '../../selectors/translate';
 import BreadCrumb from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
-import {getTranslator} from '../../selectors/translate';
-import styles from './NavBar.scss';
 import ModeDropdown from './ModeDropdown';
-
-const modes = ['student', 'teacher'];
 
 /*const SearchBox = ({t})  => {
   return <FormControl type='text' placeholder={t('search.placeholder')}/>
@@ -57,25 +54,6 @@ LkkNav.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-const Gadgets = ({isStudentMode, setModeStudent, setModeTeacher, t}) => {
-  const mode = modes[isStudentMode ? 0 : 1];
-  return <div className={styles.gadgetGroup}>
-    {<LanguageDropdown/>}
-    <ModeDropdown {...{setModeStudent, setModeTeacher, mode, t}}/>
-    {/*<SearchBox t={t}/>*/}
-  </div>;
-};
-
-Gadgets.propTypes = {
-  // mapStateToProps
-  isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
-
-  // mapDispatchToProps
-  setModeStudent: PropTypes.func.isRequired,
-  setModeTeacher: PropTypes.func.isRequired,
-};
-
 const MenuToggle = ({t}) => {
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
@@ -93,7 +71,7 @@ MenuToggle.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-const NavBar = ({isStudentMode, t, params, setModeStudent, setModeTeacher}) => {
+const NavBar = ({isStudentMode, t, params}) => {
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
     <div className={styles.navbarWrapper}>
@@ -109,7 +87,11 @@ const NavBar = ({isStudentMode, t, params, setModeStudent, setModeTeacher}) => {
         </Navbar.Collapse>
         <div className={styles.widgets + ' ' + widgetClass}>
           <BreadCrumb params={params}/>
-          <Gadgets {...{setModeStudent, setModeTeacher, isStudentMode, t}}/>
+          <div className={styles.gadgetGroup}>
+            <LanguageDropdown/>
+            <ModeDropdown/>
+            {/*<SearchBox t={t}/>*/}
+          </div>;
         </div>
       </Navbar>
     </div>
@@ -123,14 +105,10 @@ NavBar.propTypes = {
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
-
-  // mapStateToProps
-  isStudentMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 
-  // mapDispatchToProps
-  setModeStudent: PropTypes.func.isRequired,
-  setModeTeacher: PropTypes.func.isRequired
+  // mapStateToProps
+  isStudentMode: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -138,12 +116,6 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-const mapDispatchToProps = {
-  setModeStudent,
-  setModeTeacher
-};
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(withStyles(styles)(NavBar));
