@@ -10,24 +10,15 @@ import {setModeStudent, setModeTeacher} from '../../action_creators';
 const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   const modes = ['student', 'teacher'];
   const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
-  const mode = isStudentMode ? 'student' : 'teacher';
-  const setMode = isStudent => isStudent ? setModeTeacher() : setModeStudent();
-  const title = <span>
+  const bsStyle = isStudentMode ? modes[0] : modes[1];
+  const onSelect = () => {isStudentMode ? setModeTeacher() : setModeStudent();};
+  const title = <div>
     <span className={styles.onlyMode}>{t('navbar.mode') + ': '}</span>
-    <span>{texts[mode]}</span>
-  </span>;
+    <span>{texts[bsStyle]}</span>
+  </div>;
   return <div className={styles.gadgetContainer}>
-    <DropdownButton id='mode-dropdown'
-                    noCaret
-                    pullRight
-                    bsStyle={mode}
-                    title={title}
-                    onSelect={() => setMode(isStudentMode)}>
-      {
-        modes.map(k =>
-          <MenuItem key={k} eventKey={k} active={mode === k}>{texts[k]}</MenuItem>
-        )
-      }
+    <DropdownButton id='mode-dropdown' noCaret pullRight {...{bsStyle, onSelect, title}}>
+      {modes.map(k => <MenuItem key={k} eventKey={k} active={bsStyle === k}>{texts[k]}</MenuItem>)}
     </DropdownButton>
   </div>;
 };
