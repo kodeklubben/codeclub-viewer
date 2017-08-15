@@ -8,42 +8,28 @@ import DocumentTitle from 'react-document-title';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
-import processContent from './processContent';
+import processContent from '../../processContent';
 import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
-import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
-
-const InstructionButton = ({buttonPath, buttonText}) => {
-  return (buttonPath ?
-    <LinkContainer to={buttonPath}>
-      <Button className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
-        {buttonText}
-      </Button>
-    </LinkContainer> :
-    null);
-};
-
-InstructionButton.propTypes = {
-  // ownProps
-  buttonPath: PropTypes.string,
-  buttonText: PropTypes.string
-};
+import InstructionButton from './InstructionButton';
 
 const ReadmeButton = ({path, lessons, t}) => {
   const contextPath = './' + path + '.md';
   const buttonPath = (lessons[contextPath] || {}).readmePath;
-  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.toteacherinstruction')}/>;
+  return <InstructionButton buttonPath={buttonPath}
+                            buttonText={t('lessons.toteacherinstruction')}
+                            bsStyle="guide"
+                            bsSize="small"/>;
 };
 
 ReadmeButton.propTypes = {
-  // mapStateToProps
+  // ownProps
   path: PropTypes.string.isRequired,
   lessons: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired
@@ -52,11 +38,14 @@ ReadmeButton.propTypes = {
 const LessonButton = ({path, lessons, t}) => {
   const lessonPath = '/' + path;
   const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
-  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
+  return <InstructionButton buttonPath={buttonPath}
+                            buttonText={t('lessons.tolesson')}
+                            bsStyle="guide"
+                            bsSize="small"/>;
 };
 
 LessonButton.propTypes = {
-  // mapStateToProps
+  // ownProps
   path: PropTypes.string.isRequired,
   lessons: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired
