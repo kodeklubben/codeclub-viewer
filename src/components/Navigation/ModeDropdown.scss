@@ -1,4 +1,12 @@
+@import '../../styles/variables';
+
 .gadgetContainer {
   display: inline-block;
   padding: 3px 5px;
+}
+
+.onlyMode {
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
 }

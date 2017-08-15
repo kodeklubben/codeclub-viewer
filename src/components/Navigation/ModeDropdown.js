@@ -12,12 +12,16 @@ const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
   const mode = isStudentMode ? 'student' : 'teacher';
   const setMode = isStudent => isStudent ? setModeTeacher() : setModeStudent();
+  const title = <span>
+    <span className={styles.onlyMode}>{t('navbar.mode') + ': '}</span>
+    <span>{texts[mode]}</span>
+  </span>;
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='mode-dropdown'
                     noCaret
                     pullRight
                     bsStyle={mode}
-                    title={t('navbar.mode') + ': ' + texts[mode]}
+                    title={title}
                     onSelect={() => setMode(isStudentMode)}>
       {
         modes.map(k =>
