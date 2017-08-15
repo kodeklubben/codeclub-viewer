@@ -6,52 +6,18 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 //import FormControl from 'react-bootstrap/lib/FormControl';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import BreadCrumb from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import {getTranslator} from '../../selectors/translate';
 import styles from './NavBar.scss';
+import ModeDropdown from './ModeDropdown';
 
 const modes = ['student', 'teacher'];
 
-const ModeDropdown = ({t, setModeStudent, setModeTeacher, mode}) => {
-  const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
-  const setMode = mode => mode === 'student' ? setModeStudent() : setModeTeacher();
-  return <div className={styles.gadgetContainer}>
-    <DropdownButton id='mode-dropdown'
-                    noCaret
-                    pullRight
-                    bsStyle={mode}
-                    title={t('navbar.mode') + ': ' + texts[mode]}
-                    onSelect={setMode}>
-      {
-        modes.map(k =>
-          <MenuItem key={k} eventKey={k} active={mode === k}>{texts[k]}</MenuItem>
-        )
-      }
-    </DropdownButton>
-  </div>;
-};
-
-ModeDropdown.propTypes = {
-  // ownProps
-  mode: PropTypes.oneOf(modes).isRequired,
-
-  //mapStateToProps
-  t: PropTypes.func.isRequired,
-
-  // mapDispatchToProps
-  setModeStudent: PropTypes.func.isRequired,
-  setModeTeacher: PropTypes.func.isRequired
-};
-
 /*const SearchBox = ({t})  => {
-  return <div className={styles.gadgetContainer}>
-    <FormControl type='text' placeholder={t('search.placeholder')}/>
-  </div>;
+  return <FormControl type='text' placeholder={t('search.placeholder')}/>
 };
 
 SearchBox.propTypes = {
