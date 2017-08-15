@@ -22,10 +22,10 @@ import InstructionButton from './InstructionButton';
 const ReadmeButton = ({path, lessons, t}) => {
   const contextPath = './' + path + '.md';
   const buttonPath = (lessons[contextPath] || {}).readmePath;
-  return <InstructionButton buttonPath={buttonPath}
-                            buttonText={t('lessons.toteacherinstruction')}
-                            bsStyle="guide"
-                            bsSize="small"/>;
+  const buttonText= t('lessons.toteacherinstruction');
+  const bsStyle = 'guide';
+  const bsSize = 'small';
+  return <InstructionButton {...{buttonPath, buttonText, bsStyle, bsSize}}/>;
 };
 
 ReadmeButton.propTypes = {
@@ -38,10 +38,10 @@ ReadmeButton.propTypes = {
 const LessonButton = ({path, lessons, t}) => {
   const lessonPath = '/' + path;
   const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
-  return <InstructionButton buttonPath={buttonPath}
-                            buttonText={t('lessons.tolesson')}
-                            bsStyle="guide"
-                            bsSize="small"/>;
+  const buttonText= t('lessons.tolesson');
+  const bsStyle = 'guide';
+  const bsSize = 'small';
+  return <InstructionButton {...{buttonPath, buttonText, bsStyle, bsSize}}/>;
 };
 
 LessonButton.propTypes = {
