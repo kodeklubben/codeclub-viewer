@@ -19,14 +19,7 @@ import {somethingCheckedInFilter} from '../../selectors/filter';
 
 const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, somethingChecked}) => {
   const filterGroups = filterGroupKeys.map((groupKey) => {
-    return (
-      <FilterGroup
-        key={groupKey}
-        groupKey={groupKey}
-        availableLessonsForTag={availableLessons}
-        t={t}
-      />
-    );
+    return <FilterGroup key={groupKey} availableLessonsForTag={availableLessons} {...{t, groupKey}}/>;
   });
   const tooltip =
     <Tooltip id="filterhelp">

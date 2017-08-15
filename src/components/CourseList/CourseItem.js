@@ -16,7 +16,7 @@ const CourseItem = ({course, t, language}) => {
     getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
 
   return (
-    <TooltipComponent id={course.name} tooltipContent={tooltipContent}>
+    <TooltipComponent id={course.name} {...{tooltipContent}}>
       {isExternal ?
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
           <img className={styles.courseLogo} src={course.iconPath}/>

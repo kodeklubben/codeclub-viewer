@@ -7,7 +7,7 @@ import {getTranslator} from '../../selectors/translate';
 const CourseInfo = ({t, isStudentMode, courseInfo}) => {
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   return (
-    <CollapsiblePanel initiallyExpanded={false} bsStyle={bsStyle} header={t('playlist.courseinfo')}>
+    <CollapsiblePanel initiallyExpanded={false} header={t('playlist.courseinfo')} {...{bsStyle}}>
         {courseInfo ?
           <div dangerouslySetInnerHTML={courseInfo} />
         :

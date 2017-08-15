@@ -10,7 +10,7 @@ const ClearFilterButton = ({t, language, resetFilter, collapseAllFilterGroups}) 
     collapseAllFilterGroups(true);
   };
   return (
-    <Button block bsStyle="white-grey-lighter" onClick={onClick}>
+    <Button block bsStyle="white-grey-lighter" {...{onClick}}>
       {t('filter.removefilter')}
     </Button>
   );

@@ -16,32 +16,25 @@ const FilterGroup = ({
 }) => {
   const groupName = translateGroup(t, groupKey);
   if (groupName) {
-    const filterItems = Object.keys(filterTags).map((tagKey) => {
-      const onCheck = () => onFilterCheck(groupKey, tagKey);
-      const numberOfLessonsForTag = availableLessonsForTag[tagKey];
-      const tagName = translateTag(t, groupKey, tagKey);
-      return tagName ? (
-        <FilterItem
-          key={tagKey}
-          tagName={tagName}
-          numberOfLessons={numberOfLessonsForTag}
-          checked={filterTags[tagKey]}
-          onCheck={onCheck}
-        />
-      ) : null;
+    const filterItems = Object.keys(filterTags).map((key) => {
+      const onCheck = () => onFilterCheck(groupKey, key);
+      const numberOfLessons = availableLessonsForTag[key];
+      const tagName = translateTag(t, groupKey, key);
+      const checked = filterTags[key];
+      return tagName ? <FilterItem {...{key, numberOfLessons, checked, tagName, onCheck}}/> : null;
     });
 
     const nothingChecked = !somethingChecked;
     const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
     const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
-    const onGroupClick = () => {
+    const onClick = () => {
       if (nothingChecked) {
         collapseFilterGroup(groupKey, !isCollapsed);
       }
     };
     return (
       <ListGroupItem>
-        <div className={headingStyle} onClick={onGroupClick}>
+        <div className={headingStyle} {...{onClick}}>
           <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
           {groupName}
         </div>

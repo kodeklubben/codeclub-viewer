@@ -79,18 +79,18 @@ const NavBar = ({isStudentMode, t, params}) => {
         <Navbar.Header>
           <LkkBrand/>
           <Clearfix visibleXsBlock/>
-          <MenuToggle t={t}/>
+          <MenuToggle {...{t}}/>
         </Navbar.Header>
         <Navbar.Collapse>
           <div className={styles.spacing}/>
-          <LkkNav t={t}/>
+          <LkkNav {...{t}}/>
         </Navbar.Collapse>
         <div className={styles.widgets + ' ' + widgetClass}>
-          <BreadCrumb params={params}/>
+          <BreadCrumb {...{params}}/>
           <div className={styles.gadgetGroup}>
             <LanguageDropdown/>
             <ModeDropdown/>
-            {/*<SearchBox t={t}/>*/}
+            {/*<SearchBox {...{t}}/>*/}
           </div>;
         </div>
       </Navbar>

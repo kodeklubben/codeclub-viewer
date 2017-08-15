@@ -7,7 +7,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 const ActiveFilterItem = ({tagName, onClick}) => {
   return (
     <span>
-      <Button className={styles.item} onClick={onClick}>
+      <Button className={styles.item} {...{onClick}}>
         <Glyphicon glyph={'glyphicon glyphicon-remove'} className={styles.remove}/> {tagName}
       </Button>
     </span>

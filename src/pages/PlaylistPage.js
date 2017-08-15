@@ -19,21 +19,21 @@ import CourseInfo from '../components/PlaylistPage/CourseInfo';
 const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
 
-  const lessonLists = levels.map((level, idx) => (
-    <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
+  const lessonLists = levels.map((level, key) => (
+    <LessonList {...{key, level}} id={'level-' + level} lessons={lessonsByLevel[level]}/>
   ));
 
   const filter = <LessonFilter courseName={params.course}/>;
 
   const playlistsAndLessons =
     <div>
-      <PlaylistNavigation playlists={playlists}/>
+      <PlaylistNavigation {...{playlists}}/>
       {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
     </div>;
 
   const jumpTo =
     <div>
-      {levels.length > 0 ? <LevelNavigation levels={levels}/> : null}
+      {levels.length > 0 ? <LevelNavigation {...{levels}}/> : null}
     </div>;
 
   const courseInfo =

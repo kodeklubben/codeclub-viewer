@@ -9,14 +9,14 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 const LessonList = ({lessons, level, t, id}) => {
   return (
-    <div id={id} className={styles.list}>
+    <div {...{id}} className={styles.list}>
       <h3>
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </h3>
       <ListGroup>
-        {lessons.map((lesson, idx) =>
+        {lessons.map((lesson, key) =>
           lesson.indexed ?
-            <LessonItem key={idx} lesson={lesson}/>
+            <LessonItem {...{key, lesson}}/>
             : null
         )}
       </ListGroup>

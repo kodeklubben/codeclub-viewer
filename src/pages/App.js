@@ -12,7 +12,7 @@ import '../styles/customBootstrapStyles';
 const App = ({t, params, children}) => {
   return <DocumentTitle title={t('title.codeclub')}>
     <div className={styles.appContainer}>
-      <NavBar params={params}/>
+      <NavBar {...{params}}/>
       {children}
       <Footer/>
     </div>

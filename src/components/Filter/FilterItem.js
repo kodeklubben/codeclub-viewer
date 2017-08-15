@@ -6,10 +6,7 @@ const FilterItem = ({tagName, checked, onCheck, numberOfLessons}) => {
   return (
     <div className="checkbox">
       <label className={styles.label}>
-        <input type="checkbox"
-               checked={checked}
-               onChange={onCheck}
-        />
+        <input type="checkbox" onChange={onCheck} {...{checked}}/>
         <span className={numberOfLessons ? styles.lessons : styles.noLessons}>{tagName}</span>
       </label>
     </div>
