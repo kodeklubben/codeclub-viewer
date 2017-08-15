@@ -11,8 +11,8 @@ const CourseList = ({courses}) => {
   return (
     <Row>
       <div className={styles.courseList}>
-        {courseNames.map((courseName, idx) => (
-          <Col key={idx} xs={6} sm={6} md={4} lg={3}>
+        {courseNames.map(courseName => (
+          <Col key={courseName} xs={6} sm={6} md={4} lg={3}>
             <CourseItem course={courses[courseName]}/>
           </Col>
         ))}

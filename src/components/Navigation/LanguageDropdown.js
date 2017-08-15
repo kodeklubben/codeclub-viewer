@@ -44,9 +44,9 @@ const LanguageDropdown = ({isStudentMode, language, resetFilter, setLanguage, t}
                       setLanguage(eventKey);
                     }}>
       {
-        availableLanguages.map(k =>
-          <MenuItem key={k} eventKey={k} active={language === k}>
-            <LanguageItem onlyFlag={false} language={k} {...{t}}/>
+        availableLanguages.map(key =>
+          <MenuItem {...{key}} eventKey={key} active={language === key}>
+            <LanguageItem onlyFlag={false} language={key} {...{t}}/>
           </MenuItem>
         )
       }

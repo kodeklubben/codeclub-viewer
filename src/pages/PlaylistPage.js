@@ -16,12 +16,11 @@ import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => {
+const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
 
-  const lessonLists = levels.map((level, key) => (
-    <LessonList {...{key, level}} id={'level-' + level} lessons={lessonsByLevel[level]}/>
-  ));
+  const lessonLists = levels.map(level =>
+    <LessonList key={level} {...{level}} id={'level-' + level} lessons={lessonsByLevel[level]}/>);
 
   const filter = <LessonFilter courseName={params.course}/>;
 
@@ -85,14 +84,12 @@ PlaylistPage.propTypes = {
   }).isRequired,
 
   // mapStateToProps
-  isStudentMode: PropTypes.bool.isRequired,
   lessonsByLevel: PropTypes.object.isRequired,
   playlists: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, {params}) => ({
-  isStudentMode: state.isStudentMode,
   lessonsByLevel: getLessonsByLevel(state, params.course),
   playlists: getPlaylists(state, params.course),
   t: getTranslator(state)

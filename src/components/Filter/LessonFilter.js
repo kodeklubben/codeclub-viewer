@@ -18,9 +18,8 @@ import ClearFilterButton from './ClearFilterButton';
 import {somethingCheckedInFilter} from '../../selectors/filter';
 
 const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, somethingChecked}) => {
-  const filterGroups = filterGroupKeys.map((groupKey) => {
-    return <FilterGroup key={groupKey} availableLessonsForTag={availableLessons} {...{t, groupKey}}/>;
-  });
+  const filterGroups = filterGroupKeys.map(groupKey =>
+    <FilterGroup key={groupKey} availableLessonsForTag={availableLessons} {...{t, groupKey}}/>);
   const tooltip =
     <Tooltip id="filterhelp">
       <p>{t('filter.tooltip.textline1')}</p>

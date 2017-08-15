@@ -13,13 +13,13 @@ const CollapsiblePanel = React.createClass({
   render() {
     const {children, bsStyle, header} = this.props;
     const {expanded} = this.state;
-    const onSelect = () => this.setState({expanded: !expanded});
+    const onClick = () => this.setState({expanded: !expanded});
     const headerWithChevron = <span>
       <Glyphicon className={styles.chevron} glyph={expanded ? 'chevron-down' : 'chevron-right'}/>{header}
     </span>;
     return (
       <div className={styles.container}>
-        <Panel collapsible header={headerWithChevron} {...{expanded, bsStyle, onSelect}}>
+        <Panel collapsible header={headerWithChevron} onSelect={onClick} {...{expanded, bsStyle}}>
           {children}
         </Panel>
       </div>

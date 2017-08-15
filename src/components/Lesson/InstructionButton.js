@@ -22,4 +22,4 @@ InstructionButton.propTypes = {
   bsSize: PropTypes.string
 };
 
-export default (withStyles(styles)(InstructionButton));
+export default withStyles(styles)(InstructionButton);

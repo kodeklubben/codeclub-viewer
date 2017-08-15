@@ -14,9 +14,9 @@ const LessonList = ({lessons, level, t, id}) => {
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </h3>
       <ListGroup>
-        {lessons.map((lesson, key) =>
+        {lessons.map(lesson =>
           lesson.indexed ?
-            <LessonItem {...{key, lesson}}/>
+            <LessonItem key={lesson.path} {...{lesson}}/>
             : null
         )}
       </ListGroup>

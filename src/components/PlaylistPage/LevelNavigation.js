@@ -9,13 +9,13 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LevelNavigation.scss';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
-  const levelListItems = levels.map((level, key) => (
-    <ListGroupItem {...{key}} onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
+  const levelListItems = levels.map(level =>
+    <ListGroupItem key={level} onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
       <span className={styles.name}>
         <LevelIcon level={level}/>{t('general.levels.' + level)}
       </span>
     </ListGroupItem>
-  ));
+  );
   return (
     <Panel bsStyle={isStudentMode ? 'student' : 'teacher'} header={t('playlist.levelnavigation')}>
       <ListGroup fill>
