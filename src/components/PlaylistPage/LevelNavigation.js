@@ -9,10 +9,11 @@ import LevelIcon from '../LevelIcon';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LevelNavigation.scss';
 import CollapsiblePanel from '../CollapsiblePanel';
+import scrollToComponent from 'react-scroll-to-component';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map((level, idx) => (
-    <ListGroupItem key={idx} onClick={() => document.getElementById('level-' + level).scrollIntoView()}>
+    <ListGroupItem key={idx} onClick={() => scrollToComponent(document.getElementById('level-' + level))}>
       <span className={styles.name}>
         <LevelIcon level={level}/>{t('general.levels.' + level)}
       </span>
