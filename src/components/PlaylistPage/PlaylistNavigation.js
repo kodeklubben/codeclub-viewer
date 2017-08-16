@@ -4,30 +4,30 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import Accordion from 'react-bootstrap/lib/Accordion';
 import Panel from 'react-bootstrap/lib/Panel';
 import Badge from 'react-bootstrap/lib/Badge';
-import {LessonItemContainer} from './LessonItem';
+import LessonItem from './LessonItem';
 import {getTranslator} from '../../selectors/translate';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PlaylistNavigation.scss';
 
 const PlaylistNavigation = ({t, playlists, language}) => {
   const playlistsObject = playlists || {};
-  const playlistListItems = Object.keys(playlistsObject).map((name, idx) => {
+  const playlistListItems = Object.keys(playlistsObject).map(name => {
     const header = <h4 role="presentation">
       <Badge pullRight>{playlistsObject[name].length}</Badge>
       <span className={styles.link}>{name}</span>
     </h4>;
-    return playlistsObject[name].length ? <Panel key={name} {...{header}} eventKey={idx}>
+    return playlistsObject[name].length ? <Panel key={name} {...{header}} eventKey={name}>
       <ListGroup fill>
         {
           playlistsObject[name].map(lesson => {
-            return <LessonItemContainer key={lesson.path} {...{lesson}}/>;
+            return <LessonItem key={lesson.path} {...{lesson}}/>;
           })
         }
       </ListGroup>
     </Panel> : null;
   });
 
-  if(playlistListItems.length) {
+  if (playlistListItems.length) {
     return language === 'nb' ?
     <div className={styles.container}>
       <h3>{t('playlist.lessoncollections')}</h3>
@@ -37,6 +37,9 @@ const PlaylistNavigation = ({t, playlists, language}) => {
     </div>
     :
     null;
+  }
+  else {
+    return null;
   }
 };
 

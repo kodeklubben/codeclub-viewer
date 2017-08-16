@@ -14,9 +14,9 @@ const CourseItem = ({course, t, language}) => {
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const tooltipContent = isExternal ? getLessonIntro(coursePath + '/index') :
     getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
-    
+
   return (
-    <TooltipComponent id={course.name} tooltipContent={tooltipContent}>
+    <TooltipComponent id={course.name} {...{tooltipContent}}>
       {isExternal ?
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
           <img className={styles.courseLogo} src={course.iconPath}/>
@@ -34,7 +34,7 @@ const CourseItem = ({course, t, language}) => {
 };
 
 CourseItem.propTypes = {
-  t: PropTypes.func,
+  // ownProps
   course: PropTypes.shape({
     name: PropTypes.string,
     path: PropTypes.string,
@@ -42,7 +42,10 @@ CourseItem.propTypes = {
     iconPath: PropTypes.string,
     lessonCount: PropTypes.int
   }),
-  language: PropTypes.string
+
+  // mapStateToProps
+  t: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -50,4 +53,6 @@ const mapStateToProps = (state) => ({
   language: state.language
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(CourseItem));
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(CourseItem));

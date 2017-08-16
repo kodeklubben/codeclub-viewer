@@ -44,10 +44,9 @@ const ToggleButton = React.createClass({
 });
 
 ToggleButton.propTypes = {
+  // ownProps
   buttonText: PropTypes.string,
   hiddenHTML: PropTypes.string
 };
 
 export default ToggleButton;
-
-
