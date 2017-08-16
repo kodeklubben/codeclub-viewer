@@ -10,7 +10,6 @@ import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 
