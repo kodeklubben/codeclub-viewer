@@ -15,6 +15,7 @@ import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
+import ClearFilterButton from '../components/Filter/ClearFilterButton';
 
 const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
@@ -38,6 +39,8 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const courseInfo =
     <CourseInfo courseName={params.course}/>;
 
+  const resetFilter = <ClearFilterButton/>;
+
   // Title with course name and get started button
   const heading =
     <Row>
@@ -50,7 +53,7 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
     <Row>
       {/*Filter desktop*/}
       <Col xsHidden>
-        <Col sm={3} className={styles.topMargin}>{filter}</Col>
+        <Col sm={3} className={styles.topMargin}>{filter}{resetFilter}</Col>
         <Col sm={6}>
           {courseInfo}
           {playlistsAndLessons}
@@ -62,6 +65,7 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
       <Col smHidden mdHidden lgHidden>
         <Col xs={12}>{courseInfo}</Col>
         <Col xs={12}>{filter}</Col>
+        <Col xs={12}>{resetFilter}</Col>
         {/*<Col xs={12}>{jumpTo}</Col>*/}
         <Col xs={12}>{playlistsAndLessons}</Col>
       </Col>

@@ -7,6 +7,7 @@ import LessonFilter from '../components/Filter/LessonFilter';
 import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import WelcomeBox from '../components/FrontPage/WelcomeBox';
+import ClearFilterButton from '../components/Filter/ClearFilterButton';
 
 const FrontPage = ({isStudentMode}) => {
   return (
@@ -19,6 +20,7 @@ const FrontPage = ({isStudentMode}) => {
       <Row>
         <Col sm={4} md={3} lg={2}>
           <LessonFilter/>
+          <ClearFilterButton/>
         </Col>
         <Courses/>
       </Row>
