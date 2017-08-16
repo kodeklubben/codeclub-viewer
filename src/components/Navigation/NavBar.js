@@ -91,7 +91,7 @@ const NavBar = ({isStudentMode, t, params}) => {
             <LanguageDropdown/>
             <ModeDropdown/>
             {/*<SearchBox {...{t}}/>*/}
-          </div>;
+          </div>
         </div>
       </Navbar>
     </div>
