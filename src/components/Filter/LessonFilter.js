@@ -17,19 +17,9 @@ import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 import {somethingCheckedInFilter} from '../../selectors/filter';
 
-const LessonFilter = ({
-  filterGroupKeys, isStudentMode, availableLessons, t, somethingChecked
-}) => {
-  const filterGroups = filterGroupKeys.map((groupKey) => {
-    return (
-      <FilterGroup
-        key={groupKey}
-        groupKey={groupKey}
-        availableLessonsForTag={availableLessons}
-        t={t}
-      />
-    );
-  });
+const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, somethingChecked}) => {
+  const filterGroups = filterGroupKeys.map(groupKey =>
+    <FilterGroup key={groupKey} availableLessonsForTag={availableLessons} {...{t, groupKey}}/>);
   const tooltip =
     <Tooltip id="filterhelp">
       <p>{t('filter.tooltip.textline1')}</p>
@@ -49,7 +39,7 @@ const LessonFilter = ({
     <div>
       {/*Filter desktop*/}
       <Col xsHidden>
-        <Panel header={header} bsStyle={bsStyle}>
+        <Panel {...{header, bsStyle}}>
           <ListGroup fill>
             {filterGroups}
             {clearFilter}
@@ -58,7 +48,7 @@ const LessonFilter = ({
       </Col>
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
-        <CollapsiblePanel initiallyExpanded={false} header={header} bsStyle={bsStyle}>
+        <CollapsiblePanel initiallyExpanded={false} {...{header, bsStyle}}>
           <ListGroup fill>
             {filterGroups}
             {clearFilter}
@@ -71,20 +61,18 @@ const LessonFilter = ({
 };
 
 LessonFilter.propTypes = {
-  filterGroupKeys: PropTypes.arrayOf(PropTypes.string),
-  isStudentMode: PropTypes.bool,
-  availableLessons: PropTypes.object,
+  // mapStateToProps
+  filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isStudentMode: PropTypes.bool.isRequired,
+  availableLessons: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
   somethingChecked: PropTypes.bool.isRequired,
 };
 
-/**
- * Input props: courseName
- */
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, {courseName}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
-  availableLessons: getAvailableLessons(state, ownProps.courseName),
+  availableLessons: getAvailableLessons(state, courseName),
   t: getTranslator(state),
   somethingChecked: somethingCheckedInFilter(state),
 });

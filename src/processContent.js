@@ -24,7 +24,7 @@ const replaceTags = {
   }
 };
 
-function processContent(content, styles) {
+const processContent = (content, styles) => {
   const parser = require('posthtml-parser');
   const render = require('posthtml-render');
 
@@ -33,9 +33,9 @@ function processContent(content, styles) {
   content = render(parsedContent);
   content = renderScratchBlocks(content, styles);
   return content;
-}
+};
 
-function replaceTagObject(obj) {
+const replaceTagObject = (obj) => {
   const tag = obj['tag'];
   if (tag in replaceTags) {
     const replacementObj = replaceTags[tag];
@@ -47,9 +47,9 @@ function replaceTagObject(obj) {
   } else {
     return obj;
   }
-}
+};
 
-function replaceClassRecursively(obj, styles) {
+const replaceClassRecursively = (obj, styles) => {
   if (Array.isArray(obj)) {
     return obj.map((val, idx) => replaceClassRecursively(val, styles));
   } else if (typeof obj === 'object' && obj !== null) {
@@ -68,7 +68,7 @@ function replaceClassRecursively(obj, styles) {
   } else {
     return obj;
   }
-}
+};
 
 
 /**
@@ -77,7 +77,7 @@ function replaceClassRecursively(obj, styles) {
  * @param content {string} HTML with <pre class="blocks">...</pre>
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
  */
-function renderScratchBlocks(content, styles) {
+const renderScratchBlocks = (content, styles) => {
   let replace = [];
   if ('blocks' in styles) {
     replace.push({start: '<pre class="' + styles.blocks + '">', end: '</pre>'});
@@ -101,6 +101,6 @@ function renderScratchBlocks(content, styles) {
   });
 
   return returnContent;
-}
+};
 
 export default processContent;

@@ -116,7 +116,7 @@ export function getLoaders() {
     },
     resources: {
       test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
-      exclude: /\.md$/,
+      exclude: [/\.md$/, new RegExp(regexpCompPath('/playlists/') + '.*\\.txt$')],
       loader: 'file-loader?name=[path][name].[hash:6].[ext]&context='+lessonSrc
     }
   };

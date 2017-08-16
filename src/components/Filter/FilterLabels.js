@@ -14,21 +14,22 @@ const FilterLabels = ({t, filter, onFilterCheck}) => {
         const tagName = translateTag(t, groupKey, tagKey);
         if (tagName) { // Only include labels if they are translated
           const onClick = () => onFilterCheck(groupKey, tagKey);
-          labels.push(<ActiveFilterItem key={`${groupKey}_${tagKey}`} tagName={tagName} onClick={onClick}/>);
+          labels.push(<ActiveFilterItem key={`${groupKey}_${tagKey}`} {...{tagName,onClick}}/>);
         }
       }
     }
   }
   return <div>{labels}</div>;
 };
+
 FilterLabels.propTypes = {
-  // ownProps:
+  // ownProps
   t: PropTypes.func.isRequired,
 
-  // mapStateToProps:
+  // mapStateToProps
   filter: PropTypes.object.isRequired,
 
-  // mapDispatchToProps:
+  // mapDispatchToProps
   onFilterCheck: PropTypes.func.isRequired
 };
 

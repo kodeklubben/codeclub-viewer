@@ -12,13 +12,13 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import scrollToComponent from 'react-scroll-to-component';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
-  const levelListItems = levels.map((level, idx) => (
-    <ListGroupItem key={idx} onClick={() => scrollToComponent(document.getElementById('level-' + level))}>
+  const levelListItems = levels.map(level =>
+    <ListGroupItem key={level} onClick={() => scrollToComponent(document.getElementById('level-' + level))}>
       <span className={styles.name}>
         <LevelIcon level={level}/>{t('general.levels.' + level)}
       </span>
     </ListGroupItem>
-  ));
+  );
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   const header = t('playlist.levelnavigation');
   return (
@@ -42,9 +42,12 @@ const LevelNavigation = ({t, levels, isStudentMode}) => {
 };
 
 LevelNavigation.propTypes = {
+  // ownProps
   levels: PropTypes.array,
-  t: PropTypes.func,
-  isStudentMode: PropTypes.bool
+
+  // mapStateToProps
+  t: PropTypes.func.isRequired,
+  isStudentMode: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -52,4 +55,6 @@ const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(LevelNavigation));
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(LevelNavigation));
