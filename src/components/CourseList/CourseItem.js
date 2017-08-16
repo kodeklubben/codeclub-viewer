@@ -12,25 +12,36 @@ const CourseItem = ({course, t, language}) => {
   const isExternal = course.hasOwnProperty('externalLink');
 
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
-  const tooltipContent = isExternal ? getLessonIntro(coursePath + '/index') :
-    getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
+  let content = '';
+  if (isExternal) {
+    content = getLessonIntro(coursePath + '/index');
+  }
+  else {
+    content = getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
+  }
 
-  return (
+  const courseItems = isExternal ?
+    <a className={styles.courseItem} href={course.externalLink} target='_blank'>
+      <img className={styles.courseLogo} src={course.iconPath}/>
+      <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
+    </a>
+    :
+    <Link className={styles.courseItem} to={course.path}>
+      <img className={styles.courseLogo} src={course.iconPath}/>
+      <span className={styles.courseName}>{course.name}</span>
+      <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
+    </Link>;
+
+  const tooltipContent = content === 'undefined' ? '' : content;
+  
+  return tooltipContent === content ?
     <TooltipComponent id={course.name} {...{tooltipContent}}>
-      {isExternal ?
-        <a className={styles.courseItem} href={course.externalLink} target='_blank'>
-          <img className={styles.courseLogo} src={course.iconPath}/>
-          <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
-        </a>
-        :
-        <Link className={styles.courseItem} to={course.path}>
-          <img className={styles.courseLogo} src={course.iconPath}/>
-          <span className={styles.courseName}>{course.name}</span>
-          <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
-        </Link>
-      }
+      {courseItems}
     </TooltipComponent>
-  );
+    :
+    <div>
+      {courseItems}
+    </div>;
 };
 
 CourseItem.propTypes = {
