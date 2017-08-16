@@ -30,33 +30,40 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     </LinkContainer>
     : null;
 
-  const tooltipContent = getLessonIntro(lesson.path.slice(1));
+  const contentForTooltip = getLessonIntro(lesson.path.slice(1));
 
   const progressBar = lesson.level > 0 ?
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
     null;
 
-  return (
-    <TooltipComponent id={lesson.title} tooltipContent={tooltipContent}>
-      {lesson.external ?
-      <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+  const lessonItems = lesson.external ?
+    <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+      {levelIcon}
+      <div className={styles.title}>{lesson.title}</div>
+      &nbsp;<Glyphicon glyph="new-window"/>
+      {instructionBtn}
+    </ListGroupItem>
+    :
+    <LinkContainer to={lesson.path}>
+      <ListGroupItem className={styles.row}>
+        {progressBar}
         {levelIcon}
         <div className={styles.title}>{lesson.title}</div>
-        &nbsp;<Glyphicon glyph="new-window"/>
+        {progress}
         {instructionBtn}
       </ListGroupItem>
-      :
-      <LinkContainer to={lesson.path}>
-        <ListGroupItem className={styles.row}>
-          {progressBar}
-          {levelIcon}
-          <div className={styles.title}>{lesson.title}</div>
-          {progress}
-          {instructionBtn}
-        </ListGroupItem>
-      </LinkContainer>}
+    </LinkContainer>;
+
+  const tooltipContent = contentForTooltip === 'undefined' ? null : contentForTooltip;
+
+  return tooltipContent === contentForTooltip ?
+    <TooltipComponent id={lesson.title} {...{tooltipContent}}>
+      {lessonItems}
     </TooltipComponent>
-  );
+    :
+    <div>
+      {lessonItems}
+    </div>;
 };
 
 LessonItem.propTypes = {

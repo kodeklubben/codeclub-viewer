@@ -12,7 +12,7 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
     <Tooltip className={styles.tooltip} {...{id}}>
       <div dangerouslySetInnerHTML={createMarkup()}/>
     </Tooltip>;
-  return tooltipContent === '' ? null :
+  return tooltipContent === null ? null :
     <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
       {children}
     </OverlayTrigger>;
