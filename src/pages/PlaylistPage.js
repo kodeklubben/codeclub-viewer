@@ -55,8 +55,8 @@ export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, 
   const body =
     <Row>
       <Col>
-        <Col xs={12} sm={3} className={styles.topMargin}>{filter}</Col>
         <Col xs={12} smHidden mdHidden lgHidden>{courseInfo}</Col>
+        <Col xs={12} sm={3} className={styles.topMargin}>{filter}</Col>
         <Col xs={12} sm={3} smPush={6} className={styles.topMargin}>{jumpTo}</Col>
         <Col xs={12} sm={6} smPull={3}><Col xsHidden>{courseInfo}</Col>{playlistsAndLessons}</Col>
       </Col>
