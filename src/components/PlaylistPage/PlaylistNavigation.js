@@ -11,12 +11,12 @@ import styles from './PlaylistNavigation.scss';
 
 const PlaylistNavigation = ({t, playlists}) => {
   const playlistsObject = playlists || {};
-  const playlistListItems = Object.keys(playlistsObject).map((name, idx) => {
+  const playlistListItems = Object.keys(playlistsObject).map(name => {
     const header = <h4 role="presentation">
       <Badge pullRight>{playlistsObject[name].length}</Badge>
       <span className={styles.link}>{name}</span>
     </h4>;
-    return playlistsObject[name].length ? <Panel key={name} {...{header}} eventKey={idx}>
+    return playlistsObject[name].length ? <Panel key={name} {...{header}} eventKey={name}>
       <ListGroup fill>
         {
           playlistsObject[name].map(lesson => {
