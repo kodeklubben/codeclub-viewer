@@ -8,38 +8,47 @@ import DocumentTitle from 'react-document-title';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
-import processContent from './processContent';
+import processContent from '../../processContent';
 import contentStyles from './Content.scss';
-import {ImprovePageContainer} from './ImprovePage.js';
+import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
-import lessonStyles from '../PlaylistPage/LessonItem.scss';
 import Button from 'react-bootstrap/lib/Button';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
-
-const InstructionButton = ({buttonPath, buttonText}) => {
-  return (buttonPath ?
-    <LinkContainer to={buttonPath}>
-      <Button className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
-        {buttonText}
-      </Button>
-    </LinkContainer> :
-    null);
-};
+import InstructionButton from './InstructionButton';
 
 const ReadmeButton = ({path, lessons, t}) => {
   const contextPath = './' + path + '.md';
   const buttonPath = (lessons[contextPath] || {}).readmePath;
-  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.toteacherinstruction')}/>;
+  const buttonText= t('lessons.toteacherinstruction');
+  const bsStyle = 'guide';
+  const bsSize = 'small';
+  return <InstructionButton {...{buttonPath, buttonText, bsStyle, bsSize}}/>;
+};
+
+ReadmeButton.propTypes = {
+  // ownProps
+  path: PropTypes.string.isRequired,
+  lessons: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const LessonButton = ({path, lessons, t}) => {
   const lessonPath = '/' + path;
   const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
-  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
+  const buttonText= t('lessons.tolesson');
+  const bsStyle = 'guide';
+  const bsSize = 'small';
+  return <InstructionButton {...{buttonPath, buttonText, bsStyle, bsSize}}/>;
+};
+
+LessonButton.propTypes = {
+  // ownProps
+  path: PropTypes.string.isRequired,
+  lessons: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const setCheckboxes = (path, checkboxes, setCheckbox) => {
@@ -73,7 +82,7 @@ const renderToggleButtons = () => {
     const buttonText = strongNode ? strongNode.textContent : 'Hint';
     const hiddenNode = node.getElementsByTagName('hide')[0];
     const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
+    ReactDOM.render(<ToggleButton {...{buttonText, hiddenHTML}}/>,node);
   }
 };
 
@@ -161,7 +170,7 @@ const Lesson = React.createClass({
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
           <Row>
-            <ImprovePageContainer courseLessonFileProp={this.props.params}/>
+            <ImprovePage courseLessonFileProp={this.props.params}/>
           </Row>
 
         </div>
@@ -171,6 +180,8 @@ const Lesson = React.createClass({
 });
 
 Lesson.propTypes = {
+  // ownProps
+  path: PropTypes.string,
   params: PropTypes.shape({
     file: PropTypes.string.isRequired
   }).isRequired,
@@ -178,33 +189,39 @@ Lesson.propTypes = {
     frontmatter: PropTypes.object,
     content: PropTypes.string
   }),
-  path: PropTypes.string,
-  lessons: PropTypes.object,
-  isStudentMode: PropTypes.bool,
-  setModeTeacher: PropTypes.func,
-  setLanguage: PropTypes.func,
-  isReadme: PropTypes.bool,
+
+  // mapStateToProps
   t: PropTypes.func.isRequired,
-  setCheckbox: PropTypes.func,
+  isStudentMode: PropTypes.bool.isRequired,
+  lessons: PropTypes.object.isRequired,
+  language: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
   checkboxes: PropTypes.object,
-  setLastLesson: PropTypes.func
+
+  // mapDispatchToProps
+  setModeTeacher: PropTypes.func.isRequired,
+  setLanguage: PropTypes.func.isRequired,
+  setCheckbox: PropTypes.func.isRequired,
+  setLastLesson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
   isStudentMode: state.isStudentMode,
   lessons: state.lessons,
   language: state.language,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1,
-  checkboxes: state.checkboxes[createCheckboxesKey(ownProps.path)] || {}
+  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
+  checkboxes: state.checkboxes[createCheckboxesKey(path)] || {}
 });
+
+const mapDispatchToProps = {
+  setModeTeacher,
+  setLanguage,
+  setCheckbox,
+  setLastLesson
+};
 
 export default connect(
   mapStateToProps,
-  {
-    setModeTeacher,
-    setLanguage,
-    setCheckbox,
-    setLastLesson
-  }
+  mapDispatchToProps
   )(withStyles(styles, contentStyles)(Lesson));

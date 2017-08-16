@@ -4,15 +4,15 @@ import getRouteObject from './routeObject';
 
 
 const getComponentPlaylist = (nextState, cb) => {
-  cb(null, require('./pages/PlaylistPage').PlaylistPageContainer);
+  cb(null, require('./pages/PlaylistPage').default);
 };
 
 const getComponentFrontPage = (nextState, cb) => {
-  cb(null, require('./pages/FrontPage').FrontPageContainer);
+  cb(null, require('./pages/FrontPage').default);
 };
 
 const getComponentNotFound = (nextState, cb) => {
-  cb(null, require('./pages/PageNotFound').NotFoundContainer);
+  cb(null, require('./pages/PageNotFound').default);
 };
 
 const getComponentLessonPage = (nextState, cb) => {

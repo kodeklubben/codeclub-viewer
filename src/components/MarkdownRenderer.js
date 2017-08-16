@@ -12,7 +12,9 @@ const MarkdownRenderer = ({src, inline}) => {
     return null;
   }
 };
+
 MarkdownRenderer.propTypes = {
+  // ownProps
   src: PropTypes.string,
   inline: PropTypes.bool
 };
