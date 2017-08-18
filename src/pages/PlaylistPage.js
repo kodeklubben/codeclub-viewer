@@ -20,7 +20,7 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
 
   const lessonLists = levels.map(level =>
-    <LessonList key={level} {...{level}} id={'level-' + level} lessons={lessonsByLevel[level]}/>);
+    <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
 
   const filter = <LessonFilter courseName={params.course}/>;
 
