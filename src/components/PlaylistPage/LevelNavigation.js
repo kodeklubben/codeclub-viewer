@@ -12,13 +12,16 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import scrollToComponent from 'react-scroll-to-component';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
-  const levelListItems = levels.map(level =>
-    <ListGroupItem key={level} onClick={() => scrollToComponent(document.getElementById('level-' + level))}>
-      <span className={styles.name}>
-        <LevelIcon level={level}/>{t('general.levels.' + level)}
-      </span>
-    </ListGroupItem>
-  );
+  const levelListItems = levels.map(level => {
+    const onClick=() => scrollToComponent(document.getElementById('lessonlist-level-' + level));
+    return (
+      <ListGroupItem key={level} {...{onClick}}>
+        <span className={styles.name}>
+          <LevelIcon level={level}/>{t('general.levels.' + level)}
+        </span>
+      </ListGroupItem>
+    );
+  });
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   const header = t('playlist.levelnavigation');
   return (

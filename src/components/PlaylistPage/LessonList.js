@@ -7,10 +7,10 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import styles from './LessonList.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-const LessonList = ({lessons, level, t, id}) => {
+const LessonList = ({lessons, level, t}) => {
   return (
-    <div {...{id}} className={styles.list}>
-      <h3>
+    <div className={styles.list}>
+      <h3 id={'lessonlist-level-' + level}>
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </h3>
       <ListGroup>
@@ -28,7 +28,6 @@ LessonList.propTypes = {
   // ownProps
   lessons: PropTypes.array,
   level: PropTypes.string,
-  id: PropTypes.string,
 
   // mapStateToProps
   t: PropTypes.func.isRequired
