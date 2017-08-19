@@ -13,7 +13,8 @@ import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
+import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode,
+  createCheckboxesKey, getLessonIntro} from '../../util';
 import Button from 'react-bootstrap/lib/Button';
 import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
@@ -152,7 +153,7 @@ const Lesson = React.createClass({
     const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
     const meta = {
       title: this.getTitle() + ' | ' + t('title.codeclub'),
-      description: 'test'
+      description: getLessonIntro(path)
     };
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;

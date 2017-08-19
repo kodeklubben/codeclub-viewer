@@ -9,7 +9,7 @@ import styles from './PlaylistPage.scss';
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
-import {capitalize, getLessonIntro} from '../util';
+import {capitalize} from '../util';
 import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
@@ -40,7 +40,7 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
 
   const meta = {
     title: capitalize(params.course) + ' | ' + t('title.codeclub'),
-    description: getLessonIntro(params.lesson.path.slice(1))
+    description: 'Have something from constants for every course?'
   };
 
   // Title with course name and get started button

@@ -11,7 +11,7 @@ import '../styles/customBootstrapStyles';
 const App = ({t, params, children}) => {
   const meta = {
     title: t('title.codeclub'),
-    description: 'test'
+    description: 'Have a text from constants?'
   };
   return <DocumentMeta {...meta}>
     <div className={styles.appContainer}>
