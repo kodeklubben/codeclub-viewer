@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import DocumentTitle from 'react-document-title';
+import DocumentMeta from 'react-document-meta';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
@@ -150,6 +150,10 @@ const Lesson = React.createClass({
   },
   render() {
     const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
+    const meta = {
+      title: this.getTitle() + ' | ' + t('title.codeclub'),
+      description: 'test'
+    };
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
     const resetButton = anyCheckboxTrue(checkboxes) === true ?
@@ -157,7 +161,7 @@ const Lesson = React.createClass({
       onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
       : null;
     return (
-      <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
+      <DocumentMeta {...meta}>
         <div className={styles.container}>
           <h1>
             <LevelIcon level={this.getLevel()}/>
@@ -174,7 +178,7 @@ const Lesson = React.createClass({
           </Row>
 
         </div>
-      </DocumentTitle>
+      </DocumentMeta>
     );
   }
 });
@@ -189,6 +193,7 @@ Lesson.propTypes = {
     frontmatter: PropTypes.object,
     content: PropTypes.string
   }),
+  meta: PropTypes.object,
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
