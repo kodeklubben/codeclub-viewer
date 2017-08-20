@@ -13,43 +13,12 @@ import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
+import {removeHtmlFileEnding, hashCode, createCheckboxesKey} from '../../util';
 import Button from 'react-bootstrap/lib/Button';
-import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
+import {setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
-import InstructionButton from './InstructionButton';
-
-const ReadmeButton = ({path, lessons, t}) => {
-  const contextPath = './' + path + '.md';
-  const buttonPath = (lessons[contextPath] || {}).readmePath;
-  const buttonText= t('lessons.toteacherinstruction');
-  const bsStyle = 'guide';
-  const bsSize = 'small';
-  return <InstructionButton {...{buttonPath, buttonText, bsStyle, bsSize}}/>;
-};
-
-ReadmeButton.propTypes = {
-  // ownProps
-  path: PropTypes.string.isRequired,
-  lessons: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-const LessonButton = ({path, lessons, t}) => {
-  const lessonPath = '/' + path;
-  const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
-  const buttonText= t('lessons.tolesson');
-  const bsStyle = 'guide';
-  const bsSize = 'small';
-  return <InstructionButton {...{buttonPath, buttonText, bsStyle, bsSize}}/>;
-};
-
-LessonButton.propTypes = {
-  // ownProps
-  path: PropTypes.string.isRequired,
-  lessons: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired
-};
+import ReadmeButton from './ReadmeButton';
+import LessonButton from './LessonButton';
 
 const setCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = [...document.getElementsByTagName('label')];
@@ -93,48 +62,51 @@ const rememberLastLesson = (path, setLastLesson) => {
 
 const Lesson = React.createClass({
   getTitle() {
-    return this.props.lesson.frontmatter.title || this.props.params.file;
+    const {lesson, params} = this.props;
+    return lesson.frontmatter.title || params.file;
   },
   getLevel() {
-    return this.props.lesson.frontmatter.level || 0;
+    const {lesson} = this.props;
+    return lesson.frontmatter.level || 0;
   },
   getAuthor() {
-    const author = this.props.lesson.frontmatter.author || '';
+    const {lesson, t} = this.props;
+    const author = lesson.frontmatter.author || '';
     return author ?
-      <p><i>{this.props.t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> :
+      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> :
       null;
   },
   getTranslator() {
-    const translator = this.props.lesson.frontmatter.translator || '';
+    const {lesson, t} = this.props;
+    const translator = lesson.frontmatter.translator || '';
     return translator ?
-      <p><i>{this.props.t('lessons.translatedby')} <MarkdownRenderer src={translator} inline={true} /></i></p> :
+      <p><i>{t('lessons.translatedby')} <MarkdownRenderer src={translator} inline={true} /></i></p> :
       null;
   },
   getLanguage() {
-    return this.props.lesson.frontmatter.language || '';
+    const {lesson} = this.props;
+    return lesson.frontmatter.language || '';
   },
   createMarkup(){
+    const {lesson} = this.props;
     return {
-      __html: removeHtmlFileEnding(this.props.lesson.content)
+      __html: removeHtmlFileEnding(lesson.content)
     };
   },
   setLanguage(){
+    const {language, setLanguage} = this.props;
     const lessonLanguage = this.getLanguage();
-    if(lessonLanguage !== '' && lessonLanguage !== this.props.language) {
-      this.props.setLanguage(lessonLanguage);
+    if(lessonLanguage !== '' && lessonLanguage !== language) {
+      setLanguage(lessonLanguage);
     }
   },
   componentWillMount(){
+    const {lesson} = this.props;
     if (typeof document === 'undefined') {
       // do nothing server-side
       return;
     }
-    this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
-
-    if(this.props.isReadme) this.props.setModeTeacher();
-
-    //Changes the language state to the language defined in the current lesson or readme-file
-    //this.setLanguage();
+    lesson.content = processContent(lesson.content, contentStyles);
   },
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
@@ -142,14 +114,8 @@ const Lesson = React.createClass({
     rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
   },
-  componentWillUnmount() {
-    const nodes = [...document.getElementsByClassName('togglebutton')];
-    for (let node of nodes) {
-      ReactDOM.unmountComponentAtNode(node);
-    }
-  },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes, params} = this.props;
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
     const resetButton = anyCheckboxTrue(checkboxes) === true ?
@@ -170,7 +136,7 @@ const Lesson = React.createClass({
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
           <Row>
-            <ImprovePage courseLessonFileProp={this.props.params}/>
+            <ImprovePage courseLessonFileProp={params}/>
           </Row>
 
         </div>
@@ -199,7 +165,6 @@ Lesson.propTypes = {
   checkboxes: PropTypes.object,
 
   // mapDispatchToProps
-  setModeTeacher: PropTypes.func.isRequired,
   setLanguage: PropTypes.func.isRequired,
   setCheckbox: PropTypes.func.isRequired,
   setLastLesson: PropTypes.func.isRequired
@@ -215,7 +180,6 @@ const mapStateToProps = (state, {path}) => ({
 });
 
 const mapDispatchToProps = {
-  setModeTeacher,
   setLanguage,
   setCheckbox,
   setLastLesson
