@@ -13,36 +13,12 @@ import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, hashCode, createCheckboxesKey} from '../../util';
+import {removeHtmlFileEnding, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
 import ReadmeButton from './ReadmeButton';
 import LessonButton from './LessonButton';
 import ResetButton from './ResetButton';
-
-export const setCheckboxes = (path, checkboxes, setCheckbox) => {
-  const labels = [...document.getElementsByTagName('label')];
-  for (let label of labels) {
-    const input = document.getElementById(label.htmlFor);
-    if (input && input.type === 'checkbox') {
-      let hash = hashCode(label.textContent);
-      input.checked = !!checkboxes[hash];
-      setCheckbox(path, hash, !!checkboxes[hash]);
-      input.onclick = (e) => {
-        setCheckbox(path, hash, !!e.target.checked);
-      };
-    }
-  }
-};
-
-const anyCheckboxTrue = (checkboxes) => {
-  for (let i of Object.keys(checkboxes)) {
-    if (checkboxes[i] === true) {
-      return true;
-    }
-  }
-  return false;
-};
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -132,11 +108,9 @@ const Lesson = React.createClass({
           {resetButton}
           {instructionButton}
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
-
           <Row>
             <ImprovePage courseLessonFileProp={params}/>
           </Row>
-
         </div>
       </DocumentTitle>
     );

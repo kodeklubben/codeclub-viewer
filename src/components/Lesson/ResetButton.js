@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './InstructionButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import {setCheckbox} from '../../action_creators';
-import {setCheckboxes} from './Lesson';
+import {setCheckboxes} from '../../util';
 
 const ResetButton = ({path, t, setCheckbox}) => {
   const bsStyle = 'warning';
