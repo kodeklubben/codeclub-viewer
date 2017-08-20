@@ -14,13 +14,13 @@ import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, hashCode, createCheckboxesKey} from '../../util';
-import Button from 'react-bootstrap/lib/Button';
 import {setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
 import ReadmeButton from './ReadmeButton';
 import LessonButton from './LessonButton';
+import ResetButton from './ResetButton';
 
-const setCheckboxes = (path, checkboxes, setCheckbox) => {
+export const setCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = [...document.getElementsByTagName('label')];
   for (let label of labels) {
     const input = document.getElementById(label.htmlFor);
@@ -115,13 +115,11 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes, params} = this.props;
-    const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
+    const {t, path, lessons, isReadme, isStudentMode, checkboxes, params} = this.props;
+    const instructionButton = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
     const resetButton = anyCheckboxTrue(checkboxes) === true ?
-      <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
-      onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
-      : null;
+      <ResetButton {...{path}}/> : null;
     return (
       <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -132,7 +130,7 @@ const Lesson = React.createClass({
           {this.getAuthor()}
           {this.getTranslator()}
           {resetButton}
-          {instructionBtn}
+          {instructionButton}
           <div dangerouslySetInnerHTML={this.createMarkup()}/>
 
           <Row>

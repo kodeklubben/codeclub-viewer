@@ -7,7 +7,7 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 const InstructionButton = ({buttonPath, buttonText, bsStyle, bsSize}) => {
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
-      <Button className={styles.instructionButton} {...{bsStyle, bsSize}}>
+      <Button className={styles.buttonMargin} {...{bsStyle, bsSize}}>
         {buttonText}
       </Button>
     </LinkContainer> :
