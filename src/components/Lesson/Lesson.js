@@ -36,16 +36,16 @@ const rememberLastLesson = (path, setLastLesson) => {
   setLastLesson(lessonPath);
 };
 
-const createMarkup = (lessonContent) => ({__html: removeHtmlFileEnding(lessonContent)});
+const createMarkup = (lessonContent) => (
+  {__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))}
+);
 
 const Lesson = React.createClass({
-  componentWillMount(){
-    const {lesson} = this.props;
+  componentWillMount() {
     if (typeof document === 'undefined') {
       // do nothing server-side
       return;
     }
-    lesson.content = processContent(lesson.content, contentStyles);
   },
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
