@@ -14,7 +14,7 @@ import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
-import {setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
+import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
 import ReadmeButton from './ReadmeButton';
 import LessonButton from './LessonButton';
@@ -36,46 +36,9 @@ const rememberLastLesson = (path, setLastLesson) => {
   setLastLesson(lessonPath);
 };
 
+const createMarkup = (lessonContent) => ({__html: removeHtmlFileEnding(lessonContent)});
+
 const Lesson = React.createClass({
-  getTitle() {
-    const {lesson, params} = this.props;
-    return lesson.frontmatter.title || params.file;
-  },
-  getLevel() {
-    const {lesson} = this.props;
-    return lesson.frontmatter.level || 0;
-  },
-  getAuthor() {
-    const {lesson, t} = this.props;
-    const author = lesson.frontmatter.author || '';
-    return author ?
-      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> :
-      null;
-  },
-  getTranslator() {
-    const {lesson, t} = this.props;
-    const translator = lesson.frontmatter.translator || '';
-    return translator ?
-      <p><i>{t('lessons.translatedby')} <MarkdownRenderer src={translator} inline={true} /></i></p> :
-      null;
-  },
-  getLanguage() {
-    const {lesson} = this.props;
-    return lesson.frontmatter.language || '';
-  },
-  createMarkup(){
-    const {lesson} = this.props;
-    return {
-      __html: removeHtmlFileEnding(lesson.content)
-    };
-  },
-  setLanguage(){
-    const {language, setLanguage} = this.props;
-    const lessonLanguage = this.getLanguage();
-    if(lessonLanguage !== '' && lessonLanguage !== language) {
-      setLanguage(lessonLanguage);
-    }
-  },
   componentWillMount(){
     const {lesson} = this.props;
     if (typeof document === 'undefined') {
@@ -91,23 +54,33 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, checkboxes, params} = this.props;
+    const {t, path, lessons, isReadme, isStudentMode, checkboxes, params, lesson} = this.props;
+    const title = lesson.frontmatter.title || params.file;
+    const level = lesson.frontmatter.level || 0;
+    const authorName = lesson.frontmatter.author || '';
+    const translatorName = lesson.frontmatter.translator || '';
+    const author = authorName ?
+      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> :
+      null;
+    const translator = translatorName ?
+        <p><i>{t('lessons.translatedby')} <MarkdownRenderer src={translatorName} inline={true} /></i></p> :
+        null;
     const instructionButton = isReadme ? <LessonButton {...{path, lessons, t}}/> :
       isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
     const resetButton = anyCheckboxTrue(checkboxes) === true ?
       <ResetButton {...{path}}/> : null;
     return (
-      <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
+      <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
           <h1>
-            <LevelIcon level={this.getLevel()}/>
-            {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
+            <LevelIcon {...{level}}/>
+            {title}
           </h1>
-          {this.getAuthor()}
-          {this.getTranslator()}
+          {author}
+          {translator}
           {resetButton}
           {instructionButton}
-          <div dangerouslySetInnerHTML={this.createMarkup()}/>
+          <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
           <Row>
             <ImprovePage courseLessonFileProp={params}/>
           </Row>
@@ -132,12 +105,10 @@ Lesson.propTypes = {
   t: PropTypes.func.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
   lessons: PropTypes.object.isRequired,
-  language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
   checkboxes: PropTypes.object,
 
   // mapDispatchToProps
-  setLanguage: PropTypes.func.isRequired,
   setCheckbox: PropTypes.func.isRequired,
   setLastLesson: PropTypes.func.isRequired
 };
@@ -146,13 +117,11 @@ const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
   isStudentMode: state.isStudentMode,
   lessons: state.lessons,
-  language: state.language,
   isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
   checkboxes: state.checkboxes[createCheckboxesKey(path)] || {}
 });
 
 const mapDispatchToProps = {
-  setLanguage,
   setCheckbox,
   setLastLesson
 };
