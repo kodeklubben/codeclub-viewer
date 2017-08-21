@@ -21,7 +21,7 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
 
   const lessonLists = levels.map(level =>
-    <LessonList key={level} {...{level}} id={'level-' + level} lessons={lessonsByLevel[level]}/>);
+    <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
 
   const filter = <LessonFilter courseName={params.course}/>;
 
@@ -51,23 +51,11 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
 
   const body =
     <Row>
-      {/*Filter desktop*/}
-      <Col xsHidden>
-        <Col sm={3} className={styles.topMargin}>{filter}{resetFilter}</Col>
-        <Col sm={6}>
-          {courseInfo}
-          {playlistsAndLessons}
-        </Col>
-        <Col sm={3} className={styles.topMargin}>{jumpTo}</Col>
-      </Col>
-
-      {/*Filter mobile*/}
-      <Col smHidden mdHidden lgHidden>
-        <Col xs={12}>{courseInfo}</Col>
-        <Col xs={12}>{filter}</Col>
-        <Col xs={12}>{resetFilter}</Col>
-        {/*<Col xs={12}>{jumpTo}</Col>*/}
-        <Col xs={12}>{playlistsAndLessons}</Col>
+      <Col>
+        <Col xs={12} smHidden mdHidden lgHidden>{courseInfo}</Col>
+        <Col xs={12} sm={3} className={styles.topMargin}>{filter}{resetFilter}</Col>
+        <Col xs={12} sm={3} smPush={6} className={styles.topMargin}>{jumpTo}</Col>
+        <Col xs={12} sm={6} smPull={3}><Col xsHidden>{courseInfo}</Col>{playlistsAndLessons}</Col>
       </Col>
     </Row>;
 

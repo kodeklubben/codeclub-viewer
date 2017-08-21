@@ -1,4 +1,9 @@
+@import '../styles/variables';
+
 .topMargin {
   margin-top: 136px;
-}
 
+  @media (max-width: $screen-xs-max) {
+    margin-top: 0;
+  }
+}
