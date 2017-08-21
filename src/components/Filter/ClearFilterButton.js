@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './ClearFilterButton.scss';
 import Button from 'react-bootstrap/lib/Button';
 import {getTranslator} from '../../selectors/translate';
 import {somethingCheckedInFilter} from '../../selectors/filter';
@@ -10,8 +12,10 @@ const ClearFilterButton = ({t, language, resetFilter, collapseAllFilterGroups, s
     resetFilter('language', language);
     collapseAllFilterGroups(true);
   };
+  const bsStyle = 'white-grey-lighter';
+  const className = styles.marginBottom;
   return somethingChecked ?
-    <Button block bsStyle="white-grey-lighter" {...{onClick}}>
+    <Button block {...{className, bsStyle, onClick}}>
       {t('filter.removefilter')}
     </Button>
     : null;
@@ -42,4 +46,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ClearFilterButton);
+)(withStyles(styles)(ClearFilterButton));
