@@ -15,7 +15,7 @@ export const getPlaylists = createSelector(
   [getFilteredAndIndexedLessons, getPlaylistContext, getPlaylistPaths],
   (filteredLessons, playlistContext, playlistPaths) => {
     return playlistPaths.reduce((res, path) => {
-      
+
       // Between './' and second '/'
       const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
 
@@ -24,7 +24,9 @@ export const getPlaylists = createSelector(
 
       // Create an array of paths to lessons in playlist
       const playlistContent = playlistContext(path);
-      const lessonPaths = playlistContent.split('\n').map(path => './' + courseName.toLowerCase() + '/' + path);
+
+      // Split on newline and/or carriage return to account for all operating systems
+      const lessonPaths = playlistContent.split(/\r\n|\r|\n/).map(path => './' + courseName.toLowerCase() + '/' + path);
 
       // Create an array of references to lessons
       const lessons = lessonPaths.reduce((res, path) => {

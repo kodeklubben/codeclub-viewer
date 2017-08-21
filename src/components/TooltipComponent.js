@@ -9,7 +9,7 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
     return {__html: tooltipContent};
   };
   const tooltip =
-    <Tooltip className={styles.tooltip} id={id}>
+    <Tooltip className={styles.tooltip} {...{id}}>
       <div dangerouslySetInnerHTML={createMarkup()}/>
     </Tooltip>;
   return (
@@ -20,6 +20,7 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
 };
 
 TooltipComponent.propTypes = {
+  // ownProps
   id: PropTypes.string,
   children: PropTypes.object,
   tooltipContent: PropTypes.string

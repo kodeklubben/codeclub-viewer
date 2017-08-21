@@ -38,10 +38,13 @@ const WelcomeBox = ({t, welcomeBox, setWelcomeBox, lastLesson}) => {
 };
 
 WelcomeBox.propTypes = {
-  t: PropTypes.func,
-  welcomeBox: PropTypes.bool,
-  setWelcomeBox: PropTypes.func,
-  lastLesson: PropTypes.string
+  // mapStateToProps
+  t: PropTypes.func.isRequired,
+  welcomeBox: PropTypes.bool.isRequired,
+  lastLesson: PropTypes.string.isRequired,
+
+  // mapDispatchToProps
+  setWelcomeBox: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -50,8 +53,11 @@ const mapStateToProps = (state) => ({
   lastLesson: state.lastLesson
 });
 
+const mapDispatchToProps = {
+  setWelcomeBox
+};
 
 export default connect(
   mapStateToProps,
-  {setWelcomeBox}
+  mapDispatchToProps
 )(withStyles(styles)(WelcomeBox));

@@ -154,7 +154,8 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    downloadZIP:  'Download all courses as a zip file'
+    downloadZIP:  'Download all courses as a zip file',
+    contribute: 'Contribute?'
   },
   404: {
     header: 'Something went wrong',

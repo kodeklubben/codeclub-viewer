@@ -7,7 +7,7 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 
-export function BreadCrumb({params, iconContext, lessonLevel, lessonTitle}) {
+const BreadCrumb = ({params, iconContext, lessonLevel, lessonTitle}) => {
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
@@ -28,20 +28,24 @@ export function BreadCrumb({params, iconContext, lessonLevel, lessonTitle}) {
     {lessonLink ? <span> / </span> : null}
     {lessonLink ? lessonLink : null}
   </div>;
-}
+};
+
 BreadCrumb.propTypes = {
+  // ownProps
   params: PropTypes.shape({
     course: PropTypes.string,
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
-  iconContext: PropTypes.func,
-  lessonLevel: PropTypes.number,
-  lessonTitle: PropTypes.string
+
+  // mapStateToProps
+  iconContext: PropTypes.func.isRequired,
+  lessonLevel: PropTypes.number.isRequired,
+  lessonTitle: PropTypes.string.isRequired
 };
 
-function mapStateToProps(state, ownProps) {
-  const {course, lesson, file} = ownProps.params;
+function mapStateToProps(state, {params}) {
+  const {course, lesson, file} = params;
   const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
   const isReadme = (file && /README(_[a-z]{2})?/.test(file));
   let title = '';
@@ -58,6 +62,6 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export const BreadCrumbContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(BreadCrumb));
