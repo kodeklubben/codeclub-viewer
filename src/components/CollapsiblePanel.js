@@ -19,7 +19,7 @@ const CollapsiblePanel = React.createClass({
     </span>;
     return (
       <div className={styles.container}>
-        <Panel collapsible expanded={expanded} bsStyle={bsStyle} header={headerWithChevron} onSelect={onClick}>
+        <Panel collapsible header={headerWithChevron} onSelect={onClick} {...{expanded, bsStyle}}>
           {children}
         </Panel>
       </div>
@@ -28,12 +28,14 @@ const CollapsiblePanel = React.createClass({
 });
 
 CollapsiblePanel.propTypes = {
+  // ownProps
   initiallyExpanded: PropTypes.bool,
   header: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
   ]),
   bsStyle: PropTypes.oneOf(['student', 'teacher']),
+  children: PropTypes.object
 };
 
 export default withStyles(styles)(CollapsiblePanel);

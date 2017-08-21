@@ -269,14 +269,14 @@ export function removeHtmlFileEnding(lessonPage) {
 * All available languages must be defined here
 * @returns {Array} An array of available languages
 */
-export const getAvailableLanguages = () => ['nb', 'nn', 'sv', 'da', 'en'];
+export const getAvailableLanguages = () => ['nb', 'nn',/* 'sv', 'da',*/ 'en'];
 
 /**
 * Returns groupNames with tags that should be considered as logical OR in the filter.
 * @returns {Array}
 */
 export const getOrTaggedGroups = () => {
-  return ['language', 'subject', 'grade'];
+  return ['language'];
 };
 
 /**

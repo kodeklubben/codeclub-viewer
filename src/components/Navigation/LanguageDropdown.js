@@ -9,7 +9,6 @@ import styles from './LanguageDropdown.scss';
 import {getTranslator} from '../../selectors/translate';
 
 const availableLanguages = getAvailableLanguages();
-const modes = ['student', 'teacher'];
 
 const LanguageItem = ({language, t, onlyFlag}) => {
   // Note that the block with "float" (the flag) must be first in the containing div
@@ -22,27 +21,32 @@ const LanguageItem = ({language, t, onlyFlag}) => {
     </div>
   );
 };
+
 LanguageItem.propTypes = {
+  // ownProps
+  onlyFlag: PropTypes.bool.isRequired,
+
+  // mapStateToProps
   language: PropTypes.oneOf(availableLanguages).isRequired,
-  t: PropTypes.func.isRequired,
-  onlyFlag: PropTypes.bool.isRequired
+  t: PropTypes.func.isRequired
 };
 
-const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
+const LanguageDropdown = ({isStudentMode, language, resetFilter, setLanguage, t}) => {
+  const mode = isStudentMode ? 'student' : 'teacher';
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='language-dropdown'
                     noCaret
                     pullRight
                     bsStyle={'language-' + mode}
-                    title={<LanguageItem onlyFlag={true} language={language} t={t}/>}
+                    title={<LanguageItem onlyFlag={true} {...{language, t}}/>}
                     onSelect={(eventKey) => {
                       resetFilter('language', eventKey);
                       setLanguage(eventKey);
                     }}>
       {
-        availableLanguages.map(k =>
-          <MenuItem key={k} eventKey={k} active={language === k}>
-            <LanguageItem onlyFlag={false} language={k} t={t}/>
+        availableLanguages.map(key =>
+          <MenuItem {...{key}} eventKey={key} active={language === key}>
+            <LanguageItem onlyFlag={false} language={key} {...{t}}/>
           </MenuItem>
         )
       }
@@ -51,24 +55,21 @@ const LanguageDropdown = ({mode, language, resetFilter, setLanguage, t}) => {
 };
 
 LanguageDropdown.propTypes = {
-  // ownProps:
-  mode: PropTypes.oneOf(modes).isRequired,
-
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
   t: PropTypes.func.isRequired,
+  isStudentMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    language: state.language,
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  language: state.language,
+  t: getTranslator(state),
+  isStudentMode: state.isStudentMode
+});
 
 const mapDispatchToProps = {
   setLanguage,

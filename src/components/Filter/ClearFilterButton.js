@@ -1,7 +1,6 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Button from 'react-bootstrap/lib/Button';
-
 import {getTranslator} from '../../selectors/translate';
 import {resetFilter, collapseAllFilterGroups} from '../../action_creators';
 
@@ -11,11 +10,12 @@ const ClearFilterButton = ({t, language, resetFilter, collapseAllFilterGroups}) 
     collapseAllFilterGroups(true);
   };
   return (
-    <Button block bsStyle="white-grey-lighter" onClick={onClick}>
+    <Button block bsStyle="white-grey-lighter" {...{onClick}}>
       {t('filter.removefilter')}
     </Button>
   );
 };
+
 ClearFilterButton.propTypes = {
   // mapStateToProps
   language: PropTypes.string.isRequired,
