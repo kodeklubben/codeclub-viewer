@@ -12,6 +12,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
+import ClearFilterButton from './ClearFilterButton';
 
 const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t}) => {
   const filterGroups = filterGroupKeys.map(groupKey =>
@@ -48,6 +49,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t}) => 
           </ListGroup>
         </CollapsiblePanel>
       </Col>
+      <ClearFilterButton/>
     </div>
   );
 };
