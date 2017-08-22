@@ -37,11 +37,15 @@
   white-space: nowrap;
   font-size: 1.3em;
 
-  @media screen and (max-width: $screen-xs-max) {
-    font-size: 1.15em;
+  @media screen and (max-width: 500px) {
+    font-size: 1em;
   }
 }
 
 .lessonCount {
   color: $color-gray;
+}
+
+.glyph {
+  margin: 0 5px;
 }

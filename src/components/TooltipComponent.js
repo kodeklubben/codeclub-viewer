@@ -8,12 +8,16 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
   const createMarkup = () => {
     return {__html: tooltipContent};
   };
-  const tooltip =
+  const animation = true;
+  const trigger = 'click';
+  const placement = 'bottom';
+  const onClick = (e) => e.preventDefault();
+  const overlay =
     <Tooltip className={styles.tooltip} {...{id}}>
       <div dangerouslySetInnerHTML={createMarkup()}/>
     </Tooltip>;
   return (
-    <OverlayTrigger animation={true} delayShow={400} placement="bottom" overlay={tooltip}>
+    <OverlayTrigger {...{animation, placement, trigger, onClick, overlay}}>
       {children}
     </OverlayTrigger>
   );

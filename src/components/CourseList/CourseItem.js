@@ -15,22 +15,28 @@ const CourseItem = ({course, t, language}) => {
   const tooltipContent = isExternal ? getLessonIntro(coursePath + '/index') :
     getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
 
-  return (
-    <TooltipComponent id={course.name} {...{tooltipContent}}>
+  return <div>
       {isExternal ?
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
           <img className={styles.courseLogo} src={course.iconPath}/>
-          <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
+          <span className={styles.courseName}>{course.name}
+            <TooltipComponent id={course.name} {...{tooltipContent}}>
+              <Glyphicon className={styles.glyph} glyph='info-sign'/>
+            </TooltipComponent><Glyphicon className={styles.glyph} glyph='new-window'/>
+          </span>
         </a>
         :
         <Link className={styles.courseItem} to={course.path}>
           <img className={styles.courseLogo} src={course.iconPath}/>
-          <span className={styles.courseName}>{course.name}</span>
+          <span className={styles.courseName}>{course.name}
+            <TooltipComponent id={course.name} {...{tooltipContent}}>
+              <Glyphicon className={styles.glyph} glyph='info-sign'/>
+            </TooltipComponent>
+          </span>
           <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
         </Link>
       }
-    </TooltipComponent>
-  );
+    </div>;
 };
 
 CourseItem.propTypes = {

@@ -32,18 +32,25 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
 
   const tooltipContent = getLessonIntro(lesson.path.slice(1));
 
+  const tooltipComponent =
+    <TooltipComponent id={lesson.title} {...{tooltipContent}}>
+      <Glyphicon className={styles.glyph + (isStudentMode ? ' ' + styles.marginFix : '')} glyph='info-sign'/>
+    </TooltipComponent>;
+
+
   const progressBar = lesson.level > 0 ?
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
     null;
 
   return (
-    <TooltipComponent id={lesson.title} tooltipContent={tooltipContent}>
+    <div>
       {lesson.external ?
       <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
         {levelIcon}
         <div className={styles.title}>{lesson.title}</div>
         &nbsp;<Glyphicon glyph="new-window"/>
         {instructionBtn}
+        {tooltipComponent}
       </ListGroupItem>
       :
       <LinkContainer to={lesson.path}>
@@ -53,9 +60,10 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
           <div className={styles.title}>{lesson.title}</div>
           {progress}
           {instructionBtn}
+          {tooltipComponent}
         </ListGroupItem>
       </LinkContainer>}
-    </TooltipComponent>
+    </div>
   );
 };
 
