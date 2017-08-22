@@ -48,12 +48,12 @@ const locals = {};
 function getStaticSitePaths() {
   const glob = require('glob');
 
+  // Need to replace backslashes with forward slashes on Windows, since glob keeps forward slashes
   const lessonSrcPath = lessonSrc.replace(/\\/g, '/');
 
   // Only include folders in lesson src that have an index.md
   const coursePaths = glob.sync(path.join(lessonSrcPath, '*/index.md'), {dot: true})
     .map(p => p.replace(new RegExp(`^${lessonSrcPath}\/(.*)\/index\.md$`), '$1/'));
-
 
   const lessonPaths = glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md'))
