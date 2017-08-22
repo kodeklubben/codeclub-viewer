@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Button from 'react-bootstrap/lib/Button';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './InstructionButton.scss';
+import styles from './Lesson.scss';
 import {getTranslator} from '../../selectors/translate';
 import {setCheckbox} from '../../action_creators';
 import {setCheckboxes} from '../../util';

@@ -41,12 +41,6 @@ const createMarkup = (lessonContent) => (
 );
 
 const Lesson = React.createClass({
-  componentWillMount() {
-    if (typeof document === 'undefined') {
-      // do nothing server-side
-      return;
-    }
-  },
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
