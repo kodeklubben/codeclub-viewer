@@ -7,19 +7,19 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 
-const BreadCrumb = ({params, iconContext, lessonLevel, lessonTitle}) => {
+const BreadCrumb = ({params, lessonLevel}) => {
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
   const courseLink = params.course ?
     <NavLink to={`/${params.course}`} className={styles.lessonLink}>
-      <img className={styles.courseIcon} src={iconContext('./' + params.course + '/logo-black.png')}/>
+      <img className={styles.courseIcon} src={'./' + params.course + '/logo-black.png'}/>
       <span className={styles.lesson}>{capitalize(params.course)}</span>
     </NavLink> : null;
   const lessonLink = params.course && params.lesson && params.file ?
     <NavLink to={`/${params.course}/${params.lesson}/${params.file}`} className={styles.lessonLink}>
       <LevelIcon level={lessonLevel}/>
-      <span className={styles.lesson}>{lessonTitle}</span>
+      <span className={styles.lesson}>{capitalize(params.course)}</span>
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
     {homeLink}
@@ -39,26 +39,19 @@ BreadCrumb.propTypes = {
   }),
 
   // mapStateToProps
-  iconContext: PropTypes.func.isRequired,
-  lessonLevel: PropTypes.number.isRequired,
-  lessonTitle: PropTypes.string.isRequired
+  lessonLevel: PropTypes.number.isRequired
 };
 
 function mapStateToProps(state, {params}) {
-  const {course, lesson, file} = params;
-  const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
-  const isReadme = (file && /README(_[a-z]{2})?/.test(file));
-  let title = '';
+  const lessonPath = params.file ? `./${params.course}/${params.lesson}/${params.file}.md` : '';
+  const isReadme = (params.file && /README(_[a-z]{2})?/.test(params.file));
   let level = 0;
 
   if(isReadme){
-    title = state.context.readmeContext(lessonPath).frontmatter.title || '';
     level = state.context.readmeContext(lessonPath).frontmatter.level || 0;
   }
   return {
-    iconContext: state.context.iconContext,
-    lessonLevel: lessonPath && !isReadme ? state.lessons[lessonPath].level : level,
-    lessonTitle: lessonPath && !isReadme ? state.lessons[lessonPath].title : title,
+    lessonLevel: lessonPath && !isReadme ? state.lessons[lessonPath].level : level
   };
 }
 
