@@ -7,19 +7,32 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 
-const BreadCrumb = ({params, lessonLevel}) => {
+const BreadCrumb = ({params, lessons, context}) => {
+  const {course, lesson, file} = params;
+  const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
+  const isReadme = (file && /README(_[a-z]{2})?/.test(file));
+  let title = '';
+  let level = 0;
+  if (isReadme) {
+    title = context.readmeContext(lessonPath).frontmatter.title;
+    level = context.readmeContext(lessonPath).frontmatter.level;
+  }
+  else {
+    title = lessonPath ? lessons[lessonPath].title : title;
+    level = lessonPath ? lessons[lessonPath].level : level;
+  }
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
-  const courseLink = params.course ?
-    <NavLink to={`/${params.course}`} className={styles.lessonLink}>
-      <img className={styles.courseIcon} src={'./' + params.course + '/logo-black.png'}/>
-      <span className={styles.lesson}>{capitalize(params.course)}</span>
+  const courseLink = course ?
+    <NavLink to={`/${course}`} className={styles.lessonLink}>
+      <img className={styles.courseIcon} src={context.iconContext('./' + course + '/logo-black.png')}/>
+      <span className={styles.lesson}>{capitalize(course)}</span>
     </NavLink> : null;
-  const lessonLink = params.course && params.lesson && params.file ?
-    <NavLink to={`/${params.course}/${params.lesson}/${params.file}`} className={styles.lessonLink}>
-      <LevelIcon level={lessonLevel}/>
-      <span className={styles.lesson}>{capitalize(params.course)}</span>
+  const lessonLink = course && lesson && file ?
+    <NavLink to={`/${course}/${lesson}/${file}`} className={styles.lessonLink}>
+      <LevelIcon {...{level}}/>
+      <span className={styles.lesson}>{title}</span>
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
     {homeLink}
@@ -39,21 +52,14 @@ BreadCrumb.propTypes = {
   }),
 
   // mapStateToProps
-  lessonLevel: PropTypes.number.isRequired
+  lessons: PropTypes.object.isRequired,
+  context: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, {params}) {
-  const lessonPath = params.file ? `./${params.course}/${params.lesson}/${params.file}.md` : '';
-  const isReadme = (params.file && /README(_[a-z]{2})?/.test(params.file));
-  let level = 0;
-
-  if(isReadme){
-    level = state.context.readmeContext(lessonPath).frontmatter.level || 0;
-  }
-  return {
-    lessonLevel: lessonPath && !isReadme ? state.lessons[lessonPath].level : level
-  };
-}
+const mapStateToProps = (state, {params}) => ({
+  lessons: state.lessons,
+  context: state.context
+});
 
 export default connect(
   mapStateToProps
