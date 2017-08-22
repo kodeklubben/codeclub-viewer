@@ -17,7 +17,7 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
       <div dangerouslySetInnerHTML={createMarkup()}/>
     </Tooltip>;
   return (
-    <OverlayTrigger {...{animation, placement, trigger, onClick, overlay}}>
+    <OverlayTrigger rootClose {...{animation, placement, trigger, onClick, overlay}}>
       {children}
     </OverlayTrigger>
   );
