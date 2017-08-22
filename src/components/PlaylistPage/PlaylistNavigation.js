@@ -27,6 +27,10 @@ const PlaylistNavigation = ({t, playlists, language}) => {
     </Panel> : null;
   });
 
+  /*This is a temporary hack, showing only playlists for Norsk Bokmål
+   when this is the chosen gui-language, until a better solution for
+   showing playlists in other languages has been found.*/
+
   if (playlistListItems.length) {
     return language === 'nb' ?
     <div className={styles.container}>
