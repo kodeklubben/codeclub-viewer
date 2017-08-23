@@ -152,7 +152,7 @@ const Lesson = React.createClass({
   render() {
     const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
     const meta = {
-      title: this.getTitle() + ' | ' + t('title.codeclub'),
+      title: this.getTitle() + ' | ' + t('meta.title'),
       description: getLessonIntro(path)
     };
     const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :

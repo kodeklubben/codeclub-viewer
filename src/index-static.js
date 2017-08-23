@@ -6,7 +6,7 @@ import RouterContext from 'react-router/lib/RouterContext';
 import match from 'react-router/lib/match';
 import routes from './routes-static';
 import WithStylesContext from './WithStylesContext';
-import DocumentTitle from 'react-document-title';
+import DocumentMeta from 'react-document-meta';
 import store from './store';
 
 export default (locals, callback) => {
@@ -31,7 +31,7 @@ export default (locals, callback) => {
     const template = require('raw!buildDir/index-html-template.ejs');
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
     const html = template
-      .replace('<%= title %>', DocumentTitle.rewind())
+      .replace('<%= title %>', DocumentMeta.rewind())
       .replace('<%= appCss %>', appCss)
       .replace('<%= appHtml %>', `<div>${appHtml}</div>`);
     callback(null, html);

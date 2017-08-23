@@ -10,8 +10,8 @@ import '../styles/customBootstrapStyles';
 
 const App = ({t, params, children}) => {
   const meta = {
-    title: t('title.codeclub'),
-    description: 'Have a text from constants?'
+    title: t('meta.title'),
+    description: t('meta.description')
   };
   return <DocumentMeta {...meta}>
     <div className={styles.appContainer}>

@@ -10,8 +10,11 @@ export default {
       4: 'Ekspert'
     }
   },
-  title: {
-    codeclub: 'Kodeklubben',
+  meta: {
+    title: 'Kodeklubben',
+    description: 'På denne siden finner du mange oppgaver som du kan gjøre for å lære deg programmering. ' +
+     'Som du ser, finnes det mange forskjellige språk. For nybegynnere anbefaler vi å starte med Scratch, ' +
+     'men dersom du går på ungdomsskolen eller videregående så vil det også gå fint å starte med Python',
   },
   frontpage: {
     courses: 'Kurs',

@@ -9,14 +9,14 @@ import styles from './PlaylistPage.scss';
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
-import {capitalize} from '../util';
+import {capitalize, getLessonIntro} from '../util';
 import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
+const PlaylistPage = ({params, lessonsByLevel, playlists, t, language}) => {
   const levels = Object.keys(lessonsByLevel);
 
   const lessonLists = levels.map(level =>
@@ -38,9 +38,11 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const courseInfo =
     <CourseInfo courseName={params.course}/>;
 
+  const coursePath = params.course.replace(/ /g, '_').toLowerCase();
+
   const meta = {
-    title: capitalize(params.course) + ' | ' + t('title.codeclub'),
-    description: 'Have something from constants for every course?'
+    title: capitalize(params.course) + ' | ' + t('meta.title'),
+    description: getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)))
   };
 
   // Title with course name and get started button
@@ -81,13 +83,15 @@ PlaylistPage.propTypes = {
   // mapStateToProps
   lessonsByLevel: PropTypes.object.isRequired,
   playlists: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  language: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state, {params}) => ({
   lessonsByLevel: getLessonsByLevel(state, params.course),
   playlists: getPlaylists(state, params.course),
-  t: getTranslator(state)
+  t: getTranslator(state),
+  language: state.language
 });
 
 export default connect(
