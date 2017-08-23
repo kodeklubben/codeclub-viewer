@@ -39,10 +39,11 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t, language}) => {
     <CourseInfo courseName={params.course}/>;
 
   const coursePath = params.course.replace(/ /g, '_').toLowerCase();
+  const descriptionContent = getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
 
   const meta = {
     title: capitalize(params.course) + ' | ' + t('meta.title'),
-    description: getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)))
+    description: descriptionContent.substring(descriptionContent.indexOf('>') + 1)
   };
 
   // Title with course name and get started button
