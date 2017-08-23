@@ -16,8 +16,7 @@ import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
-import ReadmeButton from './ReadmeButton';
-import LessonButton from './LessonButton';
+import LessonOrReadmeButton from './LessonOrReadmeButton';
 import ResetButton from './ResetButton';
 
 const renderToggleButtons = () => {
@@ -48,7 +47,7 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, checkboxes, params, lesson} = this.props;
+    const {t, path, lessons, checkboxes, params, lesson} = this.props;
     const title = lesson.frontmatter.title || params.file;
     const level = lesson.frontmatter.level || 0;
     const authorName = lesson.frontmatter.author || '';
@@ -59,8 +58,7 @@ const Lesson = React.createClass({
     const translator = translatorName ?
         <p><i>{t('lessons.translatedby')} <MarkdownRenderer src={translatorName} inline={true} /></i></p> :
         null;
-    const instructionButton = isReadme ? <LessonButton {...{path, lessons, t}}/> :
-      isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
+    const instructionButton = <LessonOrReadmeButton {...{path, lessons, t}}/>;
     const resetButton = anyCheckboxTrue(checkboxes) === true ?
       <ResetButton {...{path}}/> : null;
     return (
@@ -97,9 +95,7 @@ Lesson.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
   lessons: PropTypes.object.isRequired,
-  isReadme: PropTypes.bool.isRequired,
   checkboxes: PropTypes.object,
 
   // mapDispatchToProps
@@ -109,9 +105,7 @@ Lesson.propTypes = {
 
 const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
-  isStudentMode: state.isStudentMode,
   lessons: state.lessons,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
   checkboxes: state.checkboxes[createCheckboxesKey(path)] || {}
 });
 
