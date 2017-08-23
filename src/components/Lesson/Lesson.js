@@ -35,9 +35,12 @@ const rememberLastLesson = (path, setLastLesson) => {
   setLastLesson(lessonPath);
 };
 
-const createMarkup = (lessonContent) => (
-  {__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))}
-);
+const createMarkup = (lessonContent) => {
+  if (typeof document !== 'undefined') {
+    return ({__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))});
+  }
+  return;
+};
 
 const Lesson = React.createClass({
   componentDidMount() {
