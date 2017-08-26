@@ -6,9 +6,9 @@ const getLessonFrontmatter = (state, {course, lesson, file}) => {
   return isReadme ? context.readmeContext(lessonPath).frontmatter : lessons[lessonPath];
 };
 
-export const getTitleForBreadCrumb = (state, params) => getLessonFrontmatter(state, params).title || '';
+export const getTitle = (state, params) => getLessonFrontmatter(state, params).title || '';
 
-export const getLevelForBreadCrumb = (state, params) => getLessonFrontmatter(state, params).level || 0;
+export const getLevel = (state, params) => getLessonFrontmatter(state, params).level || 0;
 
 export const getCourseIcon = (state, {course}) =>
   course ?

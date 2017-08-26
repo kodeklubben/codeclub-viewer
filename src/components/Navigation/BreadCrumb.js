@@ -6,7 +6,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
-import {getTitleForBreadCrumb, getLevelForBreadCrumb, getCourseIcon} from '../../selectors/breadcrumb';
+import {getTitle, getLevel, getCourseIcon} from '../../selectors/frontmatter';
 
 const BreadCrumb = ({params, title, level, courseIcon}) => {
   const {course, lesson, file} = params;
@@ -20,7 +20,7 @@ const BreadCrumb = ({params, title, level, courseIcon}) => {
     </NavLink> : null;
   const lessonLink = course && lesson && file ?
     <NavLink to={`/${course}/${lesson}/${file}`} className={styles.lessonLink}>
-      <LevelIcon level={level}/>
+      <LevelIcon {...{level}}/>
       <span className={styles.lesson}>{title}</span>
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
@@ -47,8 +47,8 @@ BreadCrumb.propTypes = {
 };
 
 const mapStateToProps = (state, {params}) => ({
-  title: getTitleForBreadCrumb(state, params),
-  level: getLevelForBreadCrumb(state, params),
+  title: getTitle(state, params),
+  level: getLevel(state, params),
   courseIcon: getCourseIcon(state, params),
 });
 
