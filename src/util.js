@@ -159,34 +159,6 @@ const getReadmePath = (readmeContext, language, path) => {
   return '';
 };
 
-export const getTitleForBreadCrumb = (params, lessons, context) => {
-  const {course, lesson, file} = params;
-  const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
-  const isReadme = (file && /README(_[a-z]{2})?/.test(file));
-  let title = '';
-  if (isReadme) {
-    title = context.readmeContext(lessonPath).frontmatter.title;
-  }
-  else {
-    title = lessonPath ? lessons[lessonPath].title : title;
-  }
-  return title;
-};
-
-export const getLevelForBreadCrumb = (params, lessons, context) => {
-  const {course, lesson, file} = params;
-  const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
-  const isReadme = (file && /README(_[a-z]{2})?/.test(file));
-  let level = 0;
-  if (isReadme) {
-    level = context.readmeContext(lessonPath).frontmatter.level;
-  }
-  else {
-    level = lessonPath ? lessons[lessonPath].level : level;
-  }
-  return level;
-};
-
 /**
  * Fix invalid tags
  * @param {Object} tags

@@ -5,22 +5,23 @@ import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {capitalize, getTitleForBreadCrumb, getLevelForBreadCrumb} from '../../util';
+import {capitalize} from '../../util';
+import {getTitleForBreadCrumb, getLevelForBreadCrumb, getCourseIcon} from '../../selectors/breadcrumb';
 
-const BreadCrumb = ({params, lessons, context}) => {
+const BreadCrumb = ({params, title, level, courseIcon}) => {
   const {course, lesson, file} = params;
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
   const courseLink = course ?
     <NavLink to={`/${course}`} className={styles.lessonLink}>
-      <img className={styles.courseIcon} src={context.iconContext('./' + course + '/logo-black.png')}/>
+      <img className={styles.courseIcon} src={courseIcon}/>
       <span className={styles.lesson}>{capitalize(course)}</span>
     </NavLink> : null;
   const lessonLink = course && lesson && file ?
     <NavLink to={`/${course}/${lesson}/${file}`} className={styles.lessonLink}>
-      <LevelIcon level={getLevelForBreadCrumb(params, lessons, context)}/>
-      <span className={styles.lesson}>{getTitleForBreadCrumb(params, lessons, context)}</span>
+      <LevelIcon level={level}/>
+      <span className={styles.lesson}>{title}</span>
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
     {homeLink}
@@ -37,16 +38,18 @@ BreadCrumb.propTypes = {
     course: PropTypes.string,
     lesson: PropTypes.string,
     file: PropTypes.string
-  }),
+  }).isRequired,
 
   // mapStateToProps
-  lessons: PropTypes.object.isRequired,
-  context: PropTypes.object.isRequired
+  title: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
+  courseIcon: PropTypes.string,
 };
 
 const mapStateToProps = (state, {params}) => ({
-  lessons: state.lessons,
-  context: state.context
+  title: getTitleForBreadCrumb(state, params),
+  level: getLevelForBreadCrumb(state, params),
+  courseIcon: getCourseIcon(state, params),
 });
 
 export default connect(
