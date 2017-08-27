@@ -14,6 +14,7 @@ import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {removeHtmlFileEnding, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
+import {getTitle, getLevel, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
 import LessonOrReadmeButton from './LessonOrReadmeButton';
@@ -50,11 +51,7 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   render() {
-    const {t, path, lessons, checkboxes, params, lesson} = this.props;
-    const title = lesson.frontmatter.title || params.file;
-    const level = lesson.frontmatter.level || 0;
-    const authorName = lesson.frontmatter.author || '';
-    const translatorName = lesson.frontmatter.translator || '';
+    const {t, path, lessons, checkboxes, params, lesson, title, level, authorName, translatorName} = this.props;
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> :
       null;
@@ -62,8 +59,7 @@ const Lesson = React.createClass({
         <p><i>{t('lessons.translatedby')} <MarkdownRenderer src={translatorName} inline={true} /></i></p> :
         null;
     const instructionButton = <LessonOrReadmeButton {...{path, lessons, t}}/>;
-    const resetButton = anyCheckboxTrue(checkboxes) === true ?
-      <ResetButton {...{path}}/> : null;
+    const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -92,7 +88,6 @@ Lesson.propTypes = {
     file: PropTypes.string.isRequired
   }).isRequired,
   lesson: PropTypes.shape({
-    frontmatter: PropTypes.object,
     content: PropTypes.string
   }),
 
@@ -100,16 +95,24 @@ Lesson.propTypes = {
   t: PropTypes.func.isRequired,
   lessons: PropTypes.object.isRequired,
   checkboxes: PropTypes.object,
+  title: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
+  authorName: PropTypes.string.isRequired,
+  translatorName: PropTypes.string.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
   setLastLesson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, {path}) => ({
+const mapStateToProps = (state, {path, params}) => ({
   t: getTranslator(state),
   lessons: state.lessons,
-  checkboxes: state.checkboxes[createCheckboxesKey(path)] || {}
+  checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
+  title: getTitle(state, params),
+  level: getLevel(state, params),
+  authorName: getAuthorName(state, params),
+  translatorName: getTranslatorName(state, params)
 });
 
 const mapDispatchToProps = {

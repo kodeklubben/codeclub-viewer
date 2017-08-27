@@ -14,3 +14,7 @@ export const getCourseIcon = (state, {course}) =>
   course ?
     state.context.iconContext('./' + course + '/logo-black.png') :
     null;
+
+export const getAuthorName = (state, params) => getLessonFrontmatter(state, params).author || '';
+
+export const getTranslatorName = (state, params) => getLessonFrontmatter(state, params).translator || '';

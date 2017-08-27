@@ -8,7 +8,8 @@ const LessonOrReadmeButton = ({path, lessons, t, isReadme, isStudentMode}) => {
   const lessonPath = '/' + path;
   const contextPath = './' + path + '.md';
   const buttonPath = isReadme ?
-    getReadmepathFromLessonpath(lessons, lessonPath) : (lessons[contextPath] || {}).readmePath;
+    getReadmepathFromLessonpath(lessons, lessonPath) :
+    (lessons[contextPath] || {}).readmePath;
   const buttonText= isReadme ? t('lessons.tolesson') : t('lessons.toteacherinstruction');
   const bsStyle = 'guide';
   const bsSize = 'small';

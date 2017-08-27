@@ -79,6 +79,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     res[path] = {
       title: lessonFrontmatter.title || '',
       author: lessonFrontmatter.author || '',
+      translator: lessonFrontmatter.translator || '',
       level: lessonFrontmatter.level,
       indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
       external: lessonFrontmatter.external || '',
