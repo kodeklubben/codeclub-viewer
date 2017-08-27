@@ -6,9 +6,7 @@ import {getTranslator} from '../../selectors/translate';
 import {getReadmepathFromLessonpath} from '../../util';
 import InstructionButton from './InstructionButton';
 
-const LessonButton = ({path, lessons, t}) => {
-  const lessonPath = '/' + path;
-  const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
+const LessonButton = ({buttonPath, t}) => {
   const buttonText= t('lessons.tolesson');
   const bsSize = 'small';
   const className = styles.buttonMargin;
@@ -16,17 +14,14 @@ const LessonButton = ({path, lessons, t}) => {
 };
 
 LessonButton.propTypes = {
-  // ownProps
-  path: PropTypes.string.isRequired,
-
   // mapStateToProps
-  lessons: PropTypes.object.isRequired,
+  buttonPath: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
-  lessons: state.lessons,
+  buttonPath: getReadmepathFromLessonpath(state.lessons, '/' + path)
 });
 
 export default connect(

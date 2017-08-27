@@ -38,10 +38,10 @@ const rememberLastLesson = (path, setLastLesson) => {
 };
 
 const createMarkup = (lessonContent) => {
+  // if (typeof document === 'undefined') do nothing server-side
   if (typeof document !== 'undefined') {
     return ({__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))});
   }
-  return;
 };
 
 const Lesson = React.createClass({
@@ -52,8 +52,8 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   render() {
-    const {t, path, checkboxes, params, lesson, title, level, authorName,
-      translatorName, isReadme, isStudentMode} = this.props;
+    const {path, params, lesson,
+      checkboxes, t, title, level, authorName, translatorName, isReadme, isStudentMode} = this.props;
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
