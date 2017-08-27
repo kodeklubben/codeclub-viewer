@@ -14,7 +14,7 @@ const ReadmeButton = ({buttonPath, t}) => {
 
 ReadmeButton.propTypes = {
   // mapStateToProps
-  buttonPath: PropTypes.string.isRequired,
+  buttonPath: PropTypes.string,
   t: PropTypes.func.isRequired
 };
 

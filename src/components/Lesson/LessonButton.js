@@ -15,7 +15,7 @@ const LessonButton = ({buttonPath, t}) => {
 
 LessonButton.propTypes = {
   // mapStateToProps
-  buttonPath: PropTypes.string.isRequired,
+  buttonPath: PropTypes.string,
   t: PropTypes.func.isRequired
 };
 
