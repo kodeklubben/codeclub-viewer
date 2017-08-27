@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
@@ -11,6 +10,7 @@ import {getTranslator} from '../../selectors/translate';
 import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import TooltipComponent from '../TooltipComponent';
+import InstructionButton from '../Lesson/InstructionButton';
 
 const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
   const levelIcon = <LevelIcon level={lesson.level}/>;
@@ -22,12 +22,8 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     </div> :
     null;
 
-  const instructionBtn = !isStudentMode && lesson.readmePath ?
-    <LinkContainer to={lesson.readmePath}>
-      <Button componentClass="div" className={styles.instructionBtn} bsStyle="guide" bsSize="xs">
-        {t('playlist.instructionbutton')}
-      </Button>
-    </LinkContainer>
+  const instructionButton = !isStudentMode ? <InstructionButton className={styles.instructionBtn}
+    buttonPath={lesson.readmePath} buttonText={t('lessons.toteacherinstruction')} bsSize='xs'/>
     : null;
 
   const tooltipContent = getLessonIntro(lesson.path.slice(1));
@@ -43,7 +39,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
         {levelIcon}
         <div className={styles.title}>{lesson.title}</div>
         &nbsp;<Glyphicon glyph="new-window"/>
-        {instructionBtn}
+        {instructionButton}
       </ListGroupItem>
       :
       <LinkContainer to={lesson.path}>
@@ -52,7 +48,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
           {levelIcon}
           <div className={styles.title}>{lesson.title}</div>
           {progress}
-          {instructionBtn}
+          {instructionButton}
         </ListGroupItem>
       </LinkContainer>}
     </TooltipComponent>
