@@ -32,12 +32,14 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
     null;
 
+  const title = <div className={styles.title}>{lesson.title}</div>;
+
   return (
     <TooltipComponent id={lesson.title} tooltipContent={tooltipContent}>
       {lesson.external ?
       <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
         {levelIcon}
-        <div className={styles.title}>{lesson.title}</div>
+        {title}
         &nbsp;<Glyphicon glyph="new-window"/>
         {instructionButton}
       </ListGroupItem>
@@ -46,7 +48,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
         <ListGroupItem className={styles.row}>
           {progressBar}
           {levelIcon}
-          <div className={styles.title}>{lesson.title}</div>
+          {title}
           {progress}
           {instructionButton}
         </ListGroupItem>
