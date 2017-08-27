@@ -53,12 +53,8 @@ const Lesson = React.createClass({
   render() {
     const {t, path, lessons, checkboxes, params, lesson, title, level, authorName, translatorName} = this.props;
     const author = authorName ?
-      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> :
-      null;
-    const translator = translatorName ?
-        <p><i>{t('lessons.translatedby')} <MarkdownRenderer src={translatorName} inline={true} /></i></p> :
-        null;
-    const instructionButton = <LessonOrReadmeButton {...{path, lessons, t}}/>;
+      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
+    const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
     const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
@@ -70,7 +66,7 @@ const Lesson = React.createClass({
           {author}
           {translator}
           {resetButton}
-          {instructionButton}
+          <LessonOrReadmeButton {...{path, lessons}}/>
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
           <Row>
             <ImprovePage courseLessonFileProp={params}/>
