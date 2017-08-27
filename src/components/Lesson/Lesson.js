@@ -17,7 +17,8 @@ import {removeHtmlFileEnding, setCheckboxes, anyCheckboxTrue, createCheckboxesKe
 import {getTitle, getLevel, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
-import LessonOrReadmeButton from './LessonOrReadmeButton';
+import LessonButton from './LessonButton';
+import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
 
 const renderToggleButtons = () => {
@@ -51,11 +52,14 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   render() {
-    const {t, path, lessons, checkboxes, params, lesson, title, level, authorName, translatorName} = this.props;
+    const {t, path, checkboxes, params, lesson, title, level, authorName,
+      translatorName, isReadme, isStudentMode} = this.props;
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
     const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
+    const instructionButton = isReadme ? <LessonButton {...{path}}/> :
+      isStudentMode ? null : <ReadmeButton {...{path}}/>;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -66,7 +70,7 @@ const Lesson = React.createClass({
           {author}
           {translator}
           {resetButton}
-          <LessonOrReadmeButton {...{path, lessons}}/>
+          {instructionButton}
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
           <Row>
             <ImprovePage courseLessonFileProp={params}/>
@@ -89,12 +93,13 @@ Lesson.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  lessons: PropTypes.object.isRequired,
   checkboxes: PropTypes.object,
   title: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
   authorName: PropTypes.string.isRequired,
   translatorName: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
+  isStudentMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -103,12 +108,13 @@ Lesson.propTypes = {
 
 const mapStateToProps = (state, {path, params}) => ({
   t: getTranslator(state),
-  lessons: state.lessons,
   checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
   title: getTitle(state, params),
   level: getLevel(state, params),
   authorName: getAuthorName(state, params),
-  translatorName: getTranslatorName(state, params)
+  translatorName: getTranslatorName(state, params),
+  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
+  isStudentMode: state.isStudentMode
 });
 
 const mapDispatchToProps = {
