@@ -6,7 +6,7 @@ const InstructionButton = ({buttonPath, buttonText, className, bsSize}) => {
   const bsStyle = 'guide';
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
-      <Button {...{className, bsStyle, bsSize}}>
+      <Button componentClass='div' {...{className, bsStyle, bsSize}}>
         {buttonText}
       </Button>
     </LinkContainer> :

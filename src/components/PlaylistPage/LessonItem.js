@@ -23,7 +23,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     null;
 
   const instructionButton = !isStudentMode ? <InstructionButton className={styles.instructionBtn}
-    buttonPath={lesson.readmePath} buttonText={t('lessons.toteacherinstruction')} bsSize='xs'/>
+    buttonPath={lesson.readmePath} buttonText={t('playlist.instructionbutton')} bsSize='xs'/>
     : null;
 
   const tooltipContent = getLessonIntro(lesson.path.slice(1));
