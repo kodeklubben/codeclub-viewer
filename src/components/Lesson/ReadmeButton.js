@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './Lesson.scss';
+import styles from './ReadmeButton.scss';
 import {getTranslator} from '../../selectors/translate';
-import InstructionButton from './InstructionButton';
+import InstructionButton from '../InstructionButton';
 
 const ReadmeButton = ({buttonPath, t}) => {
   const buttonText= t('lessons.toteacherinstruction');

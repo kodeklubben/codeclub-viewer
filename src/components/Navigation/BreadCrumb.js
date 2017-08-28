@@ -6,7 +6,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
-import {getTitle, getLevel, getCourseIcon} from '../../selectors/frontmatter';
+import {getTitle, getLevel} from '../../selectors/frontmatter';
 
 const BreadCrumb = ({params, title, level, courseIcon}) => {
   const {course, lesson, file} = params;
@@ -49,7 +49,7 @@ BreadCrumb.propTypes = {
 const mapStateToProps = (state, {params}) => ({
   title: getTitle(state, params),
   level: getLevel(state, params),
-  courseIcon: getCourseIcon(state, params),
+  courseIcon: params.course ? state.context.iconContext('./' + params.course + '/logo-black.png') : null
 });
 
 export default connect(

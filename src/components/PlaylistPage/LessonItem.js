@@ -10,7 +10,7 @@ import {getTranslator} from '../../selectors/translate';
 import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import TooltipComponent from '../TooltipComponent';
-import InstructionButton from '../Lesson/InstructionButton';
+import InstructionButton from '../InstructionButton';
 
 const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
   const levelIcon = <LevelIcon level={lesson.level}/>;
