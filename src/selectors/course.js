@@ -1,9 +1,10 @@
 import {createSelector} from 'reselect';
 import {getFilteredAndIndexedLessons} from './lesson';
-import {capitalize} from '../util';
+import {capitalize, tagsMatchFilter, cleanseTags} from '../util';
 
 const getCourseContext = (state) => state.context.courseContext;
 const getIconContext = (state) => state.context.iconContext;
+const getFilter = (state) => state.filter;
 
 // Creates a list of courses with lessons that have tags matching the filter
 export const getFilteredCourses = createSelector(
@@ -29,21 +30,22 @@ export const getFilteredCourses = createSelector(
   }
 );
 
-/*01.07.17 - Removed testing on filter, as courses should no longer be tagged*/
 export const getFilteredExternalCourses = createSelector(
-  [getCourseContext, getIconContext],
-  (courseContext, iconContext) => {
+  [getCourseContext, getIconContext, getFilter],
+  (courseContext, iconContext, filter = {}) => {
     return courseContext.keys().reduce((res, path) => {
       const coursePath = path.slice(0, path.indexOf('/', 2));
       const fm = courseContext(path).frontmatter;
-      if (fm.external != null) {
+      if (fm.external !== undefined) {
         const course = {
+          language: fm.language,
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
-          tags: {}
+          tags: fm.tags == null ? {} : cleanseTags(fm.tags)
         };
-        return {...res, [fm.title]: course};
+        const tags = Object.assign({language: [course.language]}, course.tags);
+        return tagsMatchFilter(tags, filter) ? {...res, [fm.title]: course} : res;
       }
       return res;
     }, {});
