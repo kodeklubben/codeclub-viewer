@@ -38,13 +38,12 @@ export const getFilteredExternalCourses = createSelector(
       const fm = courseContext(path).frontmatter;
       if (fm.external !== undefined) {
         const course = {
-          language: fm.language,
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
           tags: fm.tags == null ? {} : cleanseTags(fm.tags)
         };
-        const tags = Object.assign({language: [course.language]}, course.tags);
+        const tags = Object.assign({language: [fm.language]}, course.tags);
         return tagsMatchFilter(tags, filter) ? {...res, [fm.title]: course} : res;
       }
       return res;

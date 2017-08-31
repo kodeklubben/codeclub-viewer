@@ -12,7 +12,7 @@ const getFilter = (state) => state.filter;
  * Creates an object containing lessons that have tags matching the filter
  * Input props: courseName (string, optional)
  */
-export const getFilteredLessons = createSelector(
+const getFilteredLessons = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
 
@@ -43,7 +43,7 @@ export const getFilteredAndIndexedLessons = createSelector(
  * Creates an object containing lessons that have tags matching the filter
  * where the filter is considered as having all OR-tags selected
  */
-export const getFilteredLessonsOrTagsSelected = createSelector(
+const getFilteredLessonsOrTagsSelected = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
     //const orTaggedGroups = getOrTaggedGroups();
@@ -75,7 +75,7 @@ export const getFilteredLessonsOrTagsSelected = createSelector(
  * Creates an object containing indexed lessons that have tags matching the filter
  * where the filter is considered as having all OR-tags selected
  */
-export const getFilteredAndIndexedLessonsOrTagsSelected = createSelector(
+const getFilteredAndIndexedLessonsOrTagsSelected = createSelector(
   [getFilteredLessonsOrTagsSelected],
   (filteredLessons = {}) => {
     return Object.keys(filteredLessons).reduce((res, lessonPath) => {
