@@ -12,7 +12,7 @@ const getFilter = (state) => state.filter;
  * Creates an object containing lessons that have tags matching the filter
  * Input props: courseName (string, optional)
  */
-const getFilteredLessons = createSelector(
+export const getFilteredLessons = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
 
