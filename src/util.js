@@ -79,6 +79,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     res[path] = {
       title: lessonFrontmatter.title || '',
       author: lessonFrontmatter.author || '',
+      translator: lessonFrontmatter.translator || '',
       level: lessonFrontmatter.level,
       indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
       external: lessonFrontmatter.external || '',
@@ -311,6 +312,30 @@ export function createCheckboxesKey(path) {
   path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
   return 'checkboxes_' + path;
 }
+
+export const setCheckboxes = (path, checkboxes, setCheckbox) => {
+  const labels = [...document.getElementsByTagName('label')];
+  for (let label of labels) {
+    const input = document.getElementById(label.htmlFor);
+    if (input && input.type === 'checkbox') {
+      let hash = hashCode(label.textContent);
+      input.checked = !!checkboxes[hash];
+      setCheckbox(path, hash, !!checkboxes[hash]);
+      input.onclick = (e) => {
+        setCheckbox(path, hash, !!e.target.checked);
+      };
+    }
+  }
+};
+
+export const anyCheckboxTrue = (checkboxes) => {
+  for (let i of Object.keys(checkboxes)) {
+    if (checkboxes[i] === true) {
+      return true;
+    }
+  }
+  return false;
+};
 
 /**
  *
