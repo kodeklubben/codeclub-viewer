@@ -43,7 +43,7 @@ export const getFilteredAndIndexedLessons = createSelector(
  * Creates an object containing lessons that have tags matching the filter
  * where the filter is considered as having all OR-tags selected
  */
-const getFilteredLessonsOrTagsSelected = createSelector(
+export const getFilteredLessonsOrTagsSelected = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
     //const orTaggedGroups = getOrTaggedGroups();
@@ -75,7 +75,7 @@ const getFilteredLessonsOrTagsSelected = createSelector(
  * Creates an object containing indexed lessons that have tags matching the filter
  * where the filter is considered as having all OR-tags selected
  */
-const getFilteredAndIndexedLessonsOrTagsSelected = createSelector(
+export const getFilteredAndIndexedLessonsOrTagsSelected = createSelector(
   [getFilteredLessonsOrTagsSelected],
   (filteredLessons = {}) => {
     return Object.keys(filteredLessons).reduce((res, lessonPath) => {
