@@ -27,7 +27,7 @@ export function getTags() {
 function extractTags(context) {
   return (context.keys()).reduce((res, path) => {
     const fm = context(path).frontmatter;
-    const tags = cleanseTags(fm.tags, true);
+    const tags = fm.indexed === false ? {} : cleanseTags(fm.tags, true);
     return mergeTags(res, tags);
   }, {});
 }
