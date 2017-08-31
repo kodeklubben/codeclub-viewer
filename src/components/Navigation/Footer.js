@@ -11,7 +11,8 @@ const Footer = ({t, isStudentMode}) => {
     oppgaver: 'https://github.com/kodeklubben/oppgaver/',
     kidsakoder: 'http://kidsakoder.no/',
     archive: 'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
-    sponsor: 'http://kidsakoder.no/2015/07/03/kodeklubben-trondheim-utvikler-materiell-i-sommer/',
+    sparebank: 'https://www.sparebank1.no',
+    ibok: 'https://ibok.no/',
     excited: 'http://www.ntnu.edu/web/excited',
     ntnu_idi: 'https://www.ntnu.edu/idi/',
     uio_ifi: 'http://www.mn.uio.no/ifi/',
@@ -42,14 +43,17 @@ const Footer = ({t, isStudentMode}) => {
             <a className={styles.inline} href={url.archive}>{t('footer.downloadZIP')}</a>
         </Row>
         <Row className={styles.center}>
-          <a href={url.sponsor} target="_blank">
+          <a href={url.sparebank} target="_blank">
             <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}/>
           </a>
-          <a href={url.sponsor} target="_blank">
+          <a href={url.ibok} target="_blank">
             <img className={styles.img} src={require('../../assets/graphics/ibok.jpg')}/>
           </a>
           <a href={url.teknograd} target="_blank">
             <img className={styles.img} src={require('../../assets/graphics/teknograd.png')}/>
+          </a>
+          <a href={url.tekna} target="_blank">
+            <img className={styles.img} src={require('../../assets/graphics/tekna.jpg')} />
           </a>
           <a href={url.ntnu_idi} target="_blank">
             <img className={styles.img} src={require('../../assets/graphics/ntnu_idi.png')}/>

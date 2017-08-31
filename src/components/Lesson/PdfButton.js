@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './Lesson.scss';
+import styles from './PdfButton.scss';
 import Button from 'react-bootstrap/lib/Button';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
