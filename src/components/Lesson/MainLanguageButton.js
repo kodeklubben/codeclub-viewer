@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import styles from './Lesson.scss';
+import styles from './MainLanguageButton.scss';
 import {getReadmeForMainLanguage, getLessonForMainLanguage} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 
