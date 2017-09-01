@@ -39,6 +39,8 @@ function extractTags(context) {
  * @returns {Object} mergedTags
  */
 export function mergeTags(tagsA, tagsB){
+  if (Object.keys(tagsA).length === 0) { return tagsB; }
+  if (Object.keys(tagsB).length === 0) { return tagsA; }
   const groups = [...new Set(Object.keys(tagsA).concat(Object.keys(tagsB)))];
   return groups.reduce((res, groupKey) => {
     const tagsFromA = tagsA[groupKey];
