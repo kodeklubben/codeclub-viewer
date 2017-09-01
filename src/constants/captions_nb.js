@@ -62,6 +62,7 @@ export default {
   lessons: {
     writtenby: 'Skrevet av:',
     translatedby: 'Oversatt av:',
+    pdf: 'Last ned',
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
     reset: 'Fjern avkrysninger',
