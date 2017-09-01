@@ -4,6 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getAvailableLessons} from '../../selectors/lesson';
+import {getTagsFromExternalCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
@@ -14,9 +15,10 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, availableLessons, t, availableTagsFromCourses}) => {
   const filterGroups = filterGroupKeys.map(groupKey =>
-    <FilterGroup key={groupKey} availableLessonsForTag={availableLessons} {...{t, groupKey}}/>);
+    <FilterGroup key={groupKey} availableLessonsForTag={availableLessons}
+      {...{t, groupKey, availableTagsFromCourses}}/>);
   const tooltip =
     <Tooltip id="filterhelp">
       <p>{t('filter.tooltip.textline1')}</p>
@@ -59,6 +61,7 @@ LessonFilter.propTypes = {
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
   availableLessons: PropTypes.object.isRequired,
+  availableTagsFromCourses: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired
 };
 
@@ -66,6 +69,7 @@ const mapStateToProps = (state, {courseName}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
   availableLessons: getAvailableLessons(state, courseName),
+  availableTagsFromCourses: getTagsFromExternalCourses(state, courseName),
   t: getTranslator(state)
 });
 

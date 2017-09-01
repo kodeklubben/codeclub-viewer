@@ -50,3 +50,31 @@ export const getFilteredExternalCourses = createSelector(
     }, {});
   }
 );
+
+export const getTagsFromExternalCourses = createSelector(
+  [getFilter, getFilteredExternalCourses],
+  (current_filter = {}, externalCourses = {}) => {
+
+    let availableTagsFromCourses = {};
+
+    Object.keys(current_filter).forEach(groupKey => {
+      const group = current_filter[groupKey];
+      Object.keys(group).forEach(tagKey => {
+        availableTagsFromCourses[tagKey] = 0;
+      });
+    });
+
+    Object.keys(externalCourses).forEach(lessonKey => {
+      const course = externalCourses[lessonKey];
+      Object.keys(availableTagsFromCourses).forEach(tag => {
+        Object.keys(current_filter).forEach((groupKey) => {
+          if ((course.tags[groupKey] || []).indexOf(tag)!== -1){
+            availableTagsFromCourses[tag]++;
+          }
+        });
+      });
+    });
+
+    return availableTagsFromCourses;
+  }
+);

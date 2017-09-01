@@ -12,16 +12,18 @@ import {somethingCheckedInGroup} from '../../selectors/filter';
 
 const FilterGroup = ({
   groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked
+  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, availableTagsFromCourses
 }) => {
   const groupName = translateGroup(t, groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map(key => {
       const onCheck = () => onFilterCheck(groupKey, key);
       const numberOfLessons = availableLessonsForTag[key];
+      const numberOfTagsForCourse = availableTagsFromCourses[key];
       const tagName = translateTag(t, groupKey, key);
       const checked = filterTags[key];
-      return tagName ? <FilterItem {...{key, numberOfLessons, checked, tagName, onCheck}}/> : null;
+      return tagName ? <FilterItem {...{key, numberOfLessons, numberOfTagsForCourse, checked, tagName, onCheck}}/>
+        : null;
     });
 
     const nothingChecked = !somethingChecked;
@@ -54,6 +56,7 @@ FilterGroup.propTypes = {
   groupKey: PropTypes.string,
   availableLessonsForTag: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
+  availableTagsFromCourses: PropTypes.object.isRequired,
 
   // mapStateToProps:
   filterTags: PropTypes.object.isRequired,
