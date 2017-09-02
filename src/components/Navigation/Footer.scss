@@ -8,6 +8,11 @@
   a {
     text-decoration: none;
   }
+
+  @media print {
+    display: none;
+    visibility: visible;
+  }
 }
 
 .containerStudent {

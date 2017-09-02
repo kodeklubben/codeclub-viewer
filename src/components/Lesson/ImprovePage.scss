@@ -9,6 +9,11 @@
 /* Container for improve box */
 .container {
   margin: 10px 30px;
+
+  @media print {
+    display: none;
+    visibility: visible;
+  }
 }
 
 .improvePageBox {
