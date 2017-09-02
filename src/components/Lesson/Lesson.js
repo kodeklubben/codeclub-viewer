@@ -46,17 +46,19 @@ const createMarkup = (lessonContent) => {
   }
 };
 
-const filterTags = (t, tags) => {
-  const tagKeys = Object.keys(tags);
-  let tagContent = '';
-  for (let key in tagKeys) {
-    tagContent += translateGroup(t, tagKeys[key]) + ': ';
-    for (let tag in tags[tagKeys[key]]) {
-      tagContent += (translateTag(t, tagKeys[key], tags[tagKeys[key]][tag]) +
-        ((JSON.parse(tag) ===  (tags[tagKeys[key]].length - 1)) ? '\n' : ', '));
-    }
-  }
-  return tagContent;
+const PrintInfo = ({t, course, tags}) =>
+  <div className={styles.box}>
+    <div>{t('lessons.course')} {capitalize(course)}</div>
+    {Object.keys(tags).map( group =>
+      <div key={group}>
+        {translateGroup(t, group) + ': ' + tags[group].map(tag => translateTag(t, group, tag)).join(', ')}
+      </div>
+    )}
+  </div>;
+PrintInfo.PropTypes = {
+  t: PropTypes.func.isRequired,
+  course: PropTypes.string.isRequired,
+  tags: PropTypes.object.isRequired,
 };
 
 const Lesson = React.createClass({
@@ -75,23 +77,16 @@ const Lesson = React.createClass({
     const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
-    const tagsBox = (
-      <div className={styles.box}>
-        <hr/>
-        <div>{t('lessons.course')} {capitalize(params.course)}</div>
-        <div>{filterTags(t, tags)}</div>
-        <hr/>
-      </div>);
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
-          {tagsBox}
           <h1>
             <LevelIcon {...{level}}/>
             {title}
           </h1>
           {author}
           {translator}
+          <PrintInfo {...{t, course: params.course, tags}}/>
           <PrintButton/>
           {resetButton}
           {instructionButton}
@@ -109,7 +104,8 @@ Lesson.propTypes = {
   // ownProps
   path: PropTypes.string,
   params: PropTypes.shape({
-    file: PropTypes.string.isRequired
+    file: PropTypes.string.isRequired,
+    course: PropTypes.string.isRequired,
   }).isRequired,
   lesson: PropTypes.shape({
     content: PropTypes.string
