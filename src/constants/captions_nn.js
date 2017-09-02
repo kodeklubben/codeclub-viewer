@@ -63,6 +63,8 @@ export default {
     writtenby: 'Skrevet av:',
     translatedby: 'Oversatt av:',
     course: 'Kurs:',
+    language: 'Språk:',
+    filter: 'Filter:',
     print: 'Skriv ut',
     toteacherinstruction: 'Til lærarrettleiing',
     tolesson: 'Til oppgåve',
