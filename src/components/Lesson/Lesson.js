@@ -14,8 +14,8 @@ import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {capitalize, removeHtmlFileEnding,
-  setCheckboxes, anyCheckboxTrue, createCheckboxesKey, translateTag} from '../../util';
-import {getTitle, getLevel, getLessonLanguage, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
+  setCheckboxes, anyCheckboxTrue, createCheckboxesKey, translateGroup, translateTag} from '../../util';
+import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
 import LessonButton from './LessonButton';
@@ -55,19 +55,19 @@ const Lesson = React.createClass({
   },
   render() {
     const {path, params, lesson,
-      checkboxes, t, title, level, lessonLanguage, authorName, translatorName, isReadme, isStudentMode} = this.props;
+      checkboxes, t, title, level, tags, authorName, translatorName, isReadme, isStudentMode} = this.props;
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
     const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
+    const tagsKeys = Object.keys(tags);
     const tagsBox = (
       <div className={styles.box}>
         <hr/>
         <p>{t('lessons.course')} {capitalize(params.course)}</p>
-        <p>{t('lessons.language')} {translateTag(t, 'language', lessonLanguage)}</p>
-        <p>{t('lessons.filter')} {'TAGS'}</p>
+        <p>{translateGroup(t, tagsKeys[0]) + ': '}{translateTag(t, tagsKeys[0], tags[tagsKeys[0]][0])}</p>
         <hr/>
       </div>);
     return (
@@ -108,7 +108,7 @@ Lesson.propTypes = {
   checkboxes: PropTypes.object,
   title: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
-  lessonLanguage: PropTypes.string.isRequired,
+  tags: PropTypes.object.isRequired,
   authorName: PropTypes.string.isRequired,
   translatorName: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
@@ -124,7 +124,7 @@ const mapStateToProps = (state, {path, params}) => ({
   checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
   title: getTitle(state, params),
   level: getLevel(state, params),
-  lessonLanguage: getLessonLanguage(state, params),
+  tags: getTags(state, params),
   authorName: getAuthorName(state, params),
   translatorName: getTranslatorName(state, params),
   isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
