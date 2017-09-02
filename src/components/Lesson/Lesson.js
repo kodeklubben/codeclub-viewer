@@ -20,6 +20,7 @@ import MarkdownRenderer from '../MarkdownRenderer';
 import LessonButton from './LessonButton';
 import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
+import PrintButton from './PrintButton';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -69,6 +70,7 @@ const Lesson = React.createClass({
           </h1>
           {author}
           {translator}
+          <PrintButton/>
           {resetButton}
           {instructionButton}
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
