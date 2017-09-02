@@ -18,3 +18,11 @@
   // responsive font
   @include responsiveFontSizes;
 }
+
+.box {
+  display: none;
+
+  @media print {
+    display: block;
+  }
+}
