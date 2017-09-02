@@ -8,7 +8,7 @@ import InstructionButton from '../InstructionButton';
 const ReadmeButton = ({buttonPath, t}) => {
   const buttonText= t('lessons.toteacherinstruction');
   const bsSize = 'small';
-  const className = styles.buttonMargin;
+  const className = styles.container;
   return <InstructionButton {...{className, buttonPath, buttonText, bsSize}}/>;
 };
 

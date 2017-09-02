@@ -9,7 +9,7 @@ const PrintButton = ({t}) => {
   const bsStyle = 'danger';
   const bsSize = 'small';
   const onClick = () => window.print();
-  const className = styles.buttonMargin;
+  const className = styles.container;
   return <Button {...{className, bsSize, bsStyle, onClick}}>{t('lessons.print')}</Button>;
 };
 
