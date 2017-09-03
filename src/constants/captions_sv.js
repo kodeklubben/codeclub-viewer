@@ -153,7 +153,6 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    downloadZIP:  'Last ned alle kurs som zip-fil',
     contribute: 'Bidra?'
   },
   404: {

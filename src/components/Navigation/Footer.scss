@@ -32,10 +32,6 @@
   }
 }
 
-.center {
-  text-align: center;
-}
-
 .inline {
   display: inline-block;
   margin: 20px 10px;
@@ -64,8 +60,19 @@
   width: 50%;
 }
 
-.svg:hover,
 .img:hover {
   transform: scale(1.1);
   box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.5);
+}
+
+.github {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  transition: all 0.075s ease-in-out;
+}
+
+.sponsors {
+  text-align: center;
+  margin-top: 20px;
 }

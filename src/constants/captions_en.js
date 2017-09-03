@@ -155,7 +155,6 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    downloadZIP:  'Download all courses as a zip file',
     contribute: 'Contribute?'
   },
   404: {
