@@ -167,6 +167,10 @@ section.challenge {
     padding-top: 10px;
     padding-bottom: 10px;
     margin-top: 0;
+
+    @media print {
+      border-bottom: 2px #00b1da solid;
+    }
   }
   > * {
     padding: 0 20px;
