@@ -17,18 +17,16 @@
 .containerStudent {
   composes: container;
   background-color: $color-green-light;
-  color: $color-green-dark;
   a {
-    color: $color-green-dark;
+    color: black;
   }
 }
 
 .containerTeacher {
   composes: container;
   background-color: $color-blue-light;
-  color: $color-blue-dark;
   a {
-    color: $color-blue-dark;
+    color: black;
   }
 }
 
@@ -69,7 +67,6 @@
   text-align: center;
   font-size: 1.5em;
   font-weight: bold;
-  transition: all 0.075s ease-in-out;
 }
 
 .sponsors {

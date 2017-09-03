@@ -44,20 +44,17 @@ const Footer = ({t, isStudentMode}) => {
 
   return (
       <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-      {isStudentMode ? null :
-        <div>
-          <Row className={styles.github}>
-            <p><a href={url.oppgaver}>{t('footer.contribute')}</a></p>
-          </Row>
-          <Row className={styles.github}>
-            <a href={url.oppgaver}>
-              <img className={styles.svg} src={require('../../assets/graphics/github-teacher.svg')}/>
-            </a>
-          </Row>
-          <Row>
-            <div className={styles.divider}/>
-          </Row>
-        </div>}
+        <Row className={styles.github}>
+          <p><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
+        </Row>
+        <Row className={styles.github}>
+          <a href={url.oppgaver} target="_blank">
+            <img className={styles.svg} src={require('../../assets/graphics/github.png')}/>
+          </a>
+        </Row>
+        <Row>
+          <div className={styles.divider}/>
+        </Row>
         {sponsors}
       </Grid>);
 };
