@@ -3,11 +3,12 @@ import styles from './FilterItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 const FilterItem = ({tagName, checked, onCheck, numberOfLessons, numberOfTagsForCourse}) => {
+  const numberOfLessonsAndExternalCourses = numberOfLessons + numberOfTagsForCourse;
   return (
     <div className="checkbox">
       <label className={styles.label}>
         <input type="checkbox" onChange={onCheck} {...{checked}}/>
-        <span className={(numberOfLessons || numberOfTagsForCourse) ? styles.lessons : styles.noLessons}>
+        <span className={numberOfLessonsAndExternalCourses ? styles.lessons : styles.noLessons}>
           {tagName}
         </span>
       </label>

@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import {getFilteredAndIndexedLessons} from './lesson';
-import {capitalize, tagsMatchFilter, cleanseTags} from '../util';
+import {capitalize, tagsMatchFilter, cleanseTags, getOrTaggedGroups} from '../util';
 
 const getCourseContext = (state) => state.context.courseContext;
 const getIconContext = (state) => state.context.iconContext;
@@ -41,10 +41,9 @@ export const getFilteredExternalCourses = createSelector(
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
-          tags: fm.tags == null ? {} : cleanseTags(fm.tags)
+          tags: fm.tags == null ? {} : cleanseTags(Object.assign({language: [fm.language]}, fm.tags))
         };
-        const tags = Object.assign({language: [fm.language]}, course.tags);
-        return tagsMatchFilter(tags, filter) ? {...res, [fm.title]: course} : res;
+        return tagsMatchFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
       }
       return res;
     }, {});
@@ -55,6 +54,7 @@ export const getTagsFromExternalCourses = createSelector(
   [getFilter, getFilteredExternalCourses],
   (current_filter = {}, externalCourses = {}) => {
 
+    const OrTaggedGroups = getOrTaggedGroups();
     let availableTagsFromCourses = {};
 
     Object.keys(current_filter).forEach(groupKey => {
@@ -67,14 +67,15 @@ export const getTagsFromExternalCourses = createSelector(
     Object.keys(externalCourses).forEach(lessonKey => {
       const course = externalCourses[lessonKey];
       Object.keys(availableTagsFromCourses).forEach(tag => {
-        Object.keys(current_filter).forEach((groupKey) => {
-          if ((course.tags[groupKey] || []).indexOf(tag)!== -1){
+        Object.keys(current_filter).forEach(groupKey => {
+          if (OrTaggedGroups.indexOf(JSON.stringify(groupKey)) === -1 &&
+           (course.tags[groupKey] || []).indexOf(tag) !== -1){
             availableTagsFromCourses[tag]++;
           }
         });
       });
     });
-
+    
     return availableTagsFromCourses;
   }
 );
