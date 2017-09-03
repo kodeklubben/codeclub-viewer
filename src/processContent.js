@@ -49,22 +49,53 @@ const replaceTagObject = (obj) => {
   }
 };
 
+const insertHeaderIcons = (obj) => {
+  const icons = {
+    'check': require('assets/graphics/check.svg'),
+    'flag': require('assets/graphics/flag.svg'),
+    'save': require('assets/graphics/save.svg'),
+  };
+  if (obj.tag === 'h2') {
+    const className = (obj.attrs || {}).class;
+    if (Object.keys(icons).indexOf(className) !== -1) {
+      return {
+        ...obj,
+        content: [
+          {
+            tag: 'img',
+            attrs: { src: icons[className] }
+          },
+          ...obj.content
+        ]
+      };
+    }
+  }
+  return obj;
+};
+
+const replaceClass = (obj, styles) => {
+  let newObj = {};
+  for (let k in obj) {
+    if (obj.hasOwnProperty(k)) {
+      if (k === 'class' && obj[k] in styles) {
+        newObj[k] = styles[obj[k]];
+      } else {
+        newObj[k] = replaceClassRecursively(obj[k], styles);
+      }
+    }
+  }
+  return newObj;
+};
+
 const replaceClassRecursively = (obj, styles) => {
   if (Array.isArray(obj)) {
     return obj.map((val, idx) => replaceClassRecursively(val, styles));
   } else if (typeof obj === 'object' && obj !== null) {
-    const repObj = replaceTagObject(obj);
-    let newObj = {};
-    for (let k in repObj) {
-      if (repObj.hasOwnProperty(k)) {
-        if (k === 'class' && repObj[k] in styles) {
-          newObj[k] = styles[repObj[k]];
-        } else {
-          newObj[k] = replaceClassRecursively(repObj[k], styles);
-        }
-      }
-    }
-    return newObj;
+    let repObj = obj;
+    repObj = replaceTagObject(repObj);
+    repObj = insertHeaderIcons(repObj);
+    repObj = replaceClass(repObj, styles);
+    return repObj;
   } else {
     return obj;
   }
