@@ -12,6 +12,8 @@ export const getLevel = (state, params) => getLessonFrontmatter(state, params).l
 
 export const getTags = (state, params) => getLessonFrontmatter(state, params).tags || {};
 
+export const getLessonLanguage = (state, params) => getLessonFrontmatter(state, params).language || '';
+
 export const getAuthorName = (state, params) => getLessonFrontmatter(state, params).author || '';
 
 export const getTranslatorName = (state, params) => getLessonFrontmatter(state, params).translator || '';

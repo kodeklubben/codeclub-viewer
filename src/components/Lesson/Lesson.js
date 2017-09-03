@@ -15,7 +15,8 @@ import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {capitalize, removeHtmlFileEnding,
   setCheckboxes, anyCheckboxTrue, createCheckboxesKey, translateGroup, translateTag} from '../../util';
-import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
+import {getTitle, getLevel, getTags, getAuthorName,
+  getTranslatorName, getLessonLanguage} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
 import LessonButton from './LessonButton';
@@ -71,14 +72,15 @@ const Lesson = React.createClass({
   },
   render() {
     const {path, params, lesson,
-      checkboxes, t, title, level, tags, authorName, translatorName, isReadme, isStudentMode, language} = this.props;
+      checkboxes, t, title, level, tags, authorName, translatorName,
+      isReadme, isStudentMode, language, lessonLanguage} = this.props;
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
     const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
-    const mainLanguageButton = language === lesson.frontmatter.language ? null :
+    const mainLanguageButton = language === lessonLanguage ? null :
       <MainLanguageButton {...{path}}/>;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
@@ -90,9 +92,9 @@ const Lesson = React.createClass({
           {author}
           {translator}
           <PrintInfo {...{t, course: params.course, tags}}/>
+          {mainLanguageButton}
           <PrintButton/>
           {resetButton}
-          {mainLanguageButton}
           {instructionButton}
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
           <Row>
@@ -126,6 +128,7 @@ Lesson.propTypes = {
   isReadme: PropTypes.bool.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
+  lessonLanguage: PropTypes.string.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -142,7 +145,8 @@ const mapStateToProps = (state, {path, params}) => ({
   translatorName: getTranslatorName(state, params),
   isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
   isStudentMode: state.isStudentMode,
-  language: state.language
+  language: state.language,
+  lessonLanguage: getLessonLanguage(state, params)
 });
 
 const mapDispatchToProps = {

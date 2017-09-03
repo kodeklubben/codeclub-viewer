@@ -9,7 +9,7 @@ import {getTranslator} from '../../selectors/translate';
 
 const MainLanguageButton = ({path, t, isReadme, language}) => {
   const buttonPath = isReadme ? getReadmeForMainLanguage(path, language) : getLessonForMainLanguage(path, language);
-  const className = styles.buttonMargin;
+  const className = styles.container;
   const bsStyle = 'info';
   const bsSize = 'small';
   return buttonPath === null ? null :
