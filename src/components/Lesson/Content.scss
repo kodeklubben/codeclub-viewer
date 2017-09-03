@@ -83,12 +83,14 @@ section.activity {
 section.check {
   // check lists
   h2 {
-    background-image: url(assets/graphics/check.svg);
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
     padding-top: 4px;
     padding-bottom: 9px;
-    padding-left: 50px;
+
+    img {
+      height: 40px;
+      vertical-align: text-bottom;
+      padding-right: 10px;
+    }
   }
 }
 
@@ -122,15 +124,16 @@ section.flag {
   margin-bottom: 20px;
   h2 {
     color: rgb(54, 161, 55);
-    background-image: url(assets/graphics/flag.svg);
-    background-position: 0 10px;
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
     margin-top: 10px;
     margin-bottom: 10px;
     padding-top: 15px;
     padding-bottom: 10px;
-    padding-left: 60px;
+
+    img {
+      height: 40px;
+      vertical-align: text-bottom;
+      padding-right: 10px;
+    }
   }
 }
 
@@ -139,14 +142,15 @@ section.save {
   margin: 20px 0;
   h2 {
     color: rgb(36, 90, 154);
-    background-image: url(assets/graphics/save.svg);
-    background-position: 0 10px;
-    background-size: 40px 40px;
-    background-repeat: no-repeat;
     margin: 0;
     padding-top: 10px;
     padding-bottom: 20px;
-    padding-left: 50px;
+
+    img {
+      height: 40px;
+      vertical-align: text-bottom;
+      padding-right: 10px;
+    }
   }
 }
 
@@ -163,6 +167,10 @@ section.challenge {
     padding-top: 10px;
     padding-bottom: 10px;
     margin-top: 0;
+
+    @media print {
+      border-bottom: 2px #00b1da solid;
+    }
   }
   > * {
     padding: 0 20px;

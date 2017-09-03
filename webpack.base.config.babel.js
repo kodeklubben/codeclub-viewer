@@ -167,13 +167,13 @@ const baseConfig = {
     linkify: true,  // parse URL-like text to links
     langPrefix: '',  // no prefix in class for code blocks
     use: [
-      MarkdownItAnchor,
       MarkdownItAttrs,
       MarkdownItHeaderSections,
       MarkdownItImplicitFigures,
-      [MarkdownItTaskCheckbox, {disabled: false}]
+      MarkdownItAnchor,
+      [MarkdownItTaskCheckbox, {disabled: false}],
     ],
-    highlight
+    highlight,
   },
   plugins: [
     new CopyWebpackPlugin([{

@@ -9,7 +9,7 @@ import InstructionButton from '../InstructionButton';
 const LessonButton = ({buttonPath, t}) => {
   const buttonText= t('lessons.tolesson');
   const bsSize = 'small';
-  const className = styles.buttonMargin;
+  const className = styles.container;
   return <InstructionButton {...{className, buttonPath, buttonText, bsSize}}/>;
 };
 

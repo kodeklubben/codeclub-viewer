@@ -62,6 +62,8 @@ export default {
   lessons: {
     writtenby: 'Written by:',
     translatedby: 'Translated by:',
+    course: 'Course:',
+    print: 'Print',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
