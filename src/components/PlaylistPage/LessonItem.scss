@@ -40,12 +40,9 @@
 
 .glyph {
   font-size: 1.3em;
+  color: black;
 
   &:hover {
     color: $color-gray;
-  }
-
-  &:active {
-    color: black;
   }
 }

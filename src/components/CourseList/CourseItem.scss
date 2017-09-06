@@ -53,4 +53,8 @@ a:link {
 
 .glyph {
   margin: 0 5px;
+
+  &:hover {
+    color: $color-gray;
+  }
 }
