@@ -10,26 +10,22 @@ import TooltipComponent from '../TooltipComponent';
 
 const CourseItem = ({course, t, language}) => {
   const isExternal = course.hasOwnProperty('externalLink');
-
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const introPath = coursePath + '/index' + (isExternal || language === 'nb' ? '' : ('_' + language));
   const tooltipContent = getLessonIntro(introPath);
-
-  const courseItems = isExternal ?
-    <a className={styles.courseItem} href={course.externalLink} target='_blank'>
-      <img className={styles.courseLogo} src={course.iconPath}/>
-      <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
-    </a>
-    :
-    <Link className={styles.courseItem} to={course.path}>
-      <img className={styles.courseLogo} src={course.iconPath}/>
-      <span className={styles.courseName}>{course.name}</span>
-      <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
-    </Link>;
-
   return (
     <TooltipComponent {...{tooltipContent}}>
-      {courseItems}
+      {isExternal ?
+      <a className={styles.courseItem} href={course.externalLink} target='_blank'>
+        <img className={styles.courseLogo} src={course.iconPath}/>
+        <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
+      </a>
+      :
+      <Link className={styles.courseItem} to={course.path}>
+        <img className={styles.courseLogo} src={course.iconPath}/>
+        <span className={styles.courseName}>{course.name}</span>
+        <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
+      </Link>}
     </TooltipComponent>
   );
 };
