@@ -35,7 +35,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
   const title = <div className={styles.title}>{lesson.title}</div>;
 
   return (
-    <TooltipComponent id={lesson.title} tooltipContent={tooltipContent}>
+    <TooltipComponent {...{tooltipContent}}>
       {lesson.external ?
       <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
         {levelIcon}
