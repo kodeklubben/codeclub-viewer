@@ -11,7 +11,7 @@ const ResetButton = ({path, t, setCheckbox}) => {
   const bsStyle = 'warning';
   const bsSize = 'small';
   const onClick = () => setCheckboxes(path, {}, setCheckbox);
-  const className = styles.buttonMargin;
+  const className = styles.container;
   return <Button {...{className, bsSize, bsStyle, onClick}}>{t('lessons.reset')}</Button>;
 };
 

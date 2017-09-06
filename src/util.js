@@ -27,7 +27,7 @@ export function getTags() {
 function extractTags(context) {
   return (context.keys()).reduce((res, path) => {
     const fm = context(path).frontmatter;
-    const tags = cleanseTags(fm.tags, true);
+    const tags = fm.indexed === false ? {} : cleanseTags(fm.tags, true);
     return mergeTags(res, tags);
   }, {});
 }
@@ -39,6 +39,8 @@ function extractTags(context) {
  * @returns {Object} mergedTags
  */
 export function mergeTags(tagsA, tagsB){
+  if (Object.keys(tagsA).length === 0) { return tagsB; }
+  if (Object.keys(tagsB).length === 0) { return tagsA; }
   const groups = [...new Set(Object.keys(tagsA).concat(Object.keys(tagsB)))];
   return groups.reduce((res, groupKey) => {
     const tagsFromA = tagsA[groupKey];
@@ -132,7 +134,7 @@ export function getLessonIntro(lesson) {
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
   }
-  return picture + text;
+  return (picture || '') + (text || '');
 }
 
 ///////////////////////////////////

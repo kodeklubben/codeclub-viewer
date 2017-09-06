@@ -3,8 +3,9 @@ import styles from './TooltipComponent.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import {hashCode} from '../util';
 
-const TooltipComponent = ({id, children, tooltipContent}) => {
+const TooltipComponent = ({children, tooltipContent}) => {
   const createMarkup = () => {
     return {__html: tooltipContent};
   };
@@ -13,7 +14,7 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
   const placement = 'bottom';
   const onClick = (e) => e.preventDefault();
   const overlay =
-    <Tooltip className={styles.tooltip} {...{id}}>
+    <Tooltip id={hashCode(tooltipContent)} className={styles.tooltip}>
       <div dangerouslySetInnerHTML={createMarkup()}/>
     </Tooltip>;
   return (
@@ -25,8 +26,7 @@ const TooltipComponent = ({id, children, tooltipContent}) => {
 
 TooltipComponent.propTypes = {
   // ownProps
-  id: PropTypes.string,
-  children: PropTypes.object,
+  children: PropTypes.node,
   tooltipContent: PropTypes.string
 };
 

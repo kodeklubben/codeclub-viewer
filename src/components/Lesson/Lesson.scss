@@ -18,3 +18,13 @@
   // responsive font
   @include responsiveFontSizes;
 }
+
+.box {
+  display: none;
+  font-style: italic;
+  font-size: 0.75em;
+
+  @media print {
+    display: block;
+  }
+}
