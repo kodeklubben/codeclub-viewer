@@ -12,13 +12,8 @@ const CourseItem = ({course, t, language}) => {
   const isExternal = course.hasOwnProperty('externalLink');
 
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
-  let contentForTooltip = '';
-  if (isExternal) {
-    contentForTooltip = getLessonIntro(coursePath + '/index');
-  }
-  else {
-    contentForTooltip = getLessonIntro(coursePath + '/index' + (language === 'nb' ? '' : ('_' + language)));
-  }
+  const introPath = coursePath + '/index' + (isExternal || language === 'nb' ? '' : ('_' + language));
+  const tooltipContent = getLessonIntro(introPath);
 
   const courseItems = isExternal ?
     <a className={styles.courseItem} href={course.externalLink} target='_blank'>
@@ -32,16 +27,11 @@ const CourseItem = ({course, t, language}) => {
       <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
     </Link>;
 
-  const tooltipContent = contentForTooltip === 'undefined' ? null : contentForTooltip;
-
-  return tooltipContent === contentForTooltip ?
-    <TooltipComponent id={course.name} {...{tooltipContent}}>
+  return (
+    <TooltipComponent {...{tooltipContent}}>
       {courseItems}
     </TooltipComponent>
-    :
-    <div>
-      {courseItems}
-    </div>;
+  );
 };
 
 CourseItem.propTypes = {

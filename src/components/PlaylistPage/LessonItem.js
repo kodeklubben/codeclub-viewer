@@ -26,7 +26,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     buttonPath={lesson.readmePath} buttonText={t('playlist.instructionbutton')} bsSize='xs'/>
     : null;
 
-  const contentForTooltip = getLessonIntro(lesson.path.slice(1));
+  const tooltipContent = getLessonIntro(lesson.path.slice(1));
 
   const progressBar = lesson.level > 0 ?
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
@@ -52,16 +52,11 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
       </ListGroupItem>
     </LinkContainer>;
 
-  const tooltipContent = contentForTooltip === 'undefined' ? null : contentForTooltip;
-
-  return tooltipContent === contentForTooltip ?
-    <TooltipComponent id={lesson.title} {...{tooltipContent}}>
+  return (
+    <TooltipComponent {...{tooltipContent}}>
       {lessonItems}
     </TooltipComponent>
-    :
-    <div>
-      {lessonItems}
-    </div>;
+  );
 };
 
 LessonItem.propTypes = {
