@@ -17,7 +17,7 @@ const LevelNavigation = ({t, levels, isStudentMode}) => {
     return (
       <ListGroupItem key={level} {...{onClick}}>
         <span className={styles.name}>
-          <LevelIcon level={level}/>{t('general.levels.' + level)}
+          <LevelIcon {...{level}}/>{t('general.levels.' + level)}
         </span>
       </ListGroupItem>
     );
