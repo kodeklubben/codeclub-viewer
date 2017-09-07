@@ -34,9 +34,9 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
         </Row>
         <Row>
           <Col>
-            <Col xs={12} sm={3} className={lessonLists.length ? styles.topMargin : null}>{filter}</Col>
             <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
             <Col xs={12} smHidden mdHidden lgHidden>{playlist}</Col>
+            <Col xs={12} sm={3} className={lessonLists.length ? styles.topMargin : null}>{filter}</Col>
             <Col xs={12} sm={9}>
               {lessonLists.length ? lessonLists :
                 <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
