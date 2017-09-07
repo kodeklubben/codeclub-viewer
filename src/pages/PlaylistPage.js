@@ -18,41 +18,25 @@ import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
 const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
-
-  const lessonLists = levels.map(level =>
-    <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
-
+  const lessonLists = levels.map(level => <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
   const filter = <LessonFilter courseName={params.course}/>;
+  const playlist = <PlaylistNavigation {...{playlists}}/>;
+  const jumpTo = <div>{levels.length > 0 ? <LevelNavigation {...{levels}}/> : null}</div>;
+  const courseInfo = <CourseInfo courseName={params.course}/>;
 
-  const playlistsAndLessons =
-    <div>
-      <PlaylistNavigation {...{playlists}}/>
-      {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
-    </div>;
-
-  const jumpTo =
-    <div>
-      {levels.length > 0 ? <LevelNavigation {...{levels}}/> : null}
-    </div>;
-
-  const courseInfo =
-    <CourseInfo courseName={params.course}/>;
-
-  // Title with course name and get started button
   const heading =
     <Row>
-      <Col xs={12} sm={6} smOffset={3}>
-        <h1>{capitalize(params.course)} {t('playlist.lessons')}</h1>
-      </Col>
+      <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
+      <Col xs={12}>{courseInfo}</Col>
     </Row>;
 
   const body =
     <Row>
       <Col>
-        <Col xs={12} smHidden mdHidden lgHidden>{courseInfo}</Col>
         <Col xs={12} sm={3} className={styles.topMargin}>{filter}</Col>
         <Col xs={12} sm={3} smPush={6} className={styles.topMargin}>{jumpTo}</Col>
-        <Col xs={12} sm={6} smPull={3}><Col xsHidden>{courseInfo}</Col>{playlistsAndLessons}</Col>
+        <Col xs={12} smHidden mdHidden lgHidden>{playlist}</Col>
+        <Col xs={12} sm={6} smPull={3}>{lessonLists}</Col>
       </Col>
     </Row>;
 
@@ -60,6 +44,7 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
     <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
       <Grid fluid={true}>
         {heading}
+        <Col xsHidden>{playlist}</Col>
         {body}
       </Grid>
     </DocumentTitle>
