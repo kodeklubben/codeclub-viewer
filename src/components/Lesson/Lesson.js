@@ -4,7 +4,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import DocumentTitle from 'react-document-title';
+import DocumentMeta from 'react-document-meta';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
@@ -13,8 +13,8 @@ import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
-import {capitalize, removeHtmlFileEnding,
-  setCheckboxes, anyCheckboxTrue, createCheckboxesKey, translateGroup, translateTag} from '../../util';
+import {capitalize, removeHtmlFileEnding, setCheckboxes, anyCheckboxTrue,
+  createCheckboxesKey, translateGroup, translateTag, getLessonIntro} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
@@ -71,6 +71,11 @@ const Lesson = React.createClass({
   render() {
     const {path, params, lesson,
       checkboxes, t, title, level, tags, authorName, translatorName, isReadme, isStudentMode} = this.props;
+    const descriptionContent = getLessonIntro(path);
+    const meta = {
+      title: title + ' | ' + t('meta.title'),
+      description: descriptionContent.substring(descriptionContent.indexOf('<p>') + 3)
+    };
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
@@ -78,7 +83,7 @@ const Lesson = React.createClass({
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
     return (
-      <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
+      <DocumentMeta {...meta}>
         <div className={styles.container}>
           <h1>
             <LevelIcon {...{level}}/>
@@ -95,7 +100,7 @@ const Lesson = React.createClass({
             <ImprovePage courseLessonFileProp={params}/>
           </Row>
         </div>
-      </DocumentTitle>
+      </DocumentMeta>
     );
   }
 });
@@ -110,6 +115,7 @@ Lesson.propTypes = {
   lesson: PropTypes.shape({
     content: PropTypes.string
   }),
+  meta: PropTypes.object,
 
   // mapStateToProps
   t: PropTypes.func.isRequired,

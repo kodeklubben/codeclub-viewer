@@ -10,8 +10,11 @@ export default {
       4: 'Expert'
     }
   },
-  title: {
-    codeclub: 'Code club',
+  meta: {
+    title: 'Code club',
+    description: 'On this page you will find many tasks that you can do to teach you programming. ' +
+     'As you can see, there are many different languages. For beginners, we recommend starting with Scratch, ' +
+     'but if you go to junior high school or higher then it will also be nice to start with Python',
   },
   frontpage: {
     courses: 'Courses',
