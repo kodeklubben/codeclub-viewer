@@ -23,33 +23,27 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const playlist = <PlaylistNavigation {...{playlists}}/>;
   const jumpTo = <div>{levels.length > 0 ? <LevelNavigation {...{levels}}/> : null}</div>;
   const courseInfo = <CourseInfo courseName={params.course}/>;
-
-  const heading =
-    <Row>
-      <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
-      <Col xs={12}>{courseInfo}</Col>
-    </Row>;
-
-  const body =
-    <Row>
-      <Col>
-        <Col xs={12} sm={3} className={styles.topMargin}>{filter}</Col>
-        <Col xs={12} sm={3} smPush={6} className={styles.topMargin}>{jumpTo}</Col>
-        <Col xs={12} smHidden mdHidden lgHidden>{playlist}</Col>
-        <Col xs={12} sm={6} smPull={3}>
-          {lessonLists.length ? lessonLists :
-            <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
-          }
-        </Col>
-      </Col>
-    </Row>;
-
   return (
     <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
       <Grid fluid={true}>
-        {heading}
-        <Col xsHidden>{playlist}</Col>
-        {body}
+        <Row>
+          <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
+          <Col xs={12}>{courseInfo}</Col>
+          <Col xsHidden sm={3} className={styles.topMargin}>{jumpTo}</Col>
+          <Col xsHidden sm={9}>{playlist}</Col>
+        </Row>
+        <Row>
+          <Col>
+            <Col xs={12} sm={3} className={styles.topMargin}>{filter}</Col>
+            <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
+            <Col xs={12} smHidden mdHidden lgHidden>{playlist}</Col>
+            <Col xs={12} sm={9}>
+              {lessonLists.length ? lessonLists :
+                <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
+              }
+            </Col>
+          </Col>
+        </Row>
       </Grid>
     </DocumentTitle>
   );
