@@ -11,9 +11,4 @@
 .noMatchingLessons {
   font-size: 1.25em;
   font-weight: bold;
-  margin-top: 70px;
-
-  @media (max-width: $screen-xs-max) {
-    margin-top: 0;
-  }
 }

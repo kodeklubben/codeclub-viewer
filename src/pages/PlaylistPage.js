@@ -29,12 +29,12 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
         <Row>
           <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
           <Col xs={12}>{courseInfo}</Col>
-          <Col xsHidden sm={3} className={styles.topMargin}>{jumpTo}</Col>
-          <Col xsHidden sm={9}>{playlist}</Col>
+          <Col xsHidden sm={3} className={lessonLists.length ? styles.topMargin : null}>{jumpTo}</Col>
+          <Col xsHidden sm={lessonLists.length ? 9 : 12}>{playlist}</Col>
         </Row>
         <Row>
           <Col>
-            <Col xs={12} sm={3} className={styles.topMargin}>{filter}</Col>
+            <Col xs={12} sm={3} className={lessonLists.length ? styles.topMargin : null}>{filter}</Col>
             <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
             <Col xs={12} smHidden mdHidden lgHidden>{playlist}</Col>
             <Col xs={12} sm={9}>
