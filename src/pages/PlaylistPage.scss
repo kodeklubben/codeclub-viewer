@@ -8,6 +8,24 @@
   }
 }
 
+.topMarginFixed {
+  margin-top: 63px;
+  position: fixed;
+
+  @media (max-width: $screen-xs-max) {
+    margin-top: 0;
+    position: static;
+  }
+}
+
+.fixed {
+  position: fixed;
+
+  @media (max-width: $screen-xs-max) {
+    position: static;
+  }
+}
+
 .noMatchingLessons {
   font-size: 1.25em;
   font-weight: bold;

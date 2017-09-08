@@ -5,6 +5,7 @@ import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import AutoAffix from 'react-overlays/lib/AutoAffix';
 import styles from './PlaylistPage.scss';
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
@@ -30,17 +31,26 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
           <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
           <Col xs={12}>{courseInfo}</Col>
         </Row>
+        {Object.keys(playlists).length ?
         <Row>
-          <Col xs={12} sm={3} className={lessonLists.length ? styles.topMargin : null}>{jumpTo}</Col>
           <Col xs={12} sm={lessonLists.length ? 9 : 12}>{playlist}</Col>
+          <Col xsHidden sm={3} className={lessonLists.length ? styles.topMargin : null}>
+            <AutoAffix viewportOffsetTop={15} container={this}>{jumpTo}</AutoAffix>
+          </Col>
         </Row>
+        : null}
         <Row>
+          <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
           <Col xs={12} sm={3} className={lessonLists.length ? styles.topMargin : null}>{filter}</Col>
-          <Col xs={12} sm={9}>
+          <Col xs={12} sm={6}>
             {lessonLists.length ? lessonLists :
               <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
             }
           </Col>
+          {Object.keys(playlists).length ? null :
+          <Col xsHidden sm={3} className={lessonLists.length ? styles.topMargin : null}>
+            <AutoAffix viewportOffsetTop={15} container={this}>{jumpTo}</AutoAffix>
+          </Col>}
         </Row>
       </Grid>
     </DocumentTitle>
