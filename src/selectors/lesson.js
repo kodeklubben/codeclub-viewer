@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {tagsMatchFilter, getOrTaggedGroups} from '../util';
+import {tagsMatchFilter} from '../util';
 
 export const getLessons = (state, courseName = '') => {
   return Object.keys(state.lessons).reduce((res, lessonPath) => {
@@ -82,49 +82,6 @@ export const getFilteredAndIndexedLessonsOrTagsSelected = createSelector(
       const lesson = filteredLessons[lessonPath];
       return lesson.indexed ? {...res, [lessonPath]: lesson} : res;
     }, {});
-  }
-);
-
-/**
- * Creates an object containing number of lessons available in each tag given your current filter
- * Input props: courseName (string, optional)
- */
-export const getAvailableLessons = createSelector(
-  [getFilter, getFilteredAndIndexedLessons, getFilteredAndIndexedLessonsOrTagsSelected],
-  (current_filter = {}, filteredLessons = {}, filteredLessonsOrTagsSelected = {}) => {
-
-    const OrTaggedGroups = getOrTaggedGroups();
-    let availableLessons = {};
-
-    Object.keys(current_filter).forEach(groupKey => {
-      const group = current_filter[groupKey];
-      Object.keys(group).forEach(tagKey => {
-        availableLessons[tagKey] = 0;
-      });
-    });
-
-    Object.keys(filteredLessons).forEach((lessonKey) => {
-      const lesson = filteredLessons[lessonKey];
-      Object.keys(availableLessons).forEach(tag => {
-        Object.keys(current_filter).forEach(groupKey => {
-          if(OrTaggedGroups.indexOf(groupKey) === -1 && (lesson.tags[groupKey] || []).indexOf(tag) !== -1) {
-            availableLessons[tag]++;
-          }
-        });
-      });
-    });
-
-    Object.keys(filteredLessonsOrTagsSelected).forEach((lessonKey) => {
-      const lesson = filteredLessonsOrTagsSelected[lessonKey];
-      Object.keys(availableLessons).forEach(tag => {
-        Object.keys(current_filter).forEach(groupKey => {
-          if (OrTaggedGroups.indexOf(groupKey) !== -1 && (lesson.tags[groupKey] || []).indexOf(tag) !== -1) {
-            availableLessons[tag]++;
-          }
-        });
-      });
-    });
-    return availableLessons;
   }
 );
 

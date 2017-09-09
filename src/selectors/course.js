@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import {getFilteredAndIndexedLessons} from './lesson';
-import {capitalize, tagsMatchFilter, cleanseTags, getOrTaggedGroups} from '../util';
+import {capitalize, tagsMatchFilter, cleanseTags} from '../util';
 
 const getCourseContext = (state) => state.context.courseContext;
 const getIconContext = (state) => state.context.iconContext;
@@ -47,35 +47,5 @@ export const getFilteredExternalCourses = createSelector(
       }
       return res;
     }, {});
-  }
-);
-
-export const getTagsFromExternalCourses = createSelector(
-  [getFilter, getFilteredExternalCourses],
-  (current_filter = {}, externalCourses = {}) => {
-
-    const OrTaggedGroups = getOrTaggedGroups();
-    let availableTagsFromCourses = {};
-
-    Object.keys(current_filter).forEach(groupKey => {
-      const group = current_filter[groupKey];
-      Object.keys(group).forEach(tagKey => {
-        availableTagsFromCourses[tagKey] = 0;
-      });
-    });
-
-    Object.keys(externalCourses).forEach(lessonKey => {
-      const course = externalCourses[lessonKey];
-      Object.keys(availableTagsFromCourses).forEach(tag => {
-        Object.keys(current_filter).forEach(groupKey => {
-          if (OrTaggedGroups.indexOf(JSON.stringify(groupKey)) === -1 &&
-           (course.tags[groupKey] || []).indexOf(tag) !== -1){
-            availableTagsFromCourses[tag]++;
-          }
-        });
-      });
-    });
-    
-    return availableTagsFromCourses;
   }
 );

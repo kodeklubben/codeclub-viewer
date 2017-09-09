@@ -10,19 +10,15 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 
-const FilterGroup = ({
-  groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, availableTagsFromCourses
-}) => {
+const FilterGroup = ({groupKey, t, filterTags, onFilterCheck,
+  collapseFilterGroup, filterGroupsCollapsed, somethingChecked}) => {
   const groupName = translateGroup(t, groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map(key => {
       const onCheck = () => onFilterCheck(groupKey, key);
-      const numberOfLessons = availableLessonsForTag[key];
-      const numberOfTagsForCourse = availableTagsFromCourses[key];
       const tagName = translateTag(t, groupKey, key);
       const checked = filterTags[key];
-      return tagName ? <FilterItem {...{key, numberOfLessons, numberOfTagsForCourse, checked, tagName, onCheck}}/>
+      return tagName ? <FilterItem {...{key, checked, tagName, onCheck}}/>
         : null;
     });
 
@@ -54,9 +50,7 @@ const FilterGroup = ({
 FilterGroup.propTypes = {
   // ownProps:
   groupKey: PropTypes.string,
-  availableLessonsForTag: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
-  availableTagsFromCourses: PropTypes.object.isRequired,
 
   // mapStateToProps:
   filterTags: PropTypes.object.isRequired,
@@ -71,12 +65,12 @@ FilterGroup.propTypes = {
 const mapStateToProps = (state, {groupKey}) => ({
   filterTags: state.filter[groupKey],
   filterGroupsCollapsed: state.filterGroupsCollapsed,
-  somethingChecked: somethingCheckedInGroup(state, groupKey),
+  somethingChecked: somethingCheckedInGroup(state, groupKey)
 });
 
 const mapDispatchToProps = {
   onFilterCheck,
-  collapseFilterGroup,
+  collapseFilterGroup
 };
 
 export default connect(
