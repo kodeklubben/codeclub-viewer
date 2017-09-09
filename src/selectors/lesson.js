@@ -46,7 +46,6 @@ export const getFilteredAndIndexedLessons = createSelector(
 export const getFilteredLessonsOrTagsSelected = createSelector(
   [getFilter, getLessons],
   (filter = {}, lessons = {}) => {
-    //const orTaggedGroups = getOrTaggedGroups();
     let orTaggedFilter = {};
 
     for(const groupKey of Object.keys(filter)){

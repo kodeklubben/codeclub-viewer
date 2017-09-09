@@ -211,31 +211,15 @@ export function fixNonArrayTagList(tagItems) {
 /**
  * Return true only if tags of a lesson contains all the checked tags in the filter
  *
- * @param {Object} lessonTags
- * @param {Object} filter
+ * @param {Object} lessonTags e.g. {topic: ['game'], subject: ['science']}
+ * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
  * @returns {boolean}
  */
 export function tagsMatchFilter(lessonTags, filter) {
-  // lessonTags is e.g. {topic: ['game'], subject: ['science']}
-  // filter is e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
+  const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
+  const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
 
-  // Getting pre-defined OR-tagged groups
-  const OrTaggedGroups = getOrTaggedGroups();
-
-  // Sorts out which OR-tagged groups that have corresponding lessons
-  let OrTags = {};
-  OrTaggedGroups.map(groupKey => {
-    OrTags[groupKey] = filter[groupKey] ? Object.keys(filter[groupKey]) : [];
-  });
-  const OrTagsAsArray = Object.keys(OrTags);
-
-  // Keeps track of which tags for each OR-tagged group that is tagged
-  let checkedOrTags = {};
-  OrTagsAsArray.map(groupKey => {
-    checkedOrTags[groupKey] = OrTags[groupKey].filter(tag => filter[groupKey][tag]);
-  });
-
-  for (const groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
+  for (let groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
     const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
     const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
@@ -245,14 +229,14 @@ export function tagsMatchFilter(lessonTags, filter) {
       return false;
     }
     // OR-tests OR-tagged groups
-    if(OrTagsAsArray.indexOf(groupKey) !== -1 && checkedOrTags[groupKey].length !== 0
-      && checkedOrTags[groupKey].filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
+    if(['language'].indexOf(groupKey) !== -1 && checkedLanguageTags.length !== 0
+      && checkedLanguageTags.filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
       return false;
     }
     // AND-tests everything else
     for (const checkedTagKey of checkedTagKeys) {
       // lessonGroup doesn't contain checkedFilterTag
-      if (OrTagsAsArray.indexOf(groupKey) === -1 && lessonGroup.indexOf(checkedTagKey) === -1) {
+      if (['language'].indexOf(groupKey) === -1 && lessonGroup.indexOf(checkedTagKey) === -1) {
         return false;
       }
     }
@@ -273,14 +257,6 @@ export function removeHtmlFileEnding(lessonPage) {
 * @returns {Array} An array of available languages
 */
 export const getAvailableLanguages = () => ['nb', 'nn',/* 'sv', 'da',*/ 'en'];
-
-/**
-* Returns groupNames with tags that should be considered as logical OR in the filter.
-* @returns {Array}
-*/
-export const getOrTaggedGroups = () => {
-  return ['language'];
-};
 
 /**
 * Returns the readmePath of a lesson with the given lessonPath
