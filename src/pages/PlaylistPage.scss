@@ -1,10 +1,16 @@
 @import '../styles/variables';
 
 .topMargin {
-  margin-top: 63px;
+  margin-top: 0;
 
-  @media (max-width: $screen-xs-max) {
-    margin-top: 0;
+  @media (min-width: $screen-sm-min) {
+    margin-top: 63px;
+  }
+}
+
+.jumpTo {
+  @media (min-width: $screen-sm-min) {
+    height: 0;
   }
 }
 
