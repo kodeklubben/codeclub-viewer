@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {tagsMatchFilter, getOrTaggedGroups} from '../util';
 
-const getLessons = (state, courseName = '') => {
+export const getLessons = (state, courseName = '') => {
   return Object.keys(state.lessons).reduce((res, lessonPath) => {
     return lessonPath.startsWith('./' + courseName) ? {...res, [lessonPath]: state.lessons[lessonPath]} : res;
   }, {});

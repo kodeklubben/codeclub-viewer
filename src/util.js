@@ -134,7 +134,7 @@ export function getLessonIntro(lesson) {
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
   }
-  return picture + text;
+  return (picture || '') + (text || '');
 }
 
 ///////////////////////////////////
