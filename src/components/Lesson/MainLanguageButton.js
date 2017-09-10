@@ -7,8 +7,10 @@ import styles from './MainLanguageButton.scss';
 import {getReadmeForMainLanguage, getLessonForMainLanguage} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 
-const MainLanguageButton = ({path, t, isReadme, language}) => {
-  const buttonPath = isReadme ? getReadmeForMainLanguage(path, language) : getLessonForMainLanguage(path, language);
+const MainLanguageButton = ({path, t, isReadme, lessonLanguage, language}) => {
+  const buttonPath = isReadme ?
+    getReadmeForMainLanguage(path, lessonLanguage, language) :
+    getLessonForMainLanguage(path, lessonLanguage, language);
   const className = styles.container;
   const bsStyle = 'info';
   const bsSize = 'small';

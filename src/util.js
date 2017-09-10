@@ -304,18 +304,20 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * @param {String} language
 * @returns {String or null}
 */
-export const getReadmeForMainLanguage = (path, language) => {
+export const getReadmeForMainLanguage = (path, lessonLanguage, language) => {
   const req = require.context('onlyContent!lessonSrc/', true, /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
-  const hasFile = (path) => req.keys().indexOf(path) !== -1;
+  const hasFile = (readmePath) => req.keys().indexOf(readmePath) !== -1;
   const course = path.substring(0, path.indexOf('/'));
   const lesson = path.substring(path.indexOf(course) + course.length + 1, path.lastIndexOf('/'));
   const withLanguage = `./${course}/${lesson}/README_${language}.md`;
   const withoutLanguage = `./${course}/${lesson}/README.md`;
-  if (language === 'nb' && hasFile(withoutLanguage)) {
-    return '/' + course + '/' + lesson + '/README';
-  }
-  else if (language !== 'nb' && hasFile(withLanguage)) {
-    return '/' + course + '/' + lesson + '/README_' + language;
+  if (lessonLanguage !== language) {
+    if (language === 'nb' && hasFile(withoutLanguage)) {
+      return '/' + course + '/' + lesson + '/README';
+    }
+    else if (language !== 'nb' && hasFile(withLanguage)) {
+      return '/' + course + '/' + lesson + '/README_' + language;
+    }
   }
   return null;
 };
@@ -328,13 +330,15 @@ export const getReadmeForMainLanguage = (path, language) => {
 * @param {String} language
 * @returns {String or null}
 */
-export const getLessonForMainLanguage = (path, language) => {
-  //Her vil jeg hente ut alle markdownfilene som ikke er README-filer
-  //og har frontmatter.language lik language. Hvis det finnes en slik fil så
-  //skal den returnere pathen
-  //Denne funksjonen og getReadmeForMainLanguage kan garantert slås sammen,
-  //men jeg klarer ikke hente ut alle oppgavene fra en mappe
-
+export const getLessonForMainLanguage = (path, lessonLanguage, language) => {
+  /*const req = require.context('onlyContent!lessonSrc/', true,
+    /^\.\/[^\/]*\/[^\/]*\/(?!README(_[a-z]{2})?\.md$)[^\/]*\.md/);*/
+  const course = path.substring(0, path.indexOf('/'));
+  const lessonFolder = path.substring(path.indexOf(course) + course.length + 1, path.lastIndexOf('/'));
+  const lesson = ''; //Den filen som har frontmatter.language === language, ligger i lessonFolder og er ikke README
+  if (lessonLanguage !== language) {
+    return '/' + course + '/' + lessonFolder + '/' + lesson;
+  }
   return null;
 };
 
