@@ -15,8 +15,7 @@ import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import {capitalize, removeHtmlFileEnding,
   setCheckboxes, anyCheckboxTrue, createCheckboxesKey, translateGroup, translateTag} from '../../util';
-import {getTitle, getLevel, getTags, getAuthorName,
-  getTranslatorName, getLessonLanguage} from '../../selectors/frontmatter';
+import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
 import LessonButton from './LessonButton';
@@ -73,7 +72,7 @@ const Lesson = React.createClass({
   render() {
     const {path, params, lesson,
       checkboxes, t, title, level, tags, authorName, translatorName,
-      isReadme, isStudentMode, lessonLanguage} = this.props;
+      isReadme, isStudentMode} = this.props;
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
@@ -90,7 +89,7 @@ const Lesson = React.createClass({
           {author}
           {translator}
           <PrintInfo {...{t, course: params.course, tags}}/>
-          <MainLanguageButton {...{lessonLanguage, path}}/>
+          <MainLanguageButton {...{path}}/>
           <PrintButton/>
           {resetButton}
           {instructionButton}
@@ -125,7 +124,6 @@ Lesson.propTypes = {
   translatorName: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
-  lessonLanguage: PropTypes.string.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -141,8 +139,7 @@ const mapStateToProps = (state, {path, params}) => ({
   authorName: getAuthorName(state, params),
   translatorName: getTranslatorName(state, params),
   isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
-  isStudentMode: state.isStudentMode,
-  lessonLanguage: getLessonLanguage(state, params)
+  isStudentMode: state.isStudentMode
 });
 
 const mapDispatchToProps = {

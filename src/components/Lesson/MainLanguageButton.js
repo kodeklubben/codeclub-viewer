@@ -7,10 +7,10 @@ import styles from './MainLanguageButton.scss';
 import {getReadmeForMainLanguage, getLessonForMainLanguage} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 
-const MainLanguageButton = ({path, t, isReadme, lessonLanguage, language}) => {
+const MainLanguageButton = ({path, t, isReadme, language}) => {
   const buttonPath = isReadme ?
-    getReadmeForMainLanguage(path, lessonLanguage, language) :
-    getLessonForMainLanguage(path, lessonLanguage, language);
+    getReadmeForMainLanguage(path, language) :
+    getLessonForMainLanguage(path, language);
   const className = styles.container;
   const bsStyle = 'info';
   const bsSize = 'small';
@@ -25,7 +25,6 @@ const MainLanguageButton = ({path, t, isReadme, lessonLanguage, language}) => {
 MainLanguageButton.propTypes = {
   // ownProps
   path: PropTypes.string,
-  lessonLanguage: PropTypes.string,
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
