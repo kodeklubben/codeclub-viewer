@@ -301,6 +301,7 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * Returns the readmePath for the language in state
 *
 * @param {String} path
+* @param {String} lessonLanguage
 * @param {String} language
 * @returns {String or null}
 */
@@ -327,6 +328,7 @@ export const getReadmeForMainLanguage = (path, lessonLanguage, language) => {
 * Returns the lesson for the language in state
 *
 * @param {String} path
+* @param {String} lessonLanguage
 * @param {String} language
 * @returns {String or null}
 */

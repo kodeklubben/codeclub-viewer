@@ -25,6 +25,7 @@ const MainLanguageButton = ({path, t, isReadme, lessonLanguage, language}) => {
 MainLanguageButton.propTypes = {
   // ownProps
   path: PropTypes.string,
+  lessonLanguage: PropTypes.string,
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
