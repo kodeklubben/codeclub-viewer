@@ -22,7 +22,6 @@
 
 .instructionBtn {
   margin-left: auto;
-  margin-right: 7px;
 }
 
 .title {
@@ -34,15 +33,20 @@
   opacity: 0.5;
 }
 
-.marginFix {
+.marginLeft {
+  margin-left: 7px !important;
+}
+
+.externalGlyph {
+  font-size: 1.3em;
   margin-left: auto;
 }
 
 .glyph {
   font-size: 1.3em;
-  color: black;
+  margin-left: auto;
 
   &:hover {
-    color: $color-gray;
+    color: black;
   }
 }

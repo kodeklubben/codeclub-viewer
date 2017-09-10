@@ -25,7 +25,7 @@ const CourseItem = ({course, t, language}) => {
         <img className={styles.courseLogo} src={course.iconPath}/>
         <span className={styles.courseName}>{course.name}
           {tooltipButton}
-          <Glyphicon className={styles.glyph} glyph='new-window'/>
+          <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
         </span>
       </a>
       :

@@ -30,10 +30,10 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
 
   const tooltipButton = tooltipContent ?
     <TooltipComponent {...{tooltipContent}}>
-      <Glyphicon className={styles.glyph + (isStudentMode ? ' ' + styles.marginFix : '')} glyph='info-sign'/>
+      <Glyphicon className={styles.glyph +
+        ((lesson.readmePath && !isStudentMode) ? ' ' + styles.marginLeft : '')} glyph='info-sign'/>
     </TooltipComponent>
     : null;
-
 
   const progressBar = lesson.level > 0 ?
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
@@ -41,15 +41,18 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
 
   const title = <div className={styles.title}>{lesson.title}</div>;
 
+  const externalIcon = <Glyphicon className={styles.externalGlyph +
+    ((lesson.readmePath && !isStudentMode) ? ' ' + styles.marginLeft : '')} glyph="new-window"/>;
+
   return (
     <div>
       {lesson.external ?
       <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
         {levelIcon}
         {title}
-        &nbsp;<Glyphicon glyph="new-window"/>
         {instructionButton}
         {tooltipButton}
+        {externalIcon}
       </ListGroupItem>
       :
       <LinkContainer to={lesson.path}>

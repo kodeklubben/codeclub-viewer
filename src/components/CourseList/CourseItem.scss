@@ -51,8 +51,12 @@ a:link {
   color: $color-gray;
 }
 
+.externalGlyph {
+  margin: 0 0 0 5px;
+}
+
 .glyph {
-  margin: 0 5px;
+  margin: 0 3px 0 5px;
 
   &:hover {
     color: $color-gray;
