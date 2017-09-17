@@ -40,10 +40,7 @@ const rememberLastLesson = (path, setLastLesson) => {
 };
 
 const createMarkup = (lessonContent) => {
-  // if (typeof document === 'undefined') do nothing server-side
-  if (typeof document !== 'undefined') {
-    return ({__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))});
-  }
+  return ({__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))});
 };
 
 const PrintInfo = ({t, course, tags}) =>
@@ -147,4 +144,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-  )(withStyles(styles, contentStyles)(Lesson));
+)(withStyles(styles, contentStyles)(Lesson));
