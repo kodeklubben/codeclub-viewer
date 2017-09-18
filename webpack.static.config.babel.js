@@ -31,6 +31,7 @@ import path from 'path';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import yamlFront from 'yaml-front-matter';
+import WebpackShellPlugin from 'webpack-shell-plugin';
 
 
 ///////////////
@@ -107,8 +108,8 @@ const config = {
   plugins: [
     ...baseConfig.plugins,
     new StaticSiteGeneratorPlugin('staticbundle', staticSitePaths, locals, scope),
-    new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths)
-
+    new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
+    new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']}),
   ]
 };
 
