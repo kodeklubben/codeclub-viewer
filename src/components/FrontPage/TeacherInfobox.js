@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -9,15 +8,17 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
-const TeacherInfobox = createReactClass({
-  getInitialState() {
-    return {
-      showCourseInfo: false
-    };
-  },
+class TeacherInfobox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showCourseInfo: false};
+    this.changeState = this.changeState.bind(this);
+  }
+
   changeState() {
     this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
-  },
+  }
+
   render() {
     const {t} = this.props;
     const {showCourseInfo} = this.state;
@@ -60,7 +61,7 @@ const TeacherInfobox = createReactClass({
     );
   }
 
-});
+}
 
 TeacherInfobox.propTypes = {
   // mapStateToProps
