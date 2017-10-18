@@ -1,6 +1,8 @@
-import React, { PropTypes, Children } from 'react';
+import {Children} from 'react';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 
-const WithStylesContext = React.createClass({
+const WithStylesContext = createReactClass({
   getChildContext() {
     return {insertCss: this.props.onInsertCss};
   },

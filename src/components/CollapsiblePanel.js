@@ -1,11 +1,12 @@
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CollapsiblePanel.scss';
 
-const CollapsiblePanel = React.createClass({
+const CollapsiblePanel = createReactClass({
   getInitialState() {
     return {
       expanded: this.props.initiallyExpanded

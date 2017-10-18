@@ -1,11 +1,12 @@
 /* eslint-env node */
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
 import Collapse from 'react-bootstrap/lib/Collapse';
 
-const ToggleButton = React.createClass({
+const ToggleButton = createReactClass({
   getInitialState() {
     return {
       open: false

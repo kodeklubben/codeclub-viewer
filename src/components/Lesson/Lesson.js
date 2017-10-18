@@ -1,6 +1,7 @@
 /* eslint-env node */
 
 import React from 'react';
+import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
@@ -62,7 +63,7 @@ PrintInfo.PropTypes = {
   tags: PropTypes.object.isRequired,
 };
 
-const Lesson = React.createClass({
+const Lesson = createReactClass({
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
