@@ -29,12 +29,13 @@ class ToggleButton extends React.Component {
     const contentStyle = {
       paddingTop: '20px'
     };
+    const {open} = this.state;
     return (
       <div style={containerStyle}>
-        <Button onClick={() => this.setState({open: !this.state.open})}>
+        <Button onClick={() => this.setState({open: !open})}>
           {this.props.buttonText}
         </Button>
-        <Collapse in={this.state.open}>
+        <Collapse in={open}>
           <div>
             <div style={contentStyle}>
               <div dangerouslySetInnerHTML={this.createMarkup()}/>

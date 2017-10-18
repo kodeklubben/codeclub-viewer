@@ -12,11 +12,6 @@ class TeacherInfobox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {showCourseInfo: false};
-    this.changeState = this.changeState.bind(this);
-  }
-
-  changeState() {
-    this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
   }
 
   render() {
@@ -35,7 +30,7 @@ class TeacherInfobox extends React.Component {
           {t('frontpage.teacherinfobox.changemode')}
           <br />
           <div className={styles.center}>
-            <Button className={styles.plusSign} onClick={() => this.changeState()}>
+            <Button className={styles.plusSign} onClick={() => this.setState({showCourseInfo: !showCourseInfo})}>
               <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
             </Button>
           </div>
