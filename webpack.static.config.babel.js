@@ -26,13 +26,12 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {lessonSrc, buildDir, publicPath} from './webpack.base.config.babel';
-import path from 'path';
+import baseConfig from './webpack.base.config.babel';
+import {buildDir, publicPath} from './buildconstants';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
-import yamlFront from 'yaml-front-matter';
 import WebpackShellPlugin from 'webpack-shell-plugin';
-
+import {lessonPaths, coursePaths} from 'pathlists';
 
 ///////////////
 // CONSTANTS //
@@ -47,25 +46,8 @@ const locals = {};
 ///////////////
 
 function getStaticSitePaths() {
-  const glob = require('glob');
-
-  // Need to replace backslashes with forward slashes on Windows, since glob keeps forward slashes
-  const lessonSrcPath = lessonSrc.replace(/\\/g, '/');
-
-  // Only include folders in lesson src that have an index.md
-  const coursePaths = glob.sync(path.join(lessonSrcPath, '*/index.md'), {dot: true})
-    .map(p => p.replace(new RegExp(`^${lessonSrcPath}\/(.*)\/index\.md$`), '$1/'));
-
-  const lessonPaths = glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
-    .filter(p => !p.endsWith('index.md'))
-    .filter(p => {
-      const {title, external} = yamlFront.loadFront(p);
-      if (external) { console.log('Skipping external course "' + title + '" (' + p + ')'); }
-      return !external;
-    })
-    .map(p => p.replace(new RegExp(`^(${lessonSrcPath}\/)(.*)(\.md)$`), '$2/'));
-
-  const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
+  const staticPaths = ['/'].concat(coursePaths()).concat(lessonPaths());
+  //const staticPaths = ['scratch/astrokatt/astrokatt'];
 
   console.log('Static paths:');
   console.log(staticPaths);
