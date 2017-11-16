@@ -40,7 +40,7 @@ const {
   lessonSrc,
   assets,
   bootstrapStyles,
-} = require('buildconstants');
+} = require('./buildconstants');
 
 // Loaders for lesson files written in markdown (.md)
 const frontmatterLoaders = [

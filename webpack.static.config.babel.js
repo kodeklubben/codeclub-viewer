@@ -31,7 +31,7 @@ import {buildDir, publicPath} from './buildconstants';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
-import {lessonPaths, coursePaths} from 'pathlists';
+import {lessonPaths, coursePaths} from './pathlists';
 
 ///////////////
 // CONSTANTS //

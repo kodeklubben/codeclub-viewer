@@ -91,6 +91,7 @@
     "favicons-webpack-plugin": "^0.0.7",
     "file-loader": "^0.8.5",
     "front-matter-loader": "^0.1.2",
+    "fs-extra": "4.0.2",
     "glob": "^7.0.3",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.19.0",

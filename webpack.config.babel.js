@@ -33,7 +33,7 @@
 //////////////////////
 
 import baseConfig, {getValuesAsArray, getLoaders} from './webpack.base.config.babel';
-import {buildDir, publicPath} from 'buildconstants';
+import {buildDir, publicPath} from './buildconstants';
 const webpack = require('webpack');
 
 import autoprefixer from 'autoprefixer';
