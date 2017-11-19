@@ -11,6 +11,9 @@ if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 
 module.exports = {
   buildDir: path.join(__dirname, 'dist', subDir),
+  isProduction: process.env.NODE_ENV === 'production',
+  isHot: process.argv.indexOf('--hot') >= 0,
+  buildPDF: process.env.BUILD_PDF === 'true',
 
   // Webpack needs final slash in publicPath to rewrite relative paths correctly
   publicPathWithoutSlash: '/' + subDir,

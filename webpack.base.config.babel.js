@@ -33,14 +33,14 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // CONSTANTS //
 ///////////////
 
-const {
+import {
   buildDir,
   publicPathWithoutSlash,
   publicPath,
   lessonSrc,
   assets,
   bootstrapStyles,
-} = require('./buildconstants');
+} from './buildconstants';
 
 // Loaders for lesson files written in markdown (.md)
 const frontmatterLoaders = [

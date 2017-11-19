@@ -21,6 +21,7 @@ import MarkdownRenderer from '../MarkdownRenderer';
 import LessonButton from './LessonButton';
 import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
+import PdfButton from './PdfButton';
 import PrintButton from './PrintButton';
 
 const renderToggleButtons = () => {
@@ -74,6 +75,7 @@ const Lesson = React.createClass({
     const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
+    const pdfButton = <PdfButton lessonfile={params.file}/>;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -87,6 +89,7 @@ const Lesson = React.createClass({
           <PrintButton/>
           {resetButton}
           {instructionButton}
+          {pdfButton}
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
           <Row>
             <ImprovePage courseLessonFileProp={params}/>

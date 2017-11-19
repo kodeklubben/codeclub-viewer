@@ -12,8 +12,9 @@ module.exports.coursePaths = () => {
     .map(p => p.replace(new RegExp(`^${lessonSrcPath}/(.*)/index\\.md$`), '$1/'));
 };
 
-module.exports.lessonPaths = (verbose) => {
+module.exports.lessonPaths = (verbose, ending) => {
   if (typeof verbose === 'undefined') { verbose = true; }
+  if (typeof ending === 'undefined') { ending = '/'; }
   return glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md'))
     .filter(p => {
@@ -29,5 +30,5 @@ module.exports.lessonPaths = (verbose) => {
         return false;
       }
     })
-    .map(p => p.replace(new RegExp(`^(${lessonSrcPath}/)(.*)(\\.md)$`), '$2/'));
+    .map(p => p.replace(new RegExp(`^(${lessonSrcPath}/)(.*)(\\.md)$`), '$2' + ending));
 };

@@ -27,15 +27,18 @@
 //////////////////////
 
 import baseConfig from './webpack.base.config.babel';
-import {buildDir, publicPath} from './buildconstants';
+import {lessonPaths, coursePaths} from './pathlists';
+
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
-import {lessonPaths, coursePaths} from './pathlists';
+
 
 ///////////////
 // CONSTANTS //
 ///////////////
+
+import {buildDir, publicPath, buildPDF} from './buildconstants';
 
 const scope = {window: {}};
 const locals = {};
@@ -91,8 +94,11 @@ const config = {
     ...baseConfig.plugins,
     new StaticSiteGeneratorPlugin('staticbundle', staticSitePaths, locals, scope),
     new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
-    new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']}),
   ]
 };
+
+if (buildPDF) {
+  config.plugins = config.plugins.concat([new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']})]);
+}
 
 export default config;

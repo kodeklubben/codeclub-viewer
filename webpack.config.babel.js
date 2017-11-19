@@ -33,24 +33,27 @@
 //////////////////////
 
 import baseConfig, {getValuesAsArray, getLoaders} from './webpack.base.config.babel';
-import {buildDir, publicPath} from './buildconstants';
+import {lessonPaths} from './pathlists';
+
 const webpack = require('webpack');
-
+import path from 'path';
 import autoprefixer from 'autoprefixer';
-
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 
 ///////////////
 // CONSTANTS //
 ///////////////
 
-const isHot = process.argv.indexOf('--hot') >= 0;
+import {buildDir, publicPath, isHot, isProduction, buildPDF} from './buildconstants';
+import lesson from "./src/reducers/lesson";
+
 console.log(`isHot=${isHot}`);
-const isProduction = process.env.NODE_ENV === 'production';
 console.log(`isProduction=${isProduction}`);
+console.log(`buildPDF=${buildPDF}`);
 console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
@@ -138,6 +141,23 @@ function getPlugins() {
           warnings: false,
           pure_funcs: 'console.log' // removes these functions from the code
         }
+      })
+    ]);
+  }
+
+  if (!buildPDF) {
+    // copy FakeLessonPDF.pdf to all the lessons
+    // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
+    const pdfPaths = lessonPaths(false, '.pdf');
+    plugins = plugins.concat([
+      new CopyWebpackPlugin(pdfPaths.map(pdfPath => ({
+        from: 'src/assets/pdfs/FakeLessonPDF.pdf',
+        to: path.join(buildDir, pdfPath),
+      })), {
+        // Must include copyUnmodified:true since we always copy from same file,
+        // otherwise only the first path is copied to.
+        // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+        copyUnmodified: true,
       })
     ]);
   }

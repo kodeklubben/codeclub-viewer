@@ -30,7 +30,6 @@ const convertUrl = async (browser, lesson) => {
     const pdfFile = path.join('./dist', lesson + '.pdf');
     const pdfFolder = path.dirname(pdfFile);
     fse.mkdirsSync(pdfFolder);
-    //console.log('Converting', lesson);
     const page = await browser.newPage();
     const url = urlBase + lesson + '?pdf';
     await page.goto(url, {waitUntil: 'networkidle'});
