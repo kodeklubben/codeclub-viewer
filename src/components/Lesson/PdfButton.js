@@ -10,6 +10,8 @@ const PdfButton = ({t, href}) => {
   const bsStyle = 'pdf';
   const bsSize = 'small';
   const className = styles.container;
+  // Note that we need to use href in button, and not LinkContainer,
+  // since we don't want to go through React Router when getting the pdf.
   return <Button {...{className, bsStyle, bsSize, href}}>
     {buttonText}
   </Button>;
