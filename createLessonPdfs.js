@@ -83,6 +83,6 @@ const checkStarted = (data) => {
 localWebServer.stdout.on('data', checkStarted);
 localWebServer.stderr.on('data', checkStarted);
 
-localWebServer.on('close', (code, signal) => {console.log('close: code=' + code + ', signal=' + signal)});
-localWebServer.on('exit', (code, signal) => {console.log('exit: code=' + code + ', signal=' + signal)});
-localWebServer.on('error', (err) => {console.log('error:', err)});
+localWebServer.on('close', (code, signal) => { console.log('close: code=' + code + ', signal=' + signal); });
+localWebServer.on('exit', (code, signal) => { console.log('exit: code=' + code + ', signal=' + signal); });
+localWebServer.on('error', (err) => { console.log('error:', err); });

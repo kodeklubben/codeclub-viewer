@@ -22,7 +22,8 @@ const Courses = ({t, courses, externalCourses}) => {
             <CourseList courses={externalCourses}/>
           </Col>
         </Row>
-      :null}
+        :null
+      }
     </Col>
   );
 };

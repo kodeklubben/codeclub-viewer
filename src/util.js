@@ -101,7 +101,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfoMarkup(courseName, language) {
-  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^\/]*\/index[^.]*\.md/);
+  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
   const withLanguage = `./${courseName}/index_${language}.md`;
   const withoutLanguage = `./${courseName}/index.md`;
 
