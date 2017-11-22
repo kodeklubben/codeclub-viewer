@@ -20,6 +20,11 @@
  *
  */
 
+console.log();
+console.log('#################################');
+console.log(' Running webpack.config.babel.js ');
+console.log('#################################');
+console.log();
 
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
@@ -49,11 +54,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 ///////////////
 
 import {buildDir, publicPath, isHot, isProduction, buildPDF} from './buildconstants';
-import lesson from "./src/reducers/lesson";
-
-console.log(`isHot=${isHot}`);
-console.log(`isProduction=${isProduction}`);
-console.log(`buildPDF=${buildPDF}`);
+console.log('buildDir:', buildDir);
+console.log('publicPath:', publicPath);
+console.log('isHot:', isHot);
+console.log('isProduction:', isProduction);
+console.log('buildPDF:', buildPDF);
 console.log();
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';

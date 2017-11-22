@@ -14,6 +14,11 @@
  *
  */
 
+console.log();
+console.log('########################################');
+console.log(' Running webpack.static.config.babel.js ');
+console.log('########################################');
+console.log();
 
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
@@ -39,6 +44,10 @@ import WebpackShellPlugin from 'webpack-shell-plugin';
 ///////////////
 
 import {buildDir, publicPath, buildPDF} from './buildconstants';
+console.log('buildDir:', buildDir);
+console.log('publicPath:', publicPath);
+console.log('buildPDF:', buildPDF);
+console.log();
 
 const scope = {window: {}};
 const locals = {};

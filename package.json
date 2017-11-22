@@ -6,20 +6,20 @@
   "scripts": {
     "start": "webpack-dev-server -d --progress --inline --hot --history-api-fallback --host 0.0.0.0",
     "buildjs": "webpack -d --progress",
-    "buildjs:prod": "cross-env NODE_ENV=production webpack -p --progress",
+    "buildjs:prod": "cross-env NODE_ENV=production BUILD_PDF=true webpack -p --progress",
     "buildstatic": "webpack --config=webpack.static.config.babel.js --progress",
     "buildstatic:prod": "cross-env BUILD_PDF=true webpack --config=webpack.static.config.babel.js --progress",
-    "build": "yarn run buildjs && yarn run buildstatic",
-    "build:prod": "yarn run buildjs:prod && yarn run buildstatic",
+    "build": "yarn buildjs && yarn buildstatic",
+    "build:prod": "yarn buildjs:prod && yarn buildstatic:prod",
     "build:travis": "cross-env NODE_ENV=production webpack -p && webpack --config=webpack.static.config.babel.js",
     "serve": "ws",
     "servejs": "node ./server.js",
     "test": "mocha --compilers js:babel-core/register --require mock-local-storage --require ignore-styles --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:links": "node test-links.js",
-    "test:watch": "yarn run test -- --watch",
+    "test:watch": "yarn test -- --watch",
     "eslint": "eslint *.js src/ test/ --ext .js,.jsx",
     "stylelint": "stylelint \"src/**/*.scss\"",
-    "testall": "yarn run eslint && yarn run stylelint && yarn run test"
+    "testall": "yarn eslint && yarn stylelint && yarn test"
   },
   "repository": {
     "type": "git",
