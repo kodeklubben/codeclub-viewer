@@ -6,15 +6,16 @@ import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 
 const PdfButton = ({t, href}) => {
-  const buttonText= t('lessons.pdf');
-  const bsStyle = 'pdf';
-  const bsSize = 'small';
-  const className = styles.container;
+  const options = {
+    href,
+    bsStyle: 'pdf',
+    bsSize: 'small',
+    className: styles.container,
+    download: true,
+  };
   // Note that we need to use href in button, and not LinkContainer,
   // since we don't want to go through React Router when getting the pdf.
-  return <Button {...{className, bsStyle, bsSize, href}}>
-    {buttonText}
-  </Button>;
+  return <Button {...options}>{t('lessons.pdf')}</Button>;
 };
 
 PdfButton.propTypes = {

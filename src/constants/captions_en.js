@@ -63,7 +63,7 @@ export default {
     writtenby: 'Written by:',
     translatedby: 'Translated by:',
     course: 'Course:',
-    pdf: 'PDF',
+    pdf: 'Download PDF',
     print: 'Print',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
