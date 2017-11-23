@@ -234,7 +234,7 @@ export function tagsMatchFilter(lessonTags, filter) {
       return false;
     }
     // AND-tests everything else
-    for (let checkedTagKey of checkedTagKeys) {
+    for (const checkedTagKey of checkedTagKeys) {
       // lessonGroup doesn't contain checkedFilterTag
       if (groupKey !== 'language' && lessonGroup.indexOf(checkedTagKey) === -1) {
         return false;
