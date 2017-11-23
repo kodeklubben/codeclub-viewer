@@ -338,36 +338,3 @@ export const anyCheckboxTrue = (checkboxes) => {
   }
   return false;
 };
-
-/**
- *
- * @param {function} t translator function
- * @param {string} groupKey
- * @returns {string} Translated filter group name, or blank string if not found.
- */
-export function translateGroup(t, groupKey) {
-  const captionPath = `filter.group.${groupKey}`;
-  const translatedGroupName = t(captionPath);
-  if (translatedGroupName === captionPath) {
-    console.warn(`Could not translate filter group '${captionPath}'`);
-    return '';
-  }
-  return translatedGroupName;
-}
-
-/**
- *
- * @param {function} t translator function
- * @param {string} groupKey
- * @param {string} tagKey
- * @returns {string} Translated filter tag name, or blank string if not found.
- */
-export function translateTag(t, groupKey, tagKey) {
-  const captionPath = `filter.tags_${groupKey}.${tagKey}`;
-  const tagName = t(captionPath);
-  if (tagName === captionPath) {
-    console.warn(`Could not translate filter tag '${captionPath}'`);
-    return '';
-  }
-  return tagName;
-}

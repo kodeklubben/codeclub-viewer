@@ -46,6 +46,7 @@ export const buildDir = path.join(__dirname, 'dist', subDir);
 const publicPathWithoutSlash = '/' + subDir;
 export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
 export const lessonSrc = path.resolve(__dirname, '../oppgaver/src');
+export const lessonFiltertags = path.resolve(__dirname, '../oppgaver/filtertags');
 const assets = path.resolve(__dirname, './src/assets');
 const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap');
 
@@ -140,6 +141,7 @@ const baseConfig = {
     extensions: ['', '.js'],
     alias: {
       lessonSrc,
+      lessonFiltertags,
       assets,
       bootstrapStyles
     }
