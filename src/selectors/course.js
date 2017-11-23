@@ -36,12 +36,12 @@ export const getFilteredExternalCourses = createSelector(
     return courseContext.keys().reduce((res, path) => {
       const coursePath = path.slice(0, path.indexOf('/', 2));
       const fm = courseContext(path).frontmatter;
-      if (fm.external !== undefined) {
+      if (fm.external != null) {
         const course = {
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
-          tags: fm.tags == null ? {} : cleanseTags(Object.assign({language: [fm.language]}, fm.tags))
+          tags: fm.tags == null ? {} : cleanseTags({...fm.tags, language: [fm.language]})
         };
         return tagsMatchFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
       }

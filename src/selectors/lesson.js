@@ -40,52 +40,6 @@ export const getFilteredAndIndexedLessons = createSelector(
 );
 
 /**
- * Creates an object containing lessons that have tags matching the filter
- * where the filter is considered as having all OR-tags selected
- */
-export const getFilteredLessonsOrTagsSelected = createSelector(
-  [getFilter, getLessons],
-  (filter = {}, lessons = {}) => {
-    let orTaggedFilter = {};
-
-    for(const groupKey of Object.keys(filter)){
-      orTaggedFilter[groupKey] = {};
-      for(const tagKey of Object.keys(filter[groupKey])){
-        //if(orTaggedGroups.indexOf(groupKey) !== -1){
-        if(groupKey === 'language'){
-          orTaggedFilter[groupKey][tagKey] = true;
-        }else{
-          orTaggedFilter[groupKey][tagKey] = !!filter[groupKey][tagKey];
-        }
-      }
-    }
-
-    return Object.keys(lessons).reduce((res, lessonKey) => {
-      const lesson = lessons[lessonKey];
-      if (tagsMatchFilter(lesson.tags, orTaggedFilter)) {
-        res[lessonKey] = lesson;
-      }
-      return res;
-    }, {});
-  }
-);
-
-/**
- * Creates an object containing indexed lessons that have tags matching the filter
- * where the filter is considered as having all OR-tags selected
- */
-export const getFilteredAndIndexedLessonsOrTagsSelected = createSelector(
-  [getFilteredLessonsOrTagsSelected],
-  (filteredLessons = {}) => {
-    return Object.keys(filteredLessons).reduce((res, lessonPath) => {
-      const lesson = filteredLessons[lessonPath];
-      return lesson.indexed ? {...res, [lessonPath]: lesson} : res;
-    }, {});
-  }
-);
-
-
-/**
  * Creates an object {<level>: [lessonA, lessonB, ...], ...}
  * where the lessons available given your current filter are sorted according to level
  * Input props: courseName (string, optional)

@@ -59,18 +59,18 @@ FilterGroup.propTypes = {
 
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
-  collapseFilterGroup: PropTypes.func.isRequired
+  collapseFilterGroup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, {groupKey}) => ({
   filterTags: state.filter[groupKey],
   filterGroupsCollapsed: state.filterGroupsCollapsed,
-  somethingChecked: somethingCheckedInGroup(state, groupKey)
+  somethingChecked: somethingCheckedInGroup(state, groupKey),
 });
 
 const mapDispatchToProps = {
   onFilterCheck,
-  collapseFilterGroup
+  collapseFilterGroup,
 };
 
 export default connect(

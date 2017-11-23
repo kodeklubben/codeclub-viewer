@@ -228,15 +228,15 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    // OR-tests OR-tagged groups
-    if(['language'].indexOf(groupKey) !== -1 && checkedLanguageTags.length !== 0
+    // OR-tests the language group
+    if(groupKey === 'language' && checkedLanguageTags.length !== 0
       && checkedLanguageTags.filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
       return false;
     }
     // AND-tests everything else
-    for (const checkedTagKey of checkedTagKeys) {
+    for (let checkedTagKey of checkedTagKeys) {
       // lessonGroup doesn't contain checkedFilterTag
-      if (['language'].indexOf(groupKey) === -1 && lessonGroup.indexOf(checkedTagKey) === -1) {
+      if (groupKey !== 'language' && lessonGroup.indexOf(checkedTagKey) !== -1) {
         return false;
       }
     }
