@@ -33,12 +33,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // CONSTANTS //
 ///////////////
 
-export const lessonFiltertags = path.resolve(__dirname, '../oppgaver/filtertags');
 import {
   buildDir,
   publicPathWithoutSlash,
   publicPath,
   lessonSrc,
+  lessonFiltertags,
   assets,
   bootstrapStyles,
 } from './buildconstants';
