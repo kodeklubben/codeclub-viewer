@@ -34,7 +34,7 @@ const pathTest = (nextState, replace) => {
   if(path.indexOf('/') !== 0){
     path = '/' + path;
   }
-  if(path.lastIndexOf('/') === path.length-1){
+  if(path.endsWith('/')){
     path = path.slice(0, -1);
   }
   const isReadme = readmeArray.indexOf(path) > -1;

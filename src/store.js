@@ -7,13 +7,13 @@ import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
-const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
-const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
-const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^\/]*\/playlists\/[^\/]*\.txt$/);
+const iconContext = require.context('lessonSrc/', true, /^\.\/[^/]*\/logo-black\.png/);
+const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/index\.md/);
+const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^/]*\/playlists\/[^/]*\.txt$/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
-  /^\.\/[^\/]*\/[^\/]*\/(?!README(_[a-z]{2})?\.md$)[^\/]*\.md/);
+  /^\.\/[^/]*\/[^/]*\/(?!README(_[a-z]{2})?\.md$)[^/]*\.md/);
 const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
-  /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
+  /^\.\/[^/]*\/[^/]*\/README(_[a-z]{2})?\.md$/);
 const lessons = getLessons(lessonContext, readmeContext, courseContext);
 
 const initialState = {};

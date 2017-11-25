@@ -20,7 +20,7 @@ const Courses = ({t, courses, externalCourses}) => {
             <CourseList courses={courses}/>
           </Col>
         </Row>
-      : null}
+        : null}
       {externalCoursesLength > 0 ?
         <Row>
           <Col xs={12}>
@@ -28,7 +28,7 @@ const Courses = ({t, courses, externalCourses}) => {
             <CourseList courses={externalCourses}/>
           </Col>
         </Row>
-      :null}
+        :null}
       {coursesLength + externalCoursesLength !== 0 ? null :
         <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>}
     </Col>

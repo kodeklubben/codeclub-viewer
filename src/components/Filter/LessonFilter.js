@@ -24,7 +24,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
     <span>
       {t('filter.header')}
       <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}
-                      onClick={(e) => e.stopPropagation()}>
+        onClick={(e) => e.stopPropagation()}>
         <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
       </OverlayTrigger>
     </span>;

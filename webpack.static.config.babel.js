@@ -14,6 +14,11 @@
  *
  */
 
+console.log();
+console.log('########################################');
+console.log(' Running webpack.static.config.babel.js ');
+console.log('########################################');
+console.log();
 
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
@@ -26,16 +31,23 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {lessonSrc, buildDir, publicPath} from './webpack.base.config.babel';
-import path from 'path';
+import baseConfig from './webpack.base.config.babel';
+import {lessonPaths, coursePaths} from './pathlists';
+
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
-import yamlFront from 'yaml-front-matter';
+import WebpackShellPlugin from 'webpack-shell-plugin';
 
 
 ///////////////
 // CONSTANTS //
 ///////////////
+
+import {buildDir, publicPath, buildPDF} from './buildconstants';
+console.log('buildDir:', buildDir);
+console.log('publicPath:', publicPath);
+console.log('buildPDF:', buildPDF);
+console.log();
 
 const scope = {window: {}};
 const locals = {};
@@ -46,25 +58,8 @@ const locals = {};
 ///////////////
 
 function getStaticSitePaths() {
-  const glob = require('glob');
-
-  // Need to replace backslashes with forward slashes on Windows, since glob keeps forward slashes
-  const lessonSrcPath = lessonSrc.replace(/\\/g, '/');
-
-  // Only include folders in lesson src that have an index.md
-  const coursePaths = glob.sync(path.join(lessonSrcPath, '*/index.md'), {dot: true})
-    .map(p => p.replace(new RegExp(`^${lessonSrcPath}\/(.*)\/index\.md$`), '$1/'));
-
-  const lessonPaths = glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
-    .filter(p => !p.endsWith('index.md'))
-    .filter(p => {
-      const {title, external} = yamlFront.loadFront(p);
-      if (external) { console.log('Skipping external course "' + title + '" (' + p + ')'); }
-      return !external;
-    })
-    .map(p => p.replace(new RegExp(`^(${lessonSrcPath}\/)(.*)(\.md)$`), '$2/'));
-
-  const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
+  const staticPaths = ['/'].concat(coursePaths()).concat(lessonPaths());
+  //const staticPaths = ['scratch/astrokatt/astrokatt'];
 
   console.log('Static paths:');
   console.log(staticPaths);
@@ -107,9 +102,12 @@ const config = {
   plugins: [
     ...baseConfig.plugins,
     new StaticSiteGeneratorPlugin('staticbundle', staticSitePaths, locals, scope),
-    new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths)
-
+    new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
   ]
 };
+
+if (buildPDF) {
+  config.plugins = config.plugins.concat([new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']})]);
+}
 
 export default config;

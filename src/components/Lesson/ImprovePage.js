@@ -32,27 +32,27 @@ const ImprovePage = ({t, isStudentMode, courseLessonFileProp}) => {
   return (
     <div className={styles.container}>
       <div className={isStudentMode ? styles.student : styles.teacher}>
-          <div className={styles.improvePageBox}>
-            <div className={isStudentMode ? styles.textRowStudent : styles.textRowTeacher}>
-              <h2>{t('lessons.improvepage.header')}</h2>
-              <p>{t('lessons.improvepage.textline1')} <br/>
+        <div className={styles.improvePageBox}>
+          <div className={isStudentMode ? styles.textRowStudent : styles.textRowTeacher}>
+            <h2>{t('lessons.improvepage.header')}</h2>
+            <p>{t('lessons.improvepage.textline1')} <br/>
               {t('lessons.improvepage.textline2')}</p>
-            </div>
-            <div className={styles.linkRow}>
-                <div>
-                  <Button href={url.newIssue} bsStyle="white-grey" target="_blank">
-                  {t('lessons.improvepage.newissuebutton')}</Button>
-                </div>
-                <div>
-                  <Button href={url.forum} bsStyle="guide" target="_blank">
-                  {t('lessons.improvepage.forumbutton')}</Button>
-                </div>
-                <div>
-                  <Button href={url.showCode} bsStyle="orange" target="_blank">
-                  {t('lessons.improvepage.showcodebutton')}</Button>
-                </div>
-              </div>
           </div>
+          <div className={styles.linkRow}>
+            <div>
+              <Button href={url.newIssue} bsStyle="white-grey" target="_blank">
+                {t('lessons.improvepage.newissuebutton')}</Button>
+            </div>
+            <div>
+              <Button href={url.forum} bsStyle="guide" target="_blank">
+                {t('lessons.improvepage.forumbutton')}</Button>
+            </div>
+            <div>
+              <Button href={url.showCode} bsStyle="orange" target="_blank">
+                {t('lessons.improvepage.showcodebutton')}</Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

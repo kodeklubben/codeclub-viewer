@@ -45,11 +45,11 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
         </Row>
 
         {hasPlaylists ?
-        <Row>
-          <Col xs={12} sm={lessonLists.length ? 9 : 12}><PlaylistNavigation {...{playlists}}/></Col>
-          {jumpToAffixed}
-        </Row>
-        : null}
+          <Row>
+            <Col xs={12} sm={lessonLists.length ? 9 : 12}><PlaylistNavigation {...{playlists}}/></Col>
+            {jumpToAffixed}
+          </Row>
+          : null}
 
         <Row>
           <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
