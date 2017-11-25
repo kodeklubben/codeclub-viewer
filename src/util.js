@@ -1,3 +1,5 @@
+import {getFilterkeys} from './lessonrepo_data';
+
 /**
  * Makes first character in str upper case
  *
@@ -6,47 +8,6 @@
  */
 export function capitalize(str) {
   return str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
-}
-
-/**
- * Get tags from all lessons and external courses
- * Takes any number of contexts as argument
- * @returns {Object} tags
- */
-export function getTags() {
-  return [...arguments].reduce((res, context) => (
-    {...res, ...extractTags(context)}
-  ), {});
-}
-
-/**
- * Get all tags from lesson or courses in context
- * @param context
- * @returns {Object} tags
- */
-function extractTags(context) {
-  return (context.keys()).reduce((res, path) => {
-    const fm = context(path).frontmatter;
-    const tags = fm.indexed === false ? {} : cleanseTags(fm.tags, true);
-    return mergeTags(res, tags);
-  }, {});
-}
-
-/**
- *
- * @param {Object} tagsA
- * @param {Object} tagsB
- * @returns {Object} mergedTags
- */
-export function mergeTags(tagsA, tagsB){
-  if (Object.keys(tagsA).length === 0) { return tagsB; }
-  if (Object.keys(tagsB).length === 0) { return tagsA; }
-  const groups = [...new Set(Object.keys(tagsA).concat(Object.keys(tagsB)))];
-  return groups.reduce((res, groupKey) => {
-    const tagsFromA = tagsA[groupKey];
-    const tagsFromB = tagsB[groupKey];
-    return {...res, [groupKey]: {...tagsFromA, ...tagsFromB}};
-  }, {});
 }
 
 export function getLessons(lessonContext, readmeContext, courseContext) {
@@ -58,21 +19,14 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
 
     const courseFrontmatter = courseContext(coursePath).frontmatter;
-    let lessonFrontmatter = lessonContext(path).frontmatter;
+    const lessonFrontmatter = lessonContext(path).frontmatter;
 
     const language = lessonFrontmatter.language;
-
-    if (language){
-      if (lessonFrontmatter.tags) {
-        lessonFrontmatter.tags['language'] = language;
-      } else {
-        lessonFrontmatter.tags = {language: [language]};
-      }
-    }
+    const languageTags = language ? {language: [language]} : {};
 
     // Inherit tags from course, and override with lessonTags
-    const courseTags = cleanseTags(courseFrontmatter.tags, false);
-    const lessonTags = cleanseTags(lessonFrontmatter.tags, false);
+    const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
+    const lessonTags = cleanseTags({...lessonFrontmatter.tags, ...languageTags}, 'lesson ' + path);
     const tags = {...courseTags, ...lessonTags};
 
     // Gets the valid readmePath for the lesson, if it exists
@@ -165,31 +119,44 @@ const getReadmePath = (readmeContext, language, path) => {
 /**
  * Fix invalid tags
  * @param {Object} tags
- * @param {boolean} toObject
+ * @param {string} src
  * @returns {Object} valid tags
  */
-export function cleanseTags(tags, toObject = false) {
+export function cleanseTags(tags, src) {
   if (tags == null) return {};
 
+  const filterKeys = getFilterkeys();
+
   return Object.keys(tags).reduce((result, groupKey) => {
-    let tagItemsArray = fixNonArrayTagList(tags[groupKey]).filter(item => item.length > 0);
+    const groupKeyLC = groupKey.toLowerCase();
+    if (Object.keys(filterKeys).indexOf(groupKeyLC) === -1) {
+      console.warn('Ignoring invalid group ' + groupKey + ' in ' + src);
+      return result;
+    }
 
-    // Make groupKey and all tags lowerCase
-    tagItemsArray = tagItemsArray.map(tagKey => tagKey.toLowerCase());
-    groupKey = groupKey.toLowerCase();
+    let tagsInGroup = fixNonArrayTagList(tags[groupKey]).filter( (tagKey) => {
+      const isValid = tagKey.length > 0 && filterKeys[groupKeyLC].indexOf(tagKey.toLowerCase()) !== -1;
+      if (!isValid) {
+        console.warn('Ignoring invalid tag ' + tagKey + ' in group ' + groupKey + ' in ' + src);
+      }
+      return isValid;
+    });
 
-    // Ignore tagGroups with no tagItems
-    if (tagItemsArray.length === 0) return result;
+    if (tagsInGroup.length === 0) { return result; } // Ignore tagGroups with no tagItems
 
-    // Add tagItems
-    result[groupKey] = toObject ? convertTagItemsArrayToObject(tagItemsArray) : tagItemsArray;
+    result[groupKey.toLowerCase()] = tagsInGroup.map(tagKey => tagKey.toLowerCase());
     return result;
   }, {});
 }
 
-function convertTagItemsArrayToObject(tagItemsArray) {
-  return tagItemsArray.reduce((res, item) => {
-    res[item] = false;
+/**
+ * Converts and array to object, where the array values becomes the object keys, and the values are 'false'.
+ * @param array
+ * @returns {object}
+ */
+export function arrayToObject(array) {
+  return array.reduce((res, key) => {
+    res[key] = false;
     return res;
   }, {});
 }

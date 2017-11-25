@@ -38,18 +38,6 @@ export const getTranslator = (state) => {
   };
 };
 
-//const keys = require('onlyFrontmatter!lessonFiltertags/keys.md').frontmatter;
-//console.log('keys', keys);
-
-// XXX: kobinere getTranslateGroup og getTranslateTag til getTranslateFilter?
-// Og trenger vi keys.md? Burde vi bruke den til å sjekke at alle keys er skrevet riktig i courses og lessons?
-// ...og finn ut hvorfor det bare er programmering og musikk under fag
-// ... har det noe med hvor den får hvilke tags den skal vise? Kanskje den prosessen burde bruke keys.md
-//     fra oppgaverepo?
-// Og så kanskje (evt lage eget issue) lage en egen fil med funksjoner der man kan be om forskjellig innhold fra
-// oppgave-repo, slik at man får samlet alle contexts alle steder. Og da kan man lage en "fake" for
-// testene.
-
 export const getTranslateGroup = (state) => {
   const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
   return (groupKey) => {
@@ -64,9 +52,9 @@ export const getTranslateGroup = (state) => {
 
 export const getTranslateTag = (state) => {
   const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
-  console.log('captions', captions);
+  //console.log('captions', captions);
   return (groupKey, tagKey) => {
-    console.log('groupKey, tagKey', groupKey, tagKey);
+    //console.log('groupKey, tagKey', groupKey, tagKey);
     const translatedTag = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).NAME;
     if (!translatedTag) {
       console.warn(`Could not translate tag with groupKey '${groupKey}' and tagKey '${tagKey}'`);
