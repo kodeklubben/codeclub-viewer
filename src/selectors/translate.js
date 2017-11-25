@@ -29,7 +29,7 @@ export const getTranslator = (state) => {
     if (cap && replacements) {
       for (let repKey in replacements) {
         if (replacements.hasOwnProperty(repKey)) {
-          const pattern = new RegExp('\\\{\\\{' + repKey + '\\\}\\\}', 'gm'); // g=global, m=multiline
+          const pattern = new RegExp('{{' + repKey + '}}', 'gm'); // g=global, m=multiline
           cap = cap.replace(pattern, replacements[repKey]);
         }
       }

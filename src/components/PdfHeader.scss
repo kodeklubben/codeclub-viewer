@@ -1,0 +1,18 @@
+@import '../styles/variables.scss';
+
+.container {
+  width: 100%;
+  min-height: 50px;
+  background-color: $color-green-light;
+  border-bottom: 1px $color-green-light solid;
+}
+
+.courseIcon {
+  height: 50px;
+  padding: 10px 10px 15px 15px;
+}
+
+.course {
+  font-size: 20px;
+  vertical-align: middle;
+}

@@ -25,8 +25,8 @@ const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
   const path = `${params.course}/${params.lesson}/${params.file}`;
 
-  const bundledLessonContext = require.context('bundleLessons!frontAndContent!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
+  const bundledLessonContext = require.context('bundleLessons!onlyContent!lessonSrc/', true,
+    /^\.\/[^/]*\/[^/]*\/(?!index\.md$)[^/]*\.md/);
   const bundle = bundledLessonContext('./' + path + '.md');
   bundle(result => {
     // How to pass props directly to component,

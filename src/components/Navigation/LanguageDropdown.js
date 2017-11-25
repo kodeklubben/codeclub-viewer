@@ -35,14 +35,15 @@ const LanguageDropdown = ({isStudentMode, language, resetFilter, setLanguage, tr
   const mode = isStudentMode ? 'student' : 'teacher';
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='language-dropdown'
-                    noCaret
-                    pullRight
-                    bsStyle={'language-' + mode}
-                    title={<LanguageItem onlyFlag={true} {...{language, translateTag}}/>}
-                    onSelect={(eventKey) => {
-                      resetFilter('language', eventKey);
-                      setLanguage(eventKey);
-                    }}>
+      noCaret
+      pullRight
+      bsStyle={'language-' + mode}
+      title={<LanguageItem onlyFlag={true} {...{language, translateTag}}/>}
+      onSelect={(eventKey) => {
+        resetFilter('language', eventKey);
+        setLanguage(eventKey);
+      }}>
+
       {
         availableLanguages.map(key =>
           <MenuItem {...{key}} eventKey={key} active={language === key}>
