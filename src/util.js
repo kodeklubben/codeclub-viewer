@@ -9,6 +9,32 @@ export function capitalize(str) {
 }
 
 /**
+ * Returns the filename, like the unix equivalent and path.dirname. Trailing slashes are ignored.
+ *
+ * @path {string} any path
+ * @returns {string} the whole path, except the filename
+ */
+export function basename(path) {
+  if (path === '') { return ''; }
+  const b = path.match(/.*\/([^/]+)\/*$/);
+  return b == null ? path : b[1];
+}
+
+/**
+ * Returns the path except the filename, like the unix equivalent and path.basename. Trailing slashes are ignored.
+ *
+ * @path {string} any path
+ * @returns {string} only the filename
+ */
+export function dirname(path) {
+  if (path.match(/^\/+$/)) { return '/'; }
+  const b = path.match(/(.*)\/[^/]+\/*$/);
+  return b == null ? '.' : (b[1] === '' ? '/' : b[1]);
+}
+
+
+
+/**
  * Get tags from all lessons and external courses
  * Takes any number of contexts as argument
  * @returns {Object} tags
@@ -133,6 +159,7 @@ export function getLessonIntro(lesson) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
+    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(lesson) + '/$2$3');
   }
   return (picture || '') + (text || '');
 }

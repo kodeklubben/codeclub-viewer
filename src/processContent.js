@@ -1,9 +1,3 @@
-// TODO:
-//  - if possible, make webpack preprocess the HTML.
-//    - replace classnames with locally scoped css-module class names
-//    - insert scratch blocks if possible
-//  - activate the rest of Lesson.scss (compare with kodeklubben.github.io)
-
 // Structure of replaceTags:
 // {
 //   <oldtag>: {
