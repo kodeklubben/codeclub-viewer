@@ -145,8 +145,8 @@ export function getCourseInfoMarkup(courseName, language) {
   return null;
 }
 
-export function getLessonIntro(lesson) {
-  let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
+export function getLessonIntro(path) {
+  let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
   const p = lessonContent.indexOf('<p>');
@@ -159,7 +159,7 @@ export function getLessonIntro(lesson) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
-    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(lesson) + '/$2$3');
+    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(path) + '/$2$3');
   }
   return (picture || '') + (text || '');
 }
