@@ -10,9 +10,6 @@ import {
   arrayToObject,
 } from '../src/util';
 
-
-
-
 describe('util', () => {
 
   describe('capitalize', () => {
@@ -22,10 +19,6 @@ describe('util', () => {
 
       expect(capitalize(text)).to.equal('A random string');
     });
-  });
-
-  describe('getCourses', () => {
-
   });
 
   ///////////////////////////////////

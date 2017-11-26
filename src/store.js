@@ -1,12 +1,11 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getLessons, createCheckboxesKey, arrayToObject} from './util';
+import {getInitialFilter, getLessons, createCheckboxesKey} from './util';
 import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
   setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
-import {getFilterkeys} from './lessonrepo_data';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^/]*\/logo-black\.png/);
 const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/index\.md/);
@@ -48,17 +47,8 @@ store.dispatch(setWelcomeBox(initialWelcomeBox));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setLastLesson(initialLastLesson));
 
-const filterKeys = getFilterkeys();
-// Convert filterKeys { groupKey1: [tagKey1, tagKey2, ...], groupKey2: [tagKey1, tagKey2, ...] }
-// to filter { groupKey1: { tagKey1: false, tagKey2: false, ...}, groupKey2: { tagKey1: false, tagKey2: false, ...} }
-let filter = Object.keys(filterKeys).reduce( (result, groupKey) => {
-  result[groupKey] = arrayToObject(filterKeys[groupKey]);
-  return result;
-}, new Map()); // Use Map instead of Object to ensure correct order of tags
-filter.language[initialLanguage] = true;
+let filter = getInitialFilter(initialLanguage);
 store.dispatch(setFilter(filter));
-
-// 1) Check that courses and lessons don't have tags not specified in keys.md
 
 for (let groupKey of Object.keys(filter)) {
   store.dispatch(collapseFilterGroup(groupKey, true));

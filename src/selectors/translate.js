@@ -52,9 +52,7 @@ export const getTranslateGroup = (state) => {
 
 export const getTranslateTag = (state) => {
   const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
-  //console.log('captions', captions);
   return (groupKey, tagKey) => {
-    //console.log('groupKey, tagKey', groupKey, tagKey);
     const translatedTag = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).NAME;
     if (!translatedTag) {
       console.warn(`Could not translate tag with groupKey '${groupKey}' and tagKey '${tagKey}'`);

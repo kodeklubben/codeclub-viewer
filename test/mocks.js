@@ -1,6 +1,6 @@
 import mock from 'mock-require';
 
-mock('onlyFrontmatter!lessonFiltertags/keys.md', {
+const keys_md = {
   frontmatter: {
     language: ['nb', 'nn', 'en'],
     topic: ['app', 'electronics', 'web'],
@@ -9,7 +9,9 @@ mock('onlyFrontmatter!lessonFiltertags/keys.md', {
     platform: ['windows', 'mac', 'browser'],
     category: ['create game', 'create app'],
     created: ['2016'],
-    noting: [],
+    nothing: [],
     sometag: ['tag1', 'tag2'],
   }
-});
+};
+
+mock('onlyFrontmatter!lessonFiltertags/keys.md', keys_md);

@@ -1,4 +1,39 @@
-import {getFilterkeys} from './lessonrepo_data';
+/**
+ * Returns all valid filter groupKeys and tagKeys, converted to lowercase.
+ * @returns {object}: {
+ *     groupKey1: [tagKey1, tagKey2, ...],
+ *     groupKey2: [tagKey1, tagKey2, ...],
+ *  }
+ */
+export function getFilterkeys() {
+  const filterkeys = require('onlyFrontmatter!lessonFiltertags/keys.md').frontmatter;
+  return Object.keys(filterkeys).reduce( (result, groupKey) => {
+    result[groupKey.toLowerCase()] = filterkeys[groupKey].map(tagKey => tagKey.toLowerCase());
+    return result;
+  }, {});
+}
+
+/**
+ * Returns filterkeys, but where each group is a Map instead of an array.
+ * If a valid initialLanguage is given, set it to true/checked.
+ * Note that we use Map instead of object for each group to ensure correct ordering of tags.
+ * @returns {object}: {
+ *     groupKey1: Map({ tagKey1: false, tagKey2: false, ...}),
+ *     groupKey2: Map({ tagKey1: false, tagKey2: false, ...}),
+ *     ...
+ *   }
+ */
+export function getInitialFilter(initialLanguage) {
+  const filterkeys = getFilterkeys();
+  const filter = Object.keys(filterkeys).reduce( (result, groupKey) => {
+    result[groupKey] = arrayToObject(filterkeys[groupKey]);
+    return result;
+  }, new Map()); // Use Map instead of Object to ensure correct order of tags
+  if ((filterkeys.language || []).indexOf(initialLanguage) !== -1) {
+    filter.language[initialLanguage] = true;
+  }
+  return filter;
+}
 
 /**
  * Makes first character in str upper case
@@ -125,17 +160,17 @@ const getReadmePath = (readmeContext, language, path) => {
 export function cleanseTags(tags, src) {
   if (tags == null) return {};
 
-  const filterKeys = getFilterkeys();
+  const filterkeys = getFilterkeys();
 
   return Object.keys(tags).reduce((result, groupKey) => {
     const groupKeyLC = groupKey.toLowerCase();
-    if (Object.keys(filterKeys).indexOf(groupKeyLC) === -1) {
+    if (Object.keys(filterkeys).indexOf(groupKeyLC) === -1) {
       console.warn('Ignoring invalid group ' + groupKey + ' in ' + src);
       return result;
     }
 
     let tagsInGroup = fixNonArrayTagList(tags[groupKey]).filter( (tagKey) => {
-      const isValid = tagKey.length > 0 && filterKeys[groupKeyLC].indexOf(tagKey.toLowerCase()) !== -1;
+      const isValid = tagKey.length > 0 && filterkeys[groupKeyLC].indexOf(tagKey.toLowerCase()) !== -1;
       if (!isValid) {
         console.warn('Ignoring invalid tag ' + tagKey + ' in group ' + groupKey + ' in ' + src);
       }
