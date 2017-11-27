@@ -5,6 +5,9 @@ import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import AutoAffix from 'react-overlays/lib/AutoAffix';
+import cx from 'classnames';
+
 import styles from './PlaylistPage.scss';
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
@@ -18,49 +21,48 @@ import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
 const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
-
-  const lessonLists = levels.map(level =>
-    <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
-
+  const lessonLists = levels.map(level => <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
   const filter = <LessonFilter courseName={params.course}/>;
+  const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
+  const courseInfo = <CourseInfo courseName={params.course}/>;
+  const hasPlaylists = !!Object.keys(playlists).length;
 
-  const playlistsAndLessons =
-    <div>
-      <PlaylistNavigation {...{playlists}}/>
-      {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
-    </div>;
-
-  const jumpTo =
-    <div>
-      {levels.length > 0 ? <LevelNavigation {...{levels}}/> : null}
-    </div>;
-
-  const courseInfo =
-    <CourseInfo courseName={params.course}/>;
-
-  // Title with course name and get started button
-  const heading =
-    <Row>
-      <Col xs={12} sm={6} smOffset={3}>
-        <h1>{capitalize(params.course)} {t('playlist.lessons')}</h1>
-      </Col>
-    </Row>;
-
-  const body =
-    <Row>
-      <Col>
-        <Col xs={12} smHidden mdHidden lgHidden>{courseInfo}</Col>
-        <Col xs={12} sm={3} className={styles.topMargin}>{filter}</Col>
-        <Col xs={12} sm={3} smPush={6} className={styles.topMargin}>{jumpTo}</Col>
-        <Col xs={12} sm={6} smPull={3}><Col xsHidden>{courseInfo}</Col>{playlistsAndLessons}</Col>
-      </Col>
-    </Row>;
+  let thispage = null;
+  const jumpToAffixed = jumpTo ?
+    <Col xsHidden sm={3} className={cx(styles.jumpTo, {[styles.topMargin]: lessonLists.length})}>
+      <AutoAffix viewportOffsetTop={15} container={() => thispage}>
+        {jumpTo}
+      </AutoAffix>
+    </Col> : null;
 
   return (
     <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
-      <Grid fluid={true}>
-        {heading}
-        {body}
+      <Grid fluid={true} ref={grid => thispage = grid}>
+
+        <Row>
+          <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
+          <Col xs={12}>{courseInfo}</Col>
+        </Row>
+
+        {hasPlaylists ?
+          <Row>
+            <Col xs={12} sm={lessonLists.length ? 9 : 12}><PlaylistNavigation {...{playlists}}/></Col>
+            {jumpToAffixed}
+          </Row>
+          : null}
+
+        <Row>
+          <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
+          <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
+          <Col xs={12} sm={6}>
+            {lessonLists.length ?
+              lessonLists :
+              <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
+            }
+          </Col>
+          {hasPlaylists ? null : jumpToAffixed}
+        </Row>
+
       </Grid>
     </DocumentTitle>
   );

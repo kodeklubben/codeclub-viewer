@@ -4,17 +4,21 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DocumentTitle from 'react-document-title';
 
 import {getTranslator} from '../selectors/translate';
+import PdfHeader from '../components/PdfHeader';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
 import styles from './App.scss';
 import '../styles/customBootstrapStyles';
 
-const App = ({t, params, children}) => {
+const App = ({t, params, location, children}) => {
+  // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
+  const renderPdf = Object.keys(location.query).indexOf('pdf') !== -1;
+
   return <DocumentTitle title={t('title.codeclub')}>
     <div className={styles.appContainer}>
-      <NavBar {...{params}}/>
+      {renderPdf ? <PdfHeader {...{params}}/> : <NavBar {...{params}}/>}
       {children}
-      <Footer/>
+      {renderPdf ? null : <Footer/>}
     </div>
   </DocumentTitle>;
 };
@@ -22,6 +26,9 @@ const App = ({t, params, children}) => {
 App.propTypes = {
   // ownProps
   params: PropTypes.object,
+  location: PropTypes.shape({
+    query: PropTypes.object.isRequired,
+  }).isRequired,
   children: PropTypes.object,
 
   // mapStateToProps
