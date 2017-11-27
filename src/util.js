@@ -71,22 +71,30 @@ export function getInitialFilter(initialLanguage) {
 
 export function getLessons(lessonContext, readmeContext, courseContext) {
   const paths = lessonContext.keys();
+  const availableLanguages = getAvailableLanguages();
 
   return paths.reduce((res, path) => {
-    // Course name is between './' and second '/'
-    const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
-    const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
-
-    const courseFrontmatter = courseContext(coursePath).frontmatter;
     const lessonFrontmatter = lessonContext(path).frontmatter;
-
     const language = lessonFrontmatter.language;
-    const languageTags = language ? {language: [language]} : {};
+    if (!language) {
+      console.warn('Skipping lesson ' + path + ' since it is missing language.');
+      return res;
+    }
+    if (availableLanguages.indexOf(language) === -1) {
+      console.warn('Hiding lesson ' + path + ' since it uses a language that has not been activated in keys.md yet.');
+      return res;
+    }
 
-    // Inherit tags from course, and override with lessonTags
+    // Course name is between './' and second '/'
+    const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
+    const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
+    const courseFrontmatter = courseContext(coursePath).frontmatter;
+
+    // Inherit tags from course, override with lessonTags, and add lessonTag
     const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
-    const lessonTags = cleanseTags({...lessonFrontmatter.tags, ...languageTags}, 'lesson ' + path);
-    const tags = {...courseTags, ...lessonTags};
+    const lessonTags = cleanseTags(lessonFrontmatter.tags, 'lesson ' + path);
+    const languageTag = language ? {language: [language]} : {};
+    const tags = {...courseTags, ...lessonTags, ...languageTag};
 
     // Gets the valid readmePath for the lesson, if it exists
     const readmePath = getReadmePath(readmeContext, language, path);
@@ -114,21 +122,28 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfoMarkup(courseName, language) {
-  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
+  const req = require.context('frontAndContent!lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
   const withLanguage = `./${courseName}/index_${language}.md`;
   const withoutLanguage = `./${courseName}/index.md`;
 
-  const hasFile = (path) => req.keys().indexOf(path) !== -1;
+  const hasValidFile = (path) => {
+    if (req.keys().indexOf(path) === -1) { return false; }
+    const courseLanguage = req(path).frontmatter.language;
+    if (!courseLanguage) {
+      console.warn('Not using course info ' + path + ' since it is missing language.');
+      return false;
+    }
+    return courseLanguage === language;
+  };
   const createMarkupFrom = (path) => ({__html: req(path).content});
 
-  if (hasFile(withLanguage)) {
-    return createMarkupFrom(withLanguage);
+  for (const path of [withLanguage, withoutLanguage]) {
+    if (hasValidFile(path)) {
+      return createMarkupFrom(path);
+    }
   }
 
-  if (hasFile(withoutLanguage)) {
-    return createMarkupFrom(withoutLanguage);
-  }
-
+  console.warn('The course ' + courseName + ' has no course info (index.js) in language ' + language);
   return null;
 }
 
@@ -161,18 +176,28 @@ export function getLessonIntro(path) {
 **/
 const getReadmePath = (readmeContext, language, path) => {
   path = path.slice(1, path.lastIndexOf('/'));
-  const readmeContextKeys = readmeContext.keys();
   const readmePathAndLanguageCode = path + '/README_' + language;
   const readmePathNoLanguageCode = path + '/README';
 
-  if(readmeContextKeys.indexOf('.' + readmePathAndLanguageCode + '.md') !== -1){
+  const hasValidFile = (shortPath) => {
+    const fullPath = '.' + shortPath + '.md';
+    if (readmeContext.keys().indexOf(fullPath) === -1) { return false; }
+    const readmeLanguage = readmeContext(fullPath).frontmatter.language;
+    if (!readmeLanguage) {
+      console.warn('Not using README ' + fullPath + ' since it is missing language.');
+      return false;
+    }
+    return (readmeLanguage === language);
+  };
+
+  if (hasValidFile(readmePathAndLanguageCode)) {
     return readmePathAndLanguageCode;
   }
-  else if(readmeContextKeys.indexOf('.' + readmePathNoLanguageCode + '.md') !== -1){
-    if(language === readmeContext('.' + readmePathNoLanguageCode + '.md').frontmatter.language){
-      return readmePathNoLanguageCode;
-    }
+  if (hasValidFile(readmePathNoLanguageCode)) {
+    return readmePathNoLanguageCode;
   }
+
+  // If the lesson has no README (teacher instruction), just return an empty string.
   return '';
 };
 
@@ -283,7 +308,7 @@ export function removeHtmlFileEnding(lessonPage) {
 * All available languages must be defined here
 * @returns {Array} An array of available languages
 */
-export const getAvailableLanguages = () => ['nb', 'nn',/* 'sv', 'da',*/ 'en'];
+export const getAvailableLanguages = () => getFilterkeys().language;
 
 /**
 * Returns the readmePath of a lesson with the given lessonPath
