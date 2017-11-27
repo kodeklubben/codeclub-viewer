@@ -81,7 +81,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       return res;
     }
     if (availableLanguages.indexOf(language) === -1) {
-      console.warn('Hiding lesson ' + path + ' since it uses a language that has not been activated in keys.md yet.');
+      // Hiding lesson since it uses a language that is not available (yet)
       return res;
     }
 
@@ -190,11 +190,10 @@ const getReadmePath = (readmeContext, language, path) => {
     return (readmeLanguage === language);
   };
 
-  if (hasValidFile(readmePathAndLanguageCode)) {
-    return readmePathAndLanguageCode;
-  }
-  if (hasValidFile(readmePathNoLanguageCode)) {
-    return readmePathNoLanguageCode;
+  for (const shortPath of [readmePathAndLanguageCode, readmePathNoLanguageCode]) {
+    if (hasValidFile(shortPath)) {
+      return shortPath;
+    }
   }
 
   // If the lesson has no README (teacher instruction), just return an empty string.
