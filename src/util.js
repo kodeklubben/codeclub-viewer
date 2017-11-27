@@ -1,4 +1,38 @@
 /**
+ * Makes first character in str upper case
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+export function capitalize(str) {
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
+}
+
+/**
+ * Returns the filename, like the unix equivalent and path.dirname. Trailing slashes are ignored.
+ *
+ * @path {string} any path
+ * @returns {string} the whole path, except the filename
+ */
+export function basename(path) {
+  if (path === '') { return ''; }
+  const b = path.match(/.*\/([^/]+)\/*$/);
+  return b == null ? path : b[1];
+}
+
+/**
+ * Returns the path except the filename, like the unix equivalent and path.basename. Trailing slashes are ignored.
+ *
+ * @path {string} any path
+ * @returns {string} only the filename
+ */
+export function dirname(path) {
+  if (path.match(/^\/+$/)) { return '/'; }
+  const b = path.match(/(.*)\/[^/]+\/*$/);
+  return b == null ? '.' : (b[1] === '' ? '/' : b[1]);
+}
+
+/**
  * Returns all valid filter groupKeys and tagKeys, converted to lowercase.
  * @returns {object}: {
  *     groupKey1: [tagKey1, tagKey2, ...],
@@ -7,7 +41,7 @@
  */
 export function getFilterkeys() {
   const filterkeys = require('onlyFrontmatter!lessonFiltertags/keys.md').frontmatter;
-  return Object.keys(filterkeys).reduce( (result, groupKey) => {
+  return Object.keys(filterkeys).reduce((result, groupKey) => {
     result[groupKey.toLowerCase()] = filterkeys[groupKey].map(tagKey => tagKey.toLowerCase());
     return result;
   }, {});
@@ -33,16 +67,6 @@ export function getInitialFilter(initialLanguage) {
     filter.language[initialLanguage] = true;
   }
   return filter;
-}
-
-/**
- * Makes first character in str upper case
- *
- * @param {string} str
- * @returns {string}
- */
-export function capitalize(str) {
-  return str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
 }
 
 export function getLessons(lessonContext, readmeContext, courseContext) {
@@ -108,8 +132,8 @@ export function getCourseInfoMarkup(courseName, language) {
   return null;
 }
 
-export function getLessonIntro(lesson) {
-  let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
+export function getLessonIntro(path) {
+  let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
   const p = lessonContent.indexOf('<p>');
@@ -122,6 +146,7 @@ export function getLessonIntro(lesson) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
+    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(path) + '/$2$3');
   }
   return (picture || '') + (text || '');
 }
