@@ -123,6 +123,11 @@
   transition: 0.1s;
 }
 
+.btn-pdf {
+  @include button-variant(#fff, $color-green-median, $color-green-dark);
+  transition: 0.1s;
+}
+
 .btn-sm-fixed-width {
   width: 6em;
 }

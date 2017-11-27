@@ -13,11 +13,11 @@ import scrollToComponent from 'react-scroll-to-component';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map(level => {
-    const onClick=() => scrollToComponent(document.getElementById('lessonlist-level-' + level));
+    const onClick=() => scrollToComponent(document.getElementById('lessonlist-level-' + level), {align: 'top'});
     return (
       <ListGroupItem key={level} {...{onClick}}>
         <span className={styles.name}>
-          <LevelIcon level={level}/>{t('general.levels.' + level)}
+          <LevelIcon {...{level}}/>{t('general.levels.' + level)}
         </span>
       </ListGroupItem>
     );

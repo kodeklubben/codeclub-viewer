@@ -9,6 +9,32 @@ export function capitalize(str) {
 }
 
 /**
+ * Returns the filename, like the unix equivalent and path.dirname. Trailing slashes are ignored.
+ *
+ * @path {string} any path
+ * @returns {string} the whole path, except the filename
+ */
+export function basename(path) {
+  if (path === '') { return ''; }
+  const b = path.match(/.*\/([^/]+)\/*$/);
+  return b == null ? path : b[1];
+}
+
+/**
+ * Returns the path except the filename, like the unix equivalent and path.basename. Trailing slashes are ignored.
+ *
+ * @path {string} any path
+ * @returns {string} only the filename
+ */
+export function dirname(path) {
+  if (path.match(/^\/+$/)) { return '/'; }
+  const b = path.match(/(.*)\/[^/]+\/*$/);
+  return b == null ? '.' : (b[1] === '' ? '/' : b[1]);
+}
+
+
+
+/**
  * Get tags from all lessons and external courses
  * Takes any number of contexts as argument
  * @returns {Object} tags
@@ -101,7 +127,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfoMarkup(courseName, language) {
-  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^\/]*\/index[^.]*\.md/);
+  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
   const withLanguage = `./${courseName}/index_${language}.md`;
   const withoutLanguage = `./${courseName}/index.md`;
 
@@ -119,8 +145,8 @@ export function getCourseInfoMarkup(courseName, language) {
   return null;
 }
 
-export function getLessonIntro(lesson) {
-  let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
+export function getLessonIntro(path) {
+  let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
   const p = lessonContent.indexOf('<p>');
@@ -133,6 +159,7 @@ export function getLessonIntro(lesson) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
+    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(path) + '/$2$3');
   }
   return (picture || '') + (text || '');
 }
@@ -211,31 +238,15 @@ export function fixNonArrayTagList(tagItems) {
 /**
  * Return true only if tags of a lesson contains all the checked tags in the filter
  *
- * @param {Object} lessonTags
- * @param {Object} filter
+ * @param {Object} lessonTags e.g. {topic: ['game'], subject: ['science']}
+ * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
  * @returns {boolean}
  */
 export function tagsMatchFilter(lessonTags, filter) {
-  // lessonTags is e.g. {topic: ['game'], subject: ['science']}
-  // filter is e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
+  const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
+  const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
 
-  // Getting pre-defined OR-tagged groups
-  const OrTaggedGroups = getOrTaggedGroups();
-
-  // Sorts out which OR-tagged groups that have corresponding lessons
-  let OrTags = {};
-  OrTaggedGroups.map(groupKey => {
-    OrTags[groupKey] = filter[groupKey] ? Object.keys(filter[groupKey]) : [];
-  });
-  const OrTagsAsArray = Object.keys(OrTags);
-
-  // Keeps track of which tags for each OR-tagged group that is tagged
-  let checkedOrTags = {};
-  OrTagsAsArray.map(groupKey => {
-    checkedOrTags[groupKey] = OrTags[groupKey].filter(tag => filter[groupKey][tag]);
-  });
-
-  for (const groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
+  for (let groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
     const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
     const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
@@ -244,15 +255,15 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    // OR-tests OR-tagged groups
-    if(OrTagsAsArray.indexOf(groupKey) !== -1 && checkedOrTags[groupKey].length !== 0
-      && checkedOrTags[groupKey].filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
+    // OR-tests the language group
+    if(groupKey === 'language' && checkedLanguageTags.length !== 0
+      && checkedLanguageTags.filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
       return false;
     }
     // AND-tests everything else
     for (const checkedTagKey of checkedTagKeys) {
       // lessonGroup doesn't contain checkedFilterTag
-      if (OrTagsAsArray.indexOf(groupKey) === -1 && lessonGroup.indexOf(checkedTagKey) === -1) {
+      if (groupKey !== 'language' && lessonGroup.indexOf(checkedTagKey) === -1) {
         return false;
       }
     }
@@ -273,14 +284,6 @@ export function removeHtmlFileEnding(lessonPage) {
 * @returns {Array} An array of available languages
 */
 export const getAvailableLanguages = () => ['nb', 'nn',/* 'sv', 'da',*/ 'en'];
-
-/**
-* Returns groupNames with tags that should be considered as logical OR in the filter.
-* @returns {Array}
-*/
-export const getOrTaggedGroups = () => {
-  return ['language'];
-};
 
 /**
 * Returns the readmePath of a lesson with the given lessonPath

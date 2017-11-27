@@ -33,8 +33,8 @@ render(
   <Provider store={store}>
     <WithStylesContext onInsertCss={onInsertCss}>
       <Router routes={routes}
-              history={browserHistory}
-              render={applyRouterMiddleware(useScroll())}
+        history={browserHistory}
+        render={applyRouterMiddleware(useScroll())}
       />
     </WithStylesContext>
   </Provider>,

@@ -21,21 +21,22 @@ const CourseItem = ({course, t, language}) => {
   return (
     <div>
       {isExternal ?
-      <a className={styles.courseItem} href={course.externalLink} target='_blank'>
-        <img className={styles.courseLogo} src={course.iconPath}/>
-        <span className={styles.courseName}>{course.name}
-          {tooltipButton}
-          <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
-        </span>
-      </a>
-      :
-      <Link className={styles.courseItem} to={course.path}>
-        <img className={styles.courseLogo} src={course.iconPath}/>
-        <span className={styles.courseName}>{course.name}
-          {tooltipButton}
-        </span>
-        <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
-      </Link>}
+        <a className={styles.courseItem} href={course.externalLink} target='_blank'>
+          <img className={styles.courseLogo} src={course.iconPath}/>
+          <span className={styles.courseName}>{course.name}
+            {tooltipButton}
+            <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
+          </span>
+        </a>
+        :
+        <Link className={styles.courseItem} to={course.path}>
+          <img className={styles.courseLogo} src={course.iconPath}/>
+          <span className={styles.courseName}>{course.name}
+            {tooltipButton}
+          </span>
+          <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
+        </Link>
+      }
     </div>);
 };
 
