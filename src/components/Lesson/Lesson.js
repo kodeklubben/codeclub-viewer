@@ -22,7 +22,6 @@ import LessonButton from './LessonButton';
 import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
 import PdfButton from './PdfButton';
-import PrintButton from './PrintButton';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -86,7 +85,6 @@ const Lesson = React.createClass({
           {author}
           {translator}
           <PrintInfo {...{t, course: params.course, tags}}/>
-          <PrintButton/>
           {resetButton}
           {instructionButton}
           {pdfButton}
