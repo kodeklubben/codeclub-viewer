@@ -82,6 +82,10 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     }
     if (availableLanguages.indexOf(language) === -1) {
       // Hiding lesson since it uses a language that is not available (yet)
+      if (typeof document === 'undefined') { // Only show warning when rendering on server
+        console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
+          ', which is not available. Skipping lesson.');
+      }
       return res;
     }
 
