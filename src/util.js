@@ -9,71 +9,96 @@ export function capitalize(str) {
 }
 
 /**
- * Get tags from all lessons and external courses
- * Takes any number of contexts as argument
- * @returns {Object} tags
- */
-export function getTags() {
-  return [...arguments].reduce((res, context) => (
-    {...res, ...extractTags(context)}
-  ), {});
-}
-
-/**
- * Get all tags from lesson or courses in context
- * @param context
- * @returns {Object} tags
- */
-function extractTags(context) {
-  return (context.keys()).reduce((res, path) => {
-    const fm = context(path).frontmatter;
-    const tags = fm.indexed === false ? {} : cleanseTags(fm.tags, true);
-    return mergeTags(res, tags);
-  }, {});
-}
-
-/**
+ * Returns the filename, like the unix equivalent and path.dirname. Trailing slashes are ignored.
  *
- * @param {Object} tagsA
- * @param {Object} tagsB
- * @returns {Object} mergedTags
+ * @path {string} any path
+ * @returns {string} the whole path, except the filename
  */
-export function mergeTags(tagsA, tagsB){
-  if (Object.keys(tagsA).length === 0) { return tagsB; }
-  if (Object.keys(tagsB).length === 0) { return tagsA; }
-  const groups = [...new Set(Object.keys(tagsA).concat(Object.keys(tagsB)))];
-  return groups.reduce((res, groupKey) => {
-    const tagsFromA = tagsA[groupKey];
-    const tagsFromB = tagsB[groupKey];
-    return {...res, [groupKey]: {...tagsFromA, ...tagsFromB}};
+export function basename(path) {
+  if (path === '') { return ''; }
+  const b = path.match(/.*\/([^/]+)\/*$/);
+  return b == null ? path : b[1];
+}
+
+/**
+ * Returns the path except the filename, like the unix equivalent and path.basename. Trailing slashes are ignored.
+ *
+ * @path {string} any path
+ * @returns {string} only the filename
+ */
+export function dirname(path) {
+  if (path.match(/^\/+$/)) { return '/'; }
+  const b = path.match(/(.*)\/[^/]+\/*$/);
+  return b == null ? '.' : (b[1] === '' ? '/' : b[1]);
+}
+
+/**
+ * Returns all valid filter groupKeys and tagKeys, converted to lowercase.
+ * @returns {object}: {
+ *     groupKey1: [tagKey1, tagKey2, ...],
+ *     groupKey2: [tagKey1, tagKey2, ...],
+ *  }
+ */
+export function getFilterkeys() {
+  const filterkeys = require('onlyFrontmatter!lessonFiltertags/keys.md').frontmatter;
+  return Object.keys(filterkeys).reduce((result, groupKey) => {
+    result[groupKey.toLowerCase()] = filterkeys[groupKey].map(tagKey => tagKey.toLowerCase());
+    return result;
   }, {});
+}
+
+/**
+ * Returns filterkeys, but where each group is a Map instead of an array.
+ * If a valid initialLanguage is given, set it to true/checked.
+ * Note that we use Map instead of object for each group to ensure correct ordering of tags.
+ * @returns {object}: {
+ *     groupKey1: Map({ tagKey1: false, tagKey2: false, ...}),
+ *     groupKey2: Map({ tagKey1: false, tagKey2: false, ...}),
+ *     ...
+ *   }
+ */
+export function getInitialFilter(initialLanguage) {
+  const filterkeys = getFilterkeys();
+  const filter = Object.keys(filterkeys).reduce( (result, groupKey) => {
+    result[groupKey] = arrayToObject(filterkeys[groupKey]);
+    return result;
+  }, new Map()); // Use Map instead of Object to ensure correct order of tags
+  if ((filterkeys.language || []).indexOf(initialLanguage) !== -1) {
+    filter.language[initialLanguage] = true;
+  }
+  return filter;
 }
 
 export function getLessons(lessonContext, readmeContext, courseContext) {
   const paths = lessonContext.keys();
+  const availableLanguages = getAvailableLanguages();
 
   return paths.reduce((res, path) => {
-    // Course name is between './' and second '/'
-    const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
-    const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
-
-    const courseFrontmatter = courseContext(coursePath).frontmatter;
-    let lessonFrontmatter = lessonContext(path).frontmatter;
-
+    const lessonFrontmatter = lessonContext(path).frontmatter;
     const language = lessonFrontmatter.language;
-
-    if (language){
-      if (lessonFrontmatter.tags) {
-        lessonFrontmatter.tags['language'] = language;
-      } else {
-        lessonFrontmatter.tags = {language: [language]};
+    if (!language) {
+      console.warn('Skipping lesson ' + path + ' since it is missing language.');
+      return res;
+    }
+    if (availableLanguages.indexOf(language) === -1) {
+      // Hiding lesson since it uses a language that is not available (yet)
+      if (typeof document === 'undefined') { // Only show message when rendering on server
+        console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
+          ', which is not available. Skipping lesson.');
       }
+      return res;
     }
 
-    // Inherit tags from course, and override with lessonTags
-    const courseTags = cleanseTags(courseFrontmatter.tags, false);
-    const lessonTags = cleanseTags(lessonFrontmatter.tags, false);
-    const tags = {...courseTags, ...lessonTags};
+    // Course name is between './' and second '/'
+    const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
+    const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
+    const courseFrontmatter = courseContext(coursePath).frontmatter;
+
+    // Inherit tags from course, override with lessonTags, and add lessonTag
+    const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
+    const lessonTags = cleanseTags(lessonFrontmatter.tags, 'lesson ' + path);
+    const languageTag = language ? {language: [language]} : {};
+    const tags = {...courseTags, ...lessonTags, ...languageTag};
 
     // Gets the valid readmePath for the lesson, if it exists
     const readmePath = getReadmePath(readmeContext, language, path);
@@ -101,26 +126,33 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfoMarkup(courseName, language) {
-  const req = require.context('onlyContent!lessonSrc/', true,  /^\.\/[^\/]*\/index[^.]*\.md/);
+  const req = require.context('frontAndContent!lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
   const withLanguage = `./${courseName}/index_${language}.md`;
   const withoutLanguage = `./${courseName}/index.md`;
 
-  const hasFile = (path) => req.keys().indexOf(path) !== -1;
+  const hasValidFile = (path) => {
+    if (req.keys().indexOf(path) === -1) { return false; }
+    const courseLanguage = req(path).frontmatter.language;
+    if (!courseLanguage) {
+      console.warn('Not using course info ' + path + ' since it is missing language.');
+      return false;
+    }
+    return courseLanguage === language;
+  };
   const createMarkupFrom = (path) => ({__html: req(path).content});
 
-  if (hasFile(withLanguage)) {
-    return createMarkupFrom(withLanguage);
+  for (const path of [withLanguage, withoutLanguage]) {
+    if (hasValidFile(path)) {
+      return createMarkupFrom(path);
+    }
   }
 
-  if (hasFile(withoutLanguage)) {
-    return createMarkupFrom(withoutLanguage);
-  }
-
+  console.warn('The course ' + courseName + ' has no course info (index.js) in language ' + language);
   return null;
 }
 
-export function getLessonIntro(lesson) {
-  let lessonContent = require('onlyContent!lessonSrc/' + lesson + '.md').content;
+export function getLessonIntro(path) {
+  let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
   const p = lessonContent.indexOf('<p>');
@@ -133,8 +165,9 @@ export function getLessonIntro(lesson) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
+    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(path) + '/$2$3');
   }
-  return picture + text;
+  return (picture || '') + (text || '');
 }
 
 ///////////////////////////////////
@@ -147,49 +180,71 @@ export function getLessonIntro(lesson) {
 **/
 const getReadmePath = (readmeContext, language, path) => {
   path = path.slice(1, path.lastIndexOf('/'));
-  const readmeContextKeys = readmeContext.keys();
   const readmePathAndLanguageCode = path + '/README_' + language;
   const readmePathNoLanguageCode = path + '/README';
 
-  if(readmeContextKeys.indexOf('.' + readmePathAndLanguageCode + '.md') !== -1){
-    return readmePathAndLanguageCode;
-  }
-  else if(readmeContextKeys.indexOf('.' + readmePathNoLanguageCode + '.md') !== -1){
-    if(language === readmeContext('.' + readmePathNoLanguageCode + '.md').frontmatter.language){
-      return readmePathNoLanguageCode;
+  const hasValidFile = (shortPath) => {
+    const fullPath = '.' + shortPath + '.md';
+    if (readmeContext.keys().indexOf(fullPath) === -1) { return false; }
+    const readmeLanguage = readmeContext(fullPath).frontmatter.language;
+    if (!readmeLanguage) {
+      console.warn('Not using README ' + fullPath + ' since it is missing language.');
+      return false;
+    }
+    return (readmeLanguage === language);
+  };
+
+  for (const shortPath of [readmePathAndLanguageCode, readmePathNoLanguageCode]) {
+    if (hasValidFile(shortPath)) {
+      return shortPath;
     }
   }
+
+  // If the lesson has no README (teacher instruction), just return an empty string.
   return '';
 };
 
 /**
  * Fix invalid tags
  * @param {Object} tags
- * @param {boolean} toObject
+ * @param {string} src
  * @returns {Object} valid tags
  */
-export function cleanseTags(tags, toObject = false) {
+export function cleanseTags(tags, src) {
   if (tags == null) return {};
 
+  const filterkeys = getFilterkeys();
+
   return Object.keys(tags).reduce((result, groupKey) => {
-    let tagItemsArray = fixNonArrayTagList(tags[groupKey]).filter(item => item.length > 0);
+    const groupKeyLC = groupKey.toLowerCase();
+    if (Object.keys(filterkeys).indexOf(groupKeyLC) === -1) {
+      console.warn('Ignoring invalid group ' + groupKey + ' in ' + src);
+      return result;
+    }
 
-    // Make groupKey and all tags lowerCase
-    tagItemsArray = tagItemsArray.map(tagKey => tagKey.toLowerCase());
-    groupKey = groupKey.toLowerCase();
+    let tagsInGroup = fixNonArrayTagList(tags[groupKey]).filter( (tagKey) => {
+      const isValid = tagKey.length > 0 && filterkeys[groupKeyLC].indexOf(tagKey.toLowerCase()) !== -1;
+      if (!isValid) {
+        console.warn('Ignoring invalid tag ' + tagKey + ' in group ' + groupKey + ' in ' + src);
+      }
+      return isValid;
+    });
 
-    // Ignore tagGroups with no tagItems
-    if (tagItemsArray.length === 0) return result;
+    if (tagsInGroup.length === 0) { return result; } // Ignore tagGroups with no tagItems
 
-    // Add tagItems
-    result[groupKey] = toObject ? convertTagItemsArrayToObject(tagItemsArray) : tagItemsArray;
+    result[groupKey.toLowerCase()] = tagsInGroup.map(tagKey => tagKey.toLowerCase());
     return result;
   }, {});
 }
 
-function convertTagItemsArrayToObject(tagItemsArray) {
-  return tagItemsArray.reduce((res, item) => {
-    res[item] = false;
+/**
+ * Converts and array to object, where the array values becomes the object keys, and the values are 'false'.
+ * @param array
+ * @returns {object}
+ */
+export function arrayToObject(array) {
+  return array.reduce((res, key) => {
+    res[key] = false;
     return res;
   }, {});
 }
@@ -211,31 +266,15 @@ export function fixNonArrayTagList(tagItems) {
 /**
  * Return true only if tags of a lesson contains all the checked tags in the filter
  *
- * @param {Object} lessonTags
- * @param {Object} filter
+ * @param {Object} lessonTags e.g. {topic: ['game'], subject: ['science']}
+ * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
  * @returns {boolean}
  */
 export function tagsMatchFilter(lessonTags, filter) {
-  // lessonTags is e.g. {topic: ['game'], subject: ['science']}
-  // filter is e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
+  const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
+  const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
 
-  // Getting pre-defined OR-tagged groups
-  const OrTaggedGroups = getOrTaggedGroups();
-
-  // Sorts out which OR-tagged groups that have corresponding lessons
-  let OrTags = {};
-  OrTaggedGroups.map(groupKey => {
-    OrTags[groupKey] = filter[groupKey] ? Object.keys(filter[groupKey]) : [];
-  });
-  const OrTagsAsArray = Object.keys(OrTags);
-
-  // Keeps track of which tags for each OR-tagged group that is tagged
-  let checkedOrTags = {};
-  OrTagsAsArray.map(groupKey => {
-    checkedOrTags[groupKey] = OrTags[groupKey].filter(tag => filter[groupKey][tag]);
-  });
-
-  for (const groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
+  for (let groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
     const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
     const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
@@ -244,15 +283,15 @@ export function tagsMatchFilter(lessonTags, filter) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    // OR-tests OR-tagged groups
-    if(OrTagsAsArray.indexOf(groupKey) !== -1 && checkedOrTags[groupKey].length !== 0
-      && checkedOrTags[groupKey].filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
+    // OR-tests the language group
+    if(groupKey === 'language' && checkedLanguageTags.length !== 0
+      && checkedLanguageTags.filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
       return false;
     }
     // AND-tests everything else
     for (const checkedTagKey of checkedTagKeys) {
       // lessonGroup doesn't contain checkedFilterTag
-      if (OrTagsAsArray.indexOf(groupKey) === -1 && lessonGroup.indexOf(checkedTagKey) === -1) {
+      if (groupKey !== 'language' && lessonGroup.indexOf(checkedTagKey) === -1) {
         return false;
       }
     }
@@ -272,15 +311,7 @@ export function removeHtmlFileEnding(lessonPage) {
 * All available languages must be defined here
 * @returns {Array} An array of available languages
 */
-export const getAvailableLanguages = () => ['nb', 'nn',/* 'sv', 'da',*/ 'en'];
-
-/**
-* Returns groupNames with tags that should be considered as logical OR in the filter.
-* @returns {Array}
-*/
-export const getOrTaggedGroups = () => {
-  return ['language'];
-};
+export const getAvailableLanguages = () => getFilterkeys().language;
 
 /**
 * Returns the readmePath of a lesson with the given lessonPath
@@ -391,36 +422,3 @@ export const anyCheckboxTrue = (checkboxes) => {
   }
   return false;
 };
-
-/**
- *
- * @param {function} t translator function
- * @param {string} groupKey
- * @returns {string} Translated filter group name, or blank string if not found.
- */
-export function translateGroup(t, groupKey) {
-  const captionPath = `filter.group.${groupKey}`;
-  const translatedGroupName = t(captionPath);
-  if (translatedGroupName === captionPath) {
-    console.warn(`Could not translate filter group '${captionPath}'`);
-    return '';
-  }
-  return translatedGroupName;
-}
-
-/**
- *
- * @param {function} t translator function
- * @param {string} groupKey
- * @param {string} tagKey
- * @returns {string} Translated filter tag name, or blank string if not found.
- */
-export function translateTag(t, groupKey, tagKey) {
-  const captionPath = `filter.tags_${groupKey}.${tagKey}`;
-  const tagName = t(captionPath);
-  if (tagName === captionPath) {
-    console.warn(`Could not translate filter tag '${captionPath}'`);
-    return '';
-  }
-  return tagName;
-}

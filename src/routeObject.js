@@ -34,14 +34,19 @@ const pathTest = (nextState, replace) => {
   if(path.indexOf('/') !== 0){
     path = '/' + path;
   }
-  if(path.lastIndexOf('/') === path.length-1){
+  if(path.endsWith('/')){
     path = path.slice(0, -1);
   }
   const isReadme = readmeArray.indexOf(path) > -1;
   const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect && !isReadme){
-    replace({pathname:'/PageNotFound', state: path});
+    if (typeof document !== 'undefined') {
+      // Only replace in the browser
+      replace({pathname: '/PageNotFound', state: path});
+    } else {
+      console.error('ERROR: The path', path, 'is not valid!');
+    }
   }
 };
 

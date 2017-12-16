@@ -3,7 +3,7 @@ before_install:
   - git clone --depth=50 https://github.com/kodeklubben/oppgaver.git ../oppgaver
 cache: yarn
 script:
-  - yarn run eslint
-  - yarn run stylelint
-  - yarn run test
-  - ./travis_build_prod.sh
+  - yarn eslint
+  - yarn stylelint
+  - yarn test
+  - ./travis_build.sh

@@ -23,24 +23,24 @@ const Footer = ({t, isStudentMode}) => {
     <div>
       <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
 
-      {isStudentMode ? null :
-        <div>
-          <Row className={styles.center}>
-            <p>{t('footer.contribute')}</p>
-          </Row>
-          <Row className={styles.center}>
-            <a href={url.oppgaver}>
-              <img className={styles.svg} src={require('../../assets/graphics/github-teacher.svg')}/>
-            </a>
-          </Row>
-          <Row>
-            <div className={styles.divider}/>
-          </Row>
-        </div>}
+        {isStudentMode ? null :
+          <div>
+            <Row className={styles.center}>
+              <p>{t('footer.contribute')}</p>
+            </Row>
+            <Row className={styles.center}>
+              <a href={url.oppgaver}>
+                <img className={styles.svg} src={require('../../assets/graphics/github-teacher.svg')}/>
+              </a>
+            </Row>
+            <Row>
+              <div className={styles.divider}/>
+            </Row>
+          </div>}
 
         <Row className={styles.center}>
-            <a className={styles.inline} href={url.kidsakoder}>kidsakoder.no</a>
-            <a className={styles.inline} href={url.archive}>{t('footer.downloadZIP')}</a>
+          <a className={styles.inline} href={url.kidsakoder}>kidsakoder.no</a>
+          <a className={styles.inline} href={url.archive}>{t('footer.downloadZIP')}</a>
         </Row>
         <Row className={styles.center}>
           <a href={url.sparebank} target="_blank">
