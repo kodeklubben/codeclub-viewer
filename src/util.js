@@ -336,7 +336,7 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * @returns {String or null}
 */
 export const getReadmeForMainLanguage = (path, language) => {
-  const req = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
+  const req = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/README(_[a-z]{2})?\.md$/);
   const readmeLanguage = req('./' + path + '.md').frontmatter.language;
   const hasFile = (filePath) => req.keys().indexOf(filePath) !== -1;
   const course = path.substring(0, path.indexOf('/'));
@@ -360,7 +360,7 @@ export const getReadmeForMainLanguage = (path, language) => {
 */
 export const getLessonForMainLanguage = (path, language) => {
   const req = require.context('onlyFrontmatter!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/(?!README(_[a-z]{2})?\.md$)[^\/]*\.md/);
+    /^\.\/[^/]*\/[^/]*\/(?!README(_[a-z]{2})?\.md$)[^/]*\.md/);
   const lessonLanguage = req('./' + path + '.md').frontmatter.language;
   const course = path.substring(0, path.indexOf('/'));
   const lessonFolder = path.substring(path.indexOf(course) + course.length + 1, path.lastIndexOf('/'));

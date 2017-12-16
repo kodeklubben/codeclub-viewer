@@ -40,4 +40,4 @@ const mapStateToProps = (state, {path}) => ({
 
 export default connect(
   mapStateToProps
-  )(withStyles(styles)(MainLanguageButton));
+)(withStyles(styles)(MainLanguageButton));
