@@ -98,7 +98,8 @@ const Lesson = React.createClass({
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
     const pdfButton = <PdfButton lessonfile={params.file}/>;
-    const progress = checkedCheckboxes > 0 ? <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
+    const progress = (checkedCheckboxes > 0 && isStudentMode && !isReadme) ?
+      <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
