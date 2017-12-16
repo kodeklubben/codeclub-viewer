@@ -13,9 +13,9 @@ import processContent from '../../processContent';
 import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
-import {getTranslator} from '../../selectors/translate';
+import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
 import {capitalize, removeHtmlFileEnding,
-  setCheckboxes, anyCheckboxTrue, createCheckboxesKey, translateGroup, translateTag} from '../../util';
+  setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import {setCheckbox, setLastLesson} from '../../action_creators';
@@ -60,18 +60,20 @@ Progress.PropTypes = {
   totalCheckboxes: PropTypes.number.isRequired,
 };
 
-const PrintInfo = ({t, course, tags}) =>
+const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
   <div className={styles.box}>
     <div>{t('lessons.course')} {capitalize(course)}</div>
     {Object.keys(tags).map( group =>
       <div key={group}>
-        {translateGroup(t, group) + ': ' + tags[group].map(tag => translateTag(t, group, tag)).join(', ')}
+        {translateGroup(group) + ': ' + tags[group].map(tag => translateTag(group, tag)).join(', ')}
       </div>
     )}
   </div>;
 
 PrintInfo.PropTypes = {
   t: PropTypes.func.isRequired,
+  translateTag: PropTypes.func.isRequired,
+  translateGroup: PropTypes.func.isRequired,
   course: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
 };
@@ -84,8 +86,11 @@ const Lesson = React.createClass({
     renderToggleButtons();
   },
   render() {
-    const {path, params, lesson, checkedCheckboxes, totalCheckboxes,
-      checkboxes, t, title, level, tags, authorName, translatorName, isReadme, isStudentMode} = this.props;
+    const {
+      path, params, lesson,
+      checkboxes, t, translateTag, translateGroup, checkedCheckboxes, totalCheckboxes,
+      title, level, tags, authorName, translatorName, isReadme, isStudentMode
+    } = this.props;
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
@@ -103,7 +108,7 @@ const Lesson = React.createClass({
           </h1>
           {author}
           {translator}
-          <PrintInfo {...{t, course: params.course, tags}}/>
+          <PrintInfo {...{t, translateTag, translateGroup, course: params.course, tags}}/>
           <PrintButton/>
           {resetButton}
           {instructionButton}
@@ -132,6 +137,8 @@ Lesson.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
+  translateTag: PropTypes.func.isRequired,
+  translateGroup: PropTypes.func.isRequired,
   checkboxes: PropTypes.object,
   title: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
@@ -140,6 +147,8 @@ Lesson.propTypes = {
   translatorName: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
+  checkedCheckboxes: PropTypes.number.isRequired,
+  totalCheckboxes: PropTypes.number.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -148,6 +157,8 @@ Lesson.propTypes = {
 
 const mapStateToProps = (state, {path, params}) => ({
   t: getTranslator(state),
+  translateTag: getTranslateTag(state),
+  translateGroup: getTranslateGroup(state),
   checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
   title: getTitle(state, params),
   level: getLevel(state, params),

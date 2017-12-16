@@ -7,8 +7,8 @@
  */
 
 export const getTranslator = (state) => {
+  const captions = require('../constants/captions_' + state.language + '.js').default;
   return (captionPath, replacements) => {
-    const captions = require('../constants/captions_' + state.language + '.js').default;
     if (!captionPath || (typeof captionPath !== 'string')) {
       console.error(`ERROR: path should be string (was ${typeof captionPath})`);
       return null;
@@ -35,5 +35,29 @@ export const getTranslator = (state) => {
       }
     }
     return cap;
+  };
+};
+
+export const getTranslateGroup = (state) => {
+  const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
+  return (groupKey) => {
+    const translatedGroup = (captions[groupKey] || {}).NAME;
+    if (!translatedGroup) {
+      console.warn(`Could not translate group with groupKey '${groupKey}'`);
+      return '';
+    }
+    return translatedGroup;
+  };
+};
+
+export const getTranslateTag = (state) => {
+  const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
+  return (groupKey, tagKey) => {
+    const translatedTag = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).NAME;
+    if (!translatedTag) {
+      console.warn(`Could not translate tag with groupKey '${groupKey}' and tagKey '${tagKey}'`);
+      return '';
+    }
+    return translatedTag;
   };
 };
