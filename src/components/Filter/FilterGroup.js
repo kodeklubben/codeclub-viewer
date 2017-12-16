@@ -33,6 +33,22 @@ const FilterGroup = ({
         collapseFilterGroup(groupKey, !isCollapsed);
       }
     };
+
+    /* Sort filterItems alphabetically
+    ** Taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    */ 
+    if (groupKey !== 'grade') {
+      filterItems.sort((a, b) => {
+        if (a.props.tagName < b.props.tagName) {
+          return -1;
+        }
+        if (a.props.tagName > b.props.tagName) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+
     return (
       <ListGroupItem>
         <div className={headingStyle} onClick={onGroupClick}>
