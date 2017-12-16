@@ -1,4 +1,5 @@
 import jsdom from 'jsdom';
+import './mocks';
 
 const doc = jsdom.jsdom('<!doctype html><html><body></body></html>');
 const win = doc.defaultView;

@@ -20,7 +20,7 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
 CourseInfo.propTypes = {
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  courseInfo: PropTypes.object.isRequired,
+  courseInfo: PropTypes.object,
   isStudentMode: PropTypes.bool.isRequired
 };
 

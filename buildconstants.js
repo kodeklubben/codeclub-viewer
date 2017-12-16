@@ -19,6 +19,7 @@ module.exports = {
   publicPathWithoutSlash: '/' + subDir,
   publicPath: '/' + subDir + (subDir ? '/' : ''),
   lessonSrc: path.resolve(__dirname, '../oppgaver/src'),
+  lessonFiltertags: path.resolve(__dirname, '../oppgaver/filtertags'),
   assets: path.resolve(__dirname, './src/assets'),
   bootstrapStyles: path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap'),
 };

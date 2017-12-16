@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getLessons, getTags, createCheckboxesKey} from './util';
+import {getInitialFilter, getLessons, createCheckboxesKey} from './util';
 import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
   setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
 import reducer from './reducer';
@@ -47,8 +47,7 @@ store.dispatch(setWelcomeBox(initialWelcomeBox));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setLastLesson(initialLastLesson));
 
-let filter = getTags(lessonContext, courseContext);
-filter.language[initialLanguage] = true;
+let filter = getInitialFilter(initialLanguage);
 store.dispatch(setFilter(filter));
 
 for (let groupKey of Object.keys(filter)) {
