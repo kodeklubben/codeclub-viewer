@@ -41,7 +41,12 @@ const pathTest = (nextState, replace) => {
   const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect && !isReadme){
-    replace({pathname:'/PageNotFound', state: path});
+    if (typeof document !== 'undefined') {
+      // Only replace in the browser
+      replace({pathname: '/PageNotFound', state: path});
+    } else {
+      console.error('ERROR: The path', path, 'is not valid!');
+    }
   }
 };
 

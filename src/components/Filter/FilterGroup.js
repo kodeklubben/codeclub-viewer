@@ -4,19 +4,22 @@ import {onFilterCheck, collapseFilterGroup} from '../../action_creators';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
+import {getTranslateGroup, getTranslateTag} from '../../selectors/translate';
 
-const FilterGroup = ({groupKey, t, filterTags, onFilterCheck,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked}) => {
-  const groupName = translateGroup(t, groupKey);
+const FilterGroup = ({
+  groupKey, filterTags, onFilterCheck,
+  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateGroup, translateTag,
+}) => {
+  const groupName = translateGroup(groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map(key => {
       const onCheck = () => onFilterCheck(groupKey, key);
-      const tagName = translateTag(t, groupKey, key);
+      const tagName = translateTag(groupKey, key);
+
       const checked = filterTags[key];
       return tagName ? <FilterItem {...{key, checked, tagName, onCheck}}/>
         : null;
@@ -50,7 +53,6 @@ const FilterGroup = ({groupKey, t, filterTags, onFilterCheck,
 FilterGroup.propTypes = {
   // ownProps:
   groupKey: PropTypes.string,
-  t: PropTypes.func.isRequired,
 
   // mapStateToProps:
   filterTags: PropTypes.object.isRequired,
@@ -66,6 +68,8 @@ const mapStateToProps = (state, {groupKey}) => ({
   filterTags: state.filter[groupKey],
   filterGroupsCollapsed: state.filterGroupsCollapsed,
   somethingChecked: somethingCheckedInGroup(state, groupKey),
+  translateGroup: getTranslateGroup(state),
+  translateTag: getTranslateTag(state),
 });
 
 const mapDispatchToProps = {

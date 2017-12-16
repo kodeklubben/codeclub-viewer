@@ -41,7 +41,7 @@ export const getFilteredExternalCourses = createSelector(
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
-          tags: fm.tags == null ? {} : cleanseTags({...fm.tags, language: [fm.language]})
+          tags: cleanseTags({...(fm.tags || {}), language: [fm.language]}, 'external course ' + coursePath)
         };
         return tagsMatchFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
       }
