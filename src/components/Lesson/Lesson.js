@@ -142,7 +142,7 @@ const mapStateToProps = (state, {path, params}) => ({
   tags: getTags(state, params),
   authorName: getAuthorName(state, params),
   translatorName: getTranslatorName(state, params),
-  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
+  isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
   isStudentMode: state.isStudentMode
 });
 
