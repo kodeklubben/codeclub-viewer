@@ -5,11 +5,11 @@ const nodeCleanup = require('node-cleanup');
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fse = require('fs-extra');
-const {buildDir} = require('./buildconstants');
+const {buildDir, publicPath} = require('./buildconstants');
 
 const {lessonPaths} = require('./pathlists');
 
-const urlBase = 'http://127.0.0.1:8080';
+const urlBase = 'http://127.0.0.1:8080' + publicPath;
 
 let localWebServer = null;
 const cleanup = () => {
@@ -55,7 +55,7 @@ const convertUrl = async (browser, lesson) => {
 };
 
 const doConvert = () => {
-  const lessons = lessonPaths({verbose: false}).map(path => '/' + path.replace(/\/$/, ''));
+  const lessons = lessonPaths({verbose: false}).map(path => path.replace(/\/$/, ''));
 
   (async () => {
     const browser = await puppeteer.launch();
