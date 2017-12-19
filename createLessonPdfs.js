@@ -1,8 +1,11 @@
+/* eslint-env node */
+
 const { spawn } = require('child_process');
 const nodeCleanup = require('node-cleanup');
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fse = require('fs-extra');
+const {buildDir} = require('./buildconstants');
 
 const {lessonPaths} = require('./pathlists');
 
@@ -27,14 +30,14 @@ nodeCleanup(function (exitCode, signal) {
 
 const convertUrl = async (browser, lesson) => {
   try {
-    const pdfFile = path.join('./dist', lesson + '.pdf');
+    const pdfFile = path.join(buildDir, lesson + '.pdf');
     const pdfFolder = path.dirname(pdfFile);
     fse.mkdirsSync(pdfFolder);
     const page = await browser.newPage();
     const url = urlBase + lesson + '?pdf';
     await page.goto(url, {waitUntil: 'networkidle'});
     //await page.emulateMedia('screen');
-    console.log('Rendering PDF: ' + url + ' ---> ' + pdfFile);
+    console.log('Rendering PDF: ' + url + ' ---> ' + path.relative(__dirname, pdfFile));
     await page.pdf({
       path: pdfFile,
       printBackground: true,
