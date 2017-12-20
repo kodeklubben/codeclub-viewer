@@ -49,8 +49,9 @@ const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
   const now = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const bsStyle = 'success';
   const className = styles.progressBar;
-  const label = `${checkedCheckboxes}/${totalCheckboxes}`;
-  return <ProgressBar {...{now, bsStyle, className, label}} active/>;
+  const checkboxesLabel = '✓ ' + `${checkedCheckboxes}/${totalCheckboxes}`;
+  const label = now < 100 ? checkboxesLabel : checkboxesLabel + ' ★';
+  return <ProgressBar {...{now, bsStyle, className, label}}/>;
 };
 
 Progress.PropTypes = {
@@ -97,7 +98,7 @@ const Lesson = React.createClass({
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
     const pdfButton = <PdfButton lessonfile={params.file}/>;
-    const progress = (checkedCheckboxes > 0 && isStudentMode && !isReadme) ?
+    const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
