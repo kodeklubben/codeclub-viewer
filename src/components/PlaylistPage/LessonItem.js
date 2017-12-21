@@ -23,8 +23,14 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     </div> :
     null;
 
-  const instructionButton = !isStudentMode ? <InstructionButton className={styles.instructionBtn}
-    buttonPath={lesson.readmePath} buttonText={t('playlist.instructionbutton')} bsSize='xs'/>
+  const instructionButton = !isStudentMode ?
+    <InstructionButton
+      className={styles.instructionBtn}
+      buttonPath={lesson.readmePath}
+      buttonText={t('playlist.instructionbutton')}
+      bsSize='xs'
+      insideLink={true}
+    />
     : null;
 
   const tooltipContent = getLessonIntro(lesson.path.slice(1));
@@ -37,23 +43,24 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
 
   return (
     <TooltipComponent {...{tooltipContent}}>
-      {lesson.external ?
-      <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
-        {levelIcon}
-        {title}
-        &nbsp;<Glyphicon glyph="new-window"/>
-        {instructionButton}
-      </ListGroupItem>
-      :
-      <LinkContainer to={lesson.path}>
-        <ListGroupItem className={styles.row}>
-          {progressBar}
+      {lesson.external ? (
+        <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
           {levelIcon}
           {title}
-          {progress}
+          &nbsp;<Glyphicon glyph="new-window"/>
           {instructionButton}
         </ListGroupItem>
-      </LinkContainer>}
+      ) : (
+        <LinkContainer to={lesson.path}>
+          <ListGroupItem className={styles.row}>
+            {progressBar}
+            {levelIcon}
+            {title}
+            {progress}
+            {instructionButton}
+          </ListGroupItem>
+        </LinkContainer>
+      )}
     </TooltipComponent>
   );
 };

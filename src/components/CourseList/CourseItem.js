@@ -17,16 +17,16 @@ const CourseItem = ({course, t, language}) => {
   return (
     <TooltipComponent {...{tooltipContent}}>
       {isExternal ?
-      <a className={styles.courseItem} href={course.externalLink} target='_blank'>
-        <img className={styles.courseLogo} src={course.iconPath}/>
-        <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
-      </a>
-      :
-      <Link className={styles.courseItem} to={course.path}>
-        <img className={styles.courseLogo} src={course.iconPath}/>
-        <span className={styles.courseName}>{course.name}</span>
-        <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
-      </Link>}
+        <a className={styles.courseItem} href={course.externalLink} target='_blank'>
+          <img className={styles.courseLogo} src={course.iconPath}/>
+          <span className={styles.courseName}>{course.name} <Glyphicon glyph='new-window'/></span>
+        </a>
+        :
+        <Link className={styles.courseItem} to={course.path}>
+          <img className={styles.courseLogo} src={course.iconPath}/>
+          <span className={styles.courseName}>{course.name}</span>
+          <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
+        </Link>}
     </TooltipComponent>
   );
 };

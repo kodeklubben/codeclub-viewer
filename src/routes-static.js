@@ -19,8 +19,8 @@ const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
   const path = `${params.course}/${params.lesson}/${params.file}`;
 
-  const lessonContext = require.context('frontAndContent!lessonSrc/', true,
-    /^\.\/[^\/]*\/[^\/]*\/(?!index\.md$)[^\/]*\.md/);
+  const lessonContext = require.context('onlyContent!lessonSrc/', true,
+    /^\.\/[^/]*\/[^/]*\/(?!index\.md$)[^/]*\.md/);
   // console.log('SERVER: routes lessonContext.keys():');
   // console.log(lessonContext.keys());
   const result = lessonContext('./' + path + '.md');

@@ -26,7 +26,6 @@ import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
 import highlight from './src/highlighting.js';
-const fs = require('fs');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -34,20 +33,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // CONSTANTS //
 ///////////////
 
-// Use 'subDir' to serve the site from a subdir, e.g. subDir='beta' for http://kodeklubben.github.io/beta
-// The value of subDir is read from the file 'url-path-prefix.config' in the root folder, if it exists.
-const subDirFile = './url-path-prefix.config';
-let subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').trim() : '';
-if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
-if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
-
-export const buildDir = path.join(__dirname, 'dist', subDir);
-// Webpack needs final slash in publicPath to rewrite relative paths correctly
-const publicPathWithoutSlash = '/' + subDir;
-export const publicPath = publicPathWithoutSlash + (subDir ? '/' : '');
-export const lessonSrc = path.resolve(__dirname, '../oppgaver/src');
-const assets = path.resolve(__dirname, './src/assets');
-const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap');
+import {
+  buildDir,
+  publicPathWithoutSlash,
+  publicPath,
+  lessonSrc,
+  lessonFiltertags,
+  assets,
+  bootstrapStyles,
+} from './buildconstants';
 
 // Loaders for lesson files written in markdown (.md)
 const frontmatterLoaders = [
@@ -140,6 +134,7 @@ const baseConfig = {
     extensions: ['', '.js'],
     alias: {
       lessonSrc,
+      lessonFiltertags,
       assets,
       bootstrapStyles
     }

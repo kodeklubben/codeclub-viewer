@@ -5,8 +5,7 @@ import styles from './LevelIcon.scss';
 
 const LevelIcon = ({level}) => {
   return level ?
-    <img className={styles.levelIcon}
-         src={require('../assets/graphics/level-' + level + '.svg')}/>
+    <img className={styles.levelIcon} src={require('../assets/graphics/level-' + level + '.svg')}/>
     : null;
 };
 

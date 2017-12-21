@@ -34,14 +34,14 @@ const PlaylistNavigation = ({t, playlists, language}) => {
 
   if (playlistListItems.length) {
     return language === 'nb' ?
-    <div className={styles.container}>
-      <h3>{t('playlist.lessoncollections')}</h3>
-      <Accordion>
-        {playlistListItems}
-      </Accordion>
-    </div>
-    :
-    null;
+      <div className={styles.container}>
+        <h3>{t('playlist.lessoncollections')}</h3>
+        <Accordion>
+          {playlistListItems}
+        </Accordion>
+      </div>
+      :
+      null;
   }
   else {
     return null;

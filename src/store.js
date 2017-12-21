@@ -1,19 +1,19 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getLessons, getTags, createCheckboxesKey} from './util';
+import {getInitialFilter, getLessons, createCheckboxesKey} from './util';
 import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
   setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
-const iconContext = require.context('lessonSrc/', true, /^\.\/[^\/]*\/logo-black\.png/);
-const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^\/]*\/index\.md/);
-const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^\/]*\/playlists\/[^\/]*\.txt$/);
+const iconContext = require.context('lessonSrc/', true, /^\.\/[^/]*\/logo-black\.png/);
+const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/index\.md/);
+const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^/]*\/playlists\/[^/]*\.txt$/);
 const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
-  /^\.\/[^\/]*\/[^\/]*\/(?!README(_[a-z]{2})?\.md$)[^\/]*\.md/);
+  /^\.\/[^/]*\/[^/]*\/(?!README(_[a-z]{2})?\.md$)[^/]*\.md/);
 const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
-  /^\.\/[^\/]*\/[^\/]*\/README(_[a-z]{2})?\.md$/);
+  /^\.\/[^/]*\/[^/]*\/README(_[a-z]{2})?\.md$/);
 const lessons = getLessons(lessonContext, readmeContext, courseContext);
 
 const initialState = {};
@@ -47,8 +47,7 @@ store.dispatch(setWelcomeBox(initialWelcomeBox));
 store.dispatch(setLanguage(initialLanguage));
 store.dispatch(setLastLesson(initialLastLesson));
 
-let filter = getTags(lessonContext, courseContext);
-filter.language[initialLanguage] = true;
+let filter = getInitialFilter(initialLanguage);
 store.dispatch(setFilter(filter));
 
 for (let groupKey of Object.keys(filter)) {

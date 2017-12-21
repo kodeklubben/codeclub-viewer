@@ -1,11 +1,3 @@
-import scratchblocks from 'scratchblocks/browser/scratchblocks.js';
-
-// TODO:
-//  - if possible, make webpack preprocess the HTML.
-//    - replace classnames with locally scoped css-module class names
-//    - insert scratch blocks if possible
-//  - activate the rest of Lesson.scss (compare with kodeklubben.github.io)
-
 // Structure of replaceTags:
 // {
 //   <oldtag>: {
@@ -31,7 +23,9 @@ const processContent = (content, styles) => {
   let parsedContent = parser(content);
   parsedContent = replaceClassRecursively(parsedContent, styles);
   content = render(parsedContent);
-  content = renderScratchBlocks(content, styles);
+  if (typeof document !== 'undefined') {
+    content = renderScratchBlocks(content, styles);
+  }
   return content;
 };
 
@@ -57,7 +51,7 @@ const insertHeaderIcons = (obj) => {
   };
   if (obj.tag === 'h2') {
     const className = (obj.attrs || {}).class;
-    if (Object.keys(icons).indexOf(className) !== -1) {
+    if (Object.keys(icons).includes(className)) {
       return {
         ...obj,
         content: [
@@ -106,9 +100,12 @@ const replaceClassRecursively = (obj, styles) => {
  * Render scratchblocks.
  *
  * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
  */
 const renderScratchBlocks = (content, styles) => {
+  const scratchblocks = require('scratchblocks/browser/scratchblocks.js');
+
   let replace = [];
   if ('blocks' in styles) {
     replace.push({start: '<pre class="' + styles.blocks + '">', end: '</pre>'});

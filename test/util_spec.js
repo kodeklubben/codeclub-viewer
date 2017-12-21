@@ -3,11 +3,13 @@ import deepFreeze from 'deep-freeze';
 
 import {
   capitalize,
+  basename,
+  dirname,
   cleanseTags,
   fixNonArrayTagList,
-  mergeTags,
   tagsMatchFilter,
   removeHtmlFileEnding,
+  arrayToObject,
 } from '../src/util';
 
 describe('util', () => {
@@ -21,13 +23,60 @@ describe('util', () => {
     });
   });
 
-  describe('getTags', () => {
-
+  describe('basename', () => {
+    it('gets file.ext from /folder/subfolder/file.ext', () => {
+      expect(basename('/folder/subfolder/file.ext')).to.equal('file.ext');
+    });
+    it('gets file.ext from folder/subfolder/file.ext', () => {
+      expect(basename('folder/subfolder/file.ext')).to.equal('file.ext');
+    });
+    it('gets subfolder from /folder/subfolder/', () => {
+      expect(basename('/folder/subfolder/')).to.equal('subfolder');
+    });
+    it('gets subfolder from /folder/subfolder', () => {
+      expect(basename('/folder/subfolder')).to.equal('subfolder');
+    });
+    it('gets file.ext from /file.ext', () => {
+      expect(basename('/file.ext')).to.equal('file.ext');
+    });
+    it('gets file.ext from file.ext', () => {
+      expect(basename('file.ext')).to.equal('file.ext');
+    });
+    it('gets / from /', () => {
+      expect(basename('/')).to.equal('/');
+    });
+    it('gets empty string from empty string', () => {
+      expect(basename('')).to.equal('');
+    });
   });
 
-  describe('getCourses', () => {
-
+  describe('dirname', () => {
+    it('gets /folder/subfolder from /folder/subfolder/file.ext', () => {
+      expect(dirname('/folder/subfolder/file.ext')).to.equal('/folder/subfolder');
+    });
+    it('gets folder/subfolder/ from folder/subfolder/file.ext', () => {
+      expect(dirname('folder/subfolder/file.ext')).to.equal('folder/subfolder');
+    });
+    it('gets /folder from /folder/subfolder/', () => {
+      expect(dirname('/folder/subfolder/')).to.equal('/folder');
+    });
+    it('gets /folder from /folder/subfolder', () => {
+      expect(dirname('/folder/subfolder')).to.equal('/folder');
+    });
+    it('gets / from /file.ext', () => {
+      expect(dirname('/file.ext')).to.equal('/');
+    });
+    it('gets . from file.ext', () => {
+      expect(dirname('file.ext')).to.equal('.');
+    });
+    it('gets / from /', () => {
+      expect(dirname('/')).to.equal('/');
+    });
+    it('gets . from empty string', () => {
+      expect(dirname('')).to.equal('.');
+    });
   });
+
 
   ///////////////////////////////////
   //////// HELPER FUNCTIONS /////////
@@ -37,66 +86,50 @@ describe('util', () => {
     it('fixes invalid tag lists and return array', () => {
       const dirtyTags = {
         platform: 'windows, mac,     browser',
-        subject: 'physics, math',
+        subject: 'physics, mathematics',
         CAtegOry: ['create game', 'create app'],
         created: 2016,
         nothing: [],
-        someTag: ['Tag1', 'tag2']
+        someTag: ['Tag1', 'tag2'],
+        invalidGroupKey: ['tag1', 'tag2'],
+        grade: ['junior', 'invalidtag']
       };
       deepFreeze(dirtyTags);
-      expect(cleanseTags(dirtyTags, false)).to.eql({
+      expect(cleanseTags(dirtyTags, 'test')).to.eql({
         platform: ['windows', 'mac', 'browser'],
-        subject: ['physics', 'math'],
+        subject: ['physics', 'mathematics'],
         category: ['create game', 'create app'],
         created: ['2016'],
-        sometag: ['tag1', 'tag2']
-      });
-    });
-
-    it('fixes invalid tag lists and return object', () => {
-      const dirtyTags = {
-        platform: 'windows, mac,     browser',
-        subject: 'physics, math',
-        category: ['create game', 'create app'],
-        created: 2016,
-        nothing: [],
-        someTag: ['Tag1', 'tag2']
-      };
-      deepFreeze(dirtyTags);
-      expect(cleanseTags(dirtyTags, true)).to.eql({
-        platform: {
-          'windows': false,
-          'mac': false,
-          'browser': false
-        },
-        subject: {
-          'physics': false,
-          'math': false
-        },
-        category: {
-          'create game': false,
-          'create app': false
-        },
-        created: {
-          '2016': false
-        },
-        sometag: {'tag1': false, 'tag2': false}
+        sometag: ['tag1', 'tag2'],
+        grade: ['junior'],
       });
     });
 
     it('does not change already valid tag lists', () => {
       const validTags = {
         platform: ['windows', 'mac', 'browser'],
-        subject: ['physics', 'math'],
+        subject: ['physics', 'mathematics'],
         category: ['create game', 'create app'],
         created: ['2016']
       };
       deepFreeze(validTags);
-      expect(cleanseTags(validTags, false)).to.eql({
+      expect(cleanseTags(validTags, 'test')).to.eql({
         platform: ['windows', 'mac', 'browser'],
-        subject: ['physics', 'math'],
+        subject: ['physics', 'mathematics'],
         category: ['create game', 'create app'],
         created: ['2016']
+      });
+    });
+  });
+
+  describe('arrayToObject', () => {
+    it('converts array to object where lowercased array items are used as keys and values are "false"', () => {
+      const array = ['one', 'Two', 'THREE'];
+      deepFreeze(array);
+      expect(arrayToObject(array)).to.eql({
+        'one': false,
+        'Two': false,
+        'THREE': false,
       });
     });
   });
@@ -120,100 +153,6 @@ describe('util', () => {
     });
   });
 
-  describe('mergeTags', () => {
-    it('merges tags from A and B', () => {
-      const tagsA = {
-        'platform': {
-          'android': false,
-          'linux': true
-        },
-        'subject': {
-          'math': false,
-          'physics': true
-        },
-        'category': {
-          'create app': true
-        }
-      };
-      const tagsB = {
-        'platform': {
-          'linux': true,
-          'windows': true
-        },
-        'subject': {
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'create game': false,
-          'robots': true
-        }
-      };
-
-      deepFreeze(tagsA);
-      deepFreeze(tagsB);
-      expect(mergeTags(tagsA, tagsB)).to.eql({
-        'platform': {
-          'android': false,
-          'linux': true,
-          'windows': true
-        },
-        'subject': {
-          'math': false,
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'create game': false,
-          'robots': true
-        }
-      });
-    });
-
-    it('returns all tags in B if A is empty', () => {
-      const tagsA = {};
-      const tagsB = {
-        'platform': {
-          'linux': true,
-          'windows': true
-        },
-        'subject': {
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'create game': false,
-          'robots': true
-        }
-      };
-
-      deepFreeze(tagsA);
-      deepFreeze(tagsB);
-      expect(mergeTags(tagsA, tagsB)).to.eql(tagsB);
-    });
-
-    it('returns all tags in A if B is empty', () => {
-      const tagsA = {
-        'platform': {
-          'linux': true,
-          'windows': true
-        },
-        'subject': {
-          'physics': true
-        },
-        'category': {
-          'create app': true,
-          'create game': false,
-          'robots': true
-        }
-      };
-      const tagsB = {};
-
-      deepFreeze(tagsA);
-      deepFreeze(tagsB);
-      expect(mergeTags(tagsA, tagsB)).to.eql(tagsA);
-    });
-  });
 
   describe('tagsMatchFilter', () => {
     it('returns true if all tags match entire filter', () => {

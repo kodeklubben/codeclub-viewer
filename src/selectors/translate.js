@@ -7,8 +7,8 @@
  */
 
 export const getTranslator = (state) => {
+  const captions = require('../constants/captions_' + state.language + '.js').default;
   return (captionPath, replacements) => {
-    const captions = require('../constants/captions_' + state.language + '.js').default;
     if (!captionPath || (typeof captionPath !== 'string')) {
       console.error(`ERROR: path should be string (was ${typeof captionPath})`);
       return null;
@@ -29,11 +29,35 @@ export const getTranslator = (state) => {
     if (cap && replacements) {
       for (let repKey in replacements) {
         if (replacements.hasOwnProperty(repKey)) {
-          const pattern = new RegExp('\\\{\\\{' + repKey + '\\\}\\\}', 'gm'); // g=global, m=multiline
+          const pattern = new RegExp('{{' + repKey + '}}', 'gm'); // g=global, m=multiline
           cap = cap.replace(pattern, replacements[repKey]);
         }
       }
     }
     return cap;
+  };
+};
+
+export const getTranslateGroup = (state) => {
+  const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
+  return (groupKey) => {
+    const translatedGroup = (captions[groupKey] || {}).NAME;
+    if (!translatedGroup) {
+      console.warn(`Could not translate group with groupKey '${groupKey}'`);
+      return '';
+    }
+    return translatedGroup;
+  };
+};
+
+export const getTranslateTag = (state) => {
+  const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
+  return (groupKey, tagKey) => {
+    const translatedTag = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).NAME;
+    if (!translatedTag) {
+      console.warn(`Could not translate tag with groupKey '${groupKey}' and tagKey '${tagKey}'`);
+      return '';
+    }
+    return translatedTag;
   };
 };
