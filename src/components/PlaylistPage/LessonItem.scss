@@ -20,10 +20,6 @@
 .progressBarLevel3 { @include progressBar($color-level3); }
 .progressBarLevel4 { @include progressBar($color-level4); }
 
-.instructionBtn {
-  margin-left: auto;
-}
-
 .title {
   padding: 2px 0;
   margin-right: 3px;
@@ -31,10 +27,6 @@
 
 .progress {
   opacity: 0.5;
-}
-
-.marginLeft {
-  margin-left: 7px !important;
 }
 
 .externalGlyph {
@@ -45,8 +37,13 @@
 .popoverGlyph {
   font-size: 1.3em;
   margin-left: auto;
-
   &:hover {
     color: black;
+  }
+
+  @media screen and (max-width: $screen-xs-max) {
+    &:hover {
+      color: $color-gray;
+    }
   }
 }
