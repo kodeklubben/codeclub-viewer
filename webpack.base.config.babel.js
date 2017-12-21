@@ -38,6 +38,7 @@ import {
   publicPathWithoutSlash,
   publicPath,
   lessonSrc,
+  lessonFiltertags,
   assets,
   bootstrapStyles,
 } from './buildconstants';
@@ -133,6 +134,7 @@ const baseConfig = {
     extensions: ['', '.js'],
     alias: {
       lessonSrc,
+      lessonFiltertags,
       assets,
       bootstrapStyles
     }

@@ -17,9 +17,9 @@ const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(
 
 const validPathTest = (lesson, path) => {
   if(lesson){
-    return (lessonArray.indexOf(path) > -1);
+    return (lessonArray.includes(path));
   }else{
-    return (courseArray.indexOf(path) > -1);
+    return (courseArray.includes(path));
   }
 };
 
@@ -37,11 +37,16 @@ const pathTest = (nextState, replace) => {
   if(path.endsWith('/')){
     path = path.slice(0, -1);
   }
-  const isReadme = readmeArray.indexOf(path) > -1;
+  const isReadme = readmeArray.includes(path);
   const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect && !isReadme){
-    replace({pathname:'/PageNotFound', state: path});
+    if (typeof document !== 'undefined') {
+      // Only replace in the browser
+      replace({pathname: '/PageNotFound', state: path});
+    } else {
+      console.error('ERROR: The path', path, 'is not valid!');
+    }
   }
 };
 

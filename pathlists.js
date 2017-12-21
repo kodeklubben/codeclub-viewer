@@ -1,4 +1,4 @@
-const {lessonSrc} = require('./buildconstants');
+const {lessonSrc, lessonFiltertags} = require('./buildconstants');
 const path = require('path');
 const yamlFront = require('yaml-front-matter');
 const glob = require('glob');
@@ -15,18 +15,37 @@ module.exports.coursePaths = () => {
 module.exports.lessonPaths = (verbose, ending) => {
   if (typeof verbose === 'undefined') { verbose = true; }
   if (typeof ending === 'undefined') { ending = '/'; }
+  const availableLanguages = yamlFront.loadFront(path.join(lessonFiltertags, 'keys.md')).language;
+  console.log('Available languages:', availableLanguages);
   return glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md'))
     .filter(p => {
       try {
-        const {title, external} = yamlFront.loadFront(p);
-        if (verbose && external) {
-          console.log('Skipping external course "' + title + '" (' + p + ')');
+        const {title, external, language} = yamlFront.loadFront(p);
+        if (external) {
+          if (verbose) {
+            console.log('Skipping external course "' + title + '" (' + p + ')');
+          }
+          return false;
         }
-        return !external;
+        if (!language) {
+          if (verbose) {
+            console.warn('WARNING: Course "' + title + '" (' + p + ') has no language, skipping.');
+          }
+          return false;
+        }
+        if (!availableLanguages.includes(language)) {
+          if (verbose) {
+            console.log('NOTE: Course "' + title + '" (' + p + ') uses the language ' + language +
+              ', which is not currently available, skipping.');
+          }
+          return false;
+        }
+        //console.log('OK:', language, title, p);
+        return true;
       }
       catch (e) {
-        console.log('Error while processing', p, ':', e);
+        console.error('Error while processing', p, ':', e);
         return false;
       }
     })
