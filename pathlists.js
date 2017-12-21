@@ -34,7 +34,7 @@ module.exports.lessonPaths = (verbose, ending) => {
           }
           return false;
         }
-        if (availableLanguages.indexOf(language) === -1) {
+        if (!availableLanguages.includes(language)) {
           if (verbose) {
             console.log('NOTE: Course "' + title + '" (' + p + ') uses the language ' + language +
               ', which is not currently available, skipping.');

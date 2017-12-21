@@ -1,23 +1,22 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './MainLanguageButton.scss';
-import {getReadmeForMainLanguage, getLessonForMainLanguage} from '../../util';
-import {getTranslator} from '../../selectors/translate';
+import {getPathForMainLanguage} from '../../util';
+import {getTranslator, getTranslateTag} from '../../selectors/translate';
 
-const MainLanguageButton = ({path, t, isReadme, language}) => {
-  const buttonPath = isReadme ?
-    getReadmeForMainLanguage(path, language) :
-    getLessonForMainLanguage(path, language);
+const MainLanguageButton = ({path, t, tt, isReadme, language}) => {
+  const buttonPath = getPathForMainLanguage(path, language, isReadme);
   const className = styles.container;
   const bsStyle = 'info';
   const bsSize = 'small';
   return buttonPath === null ? null :
     <LinkContainer to={buttonPath}>
       <Button {...{className, bsStyle, bsSize}}>
-        {t('lessons.tomainlanguage')}
+        {t('lessons.tomainlanguage', {lang: tt('language', language)})}
       </Button>
     </LinkContainer>;
 };
@@ -34,8 +33,9 @@ MainLanguageButton.propTypes = {
 
 const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
+  tt: getTranslateTag(state),
   language: state.language,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
+  isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
 });
 
 export default connect(

@@ -51,7 +51,7 @@ const insertHeaderIcons = (obj) => {
   };
   if (obj.tag === 'h2') {
     const className = (obj.attrs || {}).class;
-    if (Object.keys(icons).indexOf(className) !== -1) {
+    if (Object.keys(icons).includes(className)) {
       return {
         ...obj,
         content: [

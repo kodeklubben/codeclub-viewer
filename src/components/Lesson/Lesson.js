@@ -22,7 +22,6 @@ import LessonButton from './LessonButton';
 import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
 import PdfButton from './PdfButton';
-import PrintButton from './PrintButton';
 import MainLanguageButton from './MainLanguageButton';
 
 const renderToggleButtons = () => {
@@ -93,7 +92,6 @@ const Lesson = React.createClass({
           {translator}
           <PrintInfo {...{t, translateTag, translateGroup, course: params.course, tags}}/>
           <MainLanguageButton {...{path}}/>
-          <PrintButton/>
           {resetButton}
           {instructionButton}
           {pdfButton}
@@ -146,7 +144,7 @@ const mapStateToProps = (state, {path, params}) => ({
   tags: getTags(state, params),
   authorName: getAuthorName(state, params),
   translatorName: getTranslatorName(state, params),
-  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
+  isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
   isStudentMode: state.isStudentMode
 });
 

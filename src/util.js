@@ -63,7 +63,7 @@ export function getInitialFilter(initialLanguage) {
     result[groupKey] = arrayToObject(filterkeys[groupKey]);
     return result;
   }, new Map()); // Use Map instead of Object to ensure correct order of tags
-  if ((filterkeys.language || []).indexOf(initialLanguage) !== -1) {
+  if ((filterkeys.language || []).includes(initialLanguage)) {
     filter.language[initialLanguage] = true;
   }
   return filter;
@@ -80,7 +80,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       console.warn('Skipping lesson ' + path + ' since it is missing language.');
       return res;
     }
-    if (availableLanguages.indexOf(language) === -1) {
+    if (!availableLanguages.includes(language)) {
       // Hiding lesson since it uses a language that is not available (yet)
       if (typeof document === 'undefined') { // Only show message when rendering on server
         console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
@@ -131,7 +131,7 @@ export function getCourseInfoMarkup(courseName, language) {
   const withoutLanguage = `./${courseName}/index.md`;
 
   const hasValidFile = (path) => {
-    if (req.keys().indexOf(path) === -1) { return false; }
+    if (!req.keys().includes(path)) { return false; }
     const courseLanguage = req(path).frontmatter.language;
     if (!courseLanguage) {
       console.warn('Not using course info ' + path + ' since it is missing language.');
@@ -185,7 +185,7 @@ const getReadmePath = (readmeContext, language, path) => {
 
   const hasValidFile = (shortPath) => {
     const fullPath = '.' + shortPath + '.md';
-    if (readmeContext.keys().indexOf(fullPath) === -1) { return false; }
+    if (!readmeContext.keys().includes(fullPath)) { return false; }
     const readmeLanguage = readmeContext(fullPath).frontmatter.language;
     if (!readmeLanguage) {
       console.warn('Not using README ' + fullPath + ' since it is missing language.');
@@ -217,13 +217,13 @@ export function cleanseTags(tags, src) {
 
   return Object.keys(tags).reduce((result, groupKey) => {
     const groupKeyLC = groupKey.toLowerCase();
-    if (Object.keys(filterkeys).indexOf(groupKeyLC) === -1) {
+    if (!Object.keys(filterkeys).includes(groupKeyLC)) {
       console.warn('Ignoring invalid group ' + groupKey + ' in ' + src);
       return result;
     }
 
     let tagsInGroup = fixNonArrayTagList(tags[groupKey]).filter( (tagKey) => {
-      const isValid = tagKey.length > 0 && filterkeys[groupKeyLC].indexOf(tagKey.toLowerCase()) !== -1;
+      const isValid = tagKey.length > 0 && filterkeys[groupKeyLC].includes(tagKey.toLowerCase());
       if (!isValid) {
         console.warn('Ignoring invalid tag ' + tagKey + ' in group ' + groupKey + ' in ' + src);
       }
@@ -285,13 +285,13 @@ export function tagsMatchFilter(lessonTags, filter) {
     }
     // OR-tests the language group
     if(groupKey === 'language' && checkedLanguageTags.length !== 0
-      && checkedLanguageTags.filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
+      && checkedLanguageTags.filter(tagKey => lessonGroup.includes(tagKey)).length === 0){
       return false;
     }
     // AND-tests everything else
     for (const checkedTagKey of checkedTagKeys) {
       // lessonGroup doesn't contain checkedFilterTag
-      if (groupKey !== 'language' && lessonGroup.indexOf(checkedTagKey) === -1) {
+      if (groupKey !== 'language' && !lessonGroup.includes(checkedTagKey)) {
         return false;
       }
     }
@@ -329,54 +329,28 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 };
 
 /**
-* Returns the readmePath for the language in state
+* Returns the path for the language in state if task is another language
 *
 * @param {String} path
 * @param {String} language
+* @param {boolean} isReadme
 * @returns {String or null}
 */
-export const getReadmeForMainLanguage = (path, language) => {
-  const req = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/README(_[a-z]{2})?\.md$/);
-  const readmeLanguage = req('./' + path + '.md').frontmatter.language;
-  const hasFile = (filePath) => req.keys().indexOf(filePath) !== -1;
-  const course = path.substring(0, path.indexOf('/'));
-  const lesson = path.substring(path.indexOf(course) + course.length + 1, path.lastIndexOf('/'));
-  const readmePath =  language === 'nb' ?
-    `./${course}/${lesson}/README.md` :
-    `./${course}/${lesson}/README_${language}.md`;
-  if ((readmeLanguage !== language) && hasFile(readmePath)) {
-    return '/' + course + '/' + lesson + '/README' + (language === 'nb' ? '' : ('_' + language));
-  }
-  return null;
-};
-
-
-/**
-* Returns the lesson for the language in state
-*
-* @param {String} path
-* @param {String} language
-* @returns {String or null}
-*/
-export const getLessonForMainLanguage = (path, language) => {
-  const req = require.context('onlyFrontmatter!lessonSrc/', true,
-    /^\.\/[^/]*\/[^/]*\/(?!README(_[a-z]{2})?\.md$)[^/]*\.md/);
+export const getPathForMainLanguage = (path, language, isReadme) => {
+  const req = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/[^.]*\.md$/);
   const lessonLanguage = req('./' + path + '.md').frontmatter.language;
-  const course = path.substring(0, path.indexOf('/'));
-  const lessonFolder = path.substring(path.indexOf(course) + course.length + 1, path.lastIndexOf('/'));
-  let lesson = '';
-  for (let lessons in req.keys()) {
-    if (req.keys()[lessons].indexOf(course + '/' + lessonFolder) !== -1) {
-      if (req(req.keys()[lessons]).frontmatter.language === language) {
-        lesson = req.keys()[lessons].substring(
-          req.keys()[lessons].lastIndexOf('/') + 1, req.keys()[lessons].lastIndexOf('.'));
+  if (lessonLanguage !== language) {
+    const lessonFolder = './' + path.substring(0, path.lastIndexOf('/'));
+    for (const lessonPath of req.keys()) {
+      if (!!isReadme === lessonPath.includes('README')) {
+        if (lessonPath.startsWith(lessonFolder)) {
+          if (req(lessonPath).frontmatter.language === language) {
+            // Cut away period at start and extension at end:
+            return lessonPath.substring(1, lessonPath.lastIndexOf('.'));
+          }
+        }
       }
     }
-  }
-  const hasFile = (filePath) => req.keys().indexOf(filePath) !== -1;
-  const lessonPath = `./${course}/${lessonFolder}/${lesson}.md`;
-  if ((lessonLanguage !== language) && hasFile(lessonPath)) {
-    return '/' + course + '/' + lessonFolder + '/' + lesson;
   }
   return null;
 };
