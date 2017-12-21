@@ -30,8 +30,9 @@ MainLanguageButton.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
+  tt: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
-  isReadme: PropTypes.bool.isRequired
+  isReadme: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {path}) => ({
