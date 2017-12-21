@@ -6,17 +6,17 @@ import {getLessonIntro} from '../../util';
 import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
-import TooltipComponent from '../TooltipComponent';
+import PopoverComponent from '../PopoverComponent';
 
 const CourseItem = ({course, t, language}) => {
   const isExternal = course.hasOwnProperty('externalLink');
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const introPath = coursePath + '/index' + (isExternal || language === 'nb' ? '' : ('_' + language));
-  const tooltipContent = getLessonIntro(introPath);
-  const tooltipButton = tooltipContent ?
-    <TooltipComponent {...{tooltipContent}}>
-      <Glyphicon className={styles.glyph} glyph='info-sign'/>
-    </TooltipComponent>
+  const popoverContent = getLessonIntro(introPath);
+  const popoverButton = popoverContent ?
+    <PopoverComponent {...{popoverContent}}>
+      <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+    </PopoverComponent>
     : null;
   return (
     <div>
@@ -24,7 +24,7 @@ const CourseItem = ({course, t, language}) => {
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
           <img className={styles.courseLogo} src={course.iconPath}/>
           <span className={styles.courseName}>{course.name}
-            {tooltipButton}
+            {popoverButton}
             <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
           </span>
         </a>
@@ -32,7 +32,7 @@ const CourseItem = ({course, t, language}) => {
         <Link className={styles.courseItem} to={course.path}>
           <img className={styles.courseLogo} src={course.iconPath}/>
           <span className={styles.courseName}>{course.name}
-            {tooltipButton}
+            {popoverButton}
           </span>
           <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
         </Link>

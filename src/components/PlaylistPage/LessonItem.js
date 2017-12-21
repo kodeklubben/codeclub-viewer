@@ -9,7 +9,7 @@ import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
-import TooltipComponent from '../TooltipComponent';
+import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
 
 const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
@@ -32,13 +32,13 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     />
     : null;
 
-  const tooltipContent = getLessonIntro(lesson.path.slice(1));
+  const popoverContent = getLessonIntro(lesson.path.slice(1));
 
-  const tooltipButton = tooltipContent ?
-    <TooltipComponent {...{tooltipContent}}>
-      <Glyphicon className={styles.glyph +
+  const popoverButton = popoverContent ?
+    <PopoverComponent {...{popoverContent}}>
+      <Glyphicon className={styles.popoverGlyph +
         ((lesson.readmePath && !isStudentMode) ? ' ' + styles.marginLeft : '')} glyph='info-sign'/>
-    </TooltipComponent>
+    </PopoverComponent>
     : null;
 
   const progressBar = lesson.level > 0 ?
@@ -57,7 +57,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
           {levelIcon}
           {title}
           {instructionButton}
-          {tooltipButton}
+          {popoverButton}
           {externalIcon}
         </ListGroupItem>
         :
@@ -68,7 +68,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
             {title}
             {progress}
             {instructionButton}
-            {tooltipButton}
+            {popoverButton}
           </ListGroupItem>
         </LinkContainer>
       }

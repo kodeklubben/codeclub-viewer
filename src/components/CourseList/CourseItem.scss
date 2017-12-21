@@ -8,14 +8,26 @@
   flex-direction: column;
   align-items: center;
   max-width: 175px;
+  &:link {
+    text-decoration: none;
+  }
   &:hover {
     color: inherit;
-    text-decoration: none;
-    font-weight: bold;
     cursor: pointer;
     white-space: nowrap;
     .courseLogo {
       padding: 0;
+    }
+  }
+
+  @media screen and (max-width: $screen-xs-max) {
+    &:hover {
+      .courseLogo {
+        padding: 5px;
+      }
+      .popoverGlyph:hover {
+        color: black;
+      }
     }
   }
 }
@@ -27,24 +39,14 @@
   margin-bottom: 15px;
 }
 
-@media screen and (max-width: 500px) {
-  .courseLogo {
-    height: 140px;
-  }
-}
-
 .courseName {
   white-space: nowrap;
   font-size: 1.3em;
   color: black;
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: $screen-xs-max) {
     font-size: 1em;
   }
-}
-
-a:link {
-  text-decoration: none;
 }
 
 .lessonCount {
@@ -55,7 +57,7 @@ a:link {
   margin: 0 0 0 5px;
 }
 
-.glyph {
+.popoverGlyph {
   margin: 0 3px 0 5px;
 
   &:hover {
