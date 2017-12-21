@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DocumentTitle from 'react-document-title';
-import ProgressBar from 'react-bootstrap/lib/ProgressBar';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
@@ -20,6 +19,7 @@ import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
+import Progress from './Progress';
 import LessonButton from './LessonButton';
 import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
@@ -43,21 +43,6 @@ const rememberLastLesson = (path, setLastLesson) => {
 
 const createMarkup = (lessonContent) => {
   return ({__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))});
-};
-
-const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
-  const now = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
-  const bsStyle = 'success';
-  const className = styles.progressBar;
-  const checkboxesLabel = '✓ ' + `${checkedCheckboxes}/${totalCheckboxes}`;
-  const label = now < 100 ? checkboxesLabel : checkboxesLabel + ' ★';
-  return <ProgressBar {...{now, bsStyle, className, label}}/>;
-};
-
-Progress.PropTypes = {
-  // mapStateToProps
-  checkedCheckboxes: PropTypes.number.isRequired,
-  totalCheckboxes: PropTypes.number.isRequired,
 };
 
 const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
@@ -165,7 +150,7 @@ const mapStateToProps = (state, {path, params}) => ({
   tags: getTags(state, params),
   authorName: getAuthorName(state, params),
   translatorName: getTranslatorName(state, params),
-  isReadme: state.context.readmeContext.keys().indexOf('./' + path + '.md') !== -1,
+  isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
   isStudentMode: state.isStudentMode,
   checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
   totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),

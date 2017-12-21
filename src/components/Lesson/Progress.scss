@@ -1,0 +1,7 @@
+.marginTop {
+  margin-top: 20px;
+
+  @media print {
+    display: none;
+  }
+}

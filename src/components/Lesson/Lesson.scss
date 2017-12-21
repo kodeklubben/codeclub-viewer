@@ -28,11 +28,3 @@
     display: block;
   }
 }
-
-.progressBar {
-  margin-top: 20px;
-
-  @media print {
-    display: none;
-  }
-}
