@@ -12,7 +12,7 @@ import '../styles/customBootstrapStyles';
 
 const App = ({t, params, location, children}) => {
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
-  const renderPdf = Object.keys(location.query).indexOf('pdf') !== -1;
+  const renderPdf = Object.keys(location.query).includes('pdf');
 
   return <DocumentTitle title={t('title.codeclub')}>
     <div className={styles.appContainer}>
