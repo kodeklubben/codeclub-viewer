@@ -1,14 +1,19 @@
 import React, {PropTypes} from 'react';
 import Button from 'react-bootstrap/lib/Button';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './InstructionButton.scss';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const InstructionButton = ({buttonPath, buttonText, className, bsSize, insideLink}) => {
+  const isNotReadme = buttonPath.includes('README');
   const bsStyle = 'guide';
   const componentClass = insideLink ? 'div' : 'a';
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
       <Button {...{className, bsStyle, bsSize, componentClass}}>
-        {buttonText}
+        <Glyphicon className={styles.icon} glyph={isNotReadme ? 'education' : 'pencil'}/>
+        <span className={styles.textMargin}>{buttonText}</span>
       </Button>
     </LinkContainer> :
     null);
@@ -23,4 +28,4 @@ InstructionButton.propTypes = {
   insideLink: PropTypes.bool, // set to true if button is nested inside a <a>...</a>
 };
 
-export default InstructionButton;
+export default withStyles(styles)(InstructionButton);

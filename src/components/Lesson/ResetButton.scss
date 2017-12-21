@@ -1,7 +1,27 @@
+@import '../../styles/variables';
+
 .container {
   margin: 10px 10px 0 0;
 
   @media print {
     display: none;
+  }
+}
+
+.textMargin {
+  margin-right: 5px;
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
+}
+
+.icon {
+  margin-top: 2px;
+  float: right;
+
+  @media (max-width: $screen-xs-max) {
+    margin-top: 0;
+    font-size: 1.5em;
   }
 }
