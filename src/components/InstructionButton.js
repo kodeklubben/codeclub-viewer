@@ -6,7 +6,7 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const InstructionButton = ({buttonPath, buttonText, className, bsSize, insideLink}) => {
-  const isNotReadme = buttonPath.includes('README');
+  const isNotReadme = buttonPath ? buttonPath.includes('README') : false;
   const bsStyle = 'guide';
   const componentClass = insideLink ? 'div' : 'a';
   return (buttonPath ?
