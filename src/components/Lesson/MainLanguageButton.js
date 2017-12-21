@@ -16,7 +16,10 @@ const MainLanguageButton = ({path, t, tt, isReadme, language}) => {
   return buttonPath === null ? null :
     <LinkContainer to={buttonPath}>
       <Button {...{className, bsStyle, bsSize}}>
-        {t('lessons.tomainlanguage', {lang: tt('language', language)})}
+        <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/>
+        <div className={styles.textMargin}>
+          {t('lessons.tomainlanguage', {lang: tt('language', language)})}
+        </div>
       </Button>
     </LinkContainer>;
 };
