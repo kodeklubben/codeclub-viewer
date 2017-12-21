@@ -8,12 +8,15 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
-class TeacherInfobox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {showCourseInfo: false};
-  }
-
+const TeacherInfobox = React.createClass({
+  getInitialState() {
+    return {
+      showCourseInfo: false
+    };
+  },
+  changeState() {
+    this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  },
   render() {
     const {t} = this.props;
     const {showCourseInfo} = this.state;
@@ -30,7 +33,7 @@ class TeacherInfobox extends React.Component {
           {t('frontpage.teacherinfobox.changemode')}
           <br />
           <div className={styles.center}>
-            <Button className={styles.plusSign} onClick={() => this.setState({showCourseInfo: !showCourseInfo})}>
+            <Button className={styles.plusSign} onClick={() => this.changeState()}>
               <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
             </Button>
           </div>
@@ -56,7 +59,7 @@ class TeacherInfobox extends React.Component {
     );
   }
 
-}
+});
 
 TeacherInfobox.propTypes = {
   // mapStateToProps

@@ -61,14 +61,13 @@ PrintInfo.PropTypes = {
   tags: PropTypes.object.isRequired,
 };
 
-class Lesson extends React.Component {
+const Lesson = React.createClass({
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
     rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
-  }
-
+  },
   render() {
     const {
       path, params, lesson,
@@ -103,7 +102,7 @@ class Lesson extends React.Component {
       </DocumentTitle>
     );
   }
-}
+});
 
 Lesson.propTypes = {
   // ownProps
