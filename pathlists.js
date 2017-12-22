@@ -7,14 +7,15 @@ const glob = require('glob');
 const lessonSrcPath = lessonSrc.replace(/\\/g, '/');
 
 
-module.exports.coursePaths = () => {
+module.exports.coursePaths = (ending) => {
+  if (typeof ending === 'undefined') { ending = ''; }
   return glob.sync(path.join(lessonSrcPath, '*/index.md'), {dot: true})
-    .map(p => p.replace(new RegExp(`^${lessonSrcPath}/(.*)/index\\.md$`), '$1/'));
+    .map(p => p.replace(new RegExp(`^${lessonSrcPath}/(.*)/index\\.md$`), '$1' + ending));
 };
 
 module.exports.lessonPaths = (verbose, ending) => {
   if (typeof verbose === 'undefined') { verbose = true; }
-  if (typeof ending === 'undefined') { ending = '/'; }
+  if (typeof ending === 'undefined') { ending = ''; }
   const availableLanguages = yamlFront.loadFront(path.join(lessonFiltertags, 'keys.md')).language;
   console.log('Available languages:', availableLanguages);
   return glob.sync(path.join(lessonSrcPath, '*/*/*.md'))

@@ -13,8 +13,7 @@ import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
-import {capitalize, removeHtmlFileEnding,
-  setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
+import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
@@ -40,7 +39,7 @@ const rememberLastLesson = (path, setLastLesson) => {
 };
 
 const createMarkup = (lessonContent) => {
-  return ({__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))});
+  return ({__html: processContent(lessonContent, contentStyles)});
 };
 
 const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>

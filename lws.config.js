@@ -3,5 +3,9 @@
 module.exports = {
   port: 8080,
   directory: './dist',
-  compress: true
+  compress: true,
+  verbose: false,
+  rewrite: [
+    { from: /^(.*[/][^.]+)$/, to: '$1.html'}, // Fake github's behaviour, that with no extension, assume .html
+  ],
 };

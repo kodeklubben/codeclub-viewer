@@ -58,7 +58,7 @@ const locals = {};
 ///////////////
 
 function getStaticSitePaths() {
-  const staticPaths = ['/'].concat(coursePaths()).concat(lessonPaths());
+  const staticPaths = ['/'].concat(coursePaths('.html')).concat(lessonPaths(false, '.html'));
   //const staticPaths = ['scratch/astrokatt/astrokatt'];
 
   console.log('Static paths:');

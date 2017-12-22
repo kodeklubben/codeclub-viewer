@@ -80,6 +80,27 @@ const serverSideRedirectCheck = (nextState, replace) => {
   }
 };
 
+const rewritePath = (nextState, replace) => {
+  const nextpath = nextState.location.pathname;
+  // XXX: if nextpath === '/index.html' the redirect to '/' ?
+  if (nextpath !== '/index.html' && nextpath.endsWith('.html')) {
+    if (typeof document !== 'undefined') {
+      replace(nextpath.replace(/\.html$/, ''));
+    } else {
+      console.error('The router cannot handle paths that end in .html' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+};
+
+const appOnEnter = (nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
+const appOnChange = (prevState, nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
 /**
 * IMPORTANT:
 * When adding new routes, especially dynamic ones (on the form path="/:somePath")
@@ -93,7 +114,7 @@ export default function getRouteObject(
   getComponentNotFound
 ) {
   return (
-    <Route path="/" component={App}>
+    <Route path="/" component={App} onEnter={appOnEnter} onChange={appOnChange}>
       <IndexRoute getComponent={getComponentFrontPage} onEnter={serverSideRedirectCheck}/>
       <Route path="/PageNotFound" getComponent={getComponentNotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
