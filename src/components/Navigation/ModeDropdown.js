@@ -4,6 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ModeDropdown.scss';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 import {setModeStudent, setModeTeacher} from '../../action_creators';
 
@@ -13,8 +14,11 @@ const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   const bsStyle = isStudentMode ? modes[0] : modes[1];
   const onSelect = () => {isStudentMode ? setModeTeacher() : setModeStudent();};
   const title = <div>
-    <span className={styles.onlyMode}>{t('navbar.mode') + ': '}</span>
-    <span>{texts[bsStyle]}</span>
+    <Glyphicon className={styles.icon} glyph={isStudentMode ? 'pencil' : 'education'}/>
+    <span>
+      <span className={styles.onlyMode}>{t('navbar.mode') + ': '}</span>
+      {texts[bsStyle]}
+    </span>
   </div>;
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='mode-dropdown' noCaret pullRight {...{bsStyle, onSelect, title}}>

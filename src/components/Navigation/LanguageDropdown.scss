@@ -15,6 +15,7 @@ $space-between-text-and-flag: 10px;
 }
 
 .flag {
+  margin: 1px 0;
   width: $flag-width;
   height: $flag-height;
   float: right;
