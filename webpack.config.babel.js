@@ -153,7 +153,7 @@ function getPlugins() {
   if (!buildPDF) {
     // copy FakeLessonPDF.pdf to all the lessons
     // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
-    const pdfPaths = lessonPaths(false, '.pdf');
+    const pdfPaths = lessonPaths('.pdf');
     plugins = plugins.concat([
       new CopyWebpackPlugin(pdfPaths.map(pdfPath => ({
         from: 'src/assets/pdfs/FakeLessonPDF.pdf',

@@ -300,12 +300,6 @@ export function tagsMatchFilter(lessonTags, filter) {
   return true; // The lessonTags contained all the checked filterTags
 }
 
-export function removeHtmlFileEnding(lessonPage) {
-  // RegEx for matching and removing parts of text that starts with
-  // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
-  return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(")/g, '$1$2');
-}
-
 /**
 * Returns languages defined as available
 * All available languages must be defined here

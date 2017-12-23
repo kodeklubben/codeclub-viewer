@@ -55,7 +55,7 @@ const convertUrl = async (browser, lesson) => {
 };
 
 const doConvert = () => {
-  const lessons = lessonPaths({verbose: false}).map(path => path.replace(/\/$/, ''));
+  const lessons = lessonPaths();
 
   (async () => {
     const browser = await puppeteer.launch();
