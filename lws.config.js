@@ -6,6 +6,8 @@ module.exports = {
   compress: true,
   verbose: false,
   rewrite: [
-    { from: /^(.*[/][^.]+)$/, to: '$1.html'}, // Fake github's behaviour, that with no extension, assume .html
+    // Fake github's behaviour, that with no extension, assume .html
+    { from: /^(.*[/][^.]+)$/, to: '$1.html'},           // .../file       --> .../file.html
+    { from: /^(.*[/][^.]+)\?(.+)$/, to: '$1.html?$2'},  // .../file?query --> .../file.html?query
   ],
 };

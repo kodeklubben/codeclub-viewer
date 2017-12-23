@@ -59,7 +59,7 @@ const pathTest = (nextState, replace) => {
 const saveURL = (nextState, replace) => {
   const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
   const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
-  if(typeof history.replaceState !== 'undefined'){
+  if(typeof history !== 'undefined' && history.replaceState){
     history.replaceState(null, null, path);
   }
 };
@@ -82,10 +82,17 @@ const serverSideRedirectCheck = (nextState, replace) => {
 
 const rewritePath = (nextState, replace) => {
   const nextpath = nextState.location.pathname;
-  // XXX: if nextpath === '/index.html' the redirect to '/' ?
-  if (nextpath !== '/index.html' && nextpath.endsWith('.html')) {
+  if (nextpath.startsWith('/index')) {
     if (typeof document !== 'undefined') {
-      replace(nextpath.replace(/\.html$/, ''));
+      replace('/' + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that start with /index' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+  else if (nextpath.endsWith('.html')) {
+    if (typeof document !== 'undefined') {
+      replace(nextpath.replace(/\.html$/, '') + nextState.location.search);
     } else {
       console.error('The router cannot handle paths that end in .html' +
         ' when rendering static pages (' + nextpath + ')');

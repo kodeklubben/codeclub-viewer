@@ -13,9 +13,9 @@ module.exports.coursePaths = (ending) => {
     .map(p => p.replace(new RegExp(`^${lessonSrcPath}/(.*)/index\\.md$`), '$1' + ending));
 };
 
-module.exports.lessonPaths = (verbose, ending) => {
-  if (typeof verbose === 'undefined') { verbose = true; }
+module.exports.lessonPaths = (ending, verbose) => {
   if (typeof ending === 'undefined') { ending = ''; }
+  if (typeof verbose === 'undefined') { verbose = false; }
   const availableLanguages = yamlFront.loadFront(path.join(lessonFiltertags, 'keys.md')).language;
   console.log('Available languages:', availableLanguages);
   return glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
