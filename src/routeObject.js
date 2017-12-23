@@ -17,9 +17,9 @@ const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(
 
 const validPathTest = (lesson, path) => {
   if(lesson){
-    return (lessonArray.indexOf(path) > -1);
+    return (lessonArray.includes(path));
   }else{
-    return (courseArray.indexOf(path) > -1);
+    return (courseArray.includes(path));
   }
 };
 
@@ -37,7 +37,7 @@ const pathTest = (nextState, replace) => {
   if(path.endsWith('/')){
     path = path.slice(0, -1);
   }
-  const isReadme = readmeArray.indexOf(path) > -1;
+  const isReadme = readmeArray.includes(path);
   const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect && !isReadme){

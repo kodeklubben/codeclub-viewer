@@ -63,7 +63,7 @@ export function getInitialFilter(initialLanguage) {
     result[groupKey] = arrayToObject(filterkeys[groupKey]);
     return result;
   }, new Map()); // Use Map instead of Object to ensure correct order of tags
-  if ((filterkeys.language || []).indexOf(initialLanguage) !== -1) {
+  if ((filterkeys.language || []).includes(initialLanguage)) {
     filter.language[initialLanguage] = true;
   }
   return filter;
@@ -80,7 +80,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
       console.warn('Skipping lesson ' + path + ' since it is missing language.');
       return res;
     }
-    if (availableLanguages.indexOf(language) === -1) {
+    if (!availableLanguages.includes(language)) {
       // Hiding lesson since it uses a language that is not available (yet)
       if (typeof document === 'undefined') { // Only show message when rendering on server
         console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
@@ -131,7 +131,7 @@ export function getCourseInfoMarkup(courseName, language) {
   const withoutLanguage = `./${courseName}/index.md`;
 
   const hasValidFile = (path) => {
-    if (req.keys().indexOf(path) === -1) { return false; }
+    if (!req.keys().includes(path)) { return false; }
     const courseLanguage = req(path).frontmatter.language;
     if (!courseLanguage) {
       console.warn('Not using course info ' + path + ' since it is missing language.');
@@ -185,7 +185,7 @@ const getReadmePath = (readmeContext, language, path) => {
 
   const hasValidFile = (shortPath) => {
     const fullPath = '.' + shortPath + '.md';
-    if (readmeContext.keys().indexOf(fullPath) === -1) { return false; }
+    if (!readmeContext.keys().includes(fullPath)) { return false; }
     const readmeLanguage = readmeContext(fullPath).frontmatter.language;
     if (!readmeLanguage) {
       console.warn('Not using README ' + fullPath + ' since it is missing language.');
@@ -217,13 +217,13 @@ export function cleanseTags(tags, src) {
 
   return Object.keys(tags).reduce((result, groupKey) => {
     const groupKeyLC = groupKey.toLowerCase();
-    if (Object.keys(filterkeys).indexOf(groupKeyLC) === -1) {
+    if (!Object.keys(filterkeys).includes(groupKeyLC)) {
       console.warn('Ignoring invalid group ' + groupKey + ' in ' + src);
       return result;
     }
 
     let tagsInGroup = fixNonArrayTagList(tags[groupKey]).filter( (tagKey) => {
-      const isValid = tagKey.length > 0 && filterkeys[groupKeyLC].indexOf(tagKey.toLowerCase()) !== -1;
+      const isValid = tagKey.length > 0 && filterkeys[groupKeyLC].includes(tagKey.toLowerCase());
       if (!isValid) {
         console.warn('Ignoring invalid tag ' + tagKey + ' in group ' + groupKey + ' in ' + src);
       }
@@ -285,13 +285,13 @@ export function tagsMatchFilter(lessonTags, filter) {
     }
     // OR-tests the language group
     if(groupKey === 'language' && checkedLanguageTags.length !== 0
-      && checkedLanguageTags.filter(tagKey => lessonGroup.indexOf(tagKey) !== -1).length === 0){
+      && checkedLanguageTags.filter(tagKey => lessonGroup.includes(tagKey)).length === 0){
       return false;
     }
     // AND-tests everything else
     for (const checkedTagKey of checkedTagKeys) {
       // lessonGroup doesn't contain checkedFilterTag
-      if (groupKey !== 'language' && lessonGroup.indexOf(checkedTagKey) === -1) {
+      if (groupKey !== 'language' && !lessonGroup.includes(checkedTagKey)) {
         return false;
       }
     }
