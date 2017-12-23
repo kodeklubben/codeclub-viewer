@@ -1,11 +1,17 @@
 @import '../../styles/variables';
 
-.language {
+.textMargin {
   margin-right: $flag-width + $space-between-text-and-flag;
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
 }
 
-.onlyFlag {
-  @media (max-width: $screen-xs-max) {
+.container {
+  margin: 10px 10px 0 0;
+
+  @media print {
     display: none;
   }
 }
@@ -14,9 +20,4 @@
   width: $flag-width;
   height: $flag-height;
   float: right;
-}
-
-.gadgetContainer {
-  display: inline-block;
-  padding: 3px 5px;
 }
