@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './TooltipComponent.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
