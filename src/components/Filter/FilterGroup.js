@@ -23,7 +23,12 @@ const FilterGroup = ({
       const checked = filterTags[key];
       return tagName ? <FilterItem {...{key, checked, tagName, onCheck}}/>
         : null;
-    });
+    }).filter(item => !!item); // filter out null-values;
+
+    // Sort filterItems alphabetically except grades
+    if (groupKey !== 'grade') {
+      filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
+    }
 
     const nothingChecked = !somethingChecked;
     const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
@@ -33,6 +38,7 @@ const FilterGroup = ({
         collapseFilterGroup(groupKey, !isCollapsed);
       }
     };
+
     return (
       <ListGroupItem>
         <div className={headingStyle} onClick={onGroupClick}>
