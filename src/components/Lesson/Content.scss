@@ -47,12 +47,12 @@ $checkbox-blue: #abdbea;
   @include styledList;
 }
 
-// scratch code blocks
-//pre.blocks,
-//code.b {
-//  background-color: inherit;
-//  border: 0;
-//}
+ scratch code blocks
+pre.blocks,
+code.b {
+  background-color: inherit;
+  border: 0;
+}
 
 // code blocks
 pre > code {
