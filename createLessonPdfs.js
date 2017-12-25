@@ -8,6 +8,7 @@ const fse = require('fs-extra');
 const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 
+const numberOfSimultaneousPdfConverts = 10;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 let localWebServer = null;
 
@@ -45,23 +46,40 @@ const convertUrl = async (browser, lesson) => {
   });
 };
 
-const doConvert = () => {
-  const lessons = lessonPaths().slice(0,10);
+const createChunks = (originalArray, chunkSize) => {
+  const chunks = [];
+  const arr = originalArray.slice();
+  while (arr.length > 0) {
+    chunks.push(arr.splice(0, chunkSize));
+  }
+  return chunks;
+};
 
+const doConvert = () => {
+  const lessons = lessonPaths();
   (async () => {
     try {
       const browser = await puppeteer.launch();
+      const lessonChunks = createChunks(lessons, numberOfSimultaneousPdfConverts);
 
-      // Could perhaps look into Promise.race() to run several promises simultaneously
-      for (const path of lessons) {
+      let pdfCount = 0;
+      const startTime = new Date().getTime();
+
+      for (const lessonChunk of lessonChunks) {
+        const convertPromises = lessonChunk.map(path => convertUrl(browser, path));
         try {
-          await convertUrl(browser, path);
-        } catch(err) {
+          await Promise.all(convertPromises); // Perhaps look into Promise.race() to run even faster
+          pdfCount += convertPromises.length;
+        } catch (err) {
           console.log('Error while converting URLs. Skipping rest of lessons.');
           console.log(err);
           break;
         }
       }
+
+      const endTime = new Date().getTime();
+      const seconds = (endTime - startTime)/1000.0;
+      console.log('Time used to convert PDFs:', seconds, 'seconds = ', (seconds/pdfCount).toFixed(2), 'seconds/PDF');
 
       browser.close();
     }
