@@ -42,7 +42,6 @@ import {lessonPaths} from './pathlists';
 
 const webpack = require('webpack');
 import path from 'path';
-import autoprefixer from 'autoprefixer';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -139,11 +138,9 @@ function getPlugins() {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
-      new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
         compress: {
-          warnings: false,
           pure_funcs: 'console.log' // removes these functions from the code
         }
       })
@@ -170,7 +167,7 @@ function getPlugins() {
   if (!isHot) {
     plugins = plugins.concat([
       new CleanWebpackPlugin(buildDir),
-      new ExtractTextPlugin(filenameBase + '.css', {allChunks: false}),
+      new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
       })
@@ -195,17 +192,15 @@ const config = {
     chunkFilename: `${filenameBase}.js`
   },
   devServer: {
-    historyApiFallback: true, // needed when using browserHistory (instead of hashHistory)
+    historyApiFallback: { // needed when using browserHistory (instead of hashHistory)
+      index: publicPath
+    },
     outputPath: buildDir // needed for copy-webpack-plugin when "to" is an abs. path
-  },
-  historyApiFallback: {
-    index: publicPath
   },
   plugins: [
     ...baseConfig.plugins,
     ...getPlugins()
   ],
-  postcss: [autoprefixer]
 };
 
 ////////////////////

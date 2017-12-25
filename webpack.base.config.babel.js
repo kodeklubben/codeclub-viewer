@@ -103,17 +103,16 @@ export function getLoaders() {
       test: inCurrentRepo('(ttf|eot|svg)(\\?[\\s\\S]+)?'),
       loader: 'file-loader?name=CCV-assets/[name].[hash:6].[ext]',
     },
-    json: {
-      // This loader is needed for some packages, e.g. sanitize-html (and markdown-it?)
-      test: inCurrentRepo('json'),
-      loader: 'json-loader'
-    },
     resources: {
       test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
       exclude: [/\.md$/, new RegExp(regexpCompPath('/playlists/') + '.*\\.txt$')],
       loader: 'file-loader?name=[path][name].[hash:6].[ext]&context='+lessonSrc
     }
   };
+}
+
+export function getRules() {
+
 }
 
 /////////////////////
@@ -131,7 +130,7 @@ const baseConfig = {
     publicPath: publicPath
   },
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js'],
     alias: {
       lessonSrc,
       lessonFiltertags,
@@ -140,7 +139,6 @@ const baseConfig = {
     }
   },
   resolveLoader: {
-    root: [path.resolve(__dirname, 'node_modules')],
     alias: {
       // Markdown-files are parsed only through one of these three aliases, and are
       // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
@@ -148,7 +146,7 @@ const baseConfig = {
       // 2) Since the lessons create a lot of data, we want to be sure that we only load
       //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
       //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
-      onlyFrontmatter: 'combine?' + JSON.stringify({frontmatter: frontmatterLoaders}),
+      onlyFrontmatter: 'combine-loader?' + JSON.stringify({frontmatter: frontmatterLoaders}),
       onlyContent: 'combine?' + JSON.stringify({content: contentLoaders}),
       frontAndContent: 'combine?' + JSON.stringify({
         frontmatter: frontmatterLoaders,
@@ -157,20 +155,24 @@ const baseConfig = {
       bundleLessons: 'bundle?name=[path][name]&context='+lessonSrc,
     }
   },
-  'markdown-it': {
-    html: true,  // allow html in source
-    linkify: true,  // parse URL-like text to links
-    langPrefix: '',  // no prefix in class for code blocks
-    use: [
-      MarkdownItAttrs,
-      MarkdownItHeaderSections,
-      MarkdownItImplicitFigures,
-      MarkdownItAnchor,
-      [MarkdownItTaskCheckbox, {disabled: false}],
-    ],
-    highlight,
-  },
   plugins: [
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        'markdown-it': {
+          html: true,  // allow html in source
+          linkify: true,  // parse URL-like text to links
+          langPrefix: '',  // no prefix in class for code blocks
+          use: [
+            MarkdownItAttrs,
+            MarkdownItHeaderSections,
+            MarkdownItImplicitFigures,
+            MarkdownItAnchor,
+            [MarkdownItTaskCheckbox, {disabled: false}],
+          ],
+          highlight,
+        },
+      }
+    }),
     new CopyWebpackPlugin([{
       context: lessonSrc,
       from: lessonSrc + '/**/*',
