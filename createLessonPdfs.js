@@ -24,44 +24,53 @@ const cleanup = () => {
 };
 
 const convertUrl = async (browser, lesson) => {
-  try {
-    const pdfFile = path.join(buildDir, lesson + '.pdf');
-    const pdfFolder = path.dirname(pdfFile);
-    fse.mkdirsSync(pdfFolder);
-    const page = await browser.newPage();
-    const url = urlBase + lesson + '?pdf';
-    await page.goto(url, {waitUntil: 'networkidle'});
-    //await page.emulateMedia('screen');
-    console.log('Rendering PDF: ' + url + ' ---> ' + path.relative(__dirname, pdfFile));
-    await page.pdf({
-      path: pdfFile,
-      printBackground: true,
-      format: 'A4',
-      margin: {
-        top: '0.5in',
-        bottom: '0.5in',
-        left: '0.5in',
-        right: '0.5in',
-      }
-    });
-  } catch(err) {
-    console.log(err);
-  }
+  const pdfFile = path.join(buildDir, lesson + '.pdf');
+  const pdfFolder = path.dirname(pdfFile);
+  fse.mkdirsSync(pdfFolder);
+  const page = await browser.newPage();
+  const url = urlBase + lesson + '?pdf';
+  await page.goto(url, {waitUntil: 'networkidle'});
+  //await page.emulateMedia('screen');
+  console.log('Rendering PDF: ' + url + ' ---> ' + path.relative(__dirname, pdfFile));
+  await page.pdf({
+    path: pdfFile,
+    printBackground: true,
+    format: 'A4',
+    margin: {
+      top: '0.5in',
+      bottom: '0.5in',
+      left: '0.5in',
+      right: '0.5in',
+    }
+  });
 };
 
 const doConvert = () => {
-  const lessons = lessonPaths();
+  const lessons = lessonPaths().slice(0,10);
 
   (async () => {
-    const browser = await puppeteer.launch();
+    try {
+      const browser = await puppeteer.launch();
 
-    // Could perhaps look into Promise.race() to run several promises simultaneously
-    for (const path of lessons) {
-      await convertUrl(browser, path);
+      // Could perhaps look into Promise.race() to run several promises simultaneously
+      for (const path of lessons) {
+        try {
+          await convertUrl(browser, path);
+        } catch(err) {
+          console.log('Error while converting URLs. Skipping rest of lessons.');
+          console.log(err);
+          break;
+        }
+      }
+
+      browser.close();
     }
-
-    browser.close();
-    cleanup();
+    catch (e) {
+      console.log('Error in doConvert:', e);
+    }
+    finally {
+      cleanup();
+    }
   })();
 
 };
