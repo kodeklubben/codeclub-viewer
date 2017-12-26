@@ -35,6 +35,7 @@
 }
 
 .popoverGlyph {
+  margin-bottom: 2px;
   font-size: 1.3em;
   &:hover {
     color: black;
@@ -44,6 +45,5 @@
 .rightSide {
   display: flex;
   align-items: center;
-  margin-bottom: 2px;
   margin-left: auto;
 }
