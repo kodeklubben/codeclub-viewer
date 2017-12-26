@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './LessonItem.scss';

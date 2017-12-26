@@ -8,7 +8,6 @@ import {
   cleanseTags,
   fixNonArrayTagList,
   tagsMatchFilter,
-  removeHtmlFileEnding,
   arrayToObject,
 } from '../src/util';
 
@@ -240,40 +239,6 @@ describe('util', () => {
       deepFreeze(tags);
       deepFreeze(filter);
       expect(tagsMatchFilter(tags, filter)).to.equal(false);
-    });
-  });
-
-  describe('removeHtmlFileEnding', () => {
-    it('simple test to see that .html is removed correctly', () => {
-      const testString = '<a href="../stuff.html">“html HTML> .html .html>"</a>';
-      const correctString = '<a href="../stuff">“html HTML> .html .html>"</a>';
-      expect(removeHtmlFileEnding(testString)).to.equal(correctString);
-    });
-
-    it('Returns true if string is unchanged', () => {
-      const testString = '../html"> .html"> ../.html> ../.html"';
-      expect(removeHtmlFileEnding(testString)).to.equal(testString);
-    });
-
-    it('Checks that multiple links are correctly edited', () => {
-      const testString = '<a href="../del_inn_nettsiden/del_inn_nettsiden.html">“Del inn nettsiden"</a>\
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eleifend sit amet nulla nec consectetur.\
-<a href="../forsvunnet_katt/forsvunnet_katt.html">Forvunnet katt</a>';
-      const correctString = '<a href="../del_inn_nettsiden/del_inn_nettsiden">“Del inn nettsiden"</a>\
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eleifend sit amet nulla nec consectetur.\
-<a href="../forsvunnet_katt/forsvunnet_katt">Forvunnet katt</a>';
-      expect(removeHtmlFileEnding(testString)).to.equal(correctString);
-    });
-
-    it('Returns true if ".html" ending is removed from string of gibberish', () => {
-      const testString = '<a href="../we/write&some-.,Bull*#¤here+-*and)(-"seIF<>the++?/regEx_will?=)\
-(/&%¤#"!remove"The.,Ending^~correctly,We__æøå_alsoPut&%In__Somehtml_words,likeHtml.or.HTML.html_htmlstuff\
-The_Only.thing.that.should.be&removed*is,the".html".ending.html">“html HTML> .html .html>"</a>';
-
-      const correctString = '<a href="../we/write&some-.,Bull*#¤here+-*and)(-"seIF<>the++?/regEx_will?=)\
-(/&%¤#"!remove"The.,Ending^~correctly,We__æøå_alsoPut&%In__Somehtml_words,likeHtml.or.HTML.html_htmlstuff\
-The_Only.thing.that.should.be&removed*is,the".html".ending">“html HTML> .html .html>"</a>';
-      expect(removeHtmlFileEnding(testString)).to.equal(correctString);
     });
   });
 
