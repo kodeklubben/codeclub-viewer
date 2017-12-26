@@ -58,3 +58,8 @@ $font-size-xsmall: ceil($font-size-base * 0.7);
 
 $font-family-roboto: 'Roboto', 'Verdana', sans-serif;
 $font-family-roboto-mono: 'Roboto Mono', monospace;
+
+// Flag in LanguageDropdown and MainLanguageButton
+$flag-width: 30px;
+$flag-height: 20px;
+$space-between-text-and-flag: 10px;

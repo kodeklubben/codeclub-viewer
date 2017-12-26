@@ -59,7 +59,7 @@ const pathTest = (nextState, replace) => {
 const saveURL = (nextState, replace) => {
   const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
   const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
-  if(typeof history.replaceState !== 'undefined'){
+  if(typeof history !== 'undefined' && history.replaceState){
     history.replaceState(null, null, path);
   }
 };
@@ -80,6 +80,34 @@ const serverSideRedirectCheck = (nextState, replace) => {
   }
 };
 
+const rewritePath = (nextState, replace) => {
+  const nextpath = nextState.location.pathname;
+  if (nextpath.startsWith('/index')) {
+    if (typeof document !== 'undefined') {
+      replace('/' + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that start with /index' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+  else if (nextpath.endsWith('.html')) {
+    if (typeof document !== 'undefined') {
+      replace(nextpath.replace(/\.html$/, '') + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that end in .html' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+};
+
+const appOnEnter = (nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
+const appOnChange = (prevState, nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
 /**
 * IMPORTANT:
 * When adding new routes, especially dynamic ones (on the form path="/:somePath")
@@ -93,7 +121,7 @@ export default function getRouteObject(
   getComponentNotFound
 ) {
   return (
-    <Route path="/" component={App}>
+    <Route path="/" component={App} onEnter={appOnEnter} onChange={appOnChange}>
       <IndexRoute getComponent={getComponentFrontPage} onEnter={serverSideRedirectCheck}/>
       <Route path="/PageNotFound" getComponent={getComponentNotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>

@@ -11,7 +11,8 @@ import store from './store';
 
 export default (locals, callback) => {
   const history = createMemoryHistory();
-  const location = history.createLocation(locals.path);
+  const pathWithoutHtml = locals.path.replace(/\.html$/, '');
+  const location = history.createLocation(pathWithoutHtml);
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     let css = [];

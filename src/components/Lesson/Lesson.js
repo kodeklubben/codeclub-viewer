@@ -1,6 +1,7 @@
 /* eslint-env node */
 
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -13,8 +14,7 @@ import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
-import {capitalize, removeHtmlFileEnding,
-  setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
+import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
@@ -22,6 +22,7 @@ import LessonButton from './LessonButton';
 import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
 import PdfButton from './PdfButton';
+import MainLanguageButton from './MainLanguageButton';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -40,7 +41,7 @@ const rememberLastLesson = (path, setLastLesson) => {
 };
 
 const createMarkup = (lessonContent) => {
-  return ({__html: removeHtmlFileEnding(processContent(lessonContent, contentStyles))});
+  return ({__html: processContent(lessonContent, contentStyles)});
 };
 
 const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
@@ -90,6 +91,7 @@ const Lesson = React.createClass({
           {author}
           {translator}
           <PrintInfo {...{t, translateTag, translateGroup, course: params.course, tags}}/>
+          <MainLanguageButton {...{path}}/>
           {resetButton}
           {instructionButton}
           {pdfButton}

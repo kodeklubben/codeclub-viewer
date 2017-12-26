@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {setLanguage, resetFilter} from '../../action_creators';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -15,9 +16,9 @@ const LanguageItem = ({language, translateTag, onlyFlag}) => {
   return (
     <div>
       <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/>
-      <div className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
+      <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
         {translateTag('language', language)}
-      </div>
+      </span>
     </div>
   );
 };

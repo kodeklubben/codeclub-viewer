@@ -58,18 +58,17 @@ const locals = {};
 ///////////////
 
 function getStaticSitePaths() {
-  const staticPaths = ['/'].concat(coursePaths()).concat(lessonPaths());
-  //const staticPaths = ['scratch/astrokatt/astrokatt'];
+  // The '/' will render to '/index.html'
+  const paths = [
+    '/',  // Is the same as '/index.html'
+    'PageNotFound.html',
+  ];
+  const courses = coursePaths('.html');
+  const lessons = lessonPaths('.html');
 
+  const staticPaths = paths.concat(courses).concat(lessons);
   console.log('Static paths:');
   console.log(staticPaths);
-
-  // [
-  //   '/scratch',
-  //    ... (more courses)
-  //   'scratch/3d_flakser/3d_flakser_1',
-  //    ... (more lessons)
-  // ]
 
   return staticPaths;
 }
