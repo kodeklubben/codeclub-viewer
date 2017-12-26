@@ -22,28 +22,28 @@
 
 .title {
   padding: 2px 0;
-  margin-right: 3px;
+  margin-right: 5px;
 }
 
 .progress {
   opacity: 0.5;
+  margin-right: 5px;
 }
 
-.externalGlyph {
-  font-size: 1.3em;
-  margin-left: auto;
+.instructionButton {
+  margin-right: 5px;
 }
 
 .popoverGlyph {
   font-size: 1.3em;
-  margin-left: auto;
   &:hover {
     color: black;
   }
+}
 
-  @media screen and (max-width: $screen-xs-max) {
-    &:hover {
-      color: $color-gray;
-    }
-  }
+.rightSide {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+  margin-left: auto;
 }

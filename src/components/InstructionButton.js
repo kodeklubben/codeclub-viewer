@@ -14,7 +14,7 @@ const InstructionButton = ({buttonPath, buttonText, className, bsSize, insideLin
     <LinkContainer to={buttonPath}>
       <Button {...{className, bsStyle, bsSize, componentClass}}>
         <Glyphicon className={styles.icon} glyph={isNotReadme ? 'education' : 'pencil'}/>
-        <span className={styles.textMargin}>{buttonText}</span>
+        <span className={buttonText ? styles.textMargin : ''}>{buttonText}</span>
       </Button>
     </LinkContainer> :
     null);

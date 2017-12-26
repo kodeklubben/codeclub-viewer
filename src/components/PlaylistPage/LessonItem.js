@@ -11,50 +11,57 @@ import {getTranslator} from '../../selectors/translate';
 import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import PopoverComponent from '../PopoverComponent';
+import InstructionButton from '../InstructionButton';
 
-const LessonItem = ({t, lesson,checkedCheckboxes, totalCheckboxes}) => {
-  const levelIcon = <LevelIcon level={lesson.level}/>;
-
+const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const progress = checkedCheckboxes > 0 ?
     <div className={styles.progress}>
       {`(${checkedCheckboxes}/${totalCheckboxes})`}
     </div> :
     null;
+  const progressBar = lesson.level > 0 ?
+    <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
+    null;
+
+  const instructionButton = isStudentMode ? null :
+    <InstructionButton
+      className={styles.instructionButton}
+      buttonPath={lesson.readmePath}
+      bsSize='xs'
+      insideLink={true}
+    />;
 
   const popoverContent = getLessonIntro(lesson.path.slice(1));
-
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
     </PopoverComponent>
     : null;
 
-  const progressBar = lesson.level > 0 ?
-    <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
-    null;
-
-  const title = <div className={styles.title}>{lesson.title}</div>;
-
-  const externalIcon = <Glyphicon className={styles.externalGlyph} glyph="new-window"/>;
-
   return (
     <div>
       {lesson.external ?
         <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
-          {levelIcon}
-          {title}
-          {popoverButton}
-          {externalIcon}
+          <LevelIcon level={lesson.level}/>
+          <div className={styles.title}>{lesson.title}</div>
+          <Glyphicon glyph="new-window"/>
+          <span className={styles.rightSide}>
+            {instructionButton}
+            {popoverButton}
+          </span>
         </ListGroupItem>
         :
         <LinkContainer to={lesson.path}>
           <ListGroupItem className={styles.row}>
             {progressBar}
-            {levelIcon}
-            {title}
+            <LevelIcon level={lesson.level}/>
+            <div className={styles.title}>{lesson.title}</div>
             {progress}
-            {popoverButton}
+            <span className={styles.rightSide}>
+              {instructionButton}
+              {popoverButton}
+            </span>
           </ListGroupItem>
         </LinkContainer>
       }
@@ -67,12 +74,14 @@ LessonItem.propTypes = {
   lesson: PropTypes.object,
 
   // mapStateToProps
+  isStudentMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state, {lesson}) => ({
+  isStudentMode: state.isStudentMode,
   t: getTranslator(state),
   checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(lesson.path)),
   totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(lesson.path)),
