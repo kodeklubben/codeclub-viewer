@@ -25,8 +25,8 @@ const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
     <DropdownButton id='mode-dropdown' noCaret pullRight {...{bsStyle, onSelect, title}}>
       {modes.map(key =>
         <MenuItem {...{key}} eventKey={key} active={bsStyle === key}>
-          {texts[key]}
           <Glyphicon className={styles.icon} glyph={key === 'student' ? 'pencil' : 'education'}/>
+          {texts[key]}
         </MenuItem>)
       }
     </DropdownButton>

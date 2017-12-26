@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 .language {
-  margin-right: $flag-width + $space-between-text-and-flag;
+  margin-left: $space-between-text-and-flag;
 }
 
 .onlyFlag {
@@ -14,7 +14,6 @@
   margin: 1px 0;
   width: $flag-width;
   height: $flag-height;
-  float: right;
 }
 
 .gadgetContainer {
