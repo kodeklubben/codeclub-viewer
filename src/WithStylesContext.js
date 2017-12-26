@@ -1,4 +1,5 @@
-import React, { PropTypes, Children } from 'react';
+import React, {Children} from 'react';
+import PropTypes from 'prop-types';
 
 const WithStylesContext = React.createClass({
   getChildContext() {

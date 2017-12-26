@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Button from 'react-bootstrap/lib/Button';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';

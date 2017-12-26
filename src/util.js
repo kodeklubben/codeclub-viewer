@@ -300,12 +300,6 @@ export function tagsMatchFilter(lessonTags, filter) {
   return true; // The lessonTags contained all the checked filterTags
 }
 
-export function removeHtmlFileEnding(lessonPage) {
-  // RegEx for matching and removing parts of text that starts with
-  // <a href= ../ followed by anything not containing whitespaces, and ends with .html">
-  return lessonPage.replace(/(<a href="\.\.\/[^\s]*)\.html(")/g, '$1$2');
-}
-
 /**
 * Returns languages defined as available
 * All available languages must be defined here
@@ -326,6 +320,33 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
       return lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;
     }
   }
+};
+
+/**
+* Returns the path for the language in state if task is another language
+*
+* @param {String} path
+* @param {String} language
+* @param {boolean} isReadme
+* @returns {String or null}
+*/
+export const getPathForMainLanguage = (path, language, isReadme) => {
+  const req = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/[^.]*\.md$/);
+  const lessonLanguage = req('./' + path + '.md').frontmatter.language;
+  if (lessonLanguage !== language) {
+    const lessonFolder = './' + path.substring(0, path.lastIndexOf('/'));
+    for (const lessonPath of req.keys()) {
+      if (!!isReadme === lessonPath.includes('README')) {
+        if (lessonPath.startsWith(lessonFolder)) {
+          if (req(lessonPath).frontmatter.language === language) {
+            // Cut away period at start and extension at end:
+            return lessonPath.substring(1, lessonPath.lastIndexOf('.'));
+          }
+        }
+      }
+    }
+  }
+  return null;
 };
 
 /**

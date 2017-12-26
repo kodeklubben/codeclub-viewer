@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {onFilterCheck, collapseFilterGroup} from '../../action_creators';
 import FilterItem from './FilterItem';
@@ -23,7 +24,12 @@ const FilterGroup = ({
       const checked = filterTags[key];
       return tagName ? <FilterItem {...{key, checked, tagName, onCheck}}/>
         : null;
-    });
+    }).filter(item => !!item); // filter out null-values;
+
+    // Sort filterItems alphabetically except grades
+    if (groupKey !== 'grade') {
+      filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
+    }
 
     const nothingChecked = !somethingChecked;
     const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
@@ -33,6 +39,7 @@ const FilterGroup = ({
         collapseFilterGroup(groupKey, !isCollapsed);
       }
     };
+
     return (
       <ListGroupItem>
         <div className={headingStyle} onClick={onGroupClick}>
