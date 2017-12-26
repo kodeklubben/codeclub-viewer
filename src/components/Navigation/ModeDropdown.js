@@ -23,7 +23,12 @@ const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   </div>;
   return <div className={styles.gadgetContainer}>
     <DropdownButton id='mode-dropdown' noCaret pullRight {...{bsStyle, onSelect, title}}>
-      {modes.map(key => <MenuItem {...{key}} eventKey={key} active={bsStyle === key}>{texts[key]}</MenuItem>)}
+      {modes.map(key =>
+        <MenuItem {...{key}} eventKey={key} active={bsStyle === key}>
+          {texts[key]}
+          <Glyphicon className={styles.icon} glyph={key === 'student' ? 'pencil' : 'education'}/>
+        </MenuItem>)
+      }
     </DropdownButton>
   </div>;
 };
