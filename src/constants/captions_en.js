@@ -62,9 +62,13 @@ export default {
   lessons: {
     writtenby: 'Written by:',
     translatedby: 'Translated by:',
+    course: 'Course:',
+    pdf: 'Download PDF',
+    print: 'Print',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
+    tomainlanguage: 'In {{lang}}',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',
@@ -82,50 +86,6 @@ export default {
     }
   },
   filter: {
-    group: {
-      grade: 'Grade',
-      language: 'Language',
-      subject: 'Subject',
-      topic: 'Topic',
-    },
-    tags_grade: {
-      preschool: 'Preschool',
-      primary: 'Primary',
-      secondary: 'Secondary',
-      junior: 'Junior',
-      senior: 'Senior',
-    },
-    tags_language: {
-      nb: 'Norsk bokmål',
-      nn: 'Norsk nynorsk',
-      sv: 'Svenska',
-      da: 'Dansk',
-      en: 'English',
-      hr: 'Hrvatski',
-    },
-    tags_subject: {
-      mathematics: 'Mathematics',
-      science: 'Science',
-      programming: 'Programming',
-      technology: 'Technology',
-      music: 'Music',
-      norwegian: 'Norwegian',
-      english: 'English',
-      arts_and_crafts: 'Arts and crafts',
-      social_science: 'Social science',
-    },
-    tags_topic: {
-      app: 'App',
-      electronics: 'Electronics',
-      step_based: 'Step based',
-      block_based: 'Block based',
-      text_based: 'Text based',
-      minecraft: 'Minecraft',
-      web: 'Web',
-      game: 'Game',
-      robot: 'Robot',
-      animation: 'Animation',
-    },
     header: 'Filter',
     tooltip: {
       textline1: 'The filter allows you to sort out the lessons you want to solve according to the topics you ' +
@@ -153,7 +113,8 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    downloadZIP:  'Download all courses as a zip file'
+    downloadZIP:  'Download all courses as a zip file',
+    contribute: 'Contribute?'
   },
   404: {
     header: 'Something went wrong',

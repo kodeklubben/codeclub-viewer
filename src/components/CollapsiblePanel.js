@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -19,7 +20,7 @@ const CollapsiblePanel = React.createClass({
     </span>;
     return (
       <div className={styles.container}>
-        <Panel collapsible expanded={expanded} bsStyle={bsStyle} header={headerWithChevron} onSelect={onClick}>
+        <Panel collapsible header={headerWithChevron} onSelect={onClick} {...{expanded, bsStyle}}>
           {children}
         </Panel>
       </div>
@@ -28,6 +29,7 @@ const CollapsiblePanel = React.createClass({
 });
 
 CollapsiblePanel.propTypes = {
+  // ownProps
   initiallyExpanded: PropTypes.bool,
   header: PropTypes.oneOfType([
     PropTypes.string,

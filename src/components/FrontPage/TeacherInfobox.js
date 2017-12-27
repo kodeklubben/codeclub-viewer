@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './TeacherInfobox.scss';
@@ -8,7 +9,6 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
 const TeacherInfobox = React.createClass({
-
   getInitialState() {
     return {
       showCourseInfo: false
@@ -17,7 +17,6 @@ const TeacherInfobox = React.createClass({
   changeState() {
     this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
   },
-
   render() {
     const {t} = this.props;
     const {showCourseInfo} = this.state;
@@ -63,7 +62,8 @@ const TeacherInfobox = React.createClass({
 });
 
 TeacherInfobox.propTypes = {
-  t: PropTypes.func
+  // mapStateToProps
+  t: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

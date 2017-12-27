@@ -1,108 +1,92 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DocumentTitle from 'react-document-title';
-
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import AutoAffix from 'react-overlays/lib/AutoAffix';
+import cx from 'classnames';
 
 import styles from './PlaylistPage.scss';
-
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
 import {getPlaylists} from '../selectors/playlist';
 import {capitalize} from '../util';
-
 import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-
-export const PlaylistPage = ({params, isStudentMode, lessonsByLevel, playlists, t}) => {
+const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   const levels = Object.keys(lessonsByLevel);
-
-  const lessonLists = levels.map((level, idx) => (
-    <LessonList key={idx} id={'level-' + level} level={level} lessons={lessonsByLevel[level]}/>
-  ));
-
+  const lessonLists = levels.map(level => <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
   const filter = <LessonFilter courseName={params.course}/>;
+  const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
+  const courseInfo = <CourseInfo courseName={params.course}/>;
+  const hasPlaylists = !!Object.keys(playlists).length;
 
-  const playlistsAndLessons =
-    <div>
-      <PlaylistNavigation playlists={playlists}/>
-      {lessonLists.length ? lessonLists : t('playlist.nomatchinglessons')}
-    </div>;
-
-  const jumpTo =
-    <div>
-      {levels.length > 0 ? <LevelNavigation levels={levels}/> : null}
-    </div>;
-
-  const courseInfo =
-    <CourseInfo courseName={params.course} isStudentMode={isStudentMode}/>;
-
-  // Title with course name and get started button
-  const heading =
-    <Row>
-      <Col xs={12} sm={6} smOffset={3}>
-        <h1>{capitalize(params.course)} {t('playlist.lessons')}</h1>
-      </Col>
-    </Row>;
-
-  const body =
-    <Row>
-      {/*Filter desktop*/}
-      <Col xsHidden>
-        <Col sm={3} className={styles.topMargin}>{filter}</Col>
-        <Col sm={6}>
-          {courseInfo}
-          {playlistsAndLessons}
-        </Col>
-        <Col sm={3} className={styles.topMargin}>{jumpTo}</Col>
-      </Col>
-
-      {/*Filter mobile*/}
-      <Col smHidden mdHidden lgHidden>
-        <Col xs={12}>{courseInfo}</Col>
-        <Col xs={12}>{filter}</Col>
-        {/*<Col xs={12}>{jumpTo}</Col>*/}
-        <Col xs={12}>{playlistsAndLessons}</Col>
-      </Col>
-    </Row>;
+  let thispage = null;
+  const jumpToAffixed = jumpTo ?
+    <Col xsHidden sm={3} className={cx(styles.jumpTo, {[styles.topMargin]: lessonLists.length})}>
+      <AutoAffix viewportOffsetTop={15} container={() => thispage}>
+        {jumpTo}
+      </AutoAffix>
+    </Col> : null;
 
   return (
     <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
-      <Grid fluid={true}>
-        {heading}
-        {body}
+      <Grid fluid={true} ref={grid => thispage = grid}>
+
+        <Row>
+          <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
+          <Col xs={12}>{courseInfo}</Col>
+        </Row>
+
+        {hasPlaylists ?
+          <Row>
+            <Col xs={12} sm={lessonLists.length ? 9 : 12}><PlaylistNavigation {...{playlists}}/></Col>
+            {jumpToAffixed}
+          </Row>
+          : null}
+
+        <Row>
+          <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
+          <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
+          <Col xs={12} sm={6}>
+            {lessonLists.length ?
+              lessonLists :
+              <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
+            }
+          </Col>
+          {hasPlaylists ? null : jumpToAffixed}
+        </Row>
+
       </Grid>
     </DocumentTitle>
   );
 };
 
 PlaylistPage.propTypes = {
-  isStudentMode: PropTypes.bool,
-  lessonsByLevel: PropTypes.object.isRequired,
-  playlists: PropTypes.object.isRequired,
+  // ownProps
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }).isRequired,
+
+  // mapStateToProps
+  lessonsByLevel: PropTypes.object.isRequired,
+  playlists: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state, props) {
-  const {course} = props.params;
-  return {
-    isStudentMode: state.isStudentMode,
-    lessonsByLevel: getLessonsByLevel(state, course),
-    playlists: getPlaylists(state, course),
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state, {params}) => ({
+  lessonsByLevel: getLessonsByLevel(state, params.course),
+  playlists: getPlaylists(state, params.course),
+  t: getTranslator(state)
+});
 
-export const PlaylistPageContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(PlaylistPage));

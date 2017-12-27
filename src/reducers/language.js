@@ -17,5 +17,5 @@ export default function(state='nb', action) {
 }
 
 function isLanguageValid(language) {
-  return getAvailableLanguages().indexOf(language) !== -1;
+  return getAvailableLanguages().includes(language);
 }

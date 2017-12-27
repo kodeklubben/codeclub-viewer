@@ -1,11 +1,12 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Link from 'react-router/lib/Link';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';
 
-const NotFound = ({t}) => {
+const PageNotFound = ({t}) => {
   return (
     <div className={styles.center}>
       <h3>{t('404.header')}</h3>
@@ -16,15 +17,15 @@ const NotFound = ({t}) => {
   );
 };
 
-NotFound.propTypes = {
-  t: PropTypes.func
+PageNotFound.propTypes = {
+  // mapStateToProps
+  t: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    t: getTranslator(state)
-  };
-}
+const mapStateToProps = (state) => ({
+  t: getTranslator(state)
+});
 
-export const NotFoundContainer = connect(
-	mapStateToProps)(withStyles(styles)(NotFound));
+export default connect(
+  mapStateToProps
+)(withStyles(styles)(PageNotFound));

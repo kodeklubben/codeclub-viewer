@@ -14,6 +14,11 @@
  *
  */
 
+console.log();
+console.log('########################################');
+console.log(' Running webpack.static.config.babel.js ');
+console.log('########################################');
+console.log();
 
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
@@ -26,16 +31,23 @@
 // IMPORT / REQUIRE //
 //////////////////////
 
-import baseConfig, {lessonSrc, buildDir, publicPath} from './webpack.base.config.babel';
-import path from 'path';
+import baseConfig from './webpack.base.config.babel';
+import {lessonPaths, coursePaths} from './pathlists';
+
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
-import yamlFront from 'yaml-front-matter';
+import WebpackShellPlugin from 'webpack-shell-plugin';
 
 
 ///////////////
 // CONSTANTS //
 ///////////////
+
+import {buildDir, publicPath, buildPDF} from './buildconstants';
+console.log('buildDir:', buildDir);
+console.log('publicPath:', publicPath);
+console.log('buildPDF:', buildPDF);
+console.log();
 
 const scope = {window: {}};
 const locals = {};
@@ -46,33 +58,17 @@ const locals = {};
 ///////////////
 
 function getStaticSitePaths() {
-  const glob = require('glob');
-  const absLessonSrc = path.resolve(__dirname, lessonSrc);
+  // The '/' will render to '/index.html'
+  const paths = [
+    '/',  // Is the same as '/index.html'
+    'PageNotFound.html',
+  ];
+  const courses = coursePaths('.html');
+  const lessons = lessonPaths('.html');
 
-  // Only include folders in lesson src that have an index.md
-  const coursePaths = glob.sync(path.join(absLessonSrc, '*/index.md'), {dot: true})
-    .map(p => p.replace(new RegExp(`^${absLessonSrc}\/(.*)\/index\.md$`), '$1/'));
-
-  const lessonPaths = glob.sync(path.join(absLessonSrc, '*/*/*.md'))
-    .filter(p => !p.endsWith('index.md'))
-    .filter(p => {
-      const {title, external} = yamlFront.loadFront(p);
-      if (external) { console.log('Skipping external course "' + title + '" (' + p + ')'); }
-      return !external;
-    })
-    .map(p => p.replace(new RegExp(`^(${absLessonSrc}\/)(.*)(\.md)$`), '$2/'));
-
-  const staticPaths = ['/'].concat(coursePaths).concat(lessonPaths);
-
+  const staticPaths = paths.concat(courses).concat(lessons);
   console.log('Static paths:');
   console.log(staticPaths);
-
-  // [
-  //   '/scratch',
-  //    ... (more courses)
-  //   'scratch/3d_flakser/3d_flakser_1',
-  //    ... (more lessons)
-  // ]
 
   return staticPaths;
 }
@@ -99,15 +95,18 @@ const config = {
     ...baseConfig.resolve,
     alias: {
       ...baseConfig.resolve.alias,
-      buildDir: path.resolve(__dirname, buildDir)
+      buildDir
     }
   },
   plugins: [
     ...baseConfig.plugins,
     new StaticSiteGeneratorPlugin('staticbundle', staticSitePaths, locals, scope),
-    new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths)
-
+    new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
   ]
 };
+
+if (buildPDF) {
+  config.plugins = config.plugins.concat([new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']})]);
+}
 
 export default config;

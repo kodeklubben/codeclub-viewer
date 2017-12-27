@@ -1,0 +1,13 @@
+@import '../styles/variables';
+
+.textMargin {
+  margin-left: 10px;
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
+}
+
+.icon {
+  margin-top: 2px;
+}

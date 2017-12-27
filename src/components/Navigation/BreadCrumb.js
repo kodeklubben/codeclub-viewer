@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import NavLink from './NavLink';
 import LevelIcon from '../LevelIcon';
@@ -6,20 +7,22 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
+import {getTitle, getLevel} from '../../selectors/frontmatter';
 
-export function BreadCrumb({params, iconContext, lessonLevel, lessonTitle}) {
+const BreadCrumb = ({params, title, level, courseIcon}) => {
+  const {course, lesson, file} = params;
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
-  const courseLink = params.course ?
-    <NavLink to={`/${params.course}`} className={styles.lessonLink}>
-      <img className={styles.courseIcon} src={iconContext('./' + params.course + '/logo-black.png')}/>
-      <span className={styles.lesson}>{capitalize(params.course)}</span>
+  const courseLink = course ?
+    <NavLink to={`/${course}`} className={styles.lessonLink}>
+      <img className={styles.courseIcon} src={courseIcon}/>
+      <span className={styles.lesson}>{capitalize(course)}</span>
     </NavLink> : null;
-  const lessonLink = params.course && params.lesson && params.file ?
-    <NavLink to={`/${params.course}/${params.lesson}/${params.file}`} className={styles.lessonLink}>
-      <LevelIcon level={lessonLevel}/>
-      <span className={styles.lesson}>{lessonTitle}</span>
+  const lessonLink = course && lesson && file ?
+    <NavLink to={`/${course}/${lesson}/${file}`} className={styles.lessonLink}>
+      <LevelIcon {...{level}}/>
+      <span className={styles.lesson}>{title}</span>
     </NavLink> : null;
   return <div className={styles.breadcrumb}>
     {homeLink}
@@ -28,36 +31,28 @@ export function BreadCrumb({params, iconContext, lessonLevel, lessonTitle}) {
     {lessonLink ? <span> / </span> : null}
     {lessonLink ? lessonLink : null}
   </div>;
-}
+};
+
 BreadCrumb.propTypes = {
+  // ownProps
   params: PropTypes.shape({
     course: PropTypes.string,
     lesson: PropTypes.string,
     file: PropTypes.string
-  }),
-  iconContext: PropTypes.func,
-  lessonLevel: PropTypes.number,
-  lessonTitle: PropTypes.string
+  }).isRequired,
+
+  // mapStateToProps
+  title: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
+  courseIcon: PropTypes.string,
 };
 
-function mapStateToProps(state, ownProps) {
-  const {course, lesson, file} = ownProps.params;
-  const lessonPath = file ? `./${course}/${lesson}/${file}.md` : '';
-  const isReadme = (file && /README(_[a-z]{2})?/.test(file));
-  let title = '';
-  let level = 0;
+const mapStateToProps = (state, {params}) => ({
+  title: getTitle(state, params),
+  level: getLevel(state, params),
+  courseIcon: params.course ? state.context.iconContext('./' + params.course + '/logo-black.png') : null
+});
 
-  if(isReadme){
-    title = state.context.readmeContext(lessonPath).frontmatter.title || '';
-    level = state.context.readmeContext(lessonPath).frontmatter.level || 0;
-  }
-  return {
-    iconContext: state.context.iconContext,
-    lessonLevel: lessonPath && !isReadme ? state.lessons[lessonPath].level : level,
-    lessonTitle: lessonPath && !isReadme ? state.lessons[lessonPath].title : title,
-  };
-}
-
-export const BreadCrumbContainer = connect(
+export default connect(
   mapStateToProps
 )(withStyles(styles)(BreadCrumb));

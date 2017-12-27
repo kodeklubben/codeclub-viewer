@@ -1,11 +1,3 @@
-import scratchblocks from 'scratchblocks/browser/scratchblocks.js';
-
-// TODO:
-//  - if possible, make webpack preprocess the HTML.
-//    - replace classnames with locally scoped css-module class names
-//    - insert scratch blocks if possible
-//  - activate the rest of Lesson.scss (compare with kodeklubben.github.io)
-
 // Structure of replaceTags:
 // {
 //   <oldtag>: {
@@ -24,18 +16,20 @@ const replaceTags = {
   }
 };
 
-function processContent(content, styles) {
+const processContent = (content, styles) => {
   const parser = require('posthtml-parser');
   const render = require('posthtml-render');
 
   let parsedContent = parser(content);
   parsedContent = replaceClassRecursively(parsedContent, styles);
   content = render(parsedContent);
-  content = renderScratchBlocks(content, styles);
+  if (typeof document !== 'undefined') {
+    content = renderScratchBlocks(content, styles);
+  }
   return content;
-}
+};
 
-function replaceTagObject(obj) {
+const replaceTagObject = (obj) => {
   const tag = obj['tag'];
   if (tag in replaceTags) {
     const replacementObj = replaceTags[tag];
@@ -47,37 +41,71 @@ function replaceTagObject(obj) {
   } else {
     return obj;
   }
-}
+};
 
-function replaceClassRecursively(obj, styles) {
+const insertHeaderIcons = (obj) => {
+  const icons = {
+    'check': require('assets/graphics/check.svg'),
+    'flag': require('assets/graphics/flag.svg'),
+    'save': require('assets/graphics/save.svg'),
+  };
+  if (obj.tag === 'h2') {
+    const className = (obj.attrs || {}).class;
+    if (Object.keys(icons).includes(className)) {
+      return {
+        ...obj,
+        content: [
+          {
+            tag: 'img',
+            attrs: { src: icons[className] }
+          },
+          ...obj.content
+        ]
+      };
+    }
+  }
+  return obj;
+};
+
+const replaceClass = (obj, styles) => {
+  let newObj = {};
+  for (let k in obj) {
+    if (obj.hasOwnProperty(k)) {
+      if (k === 'class' && obj[k] in styles) {
+        newObj[k] = styles[obj[k]];
+      } else {
+        newObj[k] = replaceClassRecursively(obj[k], styles);
+      }
+    }
+  }
+  return newObj;
+};
+
+const replaceClassRecursively = (obj, styles) => {
   if (Array.isArray(obj)) {
     return obj.map((val, idx) => replaceClassRecursively(val, styles));
   } else if (typeof obj === 'object' && obj !== null) {
-    const repObj = replaceTagObject(obj);
-    let newObj = {};
-    for (let k in repObj) {
-      if (repObj.hasOwnProperty(k)) {
-        if (k === 'class' && repObj[k] in styles) {
-          newObj[k] = styles[repObj[k]];
-        } else {
-          newObj[k] = replaceClassRecursively(repObj[k], styles);
-        }
-      }
-    }
-    return newObj;
+    let repObj = obj;
+    repObj = replaceTagObject(repObj);
+    repObj = insertHeaderIcons(repObj);
+    repObj = replaceClass(repObj, styles);
+    return repObj;
   } else {
     return obj;
   }
-}
+};
 
 
 /**
  * Render scratchblocks.
  *
  * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
  */
-function renderScratchBlocks(content, styles) {
+const renderScratchBlocks = (content, styles) => {
+  const scratchblocks = require('scratchblocks/browser/scratchblocks.js');
+
   let replace = [];
   if ('blocks' in styles) {
     replace.push({start: '<pre class="' + styles.blocks + '">', end: '</pre>'});
@@ -101,6 +129,6 @@ function renderScratchBlocks(content, styles) {
   });
 
   return returnContent;
-}
+};
 
 export default processContent;

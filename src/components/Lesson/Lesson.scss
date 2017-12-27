@@ -19,6 +19,12 @@
   @include responsiveFontSizes;
 }
 
-.resetButton {
-  margin-right: 10px;
+.box {
+  display: none;
+  font-style: italic;
+  font-size: 0.75em;
+
+  @media print {
+    display: block;
+  }
 }

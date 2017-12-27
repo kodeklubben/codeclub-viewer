@@ -1,6 +1,7 @@
 /* eslint-env node */
 
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -8,63 +9,20 @@ import DocumentTitle from 'react-document-title';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
-import processContent from './processContent';
+import processContent from '../../processContent';
 import contentStyles from './Content.scss';
-import {ImprovePageContainer} from './ImprovePage.js';
+import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
-import {getTranslator} from '../../selectors/translate';
-import {removeHtmlFileEnding, getReadmepathFromLessonpath, hashCode, createCheckboxesKey} from '../../util';
-import lessonStyles from '../PlaylistPage/LessonItem.scss';
-import Button from 'react-bootstrap/lib/Button';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setModeTeacher, setLanguage, setCheckbox, setLastLesson} from '../../action_creators';
+import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
+import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
+import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
+import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
-
-const InstructionButton = ({buttonPath, buttonText}) => {
-  return (buttonPath ?
-    <LinkContainer to={buttonPath}>
-      <Button className={lessonStyles.instructionBtn} bsStyle="guide" bsSize="small">
-        {buttonText}
-      </Button>
-    </LinkContainer> :
-    null);
-};
-
-const ReadmeButton = ({path, lessons, t}) => {
-  const contextPath = './' + path + '.md';
-  const buttonPath = (lessons[contextPath] || {}).readmePath;
-  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.toteacherinstruction')}/>;
-};
-
-const LessonButton = ({path, lessons, t}) => {
-  const lessonPath = '/' + path;
-  const buttonPath = getReadmepathFromLessonpath(lessons, lessonPath);
-  return <InstructionButton buttonPath={buttonPath} buttonText={t('lessons.tolesson')}/>;
-};
-
-const setCheckboxes = (path, checkboxes, setCheckbox) => {
-  const labels = [...document.getElementsByTagName('label')];
-  for (let label of labels) {
-    const input = document.getElementById(label.htmlFor);
-    if (input && input.type === 'checkbox') {
-      let hash = hashCode(label.textContent);
-      input.checked = !!checkboxes[hash];
-      setCheckbox(path, hash, !!checkboxes[hash]);
-      input.onclick = (e) => {
-        setCheckbox(path, hash, !!e.target.checked);
-      };
-    }
-  }
-};
-
-const anyCheckboxTrue = (checkboxes) => {
-  for (let i of Object.keys(checkboxes)) {
-    if (checkboxes[i] === true) {
-      return true;
-    }
-  }
-  return false;
-};
+import LessonButton from './LessonButton';
+import ReadmeButton from './ReadmeButton';
+import ResetButton from './ResetButton';
+import PdfButton from './PdfButton';
+import MainLanguageButton from './MainLanguageButton';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -73,7 +31,7 @@ const renderToggleButtons = () => {
     const buttonText = strongNode ? strongNode.textContent : 'Hint';
     const hiddenNode = node.getElementsByTagName('hide')[0];
     const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-    ReactDOM.render(<ToggleButton buttonText={buttonText} hiddenHTML={hiddenHTML}/>,node);
+    ReactDOM.render(<ToggleButton {...{buttonText, hiddenHTML}}/>,node);
   }
 };
 
@@ -82,88 +40,65 @@ const rememberLastLesson = (path, setLastLesson) => {
   setLastLesson(lessonPath);
 };
 
+const createMarkup = (lessonContent) => {
+  return ({__html: processContent(lessonContent, contentStyles)});
+};
+
+const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
+  <div className={styles.box}>
+    <div>{t('lessons.course')} {capitalize(course)}</div>
+    {Object.keys(tags).map( group =>
+      <div key={group}>
+        {translateGroup(group) + ': ' + tags[group].map(tag => translateTag(group, tag)).join(', ')}
+      </div>
+    )}
+  </div>;
+PrintInfo.PropTypes = {
+  t: PropTypes.func.isRequired,
+  translateTag: PropTypes.func.isRequired,
+  translateGroup: PropTypes.func.isRequired,
+  course: PropTypes.string.isRequired,
+  tags: PropTypes.object.isRequired,
+};
+
 const Lesson = React.createClass({
-  getTitle() {
-    return this.props.lesson.frontmatter.title || this.props.params.file;
-  },
-  getLevel() {
-    return this.props.lesson.frontmatter.level || 0;
-  },
-  getAuthor() {
-    const author = this.props.lesson.frontmatter.author || '';
-    return author ?
-      <p><i>{this.props.t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> :
-      null;
-  },
-  getTranslator() {
-    const translator = this.props.lesson.frontmatter.translator || '';
-    return translator ?
-      <p><i>{this.props.t('lessons.translatedby')} <MarkdownRenderer src={translator} inline={true} /></i></p> :
-      null;
-  },
-  getLanguage() {
-    return this.props.lesson.frontmatter.language || '';
-  },
-  createMarkup(){
-    return {
-      __html: removeHtmlFileEnding(this.props.lesson.content)
-    };
-  },
-  setLanguage(){
-    const lessonLanguage = this.getLanguage();
-    if(lessonLanguage !== '' && lessonLanguage !== this.props.language) {
-      this.props.setLanguage(lessonLanguage);
-    }
-  },
-  componentWillMount(){
-    if (typeof document === 'undefined') {
-      // do nothing server-side
-      return;
-    }
-    this.props.lesson.content = processContent(this.props.lesson.content, contentStyles);
-
-    if(this.props.isReadme) this.props.setModeTeacher();
-
-    //Changes the language state to the language defined in the current lesson or readme-file
-    //this.setLanguage();
-  },
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
     rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
   },
-  componentWillUnmount() {
-    const nodes = [...document.getElementsByClassName('togglebutton')];
-    for (let node of nodes) {
-      ReactDOM.unmountComponentAtNode(node);
-    }
-  },
   render() {
-    const {t, path, lessons, isReadme, isStudentMode, setCheckbox, checkboxes} = this.props;
-    const instructionBtn = isReadme ? <LessonButton {...{path, lessons, t}}/> :
-      isStudentMode ? null : <ReadmeButton {...{path, lessons, t}}/>;
-    const resetButton = anyCheckboxTrue(checkboxes) === true ?
-      <Button className={styles.resetButton}  bsStyle="warning" bsSize="small"
-      onClick={() => setCheckboxes(path, {}, setCheckbox)}>{t('lessons.reset')}</Button>
-      : null;
+    const {
+      path, params, lesson,
+      checkboxes, t, translateTag, translateGroup,
+      title, level, tags, authorName, translatorName, isReadme, isStudentMode
+    } = this.props;
+    const author = authorName ?
+      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
+    const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
+    const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
+    const instructionButton = isReadme ? <LessonButton {...{path}}/> :
+      isStudentMode ? null : <ReadmeButton {...{path}}/>;
+    const pdfButton = <PdfButton lessonfile={params.file}/>;
     return (
-      <DocumentTitle title={this.getTitle() + ' | ' + t('title.codeclub')}>
+      <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
           <h1>
-            <LevelIcon level={this.getLevel()}/>
-            {this.getTitle()}{this.getLevel > 0 ? '- ' + t('general.level') + this.getLevel() : ''}
+            <LevelIcon {...{level}}/>
+            {title}
           </h1>
-          {this.getAuthor()}
-          {this.getTranslator()}
+          {author}
+          {translator}
+          <PrintInfo {...{t, translateTag, translateGroup, course: params.course, tags}}/>
+          <MainLanguageButton {...{path}}/>
           {resetButton}
-          {instructionBtn}
-          <div dangerouslySetInnerHTML={this.createMarkup()}/>
-
+          {instructionButton}
+          {pdfButton}
+          <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
           <Row>
-            <ImprovePageContainer courseLessonFileProp={this.props.params}/>
+            <ImprovePage courseLessonFileProp={params}/>
           </Row>
-
         </div>
       </DocumentTitle>
     );
@@ -171,40 +106,54 @@ const Lesson = React.createClass({
 });
 
 Lesson.propTypes = {
+  // ownProps
+  path: PropTypes.string,
   params: PropTypes.shape({
-    file: PropTypes.string.isRequired
+    file: PropTypes.string.isRequired,
+    course: PropTypes.string.isRequired,
   }).isRequired,
   lesson: PropTypes.shape({
-    frontmatter: PropTypes.object,
     content: PropTypes.string
   }),
-  path: PropTypes.string,
-  lessons: PropTypes.object,
-  isStudentMode: PropTypes.bool,
-  setModeTeacher: PropTypes.func,
-  setLanguage: PropTypes.func,
-  isReadme: PropTypes.bool,
+
+  // mapStateToProps
   t: PropTypes.func.isRequired,
-  setCheckbox: PropTypes.func,
+  translateTag: PropTypes.func.isRequired,
+  translateGroup: PropTypes.func.isRequired,
   checkboxes: PropTypes.object,
-  setLastLesson: PropTypes.func
+  title: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
+  tags: PropTypes.object.isRequired,
+  authorName: PropTypes.string.isRequired,
+  translatorName: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
+  isStudentMode: PropTypes.bool.isRequired,
+
+  // mapDispatchToProps
+  setCheckbox: PropTypes.func.isRequired,
+  setLastLesson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, {path, params}) => ({
   t: getTranslator(state),
-  isStudentMode: state.isStudentMode,
-  lessons: state.lessons,
-  language: state.language,
-  isReadme: state.context.readmeContext.keys().indexOf('./' + ownProps.path + '.md') !== -1,
-  checkboxes: state.checkboxes[createCheckboxesKey(ownProps.path)] || {}
+  translateTag: getTranslateTag(state),
+  translateGroup: getTranslateGroup(state),
+  checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
+  title: getTitle(state, params),
+  level: getLevel(state, params),
+  tags: getTags(state, params),
+  authorName: getAuthorName(state, params),
+  translatorName: getTranslatorName(state, params),
+  isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
+  isStudentMode: state.isStudentMode
 });
+
+const mapDispatchToProps = {
+  setCheckbox,
+  setLastLesson
+};
 
 export default connect(
   mapStateToProps,
-  {
-    setModeTeacher,
-    setLanguage,
-    setCheckbox,
-    setLastLesson
-  }
-  )(withStyles(styles, contentStyles)(Lesson));
+  mapDispatchToProps
+)(withStyles(styles, contentStyles)(Lesson));

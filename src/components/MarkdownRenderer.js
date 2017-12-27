@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import markdownGenerator from 'markdown-it';
 
 const markdown = markdownGenerator();
@@ -12,7 +13,9 @@ const MarkdownRenderer = ({src, inline}) => {
     return null;
   }
 };
+
 MarkdownRenderer.propTypes = {
+  // ownProps
   src: PropTypes.string,
   inline: PropTypes.bool
 };

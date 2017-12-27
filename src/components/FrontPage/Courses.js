@@ -1,52 +1,54 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './Courses.scss';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
 
-export const Courses = React.createClass({
-
-  render() {
-    const {t} = this.props;
-    return (
-      <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
+const Courses = ({t, courses, externalCourses}) => {
+  const coursesLength = Object.keys(courses).length;
+  const externalCoursesLength = Object.keys(externalCourses).length;
+  return (
+    <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
+      {coursesLength > 0 ?
         <Row>
           <Col xs={12}>
-            <h2>{t('frontpage.courses')}</h2>
-            <CourseList courses={this.props.courses}/>
+            <div className={styles.header}>{t('frontpage.courses')}</div>
+            <CourseList courses={courses}/>
           </Col>
         </Row>
-        {Object.keys(this.props.externalCourses).length > 0 ?
-          <Row>
-            <Col xs={12}>
-              <h2>{t('frontpage.otherwebsitecourses')}</h2>
-              <CourseList courses={this.props.externalCourses}/>
-            </Col>
-          </Row>
+        : null}
+      {externalCoursesLength > 0 ?
+        <Row>
+          <Col xs={12}>
+            <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
+            <CourseList courses={externalCourses}/>
+          </Col>
+        </Row>
         :null}
-      </Col>
-    );
-  }
-
-});
-
-Courses.propTypes = {
-  courses: PropTypes.object,
-  externalCourses: PropTypes.object,
-  t: PropTypes.func
+      {coursesLength + externalCoursesLength !== 0 ? null :
+        <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>}
+    </Col>
+  );
 };
 
-function mapStateToProps(state) {
-  return {
-    courses: getFilteredCourses(state),
-    externalCourses: getFilteredExternalCourses(state),
-    t: getTranslator(state)
-  };
-}
+Courses.propTypes = {
+  // mapStateToProps
+  courses: PropTypes.object.isRequired,
+  externalCourses: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired
+};
 
-export const CoursesContainer = connect(
+const mapStateToProps = (state) => ({
+  courses: getFilteredCourses(state),
+  externalCourses: getFilteredExternalCourses(state),
+  t: getTranslator(state)
+});
+
+export default connect(
   mapStateToProps
-)(Courses);
+)(withStyles(styles)(Courses));

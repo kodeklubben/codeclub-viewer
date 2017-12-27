@@ -1,36 +1,35 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {onFilterCheck} from '../../action_creators';
+import {onFilterCheck, collapseFilterGroup} from '../../action_creators';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {translateGroup, translateTag} from '../../util';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {collapseFilterGroup} from '../../action_creators';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
+import {getTranslateGroup, getTranslateTag} from '../../selectors/translate';
 
-export const FilterGroup = ({
-  groupKey, availableLessonsForTag, t, filterTags, onFilterCheck,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked
+const FilterGroup = ({
+  groupKey, filterTags, onFilterCheck,
+  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateGroup, translateTag,
 }) => {
-  const groupName = translateGroup(t, groupKey);
+  const groupName = translateGroup(groupKey);
   if (groupName) {
-    const filterItems = Object.keys(filterTags).map((tagKey) => {
-      const onCheck = () => onFilterCheck(groupKey, tagKey);
-      const numberOfLessonsForTag = availableLessonsForTag[tagKey];
-      const tagName = translateTag(t, groupKey, tagKey);
-      return tagName ? (
-        <FilterItem
-          key={tagKey}
-          tagName={tagName}
-          numberOfLessons={numberOfLessonsForTag}
-          checked={filterTags[tagKey]}
-          onCheck={onCheck}
-        />
-      ) : null;
-    });
+    const filterItems = Object.keys(filterTags).map(key => {
+      const onCheck = () => onFilterCheck(groupKey, key);
+      const tagName = translateTag(groupKey, key);
+
+      const checked = filterTags[key];
+      return tagName ? <FilterItem {...{key, checked, tagName, onCheck}}/>
+        : null;
+    }).filter(item => !!item); // filter out null-values;
+
+    // Sort filterItems alphabetically except grades
+    if (groupKey !== 'grade') {
+      filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
+    }
 
     const nothingChecked = !somethingChecked;
     const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
@@ -40,6 +39,7 @@ export const FilterGroup = ({
         collapseFilterGroup(groupKey, !isCollapsed);
       }
     };
+
     return (
       <ListGroupItem>
         <div className={headingStyle} onClick={onGroupClick}>
@@ -60,23 +60,23 @@ export const FilterGroup = ({
 FilterGroup.propTypes = {
   // ownProps:
   groupKey: PropTypes.string,
-  availableLessonsForTag: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired,
 
   // mapStateToProps:
-  filterTags: PropTypes.object,
-  filterGroupsCollapsed: PropTypes.object,
+  filterTags: PropTypes.object.isRequired,
+  filterGroupsCollapsed: PropTypes.object.isRequired,
   somethingChecked: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
   onFilterCheck: PropTypes.func.isRequired,
-  collapseFilterGroup: PropTypes.func.isRequired
+  collapseFilterGroup: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  filterTags: state.filter[ownProps.groupKey],
+const mapStateToProps = (state, {groupKey}) => ({
+  filterTags: state.filter[groupKey],
   filterGroupsCollapsed: state.filterGroupsCollapsed,
-  somethingChecked: somethingCheckedInGroup(state, ownProps.groupKey),
+  somethingChecked: somethingCheckedInGroup(state, groupKey),
+  translateGroup: getTranslateGroup(state),
+  translateTag: getTranslateTag(state),
 });
 
 const mapDispatchToProps = {

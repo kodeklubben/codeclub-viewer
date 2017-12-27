@@ -1,40 +1,36 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import CollapsiblePanel from '../CollapsiblePanel';
-
 import {getCourseInfoMarkup} from '../../util';
 import {getTranslator} from '../../selectors/translate';
 
 const CourseInfo = ({t, isStudentMode, courseInfo}) => {
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   return (
-    <CollapsiblePanel initiallyExpanded={false} bsStyle={bsStyle} header={t('playlist.courseinfo')}>
-        {courseInfo ?
-          <div dangerouslySetInnerHTML={courseInfo} />
+    <CollapsiblePanel initiallyExpanded={false} header={t('playlist.courseinfo')} {...{bsStyle}}>
+      {courseInfo ?
+        <div dangerouslySetInnerHTML={courseInfo}/>
         :
-          <h4>{t('playlist.courseinfonotfound')}</h4>
-        }
+        <h4>{t('playlist.courseinfonotfound')}</h4>
+      }
     </CollapsiblePanel>
   );
 };
 
 CourseInfo.propTypes = {
-  // ownProps:
-  isStudentMode: PropTypes.bool,
-
-  // mapStateToProps:
-  t: PropTypes.func,
-  courseInfo: PropTypes.object
+  // mapStateToProps
+  t: PropTypes.func.isRequired,
+  courseInfo: PropTypes.object,
+  isStudentMode: PropTypes.bool.isRequired
 };
 
-/**
- * Input props: courseName
- */
-function mapStateToProps(state, props) {
-  return {
-    t: getTranslator(state),
-    courseInfo: getCourseInfoMarkup(props.courseName, state.language)
-  };
-}
+const mapStateToProps = (state, {courseName}) => ({
+  t: getTranslator(state),
+  courseInfo: getCourseInfoMarkup(courseName, state.language),
+  isStudentMode: state.isStudentMode
+});
 
-export default connect(mapStateToProps)(CourseInfo);
+export default connect(
+  mapStateToProps
+)(CourseInfo);

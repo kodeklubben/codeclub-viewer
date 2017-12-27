@@ -1,82 +1,93 @@
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
-import TooltipComponent from '../TooltipComponent';
+import PopoverComponent from '../PopoverComponent';
+import InstructionButton from '../InstructionButton';
 
-export const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
-  const levelIcon = <LevelIcon level={lesson.level}/>;
-
+const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const progress = checkedCheckboxes > 0 ?
     <div className={styles.progress}>
       {`(${checkedCheckboxes}/${totalCheckboxes})`}
     </div> :
     null;
-
-  const instructionBtn = !isStudentMode && lesson.readmePath ?
-    <LinkContainer to={lesson.readmePath}>
-      <Button componentClass="div" className={styles.instructionBtn} bsStyle="guide" bsSize="xs">
-        {t('playlist.instructionbutton')}
-      </Button>
-    </LinkContainer>
-    : null;
-
-  const tooltipContent = getLessonIntro(lesson.path.slice(1));
-
   const progressBar = lesson.level > 0 ?
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
     null;
 
+  const instructionButton = isStudentMode ? null :
+    <InstructionButton
+      className={styles.instructionButton}
+      buttonPath={lesson.readmePath}
+      bsSize='xs'
+      insideLink={true}
+    />;
+
+  const popoverContent = getLessonIntro(lesson.path.slice(1));
+  const popoverButton = popoverContent ?
+    <PopoverComponent {...{popoverContent}}>
+      <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+    </PopoverComponent>
+    : null;
+
   return (
-    <TooltipComponent id={lesson.title} tooltipContent={tooltipContent}>
+    <div>
       {lesson.external ?
-      <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
-        {levelIcon}
-        <div className={styles.title}>{lesson.title}</div>
-        &nbsp;<Glyphicon glyph="new-window"/>
-        {instructionBtn}
-      </ListGroupItem>
-      :
-      <LinkContainer to={lesson.path}>
-        <ListGroupItem className={styles.row}>
-          {progressBar}
-          {levelIcon}
+        <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+          <LevelIcon level={lesson.level}/>
           <div className={styles.title}>{lesson.title}</div>
-          {progress}
-          {instructionBtn}
+          <Glyphicon glyph="new-window"/>
+          <span className={styles.rightSide}>
+            {instructionButton}
+            {popoverButton}
+          </span>
         </ListGroupItem>
-      </LinkContainer>}
-    </TooltipComponent>
+        :
+        <LinkContainer to={lesson.path}>
+          <ListGroupItem className={styles.row}>
+            {progressBar}
+            <LevelIcon level={lesson.level}/>
+            <div className={styles.title}>{lesson.title}</div>
+            {progress}
+            <span className={styles.rightSide}>
+              {instructionButton}
+              {popoverButton}
+            </span>
+          </ListGroupItem>
+        </LinkContainer>
+      }
+    </div>
   );
 };
 
 LessonItem.propTypes = {
+  // ownProps
   lesson: PropTypes.object,
-  isStudentMode: PropTypes.bool,
-  t: PropTypes.func,
+
+  // mapStateToProps
+  isStudentMode: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
 };
 
-function mapStateToProps(state, ownProps) {
-  const lessonCheckboxesKey = createCheckboxesKey(ownProps.lesson.path);
-  return {
-    isStudentMode: state.isStudentMode,
-    t: getTranslator(state),
-    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, lessonCheckboxesKey),
-    totalCheckboxes: getTotalNumberOfCheckboxes(state, lessonCheckboxesKey),
-  };
-}
+const mapStateToProps = (state, {lesson}) => ({
+  isStudentMode: state.isStudentMode,
+  t: getTranslator(state),
+  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(lesson.path)),
+  totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(lesson.path)),
+});
 
-export const LessonItemContainer = connect(
+
+export default connect(
   mapStateToProps
 )(withStyles(styles)(LessonItem));

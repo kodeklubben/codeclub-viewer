@@ -17,9 +17,9 @@ const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(
 
 const validPathTest = (lesson, path) => {
   if(lesson){
-    return (lessonArray.indexOf(path) > -1);
+    return (lessonArray.includes(path));
   }else{
-    return (courseArray.indexOf(path) > -1);
+    return (courseArray.includes(path));
   }
 };
 
@@ -34,14 +34,19 @@ const pathTest = (nextState, replace) => {
   if(path.indexOf('/') !== 0){
     path = '/' + path;
   }
-  if(path.lastIndexOf('/') === path.length-1){
+  if(path.endsWith('/')){
     path = path.slice(0, -1);
   }
-  const isReadme = readmeArray.indexOf(path) > -1;
+  const isReadme = readmeArray.includes(path);
   const pathCorrect = validPathTest(params.lesson, path);
 
   if(!pathCorrect && !isReadme){
-    replace({pathname:'/PageNotFound', state: path});
+    if (typeof document !== 'undefined') {
+      // Only replace in the browser
+      replace({pathname: '/PageNotFound', state: path});
+    } else {
+      console.error('ERROR: The path', path, 'is not valid!');
+    }
   }
 };
 
@@ -54,7 +59,7 @@ const pathTest = (nextState, replace) => {
 const saveURL = (nextState, replace) => {
   const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
   const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
-  if(typeof history.replaceState !== 'undefined'){
+  if(typeof history !== 'undefined' && history.replaceState){
     history.replaceState(null, null, path);
   }
 };
@@ -75,6 +80,34 @@ const serverSideRedirectCheck = (nextState, replace) => {
   }
 };
 
+const rewritePath = (nextState, replace) => {
+  const nextpath = nextState.location.pathname;
+  if (nextpath.startsWith('/index')) {
+    if (typeof document !== 'undefined') {
+      replace('/' + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that start with /index' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+  else if (nextpath.endsWith('.html')) {
+    if (typeof document !== 'undefined') {
+      replace(nextpath.replace(/\.html$/, '') + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that end in .html' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+};
+
+const appOnEnter = (nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
+const appOnChange = (prevState, nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
 /**
 * IMPORTANT:
 * When adding new routes, especially dynamic ones (on the form path="/:somePath")
@@ -88,7 +121,7 @@ export default function getRouteObject(
   getComponentNotFound
 ) {
   return (
-    <Route path="/" component={App}>
+    <Route path="/" component={App} onEnter={appOnEnter} onChange={appOnChange}>
       <IndexRoute getComponent={getComponentFrontPage} onEnter={serverSideRedirectCheck}/>
       <Route path="/PageNotFound" getComponent={getComponentNotFound} onEnter={saveURL}/>
       <Route path="/:course" getComponent={getComponentPlaylist} onEnter={pathTest}/>
