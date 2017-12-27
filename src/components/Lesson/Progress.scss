@@ -1,0 +1,15 @@
+.progressBar {
+  margin-top: 20px;
+  position: relative;
+
+  @media print {
+    display: none;
+  }
+}
+
+.label {
+  position: absolute;
+  display: block;
+  width: 100%;
+  color: black;
+}
