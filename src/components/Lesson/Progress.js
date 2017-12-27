@@ -6,11 +6,11 @@ import ProgressBar from 'react-bootstrap/lib/ProgressBar';
 
 const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
   const now = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
-  const bsStyle = now < 100 ? 'danger' : 'success';
-  const active = now < 100 ? true : false;
+  const active = checkedCheckboxes < totalCheckboxes;
+  const bsStyle = active ? 'danger' : 'success';
   const className = styles.progressBar;
-  const checkboxesLabel = '✓ ' + `${checkedCheckboxes}/${totalCheckboxes}`;
-  const label = now < 100 ?
+  const checkboxesLabel =`✓ ${checkedCheckboxes}/${totalCheckboxes}`;
+  const label = active ?
     <span className={styles.label}>{checkboxesLabel}</span> :
     <span className={styles.label}>{checkboxesLabel} ★</span>;
   return <ProgressBar {...{now, bsStyle, className, label, active}}/>;
