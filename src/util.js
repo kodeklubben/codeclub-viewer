@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 /**
  * Makes first character in str upper case
  *
@@ -152,6 +154,7 @@ export function getCourseInfoMarkup(courseName, language) {
 }
 
 export function getLessonIntro(path) {
+  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
   let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
@@ -165,7 +168,7 @@ export function getLessonIntro(path) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
-    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(path) + '/$2$3');
+    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + publicPath + dirname(path) + '/$2$3');
   }
   return (picture || '') + (text || '');
 }
