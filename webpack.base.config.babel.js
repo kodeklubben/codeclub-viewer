@@ -180,6 +180,7 @@ const baseConfig = {
     new CaseSensitivePathsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
+        'PUBLICPATH': JSON.stringify(publicPath),
         'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
       }
     }),
