@@ -153,8 +153,13 @@ export function getCourseInfoMarkup(courseName, language) {
   return null;
 }
 
+/**
+ *
+ * @param {string} path The path to a lesson file, without slash in front and without '.md' at the end.
+ * @returns {string} HTML code to e.g. display in a popover.
+ */
 export function getLessonIntro(path) {
-  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
+  const publicPath = process.env.PUBLICPATH;
   let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
