@@ -173,7 +173,9 @@ export function getLessonIntro(path) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
-    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + publicPath + dirname(path) + '/$2$3');
+    // Add path to image. Regex allows for attributes with or without quotes, e.g. <img src="astrokatt.png" />,
+    // <img src=astrokatt.png />, <img src=astrokatt.png/>, and <img src=astrokatt.png>
+    picture = picture.replace(/( src="?)([^" />]*)([" />])/, '$1' + publicPath + dirname(path) + '/$2$3');
   }
   return (picture || '') + (text || '');
 }
