@@ -15,7 +15,11 @@
   }
 }
 
-.studentLabelContainer {
+.labelContainer {
+  display: flex;
+  align-items: center;
+  font-size: 1.125em;
+  font-weight: normal;
   &:hover {
     cursor: pointer;
   }
@@ -23,39 +27,38 @@
   @media (max-width: $screen-xs-max) {
     background-color: $color-green-light;
     color: $color-green-dark;
-    font-size: 1.125em;
     font-weight: bold;
     margin-bottom: 20px;
     width: 100%;
-    padding: 12px;
-    border-radius: 5px;
+    padding: 13px;
+    border-radius: 4px;
     &:hover {
-      background-color: darken($color-green-lighter, 3%);
+      background-color: darken(desaturate($color-green-light, 5%), 3%);
     }
   }
 }
 
-.teacherLabelContainer {
-  font-weight: normal;
-  &:hover {
-    cursor: pointer;
+.student {
+  @media (max-width: $screen-xs-max) {
+    background-color: $color-green-light;
+    color: $color-green-dark;
+    &:hover {
+      background-color: darken(desaturate($color-green-light, 5%), 3%);
+    }
   }
+}
 
+.teacher {
   @media (max-width: $screen-xs-max) {
     background-color: $color-blue-light;
     color: $color-blue-dark;
-    font-size: 1.125em;
-    font-weight: bold;
-    margin-bottom: 20px;
-    width: 100%;
-    padding: 12px;
-    border-radius: 5px;
     &:hover {
-      background-color: darken($color-blue-light, 3%);
+      background-color: darken(desaturate($color-blue-light, 5%), 3%);
     }
   }
 }
 
-.label {
-  margin-left: 10px;
+input.checkbox[type="checkbox"] {
+  margin-top: 0;
+  margin-right: 10px;
 }

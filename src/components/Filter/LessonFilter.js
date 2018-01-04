@@ -34,9 +34,9 @@ const LessonFilter = ({courseName, filterGroupKeys, isStudentMode, t, showOrHide
 
   const hideDoneTask = !courseName ? null :
     <div>
-      <label className={isStudentMode ? styles.studentLabelContainer : styles.teacherLabelContainer}>
-        <input type="checkbox" onChange={e => showOrHideTasks(e.target.checked)}/>
-        <span className={styles.label}>{t('filter.hideDoneTask')}</span>
+      <label className={styles.labelContainer + ' ' + (isStudentMode ? styles.student : styles.teacher)}>
+        <input className={styles.checkbox} type="checkbox" onChange={e => showOrHideTasks(e.target.checked)}/>
+        <span>{t('filter.hideDoneTask')}</span>
       </label>
     </div>;
 
