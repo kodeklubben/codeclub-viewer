@@ -24,8 +24,8 @@ const LessonItem = ({lesson, isStudentMode, filterLanguage, language, t, checked
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
     null;
 
-  const checkedFilterTags = Object.values(filterLanguage).filter(value => value).length === 1;
-  const flag = checkedFilterTags && filterLanguage[language] ? null :
+  const checkedExactlyOneLanguage = Object.values(filterLanguage).filter(value => value).length === 1;
+  const flag = checkedExactlyOneLanguage && filterLanguage[language] ? null :
     <img className={styles.flag} src={require(`../../assets/graphics/flag_${lesson.language}.svg`)}/>;
 
   const instructionButton = isStudentMode ? null :
@@ -81,7 +81,7 @@ LessonItem.propTypes = {
 
   // mapStateToProps
   isStudentMode: PropTypes.bool.isRequired,
-  filterLanguage: PropTypes.object.isRequired,
+  filterLanguage: PropTypes.objectOf(PropTypes.bool).isRequired,
   language: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
