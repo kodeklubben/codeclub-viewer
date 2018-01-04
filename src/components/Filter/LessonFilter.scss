@@ -14,3 +14,48 @@
     color: black;
   }
 }
+
+.studentLabelContainer {
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    background-color: $color-green-light;
+    color: $color-green-dark;
+    font-size: 1.125em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    &:hover {
+      background-color: darken($color-green-lighter, 3%);
+    }
+  }
+}
+
+.teacherLabelContainer {
+  font-weight: normal;
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    background-color: $color-blue-light;
+    color: $color-blue-dark;
+    font-size: 1.125em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    &:hover {
+      background-color: darken($color-blue-light, 3%);
+    }
+  }
+}
+
+.label {
+  margin-left: 10px;
+}

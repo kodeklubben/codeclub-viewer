@@ -13,8 +13,9 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
+import {showOrHideTasks} from '../../action_creators';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
+const LessonFilter = ({courseName, filterGroupKeys, isStudentMode, t, showOrHideTasks}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const tooltip =
     <Tooltip id="filterhelp">
@@ -30,6 +31,15 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
       </OverlayTrigger>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
+
+  const hideDoneTask = !courseName ? null :
+    <div>
+      <label className={isStudentMode ? styles.studentLabelContainer : styles.teacherLabelContainer}>
+        <input type="checkbox" onChange={e => showOrHideTasks(e.target.checked)}/>
+        <span className={styles.label}>{t('filter.hideDoneTask')}</span>
+      </label>
+    </div>;
+
   return (
     <div>
       {/*Filter desktop*/}
@@ -38,6 +48,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
           <ListGroup fill>
             {filterGroups}
           </ListGroup>
+          {hideDoneTask}
         </Panel>
       </Col>
       {/*Filter mobile*/}
@@ -47,6 +58,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
             {filterGroups}
           </ListGroup>
         </CollapsiblePanel>
+        {hideDoneTask}
       </Col>
       <ClearFilterButton/>
     </div>
@@ -54,10 +66,16 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
 };
 
 LessonFilter.propTypes = {
+  // ownProps
+  courseName: PropTypes.string,
+
   // mapStateToProps
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+
+  // mapDispatchToProps
+  showOrHideTasks: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, {courseName}) => ({
@@ -66,6 +84,11 @@ const mapStateToProps = (state, {courseName}) => ({
   t: getTranslator(state)
 });
 
+const mapDispatchToProps = {
+  showOrHideTasks,
+};
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withStyles(styles)(LessonFilter));

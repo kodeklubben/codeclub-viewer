@@ -8,6 +8,7 @@ import welcomeBox from './reducers/welcomeBox';
 import checkboxes from './reducers/checkboxes';
 import lastLesson from './reducers/lastLesson';
 import filterGroupsCollapsed from './reducers/filterGroupsCollapsed';
+import hidesDoneTasks from './reducers/hidesDoneTasks';
 
 export default combineReducers({
   lessons,
@@ -18,5 +19,6 @@ export default combineReducers({
   welcomeBox,
   checkboxes,
   lastLesson,
-  filterGroupsCollapsed
+  filterGroupsCollapsed,
+  hidesDoneTasks,
 });
