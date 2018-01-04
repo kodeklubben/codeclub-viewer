@@ -15,7 +15,7 @@ import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 import {showOrHideTasks} from '../../action_creators';
 
-const LessonFilter = ({courseName, filterGroupKeys, isStudentMode, t, showOrHideTasks}) => {
+const LessonFilter = ({courseName, filterGroupKeys, isStudentMode, t, showOrHideTasks, hidesDoneTasks}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const tooltip =
     <Tooltip id="filterhelp">
@@ -35,7 +35,11 @@ const LessonFilter = ({courseName, filterGroupKeys, isStudentMode, t, showOrHide
   const hideDoneTask = !courseName ? null :
     <div>
       <label className={styles.labelContainer + ' ' + (isStudentMode ? styles.student : styles.teacher)}>
-        <input className={styles.checkbox} type="checkbox" onChange={e => showOrHideTasks(e.target.checked)}/>
+        <input
+          className={styles.checkbox}
+          type="checkbox"
+          onChange={e => showOrHideTasks(e.target.checked)}
+          checked={hidesDoneTasks}/>
         <span>{t('filter.hideDoneTask')}</span>
       </label>
     </div>;
@@ -73,6 +77,7 @@ LessonFilter.propTypes = {
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
+  hidesDoneTasks: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   showOrHideTasks: PropTypes.func.isRequired,
@@ -81,7 +86,8 @@ LessonFilter.propTypes = {
 const mapStateToProps = (state, {courseName}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
+  t: getTranslator(state),
+  hidesDoneTasks: state.hidesDoneTasks,
 });
 
 const mapDispatchToProps = {
