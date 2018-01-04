@@ -13,7 +13,7 @@ import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../se
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
 
-const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxes}) => {
+const LessonItem = ({lesson, isStudentMode, filterLanguage, language, t, checkedCheckboxes, totalCheckboxes}) => {
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const progress = checkedCheckboxes > 0 ?
     <div className={styles.progress}>
@@ -23,6 +23,10 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
   const progressBar = lesson.level > 0 ?
     <span className={styles['progressBarLevel' + lesson.level]} style={{width: progressPercent + '%'}}/> :
     null;
+
+  const checkedFilterTags = Object.values(filterLanguage).filter(value => value).length === 1;
+  const flag = checkedFilterTags && filterLanguage[language] ? null :
+    <img className={styles.flag} src={require(`../../assets/graphics/flag_${lesson.language}.svg`)}/>;
 
   const instructionButton = isStudentMode ? null :
     <InstructionButton
@@ -43,6 +47,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
     <div>
       {lesson.external ?
         <ListGroupItem href={lesson.external} target="_blank" className={styles.row}>
+          {flag}
           <LevelIcon level={lesson.level}/>
           <div className={styles.title}>{lesson.title}</div>
           <Glyphicon glyph="new-window"/>
@@ -54,6 +59,7 @@ const LessonItem = ({t, lesson, isStudentMode, checkedCheckboxes, totalCheckboxe
         :
         <LinkContainer to={lesson.path}>
           <ListGroupItem className={styles.row}>
+            {flag}
             {progressBar}
             <LevelIcon level={lesson.level}/>
             <div className={styles.title}>{lesson.title}</div>
@@ -75,6 +81,8 @@ LessonItem.propTypes = {
 
   // mapStateToProps
   isStudentMode: PropTypes.bool.isRequired,
+  filterLanguage: PropTypes.object.isRequired,
+  language: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
@@ -82,6 +90,8 @@ LessonItem.propTypes = {
 
 const mapStateToProps = (state, {lesson}) => ({
   isStudentMode: state.isStudentMode,
+  filterLanguage: state.filter.language,
+  language: state.language,
   t: getTranslator(state),
   checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(lesson.path)),
   totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(lesson.path)),
