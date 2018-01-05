@@ -93,6 +93,7 @@ export default {
       textline2: 'Behind each choice there are the number of lessons that can be solved, according to the choices ' +
                  'you make in the filter.'
     },
+    hideDoneTask: 'Hide completed tasks',
     removefilter: 'Clear filter'
   },
   navbar: {

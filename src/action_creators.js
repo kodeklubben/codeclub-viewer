@@ -121,3 +121,10 @@ export function collapseAllFilterGroups(collapsed) {
     collapsed
   };
 }
+
+export function showOrHideTasks(hidingState) {
+  return {
+    type: 'SHOW_OR_HIDE_TASKS',
+    hidingState
+  };
+}

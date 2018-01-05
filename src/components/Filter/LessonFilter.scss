@@ -14,3 +14,51 @@
     color: black;
   }
 }
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  font-size: 1.125em;
+  font-weight: normal;
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: $screen-xs-max) {
+    background-color: $color-green-light;
+    color: $color-green-dark;
+    font-weight: bold;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 13px;
+    border-radius: 4px;
+    &:hover {
+      background-color: darken(desaturate($color-green-light, 5%), 3%);
+    }
+  }
+}
+
+.student {
+  @media (max-width: $screen-xs-max) {
+    background-color: $color-green-light;
+    color: $color-green-dark;
+    &:hover {
+      background-color: darken(desaturate($color-green-light, 5%), 3%);
+    }
+  }
+}
+
+.teacher {
+  @media (max-width: $screen-xs-max) {
+    background-color: $color-blue-light;
+    color: $color-blue-dark;
+    &:hover {
+      background-color: darken(desaturate($color-blue-light, 5%), 3%);
+    }
+  }
+}
+
+input.checkbox[type="checkbox"] {
+  margin-top: 0;
+  margin-right: 10px;
+}
