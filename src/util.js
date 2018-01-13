@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 /**
  * Makes first character in str upper case
  *
@@ -151,7 +153,13 @@ export function getCourseInfoMarkup(courseName, language) {
   return null;
 }
 
+/**
+ *
+ * @param {string} path The path to a lesson file, without slash in front and without '.md' at the end.
+ * @returns {string} HTML code to e.g. display in a popover.
+ */
 export function getLessonIntro(path) {
+  const publicPath = process.env.PUBLICPATH;
   let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
@@ -165,7 +173,9 @@ export function getLessonIntro(path) {
       text = lessonContent.substring(p, 300) + '...';
     }
     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
-    picture = picture.replace(/(src=")([^"]*)(")/, '$1' + dirname(path) + '/$2$3');
+    // Add path to image. Regex allows for attributes with or without quotes, e.g. <img src="astrokatt.png" />,
+    // <img src=astrokatt.png />, <img src=astrokatt.png/>, and <img src=astrokatt.png>
+    picture = picture.replace(/( src="?)([^" />]*)([" />])/, '$1' + publicPath + dirname(path) + '/$2$3');
   }
   return (picture || '') + (text || '');
 }
