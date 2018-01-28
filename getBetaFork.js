@@ -1,5 +1,10 @@
 /* eslint-env node */
 
+// This script uses SSH to find the current github user's fork of kodeklubben/beta.
+// If it cannot access github via ssh, or there is no fork, it will return with an error.
+// E.g. if the current user is coolGithubUser, then this script will return coolGithubUser/beta
+// if coolGithubUser is authenticated via ssh to github, and this user has forked kodeklubben/beta.
+
 const https = require('https');
 const { execSync } = require('child_process');
 
@@ -8,7 +13,7 @@ const getForks = (username, json) => {
   for (const fork of json) {
     const full_name = fork.full_name;
     if (full_name === lookingForFork) {
-      console.log(`git@github.com:${full_name}.git`);
+      console.log(full_name);
       process.exit(0); // Successfully found fork
     }
   }
