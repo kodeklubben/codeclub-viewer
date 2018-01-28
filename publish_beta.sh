@@ -42,10 +42,10 @@ function waitForAnyKey {
 
 # Find the (first) remote alias for the cloned repo in the current folder (pwd) given (part of) a git url.
 # Typical values for remoteAlias is "origin" and "upstream"
-function getRemoteAlias {
-    local giturl = $1
+function setRemoteAlias {
+    local giturl=$1
 
-    local remoteAlias=""
+    remoteAlias=""
     if [[ -n ${giturl} ]]; then
         for r in $(git remote); do
           url=$(git remote get-url ${r});
@@ -64,11 +64,9 @@ function getRemoteAlias {
         echo "ERROR: Url to git not specified"
         cleanupAndAbort
     fi
-
-    echo ${remoteAlias}
 }
 
-function checkRepo {
+function prepareRepo {
     echo
 
     if [[ $# != 3 ]]; then
@@ -88,7 +86,7 @@ function checkRepo {
     fi
 
     cd ${folder}
-    #echo "Preparing repo in $(pwd)"
+    echo "Preparing repo in $(pwd)"
 
     # Check that path is git folder. If not: abort.
     if [[ ! $(git rev-parse --show-toplevel 2>/dev/null) = "$(pwd)" ]]; then
@@ -102,7 +100,7 @@ function checkRepo {
         cleanupAndAbort
     fi
 
-    local remoteAlias=$(getRemoteAlias ${giturl})
+    setRemoteAlias ${giturl}
 
     # Check that ${remoteAlias}/${branch} exists, otherwise abort.
     local fullbranch="${remoteAlias}/${branch}"
@@ -111,7 +109,6 @@ function checkRepo {
         abort
     fi
 
-    echo
     echo "Checking out ${fullbranch}"
     git -c advice.detachedHead=false checkout ${fullbranch}
     PREPARED_PATHS="${PREPARED_PATHS} ${folder}" # So they can be restored back
