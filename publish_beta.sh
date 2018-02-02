@@ -184,23 +184,26 @@ function gitPush {
 
 echo
 echo -n "Checking if current github user has a fork of kodeklubben/beta (requires SSH access to github)... "
-BETA_FORK=$(node getBetaFork.js)
+BETA_REPO=$(node getBetaFork.js)
 echo "Success!"
 
 CCV_PATH=${SCRIPT_PATH}
 CCV_BRANCH="master"
-CCV_URL="kodeklubben/codeclub-viewer.git"
+CCV_REPO="kodeklubben/codeclub-viewer"
+CCV_URL="${CCV_REPO}.git"
 
 OPPGAVER_PATH=$(dirname ${SCRIPT_PATH})/oppgaver    # ../oppgaver
 OPPGAVER_BRANCH="master"
-OPPGAVER_URL="kodeklubben/oppgaver.git"
+OPPGAVER_REPO="kodeklubben/oppgaver"
+OPPGAVER_URL="${OPPGAVER_REPO}.git"
 
 BETA_PATH=$(dirname ${SCRIPT_PATH})/beta            # ../beta
 BETA_BRANCH="gh-pages"
-BETA_URL="git@github.com:${BETA_FORK}.git"          # Specify git@github.com since we need SSH to push result
+BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com since we need SSH to push result
 
 echo
-echo "This script will compile kodeklubben/codeclub-viewer using kodeklubben/oppgaver and publish to ${BETA_FORK}."
+echo "This script will compile ${CCV_REPO}(${CCV_BRANCH}) using ${OPPGAVER_REPO}(${OPPGAVER_BRANCH})"
+echo "and publish to ${BETA_REPO}(${BETA_BRANCH})."
 echo -n "Continue? [y/N]:"
 read answer
 if [ "${answer}" != "y" ]; then
