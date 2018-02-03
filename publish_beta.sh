@@ -33,21 +33,11 @@ SCRIPT_PATH=$(pwd)
 URL_PATH_PREFIX="beta"
 URL_PATH_PREFIX_FILE=url-path-prefix.config
 
-function waitForAnyKey {
-    echo #Newline
-    WAITPROMPT="Press any key to continue (or Ctrl-C to abort)..."
-    if [[ -n "$1" ]]; then
-        WAITPROMPT="$1"
-    fi
-    read -d '' -t 1 -n 10000 # Clear stdin of any keypresses, including multiple RETURNs
-    read -n1 -s -p "$WAITPROMPT" # Read 1 character silently with prompt
-    echo  #Newline
-}
 
 function askContinue {
     local answer=""
     while ! [[ "$answer" =~ ^[yn]$ ]]; do
-        echo -n "Continue? [y/n]:"
+        echo -n "Continue? [y/n]: "
         read answer
     done
     if [ "${answer}" != "y" ]; then
@@ -223,21 +213,16 @@ askContinue
 
 checkRequirements
 
+echo
+echo "[INFO] ### PREPARING FOR BUILD ###"
+echo
 prepareRepo "${CCV_PATH}"         "${CCV_BRANCH}"         "${CCV_URL}"
 prepareRepo "${OPPGAVER_PATH}"    "${OPPGAVER_BRANCH}"    "${OPPGAVER_URL}"
 prepareRepo "${BETA_PATH}"        "${BETA_BRANCH}"        "${BETA_URL}"
 
-#echo "The script expects that the following repos have been cloned to the locations shown below."
-#echo "It expects that the following repos have been cloned to the following locations:"
-#echo "    (HTTPS or SSH) kodeklubben/codeclub-viewer.git    --> ${CCV_PATH}"
-#echo "    (HTTPS or SSH) kodeklubben/oppgaver.git           --> ${OPPGAVER_PATH}"
-#echo "    (SSH) ${BETA_URL}     --> ${BETA_PATH}"
-#echo
-
-#checkRepo "${CCV_PATH}" "${CCV_BRANCH}" "${CCV_URL}"
-#checkRepo "${OPPGAVER_PATH}" "${OPPGAVER_BRANCH}" "${OPPGAVER_URL}"
-#checkRepo "${BETA_PATH}" "${BETA_BRANCH}" "${BETA_URL}"
-
+echo
+echo "[INFO] ### BUILDING ###"
+echo
 prepareBuild
 buildDist
 
@@ -247,16 +232,21 @@ echo "    cd ${CCV_PATH}"
 echo "    yarn serve"
 echo "and open up a browser at http://localhost:8080/${URL_PATH_PREFIX}"
 echo
+echo "If everything is ok and you wish to continue, this script will copy and push the new build to ${BETA_URL}."
 askContinue
 
-removeOldBeta
-copyDistToBeta
-gitAdd
+echo
+echo "[INFO] ### PREPARING FOR PUSH ###"
+echo
+syncDistToBeta
 
 echo
 echo "The compiled website is now ready to be pushed to ${BETA_URL}."
 askContinue
 
+echo
+echo "[INFO] ### PUSHING ###"
+echo
 gitPush
 
 cleanup
