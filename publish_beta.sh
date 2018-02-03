@@ -1,5 +1,31 @@
 #!/usr/bin/env bash
 
+cd $(dirname "$0") # Change directory to where the script is
+SCRIPT_PATH=$(pwd)
+URL_PATH_PREFIX="beta"
+URL_PATH_PREFIX_FILE=url-path-prefix.config
+
+echo
+echo -n "Checking if current github user has a fork of kodeklubben/beta (requires SSH access to github)... "
+BETA_REPO=$(node getBetaFork.js)
+echo "Success!"
+
+CCV_PATH=${SCRIPT_PATH}
+CCV_BRANCH="master"
+CCV_REPO="kodeklubben/codeclub-viewer"
+CCV_URL="${CCV_REPO}.git"
+
+OPPGAVER_PATH=$(dirname ${SCRIPT_PATH})/oppgaver    # ../oppgaver
+OPPGAVER_BRANCH="master"
+OPPGAVER_REPO="kodeklubben/oppgaver"
+OPPGAVER_URL="${OPPGAVER_REPO}.git"
+
+BETA_PATH=$(dirname ${SCRIPT_PATH})/beta            # ../beta
+BETA_BRANCH="gh-pages"
+BETA_BRANCH_NEW="new-gh-pages-publishscript"
+BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com since we need SSH to push result
+
+
 ###################################
 # Print error message and abort.
 #
@@ -13,6 +39,13 @@ cleanupAndAbort() {
     exit 1
 }
 
+function removePublishBranch {
+    cd ${BETA_PATH}
+    if git branch | grep -q ${BETA_BRANCH_NEW}; then
+        git branch -D ${BETA_BRANCH_NEW}
+    fi
+}
+
 PREPARED_PATHS=""
 function cleanup {
     if [[ -f ${CCV_PATH}/${URL_PATH_PREFIX_FILE} ]]; then
@@ -21,18 +54,12 @@ function cleanup {
     for f in ${PREPARED_PATHS}; do
         restoreRepo ${f}
     done
+    removePublishBranch
 }
 
 # Call cleanupAndAbort() if any command returns with a non-zero exit code:
 trap 'cleanupAndAbort $LINENO' ERR
 ###################################
-
-
-cd $(dirname "$0") # Change directory to where the script is
-SCRIPT_PATH=$(pwd)
-URL_PATH_PREFIX="beta"
-URL_PATH_PREFIX_FILE=url-path-prefix.config
-
 
 function askContinue {
     local answer=""
@@ -171,8 +198,16 @@ function buildDist {
 
 function syncDistToBeta {
     echo "[INFO] Syncing files: ${BUILD_PATH}/ --> ${BETA_PATH}"
-    rsync --dry-run --progress -r --delete ${BUILD_PATH}/ ${BETA_PATH}
+    removePublishBranch
     cd ${BETA_PATH}
+    git reset --hard  # Make sure working folder is in sync with checkout out branch
+    git checkout -b ${BETA_BRANCH_NEW}
+    git rm -rf .      # Remove all tracked files and folders in BETA_PATH
+    git clean -fxd    # Remove all untracked files and folders in BETA_PATH
+    cp -rf ${BUILD_PATH}/ ${BETA_PATH}
+    git checkout HEAD -- CNAME                        # Restore back CNAME
+    git checkout HEAD -- google91a144a83c954edb.html  # Restore back google search console verification file
+    touch .nojekyll
     git add -A
 }
 
@@ -186,25 +221,6 @@ function gitPush {
 #########################
 ### MAIN SCRIPT START ###
 #########################
-
-echo
-echo -n "Checking if current github user has a fork of kodeklubben/beta (requires SSH access to github)... "
-BETA_REPO=$(node getBetaFork.js)
-echo "Success!"
-
-CCV_PATH=${SCRIPT_PATH}
-CCV_BRANCH="master"
-CCV_REPO="kodeklubben/codeclub-viewer"
-CCV_URL="${CCV_REPO}.git"
-
-OPPGAVER_PATH=$(dirname ${SCRIPT_PATH})/oppgaver    # ../oppgaver
-OPPGAVER_BRANCH="master"
-OPPGAVER_REPO="kodeklubben/oppgaver"
-OPPGAVER_URL="${OPPGAVER_REPO}.git"
-
-BETA_PATH=$(dirname ${SCRIPT_PATH})/beta            # ../beta
-BETA_BRANCH="gh-pages"
-BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com since we need SSH to push result
 
 echo
 echo "This script will compile ${CCV_REPO}(${CCV_BRANCH}) using ${OPPGAVER_REPO}(${OPPGAVER_BRANCH})"
