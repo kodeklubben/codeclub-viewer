@@ -22,7 +22,6 @@ OPPGAVER_URL="${OPPGAVER_REPO}.git"
 
 BETA_PATH=$(dirname ${SCRIPT_PATH})/beta            # ../beta
 BETA_BRANCH="gh-pages"
-BETA_BRANCH_NEW="new-gh-pages-publishscript"
 BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com since we need SSH to push result
 
 
@@ -39,13 +38,6 @@ cleanupAndAbort() {
     exit 1
 }
 
-function removePublishBranch {
-    cd ${BETA_PATH}
-    if git branch | grep -q ${BETA_BRANCH_NEW}; then
-        git branch -D ${BETA_BRANCH_NEW}
-    fi
-}
-
 PREPARED_PATHS=""
 function cleanup {
     if [[ -f ${CCV_PATH}/${URL_PATH_PREFIX_FILE} ]]; then
@@ -54,7 +46,6 @@ function cleanup {
     for f in ${PREPARED_PATHS}; do
         restoreRepo ${f}
     done
-    removePublishBranch
 }
 
 # Call cleanupAndAbort() if any command returns with a non-zero exit code:
@@ -198,10 +189,9 @@ function buildDist {
 
 function syncDistToBeta {
     echo "[INFO] Syncing files: ${BUILD_PATH}/ --> ${BETA_PATH}"
-    removePublishBranch
     cd ${BETA_PATH}
     git reset --hard  # Make sure working folder is in sync with checkout out branch
-    git checkout -b ${BETA_BRANCH_NEW}
+    git checkout -B ${BETA_BRANCH}
     git rm -rf .      # Remove all tracked files and folders in BETA_PATH
     git clean -fxd    # Remove all untracked files and folders in BETA_PATH
     cp -rf ${BUILD_PATH}/ ${BETA_PATH}
@@ -225,6 +215,7 @@ function gitPush {
 echo
 echo "This script will compile ${CCV_REPO}(${CCV_BRANCH}) using ${OPPGAVER_REPO}(${OPPGAVER_BRANCH})"
 echo "and publish to ${BETA_REPO}(${BETA_BRANCH})."
+echo "NOTE: The local branch ${BETA_BRANCH} WILL BE RESET to the corresponding remote branch before updated with the new build."
 askContinue
 
 checkRequirements
