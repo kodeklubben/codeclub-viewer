@@ -14,11 +14,13 @@ CCV_PATH=${SCRIPT_PATH}
 CCV_BRANCH="master"
 CCV_REPO="kodeklubben/codeclub-viewer"
 CCV_URL="${CCV_REPO}.git"
+CCV_COMMIT=$(git log -n 1 -- ${CCV_PATH} | head -1)
 
 OPPGAVER_PATH=$(dirname ${SCRIPT_PATH})/oppgaver    # ../oppgaver
 OPPGAVER_BRANCH="master"
 OPPGAVER_REPO="kodeklubben/oppgaver"
 OPPGAVER_URL="${OPPGAVER_REPO}.git"
+OPPGAVER_COMMIT=$(git log -n 1 -- ${OPPGAVER_PATH} | head -1)
 
 BETA_PATH=$(dirname ${SCRIPT_PATH})/beta            # ../beta
 BETA_BRANCH="gh-pages"
@@ -208,6 +210,7 @@ function syncDistToBeta {
     git checkout HEAD -- google91a144a83c954edb.html  # Restore back google search console verification file
     touch .nojekyll
     git add -A
+    git commit -m "Publish site from oppgaver/${OPPGAVER_BRANCH} ${OPPGAVER_COMMIT} and codeclub-viewer/${CCV_BRANCH} ${CCV_COMMIT}"
 }
 
 function gitPush {
@@ -223,7 +226,8 @@ function gitPush {
 
 echo
 echo "This script will compile"
-echo "    ${CCV_REPO} (branch: ${CCV_BRANCH}) and ${OPPGAVER_REPO} (branch: ${OPPGAVER_BRANCH})"
+echo "    ${CCV_REPO} (branch: ${CCV_BRANCH}, ${CCV_COMMIT}) and"
+echo "    ${OPPGAVER_REPO} (branch: ${OPPGAVER_BRANCH}, ${OPPGAVER_COMMIT})"
 echo "and publish the result to"
 echo "    ${BETA_REPO} (branch: ${BETA_BRANCH})."
 echo
