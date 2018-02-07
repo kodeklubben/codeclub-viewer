@@ -192,8 +192,7 @@ function prepareBuild {
 function buildDist {
     cd ${CCV_PATH}
     yarn
-    #yarn build:prod
-    yarn build
+    yarn build:prod
 }
 
 function syncDistToBeta {
@@ -214,7 +213,7 @@ function syncDistToBeta {
 function gitPush {
     echo "[INFO] Pushing to ${BETA_URL}"
     cd ${BETA_PATH}
-    #git push
+    git push
 }
 
 
