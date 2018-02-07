@@ -30,7 +30,7 @@ BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com sin
 #
 # Parameter 1 is line number (optional)
 # If parameter 1 is omitted, it will only echo "Aborting." and exit with error code 1.
-cleanupAndAbort() {
+function cleanupAndAbort() {
     echo
     if [[ $# -ge 1 ]]; then echo "Error on line $1 of $0"; fi
     echo "Aborting."
@@ -38,18 +38,24 @@ cleanupAndAbort() {
     exit 1
 }
 
-PREPARED_PATHS=""
+DID_CHECKOUT_IN_PATH=""
+function registerCheckoutInPath {
+    folder=$1
+    DID_CHECKOUT_IN_PATH="${DID_CHECKOUT_IN_PATH} ${folder}"
+}
+
 function cleanup {
     if [[ -f ${CCV_PATH}/${URL_PATH_PREFIX_FILE} ]]; then
         rm -f ${CCV_PATH}/${URL_PATH_PREFIX_FILE}
     fi
-    local UNIQUE_SORTED=$(echo -e "${PREPARED_PATHS// /\n}" | sort -u)
-    for f in ${UNIQUE_SORTED}; do
-        # TEST THE LINE BELOW
-        local numberOfOccurrancesOfPath=$(echo ${PREPARED_PATHS} | tr ' ' '\n' | grep -c ${f}) # Number of occurrances of f in PREPARED_PATHS, echo $PREPARED_PATHS | tr ' ' '\n' | grep -c $f
-        # Alternatively    echo -e "${lance// /\n}" | sort | uniq -c    and then read off the numbers
-        restoreRepo ${f} ${numberOfOccurrancesOfPath} # Remember to read the number into restoreRepo
-    done
+
+    # Sort and count paths in DID_CHECKOUT_IN_PATH, and restore repo by checking out branch "count" checkouts ago
+    while read -r line; do
+        # Each $line is typically "<count> <path>", e.g. "2 /path/to/gitrepo"
+        count="${line%% *}"
+        preppath="${line##* }"
+        restoreRepo ${preppath} ${count}
+    done <<< "$(echo ${DID_CHECKOUT_IN_PATH} | xargs -n1 | sort | uniq -c | xargs -n2)"
 }
 
 # Call cleanupAndAbort() if any command returns with a non-zero exit code:
@@ -138,16 +144,17 @@ function prepareRepo {
 
     echo "[INFO] Checking out ${fullbranch}"
     git -c advice.detachedHead=false checkout ${fullbranch}
-    PREPARED_PATHS="${PREPARED_PATHS} ${folder}" # So they can be restored back
+    registerCheckoutInPath "${folder}"   # So they can be restored back
 }
 
 function restoreRepo {
     echo
 
     folder=$1
+    count=$2
     cd ${folder}
     echo "[INFO] Restoring repo in folder $(pwd)"
-    git checkout - # checkout previously checked out branch
+    git checkout @{-${count}} # checkout a previously checked out branch ("count" checkouts ago)
 }
 
 function checkRequirements {
@@ -190,7 +197,7 @@ function syncDistToBeta {
     cd ${BETA_PATH}
     git reset --hard  # Make sure working folder is in sync with checkout out branch
     git checkout -B ${BETA_BRANCH}
-    PREPARED_PATHS="${PREPARED_PATHS} ${BETA_PATH}"
+    registerCheckoutInPath "${BETA_PATH}"
     git rm -rf --quiet .      # Remove all tracked files and folders in BETA_PATH
     git clean -fxd    # Remove all untracked files and folders in BETA_PATH
     cp -rf ${BUILD_PATH}/ ${BETA_PATH}
