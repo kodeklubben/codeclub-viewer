@@ -50,12 +50,16 @@ function cleanup {
     fi
 
     # Sort and count paths in DID_CHECKOUT_IN_PATH, and restore repo by checking out branch "count" checkouts ago
-    while read -r line; do
-        # Each $line is typically "<count> <path>", e.g. "2 /path/to/gitrepo"
-        count="${line%% *}"
-        preppath="${line##* }"
-        restoreRepo ${preppath} ${count}
-    done <<< "$(echo ${DID_CHECKOUT_IN_PATH} | xargs -n1 | sort | uniq -c | xargs -n2)"
+    if [[ -n ${DID_CHECKOUT_IN_PATH} ]]; then
+        echo "DID_CHECKOUT_IN_PATH:${DID_CHECKOUT_IN_PATH}:"
+        while read -r line; do
+            # Each $line is typically "<count> <path>", e.g. "2 /path/to/gitrepo"
+            echo "line:${line}:"
+            count="${line%% *}"
+            preppath="${line##* }"
+            restoreRepo ${preppath} ${count}
+        done <<< "$(echo ${DID_CHECKOUT_IN_PATH} | xargs -n1 | sort | uniq -c | xargs -n2)"
+    fi
 }
 
 # Call cleanupAndAbort() if any command returns with a non-zero exit code:
@@ -219,9 +223,13 @@ function gitPush {
 #########################
 
 echo
-echo "This script will compile ${CCV_REPO}(${CCV_BRANCH}) using ${OPPGAVER_REPO}(${OPPGAVER_BRANCH})"
-echo "and publish to ${BETA_REPO}(${BETA_BRANCH})."
-echo "NOTE: The local branch ${BETA_BRANCH} WILL BE RESET to the corresponding remote branch before updated with the new build."
+echo "This script will compile"
+echo "    ${CCV_REPO} (branch: ${CCV_BRANCH}) and ${OPPGAVER_REPO} (branch: ${OPPGAVER_BRANCH})"
+echo "and publish the result to"
+echo "    ${BETA_REPO} (branch: ${BETA_BRANCH})."
+echo
+echo "NOTE: The local branch ${BETA_BRANCH} in the repo ${BETA_REPO}"
+echo "      WILL BE RESET to the corresponding remote branch before updated with the new build."
 askContinue
 
 checkRequirements
@@ -242,7 +250,7 @@ echo
 echo "Compilation completed. To test, open another terminal and type"
 echo "    cd ${CCV_PATH}"
 echo "    yarn serve"
-echo "and open up a browser at http://localhost:8080/${URL_PATH_PREFIX}"
+echo "and open up a browser at http://localhost:8080/${URL_PATH_PREFIX}${URL_PATH_PREFIX:+/}"
 echo
 echo "If everything is ok and you wish to continue, this script will copy and push the new build to ${BETA_URL}."
 askContinue
