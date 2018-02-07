@@ -49,6 +49,30 @@ yarn testall
 ```
 This will run the three commands `yarn eslint`, `yarn stylelint` and `yarn test`, each of which can be run individually.
 
+## Publish website (to beta)
+To publish the website to the [beta repository](https://github.com/kodeklubben/beta),
+first make sure you have a [fork of it](https://help.github.com/articles/fork-a-repo/).
+Then make a local clone of the `beta` fork next to `codeclub-viewer` and `oppgaver`
+([using SSH URL](https://help.github.com/articles/which-remote-url-should-i-use/)).
+For example, if your github username is `gituser` and you have forked the `beta` repo to this user,
+and you have a terminal open and you are located in the `codeclub-viewer` folder, type
+```
+cd ..
+git clone git@github.com:gituser/beta.git
+```
+
+Now return to the `codeclub-viewer` folder (`cd codeclub-viewer`), type
+```
+./publish_beta.sh
+```
+and follow the instructions. If everything is ok, and you answer `y` to all the questions, the newly compiled
+website will be pushed to your `beta` fork, and (if your username is `gituser`) you can test the site at
+```
+gituser.github.io/beta
+```
+If you are satisfied and want to publish the new website to the official `beta` repo, make a pull request from the `gh-pages` branch
+of your `beta` fork to the `gh-pages` branch of `kodeklubben/beta`.
+
 
 ## TODO
 We are now generating staticsite.static.[hash].js and all the images one more time during generation
