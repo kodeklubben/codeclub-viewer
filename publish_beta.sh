@@ -51,10 +51,8 @@ function cleanup {
 
     # Sort and count paths in DID_CHECKOUT_IN_PATH, and restore repo by checking out branch "count" checkouts ago
     if [[ -n ${DID_CHECKOUT_IN_PATH} ]]; then
-        echo "DID_CHECKOUT_IN_PATH:${DID_CHECKOUT_IN_PATH}:"
         while read -r line; do
             # Each $line is typically "<count> <path>", e.g. "2 /path/to/gitrepo"
-            echo "line:${line}:"
             count="${line%% *}"
             preppath="${line##* }"
             restoreRepo ${preppath} ${count}
