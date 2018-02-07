@@ -43,8 +43,12 @@ function cleanup {
     if [[ -f ${CCV_PATH}/${URL_PATH_PREFIX_FILE} ]]; then
         rm -f ${CCV_PATH}/${URL_PATH_PREFIX_FILE}
     fi
-    for f in ${PREPARED_PATHS}; do
-        restoreRepo ${f}
+    local UNIQUE_SORTED=$(echo -e "${PREPARED_PATHS// /\n}" | sort -u)
+    for f in ${UNIQUE_SORTED}; do
+        # TEST THE LINE BELOW
+        local numberOfOccurrancesOfPath=$(echo ${PREPARED_PATHS} | tr ' ' '\n' | grep -c ${f}) # Number of occurrances of f in PREPARED_PATHS, echo $PREPARED_PATHS | tr ' ' '\n' | grep -c $f
+        # Alternatively    echo -e "${lance// /\n}" | sort | uniq -c    and then read off the numbers
+        restoreRepo ${f} ${numberOfOccurrancesOfPath} # Remember to read the number into restoreRepo
     done
 }
 
@@ -163,12 +167,6 @@ function checkRequirements {
     else
       echo "[INFO] yarn package manager detected."
     fi
-    if ! command -v rsync >/dev/null 2>&1; then
-      echo "[ERROR] Could not find the rsync command. Aborting."
-      cleanupAndAbort
-    else
-      echo "[INFO] rsync command detected."
-    fi
 }
 
 function prepareBuild {
@@ -188,11 +186,12 @@ function buildDist {
 }
 
 function syncDistToBeta {
-    echo "[INFO] Syncing files: ${BUILD_PATH}/ --> ${BETA_PATH}"
+    echo "[INFO] Replacing old website: ${BUILD_PATH}/ --> ${BETA_PATH}"
     cd ${BETA_PATH}
     git reset --hard  # Make sure working folder is in sync with checkout out branch
     git checkout -B ${BETA_BRANCH}
-    git rm -rf .      # Remove all tracked files and folders in BETA_PATH
+    PREPARED_PATHS="${PREPARED_PATHS} ${BETA_PATH}"
+    git rm -rf --quiet .      # Remove all tracked files and folders in BETA_PATH
     git clean -fxd    # Remove all untracked files and folders in BETA_PATH
     cp -rf ${BUILD_PATH}/ ${BETA_PATH}
     git checkout HEAD -- CNAME                        # Restore back CNAME
@@ -221,14 +220,13 @@ askContinue
 checkRequirements
 
 echo
-echo "[INFO] ### PREPARING FOR BUILD ###"
-echo
+echo "[INFO] ### PREPARING REPOS FOR BUILD ###"
 prepareRepo "${CCV_PATH}"         "${CCV_BRANCH}"         "${CCV_URL}"
 prepareRepo "${OPPGAVER_PATH}"    "${OPPGAVER_BRANCH}"    "${OPPGAVER_URL}"
 prepareRepo "${BETA_PATH}"        "${BETA_BRANCH}"        "${BETA_URL}"
 
 echo
-echo "[INFO] ### BUILDING ###"
+echo "[INFO] ### BUILDING NEW WEBSITE ###"
 echo
 prepareBuild
 buildDist
@@ -252,7 +250,7 @@ echo "The compiled website is now ready to be pushed to ${BETA_URL}."
 askContinue
 
 echo
-echo "[INFO] ### PUSHING ###"
+echo "[INFO] ### PUSHING NEW WEBSITE ###"
 echo
 gitPush
 
