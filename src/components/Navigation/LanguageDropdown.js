@@ -16,9 +16,9 @@ const LanguageItem = ({language, translateTag, onlyFlag}) => {
   return (
     <div>
       <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/>
-      <div className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
+      <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
         {translateTag('language', language)}
-      </div>
+      </span>
     </div>
   );
 };

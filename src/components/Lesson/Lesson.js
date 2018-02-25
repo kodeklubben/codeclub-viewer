@@ -16,8 +16,10 @@ import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
 import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
+import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import {setCheckbox, setLastLesson} from '../../action_creators';
 import MarkdownRenderer from '../MarkdownRenderer';
+import Progress from './Progress';
 import LessonButton from './LessonButton';
 import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
@@ -53,6 +55,7 @@ const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
       </div>
     )}
   </div>;
+
 PrintInfo.PropTypes = {
   t: PropTypes.func.isRequired,
   translateTag: PropTypes.func.isRequired,
@@ -71,7 +74,7 @@ const Lesson = React.createClass({
   render() {
     const {
       path, params, lesson,
-      checkboxes, t, translateTag, translateGroup,
+      checkboxes, t, translateTag, translateGroup, checkedCheckboxes, totalCheckboxes,
       title, level, tags, authorName, translatorName, isReadme, isStudentMode
     } = this.props;
     const author = authorName ?
@@ -81,6 +84,8 @@ const Lesson = React.createClass({
     const instructionButton = isReadme ? <LessonButton {...{path}}/> :
       isStudentMode ? null : <ReadmeButton {...{path}}/>;
     const pdfButton = <PdfButton lessonfile={params.file}/>;
+    const progress = (checkedCheckboxes > 0 && !isReadme) ?
+      <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -95,6 +100,7 @@ const Lesson = React.createClass({
           {resetButton}
           {instructionButton}
           {pdfButton}
+          {progress}
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
           <Row>
             <ImprovePage courseLessonFileProp={params}/>
@@ -128,6 +134,8 @@ Lesson.propTypes = {
   translatorName: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
+  checkedCheckboxes: PropTypes.number.isRequired,
+  totalCheckboxes: PropTypes.number.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -145,7 +153,9 @@ const mapStateToProps = (state, {path, params}) => ({
   authorName: getAuthorName(state, params),
   translatorName: getTranslatorName(state, params),
   isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
-  isStudentMode: state.isStudentMode
+  isStudentMode: state.isStudentMode,
+  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
+  totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
 });
 
 const mapDispatchToProps = {

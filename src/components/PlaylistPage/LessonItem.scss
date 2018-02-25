@@ -20,15 +20,36 @@
 .progressBarLevel3 { @include progressBar($color-level3); }
 .progressBarLevel4 { @include progressBar($color-level4); }
 
-.instructionBtn {
-  margin-left: auto;
-}
-
 .title {
   padding: 2px 0;
-  margin-right: 3px;
+  margin-right: 5px;
 }
 
 .progress {
   opacity: 0.5;
+  margin-right: 5px;
+}
+
+.flag {
+  width: $flag-width;
+  height: $flag-height;
+  margin-right: 5px;
+}
+
+.instructionButton {
+  margin-right: 5px;
+}
+
+.popoverGlyph {
+  margin-bottom: 2px;
+  font-size: 1.3em;
+  &:hover {
+    color: black;
+  }
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
 }
