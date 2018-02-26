@@ -111,10 +111,6 @@ export function getLoaders() {
   };
 }
 
-export function getRules() {
-
-}
-
 /////////////////////
 // THE BASE CONFIG //
 /////////////////////

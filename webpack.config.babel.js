@@ -52,19 +52,19 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // CONSTANTS //
 ///////////////
 
-import {buildDir, publicPath, isHot, isProduction, buildPDF} from './buildconstants';
-console.log('buildDir:', buildDir);
-console.log('publicPath:', publicPath);
-console.log('isHot:', isHot);
-console.log('isProduction:', isProduction);
-console.log('buildPDF:', buildPDF);
+import {
+  buildDir, publicPath, publicPathWithoutSlash, isHot, isProduction, buildPDF, filenameBase
+} from './buildconstants';
+
+console.log('Build constants:');
+console.log('  buildDir:', buildDir);
+console.log('  publicPath:', publicPath);
+console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
+console.log('  isHot:', isHot);
+console.log('  isProduction:', isProduction);
+console.log('  buildPDF:', buildPDF);
+console.log('  filenameBase:', filenameBase);
 console.log();
-
-const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
-
-// Small hack to avoid having to type a slash at the end of the url if there is a subdir in publicPath:
-const newPublicPath = (isHot && publicPath.length > 1 && publicPath.slice(-1) === '/') ?
-  publicPath.slice(0, -1) : publicPath;
 
 ///////////////
 // FUNCTIONS //
@@ -187,7 +187,7 @@ const config = {
   entry: getEntry(),
   output: {
     ...baseConfig.output,
-    publicPath: newPublicPath,
+    publicPath: isHot ? publicPathWithoutSlash : publicPath,
     filename: `${filenameBase}.js`,
     chunkFilename: `${filenameBase}.js`
   },
