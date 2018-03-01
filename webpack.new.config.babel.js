@@ -21,20 +21,46 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 import {
-  buildDir, isHot, publicPath, publicPathWithoutSlash, filenameBase, isProduction,
-  buildPDF, lessonSrc,
+  assets,
+  bootstrapStyles,
+  buildDir,
+  buildPDF,
+  filenameBase,
+  isHot,
+  isProduction,
+  lessonFiltertags,
+  lessonSrc,
+  publicPath,
+  publicPathWithoutSlash,
 } from './buildconstants';
 import {lessonPaths} from './pathlists';
 
-// console.log('Build constants:');
-// console.log('  buildDir:', buildDir);
-// console.log('  publicPath:', publicPath);
-// console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
-// console.log('  isHot:', isHot);
-// console.log('  isProduction:', isProduction);
-// console.log('  buildPDF:', buildPDF);
-// console.log('  filenameBase:', filenameBase);
-// console.log();
+console.log('Build constants:');
+console.log('  assets:', assets);
+console.log('  bootstrapStyles:', bootstrapStyles);
+console.log('  buildDir:', buildDir);
+console.log('  buildPDF:', buildPDF);
+console.log('  filenameBase:', filenameBase);
+console.log('  isHot:', isHot);
+console.log('  isProduction:', isProduction);
+console.log('  lessonFiltertags:', lessonFiltertags);
+console.log('  lessonSrc:', lessonSrc);
+console.log('  publicPath:', publicPath);
+console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
+console.log();
+
+// Loader for lesson files written in markdown (.md), extracting only frontmatter
+const frontmatterLoaders = [
+  'json-loader',
+  'front-matter-loader?onlyAttributes'
+];
+
+// Loader for lesson files written in markdown (.md), extracting only content
+const contentLoaders = [
+  'html-loader?attrs=false',
+  'markdown-it-loader',
+  'front-matter-loader?onlyBody'
+];
 
 const cssModuleLoader = {
   loader: 'css-loader',
@@ -50,9 +76,14 @@ const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
 const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
 
 const config = {
+  context: __dirname,
+
   entry: {
-    main: ['./src/index.js', 'bootstrap-loader'],
-    staticbundle: './src/index-static.js',
+    main: [
+      './src/index.js',
+      isHot ? 'bootstrap-loader' : 'bootstrap-loader/extractStyles',
+    ],
+    //staticbundle: './src/index-static.js',
   },
 
   output: {
@@ -66,7 +97,35 @@ const config = {
     libraryTarget: 'umd',
   },
 
-  modules: {
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      lessonSrc,
+      lessonFiltertags,
+      assets,
+      bootstrapStyles
+    }
+  },
+
+  resolveLoader: {
+    alias: {
+      // Markdown-files are parsed only through one of these three aliases, and are
+      // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
+      // 1) We don't want to use '!!' in the requires in the modules, and
+      // 2) Since the lessons create a lot of data, we want to be sure that we only load
+      //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
+      //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
+      onlyFrontmatter: 'combine-loader?' + JSON.stringify({frontmatter: frontmatterLoaders}),
+      onlyContent: 'combine?' + JSON.stringify({content: contentLoaders}),
+      frontAndContent: 'combine?' + JSON.stringify({
+        frontmatter: frontmatterLoaders,
+        content: contentLoaders
+      }),
+      bundleLessons: 'bundle?name=[path][name]&context='+lessonSrc,
+    }
+  },
+
+  module: {
     rules: [
       {
         test: inCurrentRepo('js'),
@@ -120,7 +179,7 @@ const config = {
       },
     ],
   },
-  
+
   plugins: [
     new webpack.LoaderOptionsPlugin({
       options: {
@@ -195,7 +254,8 @@ const config = {
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
         compress: {
-          pure_funcs: 'console.log' // removes these functions from the code
+          warnings: true,
+          pure_funcs: 'console.log', // removes these functions from the code
         }
       }),
     ] : []),
@@ -217,9 +277,9 @@ const config = {
     ...(!isHot ? [
       new CleanWebpackPlugin(buildDir),
       new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
-      }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
+      // }),
     ] : []),
 
   ],
