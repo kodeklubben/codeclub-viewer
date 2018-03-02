@@ -8,11 +8,11 @@ import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
 const iconContext = require.context('lessonSrc/', true, /^\.\/[^/]*\/logo-black\.png/);
-const courseContext = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/index\.md/);
-const playlistContext = require.context('raw!lessonSrc/', true, /^\.\/[^/]*\/playlists\/[^/]*\.txt$/);
-const lessonContext = require.context('onlyFrontmatter!lessonSrc/', true,
+const courseContext = require.context('lessonSrc/', true, /^\.\/[^/]*\/index\.md/);
+const playlistContext = require.context('lessonSrc/', true, /^\.\/[^/]*\/playlists\/[^/]*\.txt$/);
+const lessonContext = require.context('lessonSrc/', true,
   /^\.\/[^/]*\/[^/]*\/(?!README(_[a-z]{2})?\.md$)[^/]*\.md/);
-const readmeContext = require.context('onlyFrontmatter!lessonSrc/', true,
+const readmeContext = require.context('lessonSrc/', true,
   /^\.\/[^/]*\/[^/]*\/README(_[a-z]{2})?\.md$/);
 const lessons = getLessons(lessonContext, readmeContext, courseContext);
 

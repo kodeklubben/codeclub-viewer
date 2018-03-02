@@ -14,4 +14,4 @@ const keys_md = {
   }
 };
 
-mock('onlyFrontmatter!lessonFiltertags/keys.md', keys_md);
+mock('lessonFiltertags/keys.md', keys_md);

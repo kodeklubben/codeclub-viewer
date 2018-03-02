@@ -42,7 +42,7 @@ export function dirname(path) {
  *  }
  */
 export function getFilterkeys() {
-  const filterkeys = require('onlyFrontmatter!lessonFiltertags/keys.md').frontmatter;
+  const filterkeys = require('lessonFiltertags/keys.md').frontmatter;
   return Object.keys(filterkeys).reduce((result, groupKey) => {
     result[groupKey.toLowerCase()] = filterkeys[groupKey].map(tagKey => tagKey.toLowerCase());
     return result;
@@ -128,7 +128,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfoMarkup(courseName, language) {
-  const req = require.context('frontAndContent!lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
+  const req = require.context('lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
   const withLanguage = `./${courseName}/index_${language}.md`;
   const withoutLanguage = `./${courseName}/index.md`;
 
@@ -160,7 +160,7 @@ export function getCourseInfoMarkup(courseName, language) {
  */
 export function getLessonIntro(path) {
   const publicPath = process.env.PUBLICPATH;
-  let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
+  let lessonContent = require('lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
   const p = lessonContent.indexOf('<p>');
@@ -341,7 +341,7 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * @returns {String or null}
 */
 export const getPathForMainLanguage = (path, language, isReadme) => {
-  const req = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/[^.]*\.md$/);
+  const req = require.context('lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/[^.]*\.md$/);
   const lessonLanguage = req('./' + path + '.md').frontmatter.language;
   if (lessonLanguage !== language) {
     const lessonFolder = './' + path.substring(0, path.lastIndexOf('/'));

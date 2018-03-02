@@ -49,18 +49,7 @@ console.log('  publicPath:', publicPath);
 console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
 console.log();
 
-// Loader for lesson files written in markdown (.md), extracting only frontmatter
-const frontmatterLoaders = [
-  'json-loader',
-  'front-matter-loader?onlyAttributes'
-];
 
-// Loader for lesson files written in markdown (.md), extracting only content
-const contentLoaders = [
-  'html-loader?attrs=false',
-  'markdown-it-loader',
-  'front-matter-loader?onlyBody'
-];
 
 const cssModuleLoader = {
   loader: 'css-loader',
@@ -108,20 +97,23 @@ const config = {
   },
 
   resolveLoader: {
+    // Since webpack v2, loaders are resolved relative to file. Use abs path so loaders can be used on md-files
+    // in lessonSrc as well.
+    modules: [path.join(__dirname, 'node_modules')],
     alias: {
-      // Markdown-files are parsed only through one of these three aliases, and are
-      // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
-      // 1) We don't want to use '!!' in the requires in the modules, and
-      // 2) Since the lessons create a lot of data, we want to be sure that we only load
-      //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
-      //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
-      onlyFrontmatter: 'combine-loader?' + JSON.stringify({frontmatter: frontmatterLoaders}),
-      onlyContent: 'combine?' + JSON.stringify({content: contentLoaders}),
-      frontAndContent: 'combine?' + JSON.stringify({
-        frontmatter: frontmatterLoaders,
-        content: contentLoaders
-      }),
-      bundleLessons: 'bundle?name=[path][name]&context='+lessonSrc,
+      // // Markdown-files are parsed only through one of these three aliases, and are
+      // // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
+      // // 1) We don't want to use '!!' in the requires in the modules, and
+      // // 2) Since the lessons create a lot of data, we want to be sure that we only load
+      // //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
+      // //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
+      // onlyFrontmatter: 'combine-loader?' + JSON.stringify({frontmatter: frontmatterLoaders}),
+      // onlyContent: 'combine?' + JSON.stringify({content: contentLoaders}),
+      // frontAndContent: 'combine?' + JSON.stringify({
+      //   frontmatter: frontmatterLoaders,
+      //   content: contentLoaders
+      // }),
+      bundleLessons: 'bundle-loader?name=[path][name]&context='+lessonSrc,
     }
   },
 
@@ -172,8 +164,28 @@ const config = {
         options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
       },
       {
+        test: /\.txt$/,
+        loader: 'raw-loader',
+      },
+      {
+        test: /\.md$/,
+        loader: 'combine-loader',
+        options: {
+          //raw: 'raw-loader',
+          frontmatter: [
+            'json-loader',
+            'front-matter-loader?onlyAttributes'
+          ],
+          content: [
+            'html-loader?attrs=false',
+            'markdown-it-loader',
+            'front-matter-loader?onlyBody',
+          ],
+        },
+      },
+      {
         test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
-        exclude: [/\.md$/, new RegExp(regexpCompPath('/playlists/') + '.*\\.txt$')],
+        exclude: [/\.md$/, /\.txt$/],
         loader: 'file-loader',
         options: {name: '[path][name].[hash:6].[ext]&context=' + lessonSrc},
       },
@@ -183,6 +195,10 @@ const config = {
   plugins: [
     new webpack.LoaderOptionsPlugin({
       options: {
+        context: __dirname,   // needed for bootstrap-loader
+        output: {
+          path: buildDir,     // needed for bootstrap-loader
+        },
         'markdown-it': {
           html: true,  // allow html in source
           linkify: true,  // parse URL-like text to links
@@ -288,7 +304,7 @@ const config = {
     historyApiFallback: { // needed when using browserHistory (instead of hashHistory)
       index: publicPath
     },
-    outputPath: buildDir // needed for copy-webpack-plugin when "to" is an abs. path
+    //outputPath: buildDir // needed for copy-webpack-plugin when "to" is an abs. path
   },
 };
 
