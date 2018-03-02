@@ -17,7 +17,9 @@ module.exports.lessonPaths = (ending, verbose) => {
   if (typeof ending === 'undefined') { ending = ''; }
   if (typeof verbose === 'undefined') { verbose = false; }
   const availableLanguages = yamlFront.loadFront(path.join(lessonFiltertags, 'keys.md')).language;
-  console.log('Available languages:', availableLanguages);
+  if (verbose) {
+    console.log('Available languages:', availableLanguages);
+  }
   return glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md'))
     .filter(p => {

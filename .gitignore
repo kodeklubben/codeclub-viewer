@@ -1,4 +1,4 @@
-node_modules
-dist
-npm-debug.log
-.idea
+/node_modules
+/dist
+/npm-debug.log
+/stats.json
