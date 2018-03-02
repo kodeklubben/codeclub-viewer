@@ -3,23 +3,23 @@ import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
 
 
-const getComponentFrontPage = (nextState, cb) => {
-  require.ensure([], require => {
-    cb(null, require('./pages/FrontPage').default);
-  }, 'FrontPage');
-};
-
-const getComponentPageNotFound = (nextState, cb) => {
-  require.ensure([], require => {
-    cb(null, require('./pages/PageNotFound').default);
-  }, 'PageNotFound');
-};
-
-const getComponentPlaylist = (nextState, cb) => {
-  require.ensure([], (require) => {
-    cb(null, require('./pages/PlaylistPage').default);
-  }, 'PlaylistPage');
-};
+// const getComponentFrontPage = (nextState, cb) => {
+//   require.ensure([], require => {
+//     cb(null, require('./pages/FrontPage').default);
+//   }, 'FrontPage');
+// };
+//
+// const getComponentPageNotFound = (nextState, cb) => {
+//   require.ensure([], require => {
+//     cb(null, require('./pages/PageNotFound').default);
+//   }, 'PageNotFound');
+// };
+//
+// const getComponentPlaylist = (nextState, cb) => {
+//   require.ensure([], (require) => {
+//     cb(null, require('./pages/PlaylistPage').default);
+//   }, 'PlaylistPage');
+// };
 
 const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
@@ -49,6 +49,5 @@ const getComponentLessonPage = (nextState, cb) => {
 
 
 
-const routes = getRouteObject(getComponentFrontPage, getComponentPlaylist,
-  getComponentLessonPage, getComponentPageNotFound);
+const routes = getRouteObject(getComponentLessonPage);
 export default routes;

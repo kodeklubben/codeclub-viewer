@@ -36,7 +36,7 @@ import {
 import {lessonPaths} from './pathlists';
 
 const createConfig = (env = {}) => {
-  
+
   if (env.verbose) {
     console.log('Build constants:');
     console.log('  assets:', assets);

@@ -3,17 +3,17 @@ import Lesson from './components/Lesson/Lesson';
 import getRouteObject from './routeObject';
 
 
-const getComponentPlaylist = (nextState, cb) => {
-  cb(null, require('./pages/PlaylistPage').default);
-};
-
-const getComponentFrontPage = (nextState, cb) => {
-  cb(null, require('./pages/FrontPage').default);
-};
-
-const getComponentNotFound = (nextState, cb) => {
-  cb(null, require('./pages/PageNotFound').default);
-};
+// const getComponentPlaylist = (nextState, cb) => {
+//   cb(null, require('./pages/PlaylistPage').default);
+// };
+//
+// const getComponentFrontPage = (nextState, cb) => {
+//   cb(null, require('./pages/FrontPage').default);
+// };
+//
+// const getComponentNotFound = (nextState, cb) => {
+//   cb(null, require('./pages/PageNotFound').default);
+// };
 
 const getComponentLessonPage = (nextState, cb) => {
   const params = nextState.params;
@@ -28,6 +28,5 @@ const getComponentLessonPage = (nextState, cb) => {
 };
 
 
-const routes = getRouteObject(
-  getComponentFrontPage, getComponentPlaylist, getComponentLessonPage, getComponentNotFound);
+const routes = getRouteObject(getComponentLessonPage);
 export default routes;
