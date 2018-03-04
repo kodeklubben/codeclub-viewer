@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+import {courseAllLangsContext, lessonAllContext} from './resources';
+
 /**
  * Makes first character in str upper case
  *
@@ -128,7 +130,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfoMarkup(courseName, language) {
-  const req = require.context('lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
+  const req = courseAllLangsContext;
   const withLanguage = `./${courseName}/index_${language}.md`;
   const withoutLanguage = `./${courseName}/index.md`;
 
@@ -341,7 +343,7 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * @returns {String or null}
 */
 export const getPathForMainLanguage = (path, language, isReadme) => {
-  const req = require.context('lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/[^.]*\.md$/);
+  const req = lessonAllContext;
   const lessonLanguage = req('./' + path + '.md').frontmatter.language;
   if (lessonLanguage !== language) {
     const lessonFolder = './' + path.substring(0, path.lastIndexOf('/'));
