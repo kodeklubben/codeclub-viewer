@@ -7,7 +7,9 @@ import IndexRoute from 'react-router/lib/IndexRoute';
 import App from './pages/App';
 import FrontPage from './pages/FrontPage';
 import PageNotFound from './pages/PageNotFound';
+import Lesson from './components/Lesson/Lesson';
 import PlaylistPage from './pages/PlaylistPage';
+
 import store from './store';
 
 const lessons = store.getState().lessons;
@@ -117,15 +119,13 @@ const appOnChange = (prevState, nextState, replace) => {
 * remember to add validity testing in pathTest and if needed in validPathTest to make
 * the 404 routing work properly.
 */
-export default function getRouteObject(
-  getComponentLessonPage,
-) {
+export default function getRouteObject() {
   return (
     <Route path="/" component={App} onEnter={appOnEnter} onChange={appOnChange}>
       <IndexRoute component={FrontPage} onEnter={serverSideRedirectCheck}/>
       <Route path="/PageNotFound" component={PageNotFound} onEnter={saveURL}/>
       <Route path="/:course" component={PlaylistPage} onEnter={pathTest}/>
-      <Route path="/:course/:lesson/:file" getComponent={getComponentLessonPage} onEnter={pathTest}/>
+      <Route path="/:course/:lesson/:file" component={Lesson} onEnter={pathTest}/>
       <Route path="*" component={PageNotFound}/>
     </Route>
   );

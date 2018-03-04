@@ -115,7 +115,7 @@ const createConfig = (env = {}) => {
         //   frontmatter: frontmatterLoaders,
         //   content: contentLoaders
         // }),
-        bundleLessons: 'bundle-loader?name=[path][name]&context=' + lessonSrc,
+        // bundleLessons: 'bundle-loader?name=[path][name]&context=' + lessonSrc,
       }
     },
 
@@ -189,7 +189,8 @@ const createConfig = (env = {}) => {
           test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
           exclude: [/\.md$/, /\.txt$/],
           loader: 'file-loader',
-          options: {name: '[path][name].[hash:6].[ext]&context=' + lessonSrc},
+          //options: {name: '[path][name].[hash:6].[ext]&context=' + lessonSrc},
+          options: {name: '[path][name].[hash:6].[ext]'},
         },
       ],
     },
