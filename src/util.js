@@ -73,57 +73,61 @@ export function getInitialFilter(initialLanguage) {
   return filter;
 }
 
+let cachedLessons = null;
 export function getLessons() {
-  const paths = lessonContext.keys();
-  const availableLanguages = getAvailableLanguages();
+  if (cachedLessons == null) {
+    const paths = lessonContext.keys();
+    const availableLanguages = getAvailableLanguages();
 
-  return paths.reduce((res, path) => {
-    const lessonFrontmatter = lessonContext(path).frontmatter;
-    const language = lessonFrontmatter.language;
-    if (!language) {
-      console.warn('Skipping lesson ' + path + ' since it is missing language.');
-      return res;
-    }
-    if (!availableLanguages.includes(language)) {
-      // Hiding lesson since it uses a language that is not available (yet)
-      if (typeof document === 'undefined') { // Only show message when rendering on server
-        console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
-          ', which is not available. Skipping lesson.');
+    cachedLessons = paths.reduce((res, path) => {
+      const lessonFrontmatter = lessonContext(path).frontmatter;
+      const language = lessonFrontmatter.language;
+      if (!language) {
+        console.warn('Skipping lesson ' + path + ' since it is missing language.');
+        return res;
       }
+      if (!availableLanguages.includes(language)) {
+        // Hiding lesson since it uses a language that is not available (yet)
+        if (typeof document === 'undefined') { // Only show message when rendering on server
+          console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
+            ', which is not available. Skipping lesson.');
+        }
+        return res;
+      }
+
+      // Course name is between './' and second '/'
+      const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
+      const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
+      const courseFrontmatter = courseContext(coursePath).frontmatter;
+
+      // Inherit tags from course, override with lessonTags, and add lessonTag
+      const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
+      const lessonTags = cleanseTags(lessonFrontmatter.tags, 'lesson ' + path);
+      const languageTag = language ? {language: [language]} : {};
+      const tags = {...courseTags, ...lessonTags, ...languageTag};
+
+      // Gets the valid readmePath for the lesson, if it exists
+      const readmePath = getReadmePath(language, path);
+
+      res[path] = {
+        title: lessonFrontmatter.title || '',
+        author: lessonFrontmatter.author || '',
+        translator: lessonFrontmatter.translator || '',
+        level: lessonFrontmatter.level,
+        indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
+        external: lessonFrontmatter.external || '',
+        readmePath: readmePath,
+        course: courseName,
+        language: language,
+        tags,
+        // Everything between '.' and '.md'
+        path: path.slice(1, path.length - 3)
+      };
+
       return res;
-    }
-
-    // Course name is between './' and second '/'
-    const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
-    const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
-    const courseFrontmatter = courseContext(coursePath).frontmatter;
-
-    // Inherit tags from course, override with lessonTags, and add lessonTag
-    const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
-    const lessonTags = cleanseTags(lessonFrontmatter.tags, 'lesson ' + path);
-    const languageTag = language ? {language: [language]} : {};
-    const tags = {...courseTags, ...lessonTags, ...languageTag};
-
-    // Gets the valid readmePath for the lesson, if it exists
-    const readmePath = getReadmePath(language, path);
-
-    res[path] = {
-      title: lessonFrontmatter.title || '',
-      author: lessonFrontmatter.author || '',
-      translator: lessonFrontmatter.translator || '',
-      level: lessonFrontmatter.level,
-      indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
-      external: lessonFrontmatter.external || '',
-      readmePath: readmePath,
-      course: courseName,
-      language: language,
-      tags,
-      // Everything between '.' and '.md'
-      path: path.slice(1, path.length - 3)
-    };
-
-    return res;
-  }, {});
+    }, {});
+  }
+  return cachedLessons;
 }
 
 /**

@@ -1,12 +1,3 @@
-export function setLessons(lessons) {
-  return {
-    type: 'SET_LESSONS',
-    payload: {
-      lessons
-    }
-  };
-}
-
 export function setFilter(filter) {
   return {
     type: 'SET_FILTER',
@@ -42,6 +33,7 @@ export function setModeTeacher() {
   };
 }
 
+// TODO: Remove
 export function changeMode() {
   return {
     type: 'CHANGE_MODE'

@@ -2,12 +2,10 @@
 
 import {createStore} from 'redux';
 import {getInitialFilter, getLessons, createCheckboxesKey} from './util';
-import {setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
+import {setFilter, setMode, setLanguage, setWelcomeBox,
   setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
-
-const lessons = getLessons();
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -23,8 +21,6 @@ if (isProduction) {
 
   store = createStore(reducer, initialState, devTools);
 }
-
-store.dispatch(setLessons(lessons));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);
 const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
@@ -43,7 +39,7 @@ for (let groupKey of Object.keys(filter)) {
   store.dispatch(collapseFilterGroup(groupKey, true));
 }
 
-for (let path of Object.keys(lessons)) {
+for (let path of Object.keys(getLessons())) {
   const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), {});
   if(Object.keys(checkboxes).length !== 0) {
     store.dispatch(setCheckboxes(path, checkboxes));
