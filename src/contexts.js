@@ -1,3 +1,5 @@
+// NOTE: Putting these contexts in separate files might enable better code splitting.
+
 // lessonSrc/*/logo-black.png
 export const iconContext =
   require.context('lessonSrc/', true, /^[.][/][^/]*[/]logo-black[.]png$/);

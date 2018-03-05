@@ -22,16 +22,6 @@ export function resetFilter(groupKey, tagKey) {
   };
 }
 
-export function setContext(contextName, context) {
-  return {
-    type: 'SET_CONTEXT',
-    payload: {
-      contextName,
-      context
-    }
-  };
-}
-
 export function onFilterCheck(groupKey, tagKey) {
   return {
     type: 'FILTER_CHECKED',

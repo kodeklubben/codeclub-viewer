@@ -11,10 +11,11 @@ import Lesson from './components/Lesson/Lesson';
 import PlaylistPage from './pages/PlaylistPage';
 
 import store from './store';
+import {courseContext, readmeContext} from './contexts';
 
 const lessons = store.getState().lessons;
-const courses = store.getState().context['courseContext'].keys();
-const readmePaths = store.getState().context['readmeContext'].keys();
+const courses = courseContext.keys();
+const readmePaths = readmeContext.keys();
 
 const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
 const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));

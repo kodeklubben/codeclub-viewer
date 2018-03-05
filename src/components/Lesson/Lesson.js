@@ -25,6 +25,7 @@ import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
 import PdfButton from './PdfButton';
 import MainLanguageButton from './MainLanguageButton';
+import {readmeContext} from '../../contexts';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -156,7 +157,7 @@ const mapStateToProps = (state, {params}) => {
     tags: getTags(state, params),
     authorName: getAuthorName(state, params),
     translatorName: getTranslatorName(state, params),
-    isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
+    isReadme: readmeContext.keys().includes('./' + path + '.md'),
     isStudentMode: state.isStudentMode,
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
     totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),

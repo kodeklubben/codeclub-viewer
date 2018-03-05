@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import {courseAllLangsContext, lessonAllContext} from './resources';
+import {courseContext, readmeContext, lessonContext, courseAllLangsContext, lessonAllContext} from './contexts';
 
 /**
  * Makes first character in str upper case
@@ -73,7 +73,7 @@ export function getInitialFilter(initialLanguage) {
   return filter;
 }
 
-export function getLessons(lessonContext, readmeContext, courseContext) {
+export function getLessons() {
   const paths = lessonContext.keys();
   const availableLanguages = getAvailableLanguages();
 
@@ -105,7 +105,7 @@ export function getLessons(lessonContext, readmeContext, courseContext) {
     const tags = {...courseTags, ...lessonTags, ...languageTag};
 
     // Gets the valid readmePath for the lesson, if it exists
-    const readmePath = getReadmePath(readmeContext, language, path);
+    const readmePath = getReadmePath(language, path);
 
     res[path] = {
       title: lessonFrontmatter.title || '',
@@ -190,7 +190,7 @@ export function getLessonIntro(path) {
 * Checks if a lesson with a given path has a README-file.
 * Accepts README-files on the form /README or /README_(ISO_CODE).
 **/
-const getReadmePath = (readmeContext, language, path) => {
+const getReadmePath = (language, path) => {
   path = path.slice(1, path.lastIndexOf('/'));
   const readmePathAndLanguageCode = path + '/README_' + language;
   const readmePathNoLanguageCode = path + '/README';

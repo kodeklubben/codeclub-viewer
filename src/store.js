@@ -2,13 +2,12 @@
 
 import {createStore} from 'redux';
 import {getInitialFilter, getLessons, createCheckboxesKey} from './util';
-import {setContext, setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
+import {setFilter, setLessons, setMode, setLanguage, setWelcomeBox,
   setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
-import {iconContext, courseContext, playlistContext, lessonContext, readmeContext} from './resources';
 
-const lessons = getLessons(lessonContext, readmeContext, courseContext);
+const lessons = getLessons();
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -25,10 +24,6 @@ if (isProduction) {
   store = createStore(reducer, initialState, devTools);
 }
 
-store.dispatch(setContext('iconContext', iconContext));
-store.dispatch(setContext('playlistContext', playlistContext));
-store.dispatch(setContext('courseContext', courseContext));
-store.dispatch(setContext('readmeContext', readmeContext));
 store.dispatch(setLessons(lessons));
 
 const initialMode = loadFromLocalStorage('isStudentMode', true);

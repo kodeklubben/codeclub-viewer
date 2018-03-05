@@ -13,5 +13,15 @@ const keys_md = {
     sometag: ['tag1', 'tag2'],
   }
 };
-
 mock('lessonFiltertags/keys.md', keys_md);
+
+const contexts = {
+  iconContext: (path) => path,
+  courseContext: (path) => path,
+  courseAllLangsContext: (path) => path,
+  playlistContext: (path) => path,
+  lessonContext: (path) => path,
+  readmeContext: (path) => path,
+  lessonAllContext: (path) => path,
+};
+mock('../src/contexts.js', contexts);
