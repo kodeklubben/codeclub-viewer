@@ -19,6 +19,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 
 import {
   assets,
@@ -33,7 +34,19 @@ import {
   publicPath,
   publicPathWithoutSlash,
 } from './buildconstants';
-import {lessonPaths} from './pathlists';
+import {getStaticSitePaths, lessonPaths} from './pathlists';
+
+const scope = {window: {}};
+const locals = {};
+const staticSitePaths = getStaticSitePaths();
+
+// TODO: Do we need 404.html from htmlwebpackplugin?
+// TODO: Combine (cleaned up) index-static.html into index.html with
+//    if (typeof global.document !== 'undefined') {
+//    surrounding the normal index stuff, and export default the static function
+// TODO: Make sure the favicons are included
+// TODO: Fix errors when generating html for lessons
+
 
 const createConfig = (env = {}) => {
 
@@ -74,7 +87,7 @@ const createConfig = (env = {}) => {
         './src/index.js',
         isHot ? 'bootstrap-loader' : 'bootstrap-loader/extractStyles',
       ],
-      //staticbundle: './src/index-static.js',
+      staticbundle: './src/index-static.js',
     },
 
     output: {
@@ -239,24 +252,24 @@ const createConfig = (env = {}) => {
         prefix: 'CCV-icons-[hash:6]/'
       }),
 
-      // Create the root index.html needed regardless of whether we make the other static index.htmls.
-      new HtmlWebpackPlugin({
-        title: 'Kodeklubben',
-        template: 'src/index-template.ejs',
-        inject: false,
-        chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-      }),
+      // // Create the root index.html needed regardless of whether we make the other static index.htmls.
+      // new HtmlWebpackPlugin({
+      //   title: 'Kodeklubben',
+      //   template: 'src/index-template.ejs',
+      //   inject: false,
+      //   chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+      // }),
 
       // Create template for the static non-root index.html files
-      new HtmlWebpackPlugin({
-        title: '<%= title %>',
-        filename: 'index-html-template.ejs',
-        appcss: '<%= appCss %>',
-        appcontent: '<%= appHtml %>',
-        template: 'src/index-template.ejs',
-        inject: false,
-        chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-      }),
+      // new HtmlWebpackPlugin({
+      //   title: '<%= title %>',
+      //   filename: 'index-html-template.ejs',
+      //   appcss: '<%= appCss %>',
+      //   appcontent: '<%= appHtml %>',
+      //   template: 'src/index-template.ejs',
+      //   inject: false,
+      //   chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+      // }),
 
       new HtmlWebpackPlugin({
         title: '404 - Page Not Found',
@@ -265,6 +278,8 @@ const createConfig = (env = {}) => {
         inject: false,
         redirectUrl: publicPath
       }),
+
+      new StaticSiteGeneratorPlugin('staticbundle', staticSitePaths, locals, scope),
 
       ...(isProduction ? [
         new webpack.DefinePlugin({

@@ -32,7 +32,7 @@ console.log();
 //////////////////////
 
 import baseConfig from './webpack.base.config.babel';
-import {lessonPaths, coursePaths} from './pathlists';
+import {getStaticSitePaths} from './pathlists';
 
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
@@ -51,28 +51,6 @@ console.log();
 
 const scope = {window: {}};
 const locals = {};
-
-
-///////////////
-// FUNCTIONS //
-///////////////
-
-function getStaticSitePaths() {
-  // The '/' will render to '/index.html'
-  const paths = [
-    '/',  // Is the same as '/index.html'
-    'PageNotFound.html',
-  ];
-  const courses = coursePaths('.html');
-  const lessons = lessonPaths('.html');
-
-  const staticPaths = paths.concat(courses).concat(lessons);
-  console.log('Static paths:');
-  console.log(staticPaths);
-
-  return staticPaths;
-}
-
 const staticSitePaths = getStaticSitePaths();
 
 ///////////////////////

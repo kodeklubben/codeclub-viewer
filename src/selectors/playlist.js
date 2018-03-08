@@ -12,8 +12,9 @@ const getPlaylistPaths = (state, courseName = '') => {
  * Input props: courseName (string, optional)
  */
 export const getPlaylists = createSelector(
-  [getLessons, getPlaylistPaths],
-  (lessons, playlistPaths) => {
+  getPlaylistPaths,
+  (playlistPaths) => {
+    const lessons = getLessons();
     return playlistPaths.reduce((res, path) => {
 
       // Between './' and second '/'
