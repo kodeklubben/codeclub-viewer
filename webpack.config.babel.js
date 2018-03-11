@@ -292,7 +292,7 @@ const createConfig = (env = {}) => {
         new webpack.optimize.UglifyJsPlugin({
           sourceMap: true,
           compress: {
-            warnings: true,
+            warnings: false,
             pure_funcs: 'console.log', // removes these functions from the code
           }
         }),
