@@ -4,12 +4,13 @@ import {tagsMatchFilter, getLessonData} from '../util';
 // TODO:
 // * Only getLessonsByLevel is used (double check). Perhaps simplify?
 // * getCourseLessons doesn't need state, perhaps it doesn't need to be selector?
-// * getLessons() could take courseName as input, and it could cache result based on parameter (if needed).
+// * getLessonData() could take courseName as input, and it could cache result based on parameter (if needed).
 // * If we need to keep this as selector, perhaps use rereselect,
 //   otherwise different courseName will force recalculation.
 // * Now only filter is gotten from state. Perhaps we could precalculate a lot more of lessons,
 //   and just apply filter in the end in a much simpler selector. I.e., can we move a lot of the logic
 //   in this file to a different file? (util.js, or perhaps a separate file)
+// * Update unit tests
 
 export const getCourseLessons = (state, courseName = '') => {
   const lessons = getLessonData();

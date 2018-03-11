@@ -33,13 +33,6 @@ export function setModeTeacher() {
   };
 }
 
-// TODO: Remove
-export function changeMode() {
-  return {
-    type: 'CHANGE_MODE'
-  };
-}
-
 export function setMode(mode) {
   return {
     type: 'SET_MODE',

@@ -34,18 +34,7 @@ const renderStatic = (locals, callback) => {
     );
     css = [...new Set(css)]; // make array unique
 
-    // TODO: Don't use HtmlWebpackPlugin to create template. Instead, load a simpler
-    //       predefined static template, and insert assets (from locals.assets) here
-    //       (if possible). If not... what assets are missing?
-    // (I guess no point in looking at plugins for HtmlWebpackPlugin if we are not using that plugin...
-    //  ... like https://github.com/jharris4/html-webpack-include-assets-plugin)
-
-    //const template = 'LANCE'; //require('raw!buildDir/index-html-template.ejs');
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
-    // const html = template
-    //   .replace('<%= title %>', DocumentTitle.rewind())
-    //   .replace('<%= appCss %>', appCss)
-    //   .replace('<%= appHtml %>', `<div>${appHtml}</div>`);
     const pageTitle =  DocumentTitle.rewind();
     const assets = Object.keys(locals.webpackStats.compilation.assets);
     const cssAssets = assets.filter(value => value.match(/\.css$/));

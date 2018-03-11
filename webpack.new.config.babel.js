@@ -37,12 +37,6 @@ import {
 import {getStaticSitePaths, lessonPaths} from './pathlists';
 
 // TODO: Do we need 404.html from htmlwebpackplugin?
-// TODO: Combine (cleaned up) index-static.html into index.html with
-//    if (typeof global.document !== 'undefined') {
-//    surrounding the normal index stuff, and export default the static function
-// TODO: Make sure the favicons are included
-// TODO: Fix errors when generating html for lessons
-
 
 const createConfig = (env = {}) => {
 
