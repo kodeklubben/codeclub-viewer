@@ -68,7 +68,7 @@
     "react-scroll-to-component": "^1.0.1",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
-    "scratchblocks": "^3.1.2"
+    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
