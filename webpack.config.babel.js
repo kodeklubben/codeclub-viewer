@@ -1,6 +1,6 @@
 /**
  *  The webpack config file
- *  -----------------------
+ *  ------------------------------
  *
  *  BOOTSTRAP:
  *  To adjust which parts of bootstrap to include in the build, adjust options in .bootstraprc.
@@ -18,199 +18,337 @@
  *  (i.e. don't use ExtractTextPlugin.extract() in the css and scss loaders.)
  *  Bootstrap has its own extract-methods (activated f.ex. by using bootstrap-loader/extractStyles)
  *
+ *
+ *  StaticSiteGeneratorPlugin:
+ *  Writes index.html files for all courses and all lessons, so that search engines can reach them,
+ *  and as an alternative to server side rendering (static html files is possible since we don't
+ *  have data in a database). After the initial index.html is loaded, the scripts take over and
+ *  make it a single page app.
  */
 
-console.log();
-console.log('#################################');
-console.log(' Running webpack.config.babel.js ');
-console.log('#################################');
-console.log();
+// TODO: Extract some vendors into separate chunk
 
 ////////////////////////////////////////
 // DEFINE GLOBAL VARIABLES FOR ESLINT //
 ////////////////////////////////////////
-
 /* eslint-env node */
 
-
-//////////////////////
-// IMPORT / REQUIRE //
-//////////////////////
-
-import baseConfig, {getValuesAsArray, getLoaders} from './webpack.base.config.babel';
-import {lessonPaths} from './pathlists';
-
-const webpack = require('webpack');
+import webpack from 'webpack';
 import path from 'path';
+
+import MarkdownItAnchor from 'markdown-it-anchor';
+import MarkdownItAttrs from 'markdown-it-attrs';
+import MarkdownItHeaderSections from 'markdown-it-header-sections';
+import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
+import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
+import highlight from './src/highlighting';
+
+import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-
-
-///////////////
-// CONSTANTS //
-///////////////
+import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
+import SitemapPlugin from 'sitemap-webpack-plugin';
+import WebpackShellPlugin from 'webpack-shell-plugin';
 
 import {
-  buildDir, publicPath, publicPathWithoutSlash, isHot, isProduction, buildPDF, filenameBase
+  assets,
+  bootstrapStyles,
+  buildDir,
+  filenameBase,
+  isHot,
+  lessonFiltertags,
+  lessonSrc,
+  publicPath,
+  publicPathWithoutSlash,
 } from './buildconstants';
+import {getStaticSitePaths, lessonPaths} from './pathlists';
 
-console.log('Build constants:');
-console.log('  buildDir:', buildDir);
-console.log('  publicPath:', publicPath);
-console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
-console.log('  isHot:', isHot);
-console.log('  isProduction:', isProduction);
-console.log('  buildPDF:', buildPDF);
-console.log('  filenameBase:', filenameBase);
-console.log();
+const staticSitePaths = getStaticSitePaths();
 
-///////////////
-// FUNCTIONS //
-///////////////
+const createConfig = (env = {}) => {
 
-function getEntry() {
-  const appEntry = './src/index.js';
-  if (isHot) {
-    return {
-      main: [
-        'bootstrap-loader',
-        appEntry
-      ]
-    };
-  } else {
-    console.log('Splitting out vendors to separate chunks (vendor and vendor2):');
+  if (env.verbose) {
+    console.log('Build constants:');
+    console.log('  assets:', assets);
+    console.log('  bootstrapStyles:', bootstrapStyles);
+    console.log('  buildDir:', buildDir);
+    console.log('  filenameBase:', filenameBase);
+    console.log('  isHot:', isHot);
+    console.log('  lessonFiltertags:', lessonFiltertags);
+    console.log('  lessonSrc:', lessonSrc);
+    console.log('  publicPath:', publicPath);
+    console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
+    console.log();
 
-    // Get all packages that exist in package.json's 'dependencies' into config.entry.vendor:
-    const pkg = require('./package.json');
-
-    // Exclude any packages that don't play nice with CommonsChunkPlugin, and add them via vendor2:
-    const excludeFromVendorEntry = ['react-bootstrap'];
-
-    return {
-      // Include all dependencies from package.json:
-      vendor: Object.keys(pkg.dependencies).filter(function(v) {
-        const includeVendor = excludeFromVendorEntry.indexOf(v) < 0;
-        if (!includeVendor) {
-          console.log(`    ---> EXCLUDED from the 'vendor' chunk: ${v}`);
-        }
-        return includeVendor;
-      }),
-      vendor2: [  // Include other vendors not in 'vendor'
-        'bootstrap-loader/extractStyles'
-      ],
-      main: appEntry
-    };
-  }
-}
-
-function getPlugins() {
-  let plugins = [
-    // Create the root index.html needed regardless of whether we make the other static index.htmls.
-    new HtmlWebpackPlugin({
-      title: 'Kodeklubben',
-      template: 'src/index-template.ejs',
-      inject: false,
-      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-    }),
-    // Create template for the static non-root index.html files
-    new HtmlWebpackPlugin({
-      title: '<%= title %>',
-      filename: 'index-html-template.ejs',
-      appcss: '<%= appCss %>',
-      appcontent: '<%= appHtml %>',
-      template: 'src/index-template.ejs',
-      inject: false,
-      chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-    }),
-    new HtmlWebpackPlugin({
-      title: '404 - Page Not Found',
-      filename: '404.html',
-      template: 'src/404-template.ejs',
-      inject: false,
-      redirectUrl: publicPath
-    })
-  ];
-
-  if (isProduction) {
-    plugins = plugins.concat([
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production')
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true,
-        compress: {
-          pure_funcs: 'console.log' // removes these functions from the code
-        }
-      })
-    ]);
+    console.log('  env.NODE_ENV:', env.NODE_ENV);
+    console.log('  env.BUILD_PDF:', env.BUILD_PDF);
+    console.log();
   }
 
-  if (!buildPDF) {
-    // copy FakeLessonPDF.pdf to all the lessons
-    // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
-    const pdfPaths = lessonPaths('.pdf');
-    plugins = plugins.concat([
-      new CopyWebpackPlugin(pdfPaths.map(pdfPath => ({
-        from: 'src/assets/pdfs/FakeLessonPDF.pdf',
-        to: path.join(buildDir, pdfPath),
-      })), {
-        // Must include copyUnmodified:true since we always copy from same file,
-        // otherwise only the first path is copied to.
-        // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
-        copyUnmodified: true,
-      })
-    ]);
-  }
-
-  if (!isHot) {
-    plugins = plugins.concat([
-      new CleanWebpackPlugin(buildDir),
-      new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
-      })
-    ]);
-  }
-
-  return plugins;
-}
-
-
-///////////////////////
-// THE ACTUAL CONFIG //
-///////////////////////
-
-const config = {
-  ...baseConfig,
-  entry: getEntry(),
-  output: {
-    ...baseConfig.output,
-    publicPath: isHot ? publicPathWithoutSlash : publicPath,
-    filename: `${filenameBase}.js`,
-    chunkFilename: `${filenameBase}.js`
-  },
-  devServer: {
-    historyApiFallback: { // needed when using browserHistory (instead of hashHistory)
-      index: publicPath
+  const cssModuleLoader = {
+    loader: 'css-loader',
+    options: {
+      modules: true,
+      importLoaders: 1,
+      localIdentName: '[name]__[local]__[hash:base64:5]',
     },
-    outputPath: buildDir // needed for copy-webpack-plugin when "to" is an abs. path
-  },
-  plugins: [
-    ...baseConfig.plugins,
-    ...getPlugins()
-  ],
+  };
+
+  // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
+  const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
+  const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
+
+  const config = {
+    context: __dirname,
+
+    entry: {
+      main: [
+        isHot ? 'bootstrap-loader' : 'bootstrap-loader/extractStyles',
+        './src/index.js',
+      ],
+    },
+
+    output: {
+      path: buildDir,
+      publicPath: isHot ? publicPathWithoutSlash : publicPath,
+      filename: `${filenameBase}.js`,
+      chunkFilename: `${filenameBase}.js`,
+
+      // static-site-generator must have files compiled to UMD or CommonJS
+      // so they can be required in a Node context:
+      libraryTarget: 'umd',
+    },
+
+    resolve: {
+      extensions: ['.js'],
+      alias: {
+        lessonSrc,
+        lessonFiltertags,
+        assets,
+        bootstrapStyles
+      }
+    },
+
+    resolveLoader: {
+      // Since webpack v2, loaders are resolved relative to file. Use abs path so loaders can be used on md-files
+      // in lessonSrc as well.
+      modules: [path.join(__dirname, 'node_modules')],
+      alias: {
+        // // Markdown-files are parsed only through one of these three aliases, and are
+        // // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
+        // // 1) We don't want to use '!!' in the requires in the modules, and
+        // // 2) Since the lessons create a lot of data, we want to be sure that we only load
+        // //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
+        // //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
+        // onlyFrontmatter: 'combine-loader?' + JSON.stringify({frontmatter: frontmatterLoaders}),
+        // onlyContent: 'combine?' + JSON.stringify({content: contentLoaders}),
+        // frontAndContent: 'combine?' + JSON.stringify({
+        //   frontmatter: frontmatterLoaders,
+        //   content: contentLoaders
+        // }),
+        // bundleLessons: 'bundle-loader?name=[path][name]&context=' + lessonSrc,
+      }
+    },
+
+    module: {
+      rules: [
+        {
+          test: inCurrentRepo('js'),
+          exclude: /node_modules/,
+          use: isHot ? [
+            'react-hot-loader',
+            'babel-loader',
+          ] : [
+            'babel-loader',
+          ],
+        },
+        {
+          test: inCurrentRepo('css'),
+          exclude: /node_modules/,
+          use: [
+            'isomorphic-style-loader',
+            cssModuleLoader,
+            'postcss-loader'
+          ],
+        },
+        {
+          test: inCurrentRepo('scss'),
+          exclude: /node_modules/,
+          use: [
+            'isomorphic-style-loader',
+            cssModuleLoader,
+            'postcss-loader',
+            'sass-loader'
+          ],
+        },
+        {
+          test: inCurrentRepo('(png|jpg|jpeg|gif)'),
+          loader: 'file-loader',
+          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
+        },
+        {
+          test: inCurrentRepo('woff2?(\\?v=[0-9]\\.[0-9]\\.[0-9])?'),
+          loader: 'file-loader',
+          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
+        },
+        {
+          test: inCurrentRepo('(ttf|eot|svg)(\\?[\\s\\S]+)?'),
+          loader: 'file-loader',
+          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
+        },
+        {
+          test: /\.txt$/,
+          loader: 'raw-loader',
+        },
+        {
+          test: /\.ejs$/,
+          loader: 'ejs-compiled-loader',
+        },
+        {
+          test: /\.md$/,
+          loader: 'combine-loader',
+          options: {
+            //raw: 'raw-loader',
+            frontmatter: [
+              'json-loader',
+              'front-matter-loader?onlyAttributes'
+            ],
+            content: [
+              'html-loader?attrs=false',
+              'markdown-it-loader',
+              'front-matter-loader?onlyBody',
+            ],
+          },
+        },
+        {
+          test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
+          exclude: [/\.md$/, new RegExp(regexpCompPath('/playlists/') + '.*\\.txt$')],
+          loader: 'file-loader',
+          options: {name: '[path][name].[hash:6].[ext]'},
+        },
+      ],
+    },
+
+    plugins: [
+      new webpack.LoaderOptionsPlugin({
+        options: {
+          context: __dirname,   // needed for bootstrap-loader
+          output: {
+            path: buildDir,     // needed for bootstrap-loader
+          },
+          'markdown-it': {
+            html: true,  // allow html in source
+            linkify: true,  // parse URL-like text to links
+            langPrefix: '',  // no prefix in class for code blocks
+            use: [
+              MarkdownItAttrs,
+              MarkdownItHeaderSections,
+              MarkdownItImplicitFigures,
+              MarkdownItAnchor,
+              [MarkdownItTaskCheckbox, {disabled: false}],
+            ],
+            highlight,
+          },
+        }
+      }),
+
+      new CopyWebpackPlugin([{
+        context: lessonSrc,
+        from: lessonSrc + '/**/*',
+        ignore: '*.md',
+        to: buildDir + '/[path][name].[ext]'
+      }]),
+
+      new CopyWebpackPlugin([{
+        context: 'src/assets/favicons/generated',
+        from: '*',
+        to: buildDir + '/favicons/'
+      }]),
+
+      new CaseSensitivePathsPlugin(),
+
+      new webpack.DefinePlugin({
+        'process.env': {
+          'PUBLICPATH': JSON.stringify(publicPath),
+          'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
+        }
+      }),
+
+      // TODO: Do we need 404.html from htmlwebpackplugin?
+      new HtmlWebpackPlugin({
+        title: '404 - Page Not Found',
+        filename: '404.html',
+        template: 'src/404-template.ejs',
+        inject: false,
+        redirectUrl: publicPath
+      }),
+
+      ...(env.NODE_ENV === 'production' ? [
+        new webpack.DefinePlugin({
+          'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+          sourceMap: true,
+          compress: {
+            warnings: true,
+            pure_funcs: 'console.log', // removes these functions from the code
+          }
+        }),
+      ] : []),
+
+      ...(env.BUILD_PDF ? [
+        new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']})
+      ] : [
+        // copy FakeLessonPDF.pdf to all the lessons
+        // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
+        new CopyWebpackPlugin(lessonPaths('.pdf', env.verbose).map(pdfPath => ({
+          from: 'src/assets/pdfs/FakeLessonPDF.pdf',
+          to: path.join(buildDir, pdfPath),
+        })), {
+          // Must include copyUnmodified:true since we always copy from same file,
+          // otherwise only the first path is copied to.
+          // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+          copyUnmodified: true,
+        })
+      ]),
+
+      ...(isHot ? [
+        // Create the root index.html
+        new HtmlWebpackPlugin({
+          title: 'Kodeklubben',
+          template: 'src/index-template.ejs',
+          inject: false,
+          chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+        }),
+      ] : [
+        new CleanWebpackPlugin(buildDir),
+        new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
+        // }),
+        new StaticSiteGeneratorPlugin({
+          entry: 'main',
+          paths: staticSitePaths,
+          locals: {},
+          globals: {
+            window: {}
+          }
+        }),
+        new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
+      ]),
+
+    ],
+
+    devServer: {
+      historyApiFallback: { // needed when using browserHistory (instead of hashHistory)
+        index: publicPath
+      },
+    },
+  };
+
+  return config;
 };
 
-////////////////////
-// Modify loaders //
-////////////////////
-
-if (isHot) {
-  const loaders = getLoaders();
-  loaders.js.loader = 'react-hot-loader!' + loaders.js.loader;
-  config.module.loaders = getValuesAsArray(loaders);
-}
-
-export default config;
+export default createConfig;

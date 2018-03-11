@@ -10,9 +10,7 @@ if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
 if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 
 const buildDir = path.join(__dirname, 'dist', subDir);
-const isProduction = process.env.NODE_ENV === 'production';
 const isHot = process.argv.indexOf('--hot') >= 0;
-const buildPDF = process.env.BUILD_PDF === 'true';
 
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
 const publicPathWithoutSlash = '/' + subDir;
@@ -26,9 +24,7 @@ const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
 
 module.exports = {
   buildDir,
-  isProduction,
   isHot,
-  buildPDF,
   publicPathWithoutSlash,
   publicPath,
   lessonSrc,
