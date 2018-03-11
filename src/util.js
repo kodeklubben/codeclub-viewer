@@ -74,7 +74,7 @@ export function getInitialFilter(initialLanguage) {
 }
 
 let cachedLessons = null;
-export function getLessons() {
+export function getLessonData() {
   if (cachedLessons == null) {
     const paths = lessonContext.keys();
     const availableLanguages = getAvailableLanguages();
@@ -330,7 +330,8 @@ export const getAvailableLanguages = () => getFilterkeys().language;
 * @param {String} lessonPath
 * @returns {String or undefined}
 */
-export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
+export const getReadmepathFromLessonpath = (lessonPath) => {
+  const lessons = getLessonData();
   for(let key of Object.keys(lessons)){
     if(lessons[key].readmePath === lessonPath){
       return lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;

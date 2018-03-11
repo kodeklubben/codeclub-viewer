@@ -8,10 +8,9 @@ import routes from './routes';
 import WithStylesContext from './WithStylesContext';
 import DocumentTitle from 'react-document-title';
 import store from './store';
+const template = require('./html-template.ejs');
 
-const template = require('ejs-compiled-loader!./index-template.ejs');
-
-export default (locals, callback) => {
+const renderStatic = (locals, callback) => {
   const history = createMemoryHistory();
   const pathWithoutHtml = locals.path.replace(/\.html$/, '');
   const location = history.createLocation(pathWithoutHtml);
@@ -56,3 +55,5 @@ export default (locals, callback) => {
     callback(null, html);
   });
 };
+
+export default renderStatic;

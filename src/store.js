@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getInitialFilter, getLessons, createCheckboxesKey} from './util';
+import {getInitialFilter, getLessonData, createCheckboxesKey} from './util';
 import {setFilter, setMode, setLanguage, setWelcomeBox,
   setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
 import reducer from './reducer';
@@ -39,7 +39,7 @@ for (let groupKey of Object.keys(filter)) {
   store.dispatch(collapseFilterGroup(groupKey, true));
 }
 
-for (let path of Object.keys(getLessons())) {
+for (let path of Object.keys(getLessonData())) {
   const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), {});
   if(Object.keys(checkboxes).length !== 0) {
     store.dispatch(setCheckboxes(path, checkboxes));

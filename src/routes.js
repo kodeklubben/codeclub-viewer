@@ -10,10 +10,10 @@ import PageNotFound from './pages/PageNotFound';
 import Lesson from './components/Lesson/Lesson';
 import PlaylistPage from './pages/PlaylistPage';
 
-import store from './store';
 import {courseContext, readmeContext} from './contexts';
+import {getLessonData} from './util';
 
-const lessons = store.getState().lessons;
+const lessons = getLessonData();
 const courses = courseContext.keys();
 const readmePaths = readmeContext.keys();
 

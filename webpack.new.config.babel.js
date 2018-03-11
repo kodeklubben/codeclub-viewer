@@ -14,7 +14,7 @@ import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
 import highlight from './src/highlighting';
 
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
-import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+//import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
@@ -35,10 +35,6 @@ import {
   publicPathWithoutSlash,
 } from './buildconstants';
 import {getStaticSitePaths, lessonPaths} from './pathlists';
-
-const scope = {window: {}};
-const locals = {};
-const staticSitePaths = getStaticSitePaths();
 
 // TODO: Do we need 404.html from htmlwebpackplugin?
 // TODO: Combine (cleaned up) index-static.html into index.html with
@@ -84,10 +80,9 @@ const createConfig = (env = {}) => {
 
     entry: {
       main: [
-        './src/index.js',
         isHot ? 'bootstrap-loader' : 'bootstrap-loader/extractStyles',
+        './src/index.js',
       ],
-      staticbundle: './src/index-static.js',
     },
 
     output: {
@@ -183,6 +178,10 @@ const createConfig = (env = {}) => {
           loader: 'raw-loader',
         },
         {
+          test: /\.ejs$/,
+          loader: 'ejs-compiled-loader',
+        },
+        {
           test: /\.md$/,
           loader: 'combine-loader',
           options: {
@@ -238,6 +237,12 @@ const createConfig = (env = {}) => {
         to: buildDir + '/[path][name].[ext]'
       }]),
 
+      new CopyWebpackPlugin([{
+        context: 'src/assets/favicons/generated',
+        from: '*',
+        to: buildDir + '/favicons/'
+      }]),
+
       new CaseSensitivePathsPlugin(),
 
       new webpack.DefinePlugin({
@@ -247,17 +252,9 @@ const createConfig = (env = {}) => {
         }
       }),
 
-      new FaviconsWebpackPlugin({
-        logo: './src/assets/graphics/favicon.png',
-        prefix: 'CCV-icons-[hash:6]/'
-      }),
-
-      // // Create the root index.html needed regardless of whether we make the other static index.htmls.
-      // new HtmlWebpackPlugin({
-      //   title: 'Kodeklubben',
-      //   template: 'src/index-template.ejs',
-      //   inject: false,
-      //   chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+      // new FaviconsWebpackPlugin({
+      //   logo: './src/assets/graphics/favicon.png',
+      //   prefix: 'CCV-icons-[hash:6]/',
       // }),
 
       // Create template for the static non-root index.html files
@@ -278,8 +275,6 @@ const createConfig = (env = {}) => {
         inject: false,
         redirectUrl: publicPath
       }),
-
-      new StaticSiteGeneratorPlugin('staticbundle', staticSitePaths, locals, scope),
 
       ...(isProduction ? [
         new webpack.DefinePlugin({
@@ -308,13 +303,29 @@ const createConfig = (env = {}) => {
         })
       ] : []),
 
-      ...(!isHot ? [
+      ...(isHot ? [
+        // Create the root index.html
+        new HtmlWebpackPlugin({
+          title: 'Kodeklubben',
+          template: 'src/index-template.ejs',
+          inject: false,
+          chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
+        }),
+      ] : [
         new CleanWebpackPlugin(buildDir),
         new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
         // new webpack.optimize.CommonsChunkPlugin({
         //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
         // }),
-      ] : []),
+        new StaticSiteGeneratorPlugin({
+          entry: 'main',
+          paths: getStaticSitePaths(),
+          locals: {},
+          globals: {
+            window: {}
+          }
+        }),
+      ]),
 
     ],
 

@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {getLessons} from './lesson';
+import {getCourseLessons} from './lesson';
 import {capitalize} from '../util';
 import {playlistContext} from '../contexts';
 
@@ -14,7 +14,7 @@ const getPlaylistPaths = (state, courseName = '') => {
 export const getPlaylists = createSelector(
   getPlaylistPaths,
   (playlistPaths) => {
-    const lessons = getLessons();
+    const lessons = getCourseLessons();
     return playlistPaths.reduce((res, path) => {
 
       // Between './' and second '/'

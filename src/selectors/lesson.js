@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {tagsMatchFilter, getLessons} from '../util';
+import {tagsMatchFilter, getLessonData} from '../util';
 
 // TODO:
 // * Only getLessonsByLevel is used (double check). Perhaps simplify?
@@ -12,7 +12,7 @@ import {tagsMatchFilter, getLessons} from '../util';
 //   in this file to a different file? (util.js, or perhaps a separate file)
 
 export const getCourseLessons = (state, courseName = '') => {
-  const lessons = getLessons();
+  const lessons = getLessonData();
   return Object.keys(lessons).reduce((res, lessonPath) => {
     return lessonPath.startsWith('./' + courseName) ? {...res, [lessonPath]: lessons[lessonPath]} : res;
   }, {});
