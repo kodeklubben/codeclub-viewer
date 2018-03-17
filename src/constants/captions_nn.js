@@ -116,8 +116,8 @@ export default {
     contribute: 'Bidra?'
   },
   404: {
-    header: 'Noko gjekk gale',
-    textline1: 'Me finn ikkje sida du leitar etter.',
+    header: 'Beklagar',
+    textline: 'Me finn ikkje sida du leitar etter.',
     tofrontpage: 'Til framsida'
   }
 };

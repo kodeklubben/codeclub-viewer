@@ -115,8 +115,8 @@ export default {
     contribute: 'Bidra?'
   },
   404: {
-    header: 'Noe gikk galt',
-    textline1: 'Vi finner ikke siden du leter etter.',
+    header: 'Beklager',
+    textline: 'Vi finner ikke siden du leter etter.',
     tofrontpage: 'Til forsiden'
   }
 };
