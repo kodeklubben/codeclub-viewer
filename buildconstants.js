@@ -9,17 +9,27 @@ let subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').tri
 if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
 if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 
-module.exports = {
-  buildDir: path.join(__dirname, 'dist', subDir),
-  isProduction: process.env.NODE_ENV === 'production',
-  isHot: process.argv.indexOf('--hot') >= 0,
-  buildPDF: process.env.BUILD_PDF === 'true',
+const buildDir = path.join(__dirname, 'dist', subDir);
+const isHot = process.argv.indexOf('--hot') >= 0;
 
-  // Webpack needs final slash in publicPath to rewrite relative paths correctly
-  publicPathWithoutSlash: '/' + subDir,
-  publicPath: '/' + subDir + (subDir ? '/' : ''),
-  lessonSrc: path.resolve(__dirname, '../oppgaver/src'),
-  lessonFiltertags: path.resolve(__dirname, '../oppgaver/filtertags'),
-  assets: path.resolve(__dirname, './src/assets'),
-  bootstrapStyles: path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap'),
+// Webpack needs final slash in publicPath to rewrite relative paths correctly
+const publicPathWithoutSlash = '/' + subDir;
+const publicPath = '/' + subDir + (subDir ? '/' : '');
+const lessonSrc = path.resolve(__dirname, '../oppgaver/src');
+const lessonFiltertags = path.resolve(__dirname, '../oppgaver/filtertags');
+const assets = path.resolve(__dirname, './src/assets');
+const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap');
+
+const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
+
+module.exports = {
+  buildDir,
+  isHot,
+  publicPathWithoutSlash,
+  publicPath,
+  lessonSrc,
+  lessonFiltertags,
+  assets,
+  bootstrapStyles,
+  filenameBase,
 };

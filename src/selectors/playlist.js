@@ -1,19 +1,20 @@
 import {createSelector} from 'reselect';
-import {getLessons} from './lesson';
+import {getCourseLessons} from './lesson';
 import {capitalize} from '../util';
+import {playlistContext} from '../contexts';
 
 const getPlaylistPaths = (state, courseName = '') => {
-  return state.context.playlistContext.keys().filter(key => key.startsWith('./' + courseName));
+  return playlistContext.keys().filter(key => key.startsWith('./' + courseName));
 };
-const getPlaylistContext = (state) => state.context.playlistContext;
 
 /**
  * Creates an object containing playlists
  * Input props: courseName (string, optional)
  */
 export const getPlaylists = createSelector(
-  [getLessons, getPlaylistContext, getPlaylistPaths],
-  (lessons, playlistContext, playlistPaths) => {
+  getPlaylistPaths,
+  (playlistPaths) => {
+    const lessons = getCourseLessons();
     return playlistPaths.reduce((res, path) => {
 
       // Between './' and second '/'

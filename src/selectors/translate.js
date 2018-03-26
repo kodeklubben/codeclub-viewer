@@ -39,7 +39,7 @@ export const getTranslator = (state) => {
 };
 
 export const getTranslateGroup = (state) => {
-  const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
+  const captions = require('lessonFiltertags/translation_' + state.language + '.md').frontmatter;
   return (groupKey) => {
     const translatedGroup = (captions[groupKey] || {}).NAME;
     if (!translatedGroup) {
@@ -51,7 +51,7 @@ export const getTranslateGroup = (state) => {
 };
 
 export const getTranslateTag = (state) => {
-  const captions = require('onlyFrontmatter!lessonFiltertags/translation_' + state.language + '.md').frontmatter;
+  const captions = require('lessonFiltertags/translation_' + state.language + '.md').frontmatter;
   return (groupKey, tagKey) => {
     const translatedTag = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).NAME;
     if (!translatedTag) {

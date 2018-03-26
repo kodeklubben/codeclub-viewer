@@ -1,9 +1,12 @@
+import {readmeContext} from '../contexts';
+import {getLessonData} from '../util';
+
 const getLessonFrontmatter = (state, {course, lesson, file}) => {
   if (!file) { return {}; }
-  const {lessons, context} = state;
+  const lessons = getLessonData();
   const lessonPath = `./${course}/${lesson}/${file}.md`;
   const isReadme = /README(_[a-z]{2})?/.test(file);
-  return isReadme ? context.readmeContext(lessonPath).frontmatter : (lessons[lessonPath] || {});
+  return isReadme ? readmeContext(lessonPath).frontmatter : (lessons[lessonPath] || {});
 };
 
 export const getTitle = (state, params) => getLessonFrontmatter(state, params).title || '';

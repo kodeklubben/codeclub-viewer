@@ -7,6 +7,7 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './MainLanguageButton.scss';
 import {getPathForMainLanguage} from '../../util';
 import {getTranslator, getTranslateTag} from '../../selectors/translate';
+import {readmeContext} from '../../contexts';
 
 const MainLanguageButton = ({path, t, tt, isReadme, language}) => {
   const buttonPath = getPathForMainLanguage(path, language, isReadme);
@@ -39,7 +40,7 @@ const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
   tt: getTranslateTag(state),
   language: state.language,
-  isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
+  isReadme: readmeContext.keys().includes('./' + path + '.md'),
 });
 
 export default connect(
