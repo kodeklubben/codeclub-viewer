@@ -51,6 +51,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import OfflinePlugin from 'offline-plugin';
 
 import {
   assets,
@@ -338,6 +339,8 @@ const createConfig = (env = {}) => {
         }),
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
       ]),
+
+      new OfflinePlugin(),
 
     ],
 
