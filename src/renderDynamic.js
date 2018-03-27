@@ -12,6 +12,7 @@ import routes from './routes';
 import WithStylesContext from './WithStylesContext';
 import store, {updateStoreFromLocalStorage} from './store';
 
+
 const renderDynamic = () => {
   const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
   const historyOptions = publicPath === '/' ? {} : {
