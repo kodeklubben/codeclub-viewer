@@ -21,71 +21,54 @@ const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
 const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));
 const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, ''));
 
-const validPathTest = (lesson, path) => {
-  if(lesson){
-    return (lessonArray.includes(path));
-  }else{
-    return (courseArray.includes(path));
+const pageNotFound = (replace, location) => {
+  if (typeof document !== 'undefined') { // Only replace in the browser
+    const path = (location.basename || '') + location.pathname; // basename is defined in historyOptions, e.g. '/beta'
+    replace({pathname: '/PageNotFound', state: path});
+  } else {
+    console.error('ERROR: The path', location.pathname, 'is not valid!');
   }
 };
 
-/**
- * Checks if the current path is valid or if it should be treated as a 404
- * When a new Route is added, functionallity for handling of the path should be added here.
- * Some of the handling may be put in the validPathTest function.
- */
-const pathTest = (nextState, replace) => {
-  const params = nextState.params;
-  let path = nextState.location.pathname;
-  if(path.indexOf('/') !== 0){
-    path = '/' + path;
+const checkCourse = ({location}, replace) => {
+  if (!courseArray.includes(location.pathname)) {
+    pageNotFound(replace, location);
   }
-  if(path.endsWith('/')){
-    path = path.slice(0, -1);
-  }
-  const isReadme = readmeArray.includes(path);
-  const pathCorrect = validPathTest(params.lesson, path);
+};
 
-  if(!pathCorrect && !isReadme){
-    if (typeof document !== 'undefined') {
-      // Only replace in the browser
-      replace({pathname: '/PageNotFound', state: path});
-    } else {
-      console.error('ERROR: The path', path, 'is not valid!');
-    }
+const checkLesson = ({location}, replace) => {
+  if (!lessonArray.includes(location.pathname) && !readmeArray.includes(location.pathname)) {
+    pageNotFound(replace, location);
   }
 };
 
 /**
  * Replaces the current URL (/PageNotFound) with the the URL either typed in by the user
  * or the URL given by a broken link.
- * History is used directly because react-router does not provide the necesarry functionallity
+ * History is used directly because react-router does not provide the necesary functionallity
  * to replace the URL without a page refresh.
  */
-const saveURL = (nextState, replace) => {
-  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
-  const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
-  if(typeof history !== 'undefined' && history.replaceState){
-    history.replaceState(null, null, path);
+const saveURL = (nextState) => {
+  let missingPage;
+  if(typeof sessionStorage !== 'undefined' && 'missingPage' in sessionStorage) {
+    // Get missing page saved in 404.html
+    missingPage = sessionStorage.missingPage;
+    delete sessionStorage.missingPage;
   }
+  if (!missingPage && nextState.location.state) {
+    // Get missing page from function 'pageNotFound'
+    missingPage = nextState.location.state;
+  }
+  if (missingPage && typeof history !== 'undefined' && history.replaceState) {
+    history.replaceState(null, null, missingPage);
+  }
+
 };
 
 /**
- * Checks if there has been passed down a redirect from 404.html.
- * If so, redirects to /PageNotFound with a state that equals the URL that caused a 404.
- * Happens when a server side 404 has occured.
+ * Rewrites /index* to / and removes .html from the end of any path.
+ * Keeps query parameters unchanged (e.g. ?a=1&b=2, found in location.search)
  */
-const serverSideRedirectCheck = (nextState, replace) => {
-  if(typeof sessionStorage !== 'undefined'){
-    let redirect = sessionStorage.redirect;
-    delete sessionStorage.redirect;
-
-    if (redirect && redirect != nextState.location.pathname) {
-      replace({pathname:'/PageNotFound', state: redirect});
-    }
-  }
-};
-
 const rewritePath = (nextState, replace) => {
   const nextpath = nextState.location.pathname;
   if (nextpath.startsWith('/index')) {
@@ -122,10 +105,10 @@ const appOnChange = (prevState, nextState, replace) => {
  */
 const routes =
   <Route path="/" component={App} onEnter={appOnEnter} onChange={appOnChange}>
-    <IndexRoute component={FrontPage} onEnter={serverSideRedirectCheck}/>
+    <IndexRoute component={FrontPage}/>
     <Route path="/PageNotFound" component={PageNotFound} onEnter={saveURL}/>
-    <Route path="/:course" component={PlaylistPage} onEnter={pathTest}/>
-    <Route path="/:course/:lesson/:file" component={Lesson} onEnter={pathTest}/>
+    <Route path="/:course" component={PlaylistPage} onEnter={checkCourse}/>
+    <Route path="/:course/:lesson/:file" component={Lesson} onEnter={checkLesson}/>
     <Route path="*" component={PageNotFound}/>
   </Route>;
 

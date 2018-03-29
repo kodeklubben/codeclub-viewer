@@ -270,19 +270,15 @@ const createConfig = (env = {}) => {
       new CaseSensitivePathsPlugin(),
 
       new webpack.DefinePlugin({
-        'process.env': {
-          'PUBLICPATH': JSON.stringify(publicPath),
-          'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
-        }
+        'process.env.PUBLICPATH': JSON.stringify(publicPath),
+        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
       }),
 
-      // TODO: Do we need 404.html from htmlwebpackplugin?
       new HtmlWebpackPlugin({
-        title: '404 - Page Not Found',
         filename: '404.html',
         template: 'src/404-template.ejs',
         inject: false,
-        redirectUrl: publicPath
+        redirectUrl: publicPath + 'PageNotFound.html'
       }),
 
       ...(env.NODE_ENV === 'production' ? [
