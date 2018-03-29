@@ -21,7 +21,6 @@ const coursePaths = (ending) => {
  * @param ending Optional ending to be added at the end of the paths
  * @returns array of strings The paths without a leading /
  */
-
 const lessonPaths = (ending, verbose) => {
   if (typeof ending === 'undefined') { ending = ''; }
   if (typeof verbose === 'undefined') { verbose = false; }
