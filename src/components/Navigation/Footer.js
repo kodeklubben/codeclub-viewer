@@ -10,8 +10,6 @@ import styles from './Footer.scss';
 const Footer = ({t, isStudentMode}) => {
   const url = {
     oppgaver: 'https://github.com/kodeklubben/oppgaver/',
-    kidsakoder: 'http://kidsakoder.no/',
-    archive: 'https://github.com/kodeklubben/kodeklubben.github.io/archive/master.zip',
     sparebank: 'https://www.sparebank1.no',
     ibok: 'https://ibok.no/',
     excited: 'http://www.ntnu.edu/web/excited',
@@ -20,55 +18,46 @@ const Footer = ({t, isStudentMode}) => {
     teknograd: 'https://www.teknograd.no/'
   };
 
+  const sponsors = (
+    <Row className={styles.sponsors}>
+      <a href={url.sparebank} target="_blank">
+        <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}/>
+      </a>
+      <a href={url.ibok} target="_blank">
+        <img className={styles.img} src={require('../../assets/graphics/ibok.jpg')}/>
+      </a>
+      <a href={url.teknograd} target="_blank">
+        <img className={styles.img} src={require('../../assets/graphics/teknograd.png')}/>
+      </a>
+      <a href={url.tekna} target="_blank">
+        <img className={styles.img} src={require('../../assets/graphics/tekna.jpg')} />
+      </a>
+      <a href={url.ntnu_idi} target="_blank">
+        <img className={styles.img} src={require('../../assets/graphics/ntnu_idi.png')}/>
+      </a>
+      <a href={url.excited} target="_blank">
+        <img className={styles.img} src={require('../../assets/graphics/excITEd.png')}/>
+      </a>
+      <a href={url.uio_ifi} target="_blank">
+        <img className={styles.img} src={require('../../assets/graphics/uio_ifi.png')}/>
+      </a>
+    </Row>);
+
   return (
-    <div>
-      <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-
-        {isStudentMode ? null :
-          <div>
-            <Row className={styles.center}>
-              <p>{t('footer.contribute')}</p>
-            </Row>
-            <Row className={styles.center}>
-              <a href={url.oppgaver}>
-                <img className={styles.svg} src={require('../../assets/graphics/github-teacher.svg')}/>
-              </a>
-            </Row>
-            <Row>
-              <div className={styles.divider}/>
-            </Row>
-          </div>}
-
-        <Row className={styles.center}>
-          <a className={styles.inline} href={url.kidsakoder}>kidsakoder.no</a>
-          <a className={styles.inline} href={url.archive}>{t('footer.downloadZIP')}</a>
-        </Row>
-        <Row className={styles.center}>
-          <a href={url.sparebank} target="_blank">
-            <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}/>
-          </a>
-          <a href={url.ibok} target="_blank">
-            <img className={styles.img} src={require('../../assets/graphics/ibok.jpg')}/>
-          </a>
-          <a href={url.teknograd} target="_blank">
-            <img className={styles.img} src={require('../../assets/graphics/teknograd.png')}/>
-          </a>
-          <a href={url.tekna} target="_blank">
-            <img className={styles.img} src={require('../../assets/graphics/tekna.jpg')} />
-          </a>
-          <a href={url.ntnu_idi} target="_blank">
-            <img className={styles.img} src={require('../../assets/graphics/ntnu_idi.png')}/>
-          </a>
-          <a href={url.excited} target="_blank">
-            <img className={styles.img} src={require('../../assets/graphics/excITEd.png')}/>
-          </a>
-          <a href={url.uio_ifi} target="_blank">
-            <img className={styles.img} src={require('../../assets/graphics/uio_ifi.png')}/>
-          </a>
-        </Row>
-      </Grid>
-    </div>
-  );
+    <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+      <Row className={styles.githubIcon}>
+        <a href={url.oppgaver} target="_blank">
+          <img className={styles.svg} src={require('../../assets/graphics/github.png')}/>
+        </a>
+      </Row>
+      <Row className={styles.contribute}>
+        <p><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
+      </Row>
+      <Row>
+        <div className={styles.divider}/>
+      </Row>
+      {sponsors}
+    </Grid>);
 };
 
 Footer.propTypes = {
