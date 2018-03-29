@@ -17,23 +17,17 @@
 .containerStudent {
   composes: container;
   background-color: $color-green-light;
-  color: $color-green-dark;
   a {
-    color: $color-green-dark;
+    color: black;
   }
 }
 
 .containerTeacher {
   composes: container;
   background-color: $color-blue-light;
-  color: $color-blue-dark;
   a {
-    color: $color-blue-dark;
+    color: black;
   }
-}
-
-.center {
-  text-align: center;
 }
 
 .inline {
@@ -64,8 +58,18 @@
   width: 50%;
 }
 
-.svg:hover,
 .img:hover {
   transform: scale(1.1);
   box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.5);
+}
+
+.github {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.sponsors {
+  text-align: center;
+  margin-top: 20px;
 }
