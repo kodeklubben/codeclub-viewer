@@ -8,6 +8,7 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 import {getTitle, getLevel} from '../../selectors/frontmatter';
+import {iconContext} from '../../contexts';
 
 const BreadCrumb = ({params, title, level, courseIcon}) => {
   const {course, lesson, file} = params;
@@ -50,7 +51,7 @@ BreadCrumb.propTypes = {
 const mapStateToProps = (state, {params}) => ({
   title: getTitle(state, params),
   level: getLevel(state, params),
-  courseIcon: params.course ? state.context.iconContext('./' + params.course + '/logo-black.png') : null
+  courseIcon: params.course ? iconContext('./' + params.course + '/logo-black.png') : null
 });
 
 export default connect(

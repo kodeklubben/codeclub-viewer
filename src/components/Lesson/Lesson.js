@@ -25,6 +25,7 @@ import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
 import PdfButton from './PdfButton';
 import MainLanguageButton from './MainLanguageButton';
+import {readmeContext} from '../../contexts';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -73,10 +74,11 @@ const Lesson = React.createClass({
   },
   render() {
     const {
-      path, params, lesson,
+      path, params,
       checkboxes, t, translateTag, translateGroup, checkedCheckboxes, totalCheckboxes,
       title, level, tags, authorName, translatorName, isReadme, isStudentMode
     } = this.props;
+    const lesson = require('lessonSrc/' + path + '.md');
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
@@ -118,9 +120,9 @@ Lesson.propTypes = {
     file: PropTypes.string.isRequired,
     course: PropTypes.string.isRequired,
   }).isRequired,
-  lesson: PropTypes.shape({
-    content: PropTypes.string
-  }),
+  // lesson: PropTypes.shape({
+  //   content: PropTypes.string
+  // }),
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
@@ -142,21 +144,26 @@ Lesson.propTypes = {
   setLastLesson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, {path, params}) => ({
-  t: getTranslator(state),
-  translateTag: getTranslateTag(state),
-  translateGroup: getTranslateGroup(state),
-  checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
-  title: getTitle(state, params),
-  level: getLevel(state, params),
-  tags: getTags(state, params),
-  authorName: getAuthorName(state, params),
-  translatorName: getTranslatorName(state, params),
-  isReadme: state.context.readmeContext.keys().includes('./' + path + '.md'),
-  isStudentMode: state.isStudentMode,
-  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
-  totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
-});
+const mapStateToProps = (state, {params}) => {
+  const path = `${params.course}/${params.lesson}/${params.file}`;
+  // XXX: Is it better to get lesson here?
+  return {
+    t: getTranslator(state),
+    translateTag: getTranslateTag(state),
+    translateGroup: getTranslateGroup(state),
+    checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
+    title: getTitle(state, params),
+    level: getLevel(state, params),
+    tags: getTags(state, params),
+    authorName: getAuthorName(state, params),
+    translatorName: getTranslatorName(state, params),
+    isReadme: readmeContext.keys().includes('./' + path + '.md'),
+    isStudentMode: state.isStudentMode,
+    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
+    totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
+    path,
+  };
+};
 
 const mapDispatchToProps = {
   setCheckbox,

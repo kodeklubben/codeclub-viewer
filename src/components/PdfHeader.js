@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../util';
 import styles from './PdfHeader.scss';
+import {iconContext} from '../contexts';
 
 const PdfHeader = ({params, courseIcon}) => {
   const {course} = params;
@@ -25,7 +26,7 @@ PdfHeader.PropTypes = {
 };
 
 const mapStateToProps = (state, {params}) => ({
-  courseIcon: state.context.iconContext('./' + params.course + '/logo-black.png'),
+  courseIcon: iconContext('./' + params.course + '/logo-black.png'),
 });
 
 export default connect(

@@ -7,17 +7,19 @@ const glob = require('glob');
 const lessonSrcPath = lessonSrc.replace(/\\/g, '/');
 
 
-module.exports.coursePaths = (ending) => {
+const coursePaths = (ending) => {
   if (typeof ending === 'undefined') { ending = ''; }
   return glob.sync(path.join(lessonSrcPath, '*/index.md'), {dot: true})
     .map(p => p.replace(new RegExp(`^${lessonSrcPath}/(.*)/index\\.md$`), '$1' + ending));
 };
 
-module.exports.lessonPaths = (ending, verbose) => {
+const lessonPaths = (ending, verbose) => {
   if (typeof ending === 'undefined') { ending = ''; }
   if (typeof verbose === 'undefined') { verbose = false; }
   const availableLanguages = yamlFront.loadFront(path.join(lessonFiltertags, 'keys.md')).language;
-  console.log('Available languages:', availableLanguages);
+  if (verbose) {
+    console.log('Available languages:', availableLanguages);
+  }
   return glob.sync(path.join(lessonSrcPath, '*/*/*.md'))
     .filter(p => !p.endsWith('index.md'))
     .filter(p => {
@@ -52,3 +54,28 @@ module.exports.lessonPaths = (ending, verbose) => {
     })
     .map(p => p.replace(new RegExp(`^(${lessonSrcPath}/)(.*)(\\.md)$`), '$2' + ending));
 };
+
+const getStaticSitePaths = (verbose) => {
+  if (typeof verbose === 'undefined') { verbose = false; }
+
+  // The '/' will render to '/index.html'
+  const paths = [
+    '/',  // '/' is the same as '/index.html'
+    'PageNotFound.html',
+  ];
+  const courses = coursePaths('.html');
+  const lessons = lessonPaths('.html');
+
+  const staticPaths = paths.concat(courses).concat(lessons);
+
+  if (verbose) {
+    console.log('Static paths:');
+    console.log(staticPaths);
+  }
+
+  return staticPaths;
+};
+
+module.exports.coursePaths = coursePaths;
+module.exports.lessonPaths = lessonPaths;
+module.exports.getStaticSitePaths = getStaticSitePaths;

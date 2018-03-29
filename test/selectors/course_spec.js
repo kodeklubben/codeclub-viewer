@@ -56,13 +56,9 @@ describe('course selector', () => {
           title: 'Nettside'
         }
       };
-      const iconContext = function (input) {
-        return input;
-      };
 
       deepFreeze(lessons);
-      deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(lessons, iconContext)).to.eql({
+      expect(getFilteredCourses.resultFunc(lessons)).to.eql({
         python: {
           iconPath: './python/logo-black.png',
           lessonCount: 1,
@@ -85,26 +81,13 @@ describe('course selector', () => {
     });
 
     it('should create an empty object if lessons is undefined', () => {
-
-      // TODO: Create testdata contexts
-      // Create fake context
-      const iconContext = function (input) {
-        return input;
-      };
-
-      deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(undefined, iconContext)).to.eql({});
+      expect(getFilteredCourses.resultFunc(undefined)).to.eql({});
     });
 
     it('should create an empty object if lessons is an empty array', () => {
       const lessons = {};
-      const iconContext = function (input) {
-        return input;
-      };
-
       deepFreeze(lessons);
-      deepFreeze(iconContext);
-      expect(getFilteredCourses.resultFunc(lessons, iconContext)).to.eql({});
+      expect(getFilteredCourses.resultFunc(lessons)).to.eql({});
     });
   });
   

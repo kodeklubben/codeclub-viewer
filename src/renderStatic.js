@@ -4,15 +4,19 @@ import {Provider} from 'react-redux';
 import createMemoryHistory from 'react-router/lib/createMemoryHistory';
 import RouterContext from 'react-router/lib/RouterContext';
 import match from 'react-router/lib/match';
-import routes from './routes-static';
+import routes from './routes';
 import WithStylesContext from './WithStylesContext';
 import DocumentTitle from 'react-document-title';
 import store from './store';
+const template = require('./html-template.ejs');
 
-export default (locals, callback) => {
+const renderStatic = (locals, callback) => {
   const history = createMemoryHistory();
   const pathWithoutHtml = locals.path.replace(/\.html$/, '');
   const location = history.createLocation(pathWithoutHtml);
+
+  // console.log('locals.path', locals.path);
+  // console.log('locals.assets', locals.assets);
 
   match({ routes, location }, (error, redirectLocation, renderProps) => {
     let css = [];
@@ -29,12 +33,16 @@ export default (locals, callback) => {
       </Provider>
     );
     css = [...new Set(css)]; // make array unique
-    const template = require('raw!buildDir/index-html-template.ejs');
+
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
-    const html = template
-      .replace('<%= title %>', DocumentTitle.rewind())
-      .replace('<%= appCss %>', appCss)
-      .replace('<%= appHtml %>', `<div>${appHtml}</div>`);
+    const pageTitle =  DocumentTitle.rewind();
+    const assets = Object.keys(locals.webpackStats.compilation.assets);
+    const cssAssets = assets.filter(value => value.match(/\.css$/));
+    const jsAssets = assets.filter(value => value.match(/\.js$/));
+    const html = template({ cssAssets, jsAssets, appCss, appHtml, pageTitle });
+
     callback(null, html);
   });
 };
+
+export default renderStatic;

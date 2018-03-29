@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+import {courseContext, readmeContext, lessonContext, courseAllLangsContext, lessonAllContext} from './contexts';
+
 /**
  * Makes first character in str upper case
  *
@@ -42,7 +44,7 @@ export function dirname(path) {
  *  }
  */
 export function getFilterkeys() {
-  const filterkeys = require('onlyFrontmatter!lessonFiltertags/keys.md').frontmatter;
+  const filterkeys = require('lessonFiltertags/keys.md').frontmatter;
   return Object.keys(filterkeys).reduce((result, groupKey) => {
     result[groupKey.toLowerCase()] = filterkeys[groupKey].map(tagKey => tagKey.toLowerCase());
     return result;
@@ -71,64 +73,68 @@ export function getInitialFilter(initialLanguage) {
   return filter;
 }
 
-export function getLessons(lessonContext, readmeContext, courseContext) {
-  const paths = lessonContext.keys();
-  const availableLanguages = getAvailableLanguages();
+let cachedLessons = null;
+export function getLessonData() {
+  if (cachedLessons == null) {
+    const paths = lessonContext.keys();
+    const availableLanguages = getAvailableLanguages();
 
-  return paths.reduce((res, path) => {
-    const lessonFrontmatter = lessonContext(path).frontmatter;
-    const language = lessonFrontmatter.language;
-    if (!language) {
-      console.warn('Skipping lesson ' + path + ' since it is missing language.');
-      return res;
-    }
-    if (!availableLanguages.includes(language)) {
-      // Hiding lesson since it uses a language that is not available (yet)
-      if (typeof document === 'undefined') { // Only show message when rendering on server
-        console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
-          ', which is not available. Skipping lesson.');
+    cachedLessons = paths.reduce((res, path) => {
+      const lessonFrontmatter = lessonContext(path).frontmatter;
+      const language = lessonFrontmatter.language;
+      if (!language) {
+        console.warn('Skipping lesson ' + path + ' since it is missing language.');
+        return res;
       }
+      if (!availableLanguages.includes(language)) {
+        // Hiding lesson since it uses a language that is not available (yet)
+        if (typeof document === 'undefined') { // Only show message when rendering on server
+          console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
+            ', which is not available. Skipping lesson.');
+        }
+        return res;
+      }
+
+      // Course name is between './' and second '/'
+      const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
+      const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
+      const courseFrontmatter = courseContext(coursePath).frontmatter;
+
+      // Inherit tags from course, override with lessonTags, and add lessonTag
+      const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
+      const lessonTags = cleanseTags(lessonFrontmatter.tags, 'lesson ' + path);
+      const languageTag = language ? {language: [language]} : {};
+      const tags = {...courseTags, ...lessonTags, ...languageTag};
+
+      // Gets the valid readmePath for the lesson, if it exists
+      const readmePath = getReadmePath(language, path);
+
+      res[path] = {
+        title: lessonFrontmatter.title || '',
+        author: lessonFrontmatter.author || '',
+        translator: lessonFrontmatter.translator || '',
+        level: lessonFrontmatter.level,
+        indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
+        external: lessonFrontmatter.external || '',
+        readmePath: readmePath,
+        course: courseName,
+        language: language,
+        tags,
+        // Everything between '.' and '.md'
+        path: path.slice(1, path.length - 3)
+      };
+
       return res;
-    }
-
-    // Course name is between './' and second '/'
-    const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
-    const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
-    const courseFrontmatter = courseContext(coursePath).frontmatter;
-
-    // Inherit tags from course, override with lessonTags, and add lessonTag
-    const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
-    const lessonTags = cleanseTags(lessonFrontmatter.tags, 'lesson ' + path);
-    const languageTag = language ? {language: [language]} : {};
-    const tags = {...courseTags, ...lessonTags, ...languageTag};
-
-    // Gets the valid readmePath for the lesson, if it exists
-    const readmePath = getReadmePath(readmeContext, language, path);
-
-    res[path] = {
-      title: lessonFrontmatter.title || '',
-      author: lessonFrontmatter.author || '',
-      translator: lessonFrontmatter.translator || '',
-      level: lessonFrontmatter.level,
-      indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
-      external: lessonFrontmatter.external || '',
-      readmePath: readmePath,
-      course: courseName,
-      language: language,
-      tags,
-      // Everything between '.' and '.md'
-      path: path.slice(1, path.length - 3)
-    };
-
-    return res;
-  }, {});
+    }, {});
+  }
+  return cachedLessons;
 }
 
 /**
 * Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
 **/
 export function getCourseInfoMarkup(courseName, language) {
-  const req = require.context('frontAndContent!lessonSrc/', true,  /^\.\/[^/]*\/index[^.]*\.md/);
+  const req = courseAllLangsContext;
   const withLanguage = `./${courseName}/index_${language}.md`;
   const withoutLanguage = `./${courseName}/index.md`;
 
@@ -160,7 +166,7 @@ export function getCourseInfoMarkup(courseName, language) {
  */
 export function getLessonIntro(path) {
   const publicPath = process.env.PUBLICPATH;
-  let lessonContent = require('onlyContent!lessonSrc/' + path + '.md').content;
+  let lessonContent = require('lessonSrc/' + path + '.md').content;
   let text, picture = '';
   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
   const p = lessonContent.indexOf('<p>');
@@ -188,7 +194,7 @@ export function getLessonIntro(path) {
 * Checks if a lesson with a given path has a README-file.
 * Accepts README-files on the form /README or /README_(ISO_CODE).
 **/
-const getReadmePath = (readmeContext, language, path) => {
+const getReadmePath = (language, path) => {
   path = path.slice(1, path.lastIndexOf('/'));
   const readmePathAndLanguageCode = path + '/README_' + language;
   const readmePathNoLanguageCode = path + '/README';
@@ -324,7 +330,8 @@ export const getAvailableLanguages = () => getFilterkeys().language;
 * @param {String} lessonPath
 * @returns {String or undefined}
 */
-export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
+export const getReadmepathFromLessonpath = (lessonPath) => {
+  const lessons = getLessonData();
   for(let key of Object.keys(lessons)){
     if(lessons[key].readmePath === lessonPath){
       return lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;
@@ -341,7 +348,7 @@ export const getReadmepathFromLessonpath = (lessons, lessonPath) => {
 * @returns {String or null}
 */
 export const getPathForMainLanguage = (path, language, isReadme) => {
-  const req = require.context('onlyFrontmatter!lessonSrc/', true, /^\.\/[^/]*\/[^/]*\/[^.]*\.md$/);
+  const req = lessonAllContext;
   const lessonLanguage = req('./' + path + '.md').frontmatter.language;
   if (lessonLanguage !== language) {
     const lessonFolder = './' + path.substring(0, path.lastIndexOf('/'));

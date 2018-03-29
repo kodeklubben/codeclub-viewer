@@ -5,6 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ReadmeButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import InstructionButton from '../InstructionButton';
+import {getLessonData} from '../../util';
 
 const ReadmeButton = ({buttonPath, t}) => {
   const buttonText= t('lessons.toteacherinstruction');
@@ -21,7 +22,7 @@ ReadmeButton.propTypes = {
 
 const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
-  buttonPath: (state.lessons['./' + path + '.md'] || {}).readmePath,
+  buttonPath: (getLessonData()['./' + path + '.md'] || {}).readmePath,
 });
 
 export default connect(

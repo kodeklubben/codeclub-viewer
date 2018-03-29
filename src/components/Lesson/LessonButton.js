@@ -22,7 +22,7 @@ LessonButton.propTypes = {
 
 const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
-  buttonPath: getReadmepathFromLessonpath(state.lessons, '/' + path)
+  buttonPath: getReadmepathFromLessonpath('/' + path)
 });
 
 export default connect(
