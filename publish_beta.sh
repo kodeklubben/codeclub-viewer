@@ -5,11 +5,6 @@ SCRIPT_PATH=$(pwd)
 URL_PATH_PREFIX="beta"
 URL_PATH_PREFIX_FILE=url-path-prefix.config
 
-echo
-echo -n "Checking if current github user has a fork of kodeklubben/beta (requires SSH access to github)... "
-BETA_REPO=$(node getBetaFork.js)
-echo "Success!"
-
 CCV_PATH=${SCRIPT_PATH}
 CCV_BRANCH="master"
 CCV_REPO="kodeklubben/codeclub-viewer"
@@ -22,7 +17,6 @@ OPPGAVER_URL="${OPPGAVER_REPO}.git"
 
 BETA_PATH=$(dirname ${SCRIPT_PATH})/beta            # ../beta
 BETA_BRANCH="gh-pages"
-BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com since we need SSH to push result
 
 
 ###################################
@@ -221,6 +215,12 @@ function gitPush {
 #########################
 ### MAIN SCRIPT START ###
 #########################
+
+echo
+echo -n "Checking if current github user has a fork of kodeklubben/beta (requires SSH access to github)... "
+BETA_REPO=$(node getBetaFork.js)
+echo "Success!"
+BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com since we need SSH to push result
 
 echo
 echo "This script will compile"
