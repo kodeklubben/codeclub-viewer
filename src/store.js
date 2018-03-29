@@ -22,28 +22,36 @@ if (isProduction) {
   store = createStore(reducer, initialState, devTools);
 }
 
-const initialMode = loadFromLocalStorage('isStudentMode', true);
-const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
-const initialLanguage = loadFromLocalStorage('language', 'nb');
-const initialLastLesson = loadFromLocalStorage('lastLesson', '');
+const defaultMode = true;
+const defaultWelcomeBox = true;
+const defaultLanguage = 'nb';
+const defaultLastLesson = '';
+const defaultCheckboxes = {};
 
-store.dispatch(setMode(initialMode));
-store.dispatch(setWelcomeBox(initialWelcomeBox));
-store.dispatch(setLanguage(initialLanguage));
-store.dispatch(setLastLesson(initialLastLesson));
-
-let filter = getInitialFilter(initialLanguage);
+let filter = getInitialFilter(defaultLanguage);
 store.dispatch(setFilter(filter));
 
 for (let groupKey of Object.keys(filter)) {
   store.dispatch(collapseFilterGroup(groupKey, true));
 }
 
-for (let path of Object.keys(getLessonData())) {
-  const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), {});
-  if(Object.keys(checkboxes).length !== 0) {
-    store.dispatch(setCheckboxes(path, checkboxes));
+export const updateStoreFromLocalStorage = () => {
+  const initialMode = loadFromLocalStorage('isStudentMode', defaultMode);
+  const initialWelcomeBox = loadFromLocalStorage('welcomeBox', defaultWelcomeBox);
+  const initialLanguage = loadFromLocalStorage('language', defaultLanguage);
+  const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
+
+  store.dispatch(setMode(initialMode));
+  store.dispatch(setWelcomeBox(initialWelcomeBox));
+  store.dispatch(setLanguage(initialLanguage));
+  store.dispatch(setLastLesson(initialLastLesson));
+
+  for (let path of Object.keys(getLessonData())) {
+    const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);
+    if(Object.keys(checkboxes).length !== 0) {
+      store.dispatch(setCheckboxes(path, checkboxes));
+    }
   }
-}
+};
 
 export default store;
