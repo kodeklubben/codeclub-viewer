@@ -2,11 +2,12 @@
 
 .container {
   margin-top: 100px;
-  padding-bottom: 20px;
+  padding-top: 20px;
   font-weight: 300;
   font-family: $font-family-roboto;
   a {
     text-decoration: none;
+    color: black;
   }
 
   @media print {
@@ -17,17 +18,11 @@
 .containerStudent {
   composes: container;
   background-color: $color-green-light;
-  a {
-    color: black;
-  }
 }
 
 .containerTeacher {
   composes: container;
   background-color: $color-blue-light;
-  a {
-    color: black;
-  }
 }
 
 .inline {
@@ -51,7 +46,6 @@
 }
 
 .divider {
-  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   border-top: 1px solid;
@@ -63,10 +57,14 @@
   box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.5);
 }
 
-.github {
+.contribute {
   text-align: center;
   font-size: 1.5em;
-  font-weight: bold;
+  //font-weight: bold;
+}
+
+.githubIcon {
+  text-align: center;
 }
 
 .sponsors {
