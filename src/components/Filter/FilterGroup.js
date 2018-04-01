@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {onFilterCheck, collapseFilterGroup} from '../../action_creators';
+import {filterChecked} from '../../reducers/filter';
+import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -12,13 +13,13 @@ import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateGroup, getTranslateTag} from '../../selectors/translate';
 
 const FilterGroup = ({
-  groupKey, filterTags, onFilterCheck,
+  groupKey, filterTags, filterChecked,
   collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateGroup, translateTag,
 }) => {
   const groupName = translateGroup(groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map(key => {
-      const onCheck = () => onFilterCheck(groupKey, key);
+      const onCheck = () => filterChecked(groupKey, key);
       const tagName = translateTag(groupKey, key);
 
       const checked = filterTags[key];
@@ -67,7 +68,7 @@ FilterGroup.propTypes = {
   somethingChecked: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
-  onFilterCheck: PropTypes.func.isRequired,
+  filterChecked: PropTypes.func.isRequired,
   collapseFilterGroup: PropTypes.func.isRequired,
 };
 
@@ -80,7 +81,7 @@ const mapStateToProps = (state, {groupKey}) => ({
 });
 
 const mapDispatchToProps = {
-  onFilterCheck,
+  filterChecked,
   collapseFilterGroup,
 };
 

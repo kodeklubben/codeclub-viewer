@@ -2,8 +2,13 @@
 
 import {createStore} from 'redux';
 import {getInitialFilter, getLessonData, createCheckboxesKey} from './util';
-import {setFilter, setMode, setLanguage, setWelcomeBox,
-  setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
+import {setCheckboxes} from './reducers/checkboxes';
+import {setFilter} from './reducers/filter';
+import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
+import {setLanguage} from './reducers/language';
+import {setLastLesson} from './reducers/lastLesson';
+import {setMode} from './reducers/mode';
+import {setWelcomeBox} from './reducers/welcomeBox';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
