@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 import filter from './reducers/filter';
-import lessons from './reducers/lesson';
 import isStudentMode from './reducers/mode';
 import language from './reducers/language';
 import welcomeBox from './reducers/welcomeBox';
@@ -9,7 +8,6 @@ import lastLesson from './reducers/lastLesson';
 import filterGroupsCollapsed from './reducers/filterGroupsCollapsed';
 
 export default combineReducers({
-  lessons,
   filter,
   isStudentMode,
   language,
