@@ -1,23 +1,56 @@
-/*
-  Example state:
-  filter: {
-    language: {
-      nb: true,
-      nn: true,
-      en: false
-    },
-    tema: {
-      app: true,
-      electronics: false,
-      block_based: false,
-      minecraft: false,
-      web: false,
-      game: true,
-      robot: false,
-      animation: false
+/////////////////////
+// ACTION CREATORS //
+/////////////////////
+
+export function setFilter(filter) {
+  return {
+    type: 'SET_FILTER',
+    filter
+  };
+}
+
+export function resetFilter(groupKey, tagKey) {
+  return {
+    type: 'RESET_FILTER',
+    groupKey,
+    tagKey
+  };
+}
+
+export function filterChecked(groupKey, tagKey) {
+  return {
+    type: 'FILTER_CHECKED',
+    groupKey,
+    tagKey
+  };
+}
+
+
+/////////////
+// REDUCER //
+/////////////
+
+const INITIAL_STATE = {
+  /*
+    filter: {
+      language: {
+        nb: true,
+        nn: true,
+        en: false
+      },
+      tema: {
+        app: true,
+        electronics: false,
+        block_based: false,
+        minecraft: false,
+        web: false,
+        game: true,
+        robot: false,
+        animation: false
+      }
     }
-  }
-*/
+  */
+};
 
 function handleCheckFilter(state, groupKey, tagKey){
   if(groupKey == null || tagKey == null) return state;
@@ -41,7 +74,7 @@ function handleCheckFilter(state, groupKey, tagKey){
 }
 
 // Set all tags to false except filter[groupKey][tagKey]
-function resetFilter(state, groupKey, tagKey) {
+function handleResetFilter(state, groupKey, tagKey) {
   const filterGroups = Object.keys(state);
   return filterGroups.reduce((res, filterGroup) => {
     const tags = state[filterGroup];
@@ -53,13 +86,13 @@ function resetFilter(state, groupKey, tagKey) {
   },{});
 }
 
-export default function(state={}, action) {
+export default function(state = INITIAL_STATE, action) {
 
   switch(action.type) {
     case 'SET_FILTER':
       return action.filter;
     case 'RESET_FILTER':
-      return resetFilter(state, action.groupKey, action.tagKey);
+      return handleResetFilter(state, action.groupKey, action.tagKey);
     case 'FILTER_CHECKED':
       return handleCheckFilter(state, action.groupKey, action.tagKey);
   }
