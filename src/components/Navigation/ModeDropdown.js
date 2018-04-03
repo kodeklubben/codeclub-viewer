@@ -7,7 +7,7 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
-import {setModeStudent, setModeTeacher} from '../../action_creators';
+import {setModeStudent, setModeTeacher} from '../../reducers/mode';
 
 const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
   const modes = ['student', 'teacher'];

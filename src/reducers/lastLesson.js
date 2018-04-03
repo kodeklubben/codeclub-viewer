@@ -1,6 +1,24 @@
 import {storeItem} from '../localStorage';
 
-export default function(state='', action) {
+/////////////////////
+// ACTION CREATORS //
+/////////////////////
+
+export function setLastLesson(path) {
+  return  {
+    type: 'SET_LASTLESSON',
+    path
+  };
+}
+
+
+/////////////
+// REDUCER //
+/////////////
+
+const INITIAL_STATE = '';
+
+export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case 'SET_LASTLESSON':
       return storeItem('lastLesson', action.path);

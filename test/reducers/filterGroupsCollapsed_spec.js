@@ -1,8 +1,7 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
-import reducer from '../../src/reducers/filterGroupsCollapsed';
-import {collapseFilterGroup, collapseAllFilterGroups} from '../../src/action_creators';
+import reducer, {collapseFilterGroup, collapseAllFilterGroups} from '../../src/reducers/filterGroupsCollapsed';
 
 describe('filterGroupsCollapse reducer', () => {
   describe('COLLAPSE_FILTERGROUP', () => {
