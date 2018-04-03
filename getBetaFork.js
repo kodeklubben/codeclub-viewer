@@ -25,7 +25,7 @@ const getForks = (username, json) => {
 // Get github user name.
 // The ssh-command will exit with error code 1, so run ssh in a subshell $(...) and
 // echo result to avoid having execSync throwing an error.
-const sshOutput = execSync('echo $(ssh -T -o StrictHostKeyChecking=no git@github.com 2>&1)').toString().trim();
+const sshOutput = execSync('ssh -T -o StrictHostKeyChecking=no git@github.com 2>&1 || true').toString().trim();
 const match = sshOutput.match(/^Hi ([^!]+)!/);
 if (match == null) {
   console.error('ERROR: Could not find git username. Perhaps SSH authentication missing?');
