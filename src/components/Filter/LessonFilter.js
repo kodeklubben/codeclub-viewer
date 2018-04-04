@@ -6,6 +6,7 @@ import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
+import RadioButtons from './RadioButtons';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -14,7 +15,7 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const tooltip =
     <Tooltip id="filterhelp">
@@ -36,7 +37,8 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
       <Col xsHidden>
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
-            {filterGroups}
+            <RadioButtons/>
+            {playlists ? null : filterGroups}
           </ListGroup>
         </Panel>
       </Col>
@@ -44,7 +46,8 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
       <Col smHidden mdHidden lgHidden>
         <CollapsiblePanel initiallyExpanded={false} {...{header, bsStyle}}>
           <ListGroup fill>
-            {filterGroups}
+            <RadioButtons/>
+            {playlists ? null : filterGroups}
           </ListGroup>
         </CollapsiblePanel>
       </Col>
@@ -57,13 +60,15 @@ LessonFilter.propTypes = {
   // mapStateToProps
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  playlists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {courseName}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
+  t: getTranslator(state),
+  playlists: state.playlists,
 });
 
 export default connect(

@@ -20,13 +20,16 @@ import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
+const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, playlists}) => {
   const levels = Object.keys(lessonsByLevel);
   const lessonLists = levels.map(level => <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
   const filter = <LessonFilter courseName={params.course}/>;
   const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
   const courseInfo = <CourseInfo courseName={params.course}/>;
-  const hasPlaylists = !!Object.keys(playlists).length;
+  const hasPlaylists = !playlists ? null :
+    <Row>
+      <Col xs={12}><PlaylistNavigation playlists={coursePlaylists}/></Col>
+    </Row>;
 
   let thispage = null;
   const jumpToAffixed = jumpTo ?
@@ -39,31 +42,23 @@ const PlaylistPage = ({params, lessonsByLevel, playlists, t}) => {
   return (
     <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
       <Grid fluid={true} ref={grid => thispage = grid}>
-
         <Row>
           <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
           <Col xs={12}>{courseInfo}</Col>
         </Row>
-
-        {hasPlaylists ?
+        {hasPlaylists ? hasPlaylists :
           <Row>
-            <Col xs={12} sm={lessonLists.length ? 9 : 12}><PlaylistNavigation {...{playlists}}/></Col>
-            {jumpToAffixed}
+            <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
+            <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
+            <Col xs={12} sm={6}>
+              {lessonLists.length ?
+                lessonLists :
+                <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
+              }
+            </Col>
+            {hasPlaylists ? null : jumpToAffixed}
           </Row>
-          : null}
-
-        <Row>
-          <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
-          <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
-          <Col xs={12} sm={6}>
-            {lessonLists.length ?
-              lessonLists :
-              <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
-            }
-          </Col>
-          {hasPlaylists ? null : jumpToAffixed}
-        </Row>
-
+        }
       </Grid>
     </DocumentTitle>
   );
@@ -77,14 +72,16 @@ PlaylistPage.propTypes = {
 
   // mapStateToProps
   lessonsByLevel: PropTypes.object.isRequired,
-  playlists: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired
+  coursePlaylists: PropTypes.object.isRequired,
+  t: PropTypes.func.isRequired,
+  playlists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
   lessonsByLevel: getLessonsByLevel(state, params.course),
-  playlists: getPlaylists(state, params.course),
-  t: getTranslator(state)
+  coursePlaylists: getPlaylists(state, params.course),
+  t: getTranslator(state),
+  playlists: state.playlists,
 });
 
 export default connect(
