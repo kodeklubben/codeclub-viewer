@@ -5,28 +5,33 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './RadioButtons.scss';
 import {getTranslator} from '../../selectors/translate';
 import {showOnlyPlaylists} from '../../reducers/playlists';
+import {resetFilter} from '../../reducers/filter';
+import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-
-const RadioButtons = ({playlists, language, t, showOnlyPlaylists}) => {
+const RadioButtons = ({playlists, language, t, showOnlyPlaylists, resetFilter, collapseAllFilterGroups}) => {
   return language !== 'nb' ? null : (
     <form>
-      <label>
+      <label className={styles.label}>
         <input
           type='radio'
           name='radioGroup'
           checked={playlists}
-          onChange={() => showOnlyPlaylists(true)}
+          onChange={() => {
+            showOnlyPlaylists(true);
+            resetFilter('language', language);
+            collapseAllFilterGroups(true);
+          }}
         />
-        {t('filter.radio.playlists')}
+        <span className={styles.marginLeft}>{t('filter.radio.playlists')}</span>
       </label>
-      <label>
+      <label className={styles.label}>
         <input
           type='radio'
           name='radioGroup'
           checked={!playlists}
           onChange={() => showOnlyPlaylists(false)}
         />
-        {t('filter.radio.lessons')}
+        <span className={styles.marginLeft}>{t('filter.radio.lessons')}</span>
       </label>
     </form>
   );
@@ -40,6 +45,8 @@ RadioButtons.propTypes = {
 
   // mapDispatchToProps
   showOnlyPlaylists: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
+  collapseAllFilterGroups: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -49,10 +56,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  showOnlyPlaylists
+  showOnlyPlaylists,
+  resetFilter,
+  collapseAllFilterGroups,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(withStyles(styles)(RadioButtons));

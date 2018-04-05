@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
 import {resetFilter} from '../../reducers/filter';
+import {showOnlyPlaylists} from '../../reducers/playlists';
+import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
@@ -33,28 +35,34 @@ LanguageItem.propTypes = {
   translateTag: PropTypes.func.isRequired
 };
 
-const LanguageDropdown = ({isStudentMode, language, resetFilter, setLanguage, translateTag}) => {
+const LanguageDropdown = ({isStudentMode, language, translateTag,
+  resetFilter, setLanguage, showOnlyPlaylists, collapseAllFilterGroups}) => {
   const mode = isStudentMode ? 'student' : 'teacher';
-  return <div className={styles.gadgetContainer}>
-    <DropdownButton id='language-dropdown'
-      noCaret
-      pullRight
-      bsStyle={'language-' + mode}
-      title={<LanguageItem onlyFlag={true} {...{language, translateTag}}/>}
-      onSelect={(eventKey) => {
-        resetFilter('language', eventKey);
-        setLanguage(eventKey);
-      }}>
+  return (
+    <div className={styles.gadgetContainer}>
+      <DropdownButton id='language-dropdown'
+        noCaret
+        pullRight
+        bsStyle={'language-' + mode}
+        title={<LanguageItem onlyFlag={true} {...{language, translateTag}}/>}
+        onSelect={(eventKey) => {
+          const showPlaylists = language === 'nb' ? false : true;
+          resetFilter('language', eventKey);
+          setLanguage(eventKey);
+          showOnlyPlaylists(showPlaylists);
+          collapseAllFilterGroups(true);
+        }}>
 
-      {
-        availableLanguages.map(key =>
-          <MenuItem {...{key}} eventKey={key} active={language === key}>
-            <LanguageItem onlyFlag={false} language={key} {...{translateTag}}/>
-          </MenuItem>
-        )
-      }
-    </DropdownButton>
-  </div>;
+        {
+          availableLanguages.map(key =>
+            <MenuItem {...{key}} eventKey={key} active={language === key}>
+              <LanguageItem onlyFlag={false} language={key} {...{translateTag}}/>
+            </MenuItem>
+          )
+        }
+      </DropdownButton>
+    </div>
+  );
 };
 
 LanguageDropdown.propTypes = {
@@ -65,18 +73,22 @@ LanguageDropdown.propTypes = {
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
-  resetFilter: PropTypes.func.isRequired
+  resetFilter: PropTypes.func.isRequired,
+  showOnlyPlaylists: PropTypes.func.isRequired,
+  collapseAllFilterGroups: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   language: state.language,
   translateTag: getTranslateTag(state),
-  isStudentMode: state.isStudentMode
+  isStudentMode: state.isStudentMode,
 });
 
 const mapDispatchToProps = {
   setLanguage,
-  resetFilter
+  resetFilter,
+  showOnlyPlaylists,
+  collapseAllFilterGroups,
 };
 
 export default connect(

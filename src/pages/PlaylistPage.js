@@ -28,7 +28,8 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, playlists}) =
   const courseInfo = <CourseInfo courseName={params.course}/>;
   const hasPlaylists = !playlists ? null :
     <Row>
-      <Col xs={12}><PlaylistNavigation playlists={coursePlaylists}/></Col>
+      <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
+      <Col xs={12} sm={9}><PlaylistNavigation playlists={coursePlaylists}/></Col>
     </Row>;
 
   let thispage = null;
@@ -48,15 +49,15 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, playlists}) =
         </Row>
         {hasPlaylists ? hasPlaylists :
           <Row>
-            <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
             <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
+            <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>
             <Col xs={12} sm={6}>
               {lessonLists.length ?
                 lessonLists :
                 <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
               }
             </Col>
-            {hasPlaylists ? null : jumpToAffixed}
+            {jumpToAffixed}
           </Row>
         }
       </Grid>

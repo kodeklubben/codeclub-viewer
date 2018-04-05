@@ -15,7 +15,7 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists, language}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const tooltip =
     <Tooltip id="filterhelp">
@@ -38,16 +38,16 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists}) => {
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
             <RadioButtons/>
-            {playlists ? null : filterGroups}
+            {playlists ? (language === 'nb' ? null : filterGroups) : filterGroups}
           </ListGroup>
         </Panel>
       </Col>
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
-        <CollapsiblePanel initiallyExpanded={false} {...{header, bsStyle}}>
+        <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
           <ListGroup fill>
             <RadioButtons/>
-            {playlists ? null : filterGroups}
+            {playlists ? (language === 'nb' ? null : filterGroups) : filterGroups}
           </ListGroup>
         </CollapsiblePanel>
       </Col>
@@ -62,6 +62,7 @@ LessonFilter.propTypes = {
   isStudentMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   playlists: PropTypes.bool.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, {courseName}) => ({
@@ -69,6 +70,7 @@ const mapStateToProps = (state, {courseName}) => ({
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
   playlists: state.playlists,
+  language: state.language,
 });
 
 export default connect(
