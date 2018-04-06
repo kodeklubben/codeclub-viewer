@@ -4,12 +4,12 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './RadioButtons.scss';
 import {getTranslator} from '../../selectors/translate';
-import {showOnlyPlaylists} from '../../reducers/playlists';
+import {setShowPlaylists} from '../../reducers/playlists';
 import {resetFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButtons = ({playlists, language, t, showOnlyPlaylists, resetFilter, collapseAllFilterGroups}) => {
-  return language !== 'nb' ? null : (
+const RadioButtons = ({playlists, language, t, setShowPlaylists, resetFilter, collapseAllFilterGroups}) => {
+  return (
     <form>
       <label className={styles.label}>
         <input
@@ -17,7 +17,7 @@ const RadioButtons = ({playlists, language, t, showOnlyPlaylists, resetFilter, c
           name='radioGroup'
           checked={playlists}
           onChange={() => {
-            showOnlyPlaylists(true);
+            setShowPlaylists(true);
             resetFilter('language', language);
             collapseAllFilterGroups(true);
           }}
@@ -29,7 +29,7 @@ const RadioButtons = ({playlists, language, t, showOnlyPlaylists, resetFilter, c
           type='radio'
           name='radioGroup'
           checked={!playlists}
-          onChange={() => showOnlyPlaylists(false)}
+          onChange={() => setShowPlaylists(false)}
         />
         <span className={styles.marginLeft}>{t('filter.radio.lessons')}</span>
       </label>
@@ -44,7 +44,7 @@ RadioButtons.propTypes = {
   t: PropTypes.func.isRequired,
 
   // mapDispatchToProps
-  showOnlyPlaylists: PropTypes.func.isRequired,
+  setShowPlaylists: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
   collapseAllFilterGroups: PropTypes.func.isRequired,
 };
@@ -56,7 +56,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  showOnlyPlaylists,
+  setShowPlaylists,
   resetFilter,
   collapseAllFilterGroups,
 };

@@ -9,7 +9,7 @@ import {setLanguage} from './reducers/language';
 import {setLastLesson} from './reducers/lastLesson';
 import {setMode} from './reducers/mode';
 import {setWelcomeBox} from './reducers/welcomeBox';
-import {showOnlyPlaylists} from './reducers/playlists';
+import {setShowPlaylists} from './reducers/playlists';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
@@ -53,7 +53,7 @@ export const updateStoreFromLocalStorage = () => {
   store.dispatch(setWelcomeBox(initialWelcomeBox));
   store.dispatch(setLanguage(initialLanguage));
   store.dispatch(setLastLesson(initialLastLesson));
-  store.dispatch(showOnlyPlaylists(initialPlaylists));
+  store.dispatch(setShowPlaylists(initialPlaylists));
 
   for (let path of Object.keys(getLessonData())) {
     const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);

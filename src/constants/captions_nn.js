@@ -93,8 +93,8 @@ export default {
       textline2: 'Bak kvart val står det kor mange oppgaver som passar til filteret du legg på.'
     },
     radio: {
-      playlists: 'Vis oppgavesamlinger',
-      lessons: 'Vis filter'
+      playlists: 'Oppgavesamlinger',
+      lessons: 'Alle oppgaver'
     },
     removefilter: 'Nullstill filter'
   },

@@ -94,8 +94,8 @@ export default {
                  'you make in the filter.'
     },
     radio: {
-      playlists: 'Show playlists',
-      lessons: 'Show filter'
+      playlists: 'Playlists',
+      lessons: 'All lessons'
     },
     removefilter: 'Clear filter'
   },

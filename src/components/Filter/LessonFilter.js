@@ -31,14 +31,15 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists, language}) 
       </OverlayTrigger>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
+  const radioButtons = language !== 'nb' ? null : <RadioButtons/>;
   return (
     <div>
       {/*Filter desktop*/}
       <Col xsHidden>
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
-            <RadioButtons/>
-            {playlists ? (language === 'nb' ? null : filterGroups) : filterGroups}
+            {radioButtons}
+            {playlists && language === 'nb' ? null : filterGroups}
           </ListGroup>
         </Panel>
       </Col>
@@ -46,8 +47,8 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists, language}) 
       <Col smHidden mdHidden lgHidden>
         <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
           <ListGroup fill>
-            <RadioButtons/>
-            {playlists ? (language === 'nb' ? null : filterGroups) : filterGroups}
+            {radioButtons}
+            {playlists && language === 'nb' ? null : filterGroups}
           </ListGroup>
         </CollapsiblePanel>
       </Col>
@@ -65,7 +66,7 @@ LessonFilter.propTypes = {
   language: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, {courseName}) => ({
+const mapStateToProps = (state) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),

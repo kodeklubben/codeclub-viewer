@@ -4,10 +4,10 @@ import {storeItem} from '../localStorage';
 // ACTION CREATORS //
 /////////////////////
 
-export function showOnlyPlaylists(playlists) {
+export function setShowPlaylists(showPlaylists) {
   return {
-    type: 'SHOW_ONLY_PLAYLISTS',
-    playlists
+    type: 'SET_SHOW_PLAYLISTS',
+    showPlaylists
   };
 }
 
@@ -20,8 +20,8 @@ const INITIAL_STATE = true;
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
-    case 'SHOW_ONLY_PLAYLISTS':
-      return storeItem('playlists', (action.playlists));
+    case 'SET_SHOW_PLAYLISTS':
+      return storeItem('showPlaylists', (action.showPlaylists));
   }
   return state;
 }
