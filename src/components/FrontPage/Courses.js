@@ -8,8 +8,10 @@ import Row from 'react-bootstrap/lib/Row';
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
+import {hasPlaylist} from '../../util';
 
-const Courses = ({t, courses, externalCourses}) => {
+const Courses = ({t, courses, externalCourses, playlists}) => {
+  const coursesWithPlaylists = hasPlaylist(courses);
   const coursesLength = Object.keys(courses).length;
   const externalCoursesLength = Object.keys(externalCourses).length;
   return (
@@ -18,11 +20,11 @@ const Courses = ({t, courses, externalCourses}) => {
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.courses')}</div>
-            <CourseList courses={courses}/>
+            <CourseList courses={playlists ? coursesWithPlaylists : courses}/>
           </Col>
         </Row>
         : null}
-      {externalCoursesLength > 0 ?
+      {externalCoursesLength > 0 && !playlists ?
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
@@ -40,13 +42,15 @@ Courses.propTypes = {
   // mapStateToProps
   courses: PropTypes.object.isRequired,
   externalCourses: PropTypes.object.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  playlists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   courses: getFilteredCourses(state),
   externalCourses: getFilteredExternalCourses(state),
-  t: getTranslator(state)
+  t: getTranslator(state),
+  playlists: state.playlists,
 });
 
 export default connect(

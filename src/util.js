@@ -367,6 +367,16 @@ export const getPathForMainLanguage = (path, language, isReadme) => {
 };
 
 /**
+* tests
+* @param {object} courses
+* @returns {object}
+*/
+export const hasPlaylist = (courses) => {
+  // TODO: Fullføre denne!!
+  return courses;
+};
+
+/**
  * Based on an implementation of Java's string to integer hashCode function.
  * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
  */
