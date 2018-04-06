@@ -13,13 +13,11 @@ const CourseList = ({courses, playlists}) => {
   return (
     <Row>
       <div className={styles.courseList}>
-        {courseNames.map(courseName => {
-          return (
-            <Col key={courseName} xs={6} sm={6} md={4} lg={3}>
-              <CourseItem course={courses[courseName]}/>
-            </Col>
-          );
-        })}
+        {courseNames.map(courseName => (
+          <Col key={courseName} xs={6} sm={6} md={4} lg={3}>
+            <CourseItem course={courses[courseName]}/>
+          </Col>
+        ))}
       </div>
     </Row>
   );
