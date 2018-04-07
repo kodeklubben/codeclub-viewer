@@ -15,13 +15,9 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists, language}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, t, showPlaylists, language}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
-  const tooltip =
-    <Tooltip id="filterhelp">
-      <p>{t('filter.tooltip.textline1')}</p>
-      <p>{t('filter.tooltip.textline2')}</p>
-    </Tooltip>;
+  const tooltip = <Tooltip id="filterhelp"><p>{t('filter.tooltip')}</p></Tooltip>;
   const header =
     <span>
       {t('filter.header')}
@@ -39,7 +35,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists, language}) 
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
             {radioButtons}
-            {playlists && language === 'nb' ? null : filterGroups}
+            {showPlaylists && language === 'nb' ? null : filterGroups}
           </ListGroup>
         </Panel>
       </Col>
@@ -48,7 +44,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, playlists, language}) 
         <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
           <ListGroup fill>
             {radioButtons}
-            {playlists && language === 'nb' ? null : filterGroups}
+            {showPlaylists && language === 'nb' ? null : filterGroups}
           </ListGroup>
         </CollapsiblePanel>
       </Col>
@@ -62,7 +58,7 @@ LessonFilter.propTypes = {
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
-  playlists: PropTypes.bool.isRequired,
+  showPlaylists: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
 };
 
@@ -70,7 +66,7 @@ const mapStateToProps = (state) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
-  playlists: state.playlists,
+  showPlaylists: state.showPlaylists,
   language: state.language,
 });
 

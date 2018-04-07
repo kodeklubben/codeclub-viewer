@@ -367,12 +367,13 @@ export const getPathForMainLanguage = (path, language, isReadme) => {
 };
 
 /**
-* tests
+* Returns an object with only the courses that have playlists
+*
 * @param {object} courses
 * @returns {object}
 */
 export const hasPlaylist = (courses) => {
-  // TODO: Fullføre denne!!
+  // TODO: make this
   return courses;
 };
 

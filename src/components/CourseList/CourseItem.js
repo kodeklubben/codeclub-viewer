@@ -9,7 +9,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 import PopoverComponent from '../PopoverComponent';
 
-const CourseItem = ({course, t, language, playlists}) => {
+const CourseItem = ({course, t, language, showPlaylists}) => {
   const isExternal = course.hasOwnProperty('externalLink');
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const introPath = coursePath + '/index' + (isExternal || language === 'nb' ? '' : ('_' + language));
@@ -35,7 +35,9 @@ const CourseItem = ({course, t, language, playlists}) => {
           <span className={styles.courseName}>{course.name}
             {popoverButton}
           </span>
-          {playlists ? null : <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>}
+          {showPlaylists ? null :
+            <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span>
+          }
         </Link>
       }
     </div>);
@@ -54,13 +56,13 @@ CourseItem.propTypes = {
   // mapStateToProps
   t: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
-  playlists: PropTypes.bool.isRequired,
+  showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
   language: state.language,
-  playlists: state.playlists,
+  showPlaylists: state.showPlaylists,
 });
 
 export default connect(

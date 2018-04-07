@@ -4,18 +4,16 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './RadioButtons.scss';
 import {getTranslator} from '../../selectors/translate';
-import {setShowPlaylists} from '../../reducers/playlists';
+import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButtons = ({playlists, language, t, setShowPlaylists, resetFilter, collapseAllFilterGroups}) => {
+const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetFilter, collapseAllFilterGroups}) => {
+  const RadioButton = ({checked, onChange}) => <input type='radio' name='radioGroup' {...{checked, onChange}}/>;
   return (
     <form>
       <label className={styles.label}>
-        <input
-          type='radio'
-          name='radioGroup'
-          checked={playlists}
+        <RadioButton checked={showPlaylists}
           onChange={() => {
             setShowPlaylists(true);
             resetFilter('language', language);
@@ -25,12 +23,7 @@ const RadioButtons = ({playlists, language, t, setShowPlaylists, resetFilter, co
         <span className={styles.marginLeft}>{t('filter.radio.playlists')}</span>
       </label>
       <label className={styles.label}>
-        <input
-          type='radio'
-          name='radioGroup'
-          checked={!playlists}
-          onChange={() => setShowPlaylists(false)}
-        />
+        <RadioButton checked={!showPlaylists} onChange={() => setShowPlaylists(false)} />
         <span className={styles.marginLeft}>{t('filter.radio.lessons')}</span>
       </label>
     </form>
@@ -39,7 +32,7 @@ const RadioButtons = ({playlists, language, t, setShowPlaylists, resetFilter, co
 
 RadioButtons.propTypes = {
   // mapStateToProps
-  playlists: PropTypes.bool.isRequired,
+  showPlaylists: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
 
@@ -50,7 +43,7 @@ RadioButtons.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  playlists: state.playlists,
+  showPlaylists: state.showPlaylists,
   language: state.language,
   t: getTranslator(state),
 });

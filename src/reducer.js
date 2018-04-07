@@ -6,7 +6,7 @@ import welcomeBox from './reducers/welcomeBox';
 import checkboxes from './reducers/checkboxes';
 import lastLesson from './reducers/lastLesson';
 import filterGroupsCollapsed from './reducers/filterGroupsCollapsed';
-import playlists from './reducers/playlists';
+import showPlaylists from './reducers/showPlaylists';
 
 export default combineReducers({
   filter,
@@ -16,5 +16,5 @@ export default combineReducers({
   checkboxes,
   lastLesson,
   filterGroupsCollapsed,
-  playlists,
+  showPlaylists,
 });

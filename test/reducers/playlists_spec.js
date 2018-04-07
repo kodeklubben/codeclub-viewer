@@ -5,7 +5,7 @@ import reducer, {setShowPlaylists} from '../../src/reducers/playlists';
 
 describe('playlists reducer', () => {
   describe('SET_SHOW_PLAYLISTS', () => {
-    it('adds state if it does not exist', () => {
+    it('Change showPlaylists from true to false.', () => {
       const initialState = true;
       const action = setShowPlaylists(false);
 
@@ -14,6 +14,17 @@ describe('playlists reducer', () => {
       const nextState = reducer(initialState, action);
 
       expect(nextState).to.deep.equal(false);
+    });
+
+    it('Change showPlaylists from false to true.', () => {
+      const initialState = false;
+      const action = setShowPlaylists(true);
+
+      deepFreeze(initialState);
+      deepFreeze(action);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.deep.equal(true);
     });
   });
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
 import {resetFilter} from '../../reducers/filter';
-import {setShowPlaylists} from '../../reducers/playlists';
+import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';

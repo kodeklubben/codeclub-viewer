@@ -88,10 +88,7 @@ export default {
   },
   filter: {
     header: 'Filter',
-    tooltip: {
-      textline1: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
-      textline2: 'Bak kvart val står det kor mange oppgaver som passar til filteret du legg på.'
-    },
+    tooltip: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
     radio: {
       playlists: 'Oppgavesamlinger',
       lessons: 'Alle oppgaver'

@@ -10,7 +10,7 @@ import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
 import {hasPlaylist} from '../../util';
 
-const Courses = ({t, courses, externalCourses, playlists}) => {
+const Courses = ({t, courses, externalCourses, showPlaylists}) => {
   const coursesWithPlaylists = hasPlaylist(courses);
   const coursesLength = Object.keys(courses).length;
   const externalCoursesLength = Object.keys(externalCourses).length;
@@ -20,11 +20,11 @@ const Courses = ({t, courses, externalCourses, playlists}) => {
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.courses')}</div>
-            <CourseList courses={playlists ? coursesWithPlaylists : courses}/>
+            <CourseList courses={showPlaylists ? coursesWithPlaylists : courses}/>
           </Col>
         </Row>
         : null}
-      {externalCoursesLength > 0 && !playlists ?
+      {externalCoursesLength > 0 && !showPlaylists ?
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
@@ -43,14 +43,14 @@ Courses.propTypes = {
   courses: PropTypes.object.isRequired,
   externalCourses: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
-  playlists: PropTypes.bool.isRequired,
+  showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   courses: getFilteredCourses(state),
   externalCourses: getFilteredExternalCourses(state),
   t: getTranslator(state),
-  playlists: state.playlists,
+  showPlaylists: state.showPlaylists,
 });
 
 export default connect(

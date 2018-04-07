@@ -20,13 +20,13 @@ import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, playlists}) => {
+const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists}) => {
   const levels = Object.keys(lessonsByLevel);
   const lessonLists = levels.map(level => <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
   const filter = <LessonFilter courseName={params.course}/>;
   const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
   const courseInfo = <CourseInfo courseName={params.course}/>;
-  const hasPlaylists = !playlists ? null :
+  const hasPlaylists = !showPlaylists ? null :
     <Row>
       <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
       <Col xs={12} sm={9}><PlaylistNavigation playlists={coursePlaylists}/></Col>
@@ -75,14 +75,14 @@ PlaylistPage.propTypes = {
   lessonsByLevel: PropTypes.object.isRequired,
   coursePlaylists: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
-  playlists: PropTypes.bool.isRequired,
+  showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
   lessonsByLevel: getLessonsByLevel(state, params.course),
   coursePlaylists: getPlaylists(state, params.course),
   t: getTranslator(state),
-  playlists: state.playlists,
+  showPlaylists: state.showPlaylists,
 });
 
 export default connect(
