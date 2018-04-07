@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
-import reducer, {setShowPlaylists} from '../../src/reducers/playlists';
+import reducer, {setShowPlaylists} from '../../src/reducers/showPlaylists';
 
 describe('playlists reducer', () => {
   describe('SET_SHOW_PLAYLISTS', () => {
