@@ -79,7 +79,7 @@ const mapStateToProps = (state, {params}) => ({
   lessonsByLevel: getLessonsByLevel(state, params.course),
   coursePlaylists: getPlaylists(state, params.course),
   t: getTranslator(state),
-  showPlaylists: state.showPlaylists,
+  showPlaylists: state.showPlaylists && Object.keys(getPlaylists(state, params.course)).length > 0,
 });
 
 export default connect(

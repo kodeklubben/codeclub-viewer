@@ -5,6 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getTranslator} from '../../selectors/translate';
+import {getPlaylists} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
@@ -55,6 +56,9 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
 };
 
 LessonFilter.propTypes = {
+  // ownProps
+  courseName: PropTypes.string,
+
   // mapStateToProps
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
@@ -63,12 +67,13 @@ LessonFilter.propTypes = {
   showFiltergroups: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, {courseName}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
-  showRadiobuttons: state.language === 'nb',
-  showFiltergroups: !state.showPlaylists || state.language !== 'nb',
+  showRadiobuttons: state.language === 'nb' && Object.keys(getPlaylists(state, courseName)).length > 0,
+  showFiltergroups: !state.showPlaylists || state.language !== 'nb' ||
+    Object.keys(getPlaylists(state, courseName)).length < 1,
 });
 
 export default connect(
