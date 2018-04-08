@@ -68,7 +68,7 @@ const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
   showRadiobuttons: state.language === 'nb',
-  showFiltergroups: !state.playlists || state.language !== 'nb',
+  showFiltergroups: !state.showPlaylists || state.language !== 'nb',
 });
 
 export default connect(
