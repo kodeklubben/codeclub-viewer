@@ -9,23 +9,23 @@ import {resetFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
 const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetFilter, collapseAllFilterGroups}) => {
-  const RadioButton = ({checked, onChange}) => <input type='radio' name='radioGroup' {...{checked, onChange}}/>;
+  const RadioButton = ({checked, onChange, text}) =>
+    <label className={styles.label}>
+      <input type='radio' name='radioGroup' {...{checked, onChange}}/>
+      <span className={styles.marginLeft}>{text}</span>
+    </label>;
   return (
     <form>
-      <label className={styles.label}>
-        <RadioButton checked={showPlaylists}
-          onChange={() => {
-            setShowPlaylists(true);
-            resetFilter('language', language);
-            collapseAllFilterGroups(true);
-          }}
-        />
-        <span className={styles.marginLeft}>{t('filter.radio.playlists')}</span>
-      </label>
-      <label className={styles.label}>
-        <RadioButton checked={!showPlaylists} onChange={() => setShowPlaylists(false)} />
-        <span className={styles.marginLeft}>{t('filter.radio.lessons')}</span>
-      </label>
+      <RadioButton
+        checked={showPlaylists}
+        onChange={() => {
+          setShowPlaylists(true);
+          resetFilter('language', language);
+          collapseAllFilterGroups(true);
+        }}
+        text={t('filter.radio.playlists')}
+      />
+      <RadioButton checked={!showPlaylists} onChange={() => setShowPlaylists(false)} text={t('filter.radio.lessons')}/>
     </form>
   );
 };

@@ -8,10 +8,9 @@ import Row from 'react-bootstrap/lib/Row';
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
-import {hasPlaylist} from '../../util';
+import {coursesWithPlaylists} from '../../util';
 
 const Courses = ({t, courses, externalCourses, showPlaylists}) => {
-  const coursesWithPlaylists = hasPlaylist(courses);
   const coursesLength = Object.keys(courses).length;
   const externalCoursesLength = Object.keys(externalCourses).length;
   return (
@@ -20,7 +19,7 @@ const Courses = ({t, courses, externalCourses, showPlaylists}) => {
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.courses')}</div>
-            <CourseList courses={showPlaylists ? coursesWithPlaylists : courses}/>
+            <CourseList courses={showPlaylists ? coursesWithPlaylists(courses) : courses}/>
           </Col>
         </Row>
         : null}

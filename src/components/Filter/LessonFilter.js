@@ -15,7 +15,7 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t, showPlaylists, language}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const tooltip = <Tooltip id="filterhelp"><p>{t('filter.tooltip')}</p></Tooltip>;
   const header =
@@ -27,7 +27,8 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showPlaylists, languag
       </OverlayTrigger>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
-  const radioButtons = language !== 'nb' ? null : <RadioButtons/>;
+  const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
+  const groups = showFiltergroups ? filterGroups : null;
   return (
     <div>
       {/*Filter desktop*/}
@@ -35,7 +36,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showPlaylists, languag
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
             {radioButtons}
-            {showPlaylists && language === 'nb' ? null : filterGroups}
+            {groups}
           </ListGroup>
         </Panel>
       </Col>
@@ -44,7 +45,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showPlaylists, languag
         <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
           <ListGroup fill>
             {radioButtons}
-            {showPlaylists && language === 'nb' ? null : filterGroups}
+            {groups}
           </ListGroup>
         </CollapsiblePanel>
       </Col>
@@ -58,16 +59,16 @@ LessonFilter.propTypes = {
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
-  showPlaylists: PropTypes.bool.isRequired,
-  language: PropTypes.string.isRequired,
+  showRadiobuttons: PropTypes.bool.isRequired,
+  showFiltergroups: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
-  showPlaylists: state.showPlaylists,
-  language: state.language,
+  showRadiobuttons: state.language === 'nb',
+  showFiltergroups: !state.playlists || state.language !== 'nb',
 });
 
 export default connect(

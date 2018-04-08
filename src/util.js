@@ -372,7 +372,7 @@ export const getPathForMainLanguage = (path, language, isReadme) => {
 * @param {object} courses
 * @returns {object}
 */
-export const hasPlaylist = (courses) => {
+export const coursesWithPlaylists = (courses) => {
   // TODO: make this
   return courses;
 };

@@ -8,7 +8,6 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import AutoAffix from 'react-overlays/lib/AutoAffix';
 import cx from 'classnames';
-
 import styles from './PlaylistPage.scss';
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
@@ -26,12 +25,6 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists
   const filter = <LessonFilter courseName={params.course}/>;
   const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
   const courseInfo = <CourseInfo courseName={params.course}/>;
-  const hasPlaylists = !showPlaylists ? null :
-    <Row>
-      <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
-      <Col xs={12} sm={9}><PlaylistNavigation playlists={coursePlaylists}/></Col>
-    </Row>;
-
   let thispage = null;
   const jumpToAffixed = jumpTo ?
     <Col xsHidden sm={3} className={cx(styles.jumpTo, {[styles.topMargin]: lessonLists.length})}>
@@ -39,7 +32,6 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists
         {jumpTo}
       </AutoAffix>
     </Col> : null;
-
   return (
     <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
       <Grid fluid={true} ref={grid => thispage = grid}>
@@ -47,7 +39,12 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists
           <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
           <Col xs={12}>{courseInfo}</Col>
         </Row>
-        {hasPlaylists ? hasPlaylists :
+        {showPlaylists ?
+          <Row>
+            <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
+            <Col xs={12} sm={9}><PlaylistNavigation playlists={coursePlaylists}/></Col>
+          </Row>
+          :
           <Row>
             <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>{filter}</Col>
             <Col xs={12} smHidden mdHidden lgHidden>{jumpTo}</Col>

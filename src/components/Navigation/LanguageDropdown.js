@@ -46,10 +46,9 @@ const LanguageDropdown = ({isStudentMode, language, translateTag,
         bsStyle={'language-' + mode}
         title={<LanguageItem onlyFlag={true} {...{language, translateTag}}/>}
         onSelect={(eventKey) => {
-          const showPlaylists = language !== 'nb';
           resetFilter('language', eventKey);
           setLanguage(eventKey);
-          setShowPlaylists(showPlaylists);
+          setShowPlaylists(language !== 'nb');
           collapseAllFilterGroups(true);
         }}>
 
