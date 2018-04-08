@@ -87,11 +87,11 @@ export default {
   },
   filter: {
     header: 'Filter',
-    tooltip: {
-      textline1: 'The filter allows you to sort out the lessons you want to solve according to the topics you ' +
-                 'want to work with.',
-      textline2: 'Behind each choice there are the number of lessons that can be solved, according to the choices ' +
-                 'you make in the filter.'
+    tooltip: 'The filter allows you to sort out the lessons you want to solve according to the topics you ' +
+      'want to work with.',
+    radio: {
+      playlists: 'Playlists',
+      lessons: 'All lessons'
     },
     removefilter: 'Clear filter'
   },

@@ -8,7 +8,6 @@ import Row from 'react-bootstrap/lib/Row';
 
 const CourseList = ({courses}) => {
   const courseNames = Object.keys(courses).sort((a, b) => courses[b].lessonCount - courses[a].lessonCount);
-
   return (
     <Row>
       <div className={styles.courseList}>
@@ -24,7 +23,7 @@ const CourseList = ({courses}) => {
 
 CourseList.propTypes = {
   // ownProps
-  courses: PropTypes.object
+  courses: PropTypes.object,
 };
 
 export default withStyles(styles)(CourseList);

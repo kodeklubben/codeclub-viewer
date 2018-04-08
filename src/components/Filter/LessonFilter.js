@@ -6,6 +6,7 @@ import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
+import RadioButtons from './RadioButtons';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -14,13 +15,9 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
-  const tooltip =
-    <Tooltip id="filterhelp">
-      <p>{t('filter.tooltip.textline1')}</p>
-      <p>{t('filter.tooltip.textline2')}</p>
-    </Tooltip>;
+  const tooltip = <Tooltip id="filterhelp"><p>{t('filter.tooltip')}</p></Tooltip>;
   const header =
     <span>
       {t('filter.header')}
@@ -30,21 +27,25 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
       </OverlayTrigger>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
+  const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
+  const groups = showFiltergroups ? filterGroups : null;
   return (
     <div>
       {/*Filter desktop*/}
       <Col xsHidden>
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
-            {filterGroups}
+            {radioButtons}
+            {groups}
           </ListGroup>
         </Panel>
       </Col>
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
-        <CollapsiblePanel initiallyExpanded={false} {...{header, bsStyle}}>
+        <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
           <ListGroup fill>
-            {filterGroups}
+            {radioButtons}
+            {groups}
           </ListGroup>
         </CollapsiblePanel>
       </Col>
@@ -57,13 +58,17 @@ LessonFilter.propTypes = {
   // mapStateToProps
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  showRadiobuttons: PropTypes.bool.isRequired,
+  showFiltergroups: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {courseName}) => ({
+const mapStateToProps = (state) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
+  t: getTranslator(state),
+  showRadiobuttons: state.language === 'nb',
+  showFiltergroups: !state.showPlaylists || state.language !== 'nb',
 });
 
 export default connect(
