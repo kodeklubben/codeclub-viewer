@@ -11,7 +11,7 @@ import cx from 'classnames';
 import styles from './PlaylistPage.scss';
 import {getLessonsByLevel} from '../selectors/lesson';
 import {getTranslator} from '../selectors/translate';
-import {getPlaylists} from '../selectors/playlist';
+import {getPlaylists, getShowRadiobuttons} from '../selectors/playlist';
 import {capitalize} from '../util';
 import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/PlaylistPage/LessonList';
@@ -79,7 +79,7 @@ const mapStateToProps = (state, {params}) => ({
   lessonsByLevel: getLessonsByLevel(state, params.course),
   coursePlaylists: getPlaylists(state, params.course),
   t: getTranslator(state),
-  showPlaylists: state.showPlaylists,
+  showPlaylists: state.showPlaylists && getShowRadiobuttons(state, params.course),
 });
 
 export default connect(
