@@ -1,3 +1,5 @@
+const softHyphen = '\u00ad';
+
 export default {
   general: {
     student: 'Elev',
@@ -90,7 +92,7 @@ export default {
     tooltip: 'Dersom man velger "Alle oppgaver", ' +
       'så kan man i filteret sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
     radio: {
-      playlists: 'Oppgavesamlinger',
+      playlists: `Oppgave${softHyphen}samlinger`,
       lessons: 'Alle oppgaver'
     },
     removefilter: 'Nullstill filter'
