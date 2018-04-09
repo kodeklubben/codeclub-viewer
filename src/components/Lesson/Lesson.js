@@ -17,7 +17,8 @@ import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors
 import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
-import {setCheckbox, setLastLesson} from '../../action_creators';
+import {setCheckbox} from '../../reducers/checkboxes';
+import {setLastLesson} from '../../reducers/lastLesson';
 import MarkdownRenderer from '../MarkdownRenderer';
 import Progress from './Progress';
 import LessonButton from './LessonButton';

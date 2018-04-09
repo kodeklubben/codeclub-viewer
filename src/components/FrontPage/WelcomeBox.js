@@ -7,7 +7,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './WelcomeBox.scss';
 import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {setWelcomeBox} from '../../action_creators';
+import {setWelcomeBox} from '../../reducers/welcomeBox';
 
 const WelcomeBox = ({t, welcomeBox, setWelcomeBox, lastLesson}) => {
   const hasLastLesson = lastLesson !== '';

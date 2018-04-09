@@ -6,7 +6,8 @@ import styles from './ClearFilterButton.scss';
 import Button from 'react-bootstrap/lib/Button';
 import {getTranslator} from '../../selectors/translate';
 import {somethingCheckedInFilter} from '../../selectors/filter';
-import {resetFilter, collapseAllFilterGroups} from '../../action_creators';
+import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
+import {resetFilter} from '../../reducers/filter';
 
 const ClearFilterButton = ({t, language, resetFilter, collapseAllFilterGroups, somethingChecked}) => {
   const onClick = () => {

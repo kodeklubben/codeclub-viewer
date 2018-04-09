@@ -1,3 +1,5 @@
+const softHyphen = '\u00ad';
+
 export default {
   general: {
     student: 'Elev',
@@ -87,9 +89,11 @@ export default {
   },
   filter: {
     header: 'Filter',
-    tooltip: {
-      textline1: 'I filteret kan man sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
-      textline2: 'Bak hvert valg står det antall oppgaver som kan løses, etter hvilke valg du gjør i filteret.'
+    tooltip: 'Dersom man velger "Alle oppgaver", ' +
+      'så kan man i filteret sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
+    radio: {
+      playlists: `Oppgave${softHyphen}samlinger`,
+      lessons: 'Alle oppgaver'
     },
     removefilter: 'Nullstill filter'
   },
@@ -111,7 +115,6 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    downloadZIP:  'Last ned alle kurs som zip-fil',
     contribute: 'Bidra?'
   },
   404: {

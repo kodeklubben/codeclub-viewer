@@ -367,6 +367,17 @@ export const getPathForMainLanguage = (path, language, isReadme) => {
 };
 
 /**
+* Returns an object with only the courses that have playlists
+*
+* @param {object} courses
+* @returns {object}
+*/
+export const coursesWithPlaylists = (courses) => {
+  // TODO: make this
+  return courses;
+};
+
+/**
  * Based on an implementation of Java's string to integer hashCode function.
  * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
  */

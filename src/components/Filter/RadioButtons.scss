@@ -1,0 +1,13 @@
+.label {
+  margin: 5px 0 5px 17px;
+  display: block;
+  font-weight: normal;
+  font-size: 1.125em;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.marginLeft {
+  margin-left: 6px;
+}

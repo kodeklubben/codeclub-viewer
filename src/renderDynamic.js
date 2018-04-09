@@ -10,7 +10,8 @@ import useScroll from 'react-router-scroll';
 import {Provider} from 'react-redux';
 import routes from './routes';
 import WithStylesContext from './WithStylesContext';
-import store from './store';
+import store, {updateStoreFromLocalStorage} from './store';
+
 
 const renderDynamic = () => {
   const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
@@ -37,7 +38,8 @@ const renderDynamic = () => {
         />
       </WithStylesContext>
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('app'),
+    updateStoreFromLocalStorage,
   );
 };
 
