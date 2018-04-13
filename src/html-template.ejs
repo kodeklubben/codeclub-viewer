@@ -9,7 +9,7 @@
     <title><%- pageTitle -%></title>
 
     <% cssAssets.forEach(function(file){ %>
-    <link href="/<%- file -%>" rel="stylesheet">
+    <link href="<%- file -%>" rel="stylesheet">
     <% }); %>
 
     <%- appCss -%>
@@ -18,7 +18,7 @@
     <div id="app"><%- appHtml -%></div>
 
     <% jsAssets.forEach(function(file){ %>
-    <script src="/<%- file -%>" async></script>
+    <script src="<%- file -%>" async></script>
     <% }); %>
 </body>
 </html>
