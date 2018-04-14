@@ -1,14 +1,14 @@
 import React, {Children} from 'react';
 import PropTypes from 'prop-types';
 
-const WithStylesContext = React.createClass({
+class WithStylesContext extends React.Component {
   getChildContext() {
     return {insertCss: this.props.onInsertCss};
-  },
+  }
   render() {
     return Children.only(this.props.children);
   }
-});
+}
 
 WithStylesContext.propTypes = {
   children: PropTypes.element.isRequired,
