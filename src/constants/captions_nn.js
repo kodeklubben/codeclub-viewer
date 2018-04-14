@@ -18,15 +18,8 @@ export default {
   frontpage: {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    welcomebox: {
-      header: 'Hei! Du er no i elevmodus',
-      changemode: 'Er du ikkje elev? Klikk elev/lærar-knappen i navigasjonsmenyen for å bytte modus. ' +
-                  'Du kan også velje å skjule denne boksen for alltid, ved å trykkje på X i hjørnet',
-      info: 'Velkomen til Kodeklubben sine oppgåvesider! Her finn du mange rettleiingar som du kan ' +
-            'bruke som inspirasjon for å lære deg programmering og lage dine eigne spel, appar og nettsider. ' +
-            'For nybegynnarar anbefaler me å ta ein kikk på dei blokkbaserte oppgåvene i Code Studio eller Scratch. ' +
-            'Bruk gjerne filtera på venstre side til å finne oppgåver som passar for deg!',
-      startbutton: 'Start her!',
+    startbutton: {
+      begin: 'Start her!',
       buttonlink: '/scratch/astrokatt/astrokatt',
       continuebutton: 'Fortsett...',
     },

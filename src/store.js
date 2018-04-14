@@ -8,7 +8,6 @@ import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
 import {setLanguage} from './reducers/language';
 import {setLastLesson} from './reducers/lastLesson';
 import {setMode} from './reducers/mode';
-import {setWelcomeBox} from './reducers/welcomeBox';
 import {setShowPlaylists} from './reducers/showPlaylists';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
@@ -29,7 +28,6 @@ if (isProduction) {
 }
 
 const defaultMode = true;
-const defaultWelcomeBox = true;
 const defaultLanguage = 'nb';
 const defaultLastLesson = '';
 const defaultCheckboxes = {};
@@ -44,13 +42,11 @@ for (let groupKey of Object.keys(filter)) {
 
 export const updateStoreFromLocalStorage = () => {
   const initialMode = loadFromLocalStorage('isStudentMode', defaultMode);
-  const initialWelcomeBox = loadFromLocalStorage('welcomeBox', defaultWelcomeBox);
   const initialLanguage = loadFromLocalStorage('language', defaultLanguage);
   const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
   const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultPlaylists);
 
   store.dispatch(setMode(initialMode));
-  store.dispatch(setWelcomeBox(initialWelcomeBox));
   store.dispatch(setLanguage(initialLanguage));
   store.dispatch(setLastLesson(initialLastLesson));
   store.dispatch(setShowPlaylists(initialPlaylists));
