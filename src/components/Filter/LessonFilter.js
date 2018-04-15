@@ -8,8 +8,7 @@ import {getTranslator} from '../../selectors/translate';
 import {getShowRadiobuttons} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import PopoverComponent from '../PopoverComponent';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
@@ -18,14 +17,12 @@ import ClearFilterButton from './ClearFilterButton';
 
 const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
-  const tooltip = <Tooltip id="filterhelp"><p>{t('filter.tooltip')}</p></Tooltip>;
   const header =
     <span>
       {t('filter.header')}
-      <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}
-        onClick={(e) => e.stopPropagation()}>
+      <PopoverComponent popoverContent={t('filter.tooltip')}>
         <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
-      </OverlayTrigger>
+      </PopoverComponent>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
