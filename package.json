@@ -41,7 +41,6 @@
     ]
   },
   "dependencies": {
-    "babel-eslint": "^8.2.3",
     "classnames": "^2.2.5",
     "highlight.js": "^9.11.0",
     "history": "^2.1.2",
@@ -68,6 +67,7 @@
     "autoprefixer": "^6.7.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.9.1",
+    "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",

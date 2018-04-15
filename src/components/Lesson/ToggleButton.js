@@ -11,9 +11,7 @@ class ToggleButton extends React.Component {
     this.state = {open: false};
   }
 
-  createMarkup = () => {
-    return {__html: this.props.hiddenHTML};
-  }
+  createMarkup = () => ({__html: this.props.hiddenHTML})
 
   render() {
     const containerStyle = {
