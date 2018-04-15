@@ -18,10 +18,10 @@ export default {
   frontpage: {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    startbutton: {
-      begin: 'Start her!',
-      buttonlink: '/scratch/astrokatt/astrokatt',
-      continuebutton: 'Fortsett...',
+    button: {
+      start: 'Start her!',
+      startlink: '/scratch/astrokatt/astrokatt',
+      continue: 'Fortsett...',
     },
     teacherinfobox: {
       header: 'Hei! Du er no i lærarmodus',

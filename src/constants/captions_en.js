@@ -16,10 +16,10 @@ export default {
   frontpage: {
     courses: 'Courses',
     otherwebsitecourses: 'Courses on other webpages',
-    startbutton: {
-      begin: 'Start here!',
-      buttonlink: '/scratch/astrokatt/astrokatt',
-      continuebutton: 'Continue...',
+    button: {
+      start: 'Start here!',
+      startlink: '/scratch/astrokatt/astrokatt',
+      continue: 'Continue...',
     },
     teacherinfobox: {
       header: 'Hello! You are now in teachermode',

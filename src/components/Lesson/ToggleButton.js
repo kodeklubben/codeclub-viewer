@@ -9,13 +9,10 @@ class ToggleButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {open: false};
-    this.createMarkup = this.createMarkup.bind(this);
   }
 
-  createMarkup(){
-    return {
-      __html: this.props.hiddenHTML
-    };
+  createMarkup = () => {
+    return {__html: this.props.hiddenHTML};
   }
 
   render() {

@@ -11,9 +11,9 @@ const StartButton = ({t, lastLesson}) => {
   const hasLastLesson = lastLesson !== '';
   return (
     <div className={styles.center}>
-      <LinkContainer to={hasLastLesson ? lastLesson : t('frontpage.startbutton.buttonlink')}>
+      <LinkContainer to={hasLastLesson ? lastLesson : t('frontpage.button.startlink')}>
         <Button bsStyle='student-frontpage'>
-          {hasLastLesson ? t('frontpage.startbutton.continuebutton') : t('frontpage.startbutton.begin')}
+          {hasLastLesson ? t('frontpage.button.continue') : t('frontpage.button.start')}
         </Button>
       </LinkContainer>
     </div>
