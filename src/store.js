@@ -3,7 +3,7 @@
 import {createStore} from 'redux';
 import {getInitialFilter, getLessonData, createCheckboxesKey} from './util';
 import {setCheckboxes} from './reducers/checkboxes';
-import {setFilter} from './reducers/filter';
+import {setFilter, resetOneFilter} from './reducers/filter';
 import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
 import {setLanguage} from './reducers/language';
 import {setLastLesson} from './reducers/lastLesson';
@@ -50,6 +50,7 @@ export const updateStoreFromLocalStorage = () => {
   store.dispatch(setLanguage(initialLanguage));
   store.dispatch(setLastLesson(initialLastLesson));
   store.dispatch(setShowPlaylists(initialPlaylists));
+  store.dispatch(resetOneFilter('language', initialLanguage));
 
   for (let path of Object.keys(getLessonData())) {
     const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);

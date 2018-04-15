@@ -9,9 +9,17 @@ export function setFilter(filter) {
   };
 }
 
-export function resetFilter(groupKey, tagKey) {
+export function resetAllFilters(groupKey, tagKey) {
   return {
-    type: 'RESET_FILTER',
+    type: 'RESET_ALL_FILTERS',
+    groupKey,
+    tagKey
+  };
+}
+
+export function resetOneFilter(groupKey, tagKey) {
+  return {
+    type: 'RESET_ONE_FILTER',
     groupKey,
     tagKey
   };
@@ -73,17 +81,29 @@ function handleCheckFilter(state, groupKey, tagKey){
 
 }
 
-// Set all tags to false except filter[groupKey][tagKey]
-function handleResetFilter(state, groupKey, tagKey) {
-  const filterGroups = Object.keys(state);
-  return filterGroups.reduce((res, filterGroup) => {
-    const tags = state[filterGroup];
-    res[filterGroup] = Object.keys(tags).reduce((tagsRes, tag) => ({...tagsRes, [tag]: false}), {});
-    if(groupKey && tagKey){
-      res[groupKey][tagKey] = true;
-    }
-    return res;
-  },{});
+// Returns a copy of filterGroup where all values have been set to false
+// except the tagKeys matching trueTagKey
+const resetFilterGroup = (filterGroup, trueTagKey) => {
+  const reducerAddTagAsFalse = (result, tagKey) => ({...result, [tagKey]: tagKey === trueTagKey});
+  const tagKeys = Object.keys(filterGroup);
+  return tagKeys.reduce(reducerAddTagAsFalse, {});
+};
+
+// Set all tags to false except filter[groupKey][trueTagKey]
+function handleResetAllFilters(state, groupKey, trueTagKey) {
+  const reducerAddGroup = (result, gKey) => ({
+    ...result,
+    [gKey]: resetFilterGroup(state[gKey], gKey === groupKey ? trueTagKey : null)
+  });
+  const groupKeys = Object.keys(state);
+  return groupKeys.reduce(reducerAddGroup, {});
+}
+
+// Set all tags to false in group with groupKey except filter[groupKey][trueTagKey]
+function handleResetOneFilter(state, groupKey, trueTagKey) {
+  const groupKeys = Object.keys(state);
+  const validGroupKey = groupKeys.includes(groupKey);
+  return validGroupKey ? {...state, [groupKey]: resetFilterGroup(state[groupKey], trueTagKey)} : state;
 }
 
 export default function(state = INITIAL_STATE, action) {
@@ -91,8 +111,10 @@ export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case 'SET_FILTER':
       return action.filter;
-    case 'RESET_FILTER':
-      return handleResetFilter(state, action.groupKey, action.tagKey);
+    case 'RESET_ALL_FILTERS':
+      return handleResetAllFilters(state, action.groupKey, action.tagKey);
+    case 'RESET_ONE_FILTER':
+      return handleResetOneFilter(state, action.groupKey, action.tagKey);
     case 'FILTER_CHECKED':
       return handleCheckFilter(state, action.groupKey, action.tagKey);
   }

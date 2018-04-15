@@ -5,10 +5,10 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './RadioButtons.scss';
 import {getTranslator} from '../../selectors/translate';
 import {setShowPlaylists} from '../../reducers/showPlaylists';
-import {resetFilter} from '../../reducers/filter';
+import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetFilter, collapseAllFilterGroups}) => {
+const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
   const RadioButton = ({checked, onChange, text}) =>
     <label className={styles.label}>
       <input type='radio' name='radioGroup' {...{checked, onChange}}/>
@@ -20,12 +20,16 @@ const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetFilter
         checked={showPlaylists}
         onChange={() => {
           setShowPlaylists(true);
-          resetFilter('language', language);
+          resetAllFilters('language', language);
           collapseAllFilterGroups(true);
         }}
         text={t('filter.radio.playlists')}
       />
-      <RadioButton checked={!showPlaylists} onChange={() => setShowPlaylists(false)} text={t('filter.radio.lessons')}/>
+      <RadioButton
+        checked={!showPlaylists}
+        onChange={() => setShowPlaylists(false)}
+        text={t('filter.radio.lessons')}
+      />
     </form>
   );
 };
@@ -38,7 +42,7 @@ RadioButtons.propTypes = {
 
   // mapDispatchToProps
   setShowPlaylists: PropTypes.func.isRequired,
-  resetFilter: PropTypes.func.isRequired,
+  resetAllFilters: PropTypes.func.isRequired,
   collapseAllFilterGroups: PropTypes.func.isRequired,
 };
 
@@ -50,7 +54,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setShowPlaylists,
-  resetFilter,
+  resetAllFilters,
   collapseAllFilterGroups,
 };
 

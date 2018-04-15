@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
-import {resetFilter} from '../../reducers/filter';
-import {setShowPlaylists} from '../../reducers/showPlaylists';
+import {resetOneFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
@@ -36,7 +35,7 @@ LanguageItem.propTypes = {
 };
 
 const LanguageDropdown = ({isStudentMode, language, translateTag,
-  resetFilter, setLanguage, setShowPlaylists, collapseAllFilterGroups}) => {
+  resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
   const mode = isStudentMode ? 'student' : 'teacher';
   return (
     <div className={styles.gadgetContainer}>
@@ -46,9 +45,8 @@ const LanguageDropdown = ({isStudentMode, language, translateTag,
         bsStyle={'language-' + mode}
         title={<LanguageItem onlyFlag={true} {...{language, translateTag}}/>}
         onSelect={(eventKey) => {
-          resetFilter('language', eventKey);
+          resetOneFilter('language', eventKey);
           setLanguage(eventKey);
-          setShowPlaylists(language !== 'nb');
           collapseAllFilterGroups(true);
         }}>
 
@@ -72,8 +70,7 @@ LanguageDropdown.propTypes = {
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
-  resetFilter: PropTypes.func.isRequired,
-  setShowPlaylists: PropTypes.func.isRequired,
+  resetOneFilter: PropTypes.func.isRequired,
   collapseAllFilterGroups: PropTypes.func.isRequired,
 };
 
@@ -85,8 +82,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   setLanguage,
-  resetFilter,
-  setShowPlaylists,
+  resetOneFilter,
   collapseAllFilterGroups,
 };
 
