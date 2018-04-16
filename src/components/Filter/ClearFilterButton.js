@@ -7,11 +7,11 @@ import Button from 'react-bootstrap/lib/Button';
 import {getTranslator} from '../../selectors/translate';
 import {somethingCheckedInFilter} from '../../selectors/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
-import {resetFilter} from '../../reducers/filter';
+import {resetAllFilters} from '../../reducers/filter';
 
-const ClearFilterButton = ({t, language, resetFilter, collapseAllFilterGroups, somethingChecked}) => {
+const ClearFilterButton = ({t, language, resetAllFilters, collapseAllFilterGroups, somethingChecked}) => {
   const onClick = () => {
-    resetFilter('language', language);
+    resetAllFilters('language', language);
     collapseAllFilterGroups(true);
   };
   const bsStyle = 'white-grey-lighter';
@@ -29,7 +29,7 @@ ClearFilterButton.propTypes = {
   t: PropTypes.func.isRequired,
 
   // mapDispatchToProps
-  resetFilter: PropTypes.func.isRequired,
+  resetAllFilters: PropTypes.func.isRequired,
   collapseAllFilterGroups: PropTypes.func.isRequired,
   somethingChecked: PropTypes.bool.isRequired
 };
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  resetFilter,
+  resetAllFilters,
   collapseAllFilterGroups,
 };
 
