@@ -327,7 +327,9 @@ const createConfig = (env = {}) => {
         new StaticSiteGeneratorPlugin({
           entry: 'main',
           paths: staticSitePaths,
-          locals: {},
+          locals: {
+            publicPath,
+          },
           globals: {
             window: {}
           }

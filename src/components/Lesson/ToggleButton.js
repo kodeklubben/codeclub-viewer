@@ -5,17 +5,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
 import Collapse from 'react-bootstrap/lib/Collapse';
 
-const ToggleButton = React.createClass({
-  getInitialState() {
-    return {
-      open: false
-    };
-  },
-  createMarkup(){
-    return {
-      __html: this.props.hiddenHTML
-    };
-  },
+class ToggleButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {open: false};
+  }
+
+  createMarkup = () => ({__html: this.props.hiddenHTML})
+
   render() {
     const containerStyle = {
       margin: '10px 0',
@@ -42,7 +39,7 @@ const ToggleButton = React.createClass({
       </div>
     );
   }
-});
+}
 
 ToggleButton.propTypes = {
   // ownProps

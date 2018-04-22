@@ -8,15 +8,14 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
-const TeacherInfobox = React.createClass({
-  getInitialState() {
-    return {
-      showCourseInfo: false
-    };
-  },
-  changeState() {
-    this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
-  },
+class TeacherInfobox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showCourseInfo: false};
+  }
+
+  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']})
+
   render() {
     const {t} = this.props;
     const {showCourseInfo} = this.state;
@@ -58,8 +57,7 @@ const TeacherInfobox = React.createClass({
       </div>
     );
   }
-
-});
+}
 
 TeacherInfobox.propTypes = {
   // mapStateToProps

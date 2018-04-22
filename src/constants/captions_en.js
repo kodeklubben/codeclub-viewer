@@ -16,17 +16,10 @@ export default {
   frontpage: {
     courses: 'Courses',
     otherwebsitecourses: 'Courses on other webpages',
-    welcomebox: {
-      header: 'Hello! You are now in studentmode',
-      changemode: 'Are you not a student? Click the student / teacher button in the navigation menu to switch mode. ' +
-                  'You can also choose to hide this box forever, by pressing X in the corner',
-      info: 'Welcome to Kodeklubbens lesson pages! Here you will find many guides that you can use as inspiration ' +
-            'to teach you programming and create your own games, apps and web pages. For beginners, we recommend ' +
-            'taking a look at the block-based tasks in Code Studio or Scratch. Please use the filters on the left ' +
-            'side to find tasks that are right for you!',
-      startbutton: 'Start here!',
-      buttonlink: '/scratch/astrokatt/astrokatt',
-      continuebutton: 'Continue...',
+    button: {
+      start: 'Start here!',
+      startlink: '/scratch/astrokatt/astrokatt',
+      continue: 'Continue...',
     },
     teacherinfobox: {
       header: 'Hello! You are now in teachermode',
@@ -87,11 +80,11 @@ export default {
   },
   filter: {
     header: 'Filter',
-    tooltip: {
-      textline1: 'The filter allows you to sort out the lessons you want to solve according to the topics you ' +
-                 'want to work with.',
-      textline2: 'Behind each choice there are the number of lessons that can be solved, according to the choices ' +
-                 'you make in the filter.'
+    tooltip: 'The filter allows you to sort out the lessons you want to solve according to the topics you ' +
+      'want to work with.',
+    radio: {
+      playlists: 'Playlists',
+      lessons: 'All lessons'
     },
     removefilter: 'Clear filter'
   },

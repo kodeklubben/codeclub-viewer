@@ -7,16 +7,13 @@ import Col from 'react-bootstrap/lib/Col';
 import LessonFilter from '../components/Filter/LessonFilter';
 import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
-import WelcomeBox from '../components/FrontPage/WelcomeBox';
+import StartButton from '../components/FrontPage/StartButton';
 
 const FrontPage = ({isStudentMode}) => {
   return (
     <Grid fluid={true}>
-      {/*WelcomeBox and TeacherInfobox*/}
-      {isStudentMode ? <WelcomeBox /> : <TeacherInfobox />}
-
+      {isStudentMode ? <StartButton /> : <TeacherInfobox />}
       <hr/>
-      {/* Filter and courses */}
       <Row>
         <Col sm={4} md={3} lg={2}>
           <LessonFilter/>

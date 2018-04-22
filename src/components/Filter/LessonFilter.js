@@ -5,46 +5,45 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getTranslator} from '../../selectors/translate';
+import {getShowRadiobuttons} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import RadioButtons from './RadioButtons';
+import PopoverComponent from '../PopoverComponent';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
 import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
-  const tooltip =
-    <Tooltip id="filterhelp">
-      <p>{t('filter.tooltip.textline1')}</p>
-      <p>{t('filter.tooltip.textline2')}</p>
-    </Tooltip>;
   const header =
     <span>
       {t('filter.header')}
-      <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={tooltip}
-        onClick={(e) => e.stopPropagation()}>
+      <PopoverComponent popoverContent={t('filter.tooltip')}>
         <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
-      </OverlayTrigger>
+      </PopoverComponent>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
+  const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
+  const groups = showFiltergroups ? filterGroups : null;
   return (
     <div>
       {/*Filter desktop*/}
       <Col xsHidden>
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
-            {filterGroups}
+            {radioButtons}
+            {groups}
           </ListGroup>
         </Panel>
       </Col>
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
-        <CollapsiblePanel initiallyExpanded={false} {...{header, bsStyle}}>
+        <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
           <ListGroup fill>
-            {filterGroups}
+            {radioButtons}
+            {groups}
           </ListGroup>
         </CollapsiblePanel>
       </Col>
@@ -54,17 +53,27 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t}) => {
 };
 
 LessonFilter.propTypes = {
+  // ownProps
+  courseName: PropTypes.string,
+
   // mapStateToProps
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  showRadiobuttons: PropTypes.bool.isRequired,
+  showFiltergroups: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {courseName}) => ({
-  filterGroupKeys: Object.keys(state.filter),
-  isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
-});
+const mapStateToProps = (state, {courseName}) => {
+  const showRadiobuttons = getShowRadiobuttons(state, courseName);
+  return {
+    filterGroupKeys: Object.keys(state.filter),
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state),
+    showRadiobuttons,
+    showFiltergroups: !state.showPlaylists || !showRadiobuttons,
+  };
+};
 
 export default connect(
   mapStateToProps

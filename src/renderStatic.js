@@ -36,7 +36,7 @@ const renderStatic = (locals, callback) => {
 
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
     const pageTitle =  DocumentTitle.rewind();
-    const assets = Object.keys(locals.webpackStats.compilation.assets);
+    const assets = Object.keys(locals.webpackStats.compilation.assets).map(p => locals.publicPath + p);
     const cssAssets = assets.filter(value => value.match(/\.css$/));
     const jsAssets = assets.filter(value => value.match(/\.js$/));
     const html = template({ cssAssets, jsAssets, appCss, appHtml, pageTitle });

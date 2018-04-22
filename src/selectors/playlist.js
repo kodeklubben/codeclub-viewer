@@ -40,3 +40,10 @@ export const getPlaylists = createSelector(
     }, {});
   }
 );
+
+/**
+ * Returns a boolean that says if the radiobuttons for choosing between playlists and lessons should be displayed
+ * Input props: courseName (string, optional)
+ */
+export const getShowRadiobuttons = (state, courseName) =>
+  state.language === 'nb' && Object.keys(getPlaylists(state, courseName)).length > 0;

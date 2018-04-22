@@ -1,3 +1,5 @@
+const softHyphen = '\u00ad';
+
 export default {
   general: {
     student: 'Elev',
@@ -16,17 +18,10 @@ export default {
   frontpage: {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    welcomebox: {
-      header: 'Hei! Du er no i elevmodus',
-      changemode: 'Er du ikkje elev? Klikk elev/lærar-knappen i navigasjonsmenyen for å bytte modus. ' +
-                  'Du kan også velje å skjule denne boksen for alltid, ved å trykkje på X i hjørnet',
-      info: 'Velkomen til Kodeklubben sine oppgåvesider! Her finn du mange rettleiingar som du kan ' +
-            'bruke som inspirasjon for å lære deg programmering og lage dine eigne spel, appar og nettsider. ' +
-            'For nybegynnarar anbefaler me å ta ein kikk på dei blokkbaserte oppgåvene i Code Studio eller Scratch. ' +
-            'Bruk gjerne filtera på venstre side til å finne oppgåver som passar for deg!',
-      startbutton: 'Start her!',
-      buttonlink: '/scratch/astrokatt/astrokatt',
-      continuebutton: 'Fortsett...',
+    button: {
+      start: 'Start her!',
+      startlink: '/scratch/astrokatt/astrokatt',
+      continue: 'Fortsett...',
     },
     teacherinfobox: {
       header: 'Hei! Du er no i lærarmodus',
@@ -88,9 +83,10 @@ export default {
   },
   filter: {
     header: 'Filter',
-    tooltip: {
-      textline1: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
-      textline2: 'Bak kvart val står det kor mange oppgaver som passar til filteret du legg på.'
+    tooltip: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
+    radio: {
+      playlists: `Oppgave${softHyphen}samlinger`,
+      lessons: 'Alle oppgaver'
     },
     removefilter: 'Nullstill filter'
   },
