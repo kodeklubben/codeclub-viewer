@@ -338,9 +338,8 @@ const createConfig = (env = {}) => {
           }
         }),
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
+        new OfflinePlugin(),
       ]),
-
-      new OfflinePlugin(),
 
     ],
 
