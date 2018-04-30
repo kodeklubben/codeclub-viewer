@@ -17,28 +17,39 @@ const lessons = getLessonData();
 const courses = courseContext.keys();
 const readmePaths = readmeContext.keys();
 
-const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
-const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));
-const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, ''));
+const lessonPathArray = Object.keys(lessons).map((key) => lessons[key]['path']);
+const coursePathArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, '')); // Remove leading '.'
+const readmePathArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, '')); // Remove leading '.'
 
-const pageNotFound = (replace, location) => {
+/**
+ * Redirects to /PageNotFound
+ *
+ * @param replace
+ * @param path
+ * @param basename is defined in historyOptions, e.g. '/beta'
+ */
+const redirectToPageNotFound = (replace, path, basename = '') => {
+  if (basename) { path = basename + path; }
   if (typeof document !== 'undefined') { // Only replace in the browser
-    const path = (location.basename || '') + location.pathname; // basename is defined in historyOptions, e.g. '/beta'
     replace({pathname: '/PageNotFound', state: path});
   } else {
     console.error('ERROR: The path', location.pathname, 'is not valid!');
   }
 };
 
-const checkCourse = ({location}, replace) => {
-  if (!courseArray.includes(location.pathname)) {
-    pageNotFound(replace, location);
+const checkCourse = ({params, location}, replace) => {
+  // Construct path explicitly instead of relying on location.pathname, which depends on originating link
+  const path = `/${params.course}`;
+  if (!coursePathArray.includes(path)) {
+    redirectToPageNotFound(replace, path, location.basename);
   }
 };
 
-const checkLesson = ({location}, replace) => {
-  if (!lessonArray.includes(location.pathname) && !readmeArray.includes(location.pathname)) {
-    pageNotFound(replace, location);
+const checkLesson = ({params, location}, replace) => {
+  // Construct path explicitly instead of relying on location.pathname, which depends on originating link
+  const path = `/${params.course}/${params.lesson}/${params.file}`;
+  if (!lessonPathArray.includes(location.pathname) && !readmePathArray.includes(location.pathname)) {
+    redirectToPageNotFound(replace, path, location.basename);
   }
 };
 
