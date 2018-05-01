@@ -36,10 +36,15 @@ const renderStatic = (locals, callback) => {
 
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
     const pageTitle =  DocumentTitle.rewind();
-    const assets = Object.keys(locals.webpackStats.compilation.assets).map(p => locals.publicPath + p);
-    const cssAssets = assets.filter(value => value.match(/\.css$/));
-    const jsAssets = assets.filter(value => value.match(/\.js$/));
-    const html = template({ cssAssets, jsAssets, appCss, appHtml, pageTitle });
+    const assets = Object.keys(locals.webpackStats.compilation.assets);
+    const faviconAssets = assets.filter(p => p === locals.faviconstatsFilename);
+    if (faviconAssets.length !== 1) {
+      console.log('WARNING (' + pathWithoutHtml + '): Could not uniquely identify faviconstats-file:', faviconAssets);
+    }
+    const faviconHtml = JSON.parse(locals.webpackStats.compilation.assets[faviconAssets[0]].source()).html.join('\n');
+    const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
+    const jsAssets = assets.filter(p => /\.js$/.test(p)).map(p => locals.publicPath + p);
+    const html = template({ cssAssets, jsAssets, appCss, appHtml, pageTitle, faviconHtml });
 
     callback(null, html);
   });

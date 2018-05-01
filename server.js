@@ -11,6 +11,10 @@ const { buildBaseDir, buildDir, publicPathWithoutSlash } = require('./buildconst
 const app = express();
 app.use(compression());
 
+// app.use(function(req, res, next) {
+//   console.log('requested:', req.url);
+//   next();
+// });
 
 // serve our static stuff (i.e. urls that match files that exists)
 app.use(publicPathWithoutSlash, express.static(path.resolve(buildDir), {redirect: false}));
@@ -18,7 +22,6 @@ app.use(publicPathWithoutSlash, express.static(path.resolve(buildDir), {redirect
 // send all requests other requests here
 app.get('*', function (req, res) {
   const url = req.params[0];
-  console.log('url', url);
   if (!url.startsWith(publicPathWithoutSlash)) {
     console.log('Redirecting to', publicPathWithoutSlash);
     res.redirect(publicPathWithoutSlash);
