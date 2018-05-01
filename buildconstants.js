@@ -9,7 +9,8 @@ let subDir = fs.existsSync(subDirFile) ? fs.readFileSync(subDirFile, 'utf8').tri
 if (subDir.startsWith('/')) { subDir = subDir.slice(1); }
 if (subDir.endsWith('/')) { subDir = subDir.slice(0, -1); }
 
-const buildDir = path.join(__dirname, 'dist', subDir);
+const buildBaseDir = path.join(__dirname, 'dist');
+const buildDir = path.join(buildBaseDir, subDir);
 const isHot = process.argv.indexOf('--hot') >= 0;
 
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
@@ -23,6 +24,7 @@ const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/a
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
 
 module.exports = {
+  buildBaseDir,
   buildDir,
   isHot,
   publicPathWithoutSlash,

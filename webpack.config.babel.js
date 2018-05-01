@@ -55,6 +55,7 @@ import WebpackShellPlugin from 'webpack-shell-plugin';
 import {
   assets,
   bootstrapStyles,
+  buildBaseDir,
   buildDir,
   filenameBase,
   isHot,
@@ -73,6 +74,7 @@ const createConfig = (env = {}) => {
     console.log('Build constants:');
     console.log('  assets:', assets);
     console.log('  bootstrapStyles:', bootstrapStyles);
+    console.log('  buildBaseDir:', buildBaseDir);
     console.log('  buildDir:', buildDir);
     console.log('  filenameBase:', filenameBase);
     console.log('  isHot:', isHot);
@@ -319,7 +321,7 @@ const createConfig = (env = {}) => {
           chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
         }),
       ] : [
-        new CleanWebpackPlugin(buildDir),
+        new CleanWebpackPlugin(buildBaseDir),
         new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
         // new webpack.optimize.CommonsChunkPlugin({
         //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
