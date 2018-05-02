@@ -33,17 +33,16 @@ const renderStatic = (locals, callback) => {
       </Provider>
     );
     css = [...new Set(css)]; // make array unique
-
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
     const pageTitle =  DocumentTitle.rewind();
-    const assets = Object.keys(locals.webpackStats.compilation.assets);
-    const faviconAssets = assets.filter(p => p === locals.faviconstatsFilename);
-    if (faviconAssets.length !== 1) {
-      console.log('WARNING (' + pathWithoutHtml + '): Could not uniquely identify faviconstats-file:', faviconAssets);
-    }
-    const faviconHtml = JSON.parse(locals.webpackStats.compilation.assets[faviconAssets[0]].source()).html.join('\n');
+    const webpackAssets = locals.webpackStats.compilation.assets;
+    const assets = Object.keys(webpackAssets);
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
     const jsAssets = assets.filter(p => /\.js$/.test(p)).map(p => locals.publicPath + p);
+    const faviconstats = webpackAssets[locals.faviconstatsFilename];
+    const faviconHtml = faviconstats ? JSON.parse(faviconstats.source()).html.join('') : '';
+    if (!faviconHtml) { console.log('WARNING: Could not obtain HTML for favicons for', locals.path); }
+
     const html = template({ cssAssets, jsAssets, appCss, appHtml, pageTitle, faviconHtml });
 
     callback(null, html);
