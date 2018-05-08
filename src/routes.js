@@ -26,8 +26,36 @@ const getLessonPage = ({params}, callback) => {
   callback(null, returnPage);
 };
 
+const rewritePath = (nextState, replace) => {
+  const nextpath = nextState.location.pathname;
+  if (nextpath.startsWith('/index')) {
+    if (typeof document !== 'undefined') {
+      replace('/' + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that start with /index' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+  else if (nextpath.endsWith('.html')) {
+    if (typeof document !== 'undefined') {
+      replace(nextpath.replace(/\.html$/, '') + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that end in .html' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
+};
+
+const appOnEnter = (nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
+const appOnChange = (prevState, nextState, replace) => {
+  rewritePath(nextState, replace);
+};
+
 const routes =
-  <Route path="/" component={App}>
+  <Route path="/" component={App} onEnter={appOnEnter} onChange={appOnChange}>
     <IndexRoute component={FrontPage}/>
     <Route path="/:course" getComponent={getCoursePage}/>
     <Route path="/:course/:lesson/:file" getComponent={getLessonPage}/>
