@@ -109,8 +109,8 @@ export default {
     contribute: 'Contribute?'
   },
   404: {
-    header: 'Something went wrong',
-    textline1: 'We can\'t find the page you are looking for.',
+    header: 'Sorry',
+    textline: 'We can\'t find the page you are looking for.',
     tofrontpage: 'To frontpage'
   }
 };

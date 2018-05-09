@@ -110,8 +110,8 @@ export default {
     contribute: 'Bidra?'
   },
   404: {
-    header: 'Noe gikk galt',
-    textline1: 'Vi finner ikke siden du leter etter.',
-    tofrontpage: 'Til forsiden'
+    header: 'Ursäkta',
+    textline: 'Vi kan inte hitta den sida du letar efter.',
+    tofrontpage: 'Till framsidan'
   }
 };
