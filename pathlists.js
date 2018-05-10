@@ -69,7 +69,7 @@ const getStaticSitePaths = (verbose) => {
   // The '/' will render to '/index.html'
   const paths = [
     '/',  // '/' is the same as '/index.html'
-    '/PageNotFound.html',
+    '/404.html',
   ];
   const courses = coursePaths('.html').map(p => '/' + p);
   const lessons = lessonPaths('.html').map(p => '/' + p);

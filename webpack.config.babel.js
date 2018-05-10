@@ -296,13 +296,6 @@ const createConfig = (env = {}) => {
         },
       }),
 
-      new HtmlWebpackPlugin({
-        filename: '404.html',
-        template: 'src/404-template.ejs',
-        inject: false,
-        redirectUrl: publicPath + 'PageNotFound.html'
-      }),
-
       ...(env.NODE_ENV === 'production' ? [
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('production')
