@@ -26,6 +26,10 @@ const getLessonPage = ({params}, callback) => {
   callback(null, returnPage);
 };
 
+/**
+ * Rewrites /index* to / and removes .html from the end of any path.
+ * Keeps query parameters unchanged (e.g. ?a=1&b=2, found in location.search)
+ */
 const rewritePath = (nextState, replace) => {
   const nextpath = nextState.location.pathname;
   if (nextpath.startsWith('/index')) {
