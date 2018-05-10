@@ -52,6 +52,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 
 import {
   assets,
@@ -352,7 +353,9 @@ const createConfig = (env = {}) => {
         }),
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
       ]),
-
+      new ServiceWorkerWebpackPlugin({
+        entry: path.join(__dirname, 'src/sw.js'),
+      }),
     ],
 
     devServer: {
