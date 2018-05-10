@@ -353,6 +353,7 @@ const createConfig = (env = {}) => {
         }),
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
       ]),
+
       new ServiceWorkerWebpackPlugin({
         entry: path.join(__dirname, 'src/sw.js'),
       }),
