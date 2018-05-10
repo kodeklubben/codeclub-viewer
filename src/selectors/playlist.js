@@ -47,3 +47,10 @@ export const getPlaylists = createSelector(
  */
 export const getShowRadiobuttons = (state, courseName) =>
   state.language === 'nb' && Object.keys(getPlaylists(state, courseName)).length > 0;
+
+/**
+ * Returns a boolean that says if the filtergroups in the filter should be displayed
+ * Input props: courseName (string, optional)
+ */
+export const getShowFiltergroups = (state, courseName) =>
+  !state.showPlaylists || !getShowRadiobuttons(state, courseName);
