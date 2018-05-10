@@ -17,7 +17,8 @@ import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors
 import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
-import {setCheckbox, setLastLesson} from '../../action_creators';
+import {setCheckbox} from '../../reducers/checkboxes';
+import {setLastLesson} from '../../reducers/lastLesson';
 import MarkdownRenderer from '../MarkdownRenderer';
 import Progress from './Progress';
 import LessonButton from './LessonButton';
@@ -65,13 +66,14 @@ PrintInfo.PropTypes = {
   tags: PropTypes.object.isRequired,
 };
 
-const Lesson = React.createClass({
+class Lesson extends React.Component {
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
     rememberLastLesson(path, setLastLesson);
     renderToggleButtons();
-  },
+  }
+
   render() {
     const {
       path, params,
@@ -111,7 +113,7 @@ const Lesson = React.createClass({
       </DocumentTitle>
     );
   }
-});
+}
 
 Lesson.propTypes = {
   // ownProps

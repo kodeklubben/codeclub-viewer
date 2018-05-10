@@ -10,82 +10,26 @@ import PageNotFound from './pages/PageNotFound';
 import Lesson from './components/Lesson/Lesson';
 import PlaylistPage from './pages/PlaylistPage';
 
-import {courseContext, readmeContext} from './contexts';
-import {getLessonData} from './util';
+import {isValidCoursePath, isValidLessonPath, isValidReadmePath} from './contexts';
 
-const lessons = getLessonData();
-const courses = courseContext.keys();
-const readmePaths = readmeContext.keys();
+const getCoursePage = ({params}, callback) => {
+  // Construct path explicitly instead of relying on location.pathname, which depends on originating link
+  const path = `/${params.course}`;
+  const returnPage = isValidCoursePath(path) ? PlaylistPage : PageNotFound;
+  callback(null, returnPage);
+};
 
-const lessonArray = Object.keys(lessons).map((key) => lessons[key]['path']);
-const courseArray = courses.map((course) => course.slice(1).replace(/\/index\.md/i, ''));
-const readmeArray = readmePaths.map((readmePath) => readmePath.slice(1).replace(/\.md/i, ''));
-
-const validPathTest = (lesson, path) => {
-  if(lesson){
-    return (lessonArray.includes(path));
-  }else{
-    return (courseArray.includes(path));
-  }
+const getLessonPage = ({params}, callback) => {
+  // Construct path explicitly instead of relying on location.pathname, which depends on originating link
+  const path = `/${params.course}/${params.lesson}/${params.file}`;
+  const returnPage = isValidLessonPath(path) || isValidReadmePath(path) ? Lesson : PageNotFound;
+  callback(null, returnPage);
 };
 
 /**
- * Checks if the current path is valid or if it should be treated as a 404
- * When a new Route is added, functionallity for handling of the path should be added here.
- * Some of the handling may be put in the validPathTest function.
+ * Rewrites /index* to / and removes .html from the end of any path.
+ * Keeps query parameters unchanged (e.g. ?a=1&b=2, found in location.search)
  */
-const pathTest = (nextState, replace) => {
-  const params = nextState.params;
-  let path = nextState.location.pathname;
-  if(path.indexOf('/') !== 0){
-    path = '/' + path;
-  }
-  if(path.endsWith('/')){
-    path = path.slice(0, -1);
-  }
-  const isReadme = readmeArray.includes(path);
-  const pathCorrect = validPathTest(params.lesson, path);
-
-  if(!pathCorrect && !isReadme){
-    if (typeof document !== 'undefined') {
-      // Only replace in the browser
-      replace({pathname: '/PageNotFound', state: path});
-    } else {
-      console.error('ERROR: The path', path, 'is not valid!');
-    }
-  }
-};
-
-/**
- * Replaces the current URL (/PageNotFound) with the the URL either typed in by the user
- * or the URL given by a broken link.
- * History is used directly because react-router does not provide the necesarry functionallity
- * to replace the URL without a page refresh.
- */
-const saveURL = (nextState, replace) => {
-  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
-  const path = (publicPath === '/') ? nextState.location.state : publicPath + nextState.location.state;
-  if(typeof history !== 'undefined' && history.replaceState){
-    history.replaceState(null, null, path);
-  }
-};
-
-/**
- * Checks if there has been passed down a redirect from 404.html.
- * If so, redirects to /PageNotFound with a state that equals the URL that caused a 404.
- * Happens when a server side 404 has occured.
- */
-const serverSideRedirectCheck = (nextState, replace) => {
-  if(typeof sessionStorage !== 'undefined'){
-    let redirect = sessionStorage.redirect;
-    delete sessionStorage.redirect;
-
-    if (redirect && redirect != nextState.location.pathname) {
-      replace({pathname:'/PageNotFound', state: redirect});
-    }
-  }
-};
-
 const rewritePath = (nextState, replace) => {
   const nextpath = nextState.location.pathname;
   if (nextpath.startsWith('/index')) {
@@ -114,18 +58,11 @@ const appOnChange = (prevState, nextState, replace) => {
   rewritePath(nextState, replace);
 };
 
-/**
- * IMPORTANT:
- * When adding new routes, especially dynamic ones (on the form path="/:somePath")
- * remember to add validity testing in pathTest and if needed in validPathTest to make
- * the 404 routing work properly.
- */
 const routes =
   <Route path="/" component={App} onEnter={appOnEnter} onChange={appOnChange}>
-    <IndexRoute component={FrontPage} onEnter={serverSideRedirectCheck}/>
-    <Route path="/PageNotFound" component={PageNotFound} onEnter={saveURL}/>
-    <Route path="/:course" component={PlaylistPage} onEnter={pathTest}/>
-    <Route path="/:course/:lesson/:file" component={Lesson} onEnter={pathTest}/>
+    <IndexRoute component={FrontPage}/>
+    <Route path="/:course" getComponent={getCoursePage}/>
+    <Route path="/:course/:lesson/:file" getComponent={getLessonPage}/>
     <Route path="*" component={PageNotFound}/>
   </Route>;
 

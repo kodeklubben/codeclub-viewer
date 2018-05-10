@@ -6,13 +6,21 @@ const glob = require('glob');
 // Need to replace backslashes with forward slashes on Windows, since glob keeps forward slashes
 const lessonSrcPath = lessonSrc.replace(/\\/g, '/');
 
-
+/**
+ *
+ * @param ending Optional ending to be added at the end of the paths
+ * @returns array of strings The paths without a leading /
+ */
 const coursePaths = (ending) => {
   if (typeof ending === 'undefined') { ending = ''; }
   return glob.sync(path.join(lessonSrcPath, '*/index.md'), {dot: true})
     .map(p => p.replace(new RegExp(`^${lessonSrcPath}/(.*)/index\\.md$`), '$1' + ending));
 };
 
+/**
+ * @param ending Optional ending to be added at the end of the paths
+ * @returns array of strings The paths without a leading /
+ */
 const lessonPaths = (ending, verbose) => {
   if (typeof ending === 'undefined') { ending = ''; }
   if (typeof verbose === 'undefined') { verbose = false; }
@@ -61,10 +69,10 @@ const getStaticSitePaths = (verbose) => {
   // The '/' will render to '/index.html'
   const paths = [
     '/',  // '/' is the same as '/index.html'
-    'PageNotFound.html',
+    '/404.html',
   ];
-  const courses = coursePaths('.html');
-  const lessons = lessonPaths('.html');
+  const courses = coursePaths('.html').map(p => '/' + p);
+  const lessons = lessonPaths('.html').map(p => '/' + p);
 
   const staticPaths = paths.concat(courses).concat(lessons);
 

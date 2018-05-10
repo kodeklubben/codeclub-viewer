@@ -5,12 +5,12 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CollapsiblePanel.scss';
 
-const CollapsiblePanel = React.createClass({
-  getInitialState() {
-    return {
-      expanded: this.props.initiallyExpanded
-    };
-  },
+class CollapsiblePanel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {expanded: this.props.initiallyExpanded};
+  }
+
   render() {
     const {children, bsStyle, header} = this.props;
     const {expanded} = this.state;
@@ -26,7 +26,7 @@ const CollapsiblePanel = React.createClass({
       </div>
     );
   }
-});
+}
 
 CollapsiblePanel.propTypes = {
   // ownProps

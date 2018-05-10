@@ -2,8 +2,13 @@
 
 import {createStore} from 'redux';
 import {getInitialFilter, getLessonData, createCheckboxesKey} from './util';
-import {setFilter, setMode, setLanguage, setWelcomeBox,
-  setCheckboxes, setLastLesson, collapseFilterGroup} from './action_creators';
+import {setCheckboxes} from './reducers/checkboxes';
+import {setFilter, resetOneFilter} from './reducers/filter';
+import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
+import {setLanguage} from './reducers/language';
+import {setLastLesson} from './reducers/lastLesson';
+import {setMode} from './reducers/mode';
+import {setShowPlaylists} from './reducers/showPlaylists';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 
@@ -22,28 +27,37 @@ if (isProduction) {
   store = createStore(reducer, initialState, devTools);
 }
 
-const initialMode = loadFromLocalStorage('isStudentMode', true);
-const initialWelcomeBox = loadFromLocalStorage('welcomeBox', true);
-const initialLanguage = loadFromLocalStorage('language', 'nb');
-const initialLastLesson = loadFromLocalStorage('lastLesson', '');
+const defaultMode = true;
+const defaultLanguage = 'nb';
+const defaultLastLesson = '';
+const defaultCheckboxes = {};
+const defaultPlaylists = true;
 
-store.dispatch(setMode(initialMode));
-store.dispatch(setWelcomeBox(initialWelcomeBox));
-store.dispatch(setLanguage(initialLanguage));
-store.dispatch(setLastLesson(initialLastLesson));
-
-let filter = getInitialFilter(initialLanguage);
+let filter = getInitialFilter(defaultLanguage);
 store.dispatch(setFilter(filter));
 
 for (let groupKey of Object.keys(filter)) {
   store.dispatch(collapseFilterGroup(groupKey, true));
 }
 
-for (let path of Object.keys(getLessonData())) {
-  const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), {});
-  if(Object.keys(checkboxes).length !== 0) {
-    store.dispatch(setCheckboxes(path, checkboxes));
+export const updateStoreFromLocalStorage = () => {
+  const initialMode = loadFromLocalStorage('isStudentMode', defaultMode);
+  const initialLanguage = loadFromLocalStorage('language', defaultLanguage);
+  const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
+  const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultPlaylists);
+
+  store.dispatch(setMode(initialMode));
+  store.dispatch(setLanguage(initialLanguage));
+  store.dispatch(setLastLesson(initialLastLesson));
+  store.dispatch(setShowPlaylists(initialPlaylists));
+  store.dispatch(resetOneFilter('language', initialLanguage));
+
+  for (let path of Object.keys(getLessonData())) {
+    const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);
+    if(Object.keys(checkboxes).length !== 0) {
+      store.dispatch(setCheckboxes(path, checkboxes));
+    }
   }
-}
+};
 
 export default store;

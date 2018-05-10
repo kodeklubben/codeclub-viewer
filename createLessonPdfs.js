@@ -8,7 +8,7 @@ const fse = require('fs-extra');
 const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 
-const numberOfSimultaneousPdfConverts = 10;
+const numberOfSimultaneousPdfConverts = 8;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 let localWebServer = null;
 

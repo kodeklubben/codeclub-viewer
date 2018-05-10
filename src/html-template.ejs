@@ -4,12 +4,12 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <%- include src/favicons %>
+    <%- faviconHtml %>
 
     <title><%- pageTitle -%></title>
 
     <% cssAssets.forEach(function(file){ %>
-    <link href="/<%- file -%>" rel="stylesheet">
+    <link href="<%- file -%>" rel="stylesheet">
     <% }); %>
 
     <%- appCss -%>
@@ -18,7 +18,7 @@
     <div id="app"><%- appHtml -%></div>
 
     <% jsAssets.forEach(function(file){ %>
-    <script src="/<%- file -%>" async></script>
+    <script src="<%- file -%>" async></script>
     <% }); %>
 </body>
 </html>

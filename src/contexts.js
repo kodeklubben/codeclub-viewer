@@ -27,3 +27,25 @@ export const readmeContext =
 // lessonSrc/*/*/*.md
 export const lessonAllContext =
   require.context('lessonSrc/', true, /^[.][/][^/]*[/][^/]*[/][^.]*[.]md$/);
+
+////////////////////////////
+// Context util functions //
+////////////////////////////
+export const getCourseIcon = (course) => {
+  const path = `./${course}/logo-black.png`;
+  return iconContext.keys().includes(path) ? iconContext(path) : null;
+};
+
+// Cut off '.' at start and '/index.md' at end:
+const extractCoursePath = (course) => course.slice(1).replace(/[/]index\.md$/i, '');
+
+// Cut off '.' at start and '.md' at end:
+const extractLessonPath = (course) => course.slice(1).replace(/\.md$/i, '');
+
+const coursePathArray = courseContext.keys().map(extractCoursePath);
+const lessonPathArray = lessonContext.keys().map(extractLessonPath);
+const readmePathArray = readmeContext.keys().map(extractLessonPath);
+
+export const isValidLessonPath = (path) => lessonPathArray.includes(path);
+export const isValidReadmePath = (path) => readmePathArray.includes(path);
+export const isValidCoursePath = (path) => coursePathArray.includes(path);

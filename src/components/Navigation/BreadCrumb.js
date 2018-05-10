@@ -8,29 +8,37 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 import {getTitle, getLevel} from '../../selectors/frontmatter';
-import {iconContext} from '../../contexts';
+import {getCourseIcon, isValidCoursePath, isValidLessonPath, isValidReadmePath} from '../../contexts';
 
 const BreadCrumb = ({params, title, level, courseIcon}) => {
   const {course, lesson, file} = params;
+  const isLesson = !!file;
+  const isCourse = course && !isLesson;
+  const coursePath = `/${course}`;
+  const lessonPath = `/${course}/${lesson}/${file}`;
+  const isValidCourse = isCourse && isValidCoursePath(coursePath);
+  const isValidLesson = isLesson && (isValidLessonPath(lessonPath) || isValidReadmePath(lessonPath));
+
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
-  const courseLink = course ?
-    <NavLink to={`/${course}`} className={styles.lessonLink}>
-      <img className={styles.courseIcon} src={courseIcon}/>
-      <span className={styles.lesson}>{capitalize(course)}</span>
-    </NavLink> : null;
-  const lessonLink = course && lesson && file ?
-    <NavLink to={`/${course}/${lesson}/${file}`} className={styles.lessonLink}>
-      <LevelIcon {...{level}}/>
-      <span className={styles.lesson}>{title}</span>
-    </NavLink> : null;
+
+  const courseLink = <NavLink to={coursePath} className={styles.lessonLink}>
+    <img className={styles.courseIcon} src={courseIcon}/>
+    <span className={styles.lesson}>{capitalize(course)}</span>
+  </NavLink>;
+
+  const lessonLink = <NavLink to={lessonPath} className={styles.lessonLink}>
+    <LevelIcon {...{level}}/>
+    <span className={styles.lesson}>{title}</span>
+  </NavLink>;
+
   return <div className={styles.breadcrumb}>
     {homeLink}
-    {courseLink ? <span> / </span> : null}
-    {courseLink ? courseLink : null}
-    {lessonLink ? <span> / </span> : null}
-    {lessonLink ? lessonLink : null}
+    {isValidCourse || isValidLesson ? <span> / </span> : null}
+    {isValidCourse || isValidLesson ? courseLink : null}
+    {isValidLesson ? <span> / </span> : null}
+    {isValidLesson ? lessonLink : null}
   </div>;
 };
 
@@ -51,7 +59,7 @@ BreadCrumb.propTypes = {
 const mapStateToProps = (state, {params}) => ({
   title: getTitle(state, params),
   level: getLevel(state, params),
-  courseIcon: params.course ? iconContext('./' + params.course + '/logo-black.png') : null
+  courseIcon: getCourseIcon(params.course),
 });
 
 export default connect(

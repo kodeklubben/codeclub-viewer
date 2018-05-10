@@ -46,6 +46,7 @@ import highlight from './src/highlighting';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
@@ -55,6 +56,7 @@ import WebpackShellPlugin from 'webpack-shell-plugin';
 import {
   assets,
   bootstrapStyles,
+  buildBaseDir,
   buildDir,
   filenameBase,
   isHot,
@@ -73,6 +75,7 @@ const createConfig = (env = {}) => {
     console.log('Build constants:');
     console.log('  assets:', assets);
     console.log('  bootstrapStyles:', bootstrapStyles);
+    console.log('  buildBaseDir:', buildBaseDir);
     console.log('  buildDir:', buildDir);
     console.log('  filenameBase:', filenameBase);
     console.log('  isHot:', isHot);
@@ -86,6 +89,8 @@ const createConfig = (env = {}) => {
     console.log('  env.BUILD_PDF:', env.BUILD_PDF);
     console.log();
   }
+
+  const faviconstatsFilename = 'faviconstats.json';
 
   const cssModuleLoader = {
     loader: 'css-loader',
@@ -261,28 +266,34 @@ const createConfig = (env = {}) => {
         to: buildDir + '/[path][name].[ext]'
       }]),
 
-      new CopyWebpackPlugin([{
-        context: 'src/assets/favicons/generated',
-        from: '*',
-        to: buildDir + '/favicons/'
-      }]),
-
       new CaseSensitivePathsPlugin(),
 
       new webpack.DefinePlugin({
-        'process.env': {
-          'PUBLICPATH': JSON.stringify(publicPath),
-          'PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash)
-        }
+        'process.env.PUBLICPATH': JSON.stringify(publicPath),
+        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
       }),
 
-      // TODO: Do we need 404.html from htmlwebpackplugin?
-      new HtmlWebpackPlugin({
-        title: '404 - Page Not Found',
-        filename: '404.html',
-        template: 'src/404-template.ejs',
-        inject: false,
-        redirectUrl: publicPath
+      new FaviconsWebpackPlugin({
+        logo: './src/assets/favicon.png',
+        prefix: 'icons-[hash:5]/',
+        emitStats: false,
+        inject: true, // only works for htmlWebpackPlugin; need to do it manually for template in renderStatic
+        statsFilename: faviconstatsFilename, // not emitted, but available in webpack's assets
+        // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
+        title: 'LKK',
+        // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+        icons: {
+          android: true,              // Android homescreen icon.
+          appleIcon: true,            // Apple touch icons.
+          appleStartup: true,         // Apple startup images.
+          coast: false,               // Opera Coast icon.
+          favicons: true,             // Regular favicons.
+          firefox: true,              // Firefox OS icons.
+          opengraph: false,
+          twitter: false,
+          yandex: false,              // Yandex browser icon.
+          windows: true,              // Windows 8 tile icons.
+        },
       }),
 
       ...(env.NODE_ENV === 'production' ? [
@@ -323,7 +334,7 @@ const createConfig = (env = {}) => {
           chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
         }),
       ] : [
-        new CleanWebpackPlugin(buildDir),
+        new CleanWebpackPlugin(buildBaseDir),
         new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
         // new webpack.optimize.CommonsChunkPlugin({
         //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
@@ -331,7 +342,10 @@ const createConfig = (env = {}) => {
         new StaticSiteGeneratorPlugin({
           entry: 'main',
           paths: staticSitePaths,
-          locals: {},
+          locals: {
+            publicPath,
+            faviconstatsFilename,
+          },
           globals: {
             window: {}
           }

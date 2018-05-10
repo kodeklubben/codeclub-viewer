@@ -1,3 +1,5 @@
+const softHyphen = '\u00ad';
+
 export default {
   general: {
     student: 'Elev',
@@ -16,17 +18,10 @@ export default {
   frontpage: {
     courses: 'Kurs',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    welcomebox: {
-      header: 'Hei! Du er nå i elevmodus',
-      changemode: 'Er du ikke en elev? Klikk elev / lærer-knappen i navigasjonsmenyen for å bytte modus. ' +
-                  'Du kan også velge å skjule denne boksen for alltid, ved å trykke på X i hjørnet',
-      info: 'Velkommen til Kodeklubbens oppgavesider! Her finner du mange veiledninger som du kan ' +
-            'bruke som inspirasjon for å lære deg programmering og lage dine egne spill, apper og nettsider. ' +
-            'For nybegynnere anbefaler vi å ta en titt på de blokkbaserte oppgavene i Code Studio eller Scratch. ' +
-            'Bruk gjerne filtrene på venstre side til å finne oppgaver som passer for deg!',
-      startbutton: 'Start her!',
-      buttonlink: '/scratch/astrokatt/astrokatt',
-      continuebutton: 'Fortsett...',
+    button: {
+      start: 'Start her!',
+      startlink: '/scratch/astrokatt/astrokatt',
+      continue: 'Fortsett...',
     },
     teacherinfobox: {
       header: 'Hei! Du er nå i lærermodus',
@@ -87,9 +82,10 @@ export default {
   },
   filter: {
     header: 'Filter',
-    tooltip: {
-      textline1: 'I filteret kan man sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
-      textline2: 'Bak hvert valg står det antall oppgaver som kan løses, etter hvilke valg du gjør i filteret.'
+    tooltip: 'I filteret kan man sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
+    radio: {
+      playlists: `Oppgave${softHyphen}samlinger`,
+      lessons: 'Alle oppgaver'
     },
     removefilter: 'Nullstill filter'
   },
@@ -111,12 +107,11 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    downloadZIP:  'Last ned alle kurs som zip-fil',
     contribute: 'Bidra?'
   },
   404: {
-    header: 'Noe gikk galt',
-    textline1: 'Vi finner ikke siden du leter etter.',
-    tofrontpage: 'Til forsiden'
+    header: 'Ursäkta',
+    textline: 'Vi kan inte hitta den sida du letar efter.',
+    tofrontpage: 'Till framsidan'
   }
 };

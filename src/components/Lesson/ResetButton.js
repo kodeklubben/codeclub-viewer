@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/lib/Button';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ResetButton.scss';
 import {getTranslator} from '../../selectors/translate';
-import {setCheckbox} from '../../action_creators';
+import {setCheckbox} from '../../reducers/checkboxes';
 import {setCheckboxes} from '../../util';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
