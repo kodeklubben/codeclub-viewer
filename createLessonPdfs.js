@@ -96,7 +96,7 @@ const doConvert = () => {
 const checkStarted = (data) => {
   const str = String(data);
   console.log('localWebServer:', str);
-  if (/^Serving at (.*?),/.test(str)) {
+  if (/^Express server running at/.test(str)) {
     doConvert(localWebServer);
   }
 };

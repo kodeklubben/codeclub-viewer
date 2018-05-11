@@ -1,4 +1,3 @@
-import './polyfills';
 import renderDynamic from './renderDynamic';
 import renderStatic from './renderStatic';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
