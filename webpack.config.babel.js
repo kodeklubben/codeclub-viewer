@@ -110,6 +110,7 @@ const createConfig = (env = {}) => {
 
     entry: {
       main: [
+        'babel-polyfill',
         isHot ? 'bootstrap-loader' : 'bootstrap-loader/extractStyles',
         './src/index.js',
       ],

@@ -1,5 +1,3 @@
-import './polyfills';
-
 import renderDynamic from './renderDynamic';
 import renderStatic from './renderStatic';
 
