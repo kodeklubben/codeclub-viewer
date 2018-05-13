@@ -43,7 +43,6 @@ self.addEventListener('activate', event => {
   );
 });
 
-// // TODO: Clean up more here. Look at more examples
 self.addEventListener('fetch', event => {
   const request = event.request;
   // Ignore not GET request.
