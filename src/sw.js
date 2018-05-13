@@ -1,4 +1,5 @@
-//Taken from https://github.com/oliviertassinari/serviceworker-webpack-plugin/blob/master/docs/src/sw.js
+// Most of this code is taken from
+// https://github.com/oliviertassinari/serviceworker-webpack-plugin/blob/master/docs/src/sw.js
 
 // Set to true for debugging
 const DEBUG = false;
@@ -14,21 +15,14 @@ let assetsToCache = [...assets, './'].map(path => new URL(path, global.location)
 
 // When the service worker is first added to a computer.
 self.addEventListener('install', event => {
-  // Need this for updating page when new build
-  self.skipWaiting();
   // Perform install steps.
   if (DEBUG) {console.log('[SW] Install event');}
   // Add core website files to cache during serviceworker installation.
   event.waitUntil(global.caches
     .open(CACHE_NAME)
     .then(cache => cache.addAll(assetsToCache))
-    .then(() => {
-      if (DEBUG) {console.log('Cached assets: main', assetsToCache);}
-    })
-    .catch(error => {
-      console.error(error);
-      throw error;
-    })
+    .then(() => {if (DEBUG) {console.log('Cached assets: main', assetsToCache);}})
+    .then(() => self.skipWaiting())
   );
 });
 
@@ -36,32 +30,20 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   if (DEBUG) {console.log('[SW] Activate event');}
   // Clean the caches
-  event.waitUntil(global.caches.keys().then(cacheNames => {
-    return Promise.all(
+  event.waitUntil(global.caches
+    .keys()
+    .then(cacheNames => Promise.all(
       cacheNames.map(cacheName => {
         // Delete the caches that are not the current one.
-        if (cacheName.indexOf(CACHE_NAME) === 0) {
-          return null;
-        }
+        if (cacheName.indexOf(CACHE_NAME) === 0) {return null;}
         return global.caches.delete(cacheName);
       })
-    );
-  }));
+    ))
+    .then(() => self.clients.claim())
+  );
 });
 
-self.addEventListener('message', event => {
-  switch (event.data.action) {
-    case 'skipWaiting':
-      if (self.skipWaiting) {
-        self.skipWaiting();
-        self.clients.claim();
-      }
-      break;
-    default:
-      break;
-  }
-});
-
+// // TODO: Clean up more here. Look at more examples
 self.addEventListener('fetch', event => {
   const request = event.request;
   // Ignore not GET request.
