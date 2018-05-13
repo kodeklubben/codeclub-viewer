@@ -14,6 +14,8 @@ let assetsToCache = [...assets, './'].map(path => new URL(path, global.location)
 
 // When the service worker is first added to a computer.
 self.addEventListener('install', event => {
+  // Need this for updating page when new build
+  self.skipWaiting();
   // Perform install steps.
   if (DEBUG) {console.log('[SW] Install event');}
   // Add core website files to cache during serviceworker installation.

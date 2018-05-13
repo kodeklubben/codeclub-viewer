@@ -53,6 +53,7 @@ import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
 import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 
 import {
   assets,
@@ -210,6 +211,10 @@ const createConfig = (env = {}) => {
           loader: 'raw-loader',
         },
         {
+          test: /\.webmanifest$/,
+          loader: 'raw-loader',
+        },
+        {
           test: /\.ejs$/,
           loader: 'ejs-compiled-loader',
         },
@@ -357,6 +362,23 @@ const createConfig = (env = {}) => {
 
       new ServiceWorkerWebpackPlugin({
         entry: path.join(__dirname, 'src/sw.js'),
+      }),
+
+      new WebpackPwaManifest({
+        name: 'Kodeklubben',
+        short_name: 'LKK',
+        description: 'Tester noe!',
+        background_color: '#ffffff',
+        theme_color: '#ffffff',
+        filename: 'manifest.webmanifest',
+        start_url: '/',
+        icons: [
+          {
+            src: path.resolve('src/assets/favicon.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons')
+          }
+        ]
       }),
     ],
 
