@@ -361,14 +361,15 @@ const createConfig = (env = {}) => {
       ]),
 
       new ServiceWorkerWebpackPlugin({
-        entry: path.join(__dirname, 'src/sw.js'),
-        includes: ['**/*', '**/*.pdf'],
+        entry: path.join(__dirname, 'src/sw.js')
       }),
 
       new WebpackPwaManifest({
         name: 'Kodeklubben',
         short_name: 'LKK',
-        description: 'Tester noe!',
+        //// TODO: Description should be the same as the one in meta-tag-description which is another issue
+        // And should everything be in english or norwegian?
+        description: 'description',
         background_color: '#ffffff',
         theme_color: '#ffffff',
         filename: 'manifest.webmanifest',
@@ -376,8 +377,7 @@ const createConfig = (env = {}) => {
         icons: [
           {
             src: path.resolve('src/assets/favicon.png'),
-            sizes: [96, 128, 192, 256, 384, 512],
-            destination: path.join('assets', 'icons')
+            sizes: [96, 128, 192, 256, 384, 512, 1024]
           }
         ]
       }),
