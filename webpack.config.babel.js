@@ -361,8 +361,7 @@ const createConfig = (env = {}) => {
       ]),
 
       new ServiceWorkerWebpackPlugin({
-        entry: path.join(__dirname, 'src/sw.js'),
-        excludes: ['**/*.pdf']
+        entry: path.join(__dirname, 'src/sw.js')
       }),
 
       new WebpackPwaManifest({
