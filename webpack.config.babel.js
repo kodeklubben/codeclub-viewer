@@ -361,13 +361,14 @@ const createConfig = (env = {}) => {
       ]),
 
       new ServiceWorkerWebpackPlugin({
-        entry: path.join(__dirname, 'src/sw.js')
+        entry: path.join(__dirname, 'src/sw.js'),
+        excludes: ['**/*.pdf']
       }),
 
       new WebpackPwaManifest({
         name: 'Kodeklubben',
         short_name: 'LKK',
-        //// TODO: Description should be the same as the one in meta-tag-description which is another issue
+        // TODO: Description should be the same as the one in meta-tag-description which is another issue
         // And should everything be in english or norwegian?
         description: 'description',
         background_color: '#ffffff',
