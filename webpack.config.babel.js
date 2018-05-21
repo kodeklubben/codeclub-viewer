@@ -365,19 +365,19 @@ const createConfig = (env = {}) => {
       }),
 
       new WebpackPwaManifest({
-        name: 'Kodeklubben',
-        short_name: 'LKK',
+        name: 'Kodeklubben', // This will be the name of the app. Don't know how we do it for different language.
+        short_name: 'LKK', // Is this right?
         // TODO: Description should be the same as the one in meta-tag-description which is another issue
-        // And should everything be in english or norwegian?
+        // And should everything be in english or norwegian? Or could we have for all languages?
         description: 'description',
-        background_color: '#ffffff',
+        background_color: '#ffffff', // Maybe use the green color for both of these?
         theme_color: '#ffffff',
         filename: 'manifest.webmanifest',
         start_url: '/',
         icons: [
           {
             src: path.resolve('src/assets/favicon.png'),
-            sizes: [96, 128, 192, 256, 384, 512, 1024]
+            sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512, 1024]
           }
         ]
       }),
