@@ -9,7 +9,7 @@ if (typeof global.document !== 'undefined') {
   // If it's already registered, it will check if the site has new content, then update the service serviceWorker
   // And the page is reloaded. Later this should be something the user should do if he/she wants to.
   new Promise((resolve, reject) => {
-    if ('serviceWorker' in navigator && location.hostname === 'localhost') {
+    if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
       runtime.register().then(reg => {
         reg.onupdatefound = () => {
           const installingWorker = reg.installing;
