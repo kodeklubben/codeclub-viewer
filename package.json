@@ -10,6 +10,7 @@
     "build:prod": "webpack -p --progress --env.NODE_ENV=production --env.BUILD_PDF",
     "build:analyse:": "webpack --progress --profile --json > stats.json",
     "build:travis": "webpack -p --env.NODE_ENV=production",
+    "build:sw": "webpack --progress --env.SW",
     "serve": "node server.js",
     "test": "mocha --compilers js:babel-core/register --require mock-local-storage --require ignore-styles --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:links": "node test-links.js",

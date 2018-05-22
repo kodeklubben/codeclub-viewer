@@ -278,6 +278,7 @@ const createConfig = (env = {}) => {
       new webpack.DefinePlugin({
         'process.env.PUBLICPATH': JSON.stringify(publicPath),
         'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
+        'process.env.SW': !!env.SW,
       }),
 
       new FaviconsWebpackPlugin({
