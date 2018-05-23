@@ -6,6 +6,7 @@ const getLessonFrontmatter = (state, {course, lesson, file}) => {
   const lessons = getLessonData();
   const lessonPath = `./${course}/${lesson}/${file}.md`;
   const isReadme = /README(_[a-z]{2})?/.test(file);
+  // NOTE: Frontmatter for README does not contain tags anymore.
   return isReadme ? readmeContext(lessonPath).frontmatter : (lessons[lessonPath] || {});
 };
 
