@@ -91,7 +91,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "favicons-webpack-plugin": "^0.0.9",
     "file-loader": "^0.8.5",
-    "front-matter-loader": "^0.1.2",
+    "front-matter-loader": "^0.2.0",
     "fs-extra": "4.0.2",
     "glob": "^7.0.3",
     "html-loader": "^0.4.3",
@@ -129,7 +129,8 @@
     "webpack": "3.10.0",
     "webpack-dev-server": "^2.11.2",
     "webpack-shell-plugin": "^0.5.0",
-    "yaml-front-matter": "^3.4.0",
+    "yaml-front-matter": "^4.0.0",
+    "yamljs": "^0.3.0",
     "yml-loader": "^2.1.0"
   }
 }
