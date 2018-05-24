@@ -1,5 +1,6 @@
 const {lessonSrc, lessonFiltertags} = require('./buildconstants');
 const path = require('path');
+const yaml = require('yamljs');
 const yamlFront = require('yaml-front-matter');
 const glob = require('glob');
 
@@ -18,13 +19,14 @@ const coursePaths = (ending) => {
 };
 
 /**
- * @param ending Optional ending to be added at the end of the paths
+ * @param {string} ending Optional ending to be added at the end of the paths
+ * @param {boolean} verbose Set to true for debug info
  * @returns array of strings The paths without a leading /
  */
 const lessonPaths = (ending, verbose) => {
   if (typeof ending === 'undefined') { ending = ''; }
   if (typeof verbose === 'undefined') { verbose = false; }
-  const availableLanguages = yamlFront.loadFront(path.join(lessonFiltertags, 'keys.md')).language;
+  const availableLanguages = yaml.load(path.join(lessonFiltertags, 'keys.yml')).language;
   if (verbose) {
     console.log('Available languages:', availableLanguages);
   }

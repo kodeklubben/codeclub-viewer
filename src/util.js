@@ -1,6 +1,13 @@
 /* eslint-env node */
 
-import {courseContext, readmeContext, lessonContext, courseAllLangsContext, lessonAllContext} from './contexts';
+import {
+  readmeContext,
+  lessonContext,
+  courseAllLangsContext,
+  lessonAllContext,
+  getCourseMetadata,
+  getLessonMetadata,
+} from './contexts';
 
 /**
  * Makes first character in str upper case
@@ -44,7 +51,7 @@ export function dirname(path) {
  *  }
  */
 export function getFilterkeys() {
-  const filterkeys = require('lessonFiltertags/keys.md').frontmatter;
+  const filterkeys = require('lessonFiltertags/keys.yml');
   return Object.keys(filterkeys).reduce((result, groupKey) => {
     result[groupKey.toLowerCase()] = filterkeys[groupKey].map(tagKey => tagKey.toLowerCase());
     return result;
@@ -97,12 +104,13 @@ export function getLessonData() {
 
       // Course name is between './' and second '/'
       const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
-      const coursePath = path.slice(0, path.indexOf('/', 2)) + '/index.md';
-      const courseFrontmatter = courseContext(coursePath).frontmatter;
+
+      const lessonMetaPath = dirname(path);
+      const courseMetaPath = dirname(lessonMetaPath);
 
       // Inherit tags from course, override with lessonTags, and add lessonTag
-      const courseTags = cleanseTags(courseFrontmatter.tags, 'course ' + coursePath);
-      const lessonTags = cleanseTags(lessonFrontmatter.tags, 'lesson ' + path);
+      const courseTags = cleanseTags(getCourseMetadata(courseMetaPath).tags, 'course ' + courseMetaPath);
+      const lessonTags = cleanseTags(getLessonMetadata(lessonMetaPath).tags, 'lesson ' + lessonMetaPath);
       const languageTag = language ? {language: [language]} : {};
       const tags = {...courseTags, ...lessonTags, ...languageTag};
 
