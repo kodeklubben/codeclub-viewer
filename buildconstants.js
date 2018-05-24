@@ -16,7 +16,8 @@ const isHot = process.argv.indexOf('--hot') >= 0;
 // Webpack needs final slash in publicPath to rewrite relative paths correctly
 const publicPathWithoutSlash = '/' + subDir;
 const publicPath = '/' + subDir + (subDir ? '/' : '');
-const lessonSrc = path.resolve(__dirname, '../oppgaver/src');
+const lessonRepo = path.resolve(__dirname, '../oppgaver');
+const lessonSrc = path.resolve(lessonRepo, 'src');
 const lessonFiltertags = path.resolve(__dirname, '../oppgaver/filtertags');
 const assets = path.resolve(__dirname, './src/assets');
 const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap');
@@ -29,6 +30,7 @@ module.exports = {
   isHot,
   publicPathWithoutSlash,
   publicPath,
+  lessonRepo,
   lessonSrc,
   lessonFiltertags,
   assets,

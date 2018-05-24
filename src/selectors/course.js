@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {getFilteredAndIndexedLessons} from './lesson';
 import {capitalize, tagsMatchFilter, cleanseTags} from '../util';
-import {iconContext, courseContext} from '../contexts';
+import {iconContext, courseContext, getCourseMetadata} from '../contexts';
 
 const getFilter = (state) => state.filter;
 
@@ -35,12 +35,13 @@ export const getFilteredExternalCourses = createSelector(
     return courseContext.keys().reduce((res, path) => {
       const coursePath = path.slice(0, path.indexOf('/', 2));
       const fm = courseContext(path).frontmatter;
+      const courseMeta = getCourseMetadata(path);
       if (fm.external != null) {
         const course = {
           externalLink: fm.external,
           iconPath: iconContext(coursePath + '/logo-black.png'),
           name: fm.title,
-          tags: cleanseTags({...(fm.tags || {}), language: [fm.language]}, 'external course ' + coursePath)
+          tags: cleanseTags({...(courseMeta.tags || {}), language: [fm.language]}, 'external course ' + coursePath)
         };
         return tagsMatchFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
       }

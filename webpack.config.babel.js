@@ -61,6 +61,7 @@ import {
   filenameBase,
   isHot,
   lessonFiltertags,
+  lessonRepo,
   lessonSrc,
   publicPath,
   publicPathWithoutSlash,
@@ -104,6 +105,7 @@ const createConfig = (env = {}) => {
   // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
   const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
   const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
+  const inLessonRepo = (extRegexp) => new RegExp('^' + regexpCompPath(lessonRepo) + '.*\\.' + extRegexp + '$');
 
   const config = {
     context: __dirname,
@@ -205,15 +207,19 @@ const createConfig = (env = {}) => {
           options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
         },
         {
-          test: /\.txt$/,
-          loader: 'raw-loader',
-        },
-        {
-          test: /\.ejs$/,
+          test: inCurrentRepo('ejs'),
           loader: 'ejs-compiled-loader',
         },
         {
-          test: /\.md$/,
+          test: inLessonRepo('txt'),
+          loader: 'raw-loader',
+        },
+        {
+          test: inLessonRepo('ya?ml'),
+          loader: 'yml-loader',
+        },
+        {
+          test: inLessonRepo('md'),
           loader: 'combine-loader',
           options: {
             //raw: 'raw-loader',
@@ -229,8 +235,7 @@ const createConfig = (env = {}) => {
           },
         },
         {
-          test: (absPath) => absPath.startsWith(lessonSrc), // only in lesson repo
-          exclude: [/\.md$/, new RegExp(regexpCompPath('/playlists/') + '.*\\.txt$')],
+          test: inLessonRepo('png'),
           loader: 'file-loader',
           options: {name: '[path][name].[hash:6].[ext]'},
         },

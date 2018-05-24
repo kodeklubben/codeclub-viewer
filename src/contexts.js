@@ -28,6 +28,14 @@ export const readmeContext =
 export const lessonAllContext =
   require.context('lessonSrc/', true, /^[.][/][^/]*[/][^/]*[/][^.]*[.]md$/);
 
+// lessonSrc/*/data.yml
+const courseDataContext =
+  require.context('lessonSrc/', true, /^[.][/][^/]+[/]data[.]yml$/);
+
+// lessonSrc/*/*/data.yml
+const lessonDataContext =
+  require.context('lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/]data[.]yml$/);
+
 ////////////////////////////
 // Context util functions //
 ////////////////////////////
@@ -49,3 +57,30 @@ const readmePathArray = readmeContext.keys().map(extractLessonPath);
 export const isValidLessonPath = (path) => lessonPathArray.includes(path);
 export const isValidReadmePath = (path) => readmePathArray.includes(path);
 export const isValidCoursePath = (path) => coursePathArray.includes(path);
+
+/**
+ * Returns a json-object corresponding to a data.yml file from course or lesson
+ * @param {string} path Starts with './' and ends without a slash, e.g. './scratch' or './scratch/astrokatt'
+ * @param {context} context A require.context with data.yml files
+ * @returns {object} A json-object with data from data.yml
+ */
+const getMetadata = (path, context) => {
+  const dataPath = path + '/data.yml';
+  // if (context.keys().includes(dataPath)) {
+  //   const data = context(dataPath);
+  //   console.log('data.yml', dataPath, data, data.tags);
+  // }
+  return context.keys().includes(dataPath) ? context(dataPath) : {};
+};
+
+/**
+ * @param {string} path The course path, e.g. './scratch'
+ * @returns {Object} See getMetadata()
+ */
+export const getCourseMetadata = (path) => getMetadata(path, courseDataContext);
+
+/**
+ * @param {string} path The lesson path, e.g. './scratch/astrokatt'
+ * @returns {Object} See getMetadata()
+ */
+export const getLessonMetadata = (path) => getMetadata(path, lessonDataContext);
