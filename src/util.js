@@ -51,7 +51,7 @@ export function dirname(path) {
  *  }
  */
 export function getFilterkeys() {
-  const filterkeys = require('lessonFiltertags/keys.md').frontmatter;
+  const filterkeys = require('lessonFiltertags/keys.yml');
   return Object.keys(filterkeys).reduce((result, groupKey) => {
     result[groupKey.toLowerCase()] = filterkeys[groupKey].map(tagKey => tagKey.toLowerCase());
     return result;
