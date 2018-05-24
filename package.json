@@ -7,7 +7,7 @@
     "start": "webpack-dev-server -d --progress --inline --hot --history-api-fallback --host 0.0.0.0",
     "build:debug": "webpack -d --progress --env.verbose",
     "build": "webpack --progress",
-    "build:prod": "webpack -p --progress --env.NODE_ENV=production --env.BUILD_PDF",
+    "build:prod": "webpack -p --progress --env.NODE_ENV=production --env.BUILD_PDF --env.SW",
     "build:analyse:": "webpack --progress --profile --json > stats.json",
     "build:travis": "webpack -p --env.NODE_ENV=production",
     "build:sw": "webpack --progress --env.SW",
