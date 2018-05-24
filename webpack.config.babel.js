@@ -193,8 +193,32 @@ const createConfig = (env = {}) => {
         },
         {
           test: inCurrentRepo('(png|jpg|jpeg|gif)'),
-          loader: 'file-loader',
-          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: 'CCV-assets/[name].[hash:6].[ext]'
+              }
+            },
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                mozjpeg: {
+                  quality: 65
+                },
+                pngquant: {
+                  quality: '65-90',
+                  speed: 4
+                },
+                svgo: {
+                  removeViewBox: false
+                },
+                gifsicle: {
+                  interlaced: false
+                }
+              }
+            },
+          ],
         },
         {
           test: inCurrentRepo('woff2?(\\?v=[0-9]\\.[0-9]\\.[0-9])?'),
