@@ -5,9 +5,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './MainLanguageButton.scss';
-import {getPathForMainLanguage} from '../../util';
+import {getPathForMainLanguage} from '../../contextUtils';
 import {getTranslator, getTranslateTag} from '../../selectors/translate';
-import {readmeContext} from '../../contexts';
+import {isValidReadmePath} from '../../contexts';
 
 const MainLanguageButton = ({path, t, tt, isReadme, language}) => {
   const buttonPath = getPathForMainLanguage(path, language, isReadme);
@@ -40,7 +40,7 @@ const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
   tt: getTranslateTag(state),
   language: state.language,
-  isReadme: readmeContext.keys().includes('./' + path + '.md'),
+  isReadme: isValidReadmePath(path),
 });
 
 export default connect(

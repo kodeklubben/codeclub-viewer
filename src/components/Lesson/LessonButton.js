@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonButton.scss';
 import {getTranslator} from '../../selectors/translate';
-import {getReadmepathFromLessonpath} from '../../util';
+import {getReadmepathFromLessonpath} from '../../contextUtils';
 import InstructionButton from '../InstructionButton';
 
 const LessonButton = ({buttonPath, t}) => {
@@ -22,7 +22,7 @@ LessonButton.propTypes = {
 
 const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
-  buttonPath: getReadmepathFromLessonpath('/' + path)
+  buttonPath: getReadmepathFromLessonpath(path)
 });
 
 export default connect(

@@ -1,7 +1,8 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getInitialFilter, getLessonData, createCheckboxesKey} from './util';
+import {getInitialFilter, createCheckboxesKey} from './util';
+import {getLessonData} from './contextUtils';
 import {setCheckboxes} from './reducers/checkboxes';
 import {setFilter, resetOneFilter} from './reducers/filter';
 import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';

@@ -20,6 +20,6 @@ const contexts = {
   playlistContext: (path) => path,
   lessonContext: (path) => path,
   readmeContext: (path) => path,
-  lessonAllContext: (path) => path,
+  lessonFrontmatterContext: (path) => path,
 };
 mock('../src/contexts.js', contexts);

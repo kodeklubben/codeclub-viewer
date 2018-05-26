@@ -22,7 +22,7 @@ ReadmeButton.propTypes = {
 
 const mapStateToProps = (state, {path}) => ({
   t: getTranslator(state),
-  buttonPath: (getLessonData()['./' + path + '.md'] || {}).readmePath,
+  buttonPath: (getLessonData()[path] || {}).readmePath,
 });
 
 export default connect(

@@ -8,7 +8,7 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 import {getTitle, getLevel} from '../../selectors/frontmatter';
-import {getCourseIcon, isValidCoursePath, isValidLessonPath, isValidReadmePath} from '../../contexts';
+import {getCourseIcon, isValidCoursePath, isValidLessonPath} from '../../contexts';
 
 const BreadCrumb = ({params, title, level, courseIcon}) => {
   const {course, lesson, file} = params;
@@ -17,7 +17,7 @@ const BreadCrumb = ({params, title, level, courseIcon}) => {
   const coursePath = `/${course}`;
   const lessonPath = `/${course}/${lesson}/${file}`;
   const isValidCourse = isCourse && isValidCoursePath(coursePath);
-  const isValidLesson = isLesson && (isValidLessonPath(lessonPath) || isValidReadmePath(lessonPath));
+  const isValidLesson = isLesson && isValidLessonPath(lessonPath);
 
   const homeLink = <NavLink to='/' onlyActiveOnIndex>
     <Glyphicon glyph='home' className={styles.homeIcon}/>

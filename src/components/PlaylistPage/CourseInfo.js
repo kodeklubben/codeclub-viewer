@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import CollapsiblePanel from '../CollapsiblePanel';
-import {getCourseInfoMarkup} from '../../util';
+import {getCourseInfoMarkup} from '../../contextUtils';
 import {getTranslator} from '../../selectors/translate';
 
 const CourseInfo = ({t, isStudentMode, courseInfo}) => {

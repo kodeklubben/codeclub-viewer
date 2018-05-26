@@ -9,8 +9,6 @@ import DocumentTitle from 'react-document-title';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
-import processContent from '../../processContent';
-import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
@@ -26,7 +24,8 @@ import ReadmeButton from './ReadmeButton';
 import ResetButton from './ResetButton';
 import PdfButton from './PdfButton';
 import MainLanguageButton from './MainLanguageButton';
-import {readmeContext} from '../../contexts';
+import {lessonReadmePaths} from '../../contexts';
+import Content from './Content';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -37,15 +36,6 @@ const renderToggleButtons = () => {
     const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
     ReactDOM.render(<ToggleButton {...{buttonText, hiddenHTML}}/>,node);
   }
-};
-
-const rememberLastLesson = (path, setLastLesson) => {
-  const lessonPath = '/' + path;
-  setLastLesson(lessonPath);
-};
-
-const createMarkup = (lessonContent) => {
-  return ({__html: processContent(lessonContent, contentStyles)});
 };
 
 const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
@@ -70,7 +60,7 @@ class Lesson extends React.Component {
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
-    rememberLastLesson(path, setLastLesson);
+    setLastLesson(path);
     renderToggleButtons();
   }
 
@@ -80,7 +70,6 @@ class Lesson extends React.Component {
       checkboxes, t, translateTag, translateGroup, checkedCheckboxes, totalCheckboxes,
       title, level, tags, authorName, translatorName, isReadme, isStudentMode
     } = this.props;
-    const lesson = require('lessonSrc/' + path + '.md');
     const author = authorName ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
     const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
@@ -105,7 +94,7 @@ class Lesson extends React.Component {
           {instructionButton}
           {pdfButton}
           {progress}
-          <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
+          <Content {...{path}}/>
           <Row>
             <ImprovePage courseLessonFileProp={params}/>
           </Row>
@@ -117,14 +106,10 @@ class Lesson extends React.Component {
 
 Lesson.propTypes = {
   // ownProps
-  path: PropTypes.string,
   params: PropTypes.shape({
     file: PropTypes.string.isRequired,
     course: PropTypes.string.isRequired,
   }).isRequired,
-  // lesson: PropTypes.shape({
-  //   content: PropTypes.string
-  // }),
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
@@ -140,6 +125,7 @@ Lesson.propTypes = {
   isStudentMode: PropTypes.bool.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
+  path: PropTypes.string,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -147,8 +133,7 @@ Lesson.propTypes = {
 };
 
 const mapStateToProps = (state, {params}) => {
-  const path = `${params.course}/${params.lesson}/${params.file}`;
-  // XXX: Is it better to get lesson here?
+  const path = `/${params.course}/${params.lesson}/${params.file}`;
   return {
     t: getTranslator(state),
     translateTag: getTranslateTag(state),
@@ -159,7 +144,7 @@ const mapStateToProps = (state, {params}) => {
     tags: getTags(state, params),
     authorName: getAuthorName(state, params),
     translatorName: getTranslatorName(state, params),
-    isReadme: readmeContext.keys().includes('./' + path + '.md'),
+    isReadme: lessonReadmePaths.includes(path),
     isStudentMode: state.isStudentMode,
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
     totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
@@ -175,4 +160,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, contentStyles)(Lesson));
+)(withStyles(styles)(Lesson));

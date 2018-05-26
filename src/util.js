@@ -1,14 +1,5 @@
 /* eslint-env node */
 
-import {
-  readmeContext,
-  lessonContext,
-  courseAllLangsContext,
-  lessonAllContext,
-  getCourseMetadata,
-  getLessonMetadata,
-} from './contexts';
-
 /**
  * Makes first character in str upper case
  *
@@ -42,6 +33,31 @@ export function dirname(path) {
   const b = path.match(/(.*)\/[^/]+\/*$/);
   return b == null ? '.' : (b[1] === '' ? '/' : b[1]);
 }
+
+/**
+ * Removes duplicates from an array
+ * @param {array} array An array with potentially duplicate elements
+ * @returns {array} An array with unique elements
+ */
+export const removeDuplicates = (array) => [...new Set(array)];
+
+/** Assigns value to a nested object, even if the subobjects don't exist.
+ *  I.e. assignDeep(obj, [1,2,3], 9) where obj={}, makes obj[1][2][3] === 9
+ *
+ * @param {object} obj
+ * @param {array} keys
+ * @param {*} value
+ */
+export const assignDeep = (obj, keys, value) => {
+  if (keys.length === 0) { return; }
+  const [key, ...rest] = keys;
+  if (rest.length === 0) {
+    obj[key] = value;
+  } else {
+    if (!obj[key]) { obj[key] = {}; }
+    assignDeep(obj[key], rest, value);
+  }
+};
 
 /**
  * Returns all valid filter groupKeys and tagKeys, converted to lowercase.
@@ -80,92 +96,7 @@ export function getInitialFilter(initialLanguage) {
   return filter;
 }
 
-let cachedLessons = null;
-export function getLessonData() {
-  if (cachedLessons == null) {
-    const paths = lessonContext.keys();
-    const availableLanguages = getAvailableLanguages();
 
-    cachedLessons = paths.reduce((res, path) => {
-      const lessonFrontmatter = lessonContext(path).frontmatter;
-      const language = lessonFrontmatter.language;
-      if (!language) {
-        console.warn('Skipping lesson ' + path + ' since it is missing language.');
-        return res;
-      }
-      if (!availableLanguages.includes(language)) {
-        // Hiding lesson since it uses a language that is not available (yet)
-        if (typeof document === 'undefined') { // Only show message when rendering on server
-          console.log('NOTE: The lesson ' + path + ' uses the language ' + language +
-            ', which is not available. Skipping lesson.');
-        }
-        return res;
-      }
-
-      // Course name is between './' and second '/'
-      const courseName = path.slice(2, path.indexOf('/', 2)).toLowerCase();
-
-      const lessonMetaPath = dirname(path);
-      const courseMetaPath = dirname(lessonMetaPath);
-
-      // Inherit tags from course, override with lessonTags, and add lessonTag
-      const courseTags = cleanseTags(getCourseMetadata(courseMetaPath).tags, 'course ' + courseMetaPath);
-      const lessonTags = cleanseTags(getLessonMetadata(lessonMetaPath).tags, 'lesson ' + lessonMetaPath);
-      const languageTag = language ? {language: [language]} : {};
-      const tags = {...courseTags, ...lessonTags, ...languageTag};
-
-      // Gets the valid readmePath for the lesson, if it exists
-      const readmePath = getReadmePath(language, path);
-
-      res[path] = {
-        title: lessonFrontmatter.title || '',
-        author: lessonFrontmatter.author || '',
-        translator: lessonFrontmatter.translator || '',
-        level: lessonFrontmatter.level,
-        indexed: lessonFrontmatter.indexed == null ? true : lessonFrontmatter.indexed,
-        external: lessonFrontmatter.external || '',
-        readmePath: readmePath,
-        course: courseName,
-        language: language,
-        tags,
-        // Everything between '.' and '.md'
-        path: path.slice(1, path.length - 3)
-      };
-
-      return res;
-    }, {});
-  }
-  return cachedLessons;
-}
-
-/**
-* Returns /course/index_(ISO_CODE) if it exists, returns /course/index if not.
-**/
-export function getCourseInfoMarkup(courseName, language) {
-  const req = courseAllLangsContext;
-  const withLanguage = `./${courseName}/index_${language}.md`;
-  const withoutLanguage = `./${courseName}/index.md`;
-
-  const hasValidFile = (path) => {
-    if (!req.keys().includes(path)) { return false; }
-    const courseLanguage = req(path).frontmatter.language;
-    if (!courseLanguage) {
-      console.warn('Not using course info ' + path + ' since it is missing language.');
-      return false;
-    }
-    return courseLanguage === language;
-  };
-  const createMarkupFrom = (path) => ({__html: req(path).content});
-
-  for (const path of [withLanguage, withoutLanguage]) {
-    if (hasValidFile(path)) {
-      return createMarkupFrom(path);
-    }
-  }
-
-  console.warn('The course ' + courseName + ' has no course info (index.js) in language ' + language);
-  return null;
-}
 
 /**
  *
@@ -194,46 +125,13 @@ export function getLessonIntro(path) {
   return (picture || '') + (text || '');
 }
 
-///////////////////////////////////
-//////// HELPER FUNCTIONS /////////
-///////////////////////////////////
-
-/**
-* Checks if a lesson with a given path has a README-file.
-* Accepts README-files on the form /README or /README_(ISO_CODE).
-**/
-const getReadmePath = (language, path) => {
-  path = path.slice(1, path.lastIndexOf('/'));
-  const readmePathAndLanguageCode = path + '/README_' + language;
-  const readmePathNoLanguageCode = path + '/README';
-
-  const hasValidFile = (shortPath) => {
-    const fullPath = '.' + shortPath + '.md';
-    if (!readmeContext.keys().includes(fullPath)) { return false; }
-    const readmeLanguage = readmeContext(fullPath).frontmatter.language;
-    if (!readmeLanguage) {
-      console.warn('Not using README ' + fullPath + ' since it is missing language.');
-      return false;
-    }
-    return (readmeLanguage === language);
-  };
-
-  for (const shortPath of [readmePathAndLanguageCode, readmePathNoLanguageCode]) {
-    if (hasValidFile(shortPath)) {
-      return shortPath;
-    }
-  }
-
-  // If the lesson has no README (teacher instruction), just return an empty string.
-  return '';
-};
-
 /**
  * Fix invalid tags
  * @param {Object} tags
  * @param {string} src
  * @returns {Object} valid tags
  */
+// TODO: Consider moving cleanseTags to resources/lessonData.js
 export function cleanseTags(tags, src) {
   if (tags == null) return {};
 
@@ -287,42 +185,78 @@ export function fixNonArrayTagList(tagItems) {
   return tagItems;
 }
 
+// /**
+//  * Return true only if tags of a lesson contains all the checked tags in the filter
+//  *
+//  * @param {Object} lessonTags e.g. {topic: ['game'], subject: ['science']}
+//  * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
+//  * @returns {boolean}
+//  */
+// export function tagsMatchFilter(lessonTags, filter) {
+//   const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
+//   const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
+//
+//   for (let groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
+//     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
+//     const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
+//    const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
+//     const lessonGroup = lessonTags[groupKey]; // e.g. ['game']
+//     if (checkedTagKeys.length > 0 && !lessonGroup) {
+//       // this is a filter with checked tags, and lesson doesn't have this group
+//       return false;
+//     }
+//     // OR-tests the language group
+//     if(groupKey === 'language' && checkedLanguageTags.length !== 0
+//       && checkedLanguageTags.filter(tagKey => lessonGroup.includes(tagKey)).length === 0){
+//       return false;
+//     }
+//     // AND-tests everything else
+//     for (const checkedTagKey of checkedTagKeys) {
+//       // lessonGroup doesn't contain checkedFilterTag
+//       if (groupKey !== 'language' && !lessonGroup.includes(checkedTagKey)) {
+//         return false;
+//       }
+//     }
+//   }
+//
+//   return true; // The lessonTags contained all the checked filterTags
+// }
+
 /**
  * Return true only if tags of a lesson contains all the checked tags in the filter
  *
- * @param {Object} lessonTags e.g. {topic: ['game'], subject: ['science']}
+ * @param {Object} lessonTags LessonTags or courseTags e.g. {topic: ['game'], subject: ['science']}
  * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
  * @returns {boolean}
  */
-export function tagsMatchFilter(lessonTags, filter) {
-  const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
-  const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
-
-  for (let groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
+export const tagsMatchFilter = (lessonTags, filter) => {
+  const groupKeys = Object.keys(filter); // groupKeys is e.g. ['topic', 'subject']
+  for (let groupKey of groupKeys) { // groupKey is e.g. 'topic'
     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
     const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
     const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
-    const lessonGroup = lessonTags[groupKey]; // e.g. ['game']
-    if (checkedTagKeys.length > 0 && !lessonGroup) {
+    const lessonGroup = lessonTags[groupKey] || []; // e.g. ['game']
+    if (checkedTagKeys.length > 0 && lessonGroup.length === 0) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    // OR-tests the language group
-    if(groupKey === 'language' && checkedLanguageTags.length !== 0
-      && checkedLanguageTags.filter(tagKey => lessonGroup.includes(tagKey)).length === 0){
-      return false;
-    }
-    // AND-tests everything else
-    for (const checkedTagKey of checkedTagKeys) {
-      // lessonGroup doesn't contain checkedFilterTag
-      if (groupKey !== 'language' && !lessonGroup.includes(checkedTagKey)) {
+    if (groupKey === 'language') {
+      // If not lessonGroup includes any(some) checkedTagKeys --> don't include lesson,
+      // meaning: Include lesson if it has ANY of the checked tags in filter (OR-test / union)
+      if (!checkedTagKeys.some(lessonGroup.includes)) {
+        return false;
+      }
+    } else {
+      // If not lessonGroup includes every checkedTagKeys --> don't include lesson,
+      // meaning: Include lesson ONLY if it has tags matching ALL checked tags in filter (AND-test / intersection)
+      if (!checkedTagKeys.every(lessonGroup.includes)) {
         return false;
       }
     }
   }
 
   return true; // The lessonTags contained all the checked filterTags
-}
+};
 
 /**
 * Returns languages defined as available
@@ -331,48 +265,6 @@ export function tagsMatchFilter(lessonTags, filter) {
 */
 export const getAvailableLanguages = () => getFilterkeys().language;
 
-/**
-* Returns the readmePath of a lesson with the given lessonPath
-*
-* @param {Object} lessons
-* @param {String} lessonPath
-* @returns {String or undefined}
-*/
-export const getReadmepathFromLessonpath = (lessonPath) => {
-  const lessons = getLessonData();
-  for(let key of Object.keys(lessons)){
-    if(lessons[key].readmePath === lessonPath){
-      return lessons[key]['external'] === '' ? lessons[key]['path'] : undefined;
-    }
-  }
-};
-
-/**
-* Returns the path for the language in state if task is another language
-*
-* @param {String} path
-* @param {String} language
-* @param {boolean} isReadme
-* @returns {String or null}
-*/
-export const getPathForMainLanguage = (path, language, isReadme) => {
-  const req = lessonAllContext;
-  const lessonLanguage = req('./' + path + '.md').frontmatter.language;
-  if (lessonLanguage !== language) {
-    const lessonFolder = './' + path.substring(0, path.lastIndexOf('/'));
-    for (const lessonPath of req.keys()) {
-      if (!!isReadme === lessonPath.includes('README')) {
-        if (lessonPath.startsWith(lessonFolder)) {
-          if (req(lessonPath).frontmatter.language === language) {
-            // Cut away period at start and extension at end:
-            return lessonPath.substring(1, lessonPath.lastIndexOf('.'));
-          }
-        }
-      }
-    }
-  }
-  return null;
-};
 
 /**
 * Returns an object with only the courses that have playlists

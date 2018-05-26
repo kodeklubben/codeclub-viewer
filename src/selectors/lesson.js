@@ -1,5 +1,6 @@
 import {createSelector} from 'reselect';
-import {tagsMatchFilter, getLessonData} from '../util';
+import {tagsMatchFilter} from '../util';
+import {getLessonData} from '../contextUtils';
 
 // TODO:
 // * Only getLessonsByLevel is used (double check). Perhaps simplify?
