@@ -1,5 +1,6 @@
 const {lessonSrc, lessonFiltertags} = require('./buildconstants');
 const path = require('path');
+const fs = require('fs');
 const yaml = require('yamljs');
 const yamlFront = require('yaml-front-matter');
 const glob = require('glob');
@@ -34,7 +35,7 @@ const lessonPaths = (ending, verbose) => {
     .filter(p => !p.endsWith('index.md'))
     .filter(p => {
       try {
-        const {title, external, language} = yamlFront.loadFront(p);
+        const {title, external, language} = yamlFront.loadFront(fs.readFileSync(p));
         if (external) {
           if (verbose) {
             console.log('Skipping external course "' + title + '" (' + p + ')');
