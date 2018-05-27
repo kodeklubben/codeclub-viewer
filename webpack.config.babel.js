@@ -52,6 +52,8 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 
 import {
   assets,
@@ -211,6 +213,10 @@ const createConfig = (env = {}) => {
           loader: 'ejs-compiled-loader',
         },
         {
+          test: inCurrentRepo('webmanifest'),
+          loader: 'raw-loader',
+        },
+        {
           test: inLessonRepo('txt'),
           loader: 'raw-loader',
         },
@@ -277,6 +283,7 @@ const createConfig = (env = {}) => {
       new webpack.DefinePlugin({
         'process.env.PUBLICPATH': JSON.stringify(publicPath),
         'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
+        'process.env.SW': !!env.SW,
       }),
 
       new FaviconsWebpackPlugin({
@@ -359,6 +366,29 @@ const createConfig = (env = {}) => {
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
       ]),
 
+      new ServiceWorkerWebpackPlugin({
+        entry: path.join(__dirname, 'src/sw.js')
+      }),
+
+      new WebpackPwaManifest({
+        name: 'Kodeklubben', // This will be the name of the app. Don't know how we do it for different language.
+        short_name: 'Kodeklubben', // Is this right?
+        // TODO: Description should be the same as the one in meta-tag-description which is another issue
+        // And should everything be in english or norwegian? Or could we have for all languages?
+        description: 'Kodeklubbens oppgavesider',
+        display: 'standalone',
+        orientation: 'any',
+        background_color: '#ffffff', // Maybe use the green color for both of these?
+        theme_color: '#ffffff',
+        filename: 'manifest.webmanifest',
+        start_url: '/',
+        icons: [
+          {
+            src: path.resolve('src/assets/favicon.png'),
+            sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512, 1024]
+          }
+        ]
+      }),
     ],
 
     devServer: {

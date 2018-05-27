@@ -7,9 +7,10 @@
     "start": "webpack-dev-server -d --progress --inline --hot --history-api-fallback --host 0.0.0.0",
     "build:debug": "webpack -d --progress --env.verbose",
     "build": "webpack --progress",
-    "build:prod": "webpack -p --progress --env.NODE_ENV=production --env.BUILD_PDF",
+    "build:prod": "webpack -p --progress --env.NODE_ENV=production --env.BUILD_PDF --env.SW",
     "build:analyse:": "webpack --progress --profile --json > stats.json",
     "build:travis": "webpack -p --env.NODE_ENV=production",
+    "build:sw": "webpack --progress --env.SW",
     "serve": "node server.js",
     "test": "mocha --compilers js:babel-core/register --require mock-local-storage --require ignore-styles --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:links": "node test-links.js",
@@ -61,7 +62,8 @@
     "react-scroll-to-component": "^1.0.1",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
-    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
+    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1",
+    "serviceworker-webpack-plugin": "^0.2.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
@@ -128,6 +130,7 @@
     "url-loader": "^0.5.7",
     "webpack": "3.10.0",
     "webpack-dev-server": "^2.11.2",
+    "webpack-pwa-manifest": "^3.6.2",
     "webpack-shell-plugin": "^0.5.0",
     "yaml-front-matter": "^4.0.0",
     "yamljs": "^0.3.0",
