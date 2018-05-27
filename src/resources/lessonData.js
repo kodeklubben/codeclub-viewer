@@ -29,6 +29,7 @@ const lessons = {};
 //   },
 //   /* ... */
 // };
+// TODO: Make this a function, and change 'lessons' to 'cachedLessons'
 for (const key of lessonDataContext.keys()) {
   const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]data[.]yml$/);
   const {tags, indexed} = lessonDataContext(key);

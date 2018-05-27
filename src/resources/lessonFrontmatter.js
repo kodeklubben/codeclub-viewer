@@ -44,6 +44,7 @@ const lessons = {};
 //   },
 //   /* ... */
 // };
+// TODO: Make this a function, and change 'lessons' to 'cachedLessons'
 for (const key of lessonFrontmatterContext.keys()) {
   const [/* ignore */, course, lesson, file] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]([^.]+)[.]md$/);
   const {language, title = '', level = 0, author = '', translator = '', external = ''} = lessonFrontmatterContext(key);

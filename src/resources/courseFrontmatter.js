@@ -34,6 +34,7 @@ const courses = {};
 //
 // Note that not all languages need to be present, and that 'external' only exists some places.
 // It is assumed that if 'external' exists for a course, there are no lessons defined.
+// TODO: Make this a function, and change 'courses' to 'cachedCourses'
 for (const key of courseFrontmatterContext.keys()) {
   const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]index[^.]*[.]md$/);
   const {title = '', language} = courseFrontmatterContext(key);

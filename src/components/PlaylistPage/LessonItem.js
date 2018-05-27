@@ -36,7 +36,7 @@ const LessonItem = ({lesson, isStudentMode, filterLanguage, language, t, checked
       insideLink={true}
     />;
 
-  const popoverContent = getLessonIntro(lesson.path.slice(1));
+  const popoverContent = getLessonIntro(lesson.path.slice(1)); // TODO: args=course,lesson,language,isReadme
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>

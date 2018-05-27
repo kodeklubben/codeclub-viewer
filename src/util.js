@@ -98,32 +98,32 @@ export function getInitialFilter(initialLanguage) {
 
 
 
-/**
- *
- * @param {string} path The path to a lesson file, without slash in front and without '.md' at the end.
- * @returns {string} HTML code to e.g. display in a popover.
- */
-export function getLessonIntro(path) {
-  const publicPath = process.env.PUBLICPATH;
-  let lessonContent = require('lessonSrc/' + path + '.md').content;
-  let text, picture = '';
-  lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
-  const p = lessonContent.indexOf('<p>');
-  const closingP = lessonContent.indexOf('</p>');
-  const img = lessonContent.indexOf('<img');
-  const closingFig = lessonContent.indexOf('</figure');
-  if (p < closingP) {
-    text = lessonContent.substring(p, closingP);
-    if (text.length > 300) {
-      text = lessonContent.substring(p, 300) + '...';
-    }
-    picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
-    // Add path to image. Regex allows for attributes with or without quotes, e.g. <img src="astrokatt.png" />,
-    // <img src=astrokatt.png />, <img src=astrokatt.png/>, and <img src=astrokatt.png>
-    picture = picture.replace(/( src="?)([^" />]*)([" />])/, '$1' + publicPath + dirname(path) + '/$2$3');
-  }
-  return (picture || '') + (text || '');
-}
+// /**
+//  *
+//  * @param {string} path The path to a lesson file, without slash in front and without '.md' at the end.
+//  * @returns {string} HTML code to e.g. display in a popover.
+//  */
+// export function getLessonIntro(path) {
+//   const publicPath = process.env.PUBLICPATH;
+//   let lessonContent = require('lessonSrc/' + path + '.md').content;
+//   let text, picture = '';
+//   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
+//   const p = lessonContent.indexOf('<p>');
+//   const closingP = lessonContent.indexOf('</p>');
+//   const img = lessonContent.indexOf('<img');
+//   const closingFig = lessonContent.indexOf('</figure');
+//   if (p < closingP) {
+//     text = lessonContent.substring(p, closingP);
+//     if (text.length > 300) {
+//       text = lessonContent.substring(p, 300) + '...';
+//     }
+//     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
+//     // Add path to image. Regex allows for attributes with or without quotes, e.g. <img src="astrokatt.png" />,
+//     // <img src=astrokatt.png />, <img src=astrokatt.png/>, and <img src=astrokatt.png>
+//     picture = picture.replace(/( src="?)([^" />]*)([" />])/, '$1' + publicPath + dirname(path) + '/$2$3');
+//   }
+//   return (picture || '') + (text || '');
+// }
 
 /**
  * Fix invalid tags

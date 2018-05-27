@@ -14,7 +14,7 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
   const isExternal = course.hasOwnProperty('externalLink');
   const coursePath = course.name.replace(/ /g, '_').toLowerCase();
   const introPath = coursePath + '/index' + (isExternal || language === 'nb' ? '' : ('_' + language));
-  const popoverContent = getLessonIntro(introPath);
+  const popoverContent = getLessonIntro(introPath); // TODO: args=course,lesson,language,isReadme
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
