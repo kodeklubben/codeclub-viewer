@@ -1,3 +1,5 @@
+import {getSortedPlaylists} from '../resources/playlists';
+
 // import {createSelector} from 'reselect';
 // import {getCourseLessons} from './lesson';
 // import {capitalize} from '../util';
@@ -41,16 +43,16 @@
 //   }
 // );
 //
-// /**
-//  * Returns a boolean that says if the radiobuttons for choosing between playlists and lessons should be displayed
-//  * Input props: courseName (string, optional)
-//  */
-// export const getShowRadiobuttons = (state, courseName) =>
-//   state.language === 'nb' && Object.keys(getPlaylists(state, courseName)).length > 0;
-//
-// /**
-//  * Returns a boolean that says if the filtergroups in the filter should be displayed
-//  * Input props: courseName (string, optional)
-//  */
-// export const getShowFiltergroups = (state, courseName) =>
-//   !state.showPlaylists || !getShowRadiobuttons(state, courseName);
+/**
+ * Returns a boolean that says if the radiobuttons for choosing between playlists and lessons should be displayed
+ * Input props: courseName (string, optional)
+ */
+export const getShowRadiobuttons = (state, course) =>
+  state.language === 'nb' && getSortedPlaylists(course).length > 0;
+
+/**
+ * Returns a boolean that says if the filtergroups in the filter should be displayed
+ * Input props: courseName (string, optional)
+ */
+export const getShowFiltergroups = (state, course) =>
+  !state.showPlaylists || !getShowRadiobuttons(state, course);

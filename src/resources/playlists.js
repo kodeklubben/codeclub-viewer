@@ -4,25 +4,63 @@ import {assignDeep} from '../util';
 export const playlistContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/]playlists[/][^.]+[.]yml/);
 
-const playlists = {};
-// TODO: Make this a function, and change 'playlists' to 'cachedPlaylists'
-for (const key of playlistContext.keys()) {
-  const [/* ignore */, course, playlist] = key.match(/^[.][/]([^/]+)[/]playlists[/]([^.]+)[.]yml$/);
-  const {sortindex = 0, title = {}, lessons = []} = playlistContext(key);
-  assignDeep(playlists, [course, playlist], {sortindex, title, lessons});
-}
+let cachedPlaylists = null;
+// An example of the structure of cachedPlaylists:
+// let cachedPlaylists = {
+//   scratch: {
+//     playlist1: {
+//       sortindex: 1,
+//       title: 'The playlist1 title',
+//       lessons: ['astrokatt', 'straffespark'],
+//     },
+//     playlist2: {
+//       sortindex: 2,
+//       title: 'The playlist2 title',
+//       lessons: ['scratchLesson1', 'scratchLesson2'],
+//     },
+//     /* ... */
+//   },
+//   python: {
+//     /* ... */
+//   }
+// };
+const getCachedPlaylists = () => {
+  if (cachedPlaylists == null) {
+    cachedPlaylists = {};
+    for (const key of playlistContext.keys()) {
+      const [/* ignore */, course, playlist] = key.match(/^[.][/]([^/]+)[/]playlists[/]([^.]+)[.]yml$/);
+      const {sortindex = 0, title = {}, lessons = []} = playlistContext(key);
+      assignDeep(cachedPlaylists, [course, playlist], {sortindex, title, lessons});
+    }
+  }
+  return cachedPlaylists;
+};
 
-const getPlaylist = (course, playlist) => (playlists[course] || {})[playlist] || {};
-
+const cachedSortedPlaylists = {};
+// An example of the structure of cachedPlaylists:
+// const cachedSortedPlaylists = {
+//   scratch: ['scratchPlaylist1', 'scratchPlaylist2'],
+//   python: ['pythonPlaylist1', 'pythonPlaylist2'],
+//   /* ... */
+// };
 /**
  * Return all playlists for a course
  * @param {string} course E.g. 'scratch'
  * @return {string[]} An array with the (file)name of all the playlists (without extension),
  *                    e.g. ['playlist1', 'playlist2']
  */
-  // TODO: Perhaps change this to getSortedPlaylists (using sortindex)?
-export const getPlaylists = (course) =>
-  Object.keys(playlists[course] || {});
+export const getSortedPlaylists = (course) => {
+  if (!cachedSortedPlaylists[course]) {
+    const coursePlaylists = getCachedPlaylists()[course] || {};
+    const playlists = Object.keys(coursePlaylists);
+    const sortFunc = (p1, p2) => coursePlaylists[p1].sortindex - coursePlaylists[p2].sortindex;
+    playlists.sort(sortFunc);
+    cachedSortedPlaylists[course] = playlists;
+  }
+  return cachedSortedPlaylists[course];
+};
+
+const getPlaylist = (course, playlist) => (getCachedPlaylists()[course] || {})[playlist] || {};
 
 /**
  * Return all the lessons in a playlist
@@ -33,15 +71,15 @@ export const getPlaylists = (course) =>
 export const getPlaylistLessons = (course, playlist) =>
   getPlaylist(course, playlist).lessons || [];
 
-/**
- * Get the sortindex of the playlist. Playlists should be shown in ascending sortindex order, i.e. 1 before 2.
- * @param {string} course E.g. 'scratch'
- * @param {string} playlist E.g. The filename of the playlist (without extension) e.g. 'playlist1'
- * @return {number} The sortindex of the playlist
- */
-  // TODO: Might not need this function, instead return playlists sorted
-export const getPlaylistSortindex = (course, playlist) =>
-  getPlaylist(course, playlist).lessons || 0;
+// /**
+//  * Get the sortindex of the playlist. Playlists should be shown in ascending sortindex order, i.e. 1 before 2.
+//  * @param {string} course E.g. 'scratch'
+//  * @param {string} playlist E.g. The filename of the playlist (without extension) e.g. 'playlist1'
+//  * @return {number} The sortindex of the playlist
+//  */
+// // TODO: Might not need this function, instead return playlists sorted
+// export const getPlaylistSortindex = (course, playlist) =>
+//   getPlaylist(course, playlist).lessons || 0;
 
 /**
  *
