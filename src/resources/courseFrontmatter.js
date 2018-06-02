@@ -7,35 +7,40 @@ import {assignDeep, getAvailableLanguages} from '../util';
 const courseFrontmatterContext =
   require.context('frontmatter!lessonSrc/', true, /^[.][/][^/]+[/]index[^.]*[.]md$/);
 
-// An example of the structure of courses:
-// const cachedCourses = {
-//   scratch: {
-//     nb: {
-//       title: 'Scratch',
-//       key: './scratch/index.md',
-//     },
-//     en: {
-//       title: 'Scratch',
-//       key: './scratch/index_en.md',
-//     },
-//   },
-//   kodegenet: {
-//     nb: {
-//       title: 'Kodegenet',
-//       external: 'https://kodegenet.no/tracks/',
-//       key: './kodegenet/index.md',
-//     },
-//   },
-//   python: {
-//     /* ... */
-//   },
-//   /* ... */
-// };
-//
-// Note that not all languages need to be present, and that 'external' only exists some places.
-// It is assumed that if 'external' exists for a course, there are no lessons defined.
+
+/**
+ * Get all courses, with all languages, based on the index*.md files.
+ * Note that not all languages need to be present, and that 'external' only exists some places.
+ * It is assumed that if 'external' exists for a course, there are no lessons defined.
+ *
+ * @returns {object} An object with the frontmatter data of courses, e.g.
+ * {
+ *   scratch: {
+ *     nb: {
+ *       title: 'Scratch',
+ *       key: './scratch/index.md',
+ *     },
+ *     en: {
+ *       title: 'Scratch',
+ *       key: './scratch/index_en.md',
+ *     },
+ *   },
+ *   kodegenet: {
+ *     nb: {
+ *       title: 'Kodegenet',
+ *       external: 'https://kodegenet.no/tracks/',
+ *       key: './kodegenet/index.md',
+ *     },
+ *   },
+ *   python: {
+ *     ...
+ *   },
+ *   ...
+ * }
+ */
 const getCourses = memoize(
   () => {
+    console.log('DEBUG: resources/courseFrontmatter.js:getCourses()');
     const courses = {};
     for (const key of courseFrontmatterContext.keys()) {
       const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]index[^.]*[.]md$/);
@@ -56,7 +61,10 @@ const getCourses = memoize(
  * @returns {string[]} An array of all courses
  */
 export const getAllCourses = memoize(
-  () => Object.keys(getCourses())
+  () => {
+    console.log('DEBUG: resources/courseFrontmatter.js:getAllCourses()');
+    return Object.keys(getCourses());
+  }
 );
 
 /**
@@ -74,14 +82,6 @@ export const getCourseFrontmatter = (course, language) => (getCourses()[course] 
  * @return {string} The title of the course
  */
 export const getCourseTitle = (course, language) => getCourseFrontmatter(course, language).title || '';
-
-// We probably need some functions to get courses based on whether or not they are external,
-// and what language they use.
-// Currently external exists in the language-dependent index-files --- potentially, they could point
-// to different external pages (in different languages).
-// But it should be possible to filter external courses on language.
-// Note that internal courses are only filtered via their lessons, and don't have data.yml-files.
-//export const getCourses = (isExternal) => {};
 
 /**
  * Returns all courses in the given languages that have external defined

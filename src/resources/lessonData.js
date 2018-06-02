@@ -9,26 +9,29 @@ const lessonDataContext =
 // TODO: but not remove it from frontmatter in the old ones,
 // TODO: or else they will break.
 
-// An example of the structure of lessons:
-// const lessons = {
-//   scratch: {
-//     astrokatt: {
-//       indexed: false, // true unless 'indexed: false' explicitly exists in data.yml
-//       tags: {
-//         topic: ['block_based', 'app'],
-//         subject: ['technology', 'programming'],
-//         grade: ['secondary', 'junior'],
-//       }
-//     },
-//     straffespark: {
-//       /* ... */
-//     },
-//   },
-//   python: {
-//     /* ... */
-//   },
-//   /* ... */
-// };
+/**
+ * Get structure of lessons with data from data.yml files
+ * @returns {object} An object of lessons, e.g.
+ * {
+ *   scratch: {
+ *     astrokatt: {
+ *       indexed: false, // true unless 'indexed: false' explicitly exists in data.yml
+ *       tags: {
+ *         topic: ['block_based', 'app'],
+ *         subject: ['technology', 'programming'],
+ *         grade: ['secondary', 'junior'],
+ *       }
+ *     },
+ *     straffespark: {
+ *       ...
+ *     },
+ *   },
+ *   python: {
+ *     ...
+ *   },
+ *   ...
+ * }
+ */
 const getLessons = memoize(
   () => {
     const lessons = {};

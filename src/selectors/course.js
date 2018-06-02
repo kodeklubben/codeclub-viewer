@@ -2,8 +2,7 @@ import {createSelector} from 'reselect';
 import {getCourseTags} from '../resources/courseData';
 import {getKeysWithTrueValues, tagsMatchFilter} from '../util';
 import {getExternalCourses} from '../resources/courseFrontmatter';
-import {getAllCourses} from '../resources/courseFrontmatter';
-import {getFilteredLessonsInCourse} from './lesson';
+import {getFilteredLessons} from './lesson';
 
 const getFilter = (state) => state.filter;
 
@@ -15,27 +14,12 @@ const getFilter = (state) => state.filter;
  */
 export const getSortedFilteredCourses = createSelector(
   // Input selectors:
-  getFilter,
+  getFilteredLessons,
 
   // Output selector (resultfunc):
-  (filter = {}) => {
-    const courses = getAllCourses();
-    const lessonCounts = {};
-    for (const course in courses) {
-      // We want to call getFilteredLessonsInCourse directly (instead of having it
-      // as an input selector) because it needs the extra 'course' argument.
-      // But we don't want to supply it the whole state, since we would need to get
-      // it through an input selector, and that would make getSortedFilteredCourses to
-      // recalculate every time anything in the state changes.
-      // Instead, we create a state with only filter in it, since that is the only part
-      // of state that getFilteredLessonsInCourse needs.
-      // NOTE: If the implementation of getFilteredLessonsInCourse changes so that
-      //       it uses other parts of the state, we will need to supply that, too.
-      const state = {filter};
-      lessonCounts[course] = getFilteredLessonsInCourse(state, course).length;
-    }
-    const filteredCourses = courses.filter(course => lessonCounts[course] > 0);
-    const sortFunc = (courseA, courseB) => lessonCounts[courseB] - lessonCounts[courseA];
+  (filteredLessons) => {
+    const filteredCourses = Object.keys(filteredLessons).filter(course => filteredLessons[course].length > 0);
+    const sortFunc = (courseA, courseB) => filteredLessons[courseB].length - filteredLessons[courseA].length;
     filteredCourses.sort(sortFunc);
     return filteredCourses;
   }
@@ -44,6 +28,7 @@ export const getSortedFilteredCourses = createSelector(
 export const getFilteredExternalCourses = createSelector(
   // Input selectors:
   getFilter,
+
   // Output selector (resultfunc):
   (filter = {}) => {
     const {language, ...rest} = filter;

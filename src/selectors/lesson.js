@@ -23,7 +23,7 @@ export const getFilteredLessonsInCourse = createCachedSelector(
 
   // Output selector (resultfunc):
   (course, filter = {}) => {
-    console.log('DEBUG: Running getFilteredLessonsInCourse for course', course);
+    console.log('DEBUG: selectors/lesson.js:getFilteredLessonsInCourse() for course', course);
     const lessonMatchesFilter = (lesson) => tagsMatchFilter(getLessonTags(course, lesson), filter);
     return getLessonsInCourse(course).filter(lessonMatchesFilter);
   },
@@ -32,6 +32,36 @@ export const getFilteredLessonsInCourse = createCachedSelector(
   (state, course) => course
 );
 
+export const getFilteredLessons = createSelector(
+  // Input selectors:
+  getFilter,
+
+  // Output selector (resultfunc):
+  (filter = {}) => {
+    console.log('DEBUG: selectors/lesson.js:getFilteredLessons');
+    const filteredLessons= {};
+    for (const course of getAllCourses()) {
+      // We call getFilteredLessonsInCourse directly (instead of having it
+      // as an input selector) because it needs the extra 'course' argument.
+      // But we don't want to supply getFilteredLessonsInCourse the whole state,
+      // since getFilteredLessons would need to get it through an input selector,
+      // and that would make getFilteredLessons recalculate every time anything in
+      // the state changes, not only when the filter changes.
+      // Instead, we recreate the redux state object with only 'filter' in it,
+      // since that is the only part of state that getFilteredLessonsInCourse needs.
+      // Note that if the implementation of getFilteredLessonsInCourse changes so that
+      // it uses other parts of the state, we will need to supply those, too.
+      //
+      // An alternative solution would be to separate out the resultfunc of
+      // getFilteredLessonsInCourse, and memoize it ourselves in a smart way,
+      // and then use this function in both getFilteredLessonsInCourse and getFilteredLessons.
+      // If so, we would not need to use reselect nor re-reselect for getFilteredLessonsInCourse.
+
+      const state = {filter}; // Supply all the state that getFilteredLessonsInCourse needs
+      filteredLessons[course] = getFilteredLessonsInCourse(state, course);
+    }
+  },
+);
 
 /**
  * Get number of filtered lessons in a course.

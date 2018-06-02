@@ -25,6 +25,7 @@ const courseDataContext =
 // };
 const getCourses = memoize(
   () => {
+    console.log('DEBUG: resources/courseData.js:getCourses()');
     const courses = {};
     for (const key of courseDataContext.keys()) {
       const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]data[.]yml$/);
