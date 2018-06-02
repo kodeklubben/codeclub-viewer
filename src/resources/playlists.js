@@ -1,3 +1,4 @@
+import memoize from 'fast-memoize';
 import {assignDeep} from '../util';
 
 // lessonSrc/*/playlists/*.txt
@@ -23,18 +24,17 @@ export const playlistContext =
 //     /* ... */
 //   }
 // };
-let cachedPlaylists = null;
-const getCachedPlaylists = () => {
-  if (cachedPlaylists == null) {
-    cachedPlaylists = {};
+const getPlaylists = memoize(
+  () => {
+    const playlists = {};
     for (const key of playlistContext.keys()) {
       const [/* ignore */, course, playlist] = key.match(/^[.][/]([^/]+)[/]playlists[/]([^.]+)[.]yml$/);
       const {sortindex = 0, title = {}, lessons = []} = playlistContext(key);
-      assignDeep(cachedPlaylists, [course, playlist], {sortindex, title, lessons});
+      assignDeep(playlists, [course, playlist], {sortindex, title, lessons});
     }
+    return cachedPlaylists;
   }
-  return cachedPlaylists;
-};
+);
 
 // An example of the structure of cachedPlaylists:
 // const cachedSortedPlaylists = {
@@ -48,21 +48,19 @@ const getCachedPlaylists = () => {
  * @return {string[]} An array with the (file)name of all the playlists (without extension),
  *                    e.g. ['playlist1', 'playlist2']
  */
-const cachedSortedPlaylists = {};
-export const getSortedPlaylists = (course) => {
-  if (!cachedSortedPlaylists[course]) {
-    const coursePlaylists = getCachedPlaylists()[course] || {};
+export const getSortedPlaylists = memoize(
+  (course) => {
+    const coursePlaylists = getPlaylists()[course] || {};
     const playlists = Object.keys(coursePlaylists);
     const sortFunc = (p1, p2) => coursePlaylists[p1].sortindex - coursePlaylists[p2].sortindex;
     playlists.sort(sortFunc);
-    cachedSortedPlaylists[course] = playlists;
+    return playlists;
   }
-  return cachedSortedPlaylists[course];
-};
+);
 
-const getPlaylist = (course, playlist) => (getCachedPlaylists()[course] || {})[playlist] || {};
+const getPlaylist = (course, playlist) => (getPlaylists()[course] || {})[playlist] || {};
 
-export const getCoursesWithPlaylists = () => Object.keys(getCachedPlaylists());
+export const getCoursesWithPlaylists = () => Object.keys(getPlaylists());
 
 /**
  * Return all the lessons in a playlist

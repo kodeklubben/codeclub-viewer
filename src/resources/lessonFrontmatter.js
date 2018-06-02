@@ -1,3 +1,4 @@
+import memoize from 'fast-memoize';
 import {assignDeep} from '../util';
 
 // lessonSrc/*/*/*.md, only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)
@@ -6,46 +7,50 @@ import {assignDeep} from '../util';
 const lessonFrontmatterContext =
   require.context('frontmatter!lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/][^.]+[.]md$/);
 
-const cachedLessons = null;
-// An example of the structure of lessons:
-// const cachedLessons = {
-//   scratch: {
-//     astrokatt: {
-//       nn: {
-//         0: {
-//           title: 'Astrokatt',
-//           level: 1,
-//           author: 'Geir',
-//           translator: 'Kari',
-//           external: 'https://www.example.com/external', // doesn't always exist
-//           url: '/scratch/astrokatt/astrokatt',
-//           key: './scratch/astrokatt/astrokatt.md',
-//         },
-//         1: {
-//           title: 'Lærerveiledning for Astrokatt',
-//           level: 1,
-//           author: 'Gro',
-//           translator: 'Per',
-//           url: '/scratch/astrokatt/README_nn',
-//           key: './scratch/astrokatt/README_nn.md',
-//         },
-//       },
-//       nb: {
-//         /* ... */
-//       },
-//     },
-//     straffespark: {
-//       /* ... */
-//     },
-//     /* ... */
-//   },
-//   python: {
-//     /* ... */
-//   },
-//   /* ... */
-// };
-export const getCachedLessons = () => {
-  if (cachedLessons == null) {
+
+/**
+ * Returns a structure with all the lessons and teacher instructions.
+ * @returns {object} E.g.
+ * {
+ *   scratch: {
+ *     astrokatt: {
+ *       nn: {
+ *         0: {
+ *           title: 'Astrokatt',
+ *           level: 1,
+ *           author: 'Geir',
+ *           translator: 'Kari',
+ *           external: 'https://www.example.com/external', // doesn't always exist
+ *           url: '/scratch/astrokatt/astrokatt',
+ *           key: './scratch/astrokatt/astrokatt.md',
+ *         },
+ *         1: {
+ *           title: 'Lærerveiledning for Astrokatt',
+ *           level: 1,
+ *           author: 'Gro',
+ *           translator: 'Per',
+ *           url: '/scratch/astrokatt/README_nn',
+ *           key: './scratch/astrokatt/README_nn.md',
+ *         },
+ *       },
+ *       nb: {
+ *         ...
+ *       },
+ *     },
+ *     straffespark: {
+ *       ...
+ *     },
+ *     ...
+ *   },
+ *   python: {
+ *     ...
+ *   },
+ *   ...
+ * }
+ */
+const getLessons = memoize(
+  () => {
+    const lessons = {};
     for (const key of lessonFrontmatterContext.keys()) {
       const [/* ignore */, course, lesson, file] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]([^.]+)[.]md$/);
       const {
@@ -55,14 +60,15 @@ export const getCachedLessons = () => {
         const isReadmeKey = file.startsWith('README') ? 1 : 0;
         const url = `/${course}/${lesson}/${file}`;
         const lessonData = {title, level, author, translator, external, url, key};
-        assignDeep(cachedLessons, [course, lesson, language, isReadmeKey], lessonData);
+        assignDeep(lessons, [course, lesson, language, isReadmeKey], lessonData);
       } else {
         console.warn('The lesson', key, 'did not contain language, so lesson will not be used.');
       }
     }
+    return lessons;
   }
-  return cachedLessons;
-};
+);
+
 
 /**
  *
@@ -82,7 +88,7 @@ export const getCachedLessons = () => {
  */
 export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
   const isReadmeKey = isReadme ? 1 : 0;
-  return (((getCachedLessons()[course] || {})[lesson] || {})[language] || {})[isReadmeKey] || {};
+  return (((getLessons()[course] || {})[lesson] || {})[language] || {})[isReadmeKey] || {};
 };
 
 
@@ -95,13 +101,9 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
  * @param {string} course Which course to get lessons for
  * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */
-let cachedLessonsInCourse = null;
-export const getLessonsInCourse = (course) => {
-  if (cachedLessonsInCourse == null) {
-    cachedLessonsInCourse = Object.keys(getCachedLessons()[course] || {});
-  }
-  return cachedLessonsInCourse;
-};
+const getLessonsInCourse = memoize(
+  course => Object.keys(getLessons()[course] || {})
+);
 
 /**
  * Get the number of lessons in a course
@@ -116,4 +118,4 @@ export const getLessonCount = (course) => getLessonsInCourse(course).length;
  * @param {string} lesson E.g. 'astrokatt'
  * @return {string[]} An array of languages this lesson exists in, e.g. ['nb', 'en']
  */
-export const getLessonLanguages = (course, lesson) => Object.keys((getCachedLessons()[course] || {})[lesson] || {});
+export const getLessonLanguages = (course, lesson) => Object.keys((getLessons()[course] || {})[lesson] || {});

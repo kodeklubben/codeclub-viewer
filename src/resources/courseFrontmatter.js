@@ -1,3 +1,4 @@
+import memoize from 'fast-memoize';
 import {assignDeep, getAvailableLanguages} from '../util';
 
 // lessonSrc/*/index*.md, only frontmatter
@@ -6,7 +7,6 @@ import {assignDeep, getAvailableLanguages} from '../util';
 const courseFrontmatterContext =
   require.context('frontmatter!lessonSrc/', true, /^[.][/][^/]+[/]index[^.]*[.]md$/);
 
-const cachedCourses = null;
 // An example of the structure of courses:
 // const cachedCourses = {
 //   scratch: {
@@ -34,33 +34,30 @@ const cachedCourses = null;
 //
 // Note that not all languages need to be present, and that 'external' only exists some places.
 // It is assumed that if 'external' exists for a course, there are no lessons defined.
-const getCachedCourses = () => {
-  if (cachedCourses == null) {
+const getCourses = memoize(
+  () => {
+    const courses = {};
     for (const key of courseFrontmatterContext.keys()) {
       const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]index[^.]*[.]md$/);
       const {title = '', language} = courseFrontmatterContext(key);
       if (getAvailableLanguages().includes(language)) {
         const data = {title, key};
-        assignDeep(cachedCourses, [course, language], data);
+        assignDeep(courses, [course, language], data);
       } else {
         console.warn(`The course info ${key} did not have a valid language (${language})`);
       }
     }
+    return courses;
   }
-  return cachedCourses;
-};
+);
 
-let cachedCourselist = null;
 /**
  * Get a list of all courses based on the course index files
  * @returns {string[]} An array of all courses
  */
-export const getAllCourses = () => {
-  if (cachedCourselist == null) {
-    cachedCourselist = Object.keys(getCachedCourses());
-  }
-  return cachedCourselist;
-};
+export const getAllCourses = memoize(
+  () => Object.keys(getCourses())
+);
 
 /**
  * Get the frontmatter of a course for a given language
@@ -68,7 +65,7 @@ export const getAllCourses = () => {
  * @param {string} language E.g. 'nb'
  * @return {object} E.g. {title: 'Scratch', key: './scratch/index.md'}
  */
-export const getCourseFrontmatter = (course, language) => (getCachedCourses()[course] || {})[language] || {};
+export const getCourseFrontmatter = (course, language) => (getCourses()[course] || {})[language] || {};
 
 /**
  * Get the title of a course for a given language
@@ -94,7 +91,7 @@ export const getCourseTitle = (course, language) => getCourseFrontmatter(course,
 export const getExternalCourses = (languages) => {
   if (languages.length === 0) { return []; }
   return getAllCourses().filter(course => {
-    const courseObj = getCachedCourses()[course];
+    const courseObj = getCourses()[course];
     for (const lang of languages) {
       if (courseObj.hasOwnProperty(lang) && courseObj[lang].external) {
         return true;

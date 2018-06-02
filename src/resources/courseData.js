@@ -1,3 +1,4 @@
+import memoize from 'fast-memoize';
 import {cleanseTags} from '../util';
 
 // lessonSrc/*/data.yml
@@ -22,19 +23,19 @@ const courseDataContext =
 //   },
 //   /* ... */
 // };
-const cachedCourses = null;
-const getCachedCourses = () => {
-  if (cachedCourses == null) {
+const getCourses = memoize(
+  () => {
+    const courses = {};
     for (const key of courseDataContext.keys()) {
       const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]data[.]yml$/);
       const {tags} = courseDataContext(key);
-      cachedCourses[course] = {tags: cleanseTags(tags, key)};
+      courses[course] = {tags: cleanseTags(tags, key)};
     }
+    return courses;
   }
-  return cachedCourses;
-};
+);
 
-const getCourseMetadata = (course) => getCachedCourses()[course] || {};
+const getCourseMetadata = (course) => getCourses()[course] || {};
 
 /**
  * Get tags for the course.

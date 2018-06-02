@@ -1,6 +1,11 @@
 //import {createSelector} from 'reselect';
 import createCachedSelector from 're-reselect';
-import {getFilteredLessonsInCourse} from '../resources/lessons';
+// import {getFilteredLessonsInCourse} from '../resources/lessons';
+import {createSelector} from 'reselect/src/reselect';
+import {getLessonsInCourse} from '../resources/lessonFrontmatter';
+import {getLessonTags} from '../resources/lessonData';
+import {tagsMatchFilter} from '../util';
+import {getAllCourses} from '../resources/courseFrontmatter';
 
 
 const getFilter = (state) => state.filter; // See structure in INITIAL_STATE in src/reducers/filter.js
@@ -12,17 +17,35 @@ const getCourse = (state, course) => course;
  * @param {string} course Which course to get lessons for
  * @returns {string[]} An array of filtered lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */
-export const getFilteredLessons = createCachedSelector(
+export const getFilteredLessonsInCourse = createCachedSelector(
   // Input selectors:
   getCourse, getFilter,
 
   // Output selector (resultfunc):
-  getFilteredLessonsInCourse,
+  (course, filter = {}) => {
+    console.log('DEBUG: Running getFilteredLessonsInCourse for course', course);
+    const lessonMatchesFilter = (lesson) => tagsMatchFilter(getLessonTags(course, lesson), filter);
+    return getLessonsInCourse(course).filter(lessonMatchesFilter);
+  },
 )(
   // Resolver function (same arguments as for input selectors). Returns selector cache key:
   (state, course) => course
 );
 
+
+/**
+ * Get number of filtered lessons in a course.
+ * @param {object} state The redux state object
+ * @param {string} course Which course to get lessons for
+ * @returns {number} Number of lessons in course
+ */
+export const getLessonCount = createSelector(
+  // Input selectors:
+  getFilteredLessons,
+
+  // Output selector (resultfunc):
+  (lessons) => lessons.length,
+);
 
 // // TODO:
 // // * Only getLessonsByLevel is used (double check). Perhaps simplify?

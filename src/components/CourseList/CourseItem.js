@@ -49,12 +49,6 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
 CourseItem.propTypes = {
   // ownProps
   course: PropTypes.string.isRequired,
-  // course: PropTypes.shape({
-  //   path: PropTypes.string,
-  //   externalLink: PropTypes.string,
-  //   iconPath: PropTypes.string,
-  //   lessonCount: PropTypes.int
-  // }),
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
