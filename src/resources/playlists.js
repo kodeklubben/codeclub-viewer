@@ -4,7 +4,6 @@ import {assignDeep} from '../util';
 export const playlistContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/]playlists[/][^.]+[.]yml/);
 
-let cachedPlaylists = null;
 // An example of the structure of cachedPlaylists:
 // let cachedPlaylists = {
 //   scratch: {
@@ -24,6 +23,7 @@ let cachedPlaylists = null;
 //     /* ... */
 //   }
 // };
+let cachedPlaylists = null;
 const getCachedPlaylists = () => {
   if (cachedPlaylists == null) {
     cachedPlaylists = {};
@@ -36,7 +36,6 @@ const getCachedPlaylists = () => {
   return cachedPlaylists;
 };
 
-const cachedSortedPlaylists = {};
 // An example of the structure of cachedPlaylists:
 // const cachedSortedPlaylists = {
 //   scratch: ['scratchPlaylist1', 'scratchPlaylist2'],
@@ -49,6 +48,7 @@ const cachedSortedPlaylists = {};
  * @return {string[]} An array with the (file)name of all the playlists (without extension),
  *                    e.g. ['playlist1', 'playlist2']
  */
+const cachedSortedPlaylists = {};
 export const getSortedPlaylists = (course) => {
   if (!cachedSortedPlaylists[course]) {
     const coursePlaylists = getCachedPlaylists()[course] || {};
@@ -61,6 +61,8 @@ export const getSortedPlaylists = (course) => {
 };
 
 const getPlaylist = (course, playlist) => (getCachedPlaylists()[course] || {})[playlist] || {};
+
+export const getCoursesWithPlaylists = () => Object.keys(getCachedPlaylists());
 
 /**
  * Return all the lessons in a playlist

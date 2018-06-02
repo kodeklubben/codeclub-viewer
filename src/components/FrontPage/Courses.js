@@ -5,12 +5,12 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Courses.scss';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
+import {getFilteredCourses, getFilteredExternalCourses, getSortedFilteredCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
+import {getCoursesWithPlaylists} from '../../resources/playlists';
 import CourseList from '../CourseList/CourseList';
-import {coursesWithPlaylists} from '../../util';
 
-const Courses = ({t, courses, externalCourses, showPlaylists}) => {
+const Courses = ({t, courses, externalCourses}) => {
   const coursesLength = Object.keys(courses).length;
   const externalCoursesLength = Object.keys(externalCourses).length;
   return (
@@ -19,18 +19,18 @@ const Courses = ({t, courses, externalCourses, showPlaylists}) => {
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.courses')}</div>
-            <CourseList courses={showPlaylists ? coursesWithPlaylists(courses) : courses}/>
+            <CourseList courses={courses}/>
           </Col>
         </Row>
         : null}
-      {externalCoursesLength > 0 && !showPlaylists ?
+      {externalCoursesLength > 0 ?
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
             <CourseList courses={externalCourses}/>
           </Col>
         </Row>
-        :null}
+        : null}
       {coursesLength + externalCoursesLength !== 0 ? null :
         <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>}
     </Col>
@@ -46,10 +46,9 @@ Courses.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  courses: getFilteredCourses(state),
-  externalCourses: getFilteredExternalCourses(state),
+  courses: state.showPlaylists ? getCoursesWithPlaylists() : getSortedFilteredCourses(state),
+  externalCourses: state.showPlaylists ? [] : getFilteredExternalCourses(state),
   t: getTranslator(state),
-  showPlaylists: state.showPlaylists,
 });
 
 export default connect(

@@ -8,7 +8,7 @@
  *  Also, to get smaller builds, do
  *    import Button from 'react-bootstrap/lib/Button';  // YES
  *  rather than
- *    import { Button } from 'react-bootstrap'; // NO
+ *    import {Button} from 'react-bootstrap'; // NO
  *
  *
  *  Regarding CSS extraction:

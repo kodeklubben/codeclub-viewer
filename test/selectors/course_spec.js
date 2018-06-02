@@ -1,10 +1,10 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
-import {getFilteredCourses} from '../../src/selectors/course';
+import {getSortedFilteredCourses} from '../../src/selectors/course';
 
 describe('course selector', () => {
-  describe('getFilteredCourses', () => {
+  describe('getSortedFilteredCourses', () => {
     it('creates an object of courses', () => {
       const lessons = {
         './scratch/asteroids/asteroids': {
@@ -58,7 +58,7 @@ describe('course selector', () => {
       };
 
       deepFreeze(lessons);
-      expect(getFilteredCourses.resultFunc(lessons)).to.eql({
+      expect(getSortedFilteredCourses.resultFunc(lessons)).to.eql({
         python: {
           iconPath: './python/logo-black.png',
           lessonCount: 1,
@@ -81,13 +81,13 @@ describe('course selector', () => {
     });
 
     it('should create an empty object if lessons is undefined', () => {
-      expect(getFilteredCourses.resultFunc(undefined)).to.eql({});
+      expect(getSortedFilteredCourses.resultFunc(undefined)).to.eql({});
     });
 
     it('should create an empty object if lessons is an empty array', () => {
       const lessons = {};
       deepFreeze(lessons);
-      expect(getFilteredCourses.resultFunc(lessons)).to.eql({});
+      expect(getSortedFilteredCourses.resultFunc(lessons)).to.eql({});
     });
   });
   

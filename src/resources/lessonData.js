@@ -8,7 +8,7 @@ const lessonDataContext =
 // TODO: but not remove it from frontmatter in the old ones,
 // TODO: or else they will break.
 
-const lessons = {};
+let cachedLessons = null;
 // An example of the structure of lessons:
 // const lessons = {
 //   scratch: {
@@ -30,12 +30,18 @@ const lessons = {};
 //   /* ... */
 // };
 // TODO: Make this a function, and change 'lessons' to 'cachedLessons'
-for (const key of lessonDataContext.keys()) {
-  const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]data[.]yml$/);
-  const {tags, indexed} = lessonDataContext(key);
-  const data = {tags: cleanseTags(tags, key), indexed: indexed !== false};
-  assignDeep(lessons, [course, lesson], data);
-}
+const getCachedLessons = () => {
+  if (cachedLessons == null) {
+    cachedLessons = {};
+    for (const key of lessonDataContext.keys()) {
+      const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]data[.]yml$/);
+      const {tags, indexed} = lessonDataContext(key);
+      const data = {tags: cleanseTags(tags, key), indexed: indexed !== false};
+      assignDeep(cachedLessons, [course, lesson], data);
+    }
+  }
+  return cachedLessons;
+};
 
 
 /**
@@ -53,7 +59,7 @@ for (const key of lessonDataContext.keys()) {
   Note that 'indexed' key might be missing, in which case it is assumed to be true.
   If 'indexed' === false it means that this lesson will only show up in the playlists (oppgavesamlinger)
  */
-const getLessonMetadata = (course, lesson) => (lessons[course] || {})[lesson] || {};
+const getLessonMetadata = (course, lesson) => (getCachedLessons()[course] || {})[lesson] || {};
 
 export const getLessonTags = (course, lesson) => getLessonMetadata(course, lesson).tags;
 

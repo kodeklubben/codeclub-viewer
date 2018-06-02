@@ -1,7 +1,29 @@
-// import {createSelector} from 'reselect';
-// import {tagsMatchFilter} from '../util';
-// import {getLessonData} from '../contextUtils';
-//
+//import {createSelector} from 'reselect';
+import createCachedSelector from 're-reselect';
+import {getFilteredLessonsInCourse} from '../resources/lessons';
+
+
+const getFilter = (state) => state.filter; // See structure in INITIAL_STATE in src/reducers/filter.js
+const getCourse = (state, course) => course;
+
+/**
+ * Get filtered lessons in a course.
+ * @param {object} state The redux state object
+ * @param {string} course Which course to get lessons for
+ * @returns {string[]} An array of filtered lessons for the given course, e.g. ['astrokatt', 'straffespark']
+ */
+export const getFilteredLessons = createCachedSelector(
+  // Input selectors:
+  getCourse, getFilter,
+
+  // Output selector (resultfunc):
+  getFilteredLessonsInCourse,
+)(
+  // Resolver function (same arguments as for input selectors). Returns selector cache key:
+  (state, course) => course
+);
+
+
 // // TODO:
 // // * Only getLessonsByLevel is used (double check). Perhaps simplify?
 // // * getCourseLessons doesn't need state, perhaps it doesn't need to be selector?

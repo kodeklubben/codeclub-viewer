@@ -223,7 +223,15 @@ export function fixNonArrayTagList(tagItems) {
 // }
 
 /**
- * Return true only if tags of a lesson contains all the checked tags in the filter
+ * Return the keys of an object whose values are true (or true-ish),
+ * i.e. if obj={hat: true, cat: false, dog: false, log: true}, the function will return [hat, log]
+ * @param {object} obj
+ * @returns {string[]} An array of the keys that have true-ish values
+ */
+export const getKeysWithTrueValues = (obj) => Object.keys(obj).filter(key => obj[key]);
+
+/**
+ * Return true only if tags of a lesson or course contains all the checked tags in the filter
  *
  * @param {Object} lessonTags LessonTags or courseTags e.g. {topic: ['game'], subject: ['science']}
  * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
@@ -233,8 +241,7 @@ export const tagsMatchFilter = (lessonTags, filter) => {
   const groupKeys = Object.keys(filter); // groupKeys is e.g. ['topic', 'subject']
   for (let groupKey of groupKeys) { // groupKey is e.g. 'topic'
     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
-    const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
-    const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
+    const checkedTagKeys = getKeysWithTrueValues(filterGroup); // only the checked tags; e.g. ['animation']
     const lessonGroup = lessonTags[groupKey] || []; // e.g. ['game']
     if (checkedTagKeys.length > 0 && lessonGroup.length === 0) {
       // this is a filter with checked tags, and lesson doesn't have this group
@@ -266,16 +273,16 @@ export const tagsMatchFilter = (lessonTags, filter) => {
 export const getAvailableLanguages = () => getFilterkeys().language;
 
 
-/**
-* Returns an object with only the courses that have playlists
-*
-* @param {object} courses
-* @returns {object}
-*/
-export const coursesWithPlaylists = (courses) => {
-  // TODO: make this
-  return courses;
-};
+// /**
+// * Returns an object with only the courses that have playlists
+// *
+// * @param {object} courses
+// * @returns {object}
+// */
+// export const coursesWithPlaylists = (courses) => {
+//   // TODO: make this
+//   return courses;
+// };
 
 /**
  * Based on an implementation of Java's string to integer hashCode function.

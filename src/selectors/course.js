@@ -1,9 +1,48 @@
-// import {createSelector} from 'reselect';
-// import {getFilteredAndIndexedLessons} from './lesson';
-// import {capitalize, tagsMatchFilter, cleanseTags} from '../util';
-// import {iconContext, courseContext, getCourseMetadata} from '../contexts';
-//
-// const getFilter = (state) => state.filter;
+import {createSelector} from 'reselect';
+import {getCourseTags} from '../resources/courseData';
+import {getKeysWithTrueValues, tagsMatchFilter} from '../util';
+import {getExternalCourses} from '../resources/courseFrontmatter';
+import {getAllCourses} from '../resources/courseFrontmatter';
+import {getFilteredLessonsInCourse} from '../resources/lessons';
+
+const getFilter = (state) => state.filter;
+
+/**
+ * Get internal courses that have more than one lesson after filter has been applied.
+ * Courses are sorted by number of lessons (most lessons first).
+ * @param {object} state The redux state object
+ * @returns {string[]} An array of courses
+ */
+export const getSortedFilteredCourses = createSelector(
+  // Input selectors:
+  getFilter,
+
+  // Output selector (resultfunc):
+  (filter = {}) => {
+    const courses = getAllCourses();
+    const lessonCounts = {};
+    for (const course in courses) {
+      lessonCounts[course] = getFilteredLessonsInCourse(course, filter).length;
+    }
+    const filteredCourses = courses.filter(course => lessonCounts[course] > 0);
+    const sortFunc = (courseA, courseB) => lessonCounts[courseB] - lessonCounts[courseA];
+    filteredCourses.sort(sortFunc);
+    return filteredCourses;
+  }
+);
+
+export const getFilteredExternalCourses = createSelector(
+  // Input selectors:
+  getFilter,
+  // Output selector (resultfunc):
+  (filter = {}) => {
+    const {language, ...rest} = filter;
+    const externalCourses = getExternalCourses(getKeysWithTrueValues(language));
+    return externalCourses.filter(course => tagsMatchFilter(getCourseTags(course), rest));
+  }
+);
+
+
 //
 // // Creates a list of courses with lessons that have tags matching the filter
 // export const getFilteredCourses = createSelector(

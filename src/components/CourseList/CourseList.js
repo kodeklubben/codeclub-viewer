@@ -7,13 +7,12 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
 const CourseList = ({courses}) => {
-  const courseNames = Object.keys(courses).sort((a, b) => courses[b].lessonCount - courses[a].lessonCount);
   return (
     <Row>
       <div className={styles.courseList}>
-        {courseNames.map(courseName => (
-          <Col key={courseName} xs={6} sm={6} md={4} lg={3}>
-            <CourseItem course={courses[courseName]}/>
+        {courses.map(course => (
+          <Col key={course} xs={6} sm={6} md={4} lg={3}>
+            <CourseItem course={course}/>
           </Col>
         ))}
       </div>
@@ -23,7 +22,7 @@ const CourseList = ({courses}) => {
 
 CourseList.propTypes = {
   // ownProps
-  courses: PropTypes.object,
+  courses: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default withStyles(styles)(CourseList);

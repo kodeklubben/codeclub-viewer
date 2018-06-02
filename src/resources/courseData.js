@@ -8,7 +8,6 @@ const courseDataContext =
 // External courses have no lessons.
 // Currently, only external courses have tags, but this could change in the future.
 
-const courses = {};
 // An example of the structure of courses:
 // const courses = {
 //   kodegenet: {
@@ -23,24 +22,29 @@ const courses = {};
 //   },
 //   /* ... */
 // };
-// TODO: Make this a function, and change 'courses' to 'cachedCourses'
-for (const key of courseDataContext.keys()) {
-  const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]data[.]yml$/);
-  const {tags} = courseDataContext(key);
-  courses[course] = {tags: cleanseTags(tags, key)};
-}
+const cachedCourses = null;
+const getCachedCourses = () => {
+  if (cachedCourses == null) {
+    for (const key of courseDataContext.keys()) {
+      const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]data[.]yml$/);
+      const {tags} = courseDataContext(key);
+      cachedCourses[course] = {tags: cleanseTags(tags, key)};
+    }
+  }
+  return cachedCourses;
+};
 
-const getCourseMetadata = (course) => courses[course] || {};
+const getCourseMetadata = (course) => getCachedCourses()[course] || {};
 
 /**
  * Get tags for the course.
  *
  * @param {string} course E.g. 'kodegenet'
  * @returns {object} E.g.
-     {
-       topic: ['block_based', 'app'],
-       subject: ['technology', 'programming'],
-       grade: ['secondary', 'junior'],
-     }
+ {
+   topic: ['block_based', 'app'],
+   subject: ['technology', 'programming'],
+   grade: ['secondary', 'junior'],
+ }
  */
 export const getCourseTags = (course) => getCourseMetadata(course).tags || {};
