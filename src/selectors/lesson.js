@@ -32,6 +32,16 @@ export const getFilteredLessonsInCourse = createCachedSelector(
   (state, course) => course
 );
 
+/**
+ * Get filtered lessons for all courses.
+ * @param {object} state The redux state object.
+ * @returns {object} An object where the keys are the courses, and the values are arrays of courses, e.g.
+ * {
+ *   scratch: ['astrokatt', 'straffespark', ...]
+ *   python: ['bokstaver', 'fargespill', ...]
+ *   ...
+ * }
+ */
 export const getFilteredLessons = createSelector(
   // Input selectors:
   getFilter,
@@ -63,19 +73,6 @@ export const getFilteredLessons = createSelector(
   },
 );
 
-/**
- * Get number of filtered lessons in a course.
- * @param {object} state The redux state object
- * @param {string} course Which course to get lessons for
- * @returns {number} Number of lessons in course
- */
-export const getLessonCount = createSelector(
-  // Input selectors:
-  getFilteredLessons,
-
-  // Output selector (resultfunc):
-  (lessons) => lessons.length,
-);
 
 // // TODO:
 // // * Only getLessonsByLevel is used (double check). Perhaps simplify?

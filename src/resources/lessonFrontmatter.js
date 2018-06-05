@@ -101,7 +101,7 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
  * @param {string} course Which course to get lessons for
  * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */
-const getLessonsInCourse = memoize(
+export const getLessonsInCourse = memoize(
   course => Object.keys(getLessons()[course] || {})
 );
 

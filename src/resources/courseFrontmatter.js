@@ -58,7 +58,7 @@ const getCourses = memoize(
 
 /**
  * Get a list of all courses based on the course index files
- * @returns {string[]} An array of all courses
+ * @returns {string[]} An array of all courses, e.g. ['scratch', 'python', ...]
  */
 export const getAllCourses = memoize(
   () => {

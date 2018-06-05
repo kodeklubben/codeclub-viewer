@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getInitialFilter, createCheckboxesKey} from './util';
-import {getLessonData} from './contextUtils';
+import {getLessonFrontmatter, getLessonLanguages, getLessonsInCourse} from './resources/lessonFrontmatter';
 import {setCheckboxes} from './reducers/checkboxes';
 import {setFilter, resetOneFilter} from './reducers/filter';
 import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
@@ -12,6 +12,7 @@ import {setMode} from './reducers/mode';
 import {setShowPlaylists} from './reducers/showPlaylists';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
+import {getAllCourses} from './resources/courseFrontmatter';
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -53,10 +54,15 @@ export const updateStoreFromLocalStorage = () => {
   store.dispatch(setShowPlaylists(initialPlaylists));
   store.dispatch(resetOneFilter('language', initialLanguage));
 
-  for (let path of Object.keys(getLessonData())) {
-    const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);
-    if(Object.keys(checkboxes).length !== 0) {
-      store.dispatch(setCheckboxes(path, checkboxes));
+  for (const course of getAllCourses()){
+    for (const lesson of getLessonsInCourse(course)) {
+      for (const language of getLessonLanguages(course, lesson)) {
+        const path = getLessonFrontmatter(course, lesson, language, false).key;
+        const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);
+        if(Object.keys(checkboxes).length !== 0) {
+          store.dispatch(setCheckboxes(path, checkboxes));
+        }
+      }
     }
   }
 };
