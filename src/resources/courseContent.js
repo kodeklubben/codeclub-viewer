@@ -1,8 +1,7 @@
 // TODO: Perhaps use code-splitting / react-loadable / bundle-loader or similar here.
 
 import {getCourseFrontmatter} from './courseFrontmatter';
-import {dirname} from '../util';
-import {getLessonContent} from './lessonContent';
+import {extractFirstPartOfHtml} from '../util';
 
 // lessonSrc/*/index*.md, only frontmatter
 // The keys are of the form './course/index*.md'
@@ -22,31 +21,13 @@ export const getCourseInfo = (course, language) => {
 };
 
 /**
- * Get first part of HTML markup for the lesson.
+ * Get first part of HTML markup for the course.
  * @param {string} course E.g. 'scratch'
- * @param {string} lesson E.g. 'astrokatt'
  * @param {string} language E.g. 'nb'
- * @param {boolean} isReadme
  * @returns {string} HTML code to e.g. display in a popover.
  */
-// TODO: This is very similar to getLessonIntro. Perhaps separate out similar code?
 export const getCourseIntro = (course, language) => {
-  let courseContent = getCourseInfo(course, language);
-  let text, picture = '';
-  courseContent = courseContent.substring(courseContent.indexOf('<section class="intro"'));
-  const p = courseContent.indexOf('<p>');
-  const closingP = courseContent.indexOf('</p>');
-  const img = courseContent.indexOf('<img');
-  const closingFig = courseContent.indexOf('</figure');
-  if (p < closingP) {
-    text = courseContent.substring(p, closingP);
-    if (text.length > 300) {
-      text = courseContent.substring(p, 300) + '...';
-    }
-    picture = img < closingFig ? courseContent.substring(img, closingFig) : '';
-    // Add path to image. Regex allows for attributes with or without quotes, e.g. <img src="astrokatt.png" />,
-    // <img src=astrokatt.png />, <img src=astrokatt.png/>, and <img src=astrokatt.png>
-    picture = picture.replace(/( src="?)([^" />]*)([" />])/, '$1' + process.env.PUBLICPATH + dirname(path) + '/$2$3');
-  }
-  return (picture || '') + (text || '');
+  const courseContent = getCourseInfo(course, language);
+  const url = getCourseFrontmatter(course, language).url;
+  return extractFirstPartOfHtml(courseContent, url);
 };

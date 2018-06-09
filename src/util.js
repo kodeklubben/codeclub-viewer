@@ -96,34 +96,36 @@ export function getInitialFilter(initialLanguage) {
   return filter;
 }
 
-
-
-// /**
-//  *
-//  * @param {string} path The path to a lesson file, without slash in front and without '.md' at the end.
-//  * @returns {string} HTML code to e.g. display in a popover.
-//  */
-// export function getLessonIntro(path) {
-//   const publicPath = process.env.PUBLICPATH;
-//   let lessonContent = require('lessonSrc/' + path + '.md').content;
-//   let text, picture = '';
-//   lessonContent = lessonContent.substring(lessonContent.indexOf('<section class="intro"'));
-//   const p = lessonContent.indexOf('<p>');
-//   const closingP = lessonContent.indexOf('</p>');
-//   const img = lessonContent.indexOf('<img');
-//   const closingFig = lessonContent.indexOf('</figure');
-//   if (p < closingP) {
-//     text = lessonContent.substring(p, closingP);
-//     if (text.length > 300) {
-//       text = lessonContent.substring(p, 300) + '...';
-//     }
-//     picture = img < closingFig ? lessonContent.substring(img, closingFig) : '';
-//     // Add path to image. Regex allows for attributes with or without quotes, e.g. <img src="astrokatt.png" />,
-//     // <img src=astrokatt.png />, <img src=astrokatt.png/>, and <img src=astrokatt.png>
-//     picture = picture.replace(/( src="?)([^" />]*)([" />])/, '$1' + publicPath + dirname(path) + '/$2$3');
-//   }
-//   return (picture || '') + (text || '');
-// }
+/**
+ * Get the first paragraph and first picture in the html.
+ * @param {string} html The path to the html, starting with a slash,
+ *                      e.g. '/scratch/astrokatt/astrokatt_nn' or '/scratch/index'
+ * @param {string} url
+ * @returns {string} HTML code to e.g. display in a popover.
+ */
+export const extractFirstPartOfHtml = (html, url) => {
+  let text, picture = '';
+  html = html.substring(html.indexOf('<section class="intro"'));
+  const p = html.indexOf('<p>');
+  const closingP = html.indexOf('</p>');
+  const img = html.indexOf('<img');
+  const closingFig = html.indexOf('</figure');
+  if (p < closingP) {
+    text = html.substring(p, closingP);
+    if (text.length > 300) {
+      text = html.substring(p, 300) + '...';
+    }
+    picture = img < closingFig ? html.substring(img, closingFig) : '';
+    // Add path to image. The following regex allows for attributes with or without quotes,
+    // e.g. <img src="astrokatt.png" />, <img src=astrokatt.png />, <img src=astrokatt.png/>,
+    // and <img src=astrokatt.png>
+    picture = picture.replace(
+      /( src="?)([^" />]*)([" />])/,
+      '$1' + process.env.PUBLICPATH_WITHOUT_SLASH + dirname(url) + '/$2$3',
+    );
+  }
+  return (picture || '') + (text || '');
+};
 
 /**
  * Fix invalid tags
@@ -185,43 +187,6 @@ export function fixNonArrayTagList(tagItems) {
   return tagItems;
 }
 
-// /**
-//  * Return true only if tags of a lesson contains all the checked tags in the filter
-//  *
-//  * @param {Object} lessonTags e.g. {topic: ['game'], subject: ['science']}
-//  * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
-//  * @returns {boolean}
-//  */
-// export function tagsMatchFilter(lessonTags, filter) {
-//   const languageTags = filter['language'] ? Object.keys(filter['language']) : [];
-//   const checkedLanguageTags = languageTags.filter(tag => filter['language'][tag]);
-//
-//   for (let groupKey of Object.keys(filter)) { // groupKey is e.g. 'topic'
-//     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
-//     const tagKeys = Object.keys(filter[groupKey]); // all tags in this filter group, e.g. ['game','animation']
-//    const checkedTagKeys = tagKeys.filter(tagKey => filterGroup[tagKey]); // only the checked tags; e.g. ['animation']
-//     const lessonGroup = lessonTags[groupKey]; // e.g. ['game']
-//     if (checkedTagKeys.length > 0 && !lessonGroup) {
-//       // this is a filter with checked tags, and lesson doesn't have this group
-//       return false;
-//     }
-//     // OR-tests the language group
-//     if(groupKey === 'language' && checkedLanguageTags.length !== 0
-//       && checkedLanguageTags.filter(tagKey => lessonGroup.includes(tagKey)).length === 0){
-//       return false;
-//     }
-//     // AND-tests everything else
-//     for (const checkedTagKey of checkedTagKeys) {
-//       // lessonGroup doesn't contain checkedFilterTag
-//       if (groupKey !== 'language' && !lessonGroup.includes(checkedTagKey)) {
-//         return false;
-//       }
-//     }
-//   }
-//
-//   return true; // The lessonTags contained all the checked filterTags
-// }
-
 /**
  * Return the keys of an object whose values are true (or true-ish),
  * i.e. if obj={hat: true, cat: false, dog: false, log: true}, the function will return [hat, log]
@@ -271,18 +236,6 @@ export const tagsMatchFilter = (lessonTags, filter) => {
 * @returns {Array} An array of available languages
 */
 export const getAvailableLanguages = () => getFilterkeys().language;
-
-
-// /**
-// * Returns an object with only the courses that have playlists
-// *
-// * @param {object} courses
-// * @returns {object}
-// */
-// export const coursesWithPlaylists = (courses) => {
-//   // TODO: make this
-//   return courses;
-// };
 
 /**
  * Based on an implementation of Java's string to integer hashCode function.

@@ -9,9 +9,10 @@ import Row from 'react-bootstrap/lib/Row';
 import AutoAffix from 'react-overlays/lib/AutoAffix';
 import cx from 'classnames';
 import styles from './PlaylistPage.scss';
-import {getLessonsByLevel} from '../selectors/lesson';
+//import {getLessonsByLevel} from '../selectors/lesson';
+import {getLessonLevels} from '../resources/lessonData';
 import {getTranslator} from '../selectors/translate';
-import {getPlaylists, getShowRadiobuttons} from '../selectors/playlist';
+import {/*getPlaylists, */getShowRadiobuttons} from '../selectors/playlist';
 import {capitalize} from '../util';
 import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/PlaylistPage/LessonList';
@@ -19,12 +20,12 @@ import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
 
-const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists}) => {
-  const levels = Object.keys(lessonsByLevel);
-  const lessonLists = levels.map(level => <LessonList key={level} {...{level}} lessons={lessonsByLevel[level]}/>);
-  const filter = <LessonFilter courseName={params.course}/>;
-  const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
-  const courseInfo = <CourseInfo courseName={params.course}/>;
+const PlaylistPage = ({params, lessonLevels, coursePlaylists, t, showPlaylists}) => {
+  const {course} = params;
+  const lessonLists = lessonLevels.map(level => <LessonList key={level} {...{course, level}} />);
+  const filter = <LessonFilter courseName={course}/>;
+  const jumpTo = lessonLevels.length > 0 ? <div><LevelNavigation {...{lessonLevels}}/></div> : null;
+  const courseInfo = <CourseInfo courseName={course}/>;
   let thispage = null;
   const jumpToAffixed = jumpTo ?
     <Col xsHidden sm={3} className={cx(styles.jumpTo, {[styles.topMargin]: lessonLists.length})}>
@@ -33,10 +34,10 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists
       </AutoAffix>
     </Col> : null;
   return (
-    <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
+    <DocumentTitle title={capitalize(course) + ' | ' + t('title.codeclub')}>
       <Grid fluid={true} ref={grid => thispage = grid}>
         <Row>
-          <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
+          <Col xs={12}><h1>{capitalize(course)} {t('playlist.lessons')}</h1></Col>
           <Col xs={12}>{courseInfo}</Col>
         </Row>
         {showPlaylists ?
@@ -69,14 +70,14 @@ PlaylistPage.propTypes = {
   }).isRequired,
 
   // mapStateToProps
-  lessonsByLevel: PropTypes.object.isRequired,
+  lessonsLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
   coursePlaylists: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
   showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
-  lessonsByLevel: getLessonsByLevel(state, params.course),
+  lessonLevels: getLessonLevels(state, params.course),
   coursePlaylists: getPlaylists(state, params.course),
   t: getTranslator(state),
   showPlaylists: state.showPlaylists && getShowRadiobuttons(state, params.course),

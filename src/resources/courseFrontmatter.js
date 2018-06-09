@@ -18,10 +18,12 @@ const courseFrontmatterContext =
  *   scratch: {
  *     nb: {
  *       title: 'Scratch',
+ *       url: '/scratch/index',
  *       key: './scratch/index.md',
  *     },
  *     en: {
  *       title: 'Scratch',
+ *       url: '/scratch/index_en',
  *       key: './scratch/index_en.md',
  *     },
  *   },
@@ -29,6 +31,7 @@ const courseFrontmatterContext =
  *     nb: {
  *       title: 'Kodegenet',
  *       external: 'https://kodegenet.no/tracks/',
+ *       url: '/kodegenet/index',
  *       key: './kodegenet/index.md',
  *     },
  *   },
@@ -43,10 +46,11 @@ const getCourses = memoize(
     console.log('DEBUG: resources/courseFrontmatter.js:getCourses()');
     const courses = {};
     for (const key of courseFrontmatterContext.keys()) {
-      const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]index[^.]*[.]md$/);
+      const [/* ignore */, course, file] = key.match(/^[.][/]([^/]+)[/](index[^.]*)[.]md$/);
       const {title = '', language} = courseFrontmatterContext(key);
       if (getAvailableLanguages().includes(language)) {
-        const data = {title, key};
+        const url = `/${course}/${file}`;
+        const data = {title, url, key};
         assignDeep(courses, [course, language], data);
       } else {
         console.warn(`The course info ${key} did not have a valid language (${language})`);

@@ -42,3 +42,13 @@ export const somethingCheckedInFilter = createSelector(
     return false;
   }
 );
+
+/**
+ * Get all languages checked in filter.
+ * @param {object} state The redux state object
+ * @returns {string[]} Array of languages checked in filter, e.g. ['nn', 'en']
+ */
+export const getCheckedFilterLanguages = createSelector(
+  (state) => state.filter.language,
+  (languageFilter) => Object.keys(languageFilter).filter(language => languageFilter[language]),
+);

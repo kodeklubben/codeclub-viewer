@@ -5,7 +5,7 @@ import {assignDeep, cleanseTags} from '../util';
 const lessonDataContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/]data[.]yml$/);
 
-// TODO: We must include "indexed" in data.yml for the new pages,
+// TODO: We must include "indexed" and "level" in data.yml for the new pages,
 // TODO: but not remove it from frontmatter in the old ones,
 // TODO: or else they will break.
 
@@ -16,6 +16,7 @@ const lessonDataContext =
  *   scratch: {
  *     astrokatt: {
  *       indexed: false, // true unless 'indexed: false' explicitly exists in data.yml
+ *       level: 1,
  *       tags: {
  *         topic: ['block_based', 'app'],
  *         subject: ['technology', 'programming'],
@@ -34,6 +35,7 @@ const lessonDataContext =
  */
 const getLessons = memoize(
   () => {
+    console.log('DEBUG: getLessons in lessonData.js');
     const lessons = {};
     for (const key of lessonDataContext.keys()) {
       const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]data[.]yml$/);
@@ -66,3 +68,56 @@ const getLessonMetadata = (course, lesson) => (getLessons()[course] || {})[lesso
 export const getLessonTags = (course, lesson) => getLessonMetadata(course, lesson).tags;
 
 export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, lesson).indexed;
+
+/**
+ * Get all lessons in a course, sorted by level.
+ * @param {string} course E.g. 'scratch'
+ * @returns {object} An object with level as keys and array of lessons as value, e.g.
+ * {
+ *   1: ['astrokatt', 'straffespark', ...]
+ *   2: [...]
+ *   ...
+ * }
+ */
+export const getLessonsByLevel = memoize(
+  (course) => {
+    console.log('DEBUG: getLessonsByLevel in lessonData.js');
+    const lessonsByLevel = {};
+    const lessonsInCourse = getLessons()[course] || {};
+    for (const lesson of Object.keys(lessonsInCourse)) {
+      const level = lessonsInCourse[lesson].level;
+      if (level != null) {
+        if (!lessonsByLevel[level]) {
+          lessonsByLevel[level] = [];
+        }
+        lessonsByLevel[level].push(lesson);
+      }
+    }
+    return lessonsByLevel;
+  }
+);
+
+/**
+ * Get all lessons in a course given a level.
+ * @param {string} course E.g. 'scratch'
+ * @param {string|number} level E.g. '1'
+ * @returns {string[]} Array of lessons, e.g. ['scratch', 'astrokatt', ...]
+ */
+export const getLessonsInLevel = (course, level) => (getLessonsByLevel(course) || {})[level] || [];
+
+/**
+ * Get all levels that exists for a given course.
+ * @param {string} course E.g. 'scratch'
+ * @returns {string[]} An array of all levels, sorted, e.g. ['1', '2', '3', '4']
+ */
+export const getLessonLevels = memoize(
+  (course) => Object.keys(getLessonsByLevel(course)).sort()
+);
+
+/**
+ * Get level for lesson.
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @returns {number} The level of the lesson. Defaults to 0 if course, lesson or level was not found.
+ */
+export const getLessonLevel = (course, lesson) => ((getLessons()[course] || {})[lesson] || {}).level || 0;

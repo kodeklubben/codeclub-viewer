@@ -9,7 +9,6 @@ import {getAllCourses} from '../resources/courseFrontmatter';
 
 
 const getFilter = (state) => state.filter; // See structure in INITIAL_STATE in src/reducers/filter.js
-const getCourse = (state, course) => course;
 
 /**
  * Get filtered lessons in a course.
@@ -19,10 +18,11 @@ const getCourse = (state, course) => course;
  */
 export const getFilteredLessonsInCourse = createCachedSelector(
   // Input selectors:
-  getCourse, getFilter,
+  getFilter,
+  (state, course) => course,
 
   // Output selector (resultfunc):
-  (course, filter = {}) => {
+  (filter, course) => {
     console.log('DEBUG: selectors/lesson.js:getFilteredLessonsInCourse() for course', course);
     const lessonMatchesFilter = (lesson) => tagsMatchFilter(getLessonTags(course, lesson), filter);
     return getLessonsInCourse(course).filter(lessonMatchesFilter);
@@ -47,7 +47,7 @@ export const getFilteredLessons = createSelector(
   getFilter,
 
   // Output selector (resultfunc):
-  (filter = {}) => {
+  (filter) => {
     console.log('DEBUG: selectors/lesson.js:getFilteredLessons');
     const filteredLessons= {};
     for (const course of getAllCourses()) {
@@ -74,7 +74,6 @@ export const getFilteredLessons = createSelector(
 );
 
 
-// // TODO:
 // // * Only getLessonsByLevel is used (double check). Perhaps simplify?
 // // * getCourseLessons doesn't need state, perhaps it doesn't need to be selector?
 // // * getLessonData() could take courseName as input, and it could cache result based on parameter (if needed).
