@@ -5,12 +5,13 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../util';
 import styles from './PdfHeader.scss';
 import {iconContext} from '../contexts';
+import Image from 'react-bootstrap/lib/Image';
 
 const PdfHeader = ({params, courseIcon}) => {
   const {course} = params;
   return (
     <div className={styles.container}>
-      <img className={styles.courseIcon} src={courseIcon}/>
+      <Image className={styles.courseIcon} src={courseIcon} alt={course}/>
       <span className={styles.course}>{capitalize(course)}</span>
     </div>
   );

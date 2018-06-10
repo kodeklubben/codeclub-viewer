@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
+import Image from 'react-bootstrap/lib/Image';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
 
@@ -21,25 +22,39 @@ const Footer = ({t, isStudentMode}) => {
   const sponsors = (
     <Row className={styles.sponsors}>
       <a href={url.sparebank} target="_blank">
-        <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}/>
+        <Image className={styles.img} src={require('../../assets/graphics/smn.jpg')}
+          alt='SpareBank1'
+        />
       </a>
       <a href={url.ibok} target="_blank">
-        <img className={styles.img} src={require('../../assets/graphics/ibok.jpg')}/>
+        <Image className={styles.img} src={require('../../assets/graphics/ibok.jpg')}
+          alt='Ibok'
+        />
       </a>
       <a href={url.teknograd} target="_blank">
-        <img className={styles.img} src={require('../../assets/graphics/teknograd.png')}/>
+        <Image className={styles.img} src={require('../../assets/graphics/teknograd.png')}
+          alt='Teknograd'
+        />
       </a>
       <a href={url.tekna} target="_blank">
-        <img className={styles.img} src={require('../../assets/graphics/tekna.jpg')} />
+        <Image className={styles.img} src={require('../../assets/graphics/tekna.jpg')}
+          alt='Tekna'
+        />
       </a>
       <a href={url.ntnu_idi} target="_blank">
-        <img className={styles.img} src={require('../../assets/graphics/ntnu_idi.png')}/>
+        <Image className={styles.img} src={require('../../assets/graphics/ntnu_idi.png')}
+          alt='NTNU institutt for datateknologi og informatikk'
+        />
       </a>
       <a href={url.excited} target="_blank">
-        <img className={styles.img} src={require('../../assets/graphics/excITEd.png')}/>
+        <Image className={styles.img} src={require('../../assets/graphics/excITEd.png')}
+          alt='excited'
+        />
       </a>
       <a href={url.uio_ifi} target="_blank">
-        <img className={styles.img} src={require('../../assets/graphics/uio_ifi.png')}/>
+        <Image className={styles.img} src={require('../../assets/graphics/uio_ifi.png')}
+          alt='UIO institutt for informatikk'
+        />
       </a>
     </Row>);
 
@@ -47,7 +62,9 @@ const Footer = ({t, isStudentMode}) => {
     <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
       <Row className={styles.githubIcon}>
         <a href={url.oppgaver} target="_blank">
-          <img className={styles.svg} src={require('../../assets/graphics/github.png')}/>
+          <Image className={styles.svg} src={require('../../assets/graphics/github.png')}
+            alt='GitHub'
+          />
         </a>
       </Row>
       <Row className={styles.contribute}>

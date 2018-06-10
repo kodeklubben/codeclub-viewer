@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import NavLink from './NavLink';
 import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Image from 'react-bootstrap/lib/Image';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
@@ -24,7 +25,7 @@ const BreadCrumb = ({params, title, level, courseIcon}) => {
   </NavLink>;
 
   const courseLink = <NavLink to={coursePath} className={styles.lessonLink}>
-    <img className={styles.courseIcon} src={courseIcon}/>
+    <Image className={styles.courseIcon} src={courseIcon} alt={course}/>
     <span className={styles.lesson}>{capitalize(course)}</span>
   </NavLink>;
 
