@@ -6,8 +6,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 const FilterItem = ({tagName, checked, onCheck}) => {
   return (
     <div className="checkbox">
-      <label className={styles.label}>
-        <input type="checkbox" onChange={onCheck} {...{checked}}/>
+      <label htmlFor={tagName} className={styles.label}>
+        <input id={tagName} type="checkbox" onChange={onCheck} {...{checked}}/>
         <span>{tagName}</span>
       </label>
     </div>

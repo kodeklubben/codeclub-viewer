@@ -40,10 +40,16 @@ const FilterGroup = ({
         collapseFilterGroup(groupKey, !isCollapsed);
       }
     };
-
+    
     return (
       <ListGroupItem>
-        <div className={headingStyle} onClick={onGroupClick}>
+        <div
+          role='button'
+          tabIndex='0'
+          className={headingStyle}
+          onClick={onGroupClick}
+          onKeyPress={e => console.log(e.keyCode)}
+        >
           <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
           {groupName}
         </div>
