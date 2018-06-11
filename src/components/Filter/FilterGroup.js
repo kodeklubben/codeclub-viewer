@@ -42,8 +42,8 @@ const FilterGroup = ({
     };
 
     return (
-      <ListGroupItem onClick={onGroupClick}>
-        <div className={headingStyle}>
+      <ListGroupItem>
+        <div className={headingStyle} onClick={onGroupClick} role='button' tabIndex='0' onKeyPress={onGroupClick}>
           <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
           {groupName}
         </div>
