@@ -5,7 +5,6 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './LessonItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import Image from 'react-bootstrap/lib/Image';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
 import {getTranslator, getTranslateTag} from '../../selectors/translate';
@@ -27,7 +26,7 @@ const LessonItem = ({lesson, isStudentMode, filterLanguage, language, t, tt, che
 
   const checkedExactlyOneLanguage = Object.values(filterLanguage).filter(value => value).length === 1;
   const flag = checkedExactlyOneLanguage && filterLanguage[language] ? null :
-    <Image className={styles.flag} src={require(`../../assets/graphics/flag_${lesson.language}.svg`)}
+    <img className={styles.flag} src={require(`../../assets/graphics/flag_${lesson.language}.svg`)}
       alt={tt('language', language)}
     />;
 

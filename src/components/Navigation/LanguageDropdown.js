@@ -6,7 +6,6 @@ import {resetOneFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import Image from 'react-bootstrap/lib/Image';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import {getAvailableLanguages} from '../../util';
 import styles from './LanguageDropdown.scss';
@@ -18,7 +17,7 @@ const LanguageItem = ({language, translateTag, onlyFlag}) => {
   // Note that the block with "float" (the flag) must be first in the containing div
   return (
     <div>
-      <Image className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}
+      <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}
         alt={translateTag('language', language)}
       />
       <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>

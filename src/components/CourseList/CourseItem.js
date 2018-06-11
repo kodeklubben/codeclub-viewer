@@ -6,7 +6,6 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {getLessonIntro} from '../../util';
 import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import Image from 'react-bootstrap/lib/Image';
 import {getTranslator} from '../../selectors/translate';
 import PopoverComponent from '../PopoverComponent';
 import {getShowFiltergroups} from '../../selectors/playlist';
@@ -25,7 +24,7 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
     <div>
       {isExternal ?
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
-          <Image className={styles.courseLogo} src={course.iconPath} alt={course.name}/>
+          <img className={styles.courseLogo} src={course.iconPath} alt={course.name}/>
           <span className={styles.courseName}>{course.name}
             {popoverButton}
             <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
@@ -33,7 +32,7 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
         </a>
         :
         <Link className={styles.courseItem} to={course.path}>
-          <Image className={styles.courseLogo} src={course.iconPath} alt={course.name}/>
+          <img className={styles.courseLogo} src={course.iconPath} alt={course.name}/>
           <span className={styles.courseName}>{course.name}
             {popoverButton}
           </span>

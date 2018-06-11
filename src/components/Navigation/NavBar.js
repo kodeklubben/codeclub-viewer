@@ -6,7 +6,6 @@ import styles from './NavBar.scss';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-import Image from 'react-bootstrap/lib/Image';
 import Clearfix from 'react-bootstrap/lib/Clearfix';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import {getTranslator} from '../../selectors/translate';
@@ -17,7 +16,7 @@ import ModeDropdown from './ModeDropdown';
 const LkkBrand = () => {
   return <Navbar.Brand>
     <a href="http://kidsakoder.no" className={styles.logo}>
-      <Image src={require('../../assets/graphics/LKK_small.png')} alt='Logo'/>
+      <img src={require('../../assets/graphics/LKK_small.png')} alt={'Logo'}/>
     </a>
   </Navbar.Brand>;
 };
