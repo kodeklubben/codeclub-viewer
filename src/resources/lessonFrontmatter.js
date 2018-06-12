@@ -106,16 +106,18 @@ export const getLessonsInCourse = memoize(
 );
 
 /**
- * Get the number of lessons in a course
- * @param {string} course
- * @returns {number} The number of lessons in the course
- */
-export const getLessonCount = (course) => getLessonsInCourse(course).length;
-
-/**
  *
  * @param {string} course E.g. 'scratch'
  * @param {string} lesson E.g. 'astrokatt'
  * @return {string[]} An array of languages this lesson exists in, e.g. ['nb', 'en']
  */
 export const getLessonLanguages = (course, lesson) => Object.keys((getLessons()[course] || {})[lesson] || {});
+
+/**
+ * Whether or not a lesson is translated to a specific language.
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} language E.g. 'nb'
+ * @returns {boolean}
+ */
+export const isLessonTranslated = (course, lesson, language) => getLessonLanguages(course, lesson).includes(language);

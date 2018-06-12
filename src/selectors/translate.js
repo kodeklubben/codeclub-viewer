@@ -5,7 +5,6 @@
  *   param {object} replacements Key-value pairs of replacements in the caption,
  *     e.g. cap='{{one}} or {{two}}' and replacement={one:'cat', two:'dog'} gives cap='cat or dog'
  */
-
 export const getTranslator = (state) => {
   const captions = require('../constants/captions_' + state.language + '.js').default;
   return (captionPath, replacements) => {

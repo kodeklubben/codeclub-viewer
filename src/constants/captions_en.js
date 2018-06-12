@@ -15,6 +15,7 @@ export default {
   },
   frontpage: {
     courses: 'Courses',
+    lessoncount: 'Lessons: {{count}}',
     otherwebsitecourses: 'Courses on other webpages',
     button: {
       start: 'Start here!',
@@ -44,13 +45,14 @@ export default {
     forumbutton: 'Go to forum'
   },
   playlist: {
-    lessons: 'Lessons',
     courseinfo: 'Information about the course',
     courseinfonotfound: 'Oops, someone forgot to write course information!',
     instructionbutton: 'Teacher Instructions',
     levelnavigation: 'Navigate to',
     lessoncollections: 'Collections of Lessons',
-    nomatchinglessons: 'No matching lessons for this combination'
+    nomatchinglessons: 'No matching lessons for this combination',
+    missingtitle: 'Playlist',
+    lessonsnottranslated: 'The lessons in this playlist have not been translated to English yet.',
   },
   lessons: {
     writtenby: 'Written by:',

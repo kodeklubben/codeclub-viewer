@@ -38,7 +38,7 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
             {popoverButton}
           </span>
           {showLessonCount ?
-            <span className={styles.lessonCount}>{t('playlist.lessons')}: {course.lessonCount}</span> :
+            <span className={styles.lessonCount}>{t('frontpage.lessoncount', {count: course.lessonCount})}</span> :
             null
           }
         </Link>

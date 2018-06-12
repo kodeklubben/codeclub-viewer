@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize';
-import {assignDeep, getAvailableLanguages} from '../util';
+import {assignDeep, capitalize, getAvailableLanguages} from '../util';
 
 // lessonSrc/*/index*.md, only frontmatter
 // The keys are of the form './course/index*.md'
@@ -85,7 +85,7 @@ export const getCourseFrontmatter = (course, language) => (getCourses()[course] 
  * @param {string} language E.g. 'nb'
  * @return {string} The title of the course
  */
-export const getCourseTitle = (course, language) => getCourseFrontmatter(course, language).title || '';
+export const getCourseTitle = (course, language) => getCourseFrontmatter(course, language).title || capitalize(course);
 
 /**
  * Returns all courses in the given languages that have external defined

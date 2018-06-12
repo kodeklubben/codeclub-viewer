@@ -12,12 +12,20 @@ export const playlistContext =
  *   scratch: {
  *     playlist1: {
  *       sortindex: 1,
- *       title: 'The playlist1 title',
+ *       title: {
+ *         nb: 'Tittel på oppgavesamling1 bokmål',
+ *         nn: 'Tittel på oppgavesamling1 nynorsk',
+ *         en: 'The playlist1 title',
+ *       }
  *       lessons: ['astrokatt', 'straffespark'],
  *     },
  *     playlist2: {
  *       sortindex: 2,
- *       title: 'The playlist2 title',
+ *       title: {
+ *         nb: 'Tittel på oppgavesamling2 bokmål',
+ *         nn: 'Tittel på oppgavesamling2 nynorsk',
+ *         en: 'The playlist2 title',
+ *       }
  *       lessons: ['scratchLesson1', 'scratchLesson2'],
  *     },
  *     ...

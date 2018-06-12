@@ -5,10 +5,6 @@ import {assignDeep, cleanseTags} from '../util';
 const lessonDataContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/]data[.]yml$/);
 
-// TODO: We must include "indexed" and "level" in data.yml for the new pages,
-// TODO: but not remove it from frontmatter in the old ones,
-// TODO: or else they will break.
-
 /**
  * Get structure of lessons with data from data.yml files
  * @returns {object} An object of lessons, e.g.

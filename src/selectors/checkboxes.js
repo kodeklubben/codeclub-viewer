@@ -8,17 +8,16 @@ const getCheckboxesForPath = (state, lessonCheckboxesKey) => state.checkboxes[le
  * Input props: lessonCheckboxesKey
  */
 export const getNumberOfCheckedCheckboxes = createCachedSelector(
-
-  // input selectors:
+  // Input selectors:
   getCheckboxesForPath,
 
-  // resultFunc:
+  // Output selector (resultfunc):
   (checkboxesForPath) => Object.keys(checkboxesForPath).reduce(
     (sum, hash) => sum + (checkboxesForPath[hash] ? 1 : 0),
     0
   )
-
 )(
+  // Resolver function (same arguments as for input selectors). Returns selector cache key:
   (state, lessonCheckboxesKey) => lessonCheckboxesKey
 );
 
@@ -28,13 +27,12 @@ export const getNumberOfCheckedCheckboxes = createCachedSelector(
  * Input props: lessonCheckboxesKey
  */
 export const getTotalNumberOfCheckboxes = createCachedSelector(
-
-  // input selectors:
+  // Input selectors:
   getCheckboxesForPath,
 
-  // resultFunc:
+  // Output selector (resultfunc):
   (checkboxesForPath) => Object.keys(checkboxesForPath).length
-
 )(
+  // Resolver function (same arguments as for input selectors). Returns selector cache key:
   (state, lessonCheckboxesKey) => lessonCheckboxesKey
 );
