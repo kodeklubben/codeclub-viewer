@@ -71,6 +71,14 @@ export const getAllCourses = memoize(
   }
 );
 
+
+/**
+ * Whether the course exists
+ * @param {string} course E.g. 'scratch'
+ * @returns {boolean}
+ */
+export const isValidCourse = (course) => getAllCourses().includes(course);
+
 /**
  * Get the frontmatter of a course for a given language
  * @param {string} course E.g. 'scratch'

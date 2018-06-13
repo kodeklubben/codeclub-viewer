@@ -11,6 +11,8 @@ import {isLessonTranslated} from '../lessonFrontmatter';
  */
 export const areAllLessonsInPlaylistTranslated = memoize(
   (course, playlist, language) => {
+    console.log(`DEBUG: resources/utils/playlistLessons.js:areAllLessonsInPlaylistTranslated` +
+      `(${course},${playlist},${language})`);
     const lessons = getPlaylistLessons(course, playlist);
     const lessonTranslatedReducer = (result, lesson) => result && isLessonTranslated(course, lesson, language);
     return lessons.reduce(lessonTranslatedReducer, true);

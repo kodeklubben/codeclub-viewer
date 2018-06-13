@@ -10,19 +10,17 @@ import PageNotFound from './pages/PageNotFound';
 import Lesson from './components/Lesson/Lesson';
 import PlaylistPage from './pages/PlaylistPage';
 
-import {isValidCoursePath, isValidLessonPath} from './contexts';
+import {isValidCourse} from './resources/courseFrontmatter';
+import {isValidLesson} from './resources/lessonFrontmatter';
 
 const getCoursePage = ({params}, callback) => {
-  // Construct path explicitly instead of relying on location.pathname, which depends on originating link
-  const path = `/${params.course}`;
-  const returnPage = isValidCoursePath(path) ? PlaylistPage : PageNotFound;
+  const returnPage = isValidCourse(params.course) ? PlaylistPage : PageNotFound;
   callback(null, returnPage);
 };
 
 const getLessonPage = ({params}, callback) => {
-  // Construct path explicitly instead of relying on location.pathname, which depends on originating link
-  const path = `/${params.course}/${params.lesson}/${params.file}`;
-  const returnPage = isValidLessonPath(path) ? Lesson : PageNotFound;
+  const {course, lesson, file} = params;
+  const returnPage = isValidLesson(course, lesson, file) ? Lesson : PageNotFound;
   callback(null, returnPage);
 };
 

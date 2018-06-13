@@ -69,6 +69,17 @@ const getLessons = memoize(
   }
 );
 
+/**
+ * Whether the given lesson exists (either normal lesson or teacher instructions)
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} file E.g. 'astrokatt_nn' or 'README_nn'
+ * @returns {boolean}
+ */
+export const isValidLesson = (course, lesson, file) => {
+  const path = `./${course}/${lesson}/${file}.md`;
+  return lessonFrontmatterContext.keys().includes(path);
+};
 
 /**
  *
