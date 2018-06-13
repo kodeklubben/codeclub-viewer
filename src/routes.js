@@ -6,9 +6,9 @@ import IndexRoute from 'react-router/lib/IndexRoute';
 
 import App from './pages/App';
 import FrontPage from './pages/FrontPage';
-import PageNotFound from './pages/PageNotFound';
-import Lesson from './components/Lesson/Lesson';
+import LessonPage from './pages/LessonPage';
 import CoursePage from './pages/CoursePage';
+import PageNotFound from './pages/PageNotFound';
 
 import {isValidCourse} from './resources/courseFrontmatter';
 import {isValidLesson} from './resources/lessonFrontmatter';
@@ -20,7 +20,7 @@ const getCoursePage = ({params}, callback) => {
 
 const getLessonPage = ({params}, callback) => {
   const {course, lesson, file} = params;
-  const returnPage = isValidLesson(course, lesson, file) ? Lesson : PageNotFound;
+  const returnPage = isValidLesson(course, lesson, file) ? LessonPage : PageNotFound;
   callback(null, returnPage);
 };
 

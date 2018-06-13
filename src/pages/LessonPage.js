@@ -6,26 +6,26 @@ import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import DocumentTitle from 'react-document-title';
-import styles from './Lesson.scss';
-import LevelIcon from '../LevelIcon';
-import ToggleButton from './ToggleButton';
-import ImprovePage from './ImprovePage.js';
+import styles from './LessonPage.scss';
+import LevelIcon from '../components/LevelIcon';
+import ToggleButton from '../components/LessonPage/ToggleButton';
+import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
-import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
-import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
-import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
-import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
-import {setCheckbox} from '../../reducers/checkboxes';
-import {setLastLesson} from '../../reducers/lastLesson';
-import MarkdownRenderer from '../MarkdownRenderer';
-import Progress from './Progress';
-import LessonButton from './LessonButton';
-import ReadmeButton from './ReadmeButton';
-import ResetButton from './ResetButton';
-import PdfButton from './PdfButton';
-import MainLanguageButton from './MainLanguageButton';
-import {lessonReadmePaths} from '../../contexts';
-import Content from './Content';
+import {getTranslator, getTranslateTag, getTranslateGroup} from '../selectors/translate';
+import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../util';
+import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../selectors/frontmatter';
+import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
+import {setCheckbox} from '../reducers/checkboxes';
+import {setLastLesson} from '../reducers/lastLesson';
+import MarkdownRenderer from '../components/MarkdownRenderer';
+import Progress from '../components/LessonPage/Progress';
+import LessonButton from '../components/LessonPage/LessonButton';
+import ReadmeButton from '../components/LessonPage/ReadmeButton';
+import ResetButton from '../components/LessonPage/ResetButton';
+import PdfButton from '../components/LessonPage/PdfButton';
+import MainLanguageButton from '../components/LessonPage/MainLanguageButton';
+import {lessonReadmePaths} from '../contexts';
+import Content from '../components/LessonPage/Content';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -56,7 +56,7 @@ PrintInfo.PropTypes = {
   tags: PropTypes.object.isRequired,
 };
 
-class Lesson extends React.Component {
+class LessonPage extends React.Component {
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
@@ -104,11 +104,12 @@ class Lesson extends React.Component {
   }
 }
 
-Lesson.propTypes = {
+LessonPage.propTypes = {
   // ownProps
   params: PropTypes.shape({
-    file: PropTypes.string.isRequired,
     course: PropTypes.string.isRequired,
+    lesson: PropTypes.string.isRequired,
+    file: PropTypes.string.isRequired,
   }).isRequired,
 
   // mapStateToProps
@@ -160,4 +161,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Lesson));
+)(withStyles(styles)(LessonPage));
