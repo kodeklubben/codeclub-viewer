@@ -32,7 +32,7 @@ const Courses = ({t, courses, externalCourses}) => {
         </Row>
         : null}
       {coursesLength + externalCoursesLength !== 0 ? null :
-        <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>}
+        <div className={styles.noMatchingLessons}>{t('coursepage.nomatchinglessons')}</div>}
     </Col>
   );
 };

@@ -8,18 +8,18 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import AutoAffix from 'react-overlays/lib/AutoAffix';
 import cx from 'classnames';
-import styles from './PlaylistPage.scss';
+import styles from './CoursePage.scss';
 import {getLessonLevels} from '../resources/lessonData';
 import {getTranslator} from '../selectors/translate';
 import {getShowFiltergroups} from '../selectors/playlist';
 import LessonFilter from '../components/Filter/LessonFilter';
-import LessonList from '../components/PlaylistPage/LessonList';
-import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
-import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
-import CourseInfo from '../components/PlaylistPage/CourseInfo';
+import LessonList from '../components/CoursePage/LessonList';
+import LevelNavigation from '../components/CoursePage/LevelNavigation';
+import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
+import CourseInfo from '../components/CoursePage/CourseInfo';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 
-const PlaylistPage = ({params, courseTitle, lessonLevels, t, showPlaylists}) => {
+const CoursePage = ({params, courseTitle, lessonLevels, t, showPlaylists}) => {
   const {course} = params;
   const lessonLists = lessonLevels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>
@@ -52,7 +52,7 @@ const PlaylistPage = ({params, courseTitle, lessonLevels, t, showPlaylists}) => 
             <Col xs={12} sm={6}>
               {lessonLists.length ?
                 lessonLists :
-                <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>
+                <div className={styles.noMatchingLessons}>{t('coursepage.nomatchinglessons')}</div>
               }
             </Col>
             {jumpToAffixed}
@@ -63,7 +63,7 @@ const PlaylistPage = ({params, courseTitle, lessonLevels, t, showPlaylists}) => 
   );
 };
 
-PlaylistPage.propTypes = {
+CoursePage.propTypes = {
   // ownProps
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
@@ -85,4 +85,4 @@ const mapStateToProps = (state, {params}) => ({
 
 export default connect(
   mapStateToProps
-)(withStyles(styles)(PlaylistPage));
+)(withStyles(styles)(CoursePage));

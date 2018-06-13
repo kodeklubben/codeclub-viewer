@@ -8,11 +8,11 @@ import {getTranslator} from '../../selectors/translate';
 const CourseInfo = ({t, isStudentMode, courseInfo}) => {
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   return (
-    <CollapsiblePanel initiallyExpanded={false} header={t('playlist.courseinfo')} {...{bsStyle}}>
+    <CollapsiblePanel initiallyExpanded={false} header={t('coursepage.courseinfo')} {...{bsStyle}}>
       {courseInfo ?
         <div dangerouslySetInnerHTML={courseInfo}/>
         :
-        <h4>{t('playlist.courseinfonotfound')}</h4>
+        <h4>{t('coursepage.courseinfonotfound')}</h4>
       }
     </CollapsiblePanel>
   );

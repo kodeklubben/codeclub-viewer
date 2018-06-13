@@ -10,7 +10,7 @@ import styles from './PlaylistNavigation.scss';
 const PlaylistNavigation = ({t, course, playlists}) => {
   return (
     <div className={styles.container}>
-      <h3>{t('playlist.lessoncollections')}</h3>
+      <h3>{t('coursepage.lessoncollections')}</h3>
       <Accordion>
         {playlists.map(playlist => <Playlist {...{course, playlist}} />)}
       </Accordion>

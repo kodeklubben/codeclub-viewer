@@ -8,13 +8,13 @@ import App from './pages/App';
 import FrontPage from './pages/FrontPage';
 import PageNotFound from './pages/PageNotFound';
 import Lesson from './components/Lesson/Lesson';
-import PlaylistPage from './pages/PlaylistPage';
+import CoursePage from './pages/CoursePage';
 
 import {isValidCourse} from './resources/courseFrontmatter';
 import {isValidLesson} from './resources/lessonFrontmatter';
 
 const getCoursePage = ({params}, callback) => {
-  const returnPage = isValidCourse(params.course) ? PlaylistPage : PageNotFound;
+  const returnPage = isValidCourse(params.course) ? CoursePage : PageNotFound;
   callback(null, returnPage);
 };
 

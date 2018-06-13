@@ -26,7 +26,7 @@ const Playlist = ({course, playlist, title, language, t}) => {
           <ListGroup fill>
             {lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>)}
           </ListGroup> :
-          <span>{t('playlist.lessonsnottranslated')}</span>
+          <span>{t('coursepage.lessonsnottranslated')}</span>
       }
     </Panel>
   );
@@ -46,7 +46,7 @@ const mapStateToProps = (state, {course, playlist}) => {
   const t = getTranslator(state);
   return {
     //allLessonsTranslated: getPlaylistLessons(course, playlist),
-    title: getPlaylistTitle(course, playlist, state.language) || t('playlist.missingtitle'),
+    title: getPlaylistTitle(course, playlist, state.language) || t('coursepage.missingtitle'),
     language: state.language,
     t,
   };

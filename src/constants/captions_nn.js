@@ -46,7 +46,7 @@ export default {
     },
     showhidefilter: 'Vis/skjul filter'
   },
-  playlist: {
+  coursepage: {
     courseinfo: 'Informasjon om kurset',
     courseinfonotfound: 'Oops, her har nokon gløymt å skrive kursinformasjon!',
     instructionbutton: 'Lærarrettleiing',

@@ -24,7 +24,7 @@ const LevelNavigation = ({t, levels, isStudentMode}) => {
     );
   });
   const bsStyle = isStudentMode ? 'student' : 'teacher';
-  const header = t('playlist.levelnavigation');
+  const header = t('coursepage.levelnavigation');
   return (
     <div>
       <Col xsHidden>

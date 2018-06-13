@@ -44,7 +44,7 @@ export default {
     showhidefilter: 'Show/hide filter',
     forumbutton: 'Go to forum'
   },
-  playlist: {
+  coursepage: {
     courseinfo: 'Information about the course',
     courseinfonotfound: 'Oops, someone forgot to write course information!',
     instructionbutton: 'Teacher Instructions',
