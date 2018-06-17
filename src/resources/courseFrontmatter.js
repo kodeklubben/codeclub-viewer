@@ -18,12 +18,12 @@ const courseFrontmatterContext =
  *   scratch: {
  *     nb: {
  *       title: 'Scratch',
- *       url: '/scratch/index',
+ *       path: '/scratch/index',
  *       key: './scratch/index.md',
  *     },
  *     en: {
  *       title: 'Scratch',
- *       url: '/scratch/index_en',
+ *       path: '/scratch/index_en',
  *       key: './scratch/index_en.md',
  *     },
  *   },
@@ -31,7 +31,7 @@ const courseFrontmatterContext =
  *     nb: {
  *       title: 'Kodegenet',
  *       external: 'https://kodegenet.no/tracks/',
- *       url: '/kodegenet/index',
+ *       path: '/kodegenet/index',
  *       key: './kodegenet/index.md',
  *     },
  *   },
@@ -49,8 +49,8 @@ const getCourses = memoize(
       const [/* ignore */, course, file] = key.match(/^[.][/]([^/]+)[/](index[^.]*)[.]md$/);
       const {title = '', language} = courseFrontmatterContext(key);
       if (getAvailableLanguages().includes(language)) {
-        const url = `/${course}/${file}`;
-        const data = {title, url, key};
+        const path = `/${course}/${file}`; // TODO: Add publicpath?
+        const data = {title, path, key};
         assignDeep(courses, [course, language], data);
       } else {
         console.warn(`The course info ${key} did not have a valid language (${language})`);

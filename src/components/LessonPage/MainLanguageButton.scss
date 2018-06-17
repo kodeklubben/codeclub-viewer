@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 .textMargin {
-  margin-left: $space-between-text-and-flag;
+  margin-left: 10px; // space between text and flag;
 
   @media (max-width: $screen-xs-max) {
     display: none;
@@ -9,14 +9,9 @@
 }
 
 .container {
-  margin: 10px 10px 0 0;
+  margin-right: 10px;
 
   @media print {
     display: none;
   }
-}
-
-.flag {
-  width: $flag-width;
-  height: $flag-height;
 }

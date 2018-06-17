@@ -233,7 +233,7 @@ export const tagsMatchFilter = (lessonTags, filter) => {
 /**
 * Returns languages defined as available
 * All available languages must be defined here
-* @returns {Array} An array of available languages
+* @returns {string[]} An array of available languages, e.g. ['nb', 'nn', 'en']
 */
 export const getAvailableLanguages = () => getFilterkeys().language;
 

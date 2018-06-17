@@ -8,6 +8,7 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
+import Flag from '../Flag';
 import {createCheckboxesKey} from '../../util';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 import {getLessonLevel} from '../../resources/lessonData';
@@ -37,9 +38,9 @@ const LessonItem = ({
   language,
   title,
   level,
-  url,
+  path,
   external,
-  readmeUrl,
+  readmePath,
   popoverContent,
   isStudentMode,
   showLessonItemFlag,
@@ -48,15 +49,10 @@ const LessonItem = ({
   totalCheckboxes
 }) => {
   const flag = showLessonItemFlag ?
-    <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/> : null;
+    <div className={styles.flag}><Flag language={language}/></div> : null;
 
   const instructionButton = isStudentMode ? null :
-    <InstructionButton
-      className={styles.instructionButton}
-      buttonPath={readmeUrl}
-      bsSize='xs'
-      insideLink={true}
-    />;
+    <InstructionButton path={readmePath} isReadme={true} onlyIcon={true} insideLink={true} />;
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
@@ -78,7 +74,7 @@ const LessonItem = ({
           </span>
         </ListGroupItem>
         :
-        <LinkContainer to={url}>
+        <LinkContainer to={path}>
           <ListGroupItem className={styles.row}>
             {flag}
             <Progressbar {...{checkedCheckboxes, totalCheckboxes, level}}/>
@@ -105,9 +101,9 @@ LessonItem.propTypes = {
   // mapStateToProps
   title: PropTypes.string.isRequired,
   level: PropTypes.number,
-  url: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
   external: PropTypes.string,
-  readmeUrl: PropTypes.string.isRequired,
+  readmePath: PropTypes.string.isRequired,
   popoverContent: PropTypes.string,
   isStudentMode: PropTypes.bool.isRequired,
   showLessonItemFlag: PropTypes.bool.isRequired,
@@ -117,13 +113,13 @@ LessonItem.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language}) => {
-  const {title, url, external} = getLessonFrontmatter(course, lesson, language, false);
+  const {title, path, external} = getLessonFrontmatter(course, lesson, language, false);
   return {
     title,
     level: getLessonLevel(course, lesson),
-    url,
+    path,
     external,
-    readmeUrl: getLessonFrontmatter(course, lesson, language, true).url,
+    readmePath: getLessonFrontmatter(course, lesson, language, true).path,
     popoverContent: getLessonIntro(course, lesson, language, false),
     isStudentMode: state.isStudentMode,
     showLessonItemFlag: showLessonItemFlag(state),
@@ -132,8 +128,6 @@ const mapStateToProps = (state, {course, lesson, language}) => {
     totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(lesson.path)),
   };
 };
-
-
 
 export default connect(
   mapStateToProps

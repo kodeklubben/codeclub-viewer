@@ -12,20 +12,16 @@ import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../selectors/translate';
-import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../util';
-import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../selectors/frontmatter';
+import {capitalize, setCheckboxes, createCheckboxesKey} from '../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
 import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import Progress from '../components/LessonPage/Progress';
-import LessonButton from '../components/LessonPage/LessonButton';
-import ReadmeButton from '../components/LessonPage/ReadmeButton';
-import ResetButton from '../components/LessonPage/ResetButton';
-import PdfButton from '../components/LessonPage/PdfButton';
-import MainLanguageButton from '../components/LessonPage/MainLanguageButton';
-import {lessonReadmePaths} from '../contexts';
+import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
+import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
+import {getLessonTags} from '../resources/lessonData';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -66,17 +62,14 @@ class LessonPage extends React.Component {
 
   render() {
     const {
-      path, params,
-      checkboxes, t, translateTag, translateGroup, checkedCheckboxes, totalCheckboxes,
-      title, level, tags, authorName, translatorName, isReadme, isStudentMode
+      course, lesson, language, isReadme,
+      t, translateTag, translateGroup,
+      path, title, level, author, translator, tags,
+      checkedCheckboxes, totalCheckboxes,
     } = this.props;
-    const author = authorName ?
-      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={authorName} inline={true} /></i></p> : null;
-    const translator = translatorName ? <p><i>{t('lessons.translatedby')} {translatorName}</i></p> : null;
-    const resetButton = anyCheckboxTrue(checkboxes) === true ? <ResetButton {...{path}}/> : null;
-    const instructionButton = isReadme ? <LessonButton {...{path}}/> :
-      isStudentMode ? null : <ReadmeButton {...{path}}/>;
-    const pdfButton = <PdfButton lessonfile={params.file}/>;
+    const authorNode = author ?
+      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> : null;
+    const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
@@ -86,17 +79,14 @@ class LessonPage extends React.Component {
             <LevelIcon {...{level}}/>
             {title}
           </h1>
-          {author}
-          {translator}
-          <PrintInfo {...{t, translateTag, translateGroup, course: params.course, tags}}/>
-          <MainLanguageButton {...{path}}/>
-          {resetButton}
-          {instructionButton}
-          {pdfButton}
+          {authorNode}
+          {translatorNode}
+          <PrintInfo {...{t, translateTag, translateGroup, course, tags}}/>
+          <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
           <Content {...{path}}/>
           <Row>
-            <ImprovePage courseLessonFileProp={params}/>
+            <ImprovePage {...{course, lesson, language, isReadme}}/>
           </Row>
         </div>
       </DocumentTitle>
@@ -106,50 +96,45 @@ class LessonPage extends React.Component {
 
 LessonPage.propTypes = {
   // ownProps
-  params: PropTypes.shape({
-    course: PropTypes.string.isRequired,
-    lesson: PropTypes.string.isRequired,
-    file: PropTypes.string.isRequired,
-  }).isRequired,
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
   translateTag: PropTypes.func.isRequired,
   translateGroup: PropTypes.func.isRequired,
-  checkboxes: PropTypes.object,
+  path: PropTypes.string,
   title: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
+  author: PropTypes.string.isRequired,
+  translator: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
-  authorName: PropTypes.string.isRequired,
-  translatorName: PropTypes.string.isRequired,
-  isReadme: PropTypes.bool.isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
+  checkboxes: PropTypes.object,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
-  path: PropTypes.string,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
   setLastLesson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, {params}) => {
-  const path = `/${params.course}/${params.lesson}/${params.file}`;
+const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
+  const {path, title, level, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
     translateTag: getTranslateTag(state),
     translateGroup: getTranslateGroup(state),
+    path,
+    title,
+    level,
+    author,
+    translator,
+    tags: getLessonTags(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
-    title: getTitle(state, params),
-    level: getLevel(state, params),
-    tags: getTags(state, params),
-    authorName: getAuthorName(state, params),
-    translatorName: getTranslatorName(state, params),
-    isReadme: lessonReadmePaths.includes(path),
-    isStudentMode: state.isStudentMode,
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
     totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
-    path,
   };
 };
 

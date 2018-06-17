@@ -21,7 +21,8 @@ const lessonFrontmatterContext =
  *           author: 'Geir',
  *           translator: 'Kari',
  *           external: 'https://www.example.com/external', // doesn't always exist
- *           url: '/scratch/astrokatt/astrokatt',
+ *           path: '/scratch/astrokatt/astrokatt',
+ *           pdfPath: '/scratch/astrokatt/astrokatt.pdf',
  *           key: './scratch/astrokatt/astrokatt.md',
  *         },
  *         1: {
@@ -29,7 +30,8 @@ const lessonFrontmatterContext =
  *           level: 1,
  *           author: 'Gro',
  *           translator: 'Per',
- *           url: '/scratch/astrokatt/README_nn',
+ *           path: '/scratch/astrokatt/README_nn',
+ *           pdfPath: '/scratch/astrokatt/README_nn.pdf',
  *           key: './scratch/astrokatt/README_nn.md',
  *         },
  *       },
@@ -58,8 +60,9 @@ const getLessons = memoize(
       } = lessonFrontmatterContext(key);
       if (language) {
         const isReadmeKey = file.startsWith('README') ? 1 : 0;
-        const url = `/${course}/${lesson}/${file}`;
-        const lessonData = {title, level, author, translator, external, url, key};
+        const path = `/${course}/${lesson}/${file}`; // TODO: Add publicpath?
+        const pdfPath = `${path}.pdf`;
+        const lessonData = {title, level, author, translator, external, path, pdfPath, key};
         assignDeep(lessons, [course, lesson, language, isReadmeKey], lessonData);
       } else {
         console.warn('The lesson', key, 'did not contain language, so lesson will not be used.');
@@ -68,6 +71,26 @@ const getLessons = memoize(
     return lessons;
   }
 );
+
+/**
+ * Convert file (given course and lesson) to language and isReadme.
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} file E.g. 'astrokatt_nn' or 'README_nn'
+ * @returns {object|null} If lesson exists an object with the structure {language: 'nn', isReadme: false}
+ *                   otherwise null.
+ */
+export const getLanguageAndIsReadme = (course, lesson, file) => {
+  const path = `./${course}/${lesson}/${file}.md`;
+  if (lessonFrontmatterContext.keys().includes(path)) {
+    return {
+      language: lessonFrontmatterContext(path).language || '',
+      isReadme: file.startsWith('README'),
+    };
+  } else {
+    return null;
+  }
+};
 
 /**
  * Whether the given lesson exists (either normal lesson or teacher instructions)
@@ -94,7 +117,7 @@ export const isValidLesson = (course, lesson, file) => {
  *     author: 'Geir',
  *     translator: 'Kari',
  *     external: 'https://www.example.com/external',
- *     url: '/scratch/astrokatt/astrokatt_nn', // or '/scratch/astrokatt/README_nn'
+ *     path: '/scratch/astrokatt/astrokatt_nn', // or '/scratch/astrokatt/README_nn'
  *   }
  */
 export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
@@ -102,6 +125,9 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
   return (((getLessons()[course] || {})[lesson] || {})[language] || {})[isReadmeKey] || {};
 };
 
+
+// export const getLessonpath = (course, lesson, language, isReadme) =>
+//   getLessonFrontmatter(course, lesson, language, isReadme).path;
 
 /**
  * Get lessons in a course.

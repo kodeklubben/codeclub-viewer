@@ -11,7 +11,7 @@ import CoursePage from './pages/CoursePage';
 import PageNotFound from './pages/PageNotFound';
 
 import {isValidCourse} from './resources/courseFrontmatter';
-import {isValidLesson} from './resources/lessonFrontmatter';
+import {getLanguageAndIsReadme} from './resources/lessonFrontmatter';
 
 const getCoursePage = ({params}, callback) => {
   const returnPage = isValidCourse(params.course) ? CoursePage : PageNotFound;
@@ -20,8 +20,13 @@ const getCoursePage = ({params}, callback) => {
 
 const getLessonPage = ({params}, callback) => {
   const {course, lesson, file} = params;
-  const returnPage = isValidLesson(course, lesson, file) ? LessonPage : PageNotFound;
-  callback(null, returnPage);
+  const languageAndIsReadme =  getLanguageAndIsReadme(course, lesson, file);
+  if (languageAndIsReadme) {
+    const {language, isReadme} = languageAndIsReadme;
+    callback(null, <LessonPage {...{course, lesson, language, isReadme}}/>);
+  } else {
+    callback(null, PageNotFound);
+  }
 };
 
 /**

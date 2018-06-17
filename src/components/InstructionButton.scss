@@ -1,5 +1,17 @@
 @import '../styles/variables';
 
+.button {
+  margin: 0 10px 0 0;
+
+  @media print {
+    display: none;
+  }
+}
+
+.buttonOnlyIcon {
+  margin-right: 5px;
+}
+
 .textMargin {
   margin-left: 10px;
 

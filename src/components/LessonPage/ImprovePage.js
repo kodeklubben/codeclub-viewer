@@ -6,18 +6,14 @@ import styles from './ImprovePage.scss';
 import {capitalize} from '../../util.js';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
+import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
-const ImprovePage = ({t, isStudentMode, courseLessonFileProp}) => {
-  const {course: courseName, lesson: lessonName} = courseLessonFileProp;
-
-  const linkToSourceCode = 'https://github.com/kodeklubben/oppgaver/tree/master/src/' +
-                           courseName + '/' + lessonName;
-
-  const linkToLesson = 'http://oppgaver.kidsakoder.no/beta/' + //'/beta' should be removed when the site goes live
-                       courseName + '/' + lessonName + '/' + lessonName;
-
+const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => {
+  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src/${course}/${lesson}`;
+  const linkToLesson = `http://oppgaver.kidsakoder.no/beta/${path}`; //'/beta' should be removed when the site goes live
   const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' +
-                       capitalize(courseName) + ': ' + capitalize(lessonName).replace(/_/g, ' ') + '\'' +
+                       capitalize(course) + ': ' + capitalize(lesson).replace(/_/g, ' ') + '\'' +
                        '&body=' + t('lessons.improvepage.newissuelink.lesson') + ': ' + linkToLesson +
                        '%0A' + t('lessons.improvepage.newissuelink.sourcecode') + ': ' + linkToSourceCode +
                        '%0A%0A' + t('lessons.improvepage.newissuelink.info') + '%0A';
@@ -61,7 +57,10 @@ const ImprovePage = ({t, isStudentMode, courseLessonFileProp}) => {
 
 ImprovePage.propTypes = {
   // ownProps
-  courseLessonFileProp: PropTypes.object,
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
 
   // mapStateToProps
   isStudentMode: PropTypes.bool.isRequired,
