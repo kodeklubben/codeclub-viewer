@@ -1,5 +1,5 @@
 import {getSortedPlaylists} from '../resources/playlists';
-import {createSelector} from 'reselect/src/reselect';
+import {createSelector} from 'reselect';
 import {getCheckedFilterLanguages} from './filter';
 
 // import {createSelector} from 'reselect';
