@@ -16,8 +16,8 @@ const courseContentContext =
  * @return {string} HTML markup
  */
 export const getCourseInfo = (course, language) => {
-  const fm = getCourseFrontmatter(course, language);
-  return fm.key ? courseContentContext(fm.key) : '';
+  const {key} = getCourseFrontmatter(course, language);
+  return key ? courseContentContext(key) : '';
 };
 
 /**
@@ -28,6 +28,6 @@ export const getCourseInfo = (course, language) => {
  */
 export const getCourseIntro = (course, language) => {
   const courseContent = getCourseInfo(course, language);
-  const url = getCourseFrontmatter(course, language).url;
-  return extractFirstPartOfHtml(courseContent, url);
+  const {path} = getCourseFrontmatter(course, language);
+  return extractFirstPartOfHtml(courseContent, path);
 };

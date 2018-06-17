@@ -6,60 +6,55 @@ import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {capitalize} from '../../util';
-import {getTitle, getLevel} from '../../selectors/frontmatter';
-import {getCourseIcon, isValidCoursePath, isValidLessonPath} from '../../contexts';
+import {getAvailableLanguages} from '../../util';
+import {getCourseTitle, getLanguageIndependentCoursePath} from '../../resources/courseFrontmatter';
+import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getCourseIcon} from '../../resources/courseIcon';
 
-const BreadCrumb = ({params, title, level, courseIcon}) => {
-  const {course, lesson, file} = params;
-  const isLesson = !!file;
+const BreadCrumb = ({course, lesson, file, courseLanguage}) => {
+  const isLesson = !!lesson;
   const isCourse = course && !isLesson;
-  const coursePath = `/${course}`;
-  const lessonPath = `/${course}/${lesson}/${file}`;
-  const isValidCourse = isCourse && isValidCoursePath(coursePath);
-  const isValidLesson = isLesson && isValidLessonPath(lessonPath);
 
-  const homeLink = <NavLink to='/' onlyActiveOnIndex>
+  const coursePath = isCourse ? getLanguageIndependentCoursePath(course) : '';
+  const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
+  const {path:lessonPath, title:lessonTitle, level} =
+    isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme).path : {};
+
+  const homeCrumb = <NavLink to={isCourse || isLesson ? '/' : ''}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
-  const courseLink = <NavLink to={coursePath} className={styles.lessonLink}>
-    <img className={styles.courseIcon} src={courseIcon}/>
-    <span className={styles.lesson}>{capitalize(course)}</span>
+  const courseCrumb = <NavLink to={coursePath} className={styles.lessonLink}>
+    <img className={styles.courseIcon} src={getCourseIcon(course)}/>
+    <span className={styles.lesson}>{getCourseTitle(course, courseLanguage)}</span>
   </NavLink>;
 
-  const lessonLink = <NavLink to={lessonPath} className={styles.lessonLink}>
+  const lessonCrumb = <NavLink className={styles.lessonLink}>
     <LevelIcon {...{level}}/>
-    <span className={styles.lesson}>{title}</span>
+    <span className={styles.lesson}>{lessonTitle}</span>
   </NavLink>;
 
   return <div className={styles.breadcrumb}>
-    {homeLink}
-    {isValidCourse || isValidLesson ? <span> / </span> : null}
-    {isValidCourse || isValidLesson ? courseLink : null}
-    {isValidLesson ? <span> / </span> : null}
-    {isValidLesson ? lessonLink : null}
+    {homeCrumb}
+    {coursePath || lessonPath ? <span> / </span> : null}
+    {coursePath || lessonPath ? courseCrumb : null}
+    {lessonPath ? <span> / </span> : null}
+    {lessonPath ? lessonCrumb : null}
   </div>;
 };
 
 BreadCrumb.propTypes = {
   // ownProps
-  params: PropTypes.shape({
-    course: PropTypes.string,
-    lesson: PropTypes.string,
-    file: PropTypes.string
-  }).isRequired,
+  course: PropTypes.string,
+  lesson: PropTypes.string,
+  file: PropTypes.string,
 
   // mapStateToProps
-  title: PropTypes.string.isRequired,
-  level: PropTypes.number.isRequired,
-  courseIcon: PropTypes.string,
+  courseLanguage: PropTypes.oneOf(getAvailableLanguages()).isRequired,
 };
 
-const mapStateToProps = (state, {params}) => ({
-  title: getTitle(state, params),
-  level: getLevel(state, params),
-  courseIcon: getCourseIcon(params.course),
+const mapStateToProps = (state) => ({
+  courseLanguage: state.language,
 });
 
 export default connect(

@@ -19,8 +19,8 @@ const lessonContentContext =
  * @return {string} HTML markup
  */
 export const getLessonContent = (course, lesson, language, isReadme) => {
-  const fm = getLessonFrontmatter(course, lesson, language, isReadme);
-  return fm.key ? lessonContentContext(fm.key) : '';
+  const {key} = getLessonFrontmatter(course, lesson, language, isReadme);
+  return key ? lessonContentContext(key) : '';
 };
 
 /**

@@ -10,7 +10,7 @@ const getFilter = (state) => state.filter;
  * Get internal courses that have more than one lesson after filter has been applied.
  * Courses are sorted by number of lessons (most lessons first).
  * @param {object} state The redux state object
- * @returns {string[]} An array of courses
+ * @returns {string[]} An array of courses, e.g. ['scratch', 'python', ...]
  */
 export const getSortedFilteredCourses = createSelector(
   // Input selectors:
@@ -25,6 +25,11 @@ export const getSortedFilteredCourses = createSelector(
   }
 );
 
+/**
+ * Get a list of external courses.
+ * @param {object} state The redux state object
+ * @type {string[]} An array of external courses, e.g. ['codecademy', 'kodegenet', ...]
+ */
 export const getFilteredExternalCourses = createSelector(
   // Input selectors:
   getFilter,

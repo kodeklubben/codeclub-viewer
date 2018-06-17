@@ -5,7 +5,8 @@ import {assignDeep, capitalize, getAvailableLanguages} from '../util';
 // The keys are of the form './course/index*.md'
 // Note that this require.context should be identical to the one for courseContent.js, except with 'frontmatter!'
 const courseFrontmatterContext =
-  require.context('frontmatter!lessonSrc/', true, /^[.][/][^/]+[/]index[^.]*[.]md$/);
+  require.context('!!json-loader!front-matter-loader?onlyAttributes!lessonSrc/',
+    true, /^[.][/][^/]+[/]index[^.]*[.]md$/);
 
 
 /**
@@ -94,6 +95,13 @@ export const getCourseFrontmatter = (course, language) => (getCourses()[course] 
  * @return {string} The title of the course
  */
 export const getCourseTitle = (course, language) => getCourseFrontmatter(course, language).title || capitalize(course);
+
+/**
+ * Get language independent path to course
+ * @param {string} course E.g. 'scratch'
+ * @returns {string} The path to the course, e.g. '/scratch'
+ */
+export const getLanguageIndependentCoursePath = (course) => isValidCourse(course) ? `/${course}` : '';
 
 /**
  * Returns all courses in the given languages that have external defined

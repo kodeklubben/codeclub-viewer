@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Courses.scss';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import {getFilteredCourses, getFilteredExternalCourses, getSortedFilteredCourses} from '../../selectors/course';
+import {getFilteredExternalCourses, getSortedFilteredCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import {getCoursesWithPlaylists} from '../../resources/playlists';
 import CourseList from '../CourseList/CourseList';
@@ -39,10 +39,9 @@ const Courses = ({t, courses, externalCourses}) => {
 
 Courses.propTypes = {
   // mapStateToProps
-  courses: PropTypes.object.isRequired,
-  externalCourses: PropTypes.object.isRequired,
+  courses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  externalCourses: PropTypes.arrayOf(PropTypes.string).isRequired,
   t: PropTypes.func.isRequired,
-  showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

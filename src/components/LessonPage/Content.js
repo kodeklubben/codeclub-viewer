@@ -5,11 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './Content.scss';
 import processContent from '../../processContent';
-//import {lessonContext, readmeContext} from '../../contexts';
-
-// lessonSrc/*/*/*.md, the regexp should be the same as in context.js
-const lessonContext =
-  require.context('frontmatter!lessonSrc/', true, /^[.][/][^/]*[/][^/]*[/][^.]*[.]md$/);
+import {getLessonContent} from '../../resources/lessonContent';
 
 const createMarkup = (lessonContent) => {
   return ({__html: processContent(lessonContent, styles)});
@@ -24,12 +20,16 @@ const createMarkup = (lessonContent) => {
 
 //console.log('lessonContext.keys:', lessonContext.keys());
 
-const Content = ({path}) => {
-  const lessonContent = lessonContext('./' + path + '.md');
+const Content = ({course, lesson, language, isReadme}) => {
+  const lessonContent = getLessonContent(course, lesson, language, isReadme);
   return <div dangerouslySetInnerHTML={createMarkup(lessonContent)}/>;
 };
 Content.propTypes = {
-  path: PropTypes.string, // of the form 'scratch/astrokatt/astrokatt'
+  // ownProps
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Content);

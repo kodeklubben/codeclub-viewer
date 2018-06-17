@@ -144,7 +144,7 @@ const createConfig = (env = {}) => {
       // in lessonSrc as well.
       modules: [path.join(__dirname, 'node_modules')],
       alias: {
-        frontmatter: 'front-matter-loader?onlyAttributes',
+        //frontmatter: 'json-loader!front-matter-loader?onlyAttributes',
         // // Markdown-files are parsed only through one of these three aliases, and are
         // // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
         // // 1) We don't want to use '!!' in the requires in the modules, and

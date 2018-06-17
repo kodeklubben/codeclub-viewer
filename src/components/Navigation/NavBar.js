@@ -87,7 +87,7 @@ const NavBar = ({isStudentMode, t, params}) => {
           <LkkNav {...{t}}/>
         </Navbar.Collapse>
         <div className={styles.widgets + ' ' + widgetClass}>
-          <BreadCrumb {...{params}}/>
+          <BreadCrumb {...params}/>
           <div className={styles.gadgetGroup}>
             <LanguageDropdown/>
             <ModeDropdown/>
@@ -106,15 +106,15 @@ NavBar.propTypes = {
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
-  t: PropTypes.func.isRequired,
 
   // mapStateToProps
-  isStudentMode: PropTypes.bool.isRequired
+  isStudentMode: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
+  t: getTranslator(state),
 });
 
 export default connect(

@@ -23,7 +23,7 @@ const getLessonPage = ({params}, callback) => {
   const languageAndIsReadme =  getLanguageAndIsReadme(course, lesson, file);
   if (languageAndIsReadme) {
     const {language, isReadme} = languageAndIsReadme;
-    callback(null, <LessonPage {...{course, lesson, language, isReadme}}/>);
+    callback(null, (props) => <LessonPage {...{course, lesson, language, isReadme}}/>);
   } else {
     callback(null, PageNotFound);
   }

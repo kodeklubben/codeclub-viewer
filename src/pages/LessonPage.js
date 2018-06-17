@@ -84,7 +84,7 @@ class LessonPage extends React.Component {
           <PrintInfo {...{t, translateTag, translateGroup, course, tags}}/>
           <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
-          <Content {...{path}}/>
+          <Content {...{course, lesson, language, isReadme}}/>
           <Row>
             <ImprovePage {...{course, lesson, language, isReadme}}/>
           </Row>

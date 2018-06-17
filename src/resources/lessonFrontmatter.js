@@ -5,7 +5,8 @@ import {assignDeep} from '../util';
 // The keys are of the form './course/lesson/file.md'
 // Note that this require.context should be identical to the one for lessonContent.js, except with 'frontmatter!'
 const lessonFrontmatterContext =
-  require.context('frontmatter!lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/][^.]+[.]md$/);
+  require.context('!!json-loader!front-matter-loader?onlyAttributes!lessonSrc/',
+    true, /^[.][/][^/]+[/][^/]+[/][^.]+[.]md$/);
 
 
 /**

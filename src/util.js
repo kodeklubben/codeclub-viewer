@@ -250,7 +250,7 @@ export function hashCode(str) {
   return Math.abs(hash);
 }
 
-export function createCheckboxesKey(path) {
+export function createCheckboxesKey(path = 'undefined') {
   path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
   return 'checkboxes_' + path;
 }
