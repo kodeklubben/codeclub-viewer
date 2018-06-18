@@ -23,7 +23,7 @@ const CoursePage = ({params, courseTitle, lessonLevels, t, showPlaylists}) => {
   const {course} = params;
   const lessonLists = lessonLevels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>
-    <LessonFilter courseName={course}/>
+    <LessonFilter course={course}/>
   </Col>;
   const jumpTo = lessonLevels.length > 0 ? <div><LevelNavigation {...{lessonLevels}}/></div> : null;
   let thispage = null;

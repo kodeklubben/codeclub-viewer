@@ -54,7 +54,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
 
 LessonFilter.propTypes = {
   // ownProps
-  courseName: PropTypes.string,
+  course: PropTypes.string,
 
   // mapStateToProps
   filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -64,12 +64,12 @@ LessonFilter.propTypes = {
   showFiltergroups: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {courseName}) => ({
+const mapStateToProps = (state, {course}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
-  showRadiobuttons: getShowRadiobuttons(state, courseName),
-  showFiltergroups: getShowFiltergroups(state, courseName),
+  showRadiobuttons: getShowRadiobuttons(state, course),
+  showFiltergroups: getShowFiltergroups(state, course),
 });
 
 export default connect(

@@ -1,4 +1,4 @@
-import {getSortedPlaylists} from '../resources/playlists';
+import {getCoursesWithPlaylists, getPlaylistsForCourse} from '../resources/playlists';
 import {createSelector} from 'reselect';
 import {getCheckedFilterLanguages} from './filter';
 
@@ -50,10 +50,11 @@ const getLanguage = (state) => state.language; // Chosen main language
 
 /**
  * Returns a boolean that says if the radiobuttons for choosing between playlists and lessons should be displayed
- * Input props: courseName (string, optional)
+ * @param {object} state The redux state object
+ * @param {string} course E.g. 'scratch' (optional)
  */
 export const getShowRadiobuttons = (state, course) =>
-  state.language === 'nb' && getSortedPlaylists(course).length > 0;
+  course ? getPlaylistsForCourse(course).length > 0 : getCoursesWithPlaylists().length > 0;
 
 /**
  * Returns a boolean that says if the filtergroups in the filter should be displayed

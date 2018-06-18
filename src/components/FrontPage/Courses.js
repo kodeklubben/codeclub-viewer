@@ -11,11 +11,9 @@ import {getCoursesWithPlaylists} from '../../resources/playlists';
 import CourseList from '../CourseList/CourseList';
 
 const Courses = ({t, courses, externalCourses}) => {
-  const coursesLength = Object.keys(courses).length;
-  const externalCoursesLength = Object.keys(externalCourses).length;
   return (
     <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
-      {coursesLength > 0 ?
+      {courses.length > 0 ?
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.courses')}</div>
@@ -23,7 +21,7 @@ const Courses = ({t, courses, externalCourses}) => {
           </Col>
         </Row>
         : null}
-      {externalCoursesLength > 0 ?
+      {externalCourses.length > 0 ?
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
@@ -31,7 +29,7 @@ const Courses = ({t, courses, externalCourses}) => {
           </Col>
         </Row>
         : null}
-      {coursesLength + externalCoursesLength !== 0 ? null :
+      {courses.length + externalCourses.length !== 0 ? null :
         <div className={styles.noMatchingLessons}>{t('coursepage.nomatchinglessons')}</div>}
     </Col>
   );
