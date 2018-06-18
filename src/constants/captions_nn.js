@@ -64,6 +64,7 @@ export default {
     tolesson: 'Til oppgåve',
     reset: 'Fjern avkrysninger',
     tomainlanguage: 'På {{lang}}',
+    license: 'Lisens: ',
     improvepage: {
       header: 'Gjer denne sida betre',
       textline1: 'Fann du ein feil? Kunne noko vore betre?',

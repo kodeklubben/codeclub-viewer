@@ -62,6 +62,7 @@ export default {
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
     tomainlanguage: 'In {{lang}}',
+    license: 'License: ',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',

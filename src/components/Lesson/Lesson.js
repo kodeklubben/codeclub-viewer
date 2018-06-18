@@ -12,7 +12,6 @@ import ToggleButton from './ToggleButton';
 import processContent from '../../processContent';
 import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
-import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
 import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
@@ -90,6 +89,10 @@ class Lesson extends React.Component {
     const pdfButton = <PdfButton lessonfile={params.file}/>;
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
+    const license = <div className={styles.license}>
+      {t('lessons.license')}
+      <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+    </div>;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
         <div className={styles.container}>
@@ -106,9 +109,8 @@ class Lesson extends React.Component {
           {pdfButton}
           {progress}
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
-          <Row>
-            <ImprovePage courseLessonFileProp={params}/>
-          </Row>
+          {license}
+          <ImprovePage courseLessonFileProp={params}/>
         </div>
       </DocumentTitle>
     );
