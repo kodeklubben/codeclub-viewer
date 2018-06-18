@@ -14,7 +14,9 @@ export default {
   },
   head: {
     title: 'Kodeklubben',
-    description: 'blablabla',
+    description: 'På denne sida finn du oppgåver for barn og unge i alle aldrar som ynskjer å lære programmering. ' +
+                  'Alt innhaldet på sida er gratis å bruke, ' +
+                  'og blir ofte brukt i kodeklubbar og programmeringsfag i skulen.',
   },
   frontpage: {
     courses: 'Kurs',

@@ -4,13 +4,13 @@ import {connect} from 'react-redux';
 import {Helmet} from 'react-helmet';
 import {getTranslator} from '../selectors/translate';
 
-const Head = ({title, t, language}) => {
+const Head = ({title, description, t, language}) => {
   return (
     <Helmet>
       <html lang={language}/>
       <title>{title}</title>
       <meta charSet='utf-8'/>
-      <meta name='description' content={t('head.description')}/>
+      <meta name='description' content={description}/>
     </Helmet>
   );
 };
@@ -18,6 +18,7 @@ const Head = ({title, t, language}) => {
 Head.propTypes = {
   // ownProps
   title: PropTypes.string.isRequired,
+  description: PropTypes.string,
 
   // mapStateToProps
   t: PropTypes.func.isRequired,

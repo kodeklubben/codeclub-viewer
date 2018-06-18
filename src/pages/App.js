@@ -15,7 +15,7 @@ const App = ({t, params, location, children}) => {
   const renderPdf = Object.keys(location.query).includes('pdf');
   return (
     <div>
-      <Head title={t('head.title')}/>
+      <Head title={t('head.title')} description={t('head.description')}/>
       <div className={styles.appContainer}>
         {renderPdf ? <PdfHeader {...{params}}/> : <NavBar {...{params}}/>}
         {children}

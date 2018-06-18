@@ -10,7 +10,7 @@ import Head from '../components/Head';
 const PageNotFound = ({t}) => {
   return (
     <div>
-      <Head title={'404 | ' + t('head.title')}/>
+      <Head title={'404 | ' + t('head.title')} description={t('head.description')}/>
       <div className={styles.center}>
         <h3>{t('404.header')}</h3>
         <p>{t('404.textline')}</p>
