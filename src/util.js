@@ -203,6 +203,9 @@ export const getKeysWithTrueValues = (obj) => Object.keys(obj).filter(key => obj
  * @returns {boolean}
  */
 export const tagsMatchFilter = (lessonTags, filter) => {
+  if (!lessonTags) {
+    throw Error('lessonTags not defined');
+  }
   const groupKeys = Object.keys(filter); // groupKeys is e.g. ['topic', 'subject']
   for (let groupKey of groupKeys) { // groupKey is e.g. 'topic'
     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}

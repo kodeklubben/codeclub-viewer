@@ -44,7 +44,7 @@ const courseFrontmatterContext =
  */
 const getCourses = memoize(
   () => {
-    console.log('DEBUG: resources/courseFrontmatter.js:getCourses()');
+    console.debug('DEBUG: resources/courseFrontmatter.js:getCourses()');
     const courses = {};
     for (const key of courseFrontmatterContext.keys()) {
       const [/* ignore */, course, file] = key.match(/^[.][/]([^/]+)[/](index[^.]*)[.]md$/);
@@ -67,7 +67,7 @@ const getCourses = memoize(
  */
 export const getAllCourses = memoize(
   () => {
-    console.log('DEBUG: resources/courseFrontmatter.js:getAllCourses()');
+    console.debug('DEBUG: resources/courseFrontmatter.js:getAllCourses()');
     return Object.keys(getCourses());
   }
 );

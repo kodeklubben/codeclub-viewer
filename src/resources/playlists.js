@@ -69,7 +69,10 @@ const getPlaylist = (course, playlist) => (getPlaylists()[course] || {})[playlis
  * Get a list of all courses that have playlists.
  * @returns {string[]} E.g. ['scratch', 'python', ...]
  */
-export const getCoursesWithPlaylists = () => Object.keys(getPlaylists());
+export const getCoursesWithPlaylists = () => {
+  console.debug('DEBUG: getCoursesWithPlaylists', getPlaylists());
+  return Object.keys(getPlaylists());
+};
 
 /**
  * Return all the lessons in a playlist

@@ -31,7 +31,7 @@ const lessonDataContext =
  */
 const getLessons = memoize(
   () => {
-    console.log('DEBUG: getLessons in lessonData.js');
+    console.debug('DEBUG: getLessons in lessonData.js');
     const lessons = {};
     for (const key of lessonDataContext.keys()) {
       const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]data[.]yml$/);
@@ -77,7 +77,7 @@ export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, les
  */
 export const getLessonsByLevel = memoize(
   (course) => {
-    console.log('DEBUG: getLessonsByLevel in lessonData.js');
+    console.debug('DEBUG: getLessonsByLevel in lessonData.js');
     const lessonsByLevel = {};
     const lessonsInCourse = getLessons()[course] || {};
     for (const lesson of Object.keys(lessonsInCourse)) {

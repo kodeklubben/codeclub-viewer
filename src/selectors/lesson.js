@@ -23,8 +23,15 @@ export const getFilteredLessonsInCourse = createCachedSelector(
 
   // Output selector (resultfunc):
   (filter, course) => {
-    console.log('DEBUG: selectors/lesson.js:getFilteredLessonsInCourse() for course', course);
-    const lessonMatchesFilter = (lesson) => tagsMatchFilter(getLessonTags(course, lesson), filter);
+    console.debug('DEBUG: selectors/lesson.js:getFilteredLessonsInCourse() for course', course);
+    const lessonMatchesFilter = (lesson) => {
+      try {
+        return tagsMatchFilter(getLessonTags(course, lesson), filter);
+      }
+      catch (e) {
+        console.error(`Error in getFilteredLessonsInCourse() for ${lesson}: ${e.message}`);
+      }
+    };
     return getLessonsInCourse(course).filter(lessonMatchesFilter);
   },
 )(
@@ -48,7 +55,7 @@ export const getFilteredLessons = createSelector(
 
   // Output selector (resultfunc):
   (filter) => {
-    console.log('DEBUG: selectors/lesson.js:getFilteredLessons');
+    console.debug('DEBUG: selectors/lesson.js:getFilteredLessons');
     const filteredLessons= {};
     for (const course of getAllCourses()) {
       // We call getFilteredLessonsInCourse directly (instead of having it
@@ -70,6 +77,7 @@ export const getFilteredLessons = createSelector(
       const state = {filter}; // Supply all the state that getFilteredLessonsInCourse needs
       filteredLessons[course] = getFilteredLessonsInCourse(state, course);
     }
+    return filteredLessons;
   },
 );
 

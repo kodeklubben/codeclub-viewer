@@ -18,6 +18,7 @@ export const getSortedFilteredCourses = createSelector(
 
   // Output selector (resultfunc):
   (filteredLessons) => {
+    console.debug('DEBUG: getSortedFilteredCourses');
     const filteredCourses = Object.keys(filteredLessons).filter(course => filteredLessons[course].length > 0);
     const sortFunc = (courseA, courseB) => filteredLessons[courseB].length - filteredLessons[courseA].length;
     filteredCourses.sort(sortFunc);
@@ -38,7 +39,16 @@ export const getFilteredExternalCourses = createSelector(
   (filter = {}) => {
     const {language, ...rest} = filter;
     const externalCourses = getExternalCourses(getKeysWithTrueValues(language));
-    return externalCourses.filter(course => tagsMatchFilter(getCourseTags(course), rest));
+    const courseMatchesFilter = (course) => {
+      try {
+        return tagsMatchFilter(getCourseTags(course), rest);
+      }
+      catch (e) {
+        console.error(`Error in getFilteredExternalCourses for ${course}: ${e.message}`);
+        return false; // Don't include a course that has errors
+      }
+    };
+    return externalCourses.filter(courseMatchesFilter);
   }
 );
 
