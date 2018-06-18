@@ -130,18 +130,18 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
 // export const getLessonpath = (course, lesson, language, isReadme) =>
 //   getLessonFrontmatter(course, lesson, language, isReadme).path;
 
-/**
- * Get lessons in a course.
- *
- * NOTE: This method could potentially be implemented by lessonData.js instead,
- *       as long as we can be sure that all lessons have a data.yml file.
- *
- * @param {string} course Which course to get lessons for
- * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
- */
-export const getLessonsInCourse = memoize(
-  course => Object.keys(getLessons()[course] || {})
-);
+// /**
+//  * Get lessons in a course.
+//  *
+//  * NOTE: This method could potentially be implemented by lessonData.js instead,
+//  *       as long as we can be sure that all lessons have a data.yml file.
+//  *
+//  * @param {string} course Which course to get lessons for
+//  * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
+//  */
+// export const getLessonsInCourse = memoize(
+//   course => Object.keys(getLessons()[course] || {})
+// );
 
 /**
  *

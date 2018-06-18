@@ -117,3 +117,12 @@ export const getLessonLevels = memoize(
  * @returns {number} The level of the lesson. Defaults to 0 if course, lesson or level was not found.
  */
 export const getLessonLevel = (course, lesson) => ((getLessons()[course] || {})[lesson] || {}).level || 0;
+
+/**
+ * Get lessons in a course. Will return all lessons that have a data.yml file.
+ * @param {string} course E.g. 'scratch'
+ * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
+ */
+export const getLessonsInCourse = memoize(
+  course => Object.keys(getLessons()[course] || {})
+);

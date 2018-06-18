@@ -2,7 +2,7 @@
 
 import {createStore} from 'redux';
 import {getInitialFilter, createCheckboxesKey} from './util';
-import {getLessonFrontmatter, getLessonLanguages, getLessonsInCourse} from './resources/lessonFrontmatter';
+import {getLessonFrontmatter, getLessonLanguages} from './resources/lessonFrontmatter';
 import {setCheckboxes} from './reducers/checkboxes';
 import {setFilter, resetOneFilter} from './reducers/filter';
 import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
@@ -13,6 +13,7 @@ import {setShowPlaylists} from './reducers/showPlaylists';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 import {getAllCourses} from './resources/courseFrontmatter';
+import {getLessonsInCourse} from './resources/lessonData';
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
