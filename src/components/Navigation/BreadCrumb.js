@@ -19,7 +19,7 @@ const BreadCrumb = ({params, title, level, courseIcon}) => {
   const isValidCourse = isCourse && isValidCoursePath(coursePath);
   const isValidLesson = isLesson && (isValidLessonPath(lessonPath) || isValidReadmePath(lessonPath));
 
-  const homeLink = <NavLink to='/' onlyActiveOnIndex>
+  const homeLink = <NavLink to='/' onlyActiveOnIndex aria-label={'Home'}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 

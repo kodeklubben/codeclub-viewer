@@ -32,7 +32,7 @@ class TeacherInfobox extends React.Component {
           {t('frontpage.teacherinfobox.changemode')}
           <br />
           <div className={styles.center}>
-            <Button className={styles.plusSign} onClick={() => this.changeState()}>
+            <Button className={styles.plusSign} onClick={() => this.changeState()} aria-label='Button for expanding'>
               <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
             </Button>
           </div>
