@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -18,6 +17,7 @@ import LessonList from '../components/PlaylistPage/LessonList';
 import LevelNavigation from '../components/PlaylistPage/LevelNavigation';
 import PlaylistNavigation from '../components/PlaylistPage/PlaylistNavigation';
 import CourseInfo from '../components/PlaylistPage/CourseInfo';
+import Head from '../components/Head';
 
 const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists}) => {
   const levels = Object.keys(lessonsByLevel);
@@ -33,7 +33,8 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists
       </AutoAffix>
     </Col> : null;
   return (
-    <DocumentTitle title={capitalize(params.course) + ' | ' + t('title.codeclub')}>
+    <div>
+      <Head title={capitalize(params.course) + ' | ' + t('head.title')}/>
       <Grid fluid={true} ref={grid => thispage = grid}>
         <Row>
           <Col xs={12}><h1>{capitalize(params.course)} {t('playlist.lessons')}</h1></Col>
@@ -58,7 +59,7 @@ const PlaylistPage = ({params, lessonsByLevel, coursePlaylists, t, showPlaylists
           </Row>
         }
       </Grid>
-    </DocumentTitle>
+    </div>
   );
 };
 

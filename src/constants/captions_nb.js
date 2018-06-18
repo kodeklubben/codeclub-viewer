@@ -12,8 +12,9 @@ export default {
       4: 'Ekspert'
     }
   },
-  title: {
-    codeclub: 'Kodeklubben',
+  head: {
+    title: 'Kodeklubben',
+    description: 'blablabla',
   },
   frontpage: {
     courses: 'Kurs',

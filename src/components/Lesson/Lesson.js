@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import DocumentTitle from 'react-document-title';
 import styles from './Lesson.scss';
 import LevelIcon from '../LevelIcon';
 import ToggleButton from './ToggleButton';
@@ -27,6 +26,7 @@ import ResetButton from './ResetButton';
 import PdfButton from './PdfButton';
 import MainLanguageButton from './MainLanguageButton';
 import {readmeContext} from '../../contexts';
+import Head from '../Head';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -91,7 +91,8 @@ class Lesson extends React.Component {
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
-      <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
+      <div>
+        <Head title={title + ' | ' + t('head.title')}/>
         <div className={styles.container}>
           <h1>
             <LevelIcon {...{level}}/>
@@ -110,7 +111,7 @@ class Lesson extends React.Component {
             <ImprovePage courseLessonFileProp={params}/>
           </Row>
         </div>
-      </DocumentTitle>
+      </div>
     );
   }
 }

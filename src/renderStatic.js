@@ -6,7 +6,7 @@ import RouterContext from 'react-router/lib/RouterContext';
 import match from 'react-router/lib/match';
 import routes from './routes';
 import WithStylesContext from './WithStylesContext';
-import DocumentTitle from 'react-document-title';
+import {Helmet} from 'react-helmet';
 import store from './store';
 const template = require('./html-template.ejs');
 
@@ -34,7 +34,7 @@ const renderStatic = (locals, callback) => {
     );
     css = [...new Set(css)]; // make array unique
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
-    const pageTitle =  DocumentTitle.rewind();
+    const helmet =  Helmet.renderStatic();
     const webpackAssets = locals.webpackStats.compilation.assets;
     const assets = Object.keys(webpackAssets);
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
@@ -43,7 +43,7 @@ const renderStatic = (locals, callback) => {
     const faviconHtml = faviconstats ? JSON.parse(faviconstats.source()).html.join('') : '';
     if (!faviconHtml) { console.log('WARNING: Could not obtain HTML for favicons for', locals.path); }
 
-    const html = template({ cssAssets, jsAssets, appCss, appHtml, pageTitle, faviconHtml });
+    const html = template({ cssAssets, jsAssets, appCss, appHtml, helmet, faviconHtml });
 
     callback(null, html);
   });
