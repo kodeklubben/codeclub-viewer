@@ -16,7 +16,7 @@ import ModeDropdown from './ModeDropdown';
 const LkkBrand = () => {
   return <Navbar.Brand>
     <a href="http://kidsakoder.no" className={styles.logo}>
-      <img src={require('../../assets/graphics/LKK_small.png')} alt={'Logo'}/>
+      <img src={require('../../assets/graphics/LKK_small.png')} alt={'LKK logo'}/>
     </a>
   </Navbar.Brand>;
 };
