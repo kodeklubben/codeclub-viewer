@@ -52,6 +52,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import ImageminPlugin from 'imagemin-webpack-plugin';
 
 import {
   assets,
@@ -193,32 +194,8 @@ const createConfig = (env = {}) => {
         },
         {
           test: inCurrentRepo('(png|jpg|jpeg|gif)'),
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: 'CCV-assets/[name].[hash:6].[ext]'
-              }
-            },
-            {
-              loader: 'image-webpack-loader',
-              options: {
-                mozjpeg: {
-                  quality: 65
-                },
-                pngquant: {
-                  quality: '65-90',
-                  speed: 4
-                },
-                svgo: {
-                  removeViewBox: false
-                },
-                gifsicle: {
-                  interlaced: false
-                }
-              }
-            },
-          ],
+          loader: 'file-loader',
+          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
         },
         {
           test: inCurrentRepo('woff2?(\\?v=[0-9]\\.[0-9]\\.[0-9])?'),
@@ -337,6 +314,7 @@ const createConfig = (env = {}) => {
             pure_funcs: 'console.log', // removes these functions from the code
           }
         }),
+        new ImageminPlugin(),
       ] : []),
 
       ...(env.BUILD_PDF ? [
