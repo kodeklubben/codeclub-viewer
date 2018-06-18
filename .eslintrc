@@ -28,10 +28,11 @@
     "react/jsx-uses-react": [1],     // avoid no-unused-vars for importing React
     "react/react-in-jsx-scope": [1], // make sure React is in scope when writing jsx
     "no-var": ["error"],
-    "jsx-a11y/label-has-for": [ 2, {
+    "jsx-a11y/label-has-for": [ "error", {
       "components": [ "Label" ],
       "required": {
-      "every": [ "nesting", "id" ]},
+        "every": [ "nesting", "id" ]
+      },
       "allowChildren": true
       }
     ]
