@@ -5247,9 +5247,9 @@ markdown-it-loader@^0.6.0:
   dependencies:
     loader-utils "^1.1.0"
 
-markdown-it-task-checkbox@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/markdown-it-task-checkbox/-/markdown-it-task-checkbox-1.0.4.tgz#183d2d81cf2b8e4de1b91bab73a13ef5c6c16581"
+markdown-it-task-checkbox@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/markdown-it-task-checkbox/-/markdown-it-task-checkbox-1.0.6.tgz#9ebd7b6382e99162264605bc580f2ac118be4242"
 
 markdown-it@^8.3.1:
   version "8.3.1"
