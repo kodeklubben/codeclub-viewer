@@ -1,7 +1,7 @@
 import {createSelector} from 'reselect';
 import {getCourseTags} from '../resources/courseData';
 import {getKeysWithTrueValues, tagsMatchFilter} from '../util';
-import {getExternalCourses} from '../resources/courseFrontmatter';
+import {getCourseLanguages, getExternalCourses} from '../resources/courseFrontmatter';
 import {getFilteredLessons} from './lesson';
 
 const getFilter = (state) => state.filter;
@@ -41,7 +41,7 @@ export const getFilteredExternalCourses = createSelector(
     const externalCourses = getExternalCourses(getKeysWithTrueValues(language));
     const courseMatchesFilter = (course) => {
       try {
-        return tagsMatchFilter(getCourseTags(course), rest);
+        return tagsMatchFilter(getCourseTags(course), getCourseLanguages(course), rest);
       }
       catch (e) {
         console.error(`Error in getFilteredExternalCourses for ${course}: ${e.message}`);

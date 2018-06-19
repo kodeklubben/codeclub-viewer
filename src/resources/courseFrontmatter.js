@@ -120,3 +120,10 @@ export const getExternalCourses = (languages) => {
     return false;
   });
 };
+
+/**
+ * Get all languages of the course (given by course title)
+ * @param {string} course E.g. 'scratch'
+ * @returns {string[]} A list of languages, e.g. ['nb', 'en']
+ */
+export const getCourseLanguages = (course) => Object.keys((getCourses()[course] || {}));

@@ -61,6 +61,17 @@ const getLessons = memoize(
  */
 const getLessonMetadata = (course, lesson) => (getLessons()[course] || {})[lesson] || {};
 
+/**
+ * Get lesson tags (without language included)
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @returns {object} A lessonTags object, e.g.
+ * {
+ *   topic: ['block_based', 'app'],
+ *   subject: ['technology', 'programming'],
+ *   grade: ['secondary', 'junior'],
+ * }
+ */
 export const getLessonTags = (course, lesson) => getLessonMetadata(course, lesson).tags;
 
 export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, lesson).indexed;

@@ -5,6 +5,7 @@ import {createSelector} from 'reselect';
 import {getLessonTags, getLessonsInCourse} from '../resources/lessonData';
 import {tagsMatchFilter} from '../util';
 import {getAllCourses} from '../resources/courseFrontmatter';
+import {getLessonLanguages} from '../resources/lessonFrontmatter';
 
 
 const getFilter = (state) => state.filter; // See structure in INITIAL_STATE in src/reducers/filter.js
@@ -25,10 +26,11 @@ export const getFilteredLessonsInCourse = createCachedSelector(
     console.debug('DEBUG: selectors/lesson.js:getFilteredLessonsInCourse() for course', course);
     const lessonMatchesFilter = (lesson) => {
       try {
-        return tagsMatchFilter(getLessonTags(course, lesson), filter);
+        return tagsMatchFilter(getLessonTags(course, lesson), getLessonLanguages(course, lesson), filter);
       }
       catch (e) {
         console.error(`Error in getFilteredLessonsInCourse() for ${lesson}: ${e.message}`);
+        return false; // If error, don't include lesson
       }
     };
     return getLessonsInCourse(course).filter(lessonMatchesFilter);
@@ -55,7 +57,7 @@ export const getFilteredLessons = createSelector(
   // Output selector (resultfunc):
   (filter) => {
     console.debug('DEBUG: selectors/lesson.js:getFilteredLessons');
-    const filteredLessons= {};
+    const filteredLessons = {};
     for (const course of getAllCourses()) {
       // We call getFilteredLessonsInCourse directly (instead of having it
       // as an input selector) because it needs the extra 'course' argument.

@@ -66,13 +66,15 @@ export const getPlaylistsForCourse = memoize(
 const getPlaylist = (course, playlist) => (getPlaylistStructure()[course] || {})[playlist] || {};
 
 /**
- * Get a list of all courses that have playlists.
+ * Get a list of all courses that have playlists, sorted alphabetically.
  * @returns {string[]} E.g. ['scratch', 'python', ...]
  */
-export const getCoursesWithPlaylists = () => {
-  console.debug('DEBUG: getCoursesWithPlaylists', getPlaylistStructure());
-  return Object.keys(getPlaylistStructure());
-};
+export const getCoursesWithPlaylists = memoize(
+  () => {
+    console.debug('DEBUG: getCoursesWithPlaylists', getPlaylistStructure());
+    return Object.keys(getPlaylistStructure()).sort();
+  }
+);
 
 /**
  * Return all the lessons in a playlist

@@ -199,32 +199,34 @@ export const getKeysWithTrueValues = (obj) => Object.keys(obj).filter(key => obj
  * Return true only if tags of a lesson or course contains all the checked tags in the filter
  *
  * @param {Object} lessonTags LessonTags or courseTags e.g. {topic: ['game'], subject: ['science']}
+ * @param {string[]} lessonLanguages Array of lesson languages e.g. ['nb', 'en']
  * @param {Object} filter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
  * @returns {boolean}
  */
-export const tagsMatchFilter = (lessonTags, filter) => {
+export const tagsMatchFilter = (lessonTags, lessonLanguages, filter) => {
   if (!lessonTags) {
     throw Error('lessonTags not defined');
   }
   const groupKeys = Object.keys(filter); // groupKeys is e.g. ['topic', 'subject']
   for (let groupKey of groupKeys) { // groupKey is e.g. 'topic'
+    const groupIsLanguage = groupKey === 'language';
     const filterGroup = filter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
     const checkedTagKeys = getKeysWithTrueValues(filterGroup); // only the checked tags; e.g. ['animation']
-    const lessonGroup = lessonTags[groupKey] || []; // e.g. ['game']
+    const lessonGroup = (groupIsLanguage ? lessonLanguages : lessonTags[groupKey]) || []; // e.g. ['game']
     if (checkedTagKeys.length > 0 && lessonGroup.length === 0) {
       // this is a filter with checked tags, and lesson doesn't have this group
       return false;
     }
-    if (groupKey === 'language') {
+    if (groupIsLanguage) {
       // If not lessonGroup includes any(some) checkedTagKeys --> don't include lesson,
       // meaning: Include lesson if it has ANY of the checked tags in filter (OR-test / union)
-      if (!checkedTagKeys.some(lessonGroup.includes)) {
+      if (!checkedTagKeys.some(checkedTagKey => lessonGroup.includes(checkedTagKey))) {
         return false;
       }
     } else {
       // If not lessonGroup includes every checkedTagKeys --> don't include lesson,
       // meaning: Include lesson ONLY if it has tags matching ALL checked tags in filter (AND-test / intersection)
-      if (!checkedTagKeys.every(lessonGroup.includes)) {
+      if (!checkedTagKeys.every(checkedTagKey => lessonGroup.includes(checkedTagKey))) {
         return false;
       }
     }

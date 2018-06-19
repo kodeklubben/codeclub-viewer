@@ -64,7 +64,7 @@ class LessonPage extends React.Component {
     const {
       course, lesson, language, isReadme,
       t, translateTag, translateGroup,
-      path, title, level, author, translator, tags,
+      title, level, author, translator, tags,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
@@ -126,7 +126,6 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
     t: getTranslator(state),
     translateTag: getTranslateTag(state),
     translateGroup: getTranslateGroup(state),
-    path,
     title,
     level,
     author,
