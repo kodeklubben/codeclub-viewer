@@ -11,8 +11,9 @@ import {getShowFiltergroups} from '../../selectors/playlist';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
 import {getCourseIntro} from '../../resources/courseContent';
 import {getCourseIcon} from '../../resources/courseIcon';
+import {getFilteredLessonsInCourse} from '../../selectors/lesson';
 
-const CourseItem = ({course, t, language, showLessonCount}) => {
+const CourseItem = ({course, t, language, showLessonCount, lessonCount}) => {
   const courseTitle = getCourseTitle(course, language);
   const isExternal = course.hasOwnProperty('externalLink');
   const popoverContent = getCourseIntro(course, language);
@@ -38,7 +39,7 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
             {popoverButton}
           </span>
           {showLessonCount ?
-            <span className={styles.lessonCount}>{t('frontpage.lessoncount', {count: course.lessonCount})}</span> :
+            <span className={styles.lessonCount}>{t('frontpage.lessoncount', {count: lessonCount})}</span> :
             null
           }
         </Link>
@@ -54,13 +55,18 @@ CourseItem.propTypes = {
   t: PropTypes.func.isRequired,
   language: PropTypes.string.isRequired,
   showLessonCount: PropTypes.bool.isRequired,
+  lessonCount: PropTypes.number,
 };
 
-const mapStateToProps = (state) => ({
-  t: getTranslator(state),
-  language: state.language,
-  showLessonCount: getShowFiltergroups(state),
-});
+const mapStateToProps = (state, {course}) => {
+  const showLessonCount = getShowFiltergroups(state);
+  return {
+    t: getTranslator(state),
+    language: state.language,
+    showLessonCount,
+    lessonCount: showLessonCount ? getFilteredLessonsInCourse(state, course).length : null,
+  };
+};
 
 export default connect(
   mapStateToProps
