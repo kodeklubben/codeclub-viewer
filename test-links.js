@@ -9,18 +9,6 @@ const packageFile = require('./package.json');
 const Spider = require('node-spider');
 const Static = require('node-static');
 
-/**
- * Get number of keys in object.
- * @param {object} obj
- */
-function length (obj) {
-  let size = 0;
-  for (let key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
-}
-
 const PORT = 3000;
 const start = 'http://localhost:' + PORT;
 const buildRoot = 'dist';
@@ -212,14 +200,15 @@ function crawl () {
       });
     });
 
-    assert.equal(ok + broken, length(resources));
-
     if (webserver) {
       webserver.close();
     }
 
     if (broken !== 0) {
       // avoid error trace
+      process.exit(1);
+    } else if (ok + broken !== Object.keys(resources).length) {
+      console.error('ok + brokens links !== total number of links');
       process.exit(1);
     } else {
       // everything ok, exit with no error code

@@ -16,7 +16,7 @@
     "test:watch": "yarn test -- --watch",
     "eslint": "eslint *.js src/ test/ --ext .js,.jsx",
     "stylelint": "stylelint \"src/**/*.scss\"",
-    "testall": "yarn eslint && yarn stylelint && yarn test"
+    "testall": "yarn eslint && yarn stylelint && yarn test && yarn build && yarn test:links"
   },
   "repository": {
     "type": "git",
