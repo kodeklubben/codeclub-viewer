@@ -2,7 +2,7 @@
 <html>
 <head>
   <script>
-    if (window.location.host !== 'localhost:8080' && window.location.protocol === 'http:') {
+    if (window.location.hostname !== 'localhost' && window.location.protocol === 'http:') {
       window.location.protocol = 'https:'
     }
   </script>
