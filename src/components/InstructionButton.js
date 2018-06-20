@@ -12,7 +12,7 @@ const InstructionButton = ({buttonPath, buttonText, className, bsSize, insideLin
   const componentClass = insideLink ? 'div' : 'a';
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
-      <Button {...{className, bsStyle, bsSize, componentClass}}>
+      <Button {...{className, bsStyle, bsSize, componentClass}} aria-label={buttonText}>
         <Glyphicon className={styles.icon} glyph={isNotReadme ? 'education' : 'pencil'}/>
         <span className={buttonText ? styles.textMargin : ''}>{buttonText}</span>
       </Button>

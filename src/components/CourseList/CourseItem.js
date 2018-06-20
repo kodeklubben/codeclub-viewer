@@ -24,7 +24,7 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
     <div>
       {isExternal ?
         <a className={styles.courseItem} href={course.externalLink} target='_blank'>
-          <img className={styles.courseLogo} src={course.iconPath}/>
+          <img className={styles.courseLogo} src={course.iconPath} alt={course.name}/>
           <span className={styles.courseName}>{course.name}
             {popoverButton}
             <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
@@ -32,7 +32,7 @@ const CourseItem = ({course, t, language, showLessonCount}) => {
         </a>
         :
         <Link className={styles.courseItem} to={course.path}>
-          <img className={styles.courseLogo} src={course.iconPath}/>
+          <img className={styles.courseLogo} src={course.iconPath} alt={course.name}/>
           <span className={styles.courseName}>{course.name}
             {popoverButton}
           </span>

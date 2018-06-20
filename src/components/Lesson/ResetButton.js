@@ -15,7 +15,7 @@ const ResetButton = ({path, t, setCheckbox}) => {
   const onClick = () => setCheckboxes(path, {}, setCheckbox);
   const className = styles.container;
   return (
-    <Button {...{className, bsSize, bsStyle, onClick}}>
+    <Button {...{className, bsSize, bsStyle, onClick}} aria-label={t('lessons.reset')}>
       <Glyphicon className={styles.icon} glyph={'remove'}/>
       <span className={styles.textMargin}>{t('lessons.reset')}</span>
     </Button>
