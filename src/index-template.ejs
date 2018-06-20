@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>
+    if (window.location.hostname !== 'localhost' && window.location.protocol === 'http:') {
+      window.location.protocol = 'https:'
+    }
+  </script>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title><%= htmlWebpackPlugin.options.title %></title>
+  <title><%= htmlWebpackPlugin.options.title %></title>
 
-    <% for (key in htmlWebpackPlugin.files.css) { %>
-    <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet">
-    <% } %>
+  <% for (key in htmlWebpackPlugin.files.css) { %>
+  <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet">
+  <% } %>
 
 </head>
 <body>
-    <div id="app"></div>
+  <div id="app"></div>
 
-    <% for (key in htmlWebpackPlugin.files.chunks) { %>
-    <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
-    <% } %>
+  <% for (key in htmlWebpackPlugin.files.chunks) { %>
+  <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
+  <% } %>
 </body>
 </html>

@@ -7,13 +7,13 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
-import {getTranslator} from '../../selectors/translate';
+import {getTranslator, getTranslateTag} from '../../selectors/translate';
 import {getLessonIntro, createCheckboxesKey} from '../../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
 
-const LessonItem = ({lesson, isStudentMode, filterLanguage, language, t, checkedCheckboxes, totalCheckboxes}) => {
+const LessonItem = ({lesson, isStudentMode, filterLanguage, language, t, tt, checkedCheckboxes, totalCheckboxes}) => {
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const progress = checkedCheckboxes > 0 ?
     <div className={styles.progress}>
@@ -26,7 +26,9 @@ const LessonItem = ({lesson, isStudentMode, filterLanguage, language, t, checked
 
   const checkedExactlyOneLanguage = Object.values(filterLanguage).filter(value => value).length === 1;
   const flag = checkedExactlyOneLanguage && filterLanguage[language] ? null :
-    <img className={styles.flag} src={require(`../../assets/graphics/flag_${lesson.language}.svg`)}/>;
+    <img className={styles.flag} src={require(`../../assets/graphics/flag_${lesson.language}.svg`)}
+      alt={tt('language', language)}
+    />;
 
   const instructionButton = isStudentMode ? null :
     <InstructionButton
@@ -84,6 +86,7 @@ LessonItem.propTypes = {
   filterLanguage: PropTypes.objectOf(PropTypes.bool).isRequired,
   language: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
+  tt: PropTypes.func.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
 };
@@ -93,6 +96,7 @@ const mapStateToProps = (state, {lesson}) => ({
   filterLanguage: state.filter.language,
   language: state.language,
   t: getTranslator(state),
+  tt: getTranslateTag(state),
   checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(lesson.path)),
   totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(lesson.path)),
 });
