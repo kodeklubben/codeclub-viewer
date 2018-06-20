@@ -9,8 +9,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {capitalize} from '../../util';
 import {getTitle, getLevel} from '../../selectors/frontmatter';
 import {getCourseIcon, isValidCoursePath, isValidLessonPath, isValidReadmePath} from '../../contexts';
+import {getTranslator} from '../../selectors/translate';
 
-const BreadCrumb = ({params, title, level, courseIcon}) => {
+const BreadCrumb = ({params, title, level, courseIcon, t}) => {
   const {course, lesson, file} = params;
   const isLesson = !!file;
   const isCourse = course && !isLesson;
@@ -19,7 +20,7 @@ const BreadCrumb = ({params, title, level, courseIcon}) => {
   const isValidCourse = isCourse && isValidCoursePath(coursePath);
   const isValidLesson = isLesson && (isValidLessonPath(lessonPath) || isValidReadmePath(lessonPath));
 
-  const homeLink = <NavLink to='/' onlyActiveOnIndex aria-label={'Home'}>
+  const homeLink = <NavLink to='/' onlyActiveOnIndex aria-label={t('general.home')}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
@@ -54,12 +55,14 @@ BreadCrumb.propTypes = {
   title: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
   courseIcon: PropTypes.string,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
   title: getTitle(state, params),
   level: getLevel(state, params),
   courseIcon: getCourseIcon(params.course),
+  t: getTranslator(state),
 });
 
 export default connect(

@@ -1,5 +1,6 @@
 export default {
   general: {
+    home: 'Home',
     student: 'Student',
     teacher: 'Teacher',
     level: 'Level',
@@ -38,7 +39,9 @@ export default {
              'new this time. Now you can easily filter tasks on topics, and all assignments have instructions ' +
              'that you can check in preparation for the sessions. For beginners, we recommend block-based ' +
              'programming, where Python / Web / Processing is the most common to proceed with afterwards.',
-      link2: 'Learn more about running a code club'
+      link2: 'Learn more about running a code club',
+      plus: 'Show more information',
+      minus: 'Show less information'
     },
     showhidefilter: 'Show/hide filter',
     forumbutton: 'Go to forum'

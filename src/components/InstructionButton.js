@@ -10,10 +10,9 @@ const InstructionButton = ({buttonPath, buttonText, className, bsSize, insideLin
   const isNotReadme = buttonPath ? buttonPath.includes('README') : false;
   const bsStyle = 'guide';
   const componentClass = insideLink ? 'div' : 'a';
-  const ariaLabel = isNotReadme ? 'Teacher instructions' : 'Lesson';
   return (buttonPath ?
     <LinkContainer to={buttonPath}>
-      <Button {...{className, bsStyle, bsSize, componentClass}} aria-label={ariaLabel}>
+      <Button {...{className, bsStyle, bsSize, componentClass}} aria-label={buttonText}>
         <Glyphicon className={styles.icon} glyph={isNotReadme ? 'education' : 'pencil'}/>
         <span className={buttonText ? styles.textMargin : ''}>{buttonText}</span>
       </Button>
