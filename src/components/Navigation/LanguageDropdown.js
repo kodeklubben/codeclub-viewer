@@ -17,7 +17,9 @@ const LanguageItem = ({language, translateTag, onlyFlag}) => {
   // Note that the block with "float" (the flag) must be first in the containing div
   return (
     <div>
-      <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}/>
+      <img className={styles.flag} src={require(`../../assets/graphics/flag_${language}.svg`)}
+        alt={translateTag('language', language)}
+      />
       <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
         {translateTag('language', language)}
       </span>

@@ -10,7 +10,7 @@ const PdfHeader = ({params, courseIcon}) => {
   const {course} = params;
   return (
     <div className={styles.container}>
-      <img className={styles.courseIcon} src={courseIcon}/>
+      <img className={styles.courseIcon} src={courseIcon} alt={course}/>
       <span className={styles.course}>{capitalize(course)}</span>
     </div>
   );
