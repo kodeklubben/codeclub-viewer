@@ -38,9 +38,6 @@
       "es2015",
       "react",
       "stage-2"
-    ],
-    "plugins": [
-      "react-hot-loader/babel"
     ]
   },
   "dependencies": {
@@ -119,7 +116,6 @@
     "postcss-loader": "^2.0.9",
     "puppeteer": "^0.10.2",
     "raw-loader": "^0.5.1",
-    "react-hot-loader": "^4.3.3",
     "resolve-url-loader": "^1.4.3",
     "sass-loader": "^6.0.6",
     "sitemap-webpack-plugin": "^0.3.0",
