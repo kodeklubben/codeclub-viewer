@@ -13,7 +13,7 @@ const ImprovePage = ({t, isStudentMode, courseLessonFileProp}) => {
   const linkToSourceCode = 'https://github.com/kodeklubben/oppgaver/tree/master/src/' +
                            courseName + '/' + lessonName;
 
-  const linkToLesson = 'http://oppgaver.kidsakoder.no/beta/' + //'/beta' should be removed when the site goes live
+  const linkToLesson = 'http://oppgaver.kidsakoder.no/' +
                        courseName + '/' + lessonName + '/' + lessonName;
 
   const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' +
