@@ -52,6 +52,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import ImageminPlugin from 'imagemin-webpack-plugin';
 
 import {
   assets,
@@ -308,6 +309,7 @@ const createConfig = (env = {}) => {
             pure_funcs: 'console.log', // removes these functions from the code
           }
         }),
+        new ImageminPlugin(),
       ] : []),
 
       ...(env.BUILD_PDF ? [
