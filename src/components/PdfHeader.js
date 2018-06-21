@@ -15,7 +15,7 @@ const PdfHeader = ({params, courseIcon}) => {
     </div>
   );
 };
-PdfHeader.PropTypes = {
+PdfHeader.propTypes = {
   // ownProps
   params: PropTypes.shape({
     course: PropTypes.string.isRequired,
