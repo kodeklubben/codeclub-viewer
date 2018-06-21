@@ -166,12 +166,7 @@ const createConfig = (env = {}) => {
         {
           test: inCurrentRepo('js'),
           exclude: /node_modules/,
-          use: isHot ? [
-            'react-hot-loader',
-            'babel-loader',
-          ] : [
-            'babel-loader',
-          ],
+          loader: 'babel-loader'
         },
         {
           test: inCurrentRepo('css'),

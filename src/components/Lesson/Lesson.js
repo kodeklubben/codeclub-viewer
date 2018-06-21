@@ -58,7 +58,7 @@ const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
     )}
   </div>;
 
-PrintInfo.PropTypes = {
+PrintInfo.propTypes = {
   t: PropTypes.func.isRequired,
   translateTag: PropTypes.func.isRequired,
   translateGroup: PropTypes.func.isRequired,
