@@ -16,7 +16,7 @@ const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
   return <ProgressBar {...{now, bsStyle, className, label, active}}/>;
 };
 
-Progress.PropTypes = {
+Progress.propTypes = {
   // ownProps
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
