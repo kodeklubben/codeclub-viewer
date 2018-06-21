@@ -61,3 +61,14 @@ export const getTranslateTag = (state) => {
     return translatedTag;
   };
 };
+
+export const getTranslateTooltip = (state) => {
+  const captions = require('lessonFiltertags/translation_' + state.language + '.yml');
+  return (groupKey, tagKey) => {
+    const translatedTooltip = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).TOOLTIP;
+    if (!translatedTooltip) {
+      return '';
+    }
+    return translatedTooltip;
+  };
+};
