@@ -39,7 +39,9 @@
       "react",
       "stage-2"
     ],
-    "plugins": ["react-hot-loader/babel"]
+    "plugins": [
+      "react-hot-loader/babel"
+    ]
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -50,18 +52,16 @@
     "posthtml-render": "^1.0.6",
     "prop-types": "^15.6.0",
     "re-reselect": "^0.5.0",
-    "react": "15.5.0",
+    "react": "^16.4.1",
     "react-bootstrap": "^0.31.1",
     "react-document-title": "^2.0.3",
-    "react-dom": "15.5.0",
+    "react-dom": "^16.4.1",
     "react-overlays": "^0.8.0",
     "react-redux": "^4.4.9",
     "react-router": "^3.2.1",
     "react-router-bootstrap": "^0.23.3",
     "react-router-scroll": "^0.4.4",
     "react-scroll-to-component": "^1.0.2",
-    "react-toolbox": "^2.0.0-beta.13",
-    "react-transition-group": "^2.2.0",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
     "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
