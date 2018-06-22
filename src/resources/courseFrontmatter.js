@@ -11,8 +11,9 @@ const courseFrontmatterContext =
 
 /**
  * Get all courses, with all languages, based on the index*.md files.
- * Note that not all languages need to be present, and that 'external' only exists some places.
- * It is assumed that if 'external' exists for a course, there are no lessons defined.
+ * Note that not all languages need to be present.
+ * Also, only courses with isExternal:true in data.yml have 'external'.
+ * External courses have no lessons.
  *
  * @returns {object} An object with the frontmatter data of courses, e.g.
  * {
@@ -44,14 +45,13 @@ const courseFrontmatterContext =
  */
 const getCourses = memoize(
   () => {
-    console.debug('DEBUG: resources/courseFrontmatter.js:getCourses()');
     const courses = {};
     for (const key of courseFrontmatterContext.keys()) {
       const [/* ignore */, course, file] = key.match(/^[.][/]([^/]+)[/](index[^.]*)[.]md$/);
-      const {title = '', language} = courseFrontmatterContext(key);
+      const {title = '', external = '', language} = courseFrontmatterContext(key);
       if (getAvailableLanguages().includes(language)) {
         const path = `/${course}/${file}`; // TODO: Add publicpath?
-        const data = {title, path, key};
+        const data = {title, external, path, key};
         assignDeep(courses, [course, language], data);
       } else {
         console.warn(`The course info ${key} did not have a valid language (${language})`);
@@ -66,12 +66,8 @@ const getCourses = memoize(
  * @returns {string[]} An array of all courses, e.g. ['scratch', 'python', ...]
  */
 export const getAllCourses = memoize(
-  () => {
-    console.debug('DEBUG: resources/courseFrontmatter.js:getAllCourses()');
-    return Object.keys(getCourses());
-  }
+  () => Object.keys(getCourses())
 );
-
 
 /**
  * Whether the course exists
@@ -102,24 +98,6 @@ export const getCourseTitle = (course, language) => getCourseFrontmatter(course,
  * @returns {string} The path to the course, e.g. '/scratch'
  */
 export const getLanguageIndependentCoursePath = (course) => isValidCourse(course) ? `/${course}` : '';
-
-/**
- * Returns all courses in the given languages that have external defined
- * @param {string[]} languages
- * @returns {string[]} An array of all the external courses in the given languages
- */
-export const getExternalCourses = (languages) => {
-  if (languages.length === 0) { return []; }
-  return getAllCourses().filter(course => {
-    const courseObj = getCourses()[course];
-    for (const lang of languages) {
-      if (courseObj.hasOwnProperty(lang) && courseObj[lang].external) {
-        return true;
-      }
-    }
-    return false;
-  });
-};
 
 /**
  * Get all languages of the course (given by course title)

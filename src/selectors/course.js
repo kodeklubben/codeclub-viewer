@@ -1,10 +1,12 @@
 import {createSelector} from 'reselect';
-import {getCourseTags} from '../resources/courseData';
-import {getKeysWithTrueValues, tagsMatchFilter} from '../util';
-import {getCourseLanguages, getExternalCourses} from '../resources/courseFrontmatter';
+import {getCourseTags, getExternalCourses} from '../resources/courseData';
+import {tagsMatchFilter} from '../util';
+import {getCourseLanguages} from '../resources/courseFrontmatter';
 import {getFilteredLessons} from './lesson';
+import {getTagsFilter} from './filter';
 
-const getFilter = (state) => state.filter;
+const getLanguageFilter = (state) => state.filter.language;
+
 
 /**
  * Get internal courses that have more than one lesson after filter has been applied.
@@ -12,13 +14,12 @@ const getFilter = (state) => state.filter;
  * @param {object} state The redux state object
  * @returns {string[]} An array of courses, e.g. ['scratch', 'python', ...]
  */
-export const getSortedFilteredCourses = createSelector(
+export const getFilteredCourses = createSelector(
   // Input selectors:
   getFilteredLessons,
 
   // Output selector (resultfunc):
   (filteredLessons) => {
-    console.debug('DEBUG: getSortedFilteredCourses');
     const filteredCourses = Object.keys(filteredLessons).filter(course => filteredLessons[course].length > 0);
     const sortFunc = (courseA, courseB) => filteredLessons[courseB].length - filteredLessons[courseA].length;
     filteredCourses.sort(sortFunc);
@@ -27,31 +28,60 @@ export const getSortedFilteredCourses = createSelector(
 );
 
 /**
- * Get a list of external courses.
+ * Get a list of external courses. Sorted alphabetically.
  * @param {object} state The redux state object
  * @type {string[]} An array of external courses, e.g. ['codecademy', 'kodegenet', ...]
  */
-export const getFilteredExternalCourses = createSelector(
+export const getTagFilteredExternalCourses = createSelector(
   // Input selectors:
-  getFilter,
+  getTagsFilter,
 
   // Output selector (resultfunc):
-  (filter = {}) => {
-    const {language, ...rest} = filter;
-    const externalCourses = getExternalCourses(getKeysWithTrueValues(language));
-    const courseMatchesFilter = (course) => {
+  (tagsFilter) => {
+    return getExternalCourses().filter(course => {
       try {
-        return tagsMatchFilter(getCourseTags(course), getCourseLanguages(course), rest);
+        return tagsMatchFilter(getCourseTags(course), tagsFilter);
       }
       catch (e) {
         console.error(`Error in getFilteredExternalCourses for ${course}: ${e.message}`);
         return false; // Don't include a course that has errors
       }
-    };
-    return externalCourses.filter(courseMatchesFilter);
+    });
   }
 );
 
+/**
+ * Returns a filtered list of {course,language} objects of external courses.
+ * Only the tuples that match both tag and language filter are returned.
+ * Sorted alphabetically by course, and within course, alphabetically by language code.
+ * @param {object} state The redux state object
+ * @returns {object[]} An array of objects, e.g.
+ * [
+ *   {course: 'khan_academy', language: 'en'},
+ *   {course: 'khan_academy', language: 'nb'},
+ *   {course: 'kodegenet', language: 'nb'},
+ *   ...
+ * ]
+ */
+export const getFilteredExternalCoursesWithLanguages = createSelector(
+  // Input selectors:
+  getTagFilteredExternalCourses,
+  getLanguageFilter,
+
+  // Output selector (resultfunc):
+  (courses, languageFilter = {}) => {
+    const coursesWithLanguages = [];
+    for (const course of courses) {
+      const courseLanguages = getCourseLanguages(course).sort();
+      for (const language of courseLanguages) {
+        if (languageFilter[language]) {
+          coursesWithLanguages.push({course, language});
+        }
+      }
+    }
+    return coursesWithLanguages;
+  }
+);
 
 //
 // // Creates a list of courses with lessons that have tags matching the filter

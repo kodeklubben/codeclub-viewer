@@ -3,9 +3,10 @@ import createCachedSelector from 're-reselect';
 // import {getFilteredLessonsInCourse} from '../resources/lessons';
 import {createSelector} from 'reselect';
 import {getLessonTags, getLessonsInCourse} from '../resources/lessonData';
-import {tagsMatchFilter} from '../util';
+import {languagesMatchFilter, tagsMatchFilter} from '../util';
 import {getAllCourses} from '../resources/courseFrontmatter';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
+import {isLessonIndexed} from '../resources/lessonData';
 
 
 const getFilter = (state) => state.filter; // See structure in INITIAL_STATE in src/reducers/filter.js
@@ -23,17 +24,20 @@ export const getFilteredLessonsInCourse = createCachedSelector(
 
   // Output selector (resultfunc):
   (filter, course) => {
-    console.debug('DEBUG: selectors/lesson.js:getFilteredLessonsInCourse() for course', course);
-    const lessonMatchesFilter = (lesson) => {
+    const {language:languageFilter, ...tagsFilter} = filter;
+    return getLessonsInCourse(course).filter(lesson => {
       try {
-        return tagsMatchFilter(getLessonTags(course, lesson), getLessonLanguages(course, lesson), filter);
+        return (
+          isLessonIndexed(course, lesson) &&
+          languagesMatchFilter(getLessonLanguages(course, lesson), languageFilter) &&
+          tagsMatchFilter(getLessonTags(course, lesson), tagsFilter)
+        );
       }
       catch (e) {
         console.error(`Error in getFilteredLessonsInCourse() for ${lesson}: ${e.message}`);
         return false; // If error, don't include lesson
       }
-    };
-    return getLessonsInCourse(course).filter(lessonMatchesFilter);
+    });
   },
 )(
   // Resolver function (same arguments as for input selectors). Returns selector cache key:
@@ -56,7 +60,6 @@ export const getFilteredLessons = createSelector(
 
   // Output selector (resultfunc):
   (filter) => {
-    console.debug('DEBUG: selectors/lesson.js:getFilteredLessons');
     const filteredLessons = {};
     for (const course of getAllCourses()) {
       // We call getFilteredLessonsInCourse directly (instead of having it

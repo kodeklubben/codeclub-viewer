@@ -5,10 +5,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Courses.scss';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import {getFilteredExternalCourses, getSortedFilteredCourses} from '../../selectors/course';
+import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import {getCoursesWithPlaylists} from '../../resources/playlists';
 import CourseList from '../CourseList/CourseList';
+import ExternalCourseList from '../CourseList/ExternalCourseList';
 
 const Courses = ({t, courses, externalCourses}) => {
   return (
@@ -25,7 +26,7 @@ const Courses = ({t, courses, externalCourses}) => {
         <Row>
           <Col xs={12}>
             <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
-            <CourseList courses={externalCourses}/>
+            <ExternalCourseList coursesWithLanguage={externalCourses}/>
           </Col>
         </Row>
         : null}
@@ -38,13 +39,16 @@ const Courses = ({t, courses, externalCourses}) => {
 Courses.propTypes = {
   // mapStateToProps
   courses: PropTypes.arrayOf(PropTypes.string).isRequired,
-  externalCourses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  externalCourses: PropTypes.arrayOf(PropTypes.shape({
+    course: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+  })).isRequired,
   t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  courses: state.showPlaylists ? getCoursesWithPlaylists() : getSortedFilteredCourses(state),
-  externalCourses: state.showPlaylists ? [] : getFilteredExternalCourses(state),
+  courses: state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state),
+  externalCourses: state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state),
   t: getTranslator(state),
 });
 

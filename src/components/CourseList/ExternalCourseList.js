@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './CourseList.scss';
 import CourseItem from './CourseItem';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
-const CourseList = ({courses, language}) => {
+const ExternalCourseList = ({coursesWithLanguage}) => {
   return (
     <Row>
       <div className={styles.courseList}>
-        {courses.map(course => (
-          <Col key={course} xs={6} sm={6} md={4} lg={3}>
+        {coursesWithLanguage.map(({course, language}) => (
+          <Col key={`${course}_${language}`} xs={6} sm={6} md={4} lg={3}>
             <CourseItem {...{course, language}}/>
           </Col>
         ))}
@@ -21,18 +20,12 @@ const CourseList = ({courses, language}) => {
   );
 };
 
-CourseList.propTypes = {
+ExternalCourseList.propTypes = {
   // ownProps
-  courses: PropTypes.arrayOf(PropTypes.string).isRequired,
-
-  // mapStateToProps
-  language: PropTypes.string.isRequired,
+  coursesWithLanguage: PropTypes.arrayOf(PropTypes.shape({
+    course: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  language: state.language,
-});
-
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(CourseList));
+export default withStyles(styles)(ExternalCourseList);

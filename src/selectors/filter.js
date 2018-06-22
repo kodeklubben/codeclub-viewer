@@ -52,3 +52,19 @@ export const getCheckedFilterLanguages = createSelector(
   (state) => state.filter.language,
   (languageFilter) => Object.keys(languageFilter).filter(language => languageFilter[language]),
 );
+
+/**
+ * Get the filter without language.
+ * @param {object} state The redux state object
+ * @returns {object} Filter without language. See INITIAL_STATE in reducers/filter.js for structure.
+ */
+export const getTagsFilter = createSelector(
+  // Input selectors:
+  (state) => state.filter,
+
+  // Output selector (resultfunc):
+  (filter) => {
+    const {language, ...tagsFilter} = filter; // Remove language from filter
+    return tagsFilter;
+  }
+);

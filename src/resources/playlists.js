@@ -71,7 +71,6 @@ const getPlaylist = (course, playlist) => (getPlaylistStructure()[course] || {})
  */
 export const getCoursesWithPlaylists = memoize(
   () => {
-    console.debug('DEBUG: getCoursesWithPlaylists', getPlaylistStructure());
     return Object.keys(getPlaylistStructure()).sort();
   }
 );
