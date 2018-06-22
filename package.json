@@ -64,7 +64,6 @@
     "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
   },
   "devDependencies": {
-    "autoprefixer": "^6.7.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.9.1",
     "babel-eslint": "^8.2.3",
@@ -114,7 +113,6 @@
     "node-sass": "4.7.2",
     "node-spider": "^1.4.1",
     "node-static": "^0.7.9",
-    "postcss-loader": "^2.0.9",
     "puppeteer": "^0.10.2",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^1.4.3",
