@@ -173,10 +173,11 @@ const createConfig = (env = {}) => {
               options: {
                 minimize: true,
                 modules: true,
-                importLoader: 1,
+                importLoader: 2,
                 localIdentName: '[name]__[local]__[hash:base64:5]'
               },
             },
+            'postcss-loader',
             'sass-loader'
           ],
         },
@@ -360,7 +361,8 @@ const createConfig = (env = {}) => {
               optimizationLevel: 2
             })
           ]
-        }
+        },
+        name: '[name][hash:6]__compressed.[ext]',
       })
     ],
 
