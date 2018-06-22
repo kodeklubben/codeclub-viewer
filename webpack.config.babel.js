@@ -168,7 +168,8 @@ const createConfig = (env = {}) => {
               options: {
                 minimize: true,
                 modules: true,
-                importLoader: 1
+                importLoader: 1,
+                localIdentName: '[name]__[local]__[hash:base64:5]'
               },
             },
             'sass-loader'
