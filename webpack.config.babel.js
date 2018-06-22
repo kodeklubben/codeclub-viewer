@@ -166,9 +166,9 @@ const createConfig = (env = {}) => {
             {
               loader: 'css-loader',
               options: {
+                minimize: true,
                 modules: true,
-                importLoaders: 1,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+                importLoader: 1
               },
             },
             'sass-loader'
