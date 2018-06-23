@@ -2,6 +2,7 @@ const softHyphen = '\u00ad';
 
 export default {
   general: {
+    home: 'Hjem',
     student: 'Elev',
     teacher: 'Lærer',
     level: 'Nivå',
@@ -42,7 +43,9 @@ export default {
               'og alle oppgavesett har veiledninger du kan sjekke ut som forberedelse til øktene. ' +
               'For nybegynnere så anbefaler vi blokkbasert programmering, hvor Python / Web / Processing ' +
               'er de vanligste å gå videre med etterpå.',
-      link2: 'Lær mer om å drive en kodeklubb'
+      link2: 'Lær mer om å drive en kodeklubb',
+      plus: 'Vis mer informasjon',
+      minus: 'Vis mindre informasjon'
     },
     showhidefilter: 'Vis/skjul filter'
   },

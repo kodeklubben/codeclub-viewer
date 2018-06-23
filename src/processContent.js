@@ -57,7 +57,10 @@ const insertHeaderIcons = (obj) => {
         content: [
           {
             tag: 'img',
-            attrs: { src: icons[className] }
+            attrs: {
+              src: icons[className],
+              alt: className
+            }
           },
           ...obj.content
         ]

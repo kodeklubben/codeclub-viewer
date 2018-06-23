@@ -11,7 +11,7 @@ import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src/${course}/${lesson}`;
-  const linkToLesson = `http://oppgaver.kidsakoder.no/beta/${path}`; //'/beta' should be removed when the site goes live
+  const linkToLesson = `http://oppgaver.kidsakoder.no/${path}`;
   const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' +
                        capitalize(course) + ': ' + capitalize(lesson).replace(/_/g, ' ') + '\'' +
                        '&body=' + t('lessons.improvepage.newissuelink.lesson') + ': ' + linkToLesson +

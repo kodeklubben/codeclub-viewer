@@ -6,7 +6,7 @@ import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import Router from 'react-router/lib/Router';
 import useRouterHistory from 'react-router/lib/useRouterHistory';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
-import useScroll from 'react-router-scroll';
+import useScroll from 'react-router-scroll/lib/useScroll';
 import {Provider} from 'react-redux';
 import routes from './routes';
 import WithStylesContext from './WithStylesContext';

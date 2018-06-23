@@ -10,8 +10,9 @@ import {getAvailableLanguages} from '../../util';
 import {getCourseTitle, getLanguageIndependentCoursePath} from '../../resources/courseFrontmatter';
 import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 import {getCourseIcon} from '../../resources/courseIcon';
+import {getTranslator} from '../../selectors/translate';
 
-const BreadCrumb = ({course, lesson, file, courseLanguage}) => {
+const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
 
@@ -20,12 +21,12 @@ const BreadCrumb = ({course, lesson, file, courseLanguage}) => {
   const {path:lessonPath, title:lessonTitle, level} =
     isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme).path : {};
 
-  const homeCrumb = <NavLink to={isCourse || isLesson ? '/' : ''}>
+  const homeCrumb = <NavLink to={isCourse || isLesson ? '/' : ''} aria-label={t('general.home')}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
   const courseCrumb = <NavLink to={coursePath} className={styles.lessonLink}>
-    <img className={styles.courseIcon} src={getCourseIcon(course)}/>
+    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={course}/>
     <span className={styles.lesson}>{getCourseTitle(course, courseLanguage)}</span>
   </NavLink>;
 
@@ -48,6 +49,7 @@ BreadCrumb.propTypes = {
   course: PropTypes.string,
   lesson: PropTypes.string,
   file: PropTypes.string,
+  t: PropTypes.func.isRequired,
 
   // mapStateToProps
   courseLanguage: PropTypes.oneOf(getAvailableLanguages()).isRequired,
@@ -55,6 +57,7 @@ BreadCrumb.propTypes = {
 
 const mapStateToProps = (state) => ({
   courseLanguage: state.language,
+  t: getTranslator(state),
 });
 
 export default connect(

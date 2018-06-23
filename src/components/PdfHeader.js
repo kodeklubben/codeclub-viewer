@@ -10,12 +10,12 @@ import {getCourseTitle} from '../resources/courseFrontmatter';
 const PdfHeader = ({course, language}) => {
   return (
     <div className={styles.container}>
-      <img className={styles.courseIcon} src={getCourseIcon(course)}/>
+      <img className={styles.courseIcon} src={getCourseIcon(course)} alt={course}/>
       <span className={styles.course}>{getCourseTitle(course, language)}</span>
     </div>
   );
 };
-PdfHeader.PropTypes = {
+PdfHeader.propTypes = {
   // ownProps
   course: PropTypes.string.isRequired,
 

@@ -18,7 +18,7 @@ const PdfButton = ({t, href}) => {
   // Note that we need to use href in button, and not LinkContainer,
   // since we don't want to go through React Router when getting the pdf.
   return (
-    <Button {...options}>
+    <Button {...options} aria-label={t('lessons.pdf')}>
       <Glyphicon className={styles.icon} glyph={'cloud-download'}/>
       <span className={styles.textMargin}>{t('lessons.pdf')}</span>
     </Button>

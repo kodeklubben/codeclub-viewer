@@ -17,7 +17,7 @@ const InstructionButton = ({path, isReadme, onlyIcon, insideLink, buttonText}) =
   };
   return (path ?
     <LinkContainer to={path}>
-      <Button  {...buttonArgs}>
+      <Button  {...buttonArgs} aria-label={buttonText}>
         <Glyphicon className={styles.icon} glyph={isReadme ? 'education' : 'pencil'}/>
         <span className={onlyIcon ? '' : styles.textMargin}>{buttonText}</span>
       </Button>
