@@ -9,7 +9,6 @@ import Row from 'react-bootstrap/lib/Row';
 import AutoAffix from 'react-overlays/lib/AutoAffix';
 import cx from 'classnames';
 import styles from './CoursePage.scss';
-import {getLessonLevels} from '../resources/lessonData';
 import {getTranslator} from '../selectors/translate';
 import {getShowFiltergroups} from '../selectors/playlist';
 import LessonFilter from '../components/Filter/LessonFilter';
@@ -18,6 +17,7 @@ import LevelNavigation from '../components/CoursePage/LevelNavigation';
 import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 import CourseInfo from '../components/CoursePage/CourseInfo';
 import {getCourseTitle} from '../resources/courseFrontmatter';
+import {getFilteredLessonLevelsInCourse} from '../selectors/lesson';
 
 const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
   const {course} = params;
@@ -71,14 +71,14 @@ CoursePage.propTypes = {
 
   // mapStateToProps
   courseTitle: PropTypes.string.isRequired,
-  levels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  levels: PropTypes.arrayOf(PropTypes.number).isRequired,
   t: PropTypes.func.isRequired,
   showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
   courseTitle: getCourseTitle(params.course, state.language),
-  levels: getLessonLevels(params.course),
+  levels: getFilteredLessonLevelsInCourse(state, params.course),
   t: getTranslator(state),
   showPlaylists: !getShowFiltergroups(state),
 });

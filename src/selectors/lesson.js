@@ -1,15 +1,11 @@
-//import {createSelector} from 'reselect';
 import createCachedSelector from 're-reselect';
-// import {getFilteredLessonsInCourse} from '../resources/lessons';
 import {createSelector} from 'reselect';
-import {getLessonTags, getLessonsInCourse} from '../resources/lessonData';
+import {getLessonTags, getLessonsInCourse, getLessonLevel} from '../resources/lessonData';
 import {languagesMatchFilter, tagsMatchFilter} from '../util';
 import {getAllCourses} from '../resources/courseFrontmatter';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
 import {isLessonIndexed} from '../resources/lessonData';
 
-
-const getFilter = (state) => state.filter; // See structure in INITIAL_STATE in src/reducers/filter.js
 
 /**
  * Get filtered lessons in a course.
@@ -19,7 +15,7 @@ const getFilter = (state) => state.filter; // See structure in INITIAL_STATE in 
  */
 export const getFilteredLessonsInCourse = createCachedSelector(
   // Input selectors:
-  getFilter,
+  (state) => state.filter, // See structure in INITIAL_STATE in src/reducers/filter.js
   (state, course) => course,
 
   // Output selector (resultfunc):
@@ -45,6 +41,48 @@ export const getFilteredLessonsInCourse = createCachedSelector(
 );
 
 /**
+ * Get filtered lessons in a course for a specific level
+ * @param {object} state The redux state object
+ * @param {string} course Which course to get lessons for
+ * @param {number} level Which level to get lessons for
+ * @returns {string[]} An array of filtered lessons for the given course, e.g. ['astrokatt', 'straffespark']
+ */
+export const getFilteredLessonsInCourseForLevel = createCachedSelector(
+  // Input selectors:
+  getFilteredLessonsInCourse,
+  (state, course, level) => course,
+  (state, course, level) => level,
+
+  // Output selector (resultfunc):
+  (lessons, course, level) => lessons.filter(lesson => getLessonLevel(course, lesson) === level),
+)(
+  (state, course, level) => `${course}_${level}`
+);
+
+/**
+ * Get levels of filtered lessons in a course.
+ * @param {object} state The redux state object
+ * @param {string} course Which course to get lessons for
+ * @returns {number[]} An array of levels from filtered lessons, sorted, e.g. [1, 2, 3, 4]
+ */
+export const getFilteredLessonLevelsInCourse = createCachedSelector(
+  // Input selectors:
+  getFilteredLessonsInCourse,
+  (state, course) => course,
+
+  // Output selector (resultfunc):
+  (lessons, course) => {
+    const levels = new Set;
+    for (const lesson of lessons) {
+      levels.add(getLessonLevel(course, lesson));
+    }
+    return [...levels].sort();
+  }
+)(
+  (state, course) => course
+);
+
+/**
  * Get filtered lessons for all courses.
  * @param {object} state The redux state object.
  * @returns {object} An object where the keys are the courses, and the values are arrays of courses, e.g.
@@ -56,7 +94,7 @@ export const getFilteredLessonsInCourse = createCachedSelector(
  */
 export const getFilteredLessons = createSelector(
   // Input selectors:
-  getFilter,
+  (state) => state.filter, // See structure in INITIAL_STATE in src/reducers/filter.js
 
   // Output selector (resultfunc):
   (filter) => {
@@ -84,77 +122,3 @@ export const getFilteredLessons = createSelector(
     return filteredLessons;
   },
 );
-
-
-// // * Only getLessonsByLevel is used (double check). Perhaps simplify?
-// // * getCourseLessons doesn't need state, perhaps it doesn't need to be selector?
-// // * getLessonData() could take courseName as input, and it could cache result based on parameter (if needed).
-// // * If we need to keep this as selector, perhaps use rereselect,
-// //   otherwise different courseName will force recalculation.
-// // * Now only filter is gotten from state. Perhaps we could precalculate a lot more of lessons,
-// //   and just apply filter in the end in a much simpler selector. I.e., can we move a lot of the logic
-// //   in this file to a different file? (util.js, or perhaps a separate file)
-// // * Update unit tests
-//
-// export const getCourseLessons = (state, courseName = '') => {
-//   const lessons = getLessonData();
-//   return Object.keys(lessons).reduce((res, lessonPath) => {
-//     return lessonPath.startsWith('./' + courseName) ? {...res, [lessonPath]: lessons[lessonPath]} : res;
-//   }, {});
-// };
-// const getFilter = (state) => state.filter;
-//
-// /**
-//  * Creates an object containing lessons that have tags matching the filter
-//  * Input props: courseName (string, optional)
-//  */
-// export const getFilteredLessons = createSelector(
-//   [getFilter, getCourseLessons],
-//   (filter = {}, lessons = {}) => {
-//
-//     return Object.keys(lessons).reduce((res, lessonKey) => {
-//       const lesson = lessons[lessonKey];
-//       if (tagsMatchFilter(lesson.tags, filter)) res[lessonKey] = lesson;
-//       return res;
-//     }, {});
-//
-//   }
-// );
-//
-// /**
-//  * Creates an object containing indexed lessons that have tags matching the filter
-//  * Input props: courseName (string, optional)
-//  */
-// export const getFilteredAndIndexedLessons = createSelector(
-//   [getFilteredLessons],
-//   (filteredLessons = {}) => {
-//     return Object.keys(filteredLessons).reduce((res, lessonPath) => {
-//       const lesson = filteredLessons[lessonPath];
-//       return lesson.indexed ? {...res, [lessonPath]: lesson} : res;
-//     }, {});
-//   }
-// );
-//
-// /**
-//  * Creates an object {<level>: [lessonA, lessonB, ...], ...}
-//  * where the lessons available given your current filter are sorted according to level
-//  * Input props: courseName (string, optional)
-//  */
-// export const getLessonsByLevel = createSelector(
-//   [getFilteredAndIndexedLessons],
-//   (lessons = {}) => {
-//     // Get lessons grouped by level
-//     return Object.keys(lessons).reduce((res, lessonId) => {
-//       const lesson = lessons[lessonId];
-//       const level = lesson.level;
-//
-//       // Ignore lessons without level
-//       if (level != null) {
-//         if (res.hasOwnProperty(level)) res[level].push(lesson);
-//         else res[level] = [lesson];
-//       }
-//
-//       return res;
-//     }, {});
-//   }
-// );

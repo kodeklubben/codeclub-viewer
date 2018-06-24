@@ -6,7 +6,8 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import LevelIcon from '../LevelIcon';
 import LessonWrapper from './LessonWrapper';
 import {getTranslator} from '../../selectors/translate';
-import {getLessonsInLevel, isLessonIndexed} from '../../resources/lessonData';
+import {getFilteredLessonsInCourseForLevel} from '../../selectors/lesson';
+import {isLessonIndexed} from '../../resources/lessonData';
 import styles from './LessonList.scss';
 
 export const lessonListId = (level) => 'lessonlist-level-' + level;
@@ -31,7 +32,7 @@ const LessonList = ({course, level, lessonsInLevel, t}) => {
 LessonList.propTypes = {
   // ownProps
   course: PropTypes.string.isRequired,
-  level: PropTypes.string.isRequired,
+  level: PropTypes.number.isRequired,
 
   // mapStateToProps
   lessonsInLevel: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -39,7 +40,7 @@ LessonList.propTypes = {
 };
 
 const mapStateToProps = (state, {course, level}) => ({
-  lessonsInLevel: getLessonsInLevel(course, level),
+  lessonsInLevel: getFilteredLessonsInCourseForLevel(state, course, level),
   t: getTranslator(state)
 });
 
