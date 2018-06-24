@@ -1,5 +1,6 @@
 .linkBase {
   color: black;
+  cursor: pointer;
   &:focus,
   &:hover {
     text-decoration: none;
@@ -13,4 +14,5 @@
 
 .spanBase {
   color: black;
+  cursor: default;
 }

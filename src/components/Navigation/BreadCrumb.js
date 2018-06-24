@@ -16,33 +16,31 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
 
-  const coursePath = isCourse ? getLanguageIndependentCoursePath(course) : '';
+  const coursePath = isLesson ? getLanguageIndependentCoursePath(course) : '';
   const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const {path:lessonPath, title:lessonTitle, level} =
-    isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme).path : {};
+  const {title:lessonTitle, level} = isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme) : {};
 
   const homeCrumb = <NavLink to={isCourse || isLesson ? '/' : ''} aria-label={t('general.home')}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
   const courseTitle = getCourseTitle(course, courseLanguage);
-  const courseCrumb = <NavLink to={coursePath} className={styles.lessonLink}>
+  const courseCrumb = <NavLink to={coursePath} className={styles.crumb}>
     <img className={styles.courseIcon} src={getCourseIcon(course)} alt={courseTitle}/>
     <span className={styles.lesson}>{getCourseTitle(course, courseLanguage)}</span>
   </NavLink>;
 
-  // TODO: lessonCrumb will never be a link (missing "to"); perhaps us a different tag than NavLink?
-  const lessonCrumb = <NavLink className={styles.lessonLink} aria-label={lessonTitle}>
+  const lessonCrumb = <NavLink className={styles.crumb} aria-label={lessonTitle}>
     <LevelIcon {...{level}}/>
     <span className={styles.lesson}>{lessonTitle}</span>
   </NavLink>;
 
   return <div className={styles.breadcrumb}>
     {homeCrumb}
-    {coursePath || lessonPath ? <span> / </span> : null}
-    {coursePath || lessonPath ? courseCrumb : null}
-    {lessonPath ? <span> / </span> : null}
-    {lessonPath ? lessonCrumb : null}
+    {isCourse || isLesson ? <span> / </span> : null}
+    {isCourse || isLesson ? courseCrumb : null}
+    {isLesson ? <span> / </span> : null}
+    {isLesson ? lessonCrumb : null}
   </div>;
 };
 
