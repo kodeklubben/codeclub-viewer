@@ -124,8 +124,8 @@ const mapStateToProps = (state, {course, lesson, language}) => {
     isStudentMode: state.isStudentMode,
     showLessonItemFlag: showLessonItemFlag(state),
     t: getTranslator(state),
-    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(lesson.path)),
-    totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(lesson.path)),
+    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
+    totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
   };
 };
 

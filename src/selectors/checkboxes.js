@@ -4,8 +4,9 @@ const getCheckboxesForPath = (state, lessonCheckboxesKey) => state.checkboxes[le
 
 /**
  * Returns the number of checkboxes checked for given lesson
- *
- * Input props: lessonCheckboxesKey
+ * @param {object} state The redux state object
+ * @param {string} lessonCheckboxesKey The key for lesson checkboxes
+ * @returns {number} Number of checked checkboxes for a lesson
  */
 export const getNumberOfCheckedCheckboxes = createCachedSelector(
   // Input selectors:
@@ -23,8 +24,9 @@ export const getNumberOfCheckedCheckboxes = createCachedSelector(
 
 /**
  * Returns total number of checkboxes for a lesson
- *
- * Input props: lessonCheckboxesKey
+ * @param {object} state The redux state object
+ * @param {string} lessonCheckboxesKey The key for lesson checkboxes
+ * @returns {number} Total number of checkboxes for a lesson
  */
 export const getTotalNumberOfCheckboxes = createCachedSelector(
   // Input selectors:
