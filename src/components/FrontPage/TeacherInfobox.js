@@ -14,7 +14,7 @@ class TeacherInfobox extends React.Component {
     this.state = {showCourseInfo: false};
   }
 
-  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']})
+  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
 
   render() {
     const {t} = this.props;

@@ -28,7 +28,7 @@ const CourseItem = ({course, language, showLessonCount, lessonCount, coursePath,
     <div>
       {externalLink ?
         <a className={styles.courseItem} href={externalLink} target='_blank'>
-          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={course}/>
+          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
           <span className={styles.courseName}>
             {courseTitle}
             {popoverButton}
@@ -43,7 +43,7 @@ const CourseItem = ({course, language, showLessonCount, lessonCount, coursePath,
         </a>
         :
         <Link className={styles.courseItem} to={coursePath}>
-          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={course}/>
+          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
           <span className={styles.courseName}>{courseTitle}{popoverButton}</span>
           {showLessonCount ?
             <span className={styles.lessonCount}>{t('frontpage.lessoncount', {count: lessonCount})}</span> :

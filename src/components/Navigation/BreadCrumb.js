@@ -25,12 +25,14 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
+  const courseTitle = getCourseTitle(course, courseLanguage);
   const courseCrumb = <NavLink to={coursePath} className={styles.lessonLink}>
-    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={course}/>
+    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={courseTitle}/>
     <span className={styles.lesson}>{getCourseTitle(course, courseLanguage)}</span>
   </NavLink>;
 
-  const lessonCrumb = <NavLink className={styles.lessonLink}>
+  // TODO: lessonCrumb will never be a link (missing "to"); perhaps us a different tag than NavLink?
+  const lessonCrumb = <NavLink className={styles.lessonLink} aria-label={lessonTitle}>
     <LevelIcon {...{level}}/>
     <span className={styles.lesson}>{lessonTitle}</span>
   </NavLink>;
