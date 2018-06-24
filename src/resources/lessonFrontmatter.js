@@ -94,18 +94,6 @@ export const getLanguageAndIsReadme = (course, lesson, file) => {
 };
 
 /**
- * Whether the given lesson exists (either normal lesson or teacher instructions)
- * @param {string} course E.g. 'scratch'
- * @param {string} lesson E.g. 'astrokatt'
- * @param {string} file E.g. 'astrokatt_nn' or 'README_nn'
- * @returns {boolean}
- */
-export const isValidLesson = (course, lesson, file) => {
-  const path = `./${course}/${lesson}/${file}.md`;
-  return lessonFrontmatterContext.keys().includes(path);
-};
-
-/**
  *
  * @param {string} course
  * @param {string} lesson
@@ -125,23 +113,6 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
   const isReadmeKey = isReadme ? 1 : 0;
   return (((getLessons()[course] || {})[lesson] || {})[language] || {})[isReadmeKey] || {};
 };
-
-
-// export const getLessonpath = (course, lesson, language, isReadme) =>
-//   getLessonFrontmatter(course, lesson, language, isReadme).path;
-
-// /**
-//  * Get lessons in a course.
-//  *
-//  * NOTE: This method could potentially be implemented by lessonData.js instead,
-//  *       as long as we can be sure that all lessons have a data.yml file.
-//  *
-//  * @param {string} course Which course to get lessons for
-//  * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
-//  */
-// export const getLessonsInCourse = memoize(
-//   course => Object.keys(getLessons()[course] || {})
-// );
 
 /**
  *

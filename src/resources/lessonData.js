@@ -75,50 +75,6 @@ export const getLessonTags = (course, lesson) => getLessonMetadata(course, lesso
 
 export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, lesson).indexed;
 
-// /**
-//  * Get all lessons in a course, sorted by level.
-//  * @param {string} course E.g. 'scratch'
-//  * @returns {object} An object with level as keys and array of lessons as value, e.g.
-//  * {
-//  *   1: ['astrokatt', 'straffespark', ...]
-//  *   2: [...]
-//  *   ...
-//  * }
-//  */
-// export const getLessonsByLevel = memoize(
-//   (course) => {
-//     const lessonsByLevel = {};
-//     const lessonsInCourse = getLessons()[course] || {};
-//     for (const lesson of Object.keys(lessonsInCourse)) {
-//       const level = lessonsInCourse[lesson].level;
-//       if (level != null) {
-//         if (!lessonsByLevel[level]) {
-//           lessonsByLevel[level] = [];
-//         }
-//         lessonsByLevel[level].push(lesson);
-//       }
-//     }
-//     return lessonsByLevel;
-//   }
-// );
-
-// /**
-//  * Get all lessons in a course given a level.
-//  * @param {string} course E.g. 'scratch'
-//  * @param {string|number} level E.g. '1'
-//  * @returns {string[]} Array of lessons, e.g. ['scratch', 'astrokatt', ...]
-//  */
-// export const getLessonsInLevel = (course, level) => (getLessonsByLevel(course) || {})[level] || [];
-
-// /**
-//  * Get all levels that exists for a given course.
-//  * @param {string} course E.g. 'scratch'
-//  * @returns {string[]} An array of all levels, sorted, e.g. ['1', '2', '3', '4']
-//  */
-// export const getLessonLevels = memoize(
-//   (course) => Object.keys(getLessonsByLevel(course)).sort()
-// );
-
 /**
  * Get level for lesson.
  * @param {string} course E.g. 'scratch'
