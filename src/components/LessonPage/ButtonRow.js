@@ -11,14 +11,29 @@ import PdfButton from './PdfButton';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
 
-const ButtonRow = ({path, pdfPath, mainLanguagePath, isReadme, isStudentMode, anyCheckedCheckboxes}) => (
-  <div className={styles.container}>
-    {mainLanguagePath ? <MainLanguageButton path={mainLanguagePath}/> : null}
-    {anyCheckedCheckboxes ? <ResetButton {...{path}}/> : null}
-    {(isReadme || !isStudentMode) ? <InstructionButton {...{path, isReadme}}/> : null}
-    {<PdfButton href={pdfPath}/>}
-  </div>
-);
+const ButtonRow = ({
+  course, lesson, language, isReadme,
+  path,
+  mainLanguage, isStudentMode, anyCheckedCheckboxes,
+}) => {
+  const mainLanguageButton = language !== mainLanguage ?
+    <MainLanguageButton {...{course, lesson, isReadme}}/> : null;
+
+  const resetButton = anyCheckedCheckboxes ?
+    <ResetButton {...{path}}/> : null;
+
+  const lessonOrReadmeButton = isReadme || !isStudentMode ?
+    <InstructionButton {...{course, lesson, language, isReadme: !isReadme}}/> : null;
+
+  return (
+    <div className={styles.container}>
+      {mainLanguageButton}
+      {resetButton}
+      {lessonOrReadmeButton}
+      {<PdfButton {...{course, lesson, language, isReadme}}/>}
+    </div>
+  );
+};
 
 ButtonRow.propTypes = {
   // ownProps
@@ -29,18 +44,16 @@ ButtonRow.propTypes = {
 
   // mapStateToProps
   path: PropTypes.string.isRequired,
-  pdfPath: PropTypes.string.isRequired,
-  mainLanguagePath: PropTypes.string,
+  mainLanguage: PropTypes.string.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
   anyCheckedCheckboxes: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, pdfPath} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     path,
-    pdfPath,
-    mainLanguagePath: getLessonFrontmatter(course, lesson, state.language, isReadme).path,
+    mainLanguage: state.language,
     isStudentMode: state.isStudentMode,
     anyCheckedCheckboxes: anyCheckboxTrue(state.checkboxes[createCheckboxesKey(path)] || {}),
   };

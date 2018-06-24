@@ -7,14 +7,16 @@ import styles from './InstructionButton.scss';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../selectors/translate';
+import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 
-const InstructionButton = ({path, isReadme, onlyIcon, insideLink, buttonText}) => {
+const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
   const buttonArgs = {
     className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
     bsStyle: 'guide',
     bsSize: onlyIcon ? 'xs' : 'small',
     componentClass: insideLink ? 'div' : 'a',
   };
+  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   return (path ?
     <LinkContainer to={path}>
       <Button  {...buttonArgs} aria-label={buttonText}>
@@ -27,8 +29,11 @@ const InstructionButton = ({path, isReadme, onlyIcon, insideLink, buttonText}) =
 
 InstructionButton.propTypes = {
   // ownProps
-  path: PropTypes.string,
-  isReadme: PropTypes.string.isRequired,
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
+
   onlyIcon: PropTypes.bool,
   insideLink: PropTypes.bool, // set to true if button is nested inside a <a>...</a>
 

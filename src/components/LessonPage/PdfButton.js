@@ -6,10 +6,11 @@ import styles from './PdfButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
-const PdfButton = ({t, href}) => {
+const PdfButton = ({course, lesson, language, isReadme, t}) => {
   const options = {
-    href,
+    href: getLessonFrontmatter(course, lesson, language, isReadme).pdfPath,
     bsStyle: 'pdf',
     bsSize: 'small',
     className: styles.container,
@@ -26,14 +27,18 @@ const PdfButton = ({t, href}) => {
 };
 
 PdfButton.propTypes = {
+  // ownProps
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
+
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  href: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, {lessonfile}) => ({
+const mapStateToProps = (state) => ({
   t: getTranslator(state),
-  href: lessonfile + '.pdf',
 });
 
 export default connect(

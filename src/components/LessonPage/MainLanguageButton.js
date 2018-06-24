@@ -8,9 +8,10 @@ import styles from './MainLanguageButton.scss';
 import {getTranslator, getTranslateTag} from '../../selectors/translate';
 import Flag from '../Flag';
 import {getAvailableLanguages} from '../../util';
+import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
-const MainLanguageButton = ({path, language, buttonText}) => (
-  <LinkContainer to={path}>
+const MainLanguageButton = ({course, lesson, isReadme, language, buttonText}) => (
+  <LinkContainer to={getLessonFrontmatter(course, lesson, language, isReadme).path}>
     <Button className={styles.container} bsStyle={'info'} bsSize={'small'}>
       <Flag language={language}/>
       <span className={styles.textMargin}>{buttonText}</span>
@@ -20,7 +21,9 @@ const MainLanguageButton = ({path, language, buttonText}) => (
 
 MainLanguageButton.propTypes = {
   // ownProps
-  path: PropTypes.string,
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
 
   // mapStateToProps
   language: PropTypes.oneOf(getAvailableLanguages()),
