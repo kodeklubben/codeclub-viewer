@@ -11,10 +11,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LevelNavigation.scss';
 import CollapsiblePanel from '../CollapsiblePanel';
 import scrollToComponent from 'react-scroll-to-component';
+import {lessonListId} from './LessonList';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map(level => {
-    const onClick=() => scrollToComponent(document.getElementById('lessonlist-level-' + level), {align: 'top'});
+    const onClick=() => scrollToComponent(document.getElementById(lessonListId(level)), {align: 'top'});
     return (
       <ListGroupItem key={level} {...{onClick}}>
         <span className={styles.name}>

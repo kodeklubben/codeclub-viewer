@@ -19,13 +19,13 @@ import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 import CourseInfo from '../components/CoursePage/CourseInfo';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 
-const CoursePage = ({params, courseTitle, lessonLevels, t, showPlaylists}) => {
+const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
   const {course} = params;
-  const lessonLists = lessonLevels.map(level => <LessonList key={level} {...{course, level}} />);
+  const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>
     <LessonFilter course={course}/>
   </Col>;
-  const jumpTo = lessonLevels.length > 0 ? <div><LevelNavigation {...{lessonLevels}}/></div> : null;
+  const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
   let thispage = null;
   const jumpToAffixed = jumpTo ?
     <Col xsHidden sm={3} className={cx(styles.jumpTo, {[styles.topMargin]: lessonLists.length})}>
@@ -71,14 +71,14 @@ CoursePage.propTypes = {
 
   // mapStateToProps
   courseTitle: PropTypes.string.isRequired,
-  lessonsLevels: PropTypes.arrayOf(PropTypes.string).isRequired,
+  levels: PropTypes.arrayOf(PropTypes.string).isRequired,
   t: PropTypes.func.isRequired,
   showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
   courseTitle: getCourseTitle(params.course, state.language),
-  lessonLevels: getLessonLevels(state, params.course),
+  levels: getLessonLevels(params.course),
   t: getTranslator(state),
   showPlaylists: !getShowFiltergroups(state),
 });

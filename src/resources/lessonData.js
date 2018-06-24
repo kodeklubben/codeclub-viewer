@@ -34,8 +34,8 @@ const getLessons = memoize(
     const lessons = {};
     for (const key of lessonDataContext.keys()) {
       const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]data[.]yml$/);
-      const {tags, indexed} = lessonDataContext(key);
-      const data = {tags: cleanseTags(tags, key), indexed: indexed !== false};
+      const {level, tags, indexed} = lessonDataContext(key);
+      const data = {level, tags: cleanseTags(tags, key), indexed: indexed !== false};
       assignDeep(lessons, [course, lesson], data);
     }
     return lessons;

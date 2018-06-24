@@ -98,12 +98,12 @@ export function getInitialFilter(initialLanguage) {
 
 /**
  * Get the first paragraph and first picture in the html.
- * @param {string} html The path to the html, starting with a slash,
+ * @param {string} html The whole html
+ * @param {string} path The path to the html, starting with a slash,
  *                      e.g. '/scratch/astrokatt/astrokatt_nn' or '/scratch/index'
- * @param {string} url
  * @returns {string} HTML code to e.g. display in a popover.
  */
-export const extractFirstPartOfHtml = (html, url) => {
+export const extractFirstPartOfHtml = (html, path) => {
   let text, picture = '';
   html = html.substring(html.indexOf('<section class="intro"'));
   const p = html.indexOf('<p>');
@@ -121,7 +121,7 @@ export const extractFirstPartOfHtml = (html, url) => {
     // and <img src=astrokatt.png>
     picture = picture.replace(
       /( src="?)([^" />]*)([" />])/,
-      '$1' + process.env.PUBLICPATH_WITHOUT_SLASH + dirname(url) + '/$2$3',
+      '$1' + process.env.PUBLICPATH_WITHOUT_SLASH + dirname(path) + '/$2$3',
     );
   }
   return (picture || '') + (text || '');

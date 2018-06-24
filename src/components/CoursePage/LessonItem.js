@@ -103,7 +103,7 @@ LessonItem.propTypes = {
   level: PropTypes.number,
   path: PropTypes.string.isRequired,
   external: PropTypes.string,
-  readmePath: PropTypes.string.isRequired,
+  readmePath: PropTypes.string,
   popoverContent: PropTypes.string,
   isStudentMode: PropTypes.bool.isRequired,
   showLessonItemFlag: PropTypes.bool.isRequired,

@@ -27,7 +27,7 @@ const InstructionButton = ({path, isReadme, onlyIcon, insideLink, buttonText}) =
 
 InstructionButton.propTypes = {
   // ownProps
-  path: PropTypes.string.isRequired,
+  path: PropTypes.string,
   isReadme: PropTypes.string.isRequired,
   onlyIcon: PropTypes.bool,
   insideLink: PropTypes.bool, // set to true if button is nested inside a <a>...</a>

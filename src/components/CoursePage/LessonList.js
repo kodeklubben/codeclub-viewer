@@ -9,11 +9,12 @@ import {getTranslator} from '../../selectors/translate';
 import {getLessonsInLevel, isLessonIndexed} from '../../resources/lessonData';
 import styles from './LessonList.scss';
 
+export const lessonListId = (level) => 'lessonlist-level-' + level;
 
 const LessonList = ({course, level, lessonsInLevel, t}) => {
   return (
     <div className={styles.list}>
-      <h3 id={'lessonlist-level-' + level}>
+      <h3 id={lessonListId(level)}>
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </h3>
       <ListGroup>

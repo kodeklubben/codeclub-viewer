@@ -20,7 +20,7 @@ const Playlist = ({course, playlist, title, language, t}) => {
     <span className={styles.link}>{title}</span>
   </h4>;
   return (
-    <Panel key={name} {...{header}} eventKey={name}>
+    <Panel key={playlist} {...{header}} eventKey={playlist}>
       {
         areAllLessonsInPlaylistTranslated(course, playlist, language) ?
           <ListGroup fill>
@@ -45,7 +45,6 @@ Playlist.propTypes = {
 const mapStateToProps = (state, {course, playlist}) => {
   const t = getTranslator(state);
   return {
-    //allLessonsTranslated: getPlaylistLessons(course, playlist),
     title: getPlaylistTitle(course, playlist, state.language) || t('coursepage.missingtitle'),
     language: state.language,
     t,

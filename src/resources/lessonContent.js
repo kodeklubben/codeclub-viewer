@@ -33,6 +33,6 @@ export const getLessonContent = (course, lesson, language, isReadme) => {
  */
 export const getLessonIntro = (course, lesson, language, isReadme) => {
   const lessonContent = getLessonContent(course, lesson, language, isReadme);
-  const url = getLessonFrontmatter(course, lesson, language, isReadme).url;
-  return extractFirstPartOfHtml(lessonContent, url);
+  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  return extractFirstPartOfHtml(lessonContent, path);
 };

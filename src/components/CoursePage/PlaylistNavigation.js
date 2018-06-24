@@ -6,15 +6,20 @@ import Playlist from './Playlist';
 import {getTranslator} from '../../selectors/translate';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PlaylistNavigation.scss';
+import {getPlaylistsForCourse} from '../../resources/playlists';
 
-const PlaylistNavigation = ({t, course, playlists}) => {
+const PlaylistNavigation = ({t, course}) => {
+  const playlists = getPlaylistsForCourse(course);
+  // TODO: Fix Accordion, seems like the current implementation got broken when upgrading to react-bootstrap 0.31.1
   return (
-    <div className={styles.container}>
-      <h3>{t('coursepage.lessoncollections')}</h3>
-      <Accordion>
-        {playlists.map(playlist => <Playlist {...{course, playlist}} />)}
-      </Accordion>
-    </div>
+    playlists.length > 0 ?
+      <div className={styles.container}>
+        <h3>{t('coursepage.lessoncollections')}</h3>
+        <Accordion>
+          {playlists.map(playlist => <Playlist key={playlist} {...{course, playlist}} />)}
+        </Accordion>
+      </div> :
+      null
   );
 };
 
@@ -23,7 +28,6 @@ PlaylistNavigation.propTypes = {
   course: PropTypes.string.isRequired,
 
   // mapStateToProps
-  playLists: PropTypes.object,
   t: PropTypes.func.isRequired,
 };
 

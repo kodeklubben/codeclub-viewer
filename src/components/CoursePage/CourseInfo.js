@@ -9,7 +9,7 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   return (
     <CollapsiblePanel initiallyExpanded={false} header={t('coursepage.courseinfo')} {...{bsStyle}}>
-      {courseInfo ?
+      {courseInfo.__html ?
         <div dangerouslySetInnerHTML={courseInfo}/>
         :
         <h4>{t('coursepage.courseinfonotfound')}</h4>
@@ -21,13 +21,13 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
 CourseInfo.propTypes = {
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  courseInfo: PropTypes.object,
+  courseInfo: PropTypes.shape({__html: PropTypes.string}).isRequired,
   isStudentMode: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state, {courseName}) => ({
   t: getTranslator(state),
-  courseInfo: getCourseInfo(courseName, state.language),
+  courseInfo: {__html: getCourseInfo(courseName, state.language)},
   isStudentMode: state.isStudentMode
 });
 
