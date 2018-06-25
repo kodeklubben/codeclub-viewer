@@ -62,7 +62,7 @@ const Footer = ({t, isStudentMode}) => {
   return (
     <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
       <Row className={styles.githubIcon}>
-        <Button label='test' raised primary/>
+        <Button label='Test' raised primary />
         <a href={url.oppgaver} target="_blank">
           <img className={styles.svg} src={require('../../assets/graphics/github.png')}
             alt={'GitHub'}
