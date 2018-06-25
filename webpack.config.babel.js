@@ -53,11 +53,6 @@ import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
 
-import {ImageminWebpackPlugin} from 'imagemin-webpack';
-import imageminGifsicle from 'imagemin-gifsicle';
-import imageminJpegtran from 'imagemin-jpegtran';
-import imageminOptipng from 'imagemin-optipng';
-
 import {
   assets,
   bootstrapStyles,
@@ -347,23 +342,7 @@ const createConfig = (env = {}) => {
           }
         }),
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
-      ]),
-      new ImageminWebpackPlugin({
-        imageminOptions: {
-          plugins: [
-            imageminGifsicle({
-              interlaced: true
-            }),
-            imageminJpegtran({
-              progressive: true
-            }),
-            imageminOptipng({
-              optimizationLevel: 2
-            })
-          ]
-        },
-        name: '[name][hash:6]__compressed.[ext]',
-      })
+      ])
     ],
 
     devServer: {
