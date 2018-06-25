@@ -11,7 +11,7 @@ import InstructionButton from '../InstructionButton';
 import Flag from '../Flag';
 import {createCheckboxesKey} from '../../util';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
-import {getLessonLevel} from '../../resources/lessonData';
+import {getLevel} from '../../resources/lessonData';
 import {getLessonIntro} from '../../resources/lessonContent';
 import {getTranslator} from '../../selectors/translate';
 import {showLessonItemFlag} from '../../selectors/playlist';
@@ -116,7 +116,7 @@ const mapStateToProps = (state, {course, lesson, language}) => {
   const {title, path, external} = getLessonFrontmatter(course, lesson, language, false);
   return {
     title,
-    level: getLessonLevel(course, lesson),
+    level: getLevel(course, lesson),
     path,
     external,
     readmePath: getLessonFrontmatter(course, lesson, language, true).path,

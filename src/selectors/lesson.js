@@ -1,6 +1,6 @@
 import createCachedSelector from 're-reselect';
 import {createSelector} from 'reselect';
-import {getLessonTags, getLessonsInCourse, getLessonLevel} from '../resources/lessonData';
+import {getLessonTags, getLessonsInCourse, getLevel} from '../resources/lessonData';
 import {languagesMatchFilter, tagsMatchFilter} from '../util';
 import {getAllCourses} from '../resources/courseFrontmatter';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
@@ -54,7 +54,7 @@ export const getFilteredLessonsInCourseForLevel = createCachedSelector(
   (state, course, level) => level,
 
   // Output selector (resultfunc):
-  (lessons, course, level) => lessons.filter(lesson => getLessonLevel(course, lesson) === level),
+  (lessons, course, level) => lessons.filter(lesson => getLevel(course, lesson) === level),
 )(
   (state, course, level) => `${course}_${level}`
 );
@@ -65,7 +65,7 @@ export const getFilteredLessonsInCourseForLevel = createCachedSelector(
  * @param {string} course Which course to get lessons for
  * @returns {number[]} An array of levels from filtered lessons, sorted, e.g. [1, 2, 3, 4]
  */
-export const getFilteredLessonLevelsInCourse = createCachedSelector(
+export const getFilteredLevelsInCourse = createCachedSelector(
   // Input selectors:
   getFilteredLessonsInCourse,
   (state, course) => course,
@@ -74,7 +74,7 @@ export const getFilteredLessonLevelsInCourse = createCachedSelector(
   (lessons, course) => {
     const levels = new Set;
     for (const lesson of lessons) {
-      levels.add(getLessonLevel(course, lesson));
+      levels.add(getLevel(course, lesson));
     }
     return [...levels].sort();
   }

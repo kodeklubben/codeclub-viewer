@@ -81,7 +81,7 @@ export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, les
  * @param {string} lesson E.g. 'astrokatt'
  * @returns {number} The level of the lesson. Defaults to 0 if course, lesson or level was not found.
  */
-export const getLessonLevel = (course, lesson) => ((getLessons()[course] || {})[lesson] || {}).level || 0;
+export const getLevel = (course, lesson) => ((getLessons()[course] || {})[lesson] || {}).level || 0;
 
 /**
  * Get lessons in a course. Will return all lessons that have a data.yml file.

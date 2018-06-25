@@ -17,7 +17,7 @@ import LevelNavigation from '../components/CoursePage/LevelNavigation';
 import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 import CourseInfo from '../components/CoursePage/CourseInfo';
 import {getCourseTitle} from '../resources/courseFrontmatter';
-import {getFilteredLessonLevelsInCourse} from '../selectors/lesson';
+import {getFilteredLevelsInCourse} from '../selectors/lesson';
 
 const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
   const {course} = params;
@@ -78,7 +78,7 @@ CoursePage.propTypes = {
 
 const mapStateToProps = (state, {params}) => ({
   courseTitle: getCourseTitle(params.course, state.language),
-  levels: getFilteredLessonLevelsInCourse(state, params.course),
+  levels: getFilteredLevelsInCourse(state, params.course),
   t: getTranslator(state),
   showPlaylists: !getShowFiltergroups(state),
 });
