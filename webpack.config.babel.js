@@ -159,15 +159,15 @@ const createConfig = (env = {}) => {
           loader: 'babel-loader'
         },
         {
-          test: inCurrentRepo('scss'),
-          exclude: /node_modules/,
+          test: inCurrentRepo('css|scss'),
           use: [
             'isomorphic-style-loader',
             {
               loader: 'css-loader',
               options: {
-                minimize: true,
+                //minimize: true,
                 modules: true,
+                sourceMap: true,
                 importLoader: 2,
                 localIdentName: '[name]__[local]__[hash:base64:5]'
               },
