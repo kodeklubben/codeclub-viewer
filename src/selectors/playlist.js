@@ -1,6 +1,4 @@
 import {getCoursesWithPlaylists, getPlaylistsForCourse} from '../resources/playlists';
-import {createSelector} from 'reselect';
-import {getCheckedFilterLanguages} from './filter';
 
 /**
  * Returns a boolean that says if the radiobuttons for choosing between playlists and lessons should be displayed
@@ -16,21 +14,3 @@ export const getShowRadiobuttons = (state, course) =>
  */
 export const getShowFiltergroups = (state, course) =>
   !state.showPlaylists || !getShowRadiobuttons(state, course);
-
-/**
- * Whether or not to show a flag in the lesson items in the playlist
- * @param {object} state The redux state object
- * @returns {boolean} Whether or not to show a flag in the lesson item in the playlist
- */
-export const showLessonItemFlag = createSelector(
-  // Input selectors:
-  getCheckedFilterLanguages,
-  (state) => state.language, // Chosen main language
-
-  // Output selector (resultfunc):
-  (checkedFilterLanguages, language) => {
-    const checkedExactlyOneLanguage = checkedFilterLanguages.length === 1;
-    const hideFlags = checkedExactlyOneLanguage && checkedFilterLanguages[0] === language;
-    return !hideFlags;
-  }
-);

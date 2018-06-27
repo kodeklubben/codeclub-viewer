@@ -14,7 +14,7 @@ import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 import {getLevel} from '../../resources/lessonData';
 import {getLessonIntro} from '../../resources/lessonContent';
 import {getTranslator} from '../../selectors/translate';
-import {showLessonItemFlag} from '../../selectors/playlist';
+import {onlyCheckedMainLanguage} from '../../selectors/filter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import styles from './LessonItem.scss';
 
@@ -43,12 +43,12 @@ const LessonItem = ({
   readmePath,
   popoverContent,
   isStudentMode,
-  showLessonItemFlag,
+  onlyCheckedMainLanguage,
   t,
   checkedCheckboxes,
   totalCheckboxes
 }) => {
-  const flag = showLessonItemFlag ?
+  const flag = !onlyCheckedMainLanguage ?
     <div className={styles.flag}><Flag language={language}/></div> : null;
 
   const instructionButton = isStudentMode ? null :
@@ -106,7 +106,7 @@ LessonItem.propTypes = {
   readmePath: PropTypes.string,
   popoverContent: PropTypes.string,
   isStudentMode: PropTypes.bool.isRequired,
-  showLessonItemFlag: PropTypes.bool.isRequired,
+  onlyCheckedMainLanguage: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
@@ -122,7 +122,7 @@ const mapStateToProps = (state, {course, lesson, language}) => {
     readmePath: getLessonFrontmatter(course, lesson, language, true).path,
     popoverContent: getLessonIntro(course, lesson, language, false),
     isStudentMode: state.isStudentMode,
-    showLessonItemFlag: showLessonItemFlag(state),
+    onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
     t: getTranslator(state),
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
     totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),

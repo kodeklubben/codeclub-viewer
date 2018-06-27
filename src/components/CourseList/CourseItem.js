@@ -13,9 +13,9 @@ import {getCourseFrontmatter, getCourseTitle, getLanguageIndependentCoursePath} 
 import {getCourseIntro} from '../../resources/courseContent';
 import {getCourseIcon} from '../../resources/courseIcon';
 import {getFilteredLessonsInCourse} from '../../selectors/lesson';
-import {showLessonItemFlag} from '../../selectors/playlist';
+import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
-const CourseItem = ({course, language, showLessonCount, lessonCount, coursePath, showExternalCourseFlags, t}) => {
+const CourseItem = ({course, language, showLessonCount, lessonCount, coursePath, onlyCheckedMainLanguage, t}) => {
   const courseTitle = getCourseTitle(course, language);
   const {external:externalLink} = getCourseFrontmatter(course, language);
   const popoverContent = getCourseIntro(course, language);
@@ -34,7 +34,7 @@ const CourseItem = ({course, language, showLessonCount, lessonCount, coursePath,
             {popoverButton}
             <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
           </span>
-          {showExternalCourseFlags ?
+          {!onlyCheckedMainLanguage ?
             <span>
               <Flag language={language}/>
             </span>:
@@ -63,7 +63,7 @@ CourseItem.propTypes = {
   showLessonCount: PropTypes.bool.isRequired,
   lessonCount: PropTypes.number,
   coursePath: PropTypes.string,
-  showExternalCourseFlags: PropTypes.bool.isRequired,
+  onlyCheckedMainLanguage: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 };
 
@@ -73,7 +73,7 @@ const mapStateToProps = (state, {course}) => {
     showLessonCount,
     lessonCount: showLessonCount ? getFilteredLessonsInCourse(state, course).length : null,
     coursePath: getLanguageIndependentCoursePath(course),
-    showExternalCourseFlags: showLessonItemFlag(state),
+    onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
     t: getTranslator(state),
   };
 };

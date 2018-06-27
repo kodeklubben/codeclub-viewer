@@ -4,6 +4,7 @@ import {getLessonTags, getLessonsInCourse, getLevel, isLessonIndexed} from '../r
 import {languagesMatchFilter, tagsMatchFilter} from '../util';
 import {getAllCourses} from '../resources/courseFrontmatter';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
+import {getTagsFilter} from './filter';
 
 /**
  * Get filtered lessons for all courses.
@@ -17,11 +18,11 @@ import {getLessonLanguages} from '../resources/lessonFrontmatter';
  */
 export const getFilteredLessons = createSelector(
   // Input selectors:
-  (state) => state.filter, // See structure in INITIAL_STATE in src/reducers/filter.js
+  state => state.filter.language,
+  getTagsFilter,
 
   // Output selector (resultfunc):
-  (filter) => {
-    const {language:languageFilter, ...tagsFilter} = filter;
+  (languageFilter, tagsFilter) => {
     const filteredLessons = {};
     for (const course of getAllCourses()) {
       filteredLessons[course] = getLessonsInCourse(course).filter(lesson => {
@@ -61,7 +62,7 @@ export const getFilteredLessonsInCourse = (state, course) => getFilteredLessons(
 export const getFilteredLessonsInCourseForLevel = createCachedSelector(
   // Input selectors:
   getFilteredLessonsInCourse,
-  (state, course, level) => course,
+  (state, course) => course,
   (state, course, level) => level,
 
   // Output selector (resultfunc):

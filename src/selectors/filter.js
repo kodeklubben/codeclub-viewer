@@ -54,6 +54,23 @@ export const getCheckedFilterLanguages = createSelector(
 );
 
 /**
+ * Whether or not to show a flag in the lesson items in the playlist
+ * @param {object} state The redux state object
+ * @returns {boolean} Whether or not to show a flag in the lesson item in the playlist
+ */
+export const onlyCheckedMainLanguage = createSelector(
+  // Input selectors:
+  getCheckedFilterLanguages,
+  (state) => state.language, // Chosen main language
+
+  // Output selector (resultfunc):
+  (checkedFilterLanguages, language) => {
+    const checkedExactlyOneLanguage = checkedFilterLanguages.length === 1;
+    return checkedExactlyOneLanguage && checkedFilterLanguages[0] === language;
+  }
+);
+
+/**
  * Get the filter without language.
  * @param {object} state The redux state object
  * @returns {object} Filter without language. See INITIAL_STATE in reducers/filter.js for structure.
