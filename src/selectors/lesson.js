@@ -4,7 +4,7 @@ import {getLessonTags, getLessonsInCourse, getLevel, isLessonIndexed} from '../r
 import {languagesMatchFilter, tagsMatchFilter} from '../util';
 import {getAllCourses} from '../resources/courseFrontmatter';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
-import {getTagsFilter} from './filter';
+import {getCheckedFilterLanguages, getTagsFilter} from './filter';
 
 /**
  * Get filtered lessons for all courses.
@@ -40,7 +40,7 @@ export const getFilteredLessons = createSelector(
       });
     }
     return filteredLessons;
-  },
+  }
 );
 
 /**
@@ -50,6 +50,35 @@ export const getFilteredLessons = createSelector(
  * @returns {string[]} An array of filtered lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */
 export const getFilteredLessonsInCourse = (state, course) => getFilteredLessons(state)[course] || [];
+
+/**
+ * Get number of lessons (in a course) per checked language.
+ * @param {object} state The redux state object
+ * @param {string} course Which course to count lessons for
+ * @returns {object} An object which shows how many lessons per language, e.g.
+ * {
+ *   nb: 5,
+ *   en: 2,
+ */
+export const getFilteredLessonsInCourseCountPerLanguage = createSelector(
+  // Input selectors:
+  (state, course) => course,
+  getFilteredLessonsInCourse,
+  getCheckedFilterLanguages,
+
+  // Output selector (resultfunc):
+  (course, lessons, filterLanguages) => {
+    const lessonsPerLanguage = {};
+    for (const lesson of lessons) {
+      for (const language of getLessonLanguages(course, lesson)) {
+        if (filterLanguages.includes(language)) {
+          lessonsPerLanguage[language] = (lessonsPerLanguage[language] || 0) + 1;
+        }
+      }
+    }
+    return lessonsPerLanguage;
+  }
+);
 
 
 /**

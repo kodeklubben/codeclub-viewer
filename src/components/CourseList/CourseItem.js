@@ -5,25 +5,40 @@ import styles from './CourseItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {getTranslator} from '../../selectors/translate';
 import PopoverComponent from '../PopoverComponent';
 import Flag from '../Flag';
+import LessonCount from './LessonCount';
 import {getShowFiltergroups} from '../../selectors/playlist';
 import {getCourseFrontmatter, getCourseTitle, getLanguageIndependentCoursePath} from '../../resources/courseFrontmatter';
 import {getCourseIntro} from '../../resources/courseContent';
 import {getCourseIcon} from '../../resources/courseIcon';
-import {getFilteredLessonsInCourse} from '../../selectors/lesson';
+import {getFilteredLessonsInCourseCountPerLanguage} from '../../selectors/lesson';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
-const CourseItem = ({course, language, showLessonCount, lessonCount, coursePath, onlyCheckedMainLanguage, t}) => {
+const CourseItem = ({course, language, showLessonCount, lessonsPerLanguage, coursePath, onlyCheckedMainLanguage}) => {
   const courseTitle = getCourseTitle(course, language);
   const {external:externalLink} = getCourseFrontmatter(course, language);
   const popoverContent = getCourseIntro(course, language);
+
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
     </PopoverComponent>
     : null;
+
+  const lessonCounts = !externalLink && showLessonCount ?
+    <div>
+      {Object.keys(lessonsPerLanguage).map(language =>
+        <LessonCount
+          key={language}
+          count={lessonsPerLanguage[language]}
+          language={language}
+          showFlag={!onlyCheckedMainLanguage}
+        />)
+      }
+    </div> :
+    null;
+
   return (
     <div>
       {externalLink ?
@@ -34,21 +49,13 @@ const CourseItem = ({course, language, showLessonCount, lessonCount, coursePath,
             {popoverButton}
             <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
           </span>
-          {!onlyCheckedMainLanguage ?
-            <span>
-              <Flag language={language}/>
-            </span>:
-            null
-          }
+          {!onlyCheckedMainLanguage ? <span><Flag language={language}/></span> : null}
         </a>
         :
         <Link className={styles.courseItem} to={coursePath}>
           <img className={styles.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
           <span className={styles.courseName}>{courseTitle}{popoverButton}</span>
-          {showLessonCount ?
-            <span className={styles.lessonCount}>{t('frontpage.lessoncount', {count: lessonCount})}</span> :
-            null
-          }
+          {lessonCounts}
         </Link>
       }
     </div>);
@@ -61,20 +68,18 @@ CourseItem.propTypes = {
 
   // mapStateToProps
   showLessonCount: PropTypes.bool.isRequired,
-  lessonCount: PropTypes.number,
+  lessonsPerLanguage: PropTypes.objectOf(PropTypes.number),
   coursePath: PropTypes.string,
   onlyCheckedMainLanguage: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, {course}) => {
   const showLessonCount = getShowFiltergroups(state);
   return {
     showLessonCount,
-    lessonCount: showLessonCount ? getFilteredLessonsInCourse(state, course).length : null,
+    lessonsPerLanguage: showLessonCount ? getFilteredLessonsInCourseCountPerLanguage(state, course) : null,
     coursePath: getLanguageIndependentCoursePath(course),
     onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
-    t: getTranslator(state),
   };
 };
 

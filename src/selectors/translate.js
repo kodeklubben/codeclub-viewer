@@ -1,4 +1,5 @@
 /**
+ * Get a translator function that gets captions in current language
  * @param {object} state
  * @returns {function} with params (captionPath, replacements), where
  *   param {string} captionPath A dot-separated path to the caption, e.g. 'myPage.firstPanel.btnText'
