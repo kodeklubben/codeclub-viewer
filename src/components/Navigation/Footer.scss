@@ -46,25 +46,12 @@
 }
 
 .divider {
-  margin-left: auto;
-  margin-right: auto;
   border-top: 1px solid;
   width: 50%;
 }
 
-.img:hover {
-  transform: scale(1.1);
-  box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.5);
-}
-
 .contribute {
-  text-align: center;
   font-size: 1.5em;
-  //font-weight: bold;
-}
-
-.githubIcon {
-  text-align: center;
 }
 
 .sponsors {

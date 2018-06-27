@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Panel from 'react-bootstrap/lib/Panel';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import Col from 'react-bootstrap/lib/Col';
+import Hidden from '@material-ui/core/Hidden';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -27,20 +27,20 @@ const LevelNavigation = ({t, levels, isStudentMode}) => {
   const header = t('playlist.levelnavigation');
   return (
     <div>
-      <Col xsHidden>
+      <Hidden only='xs'>
         <Panel {...{bsStyle, header}}>
           <ListGroup fill>
             {levelListItems}
           </ListGroup>
         </Panel>
-      </Col>
-      <Col smHidden mdHidden lgHidden>
+      </Hidden>
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <CollapsiblePanel initiallyExpanded={false} {...{bsStyle, header}}>
           <ListGroup fill>
             {levelListItems}
           </ListGroup>
         </CollapsiblePanel>
-      </Col>
+      </Hidden>
     </div>
   );
 };

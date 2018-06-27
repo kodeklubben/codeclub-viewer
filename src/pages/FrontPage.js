@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import styles from './FrontPage.scss';
 import Grid from '@material-ui/core/Grid';
 import LessonFilter from '../components/Filter/LessonFilter';
 import Courses from '../components/FrontPage/Courses';
@@ -9,12 +11,12 @@ import StartButton from '../components/FrontPage/StartButton';
 
 const FrontPage = ({isStudentMode}) => {
   return (
-    <div>
+    <div className={styles.container}>
       {isStudentMode ? <StartButton /> : <TeacherInfobox />}
       <hr/>
-      <Grid container justify='center'>
-        <Grid item xs={12} sm={3} lg={2} xl={1}><LessonFilter/></Grid>
-        <Grid item xs={12} sm={9} lg={10} xl={11}><Courses/></Grid>
+      <Grid container spacing={24}>
+        <Grid item xs={12} sm={4} lg={2}><LessonFilter/></Grid>
+        <Grid item xs={12} sm={8} lg={10}><Courses/></Grid>
       </Grid>
     </div>
   );
@@ -31,4 +33,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(FrontPage);
+)(withStyles(styles)(FrontPage));

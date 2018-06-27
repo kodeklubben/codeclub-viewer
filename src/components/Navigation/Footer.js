@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
+import Grid from '@material-ui/core/Grid';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
 
@@ -19,7 +18,7 @@ const Footer = ({t, isStudentMode}) => {
   };
 
   const sponsors = (
-    <Row className={styles.sponsors}>
+    <div className={styles.sponsors}>
       <a href={url.sparebank} target="_blank">
         <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}
           alt={'SpareBank1'}
@@ -55,23 +54,18 @@ const Footer = ({t, isStudentMode}) => {
           alt={'UIO institutt for informatikk'}
         />
       </a>
-    </Row>);
+    </div>);
 
   return (
-    <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-      <Row className={styles.githubIcon}>
-        <a href={url.oppgaver} target="_blank">
-          <img className={styles.svg} src={require('../../assets/graphics/github.png')}
-            alt={'GitHub'}
-          />
-        </a>
-      </Row>
-      <Row className={styles.contribute}>
-        <p><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
-      </Row>
-      <Row>
-        <div className={styles.divider}/>
-      </Row>
+    <Grid container direction='column' alignItems='center' justify='center'
+      className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+      <a className={styles.githubIcon} href={url.oppgaver} target="_blank">
+        <img className={styles.svg} src={require('../../assets/graphics/github.png')}
+          alt={'GitHub'}
+        />
+      </a>
+      <a className={styles.contribute} href={url.oppgaver} target="_blank">{t('footer.contribute')}</a>
+      <div className={styles.divider}/>
       {sponsors}
     </Grid>);
 };

@@ -12,7 +12,6 @@ import ToggleButton from './ToggleButton';
 import processContent from '../../processContent';
 import contentStyles from './Content.scss';
 import ImprovePage from './ImprovePage.js';
-import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../../selectors/translate';
 import {capitalize, setCheckboxes, anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import {getTitle, getLevel, getTags, getAuthorName, getTranslatorName} from '../../selectors/frontmatter';
@@ -106,9 +105,7 @@ class Lesson extends React.Component {
           {pdfButton}
           {progress}
           <div dangerouslySetInnerHTML={createMarkup(lesson.content)}/>
-          <Row>
-            <ImprovePage courseLessonFileProp={params}/>
-          </Row>
+          <ImprovePage courseLessonFileProp={params}/>
         </div>
       </DocumentTitle>
     );
