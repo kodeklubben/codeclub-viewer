@@ -5,9 +5,6 @@ import {getCourseLanguages} from '../resources/courseFrontmatter';
 import {getFilteredLessons} from './lesson';
 import {getTagsFilter} from './filter';
 
-const getLanguageFilter = (state) => state.filter.language;
-
-
 /**
  * Get internal courses that have more than one lesson after filter has been applied.
  * Courses are sorted by number of lessons (most lessons first).
@@ -66,7 +63,7 @@ export const getTagFilteredExternalCourses = createSelector(
 export const getFilteredExternalCoursesWithLanguages = createSelector(
   // Input selectors:
   getTagFilteredExternalCourses,
-  getLanguageFilter,
+  (state) => state.filter.language,
 
   // Output selector (resultfunc):
   (courses, languageFilter = {}) => {
