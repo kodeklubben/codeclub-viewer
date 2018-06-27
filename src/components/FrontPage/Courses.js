@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Courses.scss';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import CourseList from '../CourseList/CourseList';
@@ -14,26 +12,22 @@ const Courses = ({t, courses, externalCourses, showPlaylists}) => {
   const coursesLength = Object.keys(courses).length;
   const externalCoursesLength = Object.keys(externalCourses).length;
   return (
-    <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
+    <div>
       {coursesLength > 0 ?
-        <Row>
-          <Col xs={12}>
-            <div className={styles.header}>{t('frontpage.courses')}</div>
-            <CourseList courses={showPlaylists ? coursesWithPlaylists(courses) : courses}/>
-          </Col>
-        </Row>
+        <div>
+          <div className={styles.header}>{t('frontpage.courses')}</div>
+          <CourseList courses={showPlaylists ? coursesWithPlaylists(courses) : courses}/>
+        </div>
         : null}
       {externalCoursesLength > 0 && !showPlaylists ?
-        <Row>
-          <Col xs={12}>
-            <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
-            <CourseList courses={externalCourses}/>
-          </Col>
-        </Row>
-        :null}
+        <div>
+          <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
+          <CourseList courses={externalCourses}/>
+        </div>
+        : null}
       {coursesLength + externalCoursesLength !== 0 ? null :
         <div className={styles.noMatchingLessons}>{t('playlist.nomatchinglessons')}</div>}
-    </Col>
+    </div>
   );
 };
 

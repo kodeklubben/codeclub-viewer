@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import Hidden from '@material-ui/core/Hidden';
 import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
 import {getTranslator} from '../../selectors/translate';
@@ -12,7 +13,6 @@ import PopoverComponent from '../PopoverComponent';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
-import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
 const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
@@ -30,23 +30,23 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
   return (
     <div>
       {/*Filter desktop*/}
-      <Col xsHidden>
+      <Hidden only='xs'>
         <Panel {...{header, bsStyle}}>
           <ListGroup fill>
             {radioButtons}
             {groups}
           </ListGroup>
         </Panel>
-      </Col>
+      </Hidden>
       {/*Filter mobile*/}
-      <Col smHidden mdHidden lgHidden>
+      <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
           <ListGroup fill>
             {radioButtons}
             {groups}
           </ListGroup>
         </CollapsiblePanel>
-      </Col>
+      </Hidden>
       <ClearFilterButton/>
     </div>
   );
