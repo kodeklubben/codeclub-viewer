@@ -28,7 +28,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
   const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
   const groups = showFiltergroups ? filterGroups : null;
   return (
-    <div>
+    <div className={styles.marginTop}>
       {/*Filter desktop*/}
       <Hidden only='xs'>
         <Panel {...{header, bsStyle}}>
