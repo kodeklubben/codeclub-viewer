@@ -101,7 +101,6 @@
     "isomorphic-style-loader": "^4.0.0",
     "jsdom": "^9.2.1",
     "json-loader": "^0.5.4",
-    "markdown-it-anchor": "^2.5.0",
     "markdown-it-attrs": "^0.5.1",
     "markdown-it-header-sections": "^0.2.2",
     "markdown-it-implicit-figures": "^0.3.0",

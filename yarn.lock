@@ -5257,12 +5257,6 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-markdown-it-anchor@^2.5.0:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-2.7.1.tgz#372f67da7a4c4632ad0ebe4c9691726efe25342a"
-  dependencies:
-    string "^3.0.1"
-
 markdown-it-attrs@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/markdown-it-attrs/-/markdown-it-attrs-0.5.1.tgz#41e7b6cfe03ecd86fef29e84d3b6677089845704"
@@ -7975,10 +7969,6 @@ string-width@^2.1.0:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
-
-string@^3.0.1:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/string/-/string-3.3.3.tgz#5ea211cd92d228e184294990a6cc97b366a77cb0"
 
 string_decoder@^1.0.0, string_decoder@~1.0.3:
   version "1.0.3"
