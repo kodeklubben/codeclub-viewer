@@ -9,7 +9,6 @@ import {getFilteredLessonsInCourseCountPerLanguage} from '../../selectors/lesson
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
 const LessonCount = ({lessonsPerLanguage, showFlag, isTeacherMode, t}) => {
-  console.log(lessonsPerLanguage);
   const totalNumberOfLessons = Object.values(lessonsPerLanguage).reduce((sum, n) => sum + n, 0);
   return (
     <div className={styles.container}>

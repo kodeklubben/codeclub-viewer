@@ -10,14 +10,15 @@ import Flag from '../Flag';
 import {getAvailableLanguages} from '../../util';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
-const MainLanguageButton = ({course, lesson, isReadme, language, buttonText}) => (
-  <LinkContainer to={getLessonFrontmatter(course, lesson, language, isReadme).path}>
-    <Button className={styles.container} bsStyle={'info'} bsSize={'small'}>
+const MainLanguageButton = ({path, language, buttonText}) => {
+  const button = (
+    <Button className={styles.container} bsStyle={'info'} bsSize={'small'} disabled={!path}>
       <Flag language={language}/>
       <span className={styles.textMargin}>{buttonText}</span>
     </Button>
-  </LinkContainer>
-);
+  );
+  return path ? <LinkContainer to={path}>{button}</LinkContainer> : button;
+};
 
 MainLanguageButton.propTypes = {
   // ownProps
@@ -26,16 +27,22 @@ MainLanguageButton.propTypes = {
   isReadme: PropTypes.bool.isRequired,
 
   // mapStateToProps
+  path: PropTypes.string,
   language: PropTypes.oneOf(getAvailableLanguages()),
   buttonText: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, {course, lesson, isReadme}) => {
   const t = getTranslator(state);
   const tt = getTranslateTag(state);
+  const language = state.language; // E.g. 'en'
+  const lang = tt('language', language); // Name of language, e.g. 'English'
+  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+
   return {
-    language: state.language,
-    buttonText: t('lessons.tomainlanguage', {lang: tt('language', state.language)}),
+    path,
+    language,
+    buttonText: t(path ? 'lessons.tomainlanguage' : 'lessons.nottranslated', {lang}),
   };
 };
 

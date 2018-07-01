@@ -67,6 +67,7 @@ export default {
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
     tomainlanguage: 'In {{lang}}',
+    nottranslated: 'This page does not exist in {{lang}}',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',
