@@ -1,10 +1,20 @@
 @import '../../styles/variables';
 
-.noFlag {
+.container {
   color: $color-gray;
+  text-align: center;
+}
+
+.center {
+  display: inline-block;
+  width: 100%;
 }
 
 .flag {
-  color: $color-gray;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+.flagCount {
   padding-left: 5px;
 }
