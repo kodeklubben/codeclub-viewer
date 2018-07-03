@@ -33,7 +33,6 @@ InstructionButton.propTypes = {
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
-
   onlyIcon: PropTypes.bool,
   insideLink: PropTypes.bool, // set to true if button is nested inside a <a>...</a>
 
@@ -41,10 +40,10 @@ InstructionButton.propTypes = {
   buttonText: PropTypes.string,
 };
 
-const mapStateToProps = (state, {isReadme}) => {
+const mapStateToProps = (state, {isReadme, onlyIcon}) => {
   const t = getTranslator(state);
   return {
-    buttonText: t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson'),
+    buttonText: onlyIcon ? '' : t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson'),
   };
 };
 

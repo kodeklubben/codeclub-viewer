@@ -35,12 +35,13 @@ const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
 };
 
 const LessonItem = ({
+  course,
+  lesson,
   language,
   title,
   level,
   path,
   external,
-  readmePath,
   popoverContent,
   isStudentMode,
   onlyCheckedMainLanguage,
@@ -52,7 +53,7 @@ const LessonItem = ({
     <div className={styles.flag}><Flag language={language}/></div> : null;
 
   const instructionButton = isStudentMode ? null :
-    <InstructionButton path={readmePath} isReadme={true} onlyIcon={true} insideLink={true} />;
+    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
@@ -103,7 +104,6 @@ LessonItem.propTypes = {
   level: PropTypes.number,
   path: PropTypes.string.isRequired,
   external: PropTypes.string,
-  readmePath: PropTypes.string,
   popoverContent: PropTypes.string,
   isStudentMode: PropTypes.bool.isRequired,
   onlyCheckedMainLanguage: PropTypes.bool.isRequired,
@@ -119,7 +119,6 @@ const mapStateToProps = (state, {course, lesson, language}) => {
     level: getLevel(course, lesson),
     path,
     external,
-    readmePath: getLessonFrontmatter(course, lesson, language, true).path,
     popoverContent: getLessonIntro(course, lesson, language, false),
     isStudentMode: state.isStudentMode,
     onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
