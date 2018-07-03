@@ -3,7 +3,7 @@ import {assignDeep, capitalize, getAvailableLanguages} from '../util';
 
 // lessonSrc/*/index*.md, only frontmatter
 // The keys are of the form './course/index*.md'
-// Note that this require.context should be identical to the one for courseContent.js, except with 'frontmatter!'
+// Note that the regex should be identical to the one for courseContent.js.
 const courseFrontmatterContext =
   require.context('!!json-loader!front-matter-loader?onlyAttributes!lessonSrc/',
     true, /^[.][/][^/]+[/]index[^.]*[.]md$/);

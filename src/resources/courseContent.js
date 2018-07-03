@@ -5,7 +5,7 @@ import {extractFirstPartOfHtml} from '../util';
 
 // lessonSrc/*/index*.md, only frontmatter
 // The keys are of the form './course/index*.md'
-// Note that this require.context should be identical to the one for courseFrontmatter.js, except without 'frontmatter!'
+// Note that the regex should be identical to the one for courseFrontmatter.js.
 const courseContentContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/]index[^.]*[.]md$/);
 

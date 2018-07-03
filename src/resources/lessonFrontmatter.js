@@ -1,12 +1,13 @@
 import memoize from 'fast-memoize';
 import {assignDeep} from '../util';
 
-// lessonSrc/*/*/*.md, only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)
+// Gets all lessonSrc/*/*/*.md except lessonSrc/*/playlists/*
+// Gets only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)
 // The keys are of the form './course/lesson/file.md'
-// Note that this require.context should be identical to the one for lessonContent.js, except with 'frontmatter!'
+// Note that the regex should be identical to the one for lessonContent.js.
 const lessonFrontmatterContext =
   require.context('!!json-loader!front-matter-loader?onlyAttributes!lessonSrc/',
-    true, /^[.][/][^/]+[/][^/]+[/][^.]+[.]md$/);
+    true, /^[.][/][^/]+[/](?!playlists[/])[^/]+[/][^.]+[.]md$/);
 
 
 /**
