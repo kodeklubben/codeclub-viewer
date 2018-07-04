@@ -7,7 +7,6 @@ import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import AutoAffix from 'react-overlays/lib/AutoAffix';
-import cx from 'classnames';
 import styles from './CoursePage.scss';
 import {getTranslator} from '../selectors/translate';
 import {getShowFiltergroups} from '../selectors/playlist';
@@ -22,13 +21,13 @@ import {getFilteredLevelsInCourse} from '../selectors/lesson';
 const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
   const {course} = params;
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
-  const filter = <Col xs={12} sm={3} className={cx({[styles.topMargin]: lessonLists.length})}>
+  const filter = <Col xs={12} sm={3} className={styles.topMargin}>
     <LessonFilter course={course}/>
   </Col>;
   const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
   let thispage = null;
   const jumpToAffixed = jumpTo ?
-    <Col xsHidden sm={3} className={cx(styles.jumpTo, {[styles.topMargin]: lessonLists.length})}>
+    <Col xsHidden sm={3} className={styles.jumpTo}>
       <AutoAffix viewportOffsetTop={15} container={() => thispage}>
         {jumpTo}
       </AutoAffix>

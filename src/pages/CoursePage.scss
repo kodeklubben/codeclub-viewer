@@ -9,12 +9,14 @@
 }
 
 .jumpTo {
+  composes: topMargin;
   @media (min-width: $screen-sm-min) {
     height: 0;
   }
 }
 
 .noMatchingLessons {
+  composes: topMargin;
   font-size: 1.25em;
   font-weight: bold;
 }
