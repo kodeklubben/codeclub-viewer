@@ -10,6 +10,7 @@
 
 .jumpTo {
   composes: topMargin;
+
   @media (min-width: $screen-sm-min) {
     height: 0;
   }

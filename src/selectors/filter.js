@@ -100,7 +100,8 @@ export const getTagsFilter = createSelector(
 
   // Output selector (resultfunc):
   (filter) => {
-    const {language, ...tagsFilter} = filter; // Remove language from filter
+    const tagsFilter = {...filter}; // shallow clone
+    delete tagsFilter.language;
     return tagsFilter;
   }
 );
