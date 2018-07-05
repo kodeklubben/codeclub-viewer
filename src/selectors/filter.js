@@ -2,6 +2,16 @@ import {createSelector} from 'reselect';
 import createCachedSelector from 're-reselect';
 
 
+/**
+ * Uncached function that returns false if
+ *   the filter group is 'language' and exactly one item is checked, or
+ *   the filter group is not 'language' and exactly zero items are checked.
+ * Returns true otherwise.
+ * @param {object} filter See structure of INITIAL_STATE in src/reducers/filter.js
+ * @param {string} language E.g. 'nb'
+ * @param {string} groupKey E.g. 'language', 'topic', 'subject', or 'grade'
+ * @returns {boolean}
+ */
 const isSomethingCheckedInGroup = (filter = {}, language, groupKey) => {
   if (!filter.hasOwnProperty(groupKey)) {
     return false;
@@ -16,7 +26,11 @@ const isSomethingCheckedInGroup = (filter = {}, language, groupKey) => {
 };
 
 /**
- * Input props: groupKey
+ * Cached (selector) function returning isSomethingCheckedInGroup (see description for this function).
+ * The answer is cached per groupKey.
+ * @param {object} state The redux state object
+ * @param {string} groupKey E.g. 'language', 'topic', 'subject', or 'grade'
+ * @returns {boolean}
  */
 export const somethingCheckedInGroup = createCachedSelector(
   (state) => state.filter,
@@ -28,7 +42,12 @@ export const somethingCheckedInGroup = createCachedSelector(
 );
 
 /**
- * Input props: None
+ * Cached (selector) function that returns false if
+ *   the filter group 'language' has exactly one item checked, and
+ *   all filter groups that are not 'language' has exactly zero items checked.
+ * Returns true otherwise.
+ * @param {object} state The redux state object
+ * @returns {boolean}
  */
 export const somethingCheckedInFilter = createSelector(
   (state) => state.filter,
@@ -56,7 +75,7 @@ export const getCheckedFilterLanguages = createSelector(
 /**
  * Whether or not to show a flag in the lesson items in the playlist
  * @param {object} state The redux state object
- * @returns {boolean} Whether or not to show a flag in the lesson item in the playlist
+ * @returns {boolean}
  */
 export const onlyCheckedMainLanguage = createSelector(
   // Input selectors:

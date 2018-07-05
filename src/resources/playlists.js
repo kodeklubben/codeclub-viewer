@@ -7,7 +7,7 @@ export const playlistContext =
 
 /**
  * Get playlist structure
- * @returns {object} An object with playlist data, e.g.
+ * @returns {object} An object with playlist data for all playlists in all courses, e.g.
  * {
  *   scratch: {
  *     playlist1: {
@@ -63,6 +63,21 @@ export const getPlaylistsForCourse = memoize(
   }
 );
 
+/**
+ * Get data for a specific playlist in a course
+ * @param {string} course E.g. 'scratch'
+ * @param {string} playlist The filename of the playlist (without extension) e.g. 'playlist1'
+ * @returns {object} An object with playlist data for one playlist
+ * {
+ *   sortindex: 1,
+ *   title: {
+ *     nb: 'Tittel på oppgavesamling1 bokmål',
+ *     nn: 'Tittel på oppgavesamling1 nynorsk',
+ *     en: 'The playlist1 title',
+ *   }
+ *   lessons: ['astrokatt', 'straffespark'],
+ * }
+ */
 const getPlaylist = (course, playlist) => (getPlaylistStructure()[course] || {})[playlist] || {};
 
 /**

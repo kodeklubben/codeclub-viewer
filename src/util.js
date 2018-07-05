@@ -2,7 +2,6 @@
 
 /**
  * Makes first character in str upper case
- *
  * @param {string} str
  * @returns {string}
  */
@@ -12,7 +11,6 @@ export function capitalize(str) {
 
 /**
  * Returns the filename, like the unix equivalent and path.dirname. Trailing slashes are ignored.
- *
  * @path {string} any path
  * @returns {string} the whole path, except the filename
  */
@@ -24,7 +22,6 @@ export function basename(path) {
 
 /**
  * Returns the path except the filename, like the unix equivalent and path.basename. Trailing slashes are ignored.
- *
  * @path {string} any path
  * @returns {string} only the filename
  */
@@ -43,7 +40,6 @@ export const removeDuplicates = (array) => [...new Set(array)];
 
 /** Assigns value to a nested object, even if the subobjects don't exist.
  *  I.e. assignDeep(obj, [1,2,3], 9) where obj={}, makes obj[1][2][3] === 9
- *
  * @param {object} obj
  * @param {array} keys
  * @param {*} value
@@ -197,9 +193,8 @@ export const getKeysWithTrueValues = (obj) => Object.keys(obj).filter(key => obj
 
 /**
  * Return true only if tags of a lesson or course contains all the checked tags in the filter
- * =
  * @param {Object} lessonTags LessonTags or courseTags e.g. {topic: ['game'], subject: ['science']}
- * @param {Object} tagsFilter e.g. {topic: {game: false, animation: true}, subject: {mathematics: false, english: true}}}
+ * @param {Object} tagsFilter e.g. {topic: {game: false, robot: true}, subject: {mathematics: false, english: true}}}
  * @returns {boolean}
  */
 export const tagsMatchFilter = (lessonTags, tagsFilter) => {
@@ -208,8 +203,8 @@ export const tagsMatchFilter = (lessonTags, tagsFilter) => {
   }
   const groupKeys = Object.keys(tagsFilter); // groupKeys is e.g. ['topic', 'subject']
   for (let groupKey of groupKeys) { // groupKey is e.g. 'topic'
-    const filterGroup = tagsFilter[groupKey]; // the whole filter group, e.g. {game: false, animation: true}
-    const checkedTagKeys = getKeysWithTrueValues(filterGroup); // only the checked tags; e.g. ['animation']
+    const filterGroup = tagsFilter[groupKey]; // the whole filter group, e.g. {game: false, robot: true}
+    const checkedTagKeys = getKeysWithTrueValues(filterGroup); // only the checked tags; e.g. ['robot']
     const lessonGroup = lessonTags[groupKey] || []; // e.g. ['game']
     if (checkedTagKeys.length > 0 && lessonGroup.length === 0) {
       // this is a filter with checked tags, and lesson doesn't have this group
@@ -249,6 +244,8 @@ export const getAvailableLanguages = () => getFilterkeys().language;
 /**
  * Based on an implementation of Java's string to integer hashCode function.
  * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+ * @param {string} str Any string you wish to hash
+ * @returns {number} e.g. 1395333309
  */
 export function hashCode(str) {
   let hash = 0, i, chr;
@@ -259,6 +256,11 @@ export function hashCode(str) {
   return Math.abs(hash);
 }
 
+/**
+ * Get a string used to store checkboxes in localstorage
+ * @param {string} path e.g. './path/to/file.md' or '/path/to/file' or 'path/to/file.md'
+ * @returns {string} e.g. 'checkboxes_path/to/file'
+ */
 export function createCheckboxesKey(path = 'undefined') {
   path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
   return 'checkboxes_' + path;

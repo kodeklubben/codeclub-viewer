@@ -71,7 +71,6 @@ export const getExternalCourses = memoize(
 
 /**
  * Get tags for the course.
- *
  * @param {string} course E.g. 'kodegenet'
  * @returns {object} E.g.
  {

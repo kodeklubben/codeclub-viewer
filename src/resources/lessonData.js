@@ -73,6 +73,12 @@ const getLessonMetadata = (course, lesson) => (getLessons()[course] || {})[lesso
  */
 export const getLessonTags = (course, lesson) => getLessonMetadata(course, lesson).tags;
 
+/**
+ * Whether or not a lesson is indexed, i.e. if it should be shown when displaying filtered lessons per level
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @returns {boolean} Whether or not the lesson is indexed
+ */
 export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, lesson).indexed;
 
 /**
