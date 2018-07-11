@@ -48,17 +48,17 @@ const INITIAL_STATE = {
       },
       topic: {
         app: true,
+        cryptography: false,
         electronics: false,
-        step_based: false,
         block_based: false,
+        step_based: false,
         text_based: false,
         minecraft: false,
         web: false,
         game: true,
         robot: false,
-        animation: false
+        animation: false,
         sound: false,
-        cryptography: false,
       },
       subject: {
         mathematics: false,
