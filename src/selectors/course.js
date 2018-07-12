@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {getCourseTags, getExternalCourses} from '../resources/courseData';
+import {getCourseTags, getExternalCourses} from '../resources/courses';
 import {tagsMatchFilter} from '../util';
 import {getCourseLanguages} from '../resources/courseFrontmatter';
 import {getFilteredLessons} from './lesson';

@@ -1,9 +1,9 @@
 import jsdom from 'jsdom';
 import mock from 'mock-require';
 import mockFiltertagKeys from './mockData/filtertagKeys';
-import mockCourseData from './mockContextData/courseData';
+import mockCourses from './mockContextData/courses';
 import mockCourseFrontmatter from './mockContextData/courseFrontmatter';
-import mockLessonData from './mockContextData/lessonData';
+import mockLessons from './mockContextData/lessons';
 import mockLessonFrontmatter from './mockContextData/lessonFrontmatter';
 import mockPlaylists from './mockContextData/playlists';
 
@@ -39,9 +39,9 @@ Object.getPrototypeOf(require).context = (directory, useSubdirectories = false, 
   //console.log(`directory:${directory}, useSubdirectories:${useSubdirectories}, regExp:${regExp}`);
   // NOTE: The regexps need to match the corresponding real contexts in src/resources/
   const mockDataObj = {
-    [/^[.][/][^/]+[/]data[.]yml$/]: mockCourseData,
+    [/^[.][/][^/]+[/]course[.]yml$/]: mockCourses,
     [/^[.][/][^/]+[/]index[^.]*[.]md$/]: mockCourseFrontmatter,
-    [/^[.][/][^/]+[/][^/]+[/]data[.]yml$/]: mockLessonData,
+    [/^[.][/][^/]+[/][^/]+[/]lesson[.]yml$/]: mockLessons,
     [/^[.][/][^/]+[/](?!playlists[/])[^/]+[/][^.]+[.]md$/]: mockLessonFrontmatter,
     [/^[.][/][^/]+[/]playlists[/][^.]+[.]yml/]: mockPlaylists,
   };

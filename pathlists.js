@@ -20,7 +20,7 @@ const coursePaths = (ending) => {
 };
 
 /**
- * Get paths to all lessons. Currently based on all "src / * / * /data.yml"
+ * Get paths to all lessons. Currently based on all "src / * / * /lesson.yml"
  * @param {string} ending Optional ending to be added at the end of the paths
  * @param {boolean} verbose Set to true for debug info
  * @returns {string[]} The paths without a leading /
@@ -34,7 +34,7 @@ const lessonPaths = (ending, verbose) => {
   }
 
   // Get list of all lessons as paths like 'scratch/astrokatt'
-  const lessons = glob.sync(path.join(lessonSrcPath, '*/*/data.yml')).map(p => path.dirname(p));
+  const lessons = glob.sync(path.join(lessonSrcPath, '*/*/lesson.yml')).map(p => path.dirname(p));
 
   let paths = [];
   for (const lesson of lessons) {

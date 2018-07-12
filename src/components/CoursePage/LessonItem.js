@@ -11,7 +11,7 @@ import InstructionButton from '../InstructionButton';
 import Flag from '../Flag';
 import {createCheckboxesKey} from '../../util';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
-import {getLevel} from '../../resources/lessonData';
+import {getLevel} from '../../resources/lessons';
 import {getLessonIntro} from '../../resources/lessonContent';
 import {getTranslator} from '../../selectors/translate';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';

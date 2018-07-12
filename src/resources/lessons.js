@@ -1,17 +1,17 @@
 import memoize from 'fast-memoize';
 import {assignDeep, cleanseTags} from '../util';
 
-// lessonSrc/*/*/data.yml
-const lessonDataContext =
-  require.context('lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/]data[.]yml$/);
+// lessonSrc/*/*/lesson.yml
+const lessonsContext =
+  require.context('lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/]lesson[.]yml$/);
 
 /**
- * Get structure of lessons with data from data.yml files
+ * Get structure of lessons with data from lesson.yml files
  * @returns {object} An object of lessons, e.g.
  * {
  *   scratch: {
  *     astrokatt: {
- *       indexed: false, // true unless 'indexed: false' explicitly exists in data.yml
+ *       indexed: false, // true unless 'indexed: false' explicitly exists in lesson.yml
  *       level: 1,
  *       tags: {
  *         topic: ['block_based', 'app'],
@@ -32,9 +32,9 @@ const lessonDataContext =
 const getLessons = memoize(
   () => {
     const lessons = {};
-    for (const key of lessonDataContext.keys()) {
-      const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]data[.]yml$/);
-      const {level, tags, indexed} = lessonDataContext(key);
+    for (const key of lessonsContext.keys()) {
+      const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]lesson[.]yml$/);
+      const {level, tags, indexed} = lessonsContext(key);
       const data = {level, tags: cleanseTags(tags, key), indexed: indexed !== false};
       assignDeep(lessons, [course, lesson], data);
     }
@@ -90,7 +90,7 @@ export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, les
 export const getLevel = (course, lesson) => ((getLessons()[course] || {})[lesson] || {}).level || 0;
 
 /**
- * Get lessons in a course. Will return all lessons that have a data.yml file.
+ * Get lessons in a course. Will return all lessons that have a lesson.yml file.
  * @param {string} course E.g. 'scratch'
  * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */

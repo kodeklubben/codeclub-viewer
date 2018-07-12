@@ -12,7 +12,7 @@ const courseFrontmatterContext =
 /**
  * Get all courses, with all languages, based on the index*.md files.
  * Note that not all languages need to be present.
- * Also, only courses with isExternal:true in data.yml have 'external'.
+ * Also, only courses with isExternal:true in course.yml have 'external'.
  * External courses have no lessons.
  *
  * @returns {object} An object with the frontmatter data of courses, e.g.

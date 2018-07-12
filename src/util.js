@@ -129,7 +129,7 @@ export const extractFirstPartOfHtml = (html, path) => {
  * @param {string} src
  * @returns {Object} valid tags
  */
-// TODO: Consider moving cleanseTags to resources/lessonData.js
+// TODO: Consider moving cleanseTags to resources/lessons.js
 export function cleanseTags(tags, src) {
   if (tags == null) return {};
 

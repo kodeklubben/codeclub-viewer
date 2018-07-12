@@ -1,14 +1,14 @@
 import memoize from 'fast-memoize';
 import {cleanseTags} from '../util';
 
-// lessonSrc/*/data.yml
-const courseDataContext =
-  require.context('lessonSrc/', true, /^[.][/][^/]+[/]data[.]yml$/);
+// lessonSrc/*/course.yml
+const coursesContext =
+  require.context('lessonSrc/', true, /^[.][/][^/]+[/]course[.]yml$/);
 
 /**
- * Get structure of courses with data from data.yml files
- * Currently, only external courses has a data.yml file, but this could change in the future.
- * External courses are courses that have 'isExternal' in data.yml.
+ * Get structure of courses with data from course.yml files
+ * Currently, only external courses has a course.yml file, but this could change in the future.
+ * External courses are courses that have 'isExternal' in course.yml.
  * External courses have no lessons.
  * Currently, only external courses have tags, but this could change in the future.
  * @returns {object} An object of courses, e.g.
@@ -30,9 +30,9 @@ const courseDataContext =
 const getCourses = memoize(
   () => {
     const courses = {};
-    for (const key of courseDataContext.keys()) {
-      const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]data[.]yml$/);
-      const {isExternal, tags} = courseDataContext(key);
+    for (const key of coursesContext.keys()) {
+      const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]course[.]yml$/);
+      const {isExternal, tags} = coursesContext(key);
       courses[course] = {isExternal, tags: cleanseTags(tags, key)};
     }
     return courses;

@@ -7,7 +7,7 @@ import LevelIcon from '../LevelIcon';
 import LessonWrapper from './LessonWrapper';
 import {getTranslator} from '../../selectors/translate';
 import {getFilteredLessonsInCourseForLevel} from '../../selectors/lesson';
-import {isLessonIndexed} from '../../resources/lessonData';
+import {isLessonIndexed} from '../../resources/lessons';
 import styles from './LessonList.scss';
 
 export const lessonListId = (level) => 'lessonlist-level-' + level;

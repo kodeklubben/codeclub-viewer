@@ -13,7 +13,7 @@ import {setShowPlaylists} from './reducers/showPlaylists';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
 import {getAllCourses} from './resources/courseFrontmatter';
-import {getLessonsInCourse} from './resources/lessonData';
+import {getLessonsInCourse} from './resources/lessons';
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';

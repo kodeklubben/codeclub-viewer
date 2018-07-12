@@ -1,6 +1,6 @@
 import createCachedSelector from 're-reselect';
 import {createSelector} from 'reselect';
-import {getLessonTags, getLessonsInCourse, getLevel, isLessonIndexed} from '../resources/lessonData';
+import {getLessonTags, getLessonsInCourse, getLevel, isLessonIndexed} from '../resources/lessons';
 import {languagesMatchFilter, tagsMatchFilter} from '../util';
 import {getAllCourses} from '../resources/courseFrontmatter';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
@@ -84,8 +84,8 @@ export const getFilteredLessonsInCourseCountPerLanguage = createSelector(
 /**
  * Get filtered lessons in a course for a specific level
  * @param {object} state The redux state object
- * @param {string} course Which course to get lessons for
- * @param {number} level Which level to get lessons for
+ * @param {string} course Which course to get lessons for, e.g. 'scratch'
+ * @param {number} level Which level to get lessons for, e.g. '2'
  * @returns {string[]} An array of filtered lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */
 export const getFilteredLessonsInCourseForLevel = createCachedSelector(
@@ -103,7 +103,7 @@ export const getFilteredLessonsInCourseForLevel = createCachedSelector(
 /**
  * Get levels of filtered lessons in a course.
  * @param {object} state The redux state object
- * @param {string} course Which course to get lessons for
+ * @param {string} course Which course to get lessons for, e.g. 'scratch'
  * @returns {number[]} An array of levels from filtered lessons, sorted, e.g. [1, 2, 3, 4]
  */
 export const getFilteredLevelsInCourse = createCachedSelector(
