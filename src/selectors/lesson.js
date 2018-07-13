@@ -2,12 +2,12 @@ import createCachedSelector from 're-reselect';
 import {createSelector} from 'reselect';
 import {getLessonTags, getLessonsInCourse, getLevel, isLessonIndexed} from '../resources/lessons';
 import {languagesMatchFilter, tagsMatchFilter} from '../util';
-import {getAllCourses} from '../resources/courseFrontmatter';
+import {getCourses} from '../resources/courses';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
 import {getCheckedFilterLanguages, getTagsFilter} from './filter';
 
 /**
- * Get filtered lessons for all courses.
+ * Get filtered lessons for all (internal) courses.
  * @param {object} state The redux state object.
  * @returns {object} An object where the keys are the courses, and the values are arrays of courses, e.g.
  * {
@@ -24,7 +24,7 @@ export const getFilteredLessons = createSelector(
   // Output selector (resultfunc):
   (languageFilter, tagsFilter) => {
     const filteredLessons = {};
-    for (const course of getAllCourses()) {
+    for (const course of getCourses()) {
       filteredLessons[course] = getLessonsInCourse(course).filter(lesson => {
         try {
           return (

@@ -1,6 +1,6 @@
 // TODO: Perhaps use code-splitting / react-loadable / bundle-loader or similar here.
 
-import {getCourseFrontmatter} from './courseFrontmatter';
+import {getCoursePath, getCourseKey} from './courseFrontmatter';
 import {extractFirstPartOfHtml} from '../util';
 
 // lessonSrc/*/index*.md, only frontmatter
@@ -16,7 +16,7 @@ const courseContentContext =
  * @return {string} HTML markup
  */
 export const getCourseInfo = (course, language) => {
-  const {key} = getCourseFrontmatter(course, language);
+  const key = getCourseKey(course, language);
   return key ? courseContentContext(key) : '';
 };
 
@@ -28,6 +28,6 @@ export const getCourseInfo = (course, language) => {
  */
 export const getCourseIntro = (course, language) => {
   const courseContent = getCourseInfo(course, language);
-  const {path} = getCourseFrontmatter(course, language);
+  const path = getCoursePath(course, language);
   return extractFirstPartOfHtml(courseContent, path);
 };

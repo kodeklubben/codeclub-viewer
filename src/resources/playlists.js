@@ -6,8 +6,8 @@ export const playlistContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/]playlists[/][^.]+[.]yml/);
 
 /**
- * Get playlist structure
- * @returns {object} An object with playlist data for all playlists in all courses, e.g.
+ * Get playlist data for all playlists in all courses
+ * @returns {object} E.g.
  * {
  *   scratch: {
  *     playlist1: {
@@ -35,7 +35,7 @@ export const playlistContext =
  *   }
  * }
  */
-const getPlaylistStructure = memoize(
+const getData = memoize(
   () => {
     const playlists = {};
     for (const key of playlistContext.keys()) {
@@ -55,7 +55,7 @@ const getPlaylistStructure = memoize(
  */
 export const getPlaylistsForCourse = memoize(
   (course) => {
-    const coursePlaylists = getPlaylistStructure()[course] || {};
+    const coursePlaylists = getData()[course] || {};
     const playlists = Object.keys(coursePlaylists);
     const sortFunc = (p1, p2) => coursePlaylists[p1].sortindex - coursePlaylists[p2].sortindex;
     playlists.sort(sortFunc);
@@ -78,7 +78,7 @@ export const getPlaylistsForCourse = memoize(
  *   lessons: ['astrokatt', 'straffespark'],
  * }
  */
-const getPlaylist = (course, playlist) => (getPlaylistStructure()[course] || {})[playlist] || {};
+const getPlaylist = (course, playlist) => (getData()[course] || {})[playlist] || {};
 
 /**
  * Get a list of all courses that have playlists, sorted alphabetically.
@@ -86,7 +86,7 @@ const getPlaylist = (course, playlist) => (getPlaylistStructure()[course] || {})
  */
 export const getCoursesWithPlaylists = memoize(
   () => {
-    return Object.keys(getPlaylistStructure()).sort();
+    return Object.keys(getData()).sort();
   }
 );
 

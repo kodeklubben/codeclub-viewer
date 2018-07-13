@@ -10,7 +10,7 @@ const courseFrontmatterContext =
 
 
 /**
- * Get all courses, with all languages, based on the index*.md files.
+ * Get language dependent data on all courses based on the index*.md files.
  * Note that not all languages need to be present.
  * Also, only courses with isExternal:true in course.yml have 'external'.
  * External courses have no lessons.
@@ -43,7 +43,7 @@ const courseFrontmatterContext =
  *   ...
  * }
  */
-const getCourses = memoize(
+const getData = memoize(
   () => {
     const courses = {};
     for (const key of courseFrontmatterContext.keys()) {
@@ -62,27 +62,12 @@ const getCourses = memoize(
 );
 
 /**
- * Get a list of all courses based on the course index files
- * @returns {string[]} An array of all courses, e.g. ['scratch', 'python', ...]
- */
-export const getAllCourses = memoize(
-  () => Object.keys(getCourses())
-);
-
-/**
- * Whether the course exists
- * @param {string} course E.g. 'scratch'
- * @returns {boolean}
- */
-export const isValidCourse = (course) => getAllCourses().includes(course);
-
-/**
  * Get the frontmatter of a course for a given language
  * @param {string} course E.g. 'scratch'
  * @param {string} language E.g. 'nb'
  * @return {object} E.g. {title: 'Scratch', key: './scratch/index.md'}
  */
-export const getCourseFrontmatter = (course, language) => (getCourses()[course] || {})[language] || {};
+const getCourseFrontmatter = (course, language) => (getData()[course] || {})[language] || {};
 
 /**
  * Get the title of a course for a given language
@@ -93,15 +78,33 @@ export const getCourseFrontmatter = (course, language) => (getCourses()[course] 
 export const getCourseTitle = (course, language) => getCourseFrontmatter(course, language).title || capitalize(course);
 
 /**
- * Get language independent path to course
+ * Get the external link of an external course for a given language if it exists (empty string if not)
  * @param {string} course E.g. 'scratch'
- * @returns {string} The path to the course, e.g. '/scratch'
+ * @param {string} language E.g. 'nb'
+ * @return {string} The external link of the course, or an empty string
  */
-export const getLanguageIndependentCoursePath = (course) => isValidCourse(course) ? `/${course}` : '';
+export const getCourseExternalLink = (course, language) => getCourseFrontmatter(course, language).external || '';
+
+/**
+ * Get the path of a course for a given language
+ * @param {string} course E.g. 'scratch'
+ * @param {string} language E.g. 'nb'
+ * @return {string}
+ */
+export const getCoursePath = (course, language) => getCourseFrontmatter(course, language).path;
+
+/**
+ * TODO: See if this method can be removed when using dynamic imports for courseContent
+ * Get the context key of a course for a given language
+ * @param {string} course E.g. 'scratch'
+ * @param {string} language E.g. 'nb'
+ * @return {string}
+ */
+export const getCourseKey = (course, language) => getCourseFrontmatter(course, language).key;
 
 /**
  * Get all languages of the course (given by course title)
  * @param {string} course E.g. 'scratch'
  * @returns {string[]} A list of languages, e.g. ['nb', 'en']
  */
-export const getCourseLanguages = (course) => Object.keys((getCourses()[course] || {}));
+export const getCourseLanguages = (course) => Object.keys((getData()[course] || {}));

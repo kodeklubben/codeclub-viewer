@@ -12,15 +12,12 @@ import {getShowFiltergroups} from '../../selectors/playlist';
 import {getCourseIntro} from '../../resources/courseContent';
 import {getCourseIcon} from '../../resources/courseIcon';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
-import {
-  getCourseFrontmatter,
-  getCourseTitle,
-  getLanguageIndependentCoursePath,
-} from '../../resources/courseFrontmatter';
+import {getCourseExternalLink, getCourseTitle} from '../../resources/courseFrontmatter';
+import {getLanguageIndependentCoursePath} from '../../resources/courses';
 
 const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedMainLanguage}) => {
   const courseTitle = getCourseTitle(course, language);
-  const {external:externalLink} = getCourseFrontmatter(course, language);
+  const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
 
   const popoverButton = popoverContent ?

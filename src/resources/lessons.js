@@ -6,7 +6,7 @@ const lessonsContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/][^/]+[/]lesson[.]yml$/);
 
 /**
- * Get structure of lessons with data from lesson.yml files
+ * Get language independent data on all lessons from lesson.yml files.
  * @returns {object} An object of lessons, e.g.
  * {
  *   scratch: {
@@ -29,7 +29,7 @@ const lessonsContext =
  *   ...
  * }
  */
-const getLessons = memoize(
+const getData = memoize(
   () => {
     const lessons = {};
     for (const key of lessonsContext.keys()) {
@@ -58,7 +58,7 @@ const getLessons = memoize(
   Note that 'indexed' key might be missing, in which case it is assumed to be true.
   If 'indexed' === false it means that this lesson will only show up in the playlists (oppgavesamlinger)
  */
-const getLessonMetadata = (course, lesson) => (getLessons()[course] || {})[lesson] || {};
+const getLessonMetadata = (course, lesson) => (getData()[course] || {})[lesson] || {};
 
 /**
  * Get lesson tags (without language included)
@@ -87,13 +87,11 @@ export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, les
  * @param {string} lesson E.g. 'astrokatt'
  * @returns {number} The level of the lesson. Defaults to 0 if course, lesson or level was not found.
  */
-export const getLevel = (course, lesson) => ((getLessons()[course] || {})[lesson] || {}).level || 0;
+export const getLevel = (course, lesson) => ((getData()[course] || {})[lesson] || {}).level || 0;
 
 /**
  * Get lessons in a course. Will return all lessons that have a lesson.yml file.
  * @param {string} course E.g. 'scratch'
  * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */
-export const getLessonsInCourse = memoize(
-  course => Object.keys(getLessons()[course] || {})
-);
+export const getLessonsInCourse = memoize(course => Object.keys(getData()[course] || {}));

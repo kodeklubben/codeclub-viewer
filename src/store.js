@@ -12,7 +12,7 @@ import {setMode} from './reducers/mode';
 import {setShowPlaylists} from './reducers/showPlaylists';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './localStorage';
-import {getAllCourses} from './resources/courseFrontmatter';
+import {getCourses} from './resources/courses';
 import {getLessonsInCourse} from './resources/lessons';
 
 const initialState = {};
@@ -55,7 +55,7 @@ export const updateStoreFromLocalStorage = () => {
   store.dispatch(setShowPlaylists(initialPlaylists));
   store.dispatch(resetOneFilter('language', initialLanguage));
 
-  for (const course of getAllCourses()){
+  for (const course of getCourses()){
     for (const lesson of getLessonsInCourse(course)) {
       for (const language of getLessonLanguages(course, lesson)) {
         const {path} = getLessonFrontmatter(course, lesson, language, false);

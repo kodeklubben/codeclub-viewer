@@ -6,9 +6,8 @@ const coursesContext =
   require.context('lessonSrc/', true, /^[.][/][^/]+[/]course[.]yml$/);
 
 /**
- * Get structure of courses with data from course.yml files
- * Currently, only external courses has a course.yml file, but this could change in the future.
- * External courses are courses that have 'isExternal' in course.yml.
+ * Get language independent data on all courses from course.yml files.
+ * External courses are courses that have 'isExternal: true' in course.yml.
  * External courses have no lessons.
  * Currently, only external courses have tags, but this could change in the future.
  * @returns {object} An object of courses, e.g.
@@ -27,7 +26,7 @@ const coursesContext =
  *   ...
  * }
  */
-const getCourses = memoize(
+const getData = memoize(
   () => {
     const courses = {};
     for (const key of coursesContext.keys()) {
@@ -40,33 +39,19 @@ const getCourses = memoize(
 );
 
 /**
- * Get metadata structure for one course
- * @param {string} course E.g. 'scratch'
- * @returns {object} Metadata object, e.g.
- * {
- *   sExternal: true,
- *   tags: {
- *     topic: ['block_based', 'app'],
- *     subject: ['technology', 'programming'],
- *     grade: ['secondary', 'junior'],
- *   },
- * }
+ * Get a list of internal courses sorted in alphabetical order
+ * @returns {string[]} E.g. ['python', 'scratch', ...]
  */
-const getCourseMetadata = (course) => getCourses()[course] || {};
+export const getCourses = memoize(
+  () => Object.keys(getData()).filter(course => !getData()[course].isExternal).sort()
+);
 
 /**
- * Check if a course is external
- * @param {string} course E.g. 'scratch'
- * @returns {boolean}
- */
-const isCourseExternal = (course) => !!(getCourses()[course] || {})['isExternal'];
-
-/**
- * Get a list of all the external courses. Sorted alphabetically.
- * @returns {string[]} An array of courses, e.g. ['kodegenet', 'khan_academy']
+ * Get a list of external courses sorted in alphabetical order
+ * @returns {string[]} E.g. ['khan_academy', 'kodegenet', ...]
  */
 export const getExternalCourses = memoize(
-  () => Object.keys(getCourses()).filter(isCourseExternal).sort()
+  () => Object.keys(getData()).filter(course => getData()[course].isExternal).sort()
 );
 
 /**
@@ -79,4 +64,18 @@ export const getExternalCourses = memoize(
    grade: ['secondary', 'junior'],
  }
  */
-export const getCourseTags = (course) => getCourseMetadata(course).tags || {};
+export const getCourseTags = (course) => (getData()[course] || {}).tags || {};
+
+/**
+ * Whether the (internal) course exists
+ * @param {string} course E.g. 'scratch'
+ * @returns {boolean}
+ */
+export const isValidCourse = (course) => getCourses().includes(course);
+
+/**
+ * Get language independent path to course
+ * @param {string} course E.g. 'scratch'
+ * @returns {string} The path to the course, e.g. '/scratch'
+ */
+export const getLanguageIndependentCoursePath = (course) => isValidCourse(course) ? `/${course}` : '';

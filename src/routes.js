@@ -10,7 +10,7 @@ import LessonPage from './pages/LessonPage';
 import CoursePage from './pages/CoursePage';
 import PageNotFound from './pages/PageNotFound';
 
-import {isValidCourse} from './resources/courseFrontmatter';
+import {isValidCourse} from './resources/courses';
 import {getLanguageAndIsReadme} from './resources/lessonFrontmatter';
 
 const getCoursePage = ({params}, callback) => {

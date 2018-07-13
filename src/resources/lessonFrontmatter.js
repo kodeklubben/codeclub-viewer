@@ -11,7 +11,7 @@ const lessonFrontmatterContext =
 
 
 /**
- * Returns a structure with all the lessons and teacher instructions.
+ * Get language dependent data for all lessons and teacher instructions based on the index*.md files.
  * @returns {object} E.g.
  * {
  *   scratch: {
@@ -52,7 +52,7 @@ const lessonFrontmatterContext =
  *   ...
  * }
  */
-const getLessons = memoize(
+const getData = memoize(
   () => {
     const lessons = {};
     for (const key of lessonFrontmatterContext.keys()) {
@@ -112,7 +112,7 @@ export const getLanguageAndIsReadme = (course, lesson, file) => {
  */
 export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
   const isReadmeKey = isReadme ? 1 : 0;
-  return (((getLessons()[course] || {})[lesson] || {})[language] || {})[isReadmeKey] || {};
+  return (((getData()[course] || {})[lesson] || {})[language] || {})[isReadmeKey] || {};
 };
 
 /**
@@ -121,7 +121,7 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
  * @param {string} lesson E.g. 'astrokatt'
  * @return {string[]} An array of languages this lesson exists in, e.g. ['nb', 'en']
  */
-export const getLessonLanguages = (course, lesson) => Object.keys((getLessons()[course] || {})[lesson] || {});
+export const getLessonLanguages = (course, lesson) => Object.keys((getData()[course] || {})[lesson] || {});
 
 /**
  * Whether or not a lesson is translated to a specific language.
