@@ -14,7 +14,6 @@ describe('[selectors/course.js] Selector', () => {
         scratch: ['astrokatt', 'straffespark'],
         python: ['hangman'],
         microbit: ['python_hello_world', 'python_images', 'python_music'],
-        elm: [],
       };
       deepFreeze(filteredLessons);
       expect(getFilteredCourses.resultFunc(filteredLessons)).to.deep.equal(['microbit', 'scratch', 'python']);

@@ -228,7 +228,7 @@ export const tagsMatchFilter = (lessonTags, tagsFilter) => {
  */
 export const languagesMatchFilter = (lessonLanguages, languageFilter) => {
   if (!Array.isArray(lessonLanguages) || lessonLanguages.length === 0) {
-    throw Error('lessonLanguages contains no languages');
+    throw Error('lesson does not exist in any language');
   }
   const checkedLanguages = getKeysWithTrueValues(languageFilter); // only the checked tags; e.g. ['nb']
   return checkedLanguages.some(checkedTagKey => lessonLanguages.includes(checkedTagKey));

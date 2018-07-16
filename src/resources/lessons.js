@@ -90,8 +90,8 @@ export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, les
 export const getLevel = (course, lesson) => ((getData()[course] || {})[lesson] || {}).level || 0;
 
 /**
- * Get lessons in a course. Will return all lessons that have a lesson.yml file.
+ * Get lessons in a course, sorted alphabetically. Will return all lessons that have a lesson.yml file.
  * @param {string} course E.g. 'scratch'
  * @returns {string[]} An array of lessons for the given course, e.g. ['astrokatt', 'straffespark']
  */
-export const getLessonsInCourse = memoize(course => Object.keys(getData()[course] || {}));
+export const getLessonsInCourse = memoize(course => Object.keys(getData()[course] || {}).sort());

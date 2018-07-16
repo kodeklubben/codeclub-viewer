@@ -17,7 +17,7 @@ export const getFilteredCourses = createSelector(
 
   // Output selector (resultfunc):
   (filteredLessons) => {
-    const filteredCourses = Object.keys(filteredLessons).filter(course => filteredLessons[course].length > 0);
+    const filteredCourses = Object.keys(filteredLessons);
     const sortFunc = (courseA, courseB) => filteredLessons[courseB].length - filteredLessons[courseA].length;
     filteredCourses.sort(sortFunc);
     return filteredCourses;

@@ -67,7 +67,7 @@ const getData = memoize(
         const lessonData = {title, level, author, translator, external, path, pdfPath, key};
         assignDeep(lessons, [course, lesson, language, isReadmeKey], lessonData);
       } else {
-        console.warn('The lesson', key, 'did not contain language, so lesson will not be used.');
+        console.warn('WARNING: The lesson', key, 'did not specify language, so lesson will not be used.');
       }
     }
     return lessons;

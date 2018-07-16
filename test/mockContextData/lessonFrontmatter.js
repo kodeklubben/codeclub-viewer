@@ -1,6 +1,6 @@
 export default {
   './scratch/lessonA/lesson.md': {
-    level: 5,
+    level: 5,   // Using different and invalid levels here, since we want to make sure they are not used
     author: 'Geir Arne',
     title: 'Title',
     translator: 'Translator',
@@ -120,12 +120,33 @@ export default {
     translator: 'Translator',
     language: 'nb',
   },
+  './elm/lessonD/lesson_en.md': {
+    level: 8,
+    author: 'Geir Arne',
+    title: 'Title',
+    translator: 'Translator',
+    language: 'en',
+  },
   './elm/lessonE/lesson.md': {
     level: 5,
     author: 'Geir Arne',
     title: 'Title',
     translator: 'Translator',
     language: 'nb',
+  },
+  './elm/lessonE/lesson_nn.md': {
+    level: 5,
+    author: 'Geir Arne',
+    title: 'Title',
+    translator: 'Translator',
+    language: 'nn',
+  },
+  './elm/lessonE/lesson_en.md': {
+    level: 5,
+    author: 'Geir Arne',
+    title: 'Title',
+    translator: 'Translator',
+    language: 'en',
   },
   './elm/lessonF/lesson.md': {
     level: 6,

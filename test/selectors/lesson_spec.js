@@ -10,6 +10,23 @@ import {
 
 describe('[selectors/lesson.js] Selector', () => {
   describe('getFilteredLessons', () => {
+    it('should return all lessons with all languages checked (but no tags)', () => {
+      const languageFilter = {
+        nb: true,
+        nn: true,
+        en: true,
+      };
+      const tagsFilter = {};
+      const actual = getFilteredLessons.resultFunc(languageFilter, tagsFilter);
+      const expected = {
+        elm: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'],
+        scratch: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonH'],
+      };
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+
     it('should return all lessons in bokmål (with no tags checked)', () => {
       const languageFilter = {
         nb: true,
@@ -19,12 +36,7 @@ describe('[selectors/lesson.js] Selector', () => {
       const tagsFilter = {};
       const actual = getFilteredLessons.resultFunc(languageFilter, tagsFilter);
       const expected = {
-        course_with_empty_frontmatter: [],
-        course_without_language: [],
-        course_without_title: [],
         elm: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF'],
-        fake_internal_course: [],
-
         scratch: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonH'],
       };
       deepFreeze(actual);
@@ -45,58 +57,56 @@ describe('[selectors/lesson.js] Selector', () => {
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
-
-    it('', () => {
-      const languageFilter = {
-        nb: true,
-        nn: false,
-        en: true,
-      };
-      const tagsFilter = {};
-      const actual = getFilteredLessons.resultFunc(languageFilter, tagsFilter);
-      const expected = {};
-      deepFreeze(actual);
-      deepFreeze(expected);
-      expect(actual).to.deep.equal(expected);
-    });
-
-    it('', () => {
-      const languageFilter = {};
-      const tagsFilter = {};
-      const actual = getFilteredLessons.resultFunc(languageFilter, tagsFilter);
-      const expected = {};
-      deepFreeze(actual);
-      deepFreeze(expected);
-      expect(actual).to.deep.equal(expected);
-    });
   });
 
   describe('getFilteredLessonsInCourseCountPerLanguage', () => {
-    it('', () => {
-      const course = '';
-      const lessons = [];
-      const filterLanguages = [];
+    it('should return full lesson count', () => {
+      const course = 'elm';
+      const lessons = ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+      const filterLanguages = ['nb', 'nn', 'en'];
       const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
-      const expected = {};
+      const expected = {
+        nb: 6,
+        en: 3,
+        nn: 2,
+      };
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
 
-    it('', () => {
-      const course = '';
-      const lessons = [];
-      const filterLanguages = [];
+    it('should return correct lesson count', () => {
+      const course = 'elm';
+      const lessons = ['lessonA', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+      const filterLanguages = ['nb', 'en'];
       const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
-      const expected = {};
+      const expected = {
+        nb: 5,
+        en: 3,
+      };
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
 
-    it('', () => {
-      const course = '';
+    it('should return zero lesson count due to no languages left after filter', () => {
+      const course = 'elm';
       const lessons = [];
+      const filterLanguages = ['nb', 'nn', 'en'];
+      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const expected = {
+        nb: 0,
+        nn: 0,
+        en: 0,
+      };
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+
+    it('should return empty object since no languages checked in filter', () => {
+      const course = 'elm';
+      const lessons = ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
       const filterLanguages = [];
       const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
       const expected = {};
@@ -107,10 +117,33 @@ describe('[selectors/lesson.js] Selector', () => {
   });
 
   describe('getFilteredLessonsInCourseForLevel', () => {
-    it('', () => {
+    it('should return all level 2 scratch lessons', () => {
+      const lessons = [
+        'lessonA',
+        'lessonB',
+        'lessonC',
+        'lessonD',
+        'lessonE',
+        'lessonF',
+        'lessonG',
+        'lessonH',
+        'lessonI',
+        'lessonJ',
+        'lessonK',
+      ];
+      const course = 'scratch';
+      const level = 2;
+      const actual = getFilteredLessonsInCourseForLevel.resultFunc(lessons, course, level);
+      const expected = ['lessonB', 'lessonF', 'lessonJ'];
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+
+    it('should return no lessons if all lessons filtered away', () => {
       const lessons = [];
-      const course = '';
-      const level = 0;
+      const course = 'scratch';
+      const level = 2;
       const actual = getFilteredLessonsInCourseForLevel.resultFunc(lessons, course, level);
       const expected = [];
       deepFreeze(actual);
@@ -118,21 +151,22 @@ describe('[selectors/lesson.js] Selector', () => {
       expect(actual).to.deep.equal(expected);
     });
 
-    it('', () => {
-      const lessons = [];
-      const course = '';
-      const level = 0;
-      const actual = getFilteredLessonsInCourseForLevel.resultFunc(lessons, course, level);
-      const expected = [];
-      deepFreeze(actual);
-      deepFreeze(expected);
-      expect(actual).to.deep.equal(expected);
-    });
-
-    it('', () => {
-      const lessons = [];
-      const course = '';
-      const level = 0;
+    it('should return no lessons if using unused level', () => {
+      const lessons = [
+        'lessonA',
+        'lessonB',
+        'lessonC',
+        'lessonD',
+        'lessonE',
+        'lessonF',
+        'lessonG',
+        'lessonH',
+        'lessonI',
+        'lessonJ',
+        'lessonK',
+      ];
+      const course = 'scratch';
+      const level = 8;
       const actual = getFilteredLessonsInCourseForLevel.resultFunc(lessons, course, level);
       const expected = [];
       deepFreeze(actual);
@@ -142,29 +176,47 @@ describe('[selectors/lesson.js] Selector', () => {
   });
 
   describe('getFilteredLevelsInCourse', () => {
-    it('', () => {
-      const lessons = [];
-      const course = '';
+    it('should return all levels', () => {
+      const lessons = [
+        'lessonA',
+        'lessonB',
+        'lessonC',
+        'lessonD',
+        'lessonE',
+        'lessonF',
+        'lessonG',
+        'lessonH',
+        'lessonI',
+        'lessonJ',
+        'lessonK',
+      ];
+      const course = 'scratch';
       const actual = getFilteredLevelsInCourse.resultFunc(lessons, course);
-      const expected = [];
+      const expected = [1, 2, 3, 4];
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
 
-    it('', () => {
-      const lessons = [];
-      const course = '';
+    it('should return only a few levels', () => {
+      const lessons = [
+        'lessonC',
+        'lessonD',
+        'lessonG',
+        'lessonH',
+        'lessonK',
+      ];
+      const course = 'scratch';
       const actual = getFilteredLevelsInCourse.resultFunc(lessons, course);
-      const expected = [];
+      const expected = [3, 4];
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
 
-    it('', () => {
+    it('should return no levels', () => {
       const lessons = [];
-      const course = '';
+      const course = 'scratch';
       const actual = getFilteredLevelsInCourse.resultFunc(lessons, course);
       const expected = [];
       deepFreeze(actual);
