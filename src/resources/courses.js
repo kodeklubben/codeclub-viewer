@@ -32,6 +32,10 @@ const getData = memoize(
     for (const key of coursesContext.keys()) {
       const [/* ignore */, course] = key.match(/^[.][/]([^/]+)[/]course[.]yml$/);
       const {isExternal, tags} = coursesContext(key);
+      if (!isExternal && tags) {
+        console.warn('NOTE: The internal course', course, 'has defined tags in', key,
+          ', but these are currently not used.');
+      }
       courses[course] = {isExternal, tags: cleanseTags(tags, key)};
     }
     return courses;

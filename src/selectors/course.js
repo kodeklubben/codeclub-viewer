@@ -26,6 +26,7 @@ export const getFilteredCourses = createSelector(
 
 /**
  * Get a list of external courses, filtered by tags. Sorted alphabetically.
+ * Returns only courses that contain all the checked tags in the filter.
  * @param {object} state The redux state object
  * @type {string[]} An array of external courses, e.g. ['codecademy', 'kodegenet', ...]
  */

@@ -7,7 +7,7 @@ import {
   getFilteredExternalCoursesWithLanguages,
 } from '../../src/selectors/course';
 
-describe('[course.js] Selector', () => {
+describe('[selectors/course.js] Selector', () => {
   describe('getFilteredCourses', () => {
     it('should return courses sorted by number of lessons', () => {
       const filteredLessons = {
@@ -49,7 +49,7 @@ describe('[course.js] Selector', () => {
           junior: false,
         },
       };
-      const expectedCourses = ['khan_academy', 'kodegenet', 'raspberry_pi', 'sonic_pi'];
+      const expectedCourses = ['external_course', 'khan_academy', 'kodegenet', 'raspberry_pi', 'sonic_pi'];
       deepFreeze(tagsFilter);
       deepFreeze(expectedCourses);
       expect(getTagFilteredExternalCourses.resultFunc(tagsFilter)).to.deep.equal(expectedCourses);
@@ -78,7 +78,14 @@ describe('[course.js] Selector', () => {
       };
       const expectedCourses = [
         'codecademy',
-        'fake_course_without_tags',
+        'external_course',
+        'external_course_with_bad_tag',
+        'external_course_with_empty_frontmatter',
+        'external_course_without_external',
+        'external_course_without_language',
+        'external_course_without_tags',
+        'external_course_without_title',
+        'external_course_without_title_or_language',
         'khan_academy',
         'kodegenet',
         'kodeknekkerne',
@@ -112,7 +119,7 @@ describe('[course.js] Selector', () => {
         'external_course_without_language',
         'external_course_without_title',
         'external_course_without_title_or_language',
-        'fake_external_course',
+        'external_course',
         'kodegenet',
         'kodeknekkerne',
         'raspberry_pi',
@@ -125,8 +132,8 @@ describe('[course.js] Selector', () => {
       const expected = [
         {course: 'external_course_without_external', language: 'nb'},
         {course: 'external_course_without_title', language: 'nb'},
-        {course: 'fake_external_course', language: 'nb'},
-        {course: 'fake_external_course', language: 'nn'},
+        {course: 'external_course', language: 'nb'},
+        {course: 'external_course', language: 'nn'},
         {course: 'kodegenet', language: 'nb'},
         {course: 'kodeknekkerne', language: 'nb'},
       ];
@@ -144,7 +151,7 @@ describe('[course.js] Selector', () => {
         'external_course_without_language',
         'external_course_without_title',
         'external_course_without_title_or_language',
-        'fake_external_course',
+        'external_course',
         'kodegenet',
         'kodeknekkerne',
         'raspberry_pi',
