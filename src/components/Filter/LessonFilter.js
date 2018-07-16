@@ -68,7 +68,7 @@ const mapStateToProps = (state, {course}) => ({
   filterGroupKeys: Object.keys(state.filter),
   isStudentMode: state.isStudentMode,
   t: getTranslator(state),
-  showRadiobuttons: getShowRadiobuttons(state, course),
+  showRadiobuttons: getShowRadiobuttons(course),
   showFiltergroups: getShowFiltergroups(state, course),
 });
 
