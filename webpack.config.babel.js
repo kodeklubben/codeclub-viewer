@@ -36,7 +36,6 @@
 import webpack from 'webpack';
 import path from 'path';
 
-import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
@@ -252,7 +251,6 @@ const createConfig = (env = {}) => {
               MarkdownItAttrs,
               MarkdownItHeaderSections,
               MarkdownItImplicitFigures,
-              MarkdownItAnchor,
               [MarkdownItTaskCheckbox, {disabled: false}],
             ],
             highlight,
