@@ -1,5 +1,6 @@
 @import '../../styles/mixins.scss';
 @import '~bootstrapStyles/mixins/image';
+@import '../../styles/variables';
 
 .container {
   max-width: 800px;
@@ -7,6 +8,7 @@
   padding-right: 15px;
   margin-left: auto;
   margin-right: auto;
+  font-family: $font-family-dyslexica;
 
   // responsive images
   & figure > img {
