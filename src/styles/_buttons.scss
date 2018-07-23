@@ -32,7 +32,6 @@
       border-color: darken($border, $darken);
     }
   }
-  &:active,
   &.active,
   .open > &.dropdown-toggle {
     background-image: none;
