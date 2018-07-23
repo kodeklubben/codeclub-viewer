@@ -89,16 +89,12 @@ describe('[selectors/lesson.js] Selector', () => {
       expect(actual).to.deep.equal(expected);
     });
 
-    it('should return zero lesson count due to no languages left after filter', () => {
+    it('should return empty object when all lessons removed by filter', () => {
       const course = 'elm';
       const lessons = [];
       const filterLanguages = ['nb', 'nn', 'en'];
       const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
-      const expected = {
-        nb: 0,
-        nn: 0,
-        en: 0,
-      };
+      const expected = {};
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);

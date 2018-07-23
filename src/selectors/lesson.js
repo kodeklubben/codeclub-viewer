@@ -58,13 +58,13 @@ export const getFilteredLessons = createSelector(
 export const getFilteredLessonsInCourse = (state, course) => getFilteredLessons(state)[course] || [];
 
 /**
- * Get number of lessons (in a course) per checked language.
+ * Get number of lessons (in a course) per checked language. Doesn't return languages without lessons.
  * @param {object} state The redux state object
  * @param {string} course Which course to count lessons for
  * @returns {object} An object which shows how many lessons per checked filter language, e.g.
  * {
  *   nb: 5,
- *   en: 0,
+ *   en: 2,
  * }
  */
 export const getFilteredLessonsInCourseCountPerLanguage = createSelector(
@@ -76,11 +76,10 @@ export const getFilteredLessonsInCourseCountPerLanguage = createSelector(
   // Output selector (resultfunc):
   (course, lessons, filterLanguages) => {
     const lessonsPerLanguage = {};
-    filterLanguages.forEach(lang => lessonsPerLanguage[lang] = 0);
     for (const lesson of lessons) {
       for (const language of getLessonLanguages(course, lesson)) {
         if (filterLanguages.includes(language)) {
-          ++lessonsPerLanguage[language];
+          lessonsPerLanguage[language] = (lessonsPerLanguage[language] || 0) + 1;
         }
       }
     }
