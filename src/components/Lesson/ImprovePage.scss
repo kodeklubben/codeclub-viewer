@@ -1,11 +1,5 @@
 @import '../../styles/variables';
 
-.font {
-  font-family: $font-family-roboto;
-  font-weight: 300;
-  font-size: 1em;
-}
-
 /* Container for improve box */
 .container {
   margin: 10px 30px;
@@ -16,7 +10,6 @@
 }
 
 .improvePageBox {
-  composes: font;
   display: flex;
   flex-direction: column;
   text-align: center;

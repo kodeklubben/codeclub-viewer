@@ -56,9 +56,7 @@ $font-size-md-pct: 125%; // 20px if base font is 16px
 $font-size-xlarge: ceil($font-size-base * 1.5);
 $font-size-xsmall: ceil($font-size-base * 0.7);
 
-$font-family-roboto: 'Roboto', 'Verdana', sans-serif;
-$font-family-roboto-mono: 'Roboto Mono', monospace;
-$font-family-dyslexica: 'OpenDyslexic-Regular', Helvetica, Arial, sans-serif;
+$font-family-dyslexic: 'OpenDyslexic-Regular', Helvetica, Arial, sans-serif;
 
 // Flag in LanguageDropdown and MainLanguageButton
 $flag-width: 30px;

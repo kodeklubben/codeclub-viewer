@@ -1,3 +1,6 @@
+@import '../styles/variables';
+
 .appContainer {
   overflow-x: hidden; // Prevents page to scroll horizontally on e.g. phones if content goes outside width
+  font-family: 'OpenDyslexic-Regular';
 }
