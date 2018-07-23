@@ -92,15 +92,6 @@ const createConfig = (env = {}) => {
 
   const faviconstatsFilename = 'faviconstats.json';
 
-  const cssModuleLoader = {
-    loader: 'css-loader',
-    options: {
-      modules: true,
-      importLoaders: 1,
-      localIdentName: '[name]__[local]__[hash:base64:5]',
-    },
-  };
-
   // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
   const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
   const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
@@ -167,20 +158,18 @@ const createConfig = (env = {}) => {
           loader: 'babel-loader'
         },
         {
-          test: inCurrentRepo('css'),
-          exclude: /node_modules/,
-          use: [
-            'isomorphic-style-loader',
-            cssModuleLoader,
-            'postcss-loader'
-          ],
-        },
-        {
           test: inCurrentRepo('scss'),
           exclude: /node_modules/,
           use: [
             'isomorphic-style-loader',
-            cssModuleLoader,
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 1,
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              }
+            },
             'postcss-loader',
             'sass-loader'
           ],
