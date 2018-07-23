@@ -8,7 +8,7 @@ import {getTranslator} from '../../selectors/translate';
 import {getFilteredLessonsInCourseCountPerLanguage} from '../../selectors/lesson';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
-const LessonCount = ({lessonsPerLanguage, showFlag, isTeacherMode, t}) => {
+const LessonCount = ({lessonsPerLanguage, showFlag, t}) => {
   const totalNumberOfLessons = Object.values(lessonsPerLanguage).reduce((sum, n) => sum + n, 0);
   return (
     <div className={styles.container}>
@@ -18,7 +18,6 @@ const LessonCount = ({lessonsPerLanguage, showFlag, isTeacherMode, t}) => {
           {Object.keys(lessonsPerLanguage).map(language =>
             <span key={language} className={styles.flag}>
               <Flag {...{language}}/>
-              <span className={styles.flagCount}>{isTeacherMode ? lessonsPerLanguage[language] : ''}</span>
             </span>)
           }
         </div> :
@@ -35,14 +34,12 @@ LessonCount.propTypes = {
   // mapStateToProps
   lessonsPerLanguage: PropTypes.objectOf(PropTypes.number),
   showFlag: PropTypes.bool.isRequired,
-  isTeacherMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, {course}) => ({
   lessonsPerLanguage: getFilteredLessonsInCourseCountPerLanguage(state, course),
   showFlag: !onlyCheckedMainLanguage(state),
-  isTeacherMode: !state.isStudentMode,
   t: getTranslator(state),
 });
 
