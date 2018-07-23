@@ -108,7 +108,7 @@
     "mock-local-storage": "^1.0.2",
     "mock-require": "^2.0.2",
     "node-cleanup": "^2.1.2",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.7.2",
     "node-spider": "^1.4.1",
     "node-static": "^0.7.9",
     "postcss-loader": "^2.1.6",
