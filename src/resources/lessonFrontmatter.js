@@ -60,6 +60,7 @@ const getData = memoize(
       const {
         language, title = '', level = 0, author = '', translator = '', external = ''
       } = lessonFrontmatterContext(key);
+      if (!title) { console.warn('WARNING: The lesson', key, 'did not specify title.'); }
       if (language) {
         const isReadmeKey = file.startsWith('README') ? 1 : 0;
         const path = `/${course}/${lesson}/${file}`; // TODO: Add publicpath?
@@ -121,7 +122,11 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
  * @param {string} lesson E.g. 'astrokatt'
  * @return {string[]} An array of languages this lesson exists in, e.g. ['nb', 'en']
  */
-export const getLessonLanguages = (course, lesson) => Object.keys((getData()[course] || {})[lesson] || {});
+export const getLessonLanguages = (course, lesson) => {
+  const lessonObj = (getData()[course] || {})[lesson] || {};
+  // Only return languages where the lesson is defined, and not only the README:
+  return Object.keys(lessonObj).filter(language => lessonObj[language][0]);
+};
 
 /**
  * Whether or not a lesson is translated to a specific language.
