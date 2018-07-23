@@ -45,7 +45,6 @@ import highlight from './src/highlighting';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
@@ -261,29 +260,6 @@ const createConfig = (env = {}) => {
         'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
       }),
 
-      new FaviconsWebpackPlugin({
-        logo: './src/assets/favicon.png',
-        prefix: 'icons-[hash:5]/',
-        emitStats: false,
-        inject: true, // only works for htmlWebpackPlugin; need to do it manually for template in renderStatic
-        statsFilename: faviconstatsFilename, // not emitted, but available in webpack's assets
-        // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
-        title: 'LKK',
-        // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
-        icons: {
-          android: true,              // Android homescreen icon.
-          appleIcon: true,            // Apple touch icons.
-          appleStartup: true,         // Apple startup images.
-          coast: false,               // Opera Coast icon.
-          favicons: true,             // Regular favicons.
-          firefox: true,              // Firefox OS icons.
-          opengraph: false,
-          twitter: false,
-          yandex: false,              // Yandex browser icon.
-          windows: true,              // Windows 8 tile icons.
-        },
-      }),
-
       ...(env.NODE_ENV === 'production' ? [
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('production')
@@ -338,7 +314,7 @@ const createConfig = (env = {}) => {
             window: {}
           }
         }),
-        new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
+        new SitemapPlugin('https://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
       ]),
 
     ],
