@@ -17,21 +17,22 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
 
-  const coursePath = isLesson ? getLanguageIndependentCoursePath(course) : '';
   const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
   const {title:lessonTitle, level} = isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme) : {};
 
-  const homeCrumb = <NavLink to={isCourse || isLesson ? '/' : ''} aria-label={t('general.home')}>
+  const homeCrumb = <NavLink to={'/'} aria-label={t('general.home')}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
   const courseTitle = getCourseTitle(course, courseLanguage);
+  const coursePath = getLanguageIndependentCoursePath(course);
   const courseCrumb = <NavLink to={coursePath} className={styles.crumb}>
     <img className={styles.courseIcon} src={getCourseIcon(course)} alt={courseTitle}/>
     <span className={styles.lesson}>{getCourseTitle(course, courseLanguage)}</span>
   </NavLink>;
 
-  const lessonCrumb = <NavLink className={styles.crumb} aria-label={lessonTitle}>
+  const {path:lessonPath} = getLessonFrontmatter(course, lesson, lessonLanguage, isReadme);
+  const lessonCrumb = <NavLink to={lessonPath} className={styles.crumb} aria-label={lessonTitle}>
     <LevelIcon {...{level}}/>
     <span className={styles.lesson}>{lessonTitle}</span>
   </NavLink>;
