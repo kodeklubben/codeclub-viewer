@@ -15,10 +15,11 @@ import LevelNavigation from '../components/CoursePage/LevelNavigation';
 import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 import CourseInfo from '../components/CoursePage/CourseInfo';
 import {getCourseTitle} from '../resources/courseFrontmatter';
+import {getCourseIntro} from '../resources/courseContent';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
 import Head from '../components/Head';
 
-const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
+const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) => {
   const {course} = params;
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={styles.topMargin}>
@@ -34,7 +35,7 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
     </Col> : null;
   return (
     <div>
-      <Head title={courseTitle + ' | ' + t('head.title')}/>
+      <Head title={courseTitle + ' | ' + t('head.title')} description={getCourseIntro(course, language)}/>
       <Grid fluid={true} ref={grid => thispage = grid}>
         <Row>
           <Col xs={12}><h1>{courseTitle}</h1></Col>
@@ -74,6 +75,7 @@ CoursePage.propTypes = {
   levels: PropTypes.arrayOf(PropTypes.number).isRequired,
   t: PropTypes.func.isRequired,
   showPlaylists: PropTypes.bool.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
@@ -81,6 +83,7 @@ const mapStateToProps = (state, {params}) => ({
   levels: getFilteredLevelsInCourse(state, params.course),
   t: getTranslator(state),
   showPlaylists: !getShowFiltergroups(state),
+  language: state.language,
 });
 
 export default connect(

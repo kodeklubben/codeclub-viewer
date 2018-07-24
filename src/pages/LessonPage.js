@@ -20,6 +20,7 @@ import Progress from '../components/LessonPage/Progress';
 import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
+import {getLessonIntro} from '../resources/lessonContent';
 import {getLessonTags} from '../resources/lessons';
 import Head from '../components/Head';
 
@@ -74,7 +75,7 @@ class LessonPage extends React.Component {
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
       <div>
-        <Head title={title + ' | ' + t('head.title')}/>
+        <Head title={title + ' | ' + t('head.title')} description={getLessonIntro(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>
             <LevelIcon {...{level}}/>
