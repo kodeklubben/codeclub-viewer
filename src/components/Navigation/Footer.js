@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
 import DyslexiaSwitch from './DyslexiaSwitch';
@@ -20,7 +18,7 @@ const Footer = ({t, isStudentMode}) => {
   };
 
   const sponsors = (
-    <Row className={styles.sponsors}>
+    <div className={styles.sponsors}>
       <a href={url.sparebank} target="_blank">
         <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}
           alt={'SpareBank1'}
@@ -56,26 +54,24 @@ const Footer = ({t, isStudentMode}) => {
           alt={'UIO institutt for informatikk'}
         />
       </a>
-    </Row>);
+    </div>);
 
   return (
-    <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-      <Row className={styles.githubIcon}>
-        <a href={url.oppgaver} target="_blank">
-          <img className={styles.svg} src={require('../../assets/graphics/github.png')}
-            alt={'GitHub'}
-          />
-        </a>
-      </Row>
-      <Row className={styles.contribute}>
-        <p><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
-      </Row>
-      <DyslexiaSwitch/>
-      <Row>
-        <div className={styles.divider}/>
-      </Row>
+    <div className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+      <div className={styles.githubSwitch}>
+        <div className={styles.githubIcon}>
+          <a href={url.oppgaver} target="_blank">
+            <img className={styles.svg} src={require('../../assets/graphics/github.png')}
+              alt={'GitHub'}
+            />
+          </a>
+          <p className={styles.contribute}><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
+        </div>
+        <DyslexiaSwitch/>
+      </div>
+      <div className={styles.divider}/>
       {sponsors}
-    </Grid>);
+    </div>);
 };
 
 Footer.propTypes = {

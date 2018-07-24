@@ -45,7 +45,7 @@
   margin-left: auto;
   margin-right: auto;
   border-top: 1px solid;
-  width: 50%;
+  width: 96%;
 }
 
 .img:hover {
@@ -56,7 +56,6 @@
 .contribute {
   text-align: center;
   font-size: 1.5em;
-  //font-weight: bold;
 }
 
 .githubIcon {
@@ -67,4 +66,10 @@
   text-align: center;
   margin-top: 20px;
   overflow: hidden;
+}
+
+.githubSwitch {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
