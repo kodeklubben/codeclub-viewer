@@ -8,25 +8,15 @@
   flex-direction: column;
   align-items: center;
   max-width: 175px;
+  cursor: pointer;
   &:link {
     text-decoration: none;
   }
-  &:hover {
-    color: inherit;
-    cursor: pointer;
-    white-space: nowrap;
-    .courseLogo {
-      padding: 0;
-    }
-  }
 
-  @media screen and (max-width: $screen-xs-max) {
+  @media screen and (min-width: $screen-sm-min) {
     &:hover {
       .courseLogo {
-        padding: 5px;
-      }
-      .popoverGlyph:hover {
-        color: black;
+        padding: 0; // Remove padding to make the logo look bigger
       }
     }
   }
@@ -47,10 +37,6 @@
   @media screen and (max-width: $screen-xs-max) {
     font-size: 1.1em;
   }
-}
-
-.lessonCount {
-  color: $color-gray;
 }
 
 .externalGlyph {

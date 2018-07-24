@@ -46,16 +46,38 @@ const INITIAL_STATE = {
         nn: true,
         en: false
       },
-      tema: {
+      topic: {
         app: true,
+        cryptography: false,
         electronics: false,
         block_based: false,
+        step_based: false,
+        text_based: false,
         minecraft: false,
         web: false,
         game: true,
         robot: false,
-        animation: false
-      }
+        animation: false,
+        sound: false,
+      },
+      subject: {
+        mathematics: false,
+        science: false,
+        programming: true,
+        technology: false,
+        music: false,
+        norwegian: false,
+        english: false,
+        arts_and_crafts: true,
+        social_science: false,
+      },
+      grade: {
+        preschool: false,
+        primary: false,
+        secondary: true,
+        junior: false,
+        senior: false,
+     },
     }
   */
 };

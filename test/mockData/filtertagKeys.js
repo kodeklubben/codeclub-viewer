@@ -1,0 +1,41 @@
+export default {
+  language: [
+    'nb',
+    'nn',
+    'en',
+  ],
+  topic: [
+    'app',
+    'electronics',
+    'step_based',
+    'block_based',
+    'text_based',
+    'web',
+    'game',
+    'robot',
+    'animation',
+    'sound',
+  ],
+  subject: [
+    'mathematics',
+    'science',
+    'programming',
+    'technology',
+    'music',
+    'norwegian',
+    'english',
+    'arts_and_crafts',
+  ],
+  grade: [
+    'preschool',
+    'primary',
+    'secondary',
+    'junior',
+    'senior',
+  ],
+  nothing: [],
+  sometag: [
+    'tag1',
+    'tag2',
+  ],
+};

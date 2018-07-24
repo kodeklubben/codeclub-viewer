@@ -3,232 +3,221 @@ import deepFreeze from 'deep-freeze';
 
 import {
   getFilteredLessons,
-  getFilteredAndIndexedLessons,
-  getLessonsByLevel,
+  getFilteredLessonsInCourseCountPerLanguage,
+  getFilteredLessonsInCourseForLevel,
+  getFilteredLevelsInCourse,
 } from '../../src/selectors/lesson';
 
-const lessonAsteroids = {
-  author: 'Bill Gates',
-  course: 'scratch',
-  level: 3,
-  path: 'scratch/asteroids/asteroids',
-  indexed: true,
-  tags: {
-    platform: ['windows', 'mac'],
-    category: ['create game'],
-    subject: ['reading']
-  },
-  title: 'Asteroids'
-};
-
-const lessonHeiVerden = {
-  author: 'Bill Gates',
-  course: 'scratch',
-  level: 1,
-  path: 'scratch/hei_verden/hei_verden',
-  indexed: false,
-  tags: {
-    platform: ['windows', 'browser'],
-    category: ['create game', 'get started'],
-    subject: ['physics']
-  },
-  title: 'Hei verden'
-};
-
-const lessonPyHeiVerden = {
-  author: 'Ola Nordmann',
-  course: 'python',
-  level: 1,
-  path: 'python/hei_verden/hei_verden',
-  indexed: true,
-  tags: {
-    platform: ['windows', 'ios', 'linux'],
-    category: ['create game', 'get started'],
-    subject: ['math']
-  },
-  title: 'Hei verden'
-};
-
-const lessonNettside = {
-  author: 'Ola Nordmann',
-  course: 'web',
-  level: 2,
-  path: 'web/nettside/nettside',
-  indexed: false,
-  tags: {},
-  title: 'Nettside'
-};
-
-describe('lesson selector', () => {
+describe('[selectors/lesson.js] Selector', () => {
   describe('getFilteredLessons', () => {
-
-    it('should create an object containing filtered lessons', () => {
-      const lessons = {
-        [`./${lessonAsteroids.path}`]: lessonAsteroids,
-        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
-        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
-        [`./${lessonNettside.path}`]: lessonNettside,
+    it('should return all lessons with all languages checked (but no tags)', () => {
+      const languageFilter = {
+        nb: true,
+        nn: true,
+        en: true,
       };
-      const filter = {
-        platform: {
-          'windows': true,
-          'mac': false
-        },
-        category: {'create game': true},
-        subject: {'reading': false}
+      const tagsFilter = {};
+      const actual = getFilteredLessons.resultFunc(languageFilter, tagsFilter);
+      const expected = {
+        elm: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'],
+        scratch: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonH'],
       };
-
-      deepFreeze(lessons);
-      deepFreeze(filter);
-      expect(getFilteredLessons.resultFunc(filter, lessons)).to.eql({
-        [`./${lessonAsteroids.path}`]: lessonAsteroids,
-        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
-        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
-      });
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
     });
 
-    it('should create an object containing all lessons if filter is undefined', () => {
-      const lessons = {
-        [`./${lessonAsteroids.path}`]: lessonAsteroids,
-        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
-        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
-        [`./${lessonNettside.path}`]: lessonNettside,
+    it('should return all lessons in bokmål (with no tags checked)', () => {
+      const languageFilter = {
+        nb: true,
+        nn: false,
+        en: false,
       };
-      deepFreeze(lessons);
-      expect(getFilteredLessons.resultFunc(undefined, lessons)).to.eql(lessons);
+      const tagsFilter = {};
+      const actual = getFilteredLessons.resultFunc(languageFilter, tagsFilter);
+      const expected = {
+        elm: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF'],
+        scratch: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonH'],
+      };
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
     });
 
-    it('should create an object containing all lessons if filter is an empty object', () => {
-      const lessons = {
-        [`./${lessonAsteroids.path}`]: lessonAsteroids,
-        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
-        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
-        [`./${lessonNettside.path}`]: lessonNettside,
+    it('should return no lessons since no languages checked', () => {
+      const languageFilter = {
+        nb: false,
+        nn: false,
+        en: false,
       };
-      const filter = {};
-
-      deepFreeze(lessons);
-      deepFreeze(filter);
-      expect(getFilteredLessons.resultFunc(filter, lessons)).to.eql(lessons);
+      const tagsFilter = {};
+      const actual = getFilteredLessons.resultFunc(languageFilter, tagsFilter);
+      const expected = {};
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
     });
-
-    it('should create an empty object if no lessons in any course match the filter', () => {
-      const lessons = {
-        'id0': lessonAsteroids,
-        'id1': lessonHeiVerden,
-        'id2': {
-          ...lessonPyHeiVerden,
-          tags: {...lessonPyHeiVerden.tags, subject: ['science']}
-        },
-        'id3': lessonNettside,
-      };
-      const filter = {
-        platform: {
-          'windows': true,
-          'mac': false
-        },
-        category: {'create game': true},
-        subject: {
-          'reading': false,
-          'math': true
-        }
-      };
-
-      deepFreeze(lessons);
-      deepFreeze(filter);
-      expect(getFilteredLessons.resultFunc(filter, lessons)).to.eql({});
-    });
-
-    it('should create an empty object if lessons is undefined', () => {
-      const filter = {
-        platform: {
-          'windows': true,
-          'mac': false
-        },
-        category: {'create game': true},
-        subject: {
-          'reading': false,
-          'science': true
-        }
-      };
-
-
-      deepFreeze(filter);
-      expect(getFilteredLessons.resultFunc(filter, undefined)).to.eql({});
-    });
-
-    it('should create an empty array if lessons is an empty array', () => {
-      const filter = {
-        platform: {
-          'windows': true,
-          'mac': false
-        },
-        category: {'create game': true},
-        subject: {
-          'reading': false,
-          'math': true
-        }
-      };
-      const lessons = {};
-
-      deepFreeze(lessons);
-      deepFreeze(filter);
-      expect(getFilteredLessons.resultFunc(filter, lessons)).to.eql({});
-    });
-
-
   });
 
-  describe('getFilteredAndIndexedLessons', () => {
-
-    it('should create an object only containing indexed lessons', () => {
-
-      const lessons = {
-        [`./${lessonAsteroids.path}`]: lessonAsteroids,
-        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
-        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
-        [`./${lessonNettside.path}`]: lessonNettside,
+  describe('getFilteredLessonsInCourseCountPerLanguage', () => {
+    it('should return full lesson count', () => {
+      const course = 'elm';
+      const lessons = ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+      const filterLanguages = ['nb', 'nn', 'en'];
+      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const expected = {
+        nb: 6,
+        en: 3,
+        nn: 2,
       };
-
-      deepFreeze(lessons);
-      expect(getFilteredAndIndexedLessons.resultFunc(lessons)).to.eql({
-        [`./${lessonAsteroids.path}`]: lessonAsteroids,
-        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
-      });
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
     });
 
-    it('should create an empty object if lessons is undefined', () => {
-      expect(getFilteredAndIndexedLessons.resultFunc(undefined)).to.eql({});
+    it('should return correct lesson count', () => {
+      const course = 'elm';
+      const lessons = ['lessonA', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+      const filterLanguages = ['nb', 'en'];
+      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const expected = {
+        nb: 5,
+        en: 3,
+      };
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
     });
 
-    it('should create an empty array if lessons is an empty array', () => {
-      const lessons = {};
-
-      deepFreeze(lessons);
-      expect(getFilteredAndIndexedLessons.resultFunc(lessons)).to.eql({});
+    it('should return empty object when all lessons removed by filter', () => {
+      const course = 'elm';
+      const lessons = [];
+      const filterLanguages = ['nb', 'nn', 'en'];
+      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const expected = {};
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
     });
 
+    it('should return empty object since no languages checked in filter', () => {
+      const course = 'elm';
+      const lessons = ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+      const filterLanguages = [];
+      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const expected = {};
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
   });
 
-
-  describe('getLessonsByLevel', () => {
-
-    it('should group lessons by level', () => {
-      const lessons = {
-        [`./${lessonAsteroids.path}`]: lessonAsteroids,
-        [`./${lessonHeiVerden.path}`]: lessonHeiVerden,
-        [`./${lessonPyHeiVerden.path}`]: lessonPyHeiVerden,
-        [`./${lessonNettside.path}`]: lessonNettside,
-      };
-      deepFreeze(lessons);
-      expect(getLessonsByLevel.resultFunc(lessons)).to.eql({
-        1: [lessonHeiVerden, lessonPyHeiVerden],
-        2: [lessonNettside],
-        3: [lessonAsteroids],
-      });
-
+  describe('getFilteredLessonsInCourseForLevel', () => {
+    it('should return all level 2 scratch lessons', () => {
+      const lessons = [
+        'lessonA',
+        'lessonB',
+        'lessonC',
+        'lessonD',
+        'lessonE',
+        'lessonF',
+        'lessonG',
+        'lessonH',
+        'lessonI',
+        'lessonJ',
+        'lessonK',
+      ];
+      const course = 'scratch';
+      const level = 2;
+      const actual = getFilteredLessonsInCourseForLevel.resultFunc(lessons, course, level);
+      const expected = ['lessonB', 'lessonF', 'lessonJ'];
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
     });
 
+    it('should return no lessons if all lessons filtered away', () => {
+      const lessons = [];
+      const course = 'scratch';
+      const level = 2;
+      const actual = getFilteredLessonsInCourseForLevel.resultFunc(lessons, course, level);
+      const expected = [];
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+
+    it('should return no lessons if using unused level', () => {
+      const lessons = [
+        'lessonA',
+        'lessonB',
+        'lessonC',
+        'lessonD',
+        'lessonE',
+        'lessonF',
+        'lessonG',
+        'lessonH',
+        'lessonI',
+        'lessonJ',
+        'lessonK',
+      ];
+      const course = 'scratch';
+      const level = 8;
+      const actual = getFilteredLessonsInCourseForLevel.resultFunc(lessons, course, level);
+      const expected = [];
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
   });
 
+  describe('getFilteredLevelsInCourse', () => {
+    it('should return all levels', () => {
+      const lessons = [
+        'lessonA',
+        'lessonB',
+        'lessonC',
+        'lessonD',
+        'lessonE',
+        'lessonF',
+        'lessonG',
+        'lessonH',
+        'lessonI',
+        'lessonJ',
+        'lessonK',
+      ];
+      const course = 'scratch';
+      const actual = getFilteredLevelsInCourse.resultFunc(lessons, course);
+      const expected = [1, 2, 3, 4];
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+
+    it('should return only a few levels', () => {
+      const lessons = [
+        'lessonC',
+        'lessonD',
+        'lessonG',
+        'lessonH',
+        'lessonK',
+      ];
+      const course = 'scratch';
+      const actual = getFilteredLevelsInCourse.resultFunc(lessons, course);
+      const expected = [3, 4];
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+
+    it('should return no levels', () => {
+      const lessons = [];
+      const course = 'scratch';
+      const actual = getFilteredLevelsInCourse.resultFunc(lessons, course);
+      const expected = [];
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+  });
 });
