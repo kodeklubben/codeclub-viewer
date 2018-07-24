@@ -7,19 +7,17 @@ import CourseItem from './CourseItem';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
-const CourseList = ({courses, language}) => {
-  return (
-    <Row>
-      <div className={styles.courseList}>
-        {courses.map(course => (
-          <Col key={course} xs={6} sm={6} md={4} lg={3}>
-            <CourseItem {...{course, language}}/>
-          </Col>
-        ))}
-      </div>
-    </Row>
-  );
-};
+const CourseList = ({courses, language}) => (
+  <Row>
+    <div className={styles.courseList}>
+      {courses.map(course => (
+        <Col key={course} xs={6} sm={6} md={4} lg={3}>
+          <CourseItem {...{course, language}}/>
+        </Col>
+      ))}
+    </div>
+  </Row>
+);
 
 CourseList.propTypes = {
   // ownProps
