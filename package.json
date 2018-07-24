@@ -11,7 +11,7 @@
     "build:analyse:": "webpack --progress --profile --json > stats.json --mode=none",
     "build:travis": "webpack -p --env.NODE_ENV=production --mode=none",
     "serve": "node server.js",
-    "test": "mocha --compilers js:babel-core/register --require mock-local-storage --require ignore-styles --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
+    "test": "mocha \"test/**/*@(.js|.jsx)\"",
     "test:links": "node test-links.js",
     "test:watch": "yarn test -- --watch",
     "eslint": "eslint *.js src/ test/ --ext .js,.jsx",
@@ -41,7 +41,7 @@
     ]
   },
   "dependencies": {
-    "classnames": "^2.2.5",
+    "fast-memoize": "^2.3.2",
     "highlight.js": "^9.11.0",
     "history": "^2.1.2",
     "markdown-it": "^8.3.1",

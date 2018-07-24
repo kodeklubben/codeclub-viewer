@@ -18,6 +18,7 @@ export default {
   },
   frontpage: {
     courses: 'Kurs',
+    lessoncount: 'Oppgaver: {{count}}',
     otherwebsitecourses: 'Kurs på andre nettsider',
     button: {
       start: 'Start her!',
@@ -48,14 +49,15 @@ export default {
     },
     showhidefilter: 'Vis/skjul filter'
   },
-  playlist: {
-    lessons: 'Oppgåver',
+  coursepage: {
     courseinfo: 'Informasjon om kurset',
     courseinfonotfound: 'Oops, her har nokon gløymt å skrive kursinformasjon!',
     instructionbutton: 'Lærarrettleiing',
     levelnavigation: 'Hopp til',
     lessoncollections: 'Oppgåvesamlinger',
-    nomatchinglessons: 'Ingen oppgåver passar til filteret'
+    nomatchinglessons: 'Ingen oppgåver passar til filteret',
+    missingtitle: 'Oppgavesamling',
+    lessonsnottranslated: 'Oppgavene i denne oppgavesamlingen har ikke blitt oversatt til nynorsk ennå.',
   },
   lessons: {
     writtenby: 'Skrevet av:',
@@ -67,6 +69,7 @@ export default {
     tolesson: 'Til oppgåve',
     reset: 'Fjern avkrysninger',
     tomainlanguage: 'På {{lang}}',
+    nottranslated: 'Denne sida finst ikkje på {{lang}}',
     improvepage: {
       header: 'Gjer denne sida betre',
       textline1: 'Fann du ein feil? Kunne noko vore betre?',

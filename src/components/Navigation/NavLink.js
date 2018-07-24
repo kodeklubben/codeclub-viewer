@@ -4,8 +4,11 @@ import Link from 'react-router/lib/Link';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './NavLink.scss';
 
-const NavLink = ({className: c, ...rest}) => {
-  return <Link {...rest} className={styles.linkBase + (c ? ' ' + c : '')} activeClassName="active"/>;
+const NavLink = ({className, to, ...rest}) => {
+  const classes = (to ? styles.linkBase : styles.spanBase) + (className ? ' ' + className : '');
+  return to ?
+    <Link {...rest} className={classes} to={to}/> :
+    <span className={classes}>{rest.children}</span>;
 };
 
 NavLink.propTypes = {
