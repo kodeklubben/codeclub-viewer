@@ -14,6 +14,7 @@ const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => (
       onChange={() => setShowDyslexicFont(!showDyslexicFont)}
       checked={showDyslexicFont}
       id='switch'
+      onColor='#000'
     />
   </label>
 );
