@@ -18,11 +18,19 @@
   }
 }
 
-.content {
+@mixin content {
   display: flex;
   justify-content: space-between;
-  font-family: 'OpenDyslexic-Regular';
   img {
     margin-right: 15px;
   }
+}
+
+.content {
+  @include content;
+}
+
+.dyslexia {
+  @include content;
+  font-family: $font-family-dyslexic;
 }
