@@ -8,10 +8,9 @@ import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
 import {getTranslator} from '../../selectors/translate';
 
 const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => (
-  <label htmlFor='switch'>
+  <label htmlFor='switch' className={styles.container}>
     <span className={styles.text}>{t('footer.dyslexia')}</span>
     <Switch
-      className={styles.switch}
       onChange={() => setShowDyslexicFont(!showDyslexicFont)}
       checked={showDyslexicFont}
       id='switch'

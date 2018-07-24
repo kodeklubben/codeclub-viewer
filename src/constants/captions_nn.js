@@ -115,7 +115,7 @@ export default {
   },
   footer: {
     contribute: 'Bidra?',
-    dyslexia: 'Dysleksitilpasset'
+    dyslexia: 'Skrift for dyslektikarar'
   },
   404: {
     header: 'Beklagar',

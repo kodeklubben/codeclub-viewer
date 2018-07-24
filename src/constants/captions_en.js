@@ -113,7 +113,7 @@ export default {
   },
   footer: {
     contribute: 'Contribute?',
-    dyslexia: 'Dysleksitilpasset'
+    dyslexia: 'Text for dyslexics'
   },
   404: {
     header: 'Sorry',
