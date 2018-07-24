@@ -6,6 +6,8 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
+import Button from 'react-toolbox/lib/button';
+import theme from 'react-toolbox/lib/button/theme.css';
 
 const Footer = ({t, isStudentMode}) => {
   const url = {
@@ -60,6 +62,7 @@ const Footer = ({t, isStudentMode}) => {
   return (
     <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
       <Row className={styles.githubIcon}>
+        <Button label='Test' raised primary />
         <a href={url.oppgaver} target="_blank">
           <img className={styles.svg} src={require('../../assets/graphics/github.png')}
             alt={'GitHub'}
@@ -89,4 +92,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(withStyles(styles)(Footer));
+)(withStyles(styles, theme)(Footer));
