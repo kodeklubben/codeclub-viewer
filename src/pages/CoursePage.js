@@ -15,7 +15,7 @@ import LevelNavigation from '../components/CoursePage/LevelNavigation';
 import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 import CourseInfo from '../components/CoursePage/CourseInfo';
 import {getCourseTitle} from '../resources/courseFrontmatter';
-import {getCourseIntro} from '../resources/courseContent';
+import {getCourseIntroText} from '../resources/courseContent';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
 import Head from '../components/Head';
 
@@ -35,7 +35,7 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) =
     </Col> : null;
   return (
     <div>
-      <Head title={courseTitle + ' | ' + t('head.title')} description={getCourseIntro(course, language)}/>
+      <Head title={courseTitle + ' | ' + t('head.title')} description={getCourseIntroText(course, language)}/>
       <Grid fluid={true} ref={grid => thispage = grid}>
         <Row>
           <Col xs={12}><h1>{courseTitle}</h1></Col>
