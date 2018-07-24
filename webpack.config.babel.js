@@ -89,8 +89,6 @@ const createConfig = (env = {}) => {
     console.log();
   }
 
-  const faviconstatsFilename = 'faviconstats.json';
-
   // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
   const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
   const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
@@ -307,8 +305,7 @@ const createConfig = (env = {}) => {
           entry: 'main',
           paths: staticSitePaths,
           locals: {
-            publicPath,
-            faviconstatsFilename,
+            publicPath
           },
           globals: {
             window: {}
