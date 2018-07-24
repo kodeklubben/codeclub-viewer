@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './ButtonRow.scss';
 import {anyCheckboxTrue, createCheckboxesKey} from '../../util';
 import MainLanguageButton from './MainLanguageButton';
 import ResetButton from './ResetButton';
@@ -26,7 +24,7 @@ const ButtonRow = ({
     <InstructionButton {...{course, lesson, language, isReadme: !isReadme}}/> : null;
 
   return (
-    <div className={styles.container}>
+    <div>
       {mainLanguageButton}
       {resetButton}
       {lessonOrReadmeButton}
@@ -61,4 +59,4 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
 
 export default connect(
   mapStateToProps,
-)(withStyles(styles)(ButtonRow));
+)(ButtonRow);

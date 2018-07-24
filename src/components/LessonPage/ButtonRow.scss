@@ -1,3 +1,17 @@
-.container {
-  margin-top: 10px;
+@import '../../styles/variables';
+
+@mixin buttonContainer {
+  margin: 10px 10px 0 0;
+
+  @media print {
+    display: none;
+  }
+}
+
+@mixin textMargin {
+  margin-left: 10px;
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
 }

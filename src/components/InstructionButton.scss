@@ -1,11 +1,7 @@
-@import '../styles/variables';
+@import 'LessonPage/ButtonRow';
 
 .button {
-  margin: 0 10px 0 0;
-
-  @media print {
-    display: none;
-  }
+  @include buttonContainer();
 }
 
 .buttonOnlyIcon {
@@ -13,11 +9,7 @@
 }
 
 .textMargin {
-  margin-left: 10px;
-
-  @media (max-width: $screen-xs-max) {
-    display: none;
-  }
+  @include textMargin();
 }
 
 .icon {

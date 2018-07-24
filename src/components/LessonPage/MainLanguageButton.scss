@@ -1,17 +1,9 @@
-@import '../../styles/variables';
+@import './ButtonRow';
 
 .textMargin {
-  margin-left: 10px; // space between text and flag;
-
-  @media (max-width: $screen-xs-max) {
-    display: none;
-  }
+  @include textMargin();
 }
 
 .container {
-  margin-right: 10px;
-
-  @media print {
-    display: none;
-  }
+  @include buttonContainer();
 }

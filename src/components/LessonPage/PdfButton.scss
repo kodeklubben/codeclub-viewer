@@ -1,19 +1,11 @@
-@import '../../styles/variables';
+@import './buttonRow';
 
 .container {
-  margin: 0 10px 0 0;
-
-  @media print {
-    display: none;
-  }
+  @include buttonContainer();
 }
 
 .textMargin {
-  margin-left: 10px;
-
-  @media (max-width: $screen-xs-max) {
-    display: none;
-  }
+  @include textMargin();
 }
 
 .icon {
