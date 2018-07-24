@@ -11,12 +11,12 @@ import Footer from '../components/Navigation/Footer';
 import styles from './App.scss';
 import '../styles/customBootstrapStyles';
 
-const App = ({t, params, location, children}) => {
+const App = ({params, location, children, t, showDyslexicFont}) => {
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
-
+  const className = showDyslexicFont ? styles.dyslexia : styles.appContainer;
   return <DocumentTitle title={t('title.codeclub')}>
-    <div className={styles.appContainer}>
+    <div {...{className}}>
       {renderPdf ? <PdfHeader course={params.course}/> : <NavBar {...{params}}/>}
       {children}
       {renderPdf ? null : <Footer/>}
@@ -33,11 +33,13 @@ App.propTypes = {
   children: PropTypes.object,
 
   // mapStateToProps
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  t: getTranslator(state)
+  t: getTranslator(state),
+  showDyslexicFont: state.showDyslexicFont,
 });
 
 export default connect(

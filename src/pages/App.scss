@@ -2,5 +2,10 @@
 
 .appContainer {
   overflow-x: hidden; // Prevents page to scroll horizontally on e.g. phones if content goes outside width
-  font-family: 'OpenDyslexic-Regular';
+  font-family: Helvetica;
+}
+
+.dyslexia {
+  overflow-x: hidden;
+  font-family: $font-family-dyslexic;
 }

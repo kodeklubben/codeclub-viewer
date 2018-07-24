@@ -6,6 +6,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
+import DyslexiaSwitch from './DyslexiaSwitch';
 
 const Footer = ({t, isStudentMode}) => {
   const url = {
@@ -69,6 +70,7 @@ const Footer = ({t, isStudentMode}) => {
       <Row className={styles.contribute}>
         <p><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
       </Row>
+      <DyslexiaSwitch/>
       <Row>
         <div className={styles.divider}/>
       </Row>
