@@ -63,7 +63,7 @@ class LessonPage extends React.Component {
     const {
       course, lesson, language, isReadme,
       t, translateTag, translateGroup,
-      title, level, author, translator, tags,
+      title, level, author, translator, license, tags,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
@@ -71,9 +71,12 @@ class LessonPage extends React.Component {
     const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
-    const license = <div className={styles.license}>
+    const licenseRow = <div className={styles.license}>
       {t('lessons.license')}
-      <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+      {license ?
+        <MarkdownRenderer src={license} inline={true}/> :
+        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+      }
     </div>;
     return (
       <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
@@ -88,7 +91,7 @@ class LessonPage extends React.Component {
           <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
           <Content {...{course, lesson, language, isReadme}}/>
-          {license}
+          {licenseRow}
           <ImprovePage {...{course, lesson, language, isReadme}}/>
         </div>
       </DocumentTitle>
@@ -112,6 +115,7 @@ LessonPage.propTypes = {
   level: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   translator: PropTypes.string.isRequired,
+  license: PropTypes.string,
   tags: PropTypes.object.isRequired,
   checkboxes: PropTypes.object,
   checkedCheckboxes: PropTypes.number.isRequired,
@@ -123,7 +127,7 @@ LessonPage.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, title, level, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const {path, title, level, author, translator, license} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
     translateTag: getTranslateTag(state),
@@ -133,6 +137,7 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
     level,
     author,
     translator,
+    license,
     tags: getLessonTags(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
