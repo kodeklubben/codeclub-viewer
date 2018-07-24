@@ -32,18 +32,15 @@ const renderStatic = (locals, callback) => {
         </WithStylesContext>
       </Provider>
     );
+    Helmet.renderStatic();
     css = [...new Set(css)]; // make array unique
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
-    const helmet =  Helmet.renderStatic();
     const webpackAssets = locals.webpackStats.compilation.assets;
     const assets = Object.keys(webpackAssets);
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
     const jsAssets = assets.filter(p => /\.js$/.test(p)).map(p => locals.publicPath + p);
-    const faviconstats = webpackAssets[locals.faviconstatsFilename];
-    const faviconHtml = faviconstats ? JSON.parse(faviconstats.source()).html.join('') : '';
-    if (!faviconHtml) { console.log('WARNING: Could not obtain HTML for favicons for', locals.path); }
 
-    const html = template({ cssAssets, jsAssets, appCss, appHtml, helmet, faviconHtml });
+    const html = template({ cssAssets, jsAssets, appCss, appHtml });
 
     callback(null, html);
   });
