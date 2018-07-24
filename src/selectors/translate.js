@@ -77,6 +77,7 @@ export const getTranslateTag = (state) => {
   };
 };
 
+// Same function as the getTranslateTag. Only difference is that it gets TOOLTIP instead of NAME
 export const getTranslateTooltip = (state) => {
   const captions = require('lessonFiltertags/translation_' + state.language + '.yml');
   return (groupKey, tagKey) => {
