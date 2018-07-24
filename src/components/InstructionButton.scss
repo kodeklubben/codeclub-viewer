@@ -1,11 +1,15 @@
-@import '../styles/variables';
+@import 'LessonPage/ButtonRow';
+
+.button {
+  @include buttonContainer();
+}
+
+.buttonOnlyIcon {
+  margin-right: 5px;
+}
 
 .textMargin {
-  margin-left: 10px;
-
-  @media (max-width: $screen-xs-max) {
-    display: none;
-  }
+  @include textMargin();
 }
 
 .icon {
