@@ -14,7 +14,8 @@ const Footer = ({t, isStudentMode}) => {
     excited: 'http://www.ntnu.edu/web/excited',
     ntnu_idi: 'https://www.ntnu.edu/idi/',
     uio_ifi: 'http://www.mn.uio.no/ifi/',
-    teknograd: 'https://www.teknograd.no/'
+    teknograd: 'https://www.teknograd.no/',
+    tekna: 'https://www.tekna.no/'
   };
 
   const sponsors = (
