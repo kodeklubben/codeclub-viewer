@@ -1,5 +1,6 @@
 export default {
   general: {
+    home: 'Home',
     student: 'Student',
     teacher: 'Teacher',
     level: 'Level',
@@ -15,6 +16,7 @@ export default {
   },
   frontpage: {
     courses: 'Courses',
+    lessoncount: 'Lessons: {{count}}',
     otherwebsitecourses: 'Courses on other webpages',
     button: {
       start: 'Start here!',
@@ -38,19 +40,22 @@ export default {
              'new this time. Now you can easily filter tasks on topics, and all assignments have instructions ' +
              'that you can check in preparation for the sessions. For beginners, we recommend block-based ' +
              'programming, where Python / Web / Processing is the most common to proceed with afterwards.',
-      link2: 'Learn more about running a code club'
+      link2: 'Learn more about running a code club',
+      plus: 'Show more information',
+      minus: 'Show less information'
     },
     showhidefilter: 'Show/hide filter',
     forumbutton: 'Go to forum'
   },
-  playlist: {
-    lessons: 'Lessons',
+  coursepage: {
     courseinfo: 'Information about the course',
     courseinfonotfound: 'Oops, someone forgot to write course information!',
     instructionbutton: 'Teacher Instructions',
     levelnavigation: 'Navigate to',
     lessoncollections: 'Collections of Lessons',
-    nomatchinglessons: 'No matching lessons for this combination'
+    nomatchinglessons: 'No matching lessons for this combination',
+    missingtitle: 'Playlist',
+    lessonsnottranslated: 'The lessons in this playlist have not been translated to English yet.',
   },
   lessons: {
     writtenby: 'Written by:',
@@ -62,6 +67,7 @@ export default {
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
     tomainlanguage: 'In {{lang}}',
+    nottranslated: 'This page does not exist in {{lang}}',
     license: 'License: ',
     improvepage: {
       header: 'Improve this page',

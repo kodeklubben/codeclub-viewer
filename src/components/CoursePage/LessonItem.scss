@@ -1,0 +1,53 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.row {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+@mixin progressBar($color) {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 8px;
+  background-color: $color;
+}
+
+.progressBarLevel1 { @include progressBar($color-level1); }
+.progressBarLevel2 { @include progressBar($color-level2); }
+.progressBarLevel3 { @include progressBar($color-level3); }
+.progressBarLevel4 { @include progressBar($color-level4); }
+
+.title {
+  padding: 2px 0;
+  margin-right: 5px;
+}
+
+.progress {
+  opacity: 0.5;
+  margin-right: 5px;
+}
+
+.flag {
+  margin-right: 5px;
+}
+
+.instructionButton {
+  margin-right: 5px;
+}
+
+.popoverGlyph {
+  margin-bottom: 2px;
+  font-size: 1.3em;
+  &:hover {
+    color: black;
+  }
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}

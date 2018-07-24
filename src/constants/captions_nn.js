@@ -2,6 +2,7 @@ const softHyphen = '\u00ad';
 
 export default {
   general: {
+    home: 'Heim',
     student: 'Elev',
     teacher: 'Lærar',
     level: 'Nivå',
@@ -17,6 +18,7 @@ export default {
   },
   frontpage: {
     courses: 'Kurs',
+    lessoncount: 'Oppgaver: {{count}}',
     otherwebsitecourses: 'Kurs på andre nettsider',
     button: {
       start: 'Start her!',
@@ -41,18 +43,21 @@ export default {
               'og alle oppgåvesetta har rettleiingar du kan sjekke ut som førebuing til øyktene. ' +
               'For nybegynnarar anbefaler me blokkbasert programmering, der Python, Web eller Processing ' +
               'er dei vanlegaste å gå vidare med etterpå.',
-      link2: 'Lær meir om å drive ein kodeklubb'
+      link2: 'Lær meir om å drive ein kodeklubb',
+      plus: 'Vis meir informasjon',
+      minus: 'Vis mindre informasjon'
     },
     showhidefilter: 'Vis/skjul filter'
   },
-  playlist: {
-    lessons: 'Oppgåver',
+  coursepage: {
     courseinfo: 'Informasjon om kurset',
     courseinfonotfound: 'Oops, her har nokon gløymt å skrive kursinformasjon!',
     instructionbutton: 'Lærarrettleiing',
     levelnavigation: 'Hopp til',
     lessoncollections: 'Oppgåvesamlinger',
-    nomatchinglessons: 'Ingen oppgåver passar til filteret'
+    nomatchinglessons: 'Ingen oppgåver passar til filteret',
+    missingtitle: 'Oppgavesamling',
+    lessonsnottranslated: 'Oppgavene i denne oppgavesamlingen har ikke blitt oversatt til nynorsk ennå.',
   },
   lessons: {
     writtenby: 'Skrevet av:',
@@ -64,6 +69,7 @@ export default {
     tolesson: 'Til oppgåve',
     reset: 'Fjern avkrysninger',
     tomainlanguage: 'På {{lang}}',
+    nottranslated: 'Denne sida finst ikkje på {{lang}}',
     license: 'Lisens: ',
     improvepage: {
       header: 'Gjer denne sida betre',
