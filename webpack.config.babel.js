@@ -8,7 +8,7 @@
  *  Also, to get smaller builds, do
  *    import Button from 'react-bootstrap/lib/Button';  // YES
  *  rather than
- *    import { Button } from 'react-bootstrap'; // NO
+ *    import {Button} from 'react-bootstrap'; // NO
  *
  *
  *  Regarding CSS extraction:
@@ -36,7 +36,6 @@
 import webpack from 'webpack';
 import path from 'path';
 
-import MarkdownItAnchor from 'markdown-it-anchor';
 import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
@@ -141,6 +140,7 @@ const createConfig = (env = {}) => {
       // in lessonSrc as well.
       modules: [path.join(__dirname, 'node_modules')],
       alias: {
+        //frontmatter: 'json-loader!front-matter-loader?onlyAttributes',
         // // Markdown-files are parsed only through one of these three aliases, and are
         // // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
         // // 1) We don't want to use '!!' in the requires in the modules, and
@@ -212,19 +212,11 @@ const createConfig = (env = {}) => {
         },
         {
           test: inLessonRepo('md'),
-          loader: 'combine-loader',
-          options: {
-            //raw: 'raw-loader',
-            frontmatter: [
-              'json-loader',
-              'front-matter-loader?onlyAttributes'
-            ],
-            content: [
-              'html-loader?attrs=false',
-              'markdown-it-loader',
-              'front-matter-loader?onlyBody',
-            ],
-          },
+          use: [
+            'html-loader?attrs=false',
+            'markdown-it-loader',
+            'front-matter-loader?onlyBody',
+          ],
         },
         {
           test: inLessonRepo('png'),
@@ -249,7 +241,6 @@ const createConfig = (env = {}) => {
               MarkdownItAttrs,
               MarkdownItHeaderSections,
               MarkdownItImplicitFigures,
-              MarkdownItAnchor,
               [MarkdownItTaskCheckbox, {disabled: false}],
             ],
             highlight,

@@ -13,7 +13,10 @@ const PopoverComponent = ({children, popoverContent}) => {
   const animation = true;
   const trigger = 'click';
   const placement = 'bottom';
-  const onClick = (e) => e.preventDefault();
+  const onClick = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+  };
   const overlay =
     <Popover id={hashCode(popoverContent)} className={styles.popover}>
       <div className={styles.content} dangerouslySetInnerHTML={createMarkup()}/>

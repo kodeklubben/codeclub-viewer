@@ -1,51 +1,82 @@
 import {createSelector} from 'reselect';
-import {getFilteredAndIndexedLessons} from './lesson';
-import {capitalize, tagsMatchFilter, cleanseTags} from '../util';
-import {iconContext, courseContext, getCourseMetadata} from '../contexts';
+import {getCourseTags, getExternalCourses} from '../resources/courses';
+import {tagsMatchFilter} from '../util';
+import {getCourseLanguages} from '../resources/courseFrontmatter';
+import {getFilteredLessons} from './lesson';
+import {getTagsFilter} from './filter';
 
-const getFilter = (state) => state.filter;
-
-// Creates a list of courses with lessons that have tags matching the filter
+/**
+ * Get internal courses that have more than one lesson after filter has been applied.
+ * Courses are sorted by number of lessons (most lessons first).
+ * @param {object} state The redux state object
+ * @returns {string[]} An array of courses, e.g. ['scratch', 'python', ...]
+ */
 export const getFilteredCourses = createSelector(
-  [getFilteredAndIndexedLessons],
-  (lessons = {}) => {
-    return Object.keys(lessons).reduce((res, lessonKey) => {
-      const lesson = lessons[lessonKey];
-      const courseName = lesson.course;
-      const name = capitalize(courseName).replace('_', ' ');
+  // Input selectors:
+  getFilteredLessons,
 
-      // Increment lessonCount of existing course
-      if (res.hasOwnProperty(courseName)) {res[courseName].lessonCount++;}
-      // Or create a new course
-      else res[courseName] = {
-        iconPath: iconContext('./' + courseName + '/logo-black.png'),
-        lessonCount: 1,
-        name,
-        path: courseName
-      };
-
-      return res;
-    }, {});
+  // Output selector (resultfunc):
+  (filteredLessons) => {
+    const filteredCourses = Object.keys(filteredLessons);
+    const sortFunc = (courseA, courseB) => filteredLessons[courseB].length - filteredLessons[courseA].length;
+    filteredCourses.sort(sortFunc);
+    return filteredCourses;
   }
 );
 
-export const getFilteredExternalCourses = createSelector(
-  [getFilter],
-  (filter = {}) => {
-    return courseContext.keys().reduce((res, path) => {
-      const coursePath = path.slice(0, path.indexOf('/', 2));
-      const fm = courseContext(path).frontmatter;
-      const courseMeta = getCourseMetadata(path);
-      if (fm.external != null) {
-        const course = {
-          externalLink: fm.external,
-          iconPath: iconContext(coursePath + '/logo-black.png'),
-          name: fm.title,
-          tags: cleanseTags({...(courseMeta.tags || {}), language: [fm.language]}, 'external course ' + coursePath)
-        };
-        return tagsMatchFilter(course.tags, filter) ? {...res, [fm.title]: course} : res;
+/**
+ * Get a list of external courses, filtered by tags. Sorted alphabetically.
+ * Returns only courses that contain all the checked tags in the filter.
+ * @param {object} state The redux state object
+ * @type {string[]} An array of external courses, e.g. ['codecademy', 'kodegenet', ...]
+ */
+export const getTagFilteredExternalCourses = createSelector(
+  // Input selectors:
+  getTagsFilter,
+
+  // Output selector (resultfunc):
+  (tagsFilter) => {
+    return getExternalCourses().filter(course => {
+      try {
+        return tagsMatchFilter(getCourseTags(course), tagsFilter);
       }
-      return res;
-    }, {});
+      catch (e) {
+        console.error(`Error in getFilteredExternalCourses for ${course}: ${e.message}`);
+        return false; // Don't include a course that has errors
+      }
+    });
+  }
+);
+
+/**
+ * Returns a filtered list of {course,language} objects of external courses.
+ * Only the tuples that match both tag and language filter are returned.
+ * Sorted alphabetically by course, and within course, alphabetically by language code.
+ * @param {object} state The redux state object
+ * @returns {object[]} An array of objects, e.g.
+ * [
+ *   {course: 'khan_academy', language: 'en'},
+ *   {course: 'khan_academy', language: 'nb'},
+ *   {course: 'kodegenet', language: 'nb'},
+ *   ...
+ * ]
+ */
+export const getFilteredExternalCoursesWithLanguages = createSelector(
+  // Input selectors:
+  getTagFilteredExternalCourses,
+  (state) => state.filter.language,
+
+  // Output selector (resultfunc):
+  (courses, languageFilter = {}) => {
+    const coursesWithLanguages = [];
+    for (const course of courses) {
+      const courseLanguages = getCourseLanguages(course).sort();
+      for (const language of courseLanguages) {
+        if (languageFilter[language]) {
+          coursesWithLanguages.push({course, language});
+        }
+      }
+    }
+    return coursesWithLanguages;
   }
 );
