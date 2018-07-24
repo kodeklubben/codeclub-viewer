@@ -5,9 +5,6 @@ import {connect} from 'react-redux';
 import {getCheckedFilterLanguages} from '../../selectors/filter';
 import {getLessonLanguages} from '../../resources/lessonFrontmatter';
 
-// The LessonWrapper includes a LessonItem for each checked lesson.
-// React might need us to group them in a div (unless we update to React 16)
-
 const LessonWrapper = ({course, lesson, checkedLessonLanguages}) =>
   checkedLessonLanguages.map(language =>
     <LessonItem key={language} {...{course, lesson, language}}/>
