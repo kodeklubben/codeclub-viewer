@@ -113,7 +113,8 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    contribute: 'Bidra?'
+    contribute: 'Bidra?',
+    dyslexia: 'Dysleksitilpasset'
   },
   404: {
     header: 'Beklager',

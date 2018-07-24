@@ -112,7 +112,8 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    contribute: 'Contribute?'
+    contribute: 'Contribute?',
+    dyslexia: 'Dysleksitilpasset'
   },
   404: {
     header: 'Sorry',

@@ -5,21 +5,23 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './DyslexiaSwitch.scss';
 import Switch from 'react-switch';
 import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
+import {getTranslator} from '../../selectors/translate';
 
-const DyslexiaSwitch = ({showDyslexicFont, setShowDyslexicFont}) => (
+const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => (
   <label htmlFor='switch'>
-    <span className={styles.text}>Tilpasset dysleksi</span>
+    <span className={styles.text}>{t('footer.dyslexia')}</span>
     <Switch
       className={styles.switch}
       onChange={() => setShowDyslexicFont(!showDyslexicFont)}
       checked={showDyslexicFont}
-      id='swtich'
+      id='switch'
     />
   </label>
 );
 
 DyslexiaSwitch.propTypes = {
   // mapStateToProps
+  t: PropTypes.func.isRequired,
   showDyslexicFont: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
@@ -27,6 +29,7 @@ DyslexiaSwitch.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  t: getTranslator(state),
   showDyslexicFont: state.showDyslexicFont,
 });
 
