@@ -18,7 +18,7 @@ const App = ({params, location, children, t, showDyslexicFont}) => {
   return <DocumentTitle title={t('title.codeclub')}>
     <div {...{className}}>
       {renderPdf ? <PdfHeader course={params.course}/> : <NavBar {...{params}}/>}
-      {children}
+      <div className={styles.stickyFooter}>{children}</div>
       {renderPdf ? null : <Footer/>}
     </div>
   </DocumentTitle>;

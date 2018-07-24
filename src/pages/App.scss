@@ -1,11 +1,22 @@
 @import '../styles/variables';
 
+@mixin container {
+  display: flex;
+  overflow-x: hidden;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
 .appContainer {
-  overflow-x: hidden; // Prevents page to scroll horizontally on e.g. phones if content goes outside width
+  @include container;
   font-family: Helvetica;
 }
 
 .dyslexia {
-  overflow-x: hidden;
+  @include container;
   font-family: $font-family-dyslexic;
+}
+
+.stickyFooter {
+  flex: 1;
 }
