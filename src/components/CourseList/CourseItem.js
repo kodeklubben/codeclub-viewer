@@ -59,13 +59,11 @@ CourseItem.propTypes = {
   onlyCheckedMainLanguage: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {course}) => {
-  return {
-    showLessonCount: getShowFiltergroups(state),
-    coursePath: getLanguageIndependentCoursePath(course),
-    onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
-  };
-};
+const mapStateToProps = (state, {course}) => ({
+  showLessonCount: getShowFiltergroups(state),
+  coursePath: getLanguageIndependentCoursePath(course),
+  onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
+});
 
 export default connect(
   mapStateToProps

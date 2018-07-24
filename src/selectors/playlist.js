@@ -15,5 +15,5 @@ export const getShowRadiobuttons = (course) =>
  * @param {string} course E.g. 'scratch' (optional)
  * @returns {boolean}
 */
-export const getShowFiltergroups = (state, course) =>
+export const getShowFiltergroups = (state, course = '') =>
   !state.showPlaylists || !getShowRadiobuttons(course);
