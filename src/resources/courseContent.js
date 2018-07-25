@@ -38,8 +38,4 @@ export const getCourseIntro = (course, language) => {
  * @param {string} language E.g. 'nb'
  * @returns {string} Text to e.g. display in a description.
  */
-export const getCourseIntroText = (course, language) => {
-  let content = '';
-  content = getCourseIntro(course, language).replace(/<[^>]*>?/g, '');
-  return content;
-};
+export const getCourseIntroText = (course, language) => getCourseIntro(course, language).replace(/<[^>]*>/g, '');

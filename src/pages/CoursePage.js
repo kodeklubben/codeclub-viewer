@@ -35,7 +35,7 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) =
     </Col> : null;
   return (
     <div>
-      <Head title={courseTitle + ' | ' + t('head.title')} description={getCourseIntroText(course, language)}/>
+      <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
       <Grid fluid={true} ref={grid => thispage = grid}>
         <Row>
           <Col xs={12}><h1>{courseTitle}</h1></Col>

@@ -75,10 +75,7 @@ class LessonPage extends React.Component {
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
       <div>
-        <Head
-          title={title + ' | ' + t('head.title')}
-          description={getLessonIntroText(course, lesson, language, isReadme)}
-        />
+        <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>
             <LevelIcon {...{level}}/>

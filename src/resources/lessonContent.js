@@ -46,8 +46,5 @@ export const getLessonIntro = (course, lesson, language, isReadme) => {
  * @param {boolean} isReadme
  * @returns {string} Text to e.g. display in a description.
  */
-export const getLessonIntroText = (course, lesson, language, isReadme) => {
-  let content = '';
-  content = getLessonIntro(course, lesson, language, isReadme).replace(/<[^>]*>?/g, '');
-  return content;
-};
+export const getLessonIntroText = (course, lesson, language, isReadme) =>
+  getLessonIntro(course, lesson, language, isReadme).replace(/<[^>]*>/g, '');
