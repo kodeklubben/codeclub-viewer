@@ -210,7 +210,7 @@ function syncDistToBeta {
 function gitPush {
     echo "[INFO] Pushing to ${BETA_FORKED_URL}"
     cd ${BETA_PATH}
-    git push
+    git push --force
 }
 
 
@@ -255,7 +255,12 @@ echo "    cd ${CCV_PATH}"
 echo "    yarn serve"
 echo "and open up a browser at http://localhost:8080/${URL_PATH_PREFIX}${URL_PATH_PREFIX:+/}"
 echo
-echo "If everything is ok and you wish to continue, this script will copy and force push the new build to ${BETA_FORKED_URL}."
+echo "If everything is ok and you wish to continue, this script will now copy the new build to ${BETA_PATH} as follows:"
+echo "    1) Create a local branch '${BETA_BRANCH}' from '${BETA_BRANCH}' in ${BETA_REPO}"
+echo "    2) Copy the new build to ${BETA_PATH}."
+echo "    3) Commit the changes to the local '${BETA_BRANCH}'."
+echo "    4) Ask if it is ok to FORCE push '${BETA_BRANCH}' to ${BETA_FORKED_URL}."
+echo "    5) If the answer to (4) is 'y', then OVERWRITE '${BETA_BRANCH}' in ${BETA_FORKED_URL}"
 askContinue
 
 echo
@@ -264,7 +269,8 @@ echo
 syncDistToBeta
 
 echo
-echo "The compiled website is now ready to be pushed to ${BETA_FORKED_URL}."
+echo "The compiled website is now ready to be force pushed to branch '${BETA_BRANCH}' in ${BETA_FORKED_URL}."
+echo "Any remote changes WILL BE LOST!"
 askContinue
 
 echo
