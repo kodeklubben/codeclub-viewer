@@ -119,7 +119,9 @@ function prepareRepo {
     echo "[INFO] Preparing repo in $(pwd)"
 
     # Check that path is git folder. If not: abort.
-    if [[ ! $(git rev-parse --show-toplevel 2>/dev/null) = "$(pwd)" ]]; then
+    # NOTE: Try 'pwd -W' first, in case we are on windows.
+    #       If this fails, suppress error messages and just run 'pwd' instead.
+    if [[ ! $(git rev-parse --show-toplevel 2>/dev/null) = "$(pwd -W 2>/dev/null || pwd)" ]]; then
         echo "[ERROR] $(pwd) is not the top level folder of a git repo."
         cleanupAndAbort
     fi
