@@ -17,6 +17,8 @@ OPPGAVER_URL="${OPPGAVER_REPO}.git"
 
 BETA_PATH=$(dirname ${SCRIPT_PATH})/beta            # ../beta
 BETA_BRANCH="gh-pages"
+BETA_REPO="kodeklubben/beta"
+BETA_URL="${BETA_REPO}.git"
 
 
 ###################################
@@ -206,7 +208,7 @@ function syncDistToBeta {
 }
 
 function gitPush {
-    echo "[INFO] Pushing to ${BETA_URL}"
+    echo "[INFO] Pushing to ${BETA_FORKED_URL}"
     cd ${BETA_PATH}
     git push
 }
@@ -218,18 +220,18 @@ function gitPush {
 
 echo
 echo -n "Checking if current github user has a fork of kodeklubben/beta (requires SSH access to github)... "
-BETA_REPO=$(node getBetaFork.js)
+BETA_FORKED_REPO=$(node getBetaFork.js)
 echo "Success!"
-BETA_URL="git@github.com:${BETA_REPO}.git"          # Specify git@github.com since we need SSH to push result
+BETA_FORKED_URL="git@github.com:${BETA_FORKED_REPO}.git"          # Specify git@github.com since we need SSH to push result
 
 echo
 echo "This script will compile"
 echo "    ${CCV_REPO} (branch '${CCV_BRANCH}') and"
 echo "    ${OPPGAVER_REPO} (branch '${OPPGAVER_BRANCH}')"
 echo "and publish the result to"
-echo "    ${BETA_REPO} (branch '${BETA_BRANCH}')."
+echo "    ${BETA_FORKED_REPO} (branch '${BETA_BRANCH}')."
 echo
-echo "NOTE: The local branch ${BETA_BRANCH} in the repo ${BETA_REPO}"
+echo "NOTE: The branch ${BETA_BRANCH} in the forked repo ${BETA_FORKED_REPO}"
 echo "      WILL BE RESET to the corresponding remote branch before updated with the new build."
 askContinue
 
@@ -253,7 +255,7 @@ echo "    cd ${CCV_PATH}"
 echo "    yarn serve"
 echo "and open up a browser at http://localhost:8080/${URL_PATH_PREFIX}${URL_PATH_PREFIX:+/}"
 echo
-echo "If everything is ok and you wish to continue, this script will copy and push the new build to ${BETA_URL}."
+echo "If everything is ok and you wish to continue, this script will copy and force push the new build to ${BETA_FORKED_URL}."
 askContinue
 
 echo
@@ -262,7 +264,7 @@ echo
 syncDistToBeta
 
 echo
-echo "The compiled website is now ready to be pushed to ${BETA_URL}."
+echo "The compiled website is now ready to be pushed to ${BETA_FORKED_URL}."
 askContinue
 
 echo
