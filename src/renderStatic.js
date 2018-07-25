@@ -33,7 +33,6 @@ const renderStatic = (locals, callback) => {
       </Provider>
     );
     const helmet = Helmet.renderStatic();
-    console.log(helmet);
     css = [...new Set(css)]; // make array unique
     const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
     const webpackAssets = locals.webpackStats.compilation.assets;
