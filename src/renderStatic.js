@@ -39,8 +39,11 @@ const renderStatic = (locals, callback) => {
     const assets = Object.keys(webpackAssets);
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
     const jsAssets = assets.filter(p => /\.js$/.test(p)).map(p => locals.publicPath + p);
+    const faviconstats = webpackAssets[locals.faviconstatsFilename];
+    const faviconHtml = faviconstats ? JSON.parse(faviconstats.source()).html.join('') : '';
+    if (!faviconHtml) { console.log('WARNING: Could not obtain HTML for favicons for', locals.path); }
 
-    const html = template({ cssAssets, jsAssets, appCss, appHtml });
+    const html = template({ cssAssets, jsAssets, appCss, appHtml, faviconHtml });
 
     callback(null, html);
   });
