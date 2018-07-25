@@ -10,14 +10,20 @@ const {lessonPaths} = require('./pathlists');
 
 const numberOfSimultaneousPdfConverts = 8;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
+const isWin = process.platform === 'win32';
 let localWebServer = null;
 
 const cleanup = () => {
   if (localWebServer && !localWebServer.killed) {
     console.log('Killing localWebServer');
-    const killSignal = 'SIGTERM'; // 'SIGINT';
-    const killSuccess = localWebServer.kill(killSignal);
-    console.log('Successfully killed localWebServer with ' + killSignal + ':', killSuccess);
+    if (isWin) {
+      spawn('taskkill', ['/pid', localWebServer.pid, '/f', '/t']);
+      localWebServer.killed = true;
+    } else {
+      const killSignal = 'SIGTERM'; // 'SIGINT';
+      const killSuccess = localWebServer.kill(killSignal);
+      console.log('Successfully killed localWebServer with ' + killSignal + ':', killSuccess);
+    }
     localWebServer.stdout.removeAllListeners();
     localWebServer.stderr.removeAllListeners();
     localWebServer.removeAllListeners();
