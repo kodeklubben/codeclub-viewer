@@ -12,6 +12,8 @@
 
   <title><%= htmlWebpackPlugin.options.title %></title>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+
   <% for (key in htmlWebpackPlugin.files.css) { %>
   <link href="<%= htmlWebpackPlugin.files.css[key] %>" rel="stylesheet">
   <% } %>
