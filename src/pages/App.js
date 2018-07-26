@@ -17,7 +17,7 @@ const App = ({t, params, location, children}) => {
 
   return <DocumentTitle title={t('title.codeclub')}>
     <div className={styles.appContainer}>
-      {renderPdf ? <PdfHeader {...{params}}/> : <NavBar {...{params}}/>}
+      {renderPdf ? <PdfHeader course={params.course}/> : <NavBar {...{params}}/>}
       {children}
       {renderPdf ? null : <Footer/>}
     </div>

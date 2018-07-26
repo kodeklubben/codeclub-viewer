@@ -1,76 +1,131 @@
+import createCachedSelector from 're-reselect';
 import {createSelector} from 'reselect';
-import {tagsMatchFilter, getLessonData} from '../util';
-
-// TODO:
-// * Only getLessonsByLevel is used (double check). Perhaps simplify?
-// * getCourseLessons doesn't need state, perhaps it doesn't need to be selector?
-// * getLessonData() could take courseName as input, and it could cache result based on parameter (if needed).
-// * If we need to keep this as selector, perhaps use rereselect,
-//   otherwise different courseName will force recalculation.
-// * Now only filter is gotten from state. Perhaps we could precalculate a lot more of lessons,
-//   and just apply filter in the end in a much simpler selector. I.e., can we move a lot of the logic
-//   in this file to a different file? (util.js, or perhaps a separate file)
-// * Update unit tests
-
-export const getCourseLessons = (state, courseName = '') => {
-  const lessons = getLessonData();
-  return Object.keys(lessons).reduce((res, lessonPath) => {
-    return lessonPath.startsWith('./' + courseName) ? {...res, [lessonPath]: lessons[lessonPath]} : res;
-  }, {});
-};
-const getFilter = (state) => state.filter;
+import {getLessonTags, getLessonsInCourse, getLevel, isLessonIndexed} from '../resources/lessons';
+import {languagesMatchFilter, tagsMatchFilter} from '../util';
+import {getCourses} from '../resources/courses';
+import {getLessonLanguages} from '../resources/lessonFrontmatter';
+import {getCheckedFilterLanguages, getTagsFilter} from './filter';
 
 /**
- * Creates an object containing lessons that have tags matching the filter
- * Input props: courseName (string, optional)
+ * Get filtered lessons for all (internal) courses.
+ * Courses are sorted alphabetically.
+ * Lessons are sorted alphabetically within each course.
+ * Courses with no lessons (i.e. "empty courses") are not returned.
+ * @param {object} state The redux state object.
+ * @returns {object} An object where the keys are the courses, and the values are arrays of courses, e.g.
+ * {
+ *   python: ['bokstaver', 'fargespill', ...]
+ *   scratch: ['astrokatt', 'straffespark', ...]
+ *   ...
+ * }
  */
 export const getFilteredLessons = createSelector(
-  [getFilter, getCourseLessons],
-  (filter = {}, lessons = {}) => {
+  // Input selectors:
+  state => state.filter.language,
+  getTagsFilter,
 
-    return Object.keys(lessons).reduce((res, lessonKey) => {
-      const lesson = lessons[lessonKey];
-      if (tagsMatchFilter(lesson.tags, filter)) res[lessonKey] = lesson;
-      return res;
-    }, {});
-
-  }
-);
-
-/**
- * Creates an object containing indexed lessons that have tags matching the filter
- * Input props: courseName (string, optional)
- */
-export const getFilteredAndIndexedLessons = createSelector(
-  [getFilteredLessons],
-  (filteredLessons = {}) => {
-    return Object.keys(filteredLessons).reduce((res, lessonPath) => {
-      const lesson = filteredLessons[lessonPath];
-      return lesson.indexed ? {...res, [lessonPath]: lesson} : res;
-    }, {});
-  }
-);
-
-/**
- * Creates an object {<level>: [lessonA, lessonB, ...], ...}
- * where the lessons available given your current filter are sorted according to level
- * Input props: courseName (string, optional)
- */
-export const getLessonsByLevel = createSelector(
-  [getFilteredAndIndexedLessons],
-  (lessons = {}) => {
-    // Get lessons grouped by level
-    return Object.keys(lessons).reduce((res, lessonId) => {
-      const lesson = lessons[lessonId];
-      const level = lesson.level;
-
-      // Ignore lessons without level
-      if (level != null) {
-        if (res.hasOwnProperty(level)) res[level].push(lesson);
-        else res[level] = [lesson];
+  // Output selector (resultfunc):
+  (languageFilter, tagsFilter) => {
+    const filteredLessons = {};
+    for (const course of getCourses()) {
+      const lessons = getLessonsInCourse(course).filter(lesson => {
+        try {
+          return (
+            isLessonIndexed(course, lesson) &&
+            languagesMatchFilter(getLessonLanguages(course, lesson), languageFilter) &&
+            tagsMatchFilter(getLessonTags(course, lesson), tagsFilter)
+          );
+        }
+        catch (e) {
+          console.error(`ERROR --- Skipping ${lesson} due to error: ${e.message}`);
+          return false; // If error, don't include lesson
+        }
+      });
+      if (lessons.length > 0) {
+        filteredLessons[course] = lessons;
       }
-
-      return res;
-    }, {});
+    }
+    return filteredLessons;
   }
+);
+
+/**
+ * Get filtered lessons in a course.
+ * @param {object} state The redux state object
+ * @param {string} course Which course to get lessons for
+ * @returns {string[]} An array of filtered lessons for the given course, e.g. ['astrokatt', 'straffespark']
+ */
+export const getFilteredLessonsInCourse = (state, course) => getFilteredLessons(state)[course] || [];
+
+/**
+ * Get number of lessons (in a course) per checked language. Doesn't return languages without lessons.
+ * @param {object} state The redux state object
+ * @param {string} course Which course to count lessons for
+ * @returns {object} An object which shows how many lessons per checked filter language, e.g.
+ * {
+ *   nb: 5,
+ *   en: 2,
+ * }
+ */
+export const getFilteredLessonsInCourseCountPerLanguage = createSelector(
+  // Input selectors:
+  (state, course) => course,
+  getFilteredLessonsInCourse,
+  getCheckedFilterLanguages,
+
+  // Output selector (resultfunc):
+  (course, lessons, filterLanguages) => {
+    const lessonsPerLanguage = {};
+    for (const lesson of lessons) {
+      for (const language of getLessonLanguages(course, lesson)) {
+        if (filterLanguages.includes(language)) {
+          lessonsPerLanguage[language] = (lessonsPerLanguage[language] || 0) + 1;
+        }
+      }
+    }
+    return lessonsPerLanguage;
+  }
+);
+
+
+/**
+ * Get filtered lessons in a course for a specific level
+ * @param {object} state The redux state object
+ * @param {string} course Which course to get lessons for, e.g. 'scratch'
+ * @param {number} level Which level to get lessons for, e.g. '2'
+ * @returns {string[]} An array of filtered lessons for the given course, e.g. ['astrokatt', 'straffespark']
+ */
+export const getFilteredLessonsInCourseForLevel = createCachedSelector(
+  // Input selectors:
+  getFilteredLessonsInCourse,
+  (state, course) => course,
+  (state, course, level) => level,
+
+  // Output selector (resultfunc):
+  (lessons, course, level) => lessons.filter(lesson => getLevel(course, lesson) === level),
+)(
+  (state, course, level) => `${course}_${level}`
+);
+
+/**
+ * Get levels of filtered lessons in a course.
+ * @param {object} state The redux state object
+ * @param {string} course Which course to get lessons for, e.g. 'scratch'
+ * @returns {number[]} An array of levels from filtered lessons, sorted, e.g. [1, 2, 3, 4]
+ */
+export const getFilteredLevelsInCourse = createCachedSelector(
+  // Input selectors:
+  getFilteredLessonsInCourse,
+  (state, course) => course,
+
+  // Output selector (resultfunc):
+  (lessons, course) => {
+    const levels = new Set;
+    for (const lesson of lessons) {
+      levels.add(getLevel(course, lesson));
+    }
+    return [...levels].sort();
+  }
+)(
+  (state, course) => course
 );

@@ -1,47 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {getFilteredCourses, getFilteredExternalCourses} from '../../selectors/course';
+import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
+import {getCoursesWithPlaylists} from '../../resources/playlists';
 import CourseList from '../CourseList/CourseList';
-import {coursesWithPlaylists} from '../../util';
+import ExternalCourseList from '../CourseList/ExternalCourseList';
 
-const Courses = ({t, courses, externalCourses, showPlaylists}) => {
-  const coursesLength = Object.keys(courses).length;
-  const externalCoursesLength = Object.keys(externalCourses).length;
-  return (
-    <div>
-      {coursesLength > 0 ?
-        <div>
-          <h2><b>{t('frontpage.courses')}</b></h2>
-          <CourseList courses={showPlaylists ? coursesWithPlaylists(courses) : courses}/>
-        </div>
-        : null}
-      {externalCoursesLength > 0 && !showPlaylists ?
-        <div>
-          <h2><b>{t('frontpage.otherwebsitecourses')}</b></h2>
-          <CourseList courses={externalCourses}/>
-        </div>
-        : null}
-      {coursesLength + externalCoursesLength !== 0 ? null :
-        <h2><b>{t('playlist.nomatchinglessons')}</b></h2>}
-    </div>
-  );
-};
+const Courses = ({t, courses, externalCourses}) => (
+  <div>
+    {courses.length > 0 ?
+      <div>
+        <h2><b>{t('frontpage.courses')}</b></h2>
+        <CourseList {...{courses}}/>
+      </div>
+      : null}
+    {externalCourses.length > 0 ?
+      <div>
+        <h2><b>{t('frontpage.otherwebsitecourses')}</b></h2>
+        <ExternalCourseList coursesWithLanguage={externalCourses}/>
+      </div>
+      : null}
+    {courses.length + externalCourses.length !== 0 ? null :
+      <h2><b>{t('playlist.nomatchinglessons')}</b></h2>}
+  </div>
+);
 
 Courses.propTypes = {
   // mapStateToProps
-  courses: PropTypes.object.isRequired,
-  externalCourses: PropTypes.object.isRequired,
+  courses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  externalCourses: PropTypes.arrayOf(PropTypes.shape({
+    course: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+  })).isRequired,
   t: PropTypes.func.isRequired,
-  showPlaylists: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  courses: getFilteredCourses(state),
-  externalCourses: getFilteredExternalCourses(state),
+  courses: state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state),
+  externalCourses: state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state),
   t: getTranslator(state),
-  showPlaylists: state.showPlaylists,
 });
 
 export default connect(

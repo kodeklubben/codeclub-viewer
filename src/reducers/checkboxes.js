@@ -33,27 +33,25 @@ export function setCheckboxes(path, checkboxes) {
 
 const INITIAL_STATE = {
   /*
-    checkboxes: {
-      checkboxes_scratch/astrokatt/astrokatt: {
-        104227806: true,
-        858451434: true,
-        1317817857: true,
-        2417258607: false,
-        2774908712: true,
-        2823855066: true,
-        3166765754: true,
-        ...
-      },
-      checkboxes_scratch/soloball/soloball: {
-        667555411: false,
-        1017961787: false,
-        1190792545: false,
-        1260979951: false,
-        1446858584: false,
-        ...
-      },
+    checkboxes_scratch/astrokatt/astrokatt: {
+      104227806: true,
+      858451434: true,
+      1317817857: true,
+      2417258607: false,
+      2774908712: true,
+      2823855066: true,
+      3166765754: true,
       ...
-    }
+    },
+    checkboxes_scratch/soloball/soloball: {
+      667555411: false,
+      1017961787: false,
+      1190792545: false,
+      1260979951: false,
+      1446858584: false,
+      ...
+    },
+    ...
    */
 };
 

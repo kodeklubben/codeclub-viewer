@@ -1,19 +1,17 @@
 @import '../../styles/variables';
 
+.languageItemContainer {
+  padding: 0 0 1px; // To get alignment correct relative to student/teacher button
+}
+
 .language {
-  margin-left: $space-between-text-and-flag;
+  margin-left: 10px; // space between text and flag
 }
 
 .onlyFlag {
   @media (max-width: $screen-xs-max) {
     display: none;
   }
-}
-
-.flag {
-  margin: 1px 0;
-  width: $flag-width;
-  height: $flag-height;
 }
 
 .gadgetContainer {
