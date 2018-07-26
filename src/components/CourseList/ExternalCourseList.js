@@ -1,21 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './CourseList.scss';
 import CourseItem from './CourseItem';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
+import Grid from '@material-ui/core/Grid';
 
 const ExternalCourseList = ({coursesWithLanguage}) => (
-  <Row>
-    <div className={styles.courseList}>
-      {coursesWithLanguage.map(({course, language}) => (
-        <Col key={`${course}_${language}`} xs={6} sm={6} md={4} lg={3}>
-          <CourseItem {...{course, language}}/>
-        </Col>
-      ))}
-    </div>
-  </Row>
+  <Grid container>
+    {coursesWithLanguage.map(({course, language}) => (
+      <Grid key={`${course}_${language}`} item xs={6} sm={6} md={4} lg={3} xl={2}>
+        <CourseItem {...{course, language}}/>
+      </Grid>
+    ))}
+  </Grid>
 );
 
 ExternalCourseList.propTypes = {
@@ -26,4 +21,4 @@ ExternalCourseList.propTypes = {
   })).isRequired,
 };
 
-export default withStyles(styles)(ExternalCourseList);
+export default ExternalCourseList;
