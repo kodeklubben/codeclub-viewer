@@ -296,7 +296,6 @@ const createConfig = (env = {}) => {
           sourceMap: true,
           compress: {
             warnings: false,
-            pure_funcs: 'console.log', // removes these functions from the code
           }
         }),
       ] : []),
