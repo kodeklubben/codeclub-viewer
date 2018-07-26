@@ -199,7 +199,7 @@ function syncDistToBeta {
     registerCheckoutInPath "${BETA_PATH}"
     git rm -rf --quiet .      # Remove all tracked files and folders in BETA_PATH
     git clean -fxd    # Remove all untracked files and folders in BETA_PATH
-    cp -rf ${BUILD_PATH}/ ${BETA_PATH}
+    cp -a ${BUILD_PATH}/* ${BETA_PATH}
     git checkout HEAD -- CNAME                        # Restore back CNAME
     git checkout HEAD -- google91a144a83c954edb.html  # Restore back google search console verification file
     touch .nojekyll
