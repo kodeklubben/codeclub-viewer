@@ -14,7 +14,7 @@ class TeacherInfobox extends React.Component {
     this.state = {showCourseInfo: false};
   }
 
-  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']})
+  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
 
   render() {
     const {t} = this.props;
@@ -23,7 +23,7 @@ class TeacherInfobox extends React.Component {
       'http://kidsakoder.no/skole/valgfag/',
       'http://kidsakoder.no/kodeklubben/'
     ];
-
+    const ariaLabel = showCourseInfo ? t('frontpage.teacherinfobox.minus') : t('frontpage.teacherinfobox.plus');
     return (
       <div className={styles.center}>
         <div className={styles.infoBox}>
@@ -32,7 +32,7 @@ class TeacherInfobox extends React.Component {
           {t('frontpage.teacherinfobox.changemode')}
           <br />
           <div className={styles.center}>
-            <Button className={styles.plusSign} onClick={() => this.changeState()}>
+            <Button className={styles.plusSign} onClick={() => this.changeState()} aria-label={ariaLabel}>
               <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
             </Button>
           </div>

@@ -95,10 +95,7 @@ describe('util', () => {
       };
       deepFreeze(dirtyTags);
       expect(cleanseTags(dirtyTags, 'test')).to.eql({
-        platform: ['windows', 'mac', 'browser'],
-        subject: ['physics', 'mathematics'],
-        category: ['create game', 'create app'],
-        created: ['2016'],
+        subject: ['mathematics'],
         sometag: ['tag1', 'tag2'],
         grade: ['junior'],
       });
@@ -113,10 +110,7 @@ describe('util', () => {
       };
       deepFreeze(validTags);
       expect(cleanseTags(validTags, 'test')).to.eql({
-        platform: ['windows', 'mac', 'browser'],
-        subject: ['physics', 'mathematics'],
-        category: ['create game', 'create app'],
-        created: ['2016']
+        subject: ['mathematics'],
       });
     });
   });

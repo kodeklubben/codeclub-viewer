@@ -8,7 +8,7 @@
  *  Also, to get smaller builds, do
  *    import Button from 'react-bootstrap/lib/Button';  // YES
  *  rather than
- *    import { Button } from 'react-bootstrap'; // NO
+ *    import {Button} from 'react-bootstrap'; // NO
  *
  *
  *  Regarding CSS extraction:
@@ -144,6 +144,7 @@ const createConfig = (env = {}) => {
       // in lessonSrc as well.
       modules: [path.join(__dirname, 'node_modules')],
       alias: {
+        //frontmatter: 'json-loader!front-matter-loader?onlyAttributes',
         // // Markdown-files are parsed only through one of these three aliases, and are
         // // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
         // // 1) We don't want to use '!!' in the requires in the modules, and
@@ -165,12 +166,7 @@ const createConfig = (env = {}) => {
         {
           test: inCurrentRepo('js'),
           exclude: /node_modules/,
-          use: isHot ? [
-            'react-hot-loader',
-            'babel-loader',
-          ] : [
-            'babel-loader',
-          ],
+          loader: 'babel-loader'
         },
         {
           test: inCurrentRepo('css'),
@@ -220,19 +216,11 @@ const createConfig = (env = {}) => {
         },
         {
           test: inLessonRepo('md'),
-          loader: 'combine-loader',
-          options: {
-            //raw: 'raw-loader',
-            frontmatter: [
-              'json-loader',
-              'front-matter-loader?onlyAttributes'
-            ],
-            content: [
-              'html-loader?attrs=false',
-              'markdown-it-loader',
-              'front-matter-loader?onlyBody',
-            ],
-          },
+          use: [
+            'html-loader?attrs=false',
+            'markdown-it-loader',
+            'front-matter-loader?onlyBody',
+          ],
         },
         {
           test: inLessonRepo('png'),

@@ -6,60 +6,60 @@ import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {capitalize} from '../../util';
-import {getTitle, getLevel} from '../../selectors/frontmatter';
-import {getCourseIcon, isValidCoursePath, isValidLessonPath, isValidReadmePath} from '../../contexts';
+import {getAvailableLanguages} from '../../util';
+import {getLanguageIndependentCoursePath} from '../../resources/courses';
+import {getCourseTitle} from '../../resources/courseFrontmatter';
+import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getCourseIcon} from '../../resources/courseIcon';
+import {getTranslator} from '../../selectors/translate';
 
-const BreadCrumb = ({params, title, level, courseIcon}) => {
-  const {course, lesson, file} = params;
-  const isLesson = !!file;
+const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
+  const isLesson = !!lesson;
   const isCourse = course && !isLesson;
-  const coursePath = `/${course}`;
-  const lessonPath = `/${course}/${lesson}/${file}`;
-  const isValidCourse = isCourse && isValidCoursePath(coursePath);
-  const isValidLesson = isLesson && (isValidLessonPath(lessonPath) || isValidReadmePath(lessonPath));
 
-  const homeLink = <NavLink to='/' onlyActiveOnIndex>
+  const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
+  const {title:lessonTitle, level} = isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme) : {};
+
+  const homeCrumb = <NavLink to={'/'} aria-label={t('general.home')}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
-  const courseLink = <NavLink to={coursePath} className={styles.lessonLink}>
-    <img className={styles.courseIcon} src={courseIcon}/>
-    <span className={styles.lesson}>{capitalize(course)}</span>
+  const courseTitle = getCourseTitle(course, courseLanguage);
+  const coursePath = getLanguageIndependentCoursePath(course);
+  const courseCrumb = <NavLink to={coursePath} className={styles.crumb}>
+    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={courseTitle}/>
+    <span className={styles.lesson}>{getCourseTitle(course, courseLanguage)}</span>
   </NavLink>;
 
-  const lessonLink = <NavLink to={lessonPath} className={styles.lessonLink}>
+  const {path:lessonPath} = getLessonFrontmatter(course, lesson, lessonLanguage, isReadme);
+  const lessonCrumb = <NavLink to={lessonPath} className={styles.crumb} aria-label={lessonTitle}>
     <LevelIcon {...{level}}/>
-    <span className={styles.lesson}>{title}</span>
+    <span className={styles.lesson}>{lessonTitle}</span>
   </NavLink>;
 
   return <div className={styles.breadcrumb}>
-    {homeLink}
-    {isValidCourse || isValidLesson ? <span> / </span> : null}
-    {isValidCourse || isValidLesson ? courseLink : null}
-    {isValidLesson ? <span> / </span> : null}
-    {isValidLesson ? lessonLink : null}
+    {homeCrumb}
+    {isCourse || isLesson ? <span> / </span> : null}
+    {isCourse || isLesson ? courseCrumb : null}
+    {isLesson ? <span> / </span> : null}
+    {isLesson ? lessonCrumb : null}
   </div>;
 };
 
 BreadCrumb.propTypes = {
   // ownProps
-  params: PropTypes.shape({
-    course: PropTypes.string,
-    lesson: PropTypes.string,
-    file: PropTypes.string
-  }).isRequired,
+  course: PropTypes.string,
+  lesson: PropTypes.string,
+  file: PropTypes.string,
+  t: PropTypes.func.isRequired,
 
   // mapStateToProps
-  title: PropTypes.string.isRequired,
-  level: PropTypes.number.isRequired,
-  courseIcon: PropTypes.string,
+  courseLanguage: PropTypes.oneOf(getAvailableLanguages()).isRequired,
 };
 
-const mapStateToProps = (state, {params}) => ({
-  title: getTitle(state, params),
-  level: getLevel(state, params),
-  courseIcon: getCourseIcon(params.course),
+const mapStateToProps = (state) => ({
+  courseLanguage: state.language,
+  t: getTranslator(state),
 });
 
 export default connect(
