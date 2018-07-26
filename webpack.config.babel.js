@@ -319,7 +319,6 @@ const createConfig = (env = {}) => {
       ...(isHot ? [
         // Create the root index.html
         new HtmlWebpackPlugin({
-          title: 'Kodeklubben',
           template: 'src/index-template.ejs',
           inject: false,
           chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
