@@ -41,10 +41,12 @@
     ]
   },
   "dependencies": {
+    "canvas": "^1.6.11",
     "fast-memoize": "^2.3.2",
     "highlight.js": "^9.11.0",
     "history": "^2.1.2",
     "markdown-it": "^8.3.1",
+    "node-gyp": "^3.7.0",
     "posthtml-parser": "^0.2.0",
     "posthtml-render": "^1.0.6",
     "prop-types": "^15.6.0",
@@ -61,7 +63,7 @@
     "react-scroll-to-component": "^1.0.2",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
-    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
+    "scratchblocks": "^3.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

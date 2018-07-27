@@ -107,7 +107,7 @@ const replaceClassRecursively = (obj, styles) => {
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
  */
 const renderScratchBlocks = (content, styles) => {
-  const scratchblocks = require('scratchblocks/browser/scratchblocks.js');
+  const scratchblocks = require('scratchblocks/browser.js');
 
   let replace = [];
   if ('blocks' in styles) {
@@ -125,7 +125,7 @@ const renderScratchBlocks = (content, styles) => {
     if (blocks) {
       blocks.forEach(block => {
         let code = block.substring(r.start.length, block.length - r.end.length);
-        let SVG = scratchblocks(code, r.options);
+        let SVG = scratchblocks.renderSVGString(code, r.options);
         returnContent = returnContent.replace(block, SVG);
       });
     }
