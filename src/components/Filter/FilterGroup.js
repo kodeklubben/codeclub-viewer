@@ -10,18 +10,18 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
-import {getTranslateGroup, getTranslateTag, getTranslateTooltip} from '../../selectors/translate';
+import {getTranslateFilter} from '../../selectors/translate';
 
 const FilterGroup = ({
   groupKey, filterTags, filterChecked,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateGroup, translateTag, translateTooltip
+  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateFilter
 }) => {
-  const groupName = translateGroup(groupKey);
+  const groupName = translateFilter(groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map(key => {
       const onCheck = () => filterChecked(groupKey, key);
-      const tagName = translateTag(groupKey, key);
-      const popoverContent = translateTooltip(groupKey, key);
+      const tagName = translateFilter(groupKey, key);
+      const popoverContent = translateFilter(groupKey, key, true);
 
       const checked = filterTags[key];
       return tagName ? <FilterItem {...{key, checked, tagName, onCheck, popoverContent}}/>
@@ -67,9 +67,7 @@ FilterGroup.propTypes = {
   filterTags: PropTypes.object.isRequired,
   filterGroupsCollapsed: PropTypes.object.isRequired,
   somethingChecked: PropTypes.bool.isRequired,
-  translateGroup: PropTypes.func.isRequired,
-  translateTag: PropTypes.func.isRequired,
-  translateTooltip: PropTypes.func.isRequired,
+  translateFilter: PropTypes.func.isRequired,
 
   // mapDispatchToProps:
   filterChecked: PropTypes.func.isRequired,
@@ -80,9 +78,7 @@ const mapStateToProps = (state, {groupKey}) => ({
   filterTags: state.filter[groupKey],
   filterGroupsCollapsed: state.filterGroupsCollapsed,
   somethingChecked: somethingCheckedInGroup(state, groupKey),
-  translateGroup: getTranslateGroup(state),
-  translateTag: getTranslateTag(state),
-  translateTooltip: getTranslateTooltip(state),
+  translateFilter: getTranslateFilter(state),
 });
 
 const mapDispatchToProps = {

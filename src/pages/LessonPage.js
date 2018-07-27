@@ -9,7 +9,7 @@ import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
-import {getTranslator, getTranslateTag, getTranslateGroup} from '../selectors/translate';
+import {getTranslator, getTranslateFilter} from '../selectors/translate';
 import {capitalize, setCheckboxes, createCheckboxesKey} from '../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
 import {setCheckbox} from '../reducers/checkboxes';
@@ -34,20 +34,19 @@ const renderToggleButtons = () => {
   }
 };
 
-const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
+const PrintInfo = ({t, translateFilter, course, tags}) =>
   <div className={styles.box}>
     <div>{t('lessons.course')} {capitalize(course)}</div>
     {Object.keys(tags).map( group =>
       <div key={group}>
-        {translateGroup(group) + ': ' + tags[group].map(tag => translateTag(group, tag)).join(', ')}
+        {translateFilter(group) + ': ' + tags[group].map(tag => translateFilter(group, tag)).join(', ')}
       </div>
     )}
   </div>;
 
 PrintInfo.propTypes = {
   t: PropTypes.func.isRequired,
-  translateTag: PropTypes.func.isRequired,
-  translateGroup: PropTypes.func.isRequired,
+  translateFilter: PropTypes.func.isRequired,
   course: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
 };
@@ -63,7 +62,7 @@ class LessonPage extends React.Component {
   render() {
     const {
       course, lesson, language, isReadme,
-      t, translateTag, translateGroup,
+      t, translateFilter,
       title, level, author, translator, license, tags,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
@@ -89,7 +88,7 @@ class LessonPage extends React.Component {
           </h1>
           {authorNode}
           {translatorNode}
-          <PrintInfo {...{t, translateTag, translateGroup, course, tags}}/>
+          <PrintInfo {...{t, translateFilter, course, tags}}/>
           <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
           <Content {...{course, lesson, language, isReadme}}/>
@@ -110,8 +109,7 @@ LessonPage.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  translateTag: PropTypes.func.isRequired,
-  translateGroup: PropTypes.func.isRequired,
+  translateFilter: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
@@ -132,8 +130,7 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
   const {path, title, level, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
-    translateTag: getTranslateTag(state),
-    translateGroup: getTranslateGroup(state),
+    translateFilter: getTranslateFilter(state),
     path,
     title,
     level,

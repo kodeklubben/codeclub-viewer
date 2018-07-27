@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './MainLanguageButton.scss';
-import {getTranslator, getTranslateTag} from '../../selectors/translate';
+import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 import {getAvailableLanguages} from '../../util';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
@@ -34,9 +34,9 @@ MainLanguageButton.propTypes = {
 
 const mapStateToProps = (state, {course, lesson, isReadme}) => {
   const t = getTranslator(state);
-  const tt = getTranslateTag(state);
+  const tf = getTranslateFilter(state);
   const language = state.language; // E.g. 'en'
-  const lang = tt('language', language); // Name of language, e.g. 'English'
+  const lang = tf('language', language); // Name of language, e.g. 'English'
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
 
   return {
