@@ -255,12 +255,6 @@ const createConfig = (env = {}) => {
         new webpack.DefinePlugin({
           'process.env.NODE_ENV': JSON.stringify('production')
         }),
-        new webpack.optimize.UglifyJsPlugin({
-          sourceMap: true,
-          compress: {
-            warnings: false,
-          }
-        }),
       ] : []),
 
       ...(env.BUILD_PDF ? [
