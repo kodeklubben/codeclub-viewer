@@ -347,7 +347,7 @@ const createConfig = (env = {}) => {
 
     devServer: {
       historyApiFallback: { // needed when using browserHistory (instead of hashHistory)
-        index: publicPath
+        index: `${publicPath}index.html`
       },
     },
   };

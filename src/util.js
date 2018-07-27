@@ -117,7 +117,7 @@ export const extractFirstPartOfHtml = (html, path) => {
     // and <img src=astrokatt.png>
     picture = picture.replace(
       /( src="?)([^" />]*)([" />])/,
-      '$1' + process.env.PUBLICPATH_WITHOUT_SLASH + dirname(path).slice(1) + '/$2$3',
+      '$1' + process.env.PUBLICPATH + dirname(path).slice(1) + '/$2$3',
     );
   }
   return (picture || '') + (text || '');
