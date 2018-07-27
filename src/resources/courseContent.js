@@ -31,3 +31,11 @@ export const getCourseIntro = (course, language) => {
   const path = getCoursePath(course, language);
   return extractFirstPartOfHtml(courseContent, path);
 };
+
+/**
+ * Get the text in the first part of HTML markup for the course.
+ * @param {string} course E.g. 'scratch'
+ * @param {string} language E.g. 'nb'
+ * @returns {string} Text to e.g. display in a description.
+ */
+export const getCourseIntroText = (course, language) => getCourseIntro(course, language).replace(/<[^>]*>/g, '');
