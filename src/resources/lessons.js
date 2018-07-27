@@ -13,6 +13,7 @@ const lessonsContext =
  *     astrokatt: {
  *       indexed: false, // true unless 'indexed: false' explicitly exists in lesson.yml
  *       level: 1,
+ *       license: '[cc-by-sa 3.0](http://creativecommons.org/licenses/by-sa/3.0/)'
  *       tags: {
  *         topic: ['block_based', 'app'],
  *         subject: ['technology', 'programming'],
