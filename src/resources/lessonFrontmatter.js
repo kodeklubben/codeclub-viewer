@@ -58,14 +58,14 @@ const getData = memoize(
     for (const key of lessonFrontmatterContext.keys()) {
       const [/* ignore */, course, lesson, file] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]([^.]+)[.]md$/);
       const {
-        language, title = '', level = 0, author = '', translator = '', external = '', license = ''
+        language, title = '', level = 0, author = '', translator = '', external = ''
       } = lessonFrontmatterContext(key);
       if (!title) { console.warn('WARNING: The lesson', key, 'did not specify title.'); }
       if (language) {
         const isReadmeKey = file.startsWith('README') ? 1 : 0;
         const path = `/${course}/${lesson}/${file}`; // TODO: Add publicpath?
         const pdfPath = `${path}.pdf`;
-        const lessonData = {title, level, author, translator, external, path, pdfPath, key, license};
+        const lessonData = {title, level, author, translator, external, path, pdfPath, key};
         assignDeep(lessons, [course, lesson, language, isReadmeKey], lessonData);
       } else {
         console.warn('WARNING: The lesson', key, 'did not specify language, so lesson will not be used.');

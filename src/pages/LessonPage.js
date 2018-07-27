@@ -20,7 +20,7 @@ import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
-import {getLessonTags} from '../resources/lessons';
+import {getLessonTags, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
 
 const renderToggleButtons = () => {
@@ -117,7 +117,7 @@ LessonPage.propTypes = {
   level: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   translator: PropTypes.string.isRequired,
-  license: PropTypes.string,
+  license: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
   checkboxes: PropTypes.object,
   checkedCheckboxes: PropTypes.number.isRequired,
@@ -129,7 +129,7 @@ LessonPage.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, title, level, author, translator, license} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const {path, title, level, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
     translateTag: getTranslateTag(state),
@@ -139,7 +139,7 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
     level,
     author,
     translator,
-    license,
+    license: getLicense(course, lesson),
     tags: getLessonTags(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),

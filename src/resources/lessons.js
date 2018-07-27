@@ -34,8 +34,8 @@ const getData = memoize(
     const lessons = {};
     for (const key of lessonsContext.keys()) {
       const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]lesson[.]yml$/);
-      const {level, tags, indexed} = lessonsContext(key);
-      const data = {level, tags: cleanseTags(tags, key), indexed: indexed !== false};
+      const {level, license, tags, indexed} = lessonsContext(key);
+      const data = {level, license, tags: cleanseTags(tags, key), indexed: indexed !== false};
       assignDeep(lessons, [course, lesson], data);
     }
     return lessons;
@@ -80,6 +80,14 @@ export const getLessonTags = (course, lesson) => getLessonMetadata(course, lesso
  * @returns {boolean} Whether or not the lesson is indexed
  */
 export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, lesson).indexed;
+
+/**
+ * Get license for lesson.
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @returns {string} The license for the lesson. Defaults to '', if course, lesson or license was not found
+ */
+export const getLicense = (course, lesson) => ((getData()[course] || {})[lesson] || {}).license || '';
 
 /**
  * Get level for lesson.
