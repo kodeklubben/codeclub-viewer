@@ -9,7 +9,6 @@ import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
-import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateTag, getTranslateGroup} from '../selectors/translate';
 import {capitalize, setCheckboxes, createCheckboxesKey} from '../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
@@ -21,7 +20,7 @@ import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
-import {getLessonTags} from '../resources/lessons';
+import {getLessonTags, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
 
 const renderToggleButtons = () => {
@@ -65,7 +64,7 @@ class LessonPage extends React.Component {
     const {
       course, lesson, language, isReadme,
       t, translateTag, translateGroup,
-      title, level, author, translator, tags,
+      title, level, author, translator, license, tags,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
@@ -73,6 +72,13 @@ class LessonPage extends React.Component {
     const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
+    const licenseRow = <div className={styles.license}>
+      {t('lessons.license')}
+      {license ?
+        <MarkdownRenderer src={license} inline={true}/> :
+        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+      }
+    </div>;
     return (
       <div>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
@@ -87,9 +93,8 @@ class LessonPage extends React.Component {
           <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
           <Content {...{course, lesson, language, isReadme}}/>
-          <Row>
-            <ImprovePage {...{course, lesson, language, isReadme}}/>
-          </Row>
+          {licenseRow}
+          <ImprovePage {...{course, lesson, language, isReadme}}/>
         </div>
       </div>
     );
@@ -112,6 +117,7 @@ LessonPage.propTypes = {
   level: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   translator: PropTypes.string.isRequired,
+  license: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
   checkboxes: PropTypes.object,
   checkedCheckboxes: PropTypes.number.isRequired,
@@ -133,6 +139,7 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
     level,
     author,
     translator,
+    license: getLicense(course, lesson),
     tags: getLessonTags(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
