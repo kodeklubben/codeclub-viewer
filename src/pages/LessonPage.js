@@ -9,7 +9,6 @@ import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
-import Row from 'react-bootstrap/lib/Row';
 import {getTranslator, getTranslateFilter} from '../selectors/translate';
 import {capitalize, setCheckboxes, createCheckboxesKey} from '../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
@@ -21,7 +20,7 @@ import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
-import {getLessonTags} from '../resources/lessons';
+import {getLessonTags, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
 
 const renderToggleButtons = () => {
@@ -64,7 +63,7 @@ class LessonPage extends React.Component {
     const {
       course, lesson, language, isReadme,
       t, translateFilter,
-      title, level, author, translator, tags,
+      title, level, author, translator, license, tags,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
