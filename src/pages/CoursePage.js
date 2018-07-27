@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -16,9 +15,11 @@ import LevelNavigation from '../components/CoursePage/LevelNavigation';
 import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 import CourseInfo from '../components/CoursePage/CourseInfo';
 import {getCourseTitle} from '../resources/courseFrontmatter';
+import {getCourseIntroText} from '../resources/courseContent';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
+import Head from '../components/Head';
 
-const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
+const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) => {
   const {course} = params;
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={styles.topMargin}>
@@ -33,7 +34,8 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
       </AutoAffix>
     </Col> : null;
   return (
-    <DocumentTitle title={courseTitle + ' | ' + t('title.codeclub')}>
+    <div>
+      <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
       <Grid fluid={true} ref={grid => thispage = grid}>
         <Row>
           <Col xs={12}><h1>{courseTitle}</h1></Col>
@@ -58,7 +60,7 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists}) => {
           </Row>
         }
       </Grid>
-    </DocumentTitle>
+    </div>
   );
 };
 
@@ -73,6 +75,7 @@ CoursePage.propTypes = {
   levels: PropTypes.arrayOf(PropTypes.number).isRequired,
   t: PropTypes.func.isRequired,
   showPlaylists: PropTypes.bool.isRequired,
+  language: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state, {params}) => ({
@@ -80,6 +83,7 @@ const mapStateToProps = (state, {params}) => ({
   levels: getFilteredLevelsInCourse(state, params.course),
   t: getTranslator(state),
   showPlaylists: !getShowFiltergroups(state),
+  language: state.language,
 });
 
 export default connect(
