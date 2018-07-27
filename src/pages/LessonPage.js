@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import DocumentTitle from 'react-document-title';
 import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
@@ -21,7 +20,9 @@ import Progress from '../components/LessonPage/Progress';
 import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
+import {getLessonIntroText} from '../resources/lessonContent';
 import {getLessonTags} from '../resources/lessons';
+import Head from '../components/Head';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -73,7 +74,8 @@ class LessonPage extends React.Component {
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     return (
-      <DocumentTitle title={title + ' | ' + t('title.codeclub')}>
+      <div>
+        <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>
             <LevelIcon {...{level}}/>
@@ -89,7 +91,7 @@ class LessonPage extends React.Component {
             <ImprovePage {...{course, lesson, language, isReadme}}/>
           </Row>
         </div>
-      </DocumentTitle>
+      </div>
     );
   }
 }
