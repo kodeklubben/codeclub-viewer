@@ -77,7 +77,14 @@ export const getTranslateTag = (state) => {
   };
 };
 
-// Same function as the getTranslateTag. Only difference is that it gets TOOLTIP instead of NAME
+/**
+ * Get a translater function to get tooltip of filter tags in current language
+ * @param {object} state The redux state object
+ * @returns {function} with params (groupKey, tagKey), where
+ *   param {string} groupKey The name of the filter group, e.g. 'language' or 'topic'
+ *   param {string} tagKey The name of the filter tag, e.g. 'en' or 'game'
+ *   returns {string} The translated tooltip of the tag, e.g. 'Engelsk' or 'Spill'
+ */
 export const getTranslateTooltip = (state) => {
   const captions = require('lessonFiltertags/translation_' + state.language + '.yml');
   return (groupKey, tagKey) => {
