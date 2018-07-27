@@ -17,7 +17,7 @@ const App = ({params, location, children, showDyslexicFont}) => {
     <div>
       <Head/>
       <div {...{className}}>
-        {renderPdf ? <PdfHeader course={params.course}/> : <NavBar {...{params}}/>}
+        {renderPdf ? <PdfHeader  {...{params}}/> : <NavBar {...{params}}/>}
         <div className={styles.stickyFooter}>{children}</div>
         {renderPdf ? null : <Footer/>}
       </div>
