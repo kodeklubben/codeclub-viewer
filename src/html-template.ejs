@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html <%- helmet.htmlAttributes.toString() %>>
 <head>
   <script>
-    if (window.location.hostname !== 'localhost' && window.location.protocol === 'http:') {
-      window.location.protocol = 'https:'
+    var loc = window.location;
+    if (loc.hostname !== 'localhost' && loc.hostname !== '127.0.0.1' && loc.protocol === 'http:') {
+      loc.protocol = 'https:'
     }
   </script>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title><%- pageTitle -%></title>
+  <%- helmet.title.toString() %>
+  <%- helmet.meta.toString() %>
 
   <% cssAssets.forEach(function(file){ %>
   <link href="<%- file -%>" rel="stylesheet">

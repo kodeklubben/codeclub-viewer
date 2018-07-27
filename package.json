@@ -4,7 +4,7 @@
   "description": "A viewer to display codeclub lessons",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server -d --progress --inline --hot --history-api-fallback --host 0.0.0.0",
+    "start": "webpack-dev-server -d --progress --inline --hot --host 0.0.0.0",
     "build:debug": "webpack -d --progress --env.verbose",
     "build": "webpack --progress --mode=none",
     "build:prod": "webpack -p --progress --env.NODE_ENV=production --env.BUILD_PDF --mode=none",
@@ -51,8 +51,8 @@
     "re-reselect": "^0.5.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.31.1",
-    "react-document-title": "^2.0.3",
     "react-dom": "^16.4.1",
+    "react-helmet": "^5.2.0",
     "react-overlays": "^0.8.3",
     "react-redux": "^4.4.9",
     "react-router": "^3.2.1",

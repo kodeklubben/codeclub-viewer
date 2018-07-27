@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -9,8 +11,9 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
 const PdfButton = ({course, lesson, language, isReadme, t}) => {
+  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const options = {
-    href: getLessonFrontmatter(course, lesson, language, isReadme).pdfPath,
+    href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
     bsStyle: 'pdf',
     bsSize: 'small',
     className: styles.container,

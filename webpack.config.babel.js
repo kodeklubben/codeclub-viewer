@@ -259,7 +259,6 @@ const createConfig = (env = {}) => {
           sourceMap: true,
           compress: {
             warnings: false,
-            pure_funcs: 'console.log', // removes these functions from the code
           }
         }),
       ] : []),
@@ -283,7 +282,6 @@ const createConfig = (env = {}) => {
       ...(isHot ? [
         // Create the root index.html
         new HtmlWebpackPlugin({
-          title: 'Kodeklubben',
           template: 'src/index-template.ejs',
           inject: false,
           chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
@@ -311,7 +309,7 @@ const createConfig = (env = {}) => {
 
     devServer: {
       historyApiFallback: { // needed when using browserHistory (instead of hashHistory)
-        index: publicPath
+        index: `${publicPath}index.html`
       },
     },
   };
