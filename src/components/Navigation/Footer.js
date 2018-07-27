@@ -55,19 +55,24 @@ const Footer = ({t, isStudentMode}) => {
           alt={'UIO institutt for informatikk'}
         />
       </a>
-    </div>);
+    </div>
+  );
+
+  const github = (
+    <div className={styles.githubIcon}>
+      <a href={url.oppgaver} target="_blank">
+        <img className={styles.svg} src={require('../../assets/graphics/github.png')}
+          alt={'GitHub'}
+        />
+      </a>
+      <p className={styles.contribute}><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
+    </div>
+  );
 
   return (
     <div className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
       <div className={styles.githubSwitch}>
-        <div className={styles.githubIcon}>
-          <a href={url.oppgaver} target="_blank">
-            <img className={styles.svg} src={require('../../assets/graphics/github.png')}
-              alt={'GitHub'}
-            />
-          </a>
-          <p className={styles.contribute}><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
-        </div>
+        {github}
         <DyslexiaSwitch/>
       </div>
       <div className={styles.divider}/>
