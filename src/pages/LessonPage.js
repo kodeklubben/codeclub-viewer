@@ -72,6 +72,13 @@ class LessonPage extends React.Component {
     const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
+    const licenseRow = <div className={styles.license}>
+      {t('lessons.license')}
+      {license ?
+        <MarkdownRenderer src={license} inline={true}/> :
+        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+      }
+    </div>;
     return (
       <div>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
@@ -86,9 +93,8 @@ class LessonPage extends React.Component {
           <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
           <Content {...{course, lesson, language, isReadme}}/>
-          <Row>
-            <ImprovePage {...{course, lesson, language, isReadme}}/>
-          </Row>
+          {licenseRow}
+          <ImprovePage {...{course, lesson, language, isReadme}}/>
         </div>
       </div>
     );
@@ -110,6 +116,7 @@ LessonPage.propTypes = {
   level: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   translator: PropTypes.string.isRequired,
+  license: PropTypes.string.isRequired,
   tags: PropTypes.object.isRequired,
   checkboxes: PropTypes.object,
   checkedCheckboxes: PropTypes.number.isRequired,
@@ -130,6 +137,7 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
     level,
     author,
     translator,
+    license: getLicense(course, lesson),
     tags: getLessonTags(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),

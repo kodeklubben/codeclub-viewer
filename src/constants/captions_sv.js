@@ -73,6 +73,7 @@ export default {
     reset: 'Fjern avkrysninger',
     tomainlanguage: 'På {{lang}}',
     nottranslated: 'Denne siden finnes ikke på {{lang}}',
+    license: 'Lisens: ',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',
