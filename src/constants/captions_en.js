@@ -11,8 +11,11 @@ export default {
       4: 'Expert'
     }
   },
-  title: {
-    codeclub: 'Code club',
+  head: {
+    title: 'Code club',
+    description: 'On this page you will find tasks for people of all ages who wants to learn programming. ' +
+                  'All content on the site is free to use, ' +
+                  'and is often used in the code club and programming subjects at school.',
   },
   frontpage: {
     courses: 'Courses',
