@@ -10,20 +10,21 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
-import {getTranslateGroup, getTranslateTag} from '../../selectors/translate';
+import {getTranslateGroup, getTranslateTag, getTranslateTooltip} from '../../selectors/translate';
 
 const FilterGroup = ({
   groupKey, filterTags, filterChecked,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateGroup, translateTag,
+  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateGroup, translateTag, translateTooltip
 }) => {
   const groupName = translateGroup(groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map(key => {
       const onCheck = () => filterChecked(groupKey, key);
       const tagName = translateTag(groupKey, key);
+      const popoverContent = translateTooltip(groupKey, key);
 
       const checked = filterTags[key];
-      return tagName ? <FilterItem {...{key, checked, tagName, onCheck}}/>
+      return tagName ? <FilterItem {...{key, checked, tagName, onCheck, popoverContent}}/>
         : null;
     }).filter(item => !!item); // filter out null-values;
 
@@ -66,6 +67,9 @@ FilterGroup.propTypes = {
   filterTags: PropTypes.object.isRequired,
   filterGroupsCollapsed: PropTypes.object.isRequired,
   somethingChecked: PropTypes.bool.isRequired,
+  translateGroup: PropTypes.func.isRequired,
+  translateTag: PropTypes.func.isRequired,
+  translateTooltip: PropTypes.func.isRequired,
 
   // mapDispatchToProps:
   filterChecked: PropTypes.func.isRequired,
@@ -78,6 +82,7 @@ const mapStateToProps = (state, {groupKey}) => ({
   somethingChecked: somethingCheckedInGroup(state, groupKey),
   translateGroup: getTranslateGroup(state),
   translateTag: getTranslateTag(state),
+  translateTooltip: getTranslateTooltip(state),
 });
 
 const mapDispatchToProps = {

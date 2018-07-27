@@ -76,3 +76,22 @@ export const getTranslateTag = (state) => {
     return translatedTag;
   };
 };
+
+/**
+ * Get a translater function to get tooltip of filter tags in current language
+ * @param {object} state The redux state object
+ * @returns {function} with params (groupKey, tagKey), where
+ *   param {string} groupKey The name of the filter group, e.g. 'language' or 'topic'
+ *   param {string} tagKey The name of the filter tag, e.g. 'en' or 'game'
+ *   returns {string} The translated tooltip of the tag, e.g. 'Engelsk' or 'Spill'
+ */
+export const getTranslateTooltip = (state) => {
+  const captions = require('lessonFiltertags/translation_' + state.language + '.yml');
+  return (groupKey, tagKey) => {
+    const translatedTooltip = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).TOOLTIP;
+    if (!translatedTooltip) {
+      return '';
+    }
+    return translatedTooltip;
+  };
+};
