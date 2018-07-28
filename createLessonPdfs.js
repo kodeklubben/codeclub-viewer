@@ -9,7 +9,7 @@ const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
-const concurrentPDFrenders = 12;
+const concurrentPDFrenders = 10;
 const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 const isWin = process.platform === 'win32';
@@ -38,7 +38,7 @@ const convertUrl = async (browser, lesson) => {
   fse.mkdirsSync(pdfFolder);
   const page = await browser.newPage();
   const url = urlBase + lesson + '?pdf';
-  await page.goto(url, {waitUntil: 'networkidle'});
+  await page.goto(url, {waitUntil: 'networkidle0'});
   //await page.emulateMedia('screen');
   console.log('Rendering PDF: ' + url + ' ---> ' + path.relative(__dirname, pdfFile));
   await page.pdf({
