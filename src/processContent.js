@@ -108,6 +108,7 @@ const replaceClassRecursively = (obj, styles) => {
  */
 const renderScratchBlocks = (content, styles) => {
   const scratchblocks = require('scratchblocks/browser.js');
+  require('scratchblocks/src/translations-all');
 
   let replace = [];
   if ('blocks' in styles) {
