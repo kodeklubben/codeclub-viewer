@@ -7,8 +7,10 @@ const path = require('path');
 const fse = require('fs-extra');
 const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
+const PQueue = require('p-queue');
 
-const numberOfSimultaneousPdfConverts = 8;
+const concurrentPDFrenders = 12;
+const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 const isWin = process.platform === 'win32';
 let localWebServer = null;
@@ -52,55 +54,89 @@ const convertUrl = async (browser, lesson) => {
   });
 };
 
-const createChunks = (originalArray, chunkSize) => {
-  const chunks = [];
-  const arr = originalArray.slice();
-  while (arr.length > 0) {
-    chunks.push(arr.splice(0, chunkSize));
-  }
-  return chunks;
-};
-
 const doConvert = () => {
   const lessons = lessonPaths();
+  let success = true;
+
   (async () => {
     try {
       const browser = await puppeteer.launch();
-      const lessonChunks = createChunks(lessons, numberOfSimultaneousPdfConverts);
+      const queue = new PQueue({concurrency: concurrentPDFrenders});
 
-      let pdfCount = 0;
+      let completedPDFs = 0;
+      const retriesForPath = {};
+      const failedPDFs = [];
+
+      const onSuccess = () => {
+        ++completedPDFs;
+      };
+
+      const onFail = (path, reason) => {
+        const retries = retriesForPath[path] || 0;
+        console.log(`---> Failed to create PDF of the lesson ${path} (earlier retries: ${retries}).`);
+        console.log(`---> Reason: ${reason}.`);
+        if (retries < maxRetriesPerPDF) {
+          console.log('---> Re-adding it to queue to try again.');
+          retriesForPath[path] = retries + 1;
+          queue.add(() => convertUrl(browser, path))
+            .then(onSuccess)
+            .catch(reason => onFail(path, reason));
+        } else {
+          delete retriesForPath[path];
+          failedPDFs.push(path);
+          console.log('---> Failed too many times, GIVING UP.');
+        }
+      };
+
       const startTime = new Date().getTime();
 
-      for (const lessonChunk of lessonChunks) {
-        const convertPromises = lessonChunk.map(path => convertUrl(browser, path));
-        try {
-          await Promise.all(convertPromises); // Perhaps look into Promise.race() to run even faster
-          pdfCount += convertPromises.length;
-        } catch (err) {
-          console.log('Error while converting URLs. Skipping rest of lessons.');
-          console.log(err);
-          break;
-        }
+      for (const path of lessons) {
+        queue.add(() => convertUrl(browser, path))
+          .then(onSuccess)
+          .catch(reason => onFail(path, reason));
       }
 
+      await queue.onIdle();
       const endTime = new Date().getTime();
       const seconds = (endTime - startTime)/1000.0;
-      console.log('Time used to convert PDFs:', seconds, 'seconds = ', (seconds/pdfCount).toFixed(2), 'seconds/PDF');
+
+      console.log('Total number of lessons:', lessons.length);
+      console.log('Number of successful PDFs:', completedPDFs);
+      console.log('Time used to convert PDFs:', seconds, 'seconds = ',
+        (seconds/completedPDFs).toFixed(2), 'seconds/PDF');
+
+      if (Object.keys(retriesForPath).length > 0) {
+        console.log('Successful retries:');
+        Object.keys(retriesForPath).forEach(path => {
+          const retries = retriesForPath[path];
+          console.log(`   ${path} (${retries} retries)`);
+        });
+      }
+
+      if (failedPDFs.length > 0) {
+        success = false;
+        console.log('Failed PDFs:');
+        failedPDFs.forEach(path => { console.log(`   ${path}`); });
+      }
 
       browser.close();
     }
     catch (e) {
       console.log('Error in doConvert:', e);
+      success = false;
     }
     finally {
       cleanup();
+      if (!success) {
+        console.log('ERROR: Failed to convert PDFs.');
+        process.exit(1);
+      }
     }
   })();
-
 };
 
 const checkStarted = (data) => {
-  const str = String(data);
+  const str = String(data).trim();
   console.log('localWebServer:', str);
   if (/^Express server running at/.test(str)) {
     doConvert(localWebServer);
