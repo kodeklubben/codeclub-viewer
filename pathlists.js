@@ -25,9 +25,7 @@ const coursePaths = (ending) => {
  * @param {boolean} verbose Set to true for debug info
  * @returns {string[]} The paths without a leading /
  */
-const lessonPaths = (ending, verbose) => {
-  if (typeof ending === 'undefined') { ending = ''; }
-  if (typeof verbose === 'undefined') { verbose = false; }
+const lessonPaths = (ending = '', verbose = false) => {
   const availableLanguages = yaml.load(path.join(lessonFiltertags, 'keys.yml')).language;
   if (verbose) {
     console.log('Available languages:', availableLanguages);
