@@ -11,8 +11,6 @@ import {getAvailableLanguages} from '../../util';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
 const MainLanguageButton = ({path, external, language, buttonText}) => {
-  console.log('path', path);
-  console.log('external', external);
   const options = {
     className: styles.container,
     bsStyle: 'info',
