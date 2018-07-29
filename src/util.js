@@ -9,7 +9,7 @@ export const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice
 
 /**
  * Returns the filename, like the unix equivalent and path.dirname. Trailing slashes are ignored.
- * @path {string} any path
+ * @param {string} path any path
  * @returns {string} the whole path, except the filename
  */
 export const basename = (path) => {
@@ -37,6 +37,7 @@ export const getFilterkeys = () => {
  * Returns filterkeys, but where each group is a Map instead of an array.
  * If a valid initialLanguage is given, set it to true/checked.
  * Note that we use Map instead of object for each group to ensure correct ordering of tags.
+ * @param {string} initialLanguage
  * @returns {object}: {
  *     groupKey1: Map({ tagKey1: false, tagKey2: false, ...}),
  *     groupKey2: Map({ tagKey1: false, tagKey2: false, ...}),
@@ -150,6 +151,13 @@ export const createCheckboxesKey = (path = 'undefined') => {
   return 'checkboxes_' + path;
 };
 
+/**
+ * TODO: Write better doc
+ * @param {string} path
+ * @param {object} checkboxes
+ * @param {function} setCheckbox
+ * @returns {object}
+ */
 export const setCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = [...document.getElementsByTagName('label')];
   for (let label of labels) {
@@ -165,6 +173,11 @@ export const setCheckboxes = (path, checkboxes, setCheckbox) => {
   }
 };
 
+/**
+ * TODO: Write better doc
+ * @param {object} checkboxes
+ * @returns {boolean}
+ */
 export const anyCheckboxTrue = (checkboxes) => {
   for (let i of Object.keys(checkboxes)) {
     if (checkboxes[i] === true) {

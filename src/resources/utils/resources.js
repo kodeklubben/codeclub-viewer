@@ -21,7 +21,7 @@ export const assignDeep = (obj, keys, value) => {
 
 /**
  * Returns the path except the filename, like the unix equivalent and path.basename. Trailing slashes are ignored.
- * @path {string} any path
+ * @param {string} path any path
  * @returns {string} only the filename
  */
 export const dirname = (path) => {
