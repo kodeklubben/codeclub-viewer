@@ -1,5 +1,6 @@
 import memoize from 'fast-memoize';
-import {assignDeep, capitalize, getAvailableLanguages} from '../util';
+import {capitalize, getAvailableLanguages} from '../util';
+import {assignDeep} from './utils/resources';
 
 // lessonSrc/*/index*.md, only frontmatter
 // The keys are of the form './course/index*.md'

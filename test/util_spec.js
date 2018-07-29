@@ -1,15 +1,7 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
-
-import {
-  capitalize,
-  basename,
-  dirname,
-  cleanseTags,
-  fixNonArrayTagList,
-  tagsMatchFilter,
-  arrayToObject,
-} from '../src/util';
+import {capitalize, basename, tagsMatchFilter, arrayToObject} from '../src/util';
+import {dirname, cleanseTags, fixNonArrayTagList} from '../src/resources/utils/resources';
 
 describe('util', () => {
 

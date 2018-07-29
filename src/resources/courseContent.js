@@ -1,7 +1,7 @@
 // TODO: Perhaps use code-splitting / react-loadable / bundle-loader or similar here.
 
 import {getCoursePath, getCourseKey} from './courseFrontmatter';
-import {extractFirstPartOfHtml} from '../util';
+import {extractFirstPartOfHtml} from './utils/resources';
 
 // lessonSrc/*/index*.md, only frontmatter
 // The keys are of the form './course/index*.md'

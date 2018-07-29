@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize';
-import {assignDeep} from '../util';
+import {assignDeep} from './utils/resources';
 
 // Gets all lessonSrc/*/*/*.md except lessonSrc/*/playlists/*
 // Gets only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)
