@@ -21,5 +21,10 @@
   <% for (key in htmlWebpackPlugin.files.chunks) { %>
   <script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
   <% } %>
+  <!-- Scratchblocks-->
+  <script src="https://scratchblocks.github.io/js/scratchblocks-v3.1-min.js"></script>
+  <script src="https://scratchblocks.github.io/js/translations-all-v3.1-min.js" charset="utf8"></script>
+  <script>scratchblocks.renderMatching('pre', {languages: ['nb', 'nn', 'en']});</script> <!-- std blocks -->
+  <script>scratchblocks.renderMatching('code.b', {languages: ['nb', 'nn', 'en'], inline: true});</script>  <!-- inline blocks -->
 </body>
 </html>
