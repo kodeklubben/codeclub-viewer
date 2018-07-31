@@ -79,7 +79,7 @@ class LessonPage extends React.Component {
       }
     </div>;
     return (
-      <div>
+      <div role='main'>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>

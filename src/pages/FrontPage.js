@@ -11,7 +11,7 @@ import StartButton from '../components/FrontPage/StartButton';
 
 const FrontPage = ({isStudentMode}) => {
   return (
-    <Grid fluid={true}>
+    <Grid fluid={true} role='main'>
       {isStudentMode ? <StartButton /> : <TeacherInfobox />}
       <hr/>
       <Row>
