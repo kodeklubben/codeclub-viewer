@@ -20,7 +20,7 @@ import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
-import {getLicense} from '../resources/lessons';
+import {getLevel, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
 import PrintInfo from '../components/LessonPage/PrintInfo';
 
@@ -46,7 +46,7 @@ class LessonPage extends React.Component {
   render() {
     const {
       course, lesson, language, isReadme,
-      t, title, level, author, translator, license,
+      t, title, author, translator, license,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
@@ -66,7 +66,7 @@ class LessonPage extends React.Component {
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>
-            <LevelIcon {...{level}}/>
+            <LevelIcon level={getLevel(course, lesson)}/>
             {title}
           </h1>
           {authorNode}
@@ -94,7 +94,6 @@ LessonPage.propTypes = {
   t: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  level: PropTypes.number,
   author: PropTypes.string.isRequired,
   translator: PropTypes.string.isRequired,
   license: PropTypes.string,
@@ -108,12 +107,11 @@ LessonPage.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, title, level, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const {path, title, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
     path,
     title,
-    level,
     author,
     translator,
     license: getLicense(course, lesson),
