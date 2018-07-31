@@ -7471,9 +7471,9 @@ schema-utils@^0.4.0:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-"scratchblocks@https://github.com/Skagevang/scratchblocks":
+"scratchblocks@github:Skagevang/scratchblocks#c36ce1df0d00a33ea07c5ca195f9403ee493136b":
   version "4.0.1"
-  resolved "https://github.com/Skagevang/scratchblocks#c36ce1df0d00a33ea07c5ca195f9403ee493136b"
+  resolved "https://codeload.github.com/Skagevang/scratchblocks/tar.gz/c36ce1df0d00a33ea07c5ca195f9403ee493136b"
   optionalDependencies:
     canvas "1.4.0"
     node-fetch "^1.5.3"
