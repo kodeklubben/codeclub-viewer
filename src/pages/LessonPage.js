@@ -20,7 +20,7 @@ import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
-import {getLessonTags, getLicense} from '../resources/lessons';
+import {getLessonTags, getLevel, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
 
 const renderToggleButtons = () => {
@@ -63,7 +63,7 @@ class LessonPage extends React.Component {
     const {
       course, lesson, language, isReadme,
       t, translateFilter,
-      title, level, author, translator, license, tags,
+      title, author, translator, license, tags,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
@@ -83,7 +83,7 @@ class LessonPage extends React.Component {
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>
-            <LevelIcon {...{level}}/>
+            <LevelIcon level={getLevel(course, lesson)}/>
             {title}
           </h1>
           {authorNode}
@@ -112,7 +112,6 @@ LessonPage.propTypes = {
   translateFilter: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  level: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   translator: PropTypes.string.isRequired,
   license: PropTypes.string.isRequired,
@@ -127,13 +126,12 @@ LessonPage.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, title, level, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const {path, title, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
     translateFilter: getTranslateFilter(state),
     path,
     title,
-    level,
     author,
     translator,
     license: getLicense(course, lesson),

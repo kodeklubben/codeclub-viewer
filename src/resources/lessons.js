@@ -36,6 +36,7 @@ const getData = memoize(
     for (const key of lessonsContext.keys()) {
       const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]lesson[.]yml$/);
       const {level, license, tags, indexed} = lessonsContext(key);
+      if (!level) { console.warn(`The lesson ${course}/${lesson} is missing 'level'.`); }
       const data = {level, license, tags: cleanseTags(tags, key), indexed: indexed !== false};
       assignDeep(lessons, [course, lesson], data);
     }
