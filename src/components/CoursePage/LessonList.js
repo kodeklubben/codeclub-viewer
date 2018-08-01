@@ -15,9 +15,9 @@ export const lessonListId = (level) => 'lessonlist-level-' + level;
 const LessonList = ({course, level, lessonsInLevel, t}) => {
   return (
     <div className={styles.list}>
-      <h3 id={lessonListId(level)}>
+      <h2 id={lessonListId(level)}>
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
-      </h3>
+      </h2>
       <ListGroup>
         {lessonsInLevel.map(lesson =>
           isLessonIndexed(course, lesson) ?
