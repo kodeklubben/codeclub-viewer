@@ -14,6 +14,7 @@
 .center {
   display: flex;
   justify-content: center;
+  font-size: 28px;
 }
 
 .infoBox {
@@ -39,6 +40,6 @@
     outline: none;
   }
   color: gray;
-  font-size: 2em;
+  font-size: 1.2em;
   transition: 0.1s;
 }
