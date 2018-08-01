@@ -152,11 +152,10 @@ export const createCheckboxesKey = (path = 'undefined') => {
 };
 
 /**
- * TODO: Write better doc
- * @param {string} path
- * @param {object} checkboxes
- * @param {function} setCheckbox
- * @returns {object}
+ * Finds every checkbox in the lesson and updates the state of it.
+ * @param {string} path path for the lesson
+ * @param {object} checkboxes checkbox object in state
+ * @param {function} setCheckbox function for updating the state and localstorage
  */
 export const setCheckboxes = (path, checkboxes, setCheckbox) => {
   const labels = [...document.getElementsByTagName('label')];
@@ -174,8 +173,8 @@ export const setCheckboxes = (path, checkboxes, setCheckbox) => {
 };
 
 /**
- * TODO: Write better doc
- * @param {object} checkboxes
+ * Checks every checkbox and see if it's checked or not
+ * @param {object} checkboxes checkbox object in state
  * @returns {boolean}
  */
 export const anyCheckboxTrue = (checkboxes) => {
