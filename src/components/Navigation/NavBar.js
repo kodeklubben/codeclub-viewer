@@ -65,7 +65,7 @@ MenuToggle.propTypes = {
 const NavBar = ({isStudentMode, t, params}) => {
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
-    <div className={styles.navbarWrapper}>
+    <div className={styles.navbarWrapper} role='banner'>
       <Navbar fluid={true} staticTop>
         <Navbar.Header>
           <LkkBrand/>
