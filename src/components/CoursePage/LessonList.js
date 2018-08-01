@@ -15,7 +15,7 @@ export const lessonListId = (level) => 'lessonlist-level-' + level;
 const LessonList = ({course, level, lessonsInLevel, t}) => {
   return (
     <div className={styles.list}>
-      <h2 id={lessonListId(level)}>
+      <h2 className={styles.headerText} id={lessonListId(level)}>
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </h2>
       <ListGroup>
