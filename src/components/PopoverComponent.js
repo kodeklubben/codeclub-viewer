@@ -10,19 +10,22 @@ const PopoverComponent = ({children, popoverContent}) => {
   const createMarkup = () => {
     return {__html: popoverContent};
   };
-  const animation = true;
-  const trigger = 'click';
-  const placement = 'bottom';
-  const onClick = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
   const overlay =
     <Popover id={hashCode(popoverContent)} className={styles.popover}>
       <div className={styles.content} dangerouslySetInnerHTML={createMarkup()}/>
     </Popover>;
+  const options = {
+    animation: true,
+    rootClose: true,
+    trigger: 'click',
+    placement: 'bottom',
+    onClick: e => {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  };
   return (
-    <OverlayTrigger rootClose {...{animation, placement, trigger, onClick, overlay}}>
+    <OverlayTrigger {...options} {...{overlay}}>
       {children}
     </OverlayTrigger>
   );
