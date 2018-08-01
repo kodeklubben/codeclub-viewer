@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.container {
+  padding-top: 7px;
+  margin-right: 5px;
+}
+
+.textMargin {
+  margin-left: 10px;
+
+  @media (max-width: $screen-xs-max) {
+    display: none;
+  }
+}

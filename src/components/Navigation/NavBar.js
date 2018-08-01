@@ -12,6 +12,7 @@ import {getTranslator} from '../../selectors/translate';
 import BreadCrumb from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import ModeDropdown from './ModeDropdown';
+import ContinueButton from './ContinueButton';
 
 const LkkBrand = () => {
   return <Navbar.Brand>
@@ -79,9 +80,9 @@ const NavBar = ({isStudentMode, t, params}) => {
         <div className={styles.widgets + ' ' + widgetClass}>
           <BreadCrumb {...params}/>
           <div className={styles.gadgetGroup}>
+            <ContinueButton/>
             <LanguageDropdown/>
             <ModeDropdown/>
-            {/*<SearchBox {...{t}}/>*/}
           </div>
         </div>
       </Navbar>

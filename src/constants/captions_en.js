@@ -22,11 +22,7 @@ export default {
     courses: 'Courses',
     lessoncount: 'Lessons: {{count}}',
     otherwebsitecourses: 'Courses on other webpages',
-    button: {
-      start: 'Start here!',
-      startlink: '/scratch/astrokatt/astrokatt',
-      continue: 'Continue...',
-    },
+    continueButton: 'Continue',
     teacherinfobox: {
       header: 'Hello! You are now in teachermode',
       changemode: 'Are you not a teacher or supervisor? Click the student / teacher button in the navigation menu ' +

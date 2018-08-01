@@ -17,7 +17,7 @@ const Courses = ({t, courses, externalCourses}) => {
       {courses.length > 0 ?
         <Row>
           <Col xs={12}>
-            <div className={styles.header}>{t('frontpage.courses')}</div>
+            <h1 className={styles.header}>{t('frontpage.courses')}</h1>
             <CourseList courses={courses}/>
           </Col>
         </Row>
@@ -25,13 +25,13 @@ const Courses = ({t, courses, externalCourses}) => {
       {externalCourses.length > 0 ?
         <Row>
           <Col xs={12}>
-            <div className={styles.header}>{t('frontpage.otherwebsitecourses')}</div>
+            <h1 className={styles.header}>{t('frontpage.otherwebsitecourses')}</h1>
             <ExternalCourseList coursesWithLanguage={externalCourses}/>
           </Col>
         </Row>
         : null}
       {courses.length + externalCourses.length !== 0 ? null :
-        <div className={styles.noMatchingLessons}>{t('coursepage.nomatchinglessons')}</div>}
+        <h1 className={styles.noMatchingLessons}>{t('coursepage.nomatchinglessons')}</h1>}
     </Col>
   );
 };

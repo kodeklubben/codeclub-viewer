@@ -24,11 +24,7 @@ export default {
     courses: 'Kurs',
     lessoncount: 'Oppgåver: {{count}}',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    button: {
-      start: 'Start her!',
-      startlink: '/scratch/astrokatt/astrokatt',
-      continue: 'Fortset...',
-    },
+    continueButton: 'Fortset',
     teacherinfobox: {
       header: 'Hei! Du er no i lærarmodus',
       changemode: 'Er du ikkje lærar eller rettleiar? Klikk elev/lærar-knappen i navigasjonsmenyen ' +
