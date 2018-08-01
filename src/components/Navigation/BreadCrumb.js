@@ -12,13 +12,14 @@ import {getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 import {getCourseIcon} from '../../resources/courseIcon';
 import {getTranslator} from '../../selectors/translate';
+import {getLevel} from '../../resources/lessons';
 
 const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
 
   const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const {title:lessonTitle, level} = isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme) : {};
+  const {title:lessonTitle} = isLesson ? getLessonFrontmatter(course, lesson, lessonLanguage, isReadme) : {};
 
   const homeCrumb = <NavLink to={'/'} aria-label={t('general.home')}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
@@ -33,7 +34,7 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
 
   const {path:lessonPath} = getLessonFrontmatter(course, lesson, lessonLanguage, isReadme);
   const lessonCrumb = <NavLink to={lessonPath} className={styles.crumb} aria-label={lessonTitle}>
-    <LevelIcon {...{level}}/>
+    <LevelIcon level={getLevel(course, lesson)}/>
     <span className={styles.lesson}>{lessonTitle}</span>
   </NavLink>;
 
