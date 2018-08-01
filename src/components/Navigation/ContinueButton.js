@@ -12,17 +12,17 @@ const ContinueButton = ({t, lastLesson, isStudentMode}) => {
   const hasLastLesson = lastLesson !== '';
   const options = {
     'aria-label': t('frontpage.continueButton'),
-    active: false,
     className: styles.container,
     bsStyle: isStudentMode ? 'language-student' : 'language-teacher'
   };
-  const button = (
-    <Button {...options}>
-      <Glyphicon glyph={'arrow-right'}/>
-      <span className={styles.textMargin}>{t('frontpage.continueButton')}</span>
-    </Button>
-  );
-  return hasLastLesson ? <LinkContainer active={false} to={lastLesson}>{button}</LinkContainer> : null;
+  return hasLastLesson ?
+    <LinkContainer active={false} to={lastLesson}>
+      <Button {...options}>
+        <Glyphicon glyph={'arrow-right'}/>
+        <span className={styles.textMargin}>{t('frontpage.continueButton')}</span>
+      </Button>
+    </LinkContainer>
+    : null;
 };
 
 ContinueButton.propTypes = {
