@@ -6,8 +6,9 @@ import styles from './PdfHeader.scss';
 import {getAvailableLanguages} from '../util';
 import {getCourseIcon} from '../resources/courseIcon';
 import {getCourseTitle} from '../resources/courseFrontmatter';
+import {getTranslator} from '../selectors/translate';
 
-const PdfHeader = ({course, language}) => {
+const PdfHeader = ({course, language, t}) => {
   const courseTitle = getCourseTitle(course, language);
   return (
     <div className={styles.container}>
@@ -22,10 +23,12 @@ PdfHeader.propTypes = {
 
   // mapStateToProps
   language: PropTypes.oneOf(getAvailableLanguages()).isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   language: state.language,
+  t: getTranslator(state),
 });
 
 export default connect(

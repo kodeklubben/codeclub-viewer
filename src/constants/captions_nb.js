@@ -11,7 +11,8 @@ export default {
       2: 'Nybegynner',
       3: 'Erfaren',
       4: 'Ekspert'
-    }
+    },
+    picture: 'Bilde av '
   },
   head: {
     title: 'Kodeklubben',

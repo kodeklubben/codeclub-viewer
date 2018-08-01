@@ -9,7 +9,8 @@ export default {
       2: 'Beginner',
       3: 'Experienced',
       4: 'Expert'
-    }
+    },
+    picture: 'Picture of '
   },
   head: {
     title: 'Code club',
