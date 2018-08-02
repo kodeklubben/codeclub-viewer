@@ -116,7 +116,7 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    contribute: 'Contribute?',
+    contribute: 'Create your own lessons',
     dyslexia: 'Text for dyslexics'
   },
   404: {

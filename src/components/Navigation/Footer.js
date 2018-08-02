@@ -8,7 +8,7 @@ import DyslexiaSwitch from './DyslexiaSwitch';
 
 const Footer = ({t, isStudentMode}) => {
   const url = {
-    oppgaver: 'https://github.com/kodeklubben/oppgaver/',
+    wiki: 'https://github.com/kodeklubben/oppgaver/wiki',
     sparebank: 'https://www.sparebank1.no',
     ibok: 'https://ibok.no/',
     excited: 'http://www.ntnu.edu/web/excited',

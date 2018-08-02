@@ -117,7 +117,7 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    contribute: 'Bidra?',
+    contribute: 'Lag egne oppgaver',
     dyslexia: 'Skrift for dyslektikere'
   },
   404: {

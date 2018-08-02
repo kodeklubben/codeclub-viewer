@@ -21,7 +21,7 @@ app.use(publicPathWithoutSlash, express.static(path.resolve(buildDir), {redirect
 // send all requests other requests here
 app.get('*', function (req, res) {
   const url = req.params[0];
-  console.log('url', url);
+  //console.log('url', url);
   if (!url.startsWith(publicPathWithoutSlash)) {
     console.log('Redirecting to', publicPathWithoutSlash);
     res.redirect(publicPathWithoutSlash);
