@@ -61,7 +61,7 @@
     "react-scroll-to-component": "^1.0.2",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
-    "scratchblocks": "github:arve0/scratchblocks#68ebaf393c4be6193a339b9dd473ca01cfc7f7f1"
+    "scratchblocks": "github:Skagevang/scratchblocks#c36ce1df0d00a33ea07c5ca195f9403ee493136b"
   },
   "devDependencies": {
     "autoprefixer": "^9.0.1",
@@ -110,8 +110,9 @@
     "node-sass": "^4.7.2",
     "node-spider": "^1.4.1",
     "node-static": "^0.7.9",
+    "p-queue": "^2.4.2",
     "postcss-loader": "^2.1.6",
-    "puppeteer": "^0.10.2",
+    "puppeteer": "^1.6.1",
     "raw-loader": "^0.5.1",
     "resolve-url-loader": "^2.3.0",
     "sass-loader": "^7.0.3",

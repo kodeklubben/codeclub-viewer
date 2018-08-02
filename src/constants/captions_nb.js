@@ -72,6 +72,7 @@ export default {
     reset: 'Fjern avkrysninger',
     tomainlanguage: 'På {{lang}}',
     nottranslated: 'Denne siden finnes ikke på {{lang}}',
+    license: 'Lisens: ',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',
@@ -116,7 +117,7 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    contribute: 'Bidra?'
+    contribute: 'Lag egne oppgaver'
   },
   404: {
     header: 'Beklager',

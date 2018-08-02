@@ -9,9 +9,8 @@ import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
-import Row from 'react-bootstrap/lib/Row';
-import {getTranslator, getTranslateTag, getTranslateGroup} from '../selectors/translate';
-import {capitalize, setCheckboxes, createCheckboxesKey} from '../util';
+import {getTranslator} from '../selectors/translate';
+import {setCheckboxes, createCheckboxesKey} from '../util';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
 import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
@@ -21,8 +20,9 @@ import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
-import {getLessonTags} from '../resources/lessons';
+import {getLevel, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
+import PrintInfo from '../components/LessonPage/PrintInfo';
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -33,24 +33,6 @@ const renderToggleButtons = () => {
     const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
     ReactDOM.render(<ToggleButton {...{buttonText, hiddenHTML}}/>,node);
   }
-};
-
-const PrintInfo = ({t, translateTag, translateGroup, course, tags}) =>
-  <div className={styles.box}>
-    <div>{t('lessons.course')} {capitalize(course)}</div>
-    {Object.keys(tags).map( group =>
-      <div key={group}>
-        {translateGroup(group) + ': ' + tags[group].map(tag => translateTag(group, tag)).join(', ')}
-      </div>
-    )}
-  </div>;
-
-PrintInfo.propTypes = {
-  t: PropTypes.func.isRequired,
-  translateTag: PropTypes.func.isRequired,
-  translateGroup: PropTypes.func.isRequired,
-  course: PropTypes.string.isRequired,
-  tags: PropTypes.object.isRequired,
 };
 
 class LessonPage extends React.Component {
@@ -64,8 +46,7 @@ class LessonPage extends React.Component {
   render() {
     const {
       course, lesson, language, isReadme,
-      t, translateTag, translateGroup,
-      title, level, author, translator, tags,
+      t, title, author, translator, license,
       checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
@@ -73,23 +54,29 @@ class LessonPage extends React.Component {
     const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
     const progress = (checkedCheckboxes > 0 && !isReadme) ?
       <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
+    const licenseRow = <div className={styles.license}>
+      {t('lessons.license')}
+      {license ?
+        <MarkdownRenderer src={license} inline={true}/> :
+        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+      }
+    </div>;
     return (
       <div>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>
-            <LevelIcon {...{level}}/>
+            <LevelIcon level={getLevel(course, lesson)}/>
             {title}
           </h1>
           {authorNode}
           {translatorNode}
-          <PrintInfo {...{t, translateTag, translateGroup, course, tags}}/>
+          <PrintInfo {...{course, lesson}}/>
           <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
           <Content {...{course, lesson, language, isReadme}}/>
-          <Row>
-            <ImprovePage {...{course, lesson, language, isReadme}}/>
-          </Row>
+          {licenseRow}
+          <ImprovePage {...{course, lesson, language, isReadme}}/>
         </div>
       </div>
     );
@@ -105,14 +92,11 @@ LessonPage.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  translateTag: PropTypes.func.isRequired,
-  translateGroup: PropTypes.func.isRequired,
   path: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  level: PropTypes.number.isRequired,
   author: PropTypes.string.isRequired,
   translator: PropTypes.string.isRequired,
-  tags: PropTypes.object.isRequired,
+  license: PropTypes.string,
   checkboxes: PropTypes.object,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
@@ -123,17 +107,14 @@ LessonPage.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, title, level, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const {path, title, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
-    translateTag: getTranslateTag(state),
-    translateGroup: getTranslateGroup(state),
     path,
     title,
-    level,
     author,
     translator,
-    tags: getLessonTags(course, lesson),
+    license: getLicense(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
     totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
