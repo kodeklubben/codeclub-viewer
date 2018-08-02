@@ -7,12 +7,6 @@
 //       ...
 //     }
 // }
-/**
- * Render scratchblocks
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
- * @returns {string} <pre class="blocks">...</pre> replaced with SVG
- */
 const replaceTags = {
   toggle: {
     tag: 'div',
@@ -23,10 +17,9 @@ const replaceTags = {
 };
 
 /**
- * Render scratchblocks
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
- * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ * Replaces div's with class togglebutton
+ * @param {object} obj
+ * @returns {object}
  */
 const replaceTagObject = (obj) => {
   const tag = obj['tag'];
@@ -43,10 +36,9 @@ const replaceTagObject = (obj) => {
 };
 
 /**
- * Render scratchblocks
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
- * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ * Adding pictures to h2's with correct classnames
+ * @param {object} obj
+ * @returns {object}
  */
 const insertHeaderIcons = (obj) => {
   const icons = {
@@ -76,10 +68,10 @@ const insertHeaderIcons = (obj) => {
 };
 
 /**
- * Render scratchblocks
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
- * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ * Replaces classes
+ * @param {object} obj
+ * @param {object} styles css-modules object
+ * @returns {object}
  */
 const replaceClass = (obj, styles) => {
   let newObj = {};
@@ -96,10 +88,10 @@ const replaceClass = (obj, styles) => {
 };
 
 /**
- * Render scratchblocks
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
- * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ * Replaces classes recursively
+ * @param {object} obj
+ * @param {object} styles css-modules object
+ * @returns {object}
  */
 const replaceClassRecursively = (obj, styles) => {
   if (Array.isArray(obj)) {
@@ -118,8 +110,8 @@ const replaceClassRecursively = (obj, styles) => {
 
 /**
  * Render scratchblocks
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
+ * @param {string} content HTML with <pre class="blocks">...</pre>
+ * @param {object} styles css-modules object
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
  */
 const renderScratchBlocks = (content, styles) => {
@@ -152,8 +144,8 @@ const renderScratchBlocks = (content, styles) => {
 
 /**
  * Process all of the content
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
+ * @param {string} content HTML with <pre class="blocks">...</pre>
+ * @param {object} styles css-modules object
  * @returns {string} The HTML as a string
  */
 export const processContent = (content, styles) => {
