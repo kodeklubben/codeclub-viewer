@@ -7,7 +7,7 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import {getAvailableLanguages} from '../../util';
+import {getAvailableLanguages} from '../../utils/util';
 import styles from './LanguageDropdown.scss';
 import {getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';

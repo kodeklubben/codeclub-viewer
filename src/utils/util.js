@@ -1,6 +1,4 @@
-/* eslint-env node */
-
-import {getFilterkeys} from '../../util';
+import {getFilterkeys} from './filterUtils';
 
 /** Assigns value to a nested object, even if the subobjects don't exist.
  *  I.e. assignDeep(obj, [1,2,3], 9) where obj={}, makes obj[1][2][3] === 9
@@ -20,48 +18,6 @@ export const assignDeep = (obj, keys, value) => {
 };
 
 /**
- * Returns the path except the filename, like the unix equivalent and path.basename. Trailing slashes are ignored.
- * @param {string} path any path
- * @returns {string} only the filename
- */
-export const dirname = (path) => {
-  if (path.match(/^\/+$/)) { return '/'; }
-  const b = path.match(/(.*)\/[^/]+\/*$/);
-  return b == null ? '.' : (b[1] === '' ? '/' : b[1]);
-};
-
-/**
- * Get the first paragraph and first picture in the html.
- * @param {string} html The whole html
- * @param {string} path The path to the html, starting with a slash,
- *                      e.g. '/scratch/astrokatt/astrokatt_nn' or '/scratch/index'
- * @returns {string} HTML code to e.g. display in a popover.
- */
-export const extractFirstPartOfHtml = (html, path) => {
-  let text, picture = '';
-  html = html.substring(html.indexOf('<section class="intro"'));
-  const p = html.indexOf('<p>');
-  const closingP = html.indexOf('</p>');
-  const img = html.indexOf('<img');
-  const closingFig = html.indexOf('</figure');
-  if (p < closingP) {
-    text = html.substring(p, closingP);
-    if (text.length > 300) {
-      text = html.substring(p, 300) + '...';
-    }
-    picture = img < closingFig ? html.substring(img, closingFig) : '';
-    // Add path to image. The following regex allows for attributes with or without quotes,
-    // e.g. <img src="astrokatt.png" />, <img src=astrokatt.png />, <img src=astrokatt.png/>,
-    // and <img src=astrokatt.png>
-    picture = picture.replace(
-      /( src="?)([^" />]*)([" />])/,
-      '$1' + process.env.PUBLICPATH + dirname(path).slice(1) + '/$2$3',
-    );
-  }
-  return (picture || '') + (text || '');
-};
-
-/**
  * Make sure tagItems is an array. Try to convert to array if it is not.
  * This happens if tags is created as string or numbers (e.g. someGroupKey: tag1, tag2, 12345)
  * instead of list (e.g. someGroupKey: [tag1, tag2, 12345]) in YAML
@@ -73,6 +29,18 @@ export const fixNonArrayTagList = (tagItems) => {
   if (typeof tagItems === 'string') return tagItems.split(/,\s*/);
   if (!Array.isArray(tagItems) && typeof tagItems !== 'string') return fixNonArrayTagList(tagItems.toString());
   return tagItems;
+};
+
+/**
+ * Converts and array to object, where the array values becomes the object keys, and the values are 'false'.
+ * @param array
+ * @returns {object}
+ */
+export const arrayToObject = (array) => {
+  return array.reduce((res, key) => {
+    res[key] = false;
+    return res;
+  }, {});
 };
 
 /**
@@ -106,4 +74,34 @@ export const cleanseTags = (tags, src) => {
     result[groupKey.toLowerCase()] = tagsInGroup.map(tagKey => tagKey.toLowerCase());
     return result;
   }, {});
+};
+
+/**
+ * Return the keys of an object whose values are true (or true-ish),
+ * i.e. if obj={hat: true, cat: false, dog: false, log: true}, the function will return [hat, log]
+ * @param {object} obj
+ * @returns {string[]} An array of the keys that have true-ish values
+ */
+export const getKeysWithTrueValues = (obj) => Object.keys(obj).filter(key => obj[key]);
+
+/**
+* Returns languages defined as available
+* All available languages must be defined here
+* @returns {string[]} An array of available languages, e.g. ['nb', 'nn', 'en']
+*/
+export const getAvailableLanguages = () => getFilterkeys().language;
+
+/**
+ * Based on an implementation of Java's string to integer hashCode function.
+ * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+ * @param {string} str Any string you wish to hash
+ * @returns {number} e.g. 1395333309
+ */
+export const hashCode = (str) => {
+  let hash = 0, i, chr;
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+  }
+  return Math.abs(hash);
 };

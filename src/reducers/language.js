@@ -1,5 +1,5 @@
-import {getAvailableLanguages} from '../util';
-import {storeItem} from '../localStorage';
+import {getAvailableLanguages} from '../utils/util';
+import {storeItem} from '../utils/localStorage';
 
 
 /////////////////////

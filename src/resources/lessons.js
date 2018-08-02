@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize';
-import {assignDeep, cleanseTags} from './utils/resources';
+import {assignDeep, cleanseTags} from '../utils/util';
 
 // lessonSrc/*/*/lesson.yml
 const lessonsContext =

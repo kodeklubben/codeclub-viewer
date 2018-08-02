@@ -1,22 +1,4 @@
-/* eslint-env node */
-
-/**
- * Makes first character in str upper case
- * @param {string} str
- * @returns {string}
- */
-export const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : str;
-
-/**
- * Returns the filename, like the unix equivalent and path.dirname. Trailing slashes are ignored.
- * @param {string} path any path
- * @returns {string} the whole path, except the filename
- */
-export const basename = (path) => {
-  if (path === '') { return ''; }
-  const b = path.match(/.*\/([^/]+)\/*$/);
-  return b == null ? path : b[1];
-};
+import {arrayToObject, getKeysWithTrueValues} from './util';
 
 /**
  * Returns all valid filter groupKeys and tagKeys, converted to lowercase.
@@ -57,26 +39,6 @@ export const getInitialFilter = (initialLanguage) => {
 };
 
 /**
- * Converts and array to object, where the array values becomes the object keys, and the values are 'false'.
- * @param array
- * @returns {object}
- */
-export const arrayToObject = (array) => {
-  return array.reduce((res, key) => {
-    res[key] = false;
-    return res;
-  }, {});
-};
-
-/**
- * Return the keys of an object whose values are true (or true-ish),
- * i.e. if obj={hat: true, cat: false, dog: false, log: true}, the function will return [hat, log]
- * @param {object} obj
- * @returns {string[]} An array of the keys that have true-ish values
- */
-export const getKeysWithTrueValues = (obj) => Object.keys(obj).filter(key => obj[key]);
-
-/**
  * Return true only if tags of a lesson or course contains all the checked tags in the filter
  * @param {Object} lessonTags LessonTags or courseTags e.g. {topic: ['game'], subject: ['science']}
  * @param {Object} tagsFilter e.g. {topic: {game: false, robot: true}, subject: {mathematics: false, english: true}}}
@@ -104,7 +66,6 @@ export const tagsMatchFilter = (lessonTags, tagsFilter) => {
   return true;
 };
 
-
 /**
  * Return true if lessonLanguages includes at least one checked language (union / OR-test)
  * @param {string[]} lessonLanguages Array of lesson languages e.g. ['nb', 'en']
@@ -117,71 +78,4 @@ export const languagesMatchFilter = (lessonLanguages, languageFilter) => {
   }
   const checkedLanguages = getKeysWithTrueValues(languageFilter); // only the checked tags; e.g. ['nb']
   return checkedLanguages.some(checkedTagKey => lessonLanguages.includes(checkedTagKey));
-};
-
-/**
-* Returns languages defined as available
-* All available languages must be defined here
-* @returns {string[]} An array of available languages, e.g. ['nb', 'nn', 'en']
-*/
-export const getAvailableLanguages = () => getFilterkeys().language;
-
-/**
- * Based on an implementation of Java's string to integer hashCode function.
- * See e.g. https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
- * @param {string} str Any string you wish to hash
- * @returns {number} e.g. 1395333309
- */
-export const hashCode = (str) => {
-  let hash = 0, i, chr;
-  for (i = 0; i < str.length; i++) {
-    chr = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr;
-  }
-  return Math.abs(hash);
-};
-
-/**
- * Get a string used to store checkboxes in localstorage
- * @param {string} path e.g. './path/to/file.md' or '/path/to/file' or 'path/to/file.md'
- * @returns {string} e.g. 'checkboxes_path/to/file'
- */
-export const createCheckboxesKey = (path = 'undefined') => {
-  path = path.match(/^\.?\/?(.*?)(?:\.md)?$/)[1]; // Remove . or / or ./ from beginning and .md from end
-  return 'checkboxes_' + path;
-};
-
-/**
- * Finds every checkbox in the lesson and updates the state of it.
- * @param {string} path path for the lesson
- * @param {object} checkboxes checkbox object in state
- * @param {function} setCheckbox function for updating the state and localstorage
- */
-export const setCheckboxes = (path, checkboxes, setCheckbox) => {
-  const labels = [...document.getElementsByTagName('label')];
-  for (let label of labels) {
-    const input = document.getElementById(label.htmlFor);
-    if (input && input.type === 'checkbox') {
-      let hash = hashCode(label.textContent);
-      input.checked = !!checkboxes[hash];
-      setCheckbox(path, hash, !!checkboxes[hash]);
-      input.onclick = (e) => {
-        setCheckbox(path, hash, !!e.target.checked);
-      };
-    }
-  }
-};
-
-/**
- * Checks every checkbox and see if it's checked or not
- * @param {object} checkboxes checkbox object in state
- * @returns {boolean}
- */
-export const anyCheckboxTrue = (checkboxes) => {
-  for (let i of Object.keys(checkboxes)) {
-    if (checkboxes[i] === true) {
-      return true;
-    }
-  }
-  return false;
 };

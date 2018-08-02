@@ -2,7 +2,7 @@
 // TODO: Perhaps use code-splitting / react-loadable / bundle-loader or similar here.
 
 import {getLessonFrontmatter} from './lessonFrontmatter';
-import {extractFirstPartOfHtml} from './utils/resources';
+import {extractFirstPartOfHtml} from '../utils/stringUtils';
 
 // Gets all lessonSrc/*/*/*.md except lessonSrc/*/playlists/*
 // Gets only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)

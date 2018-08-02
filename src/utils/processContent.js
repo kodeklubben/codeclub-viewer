@@ -7,6 +7,12 @@
 //       ...
 //     }
 // }
+/**
+ * Render scratchblocks
+ * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
+ * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ */
 const replaceTags = {
   toggle: {
     tag: 'div',
@@ -16,19 +22,12 @@ const replaceTags = {
   }
 };
 
-const processContent = (content, styles) => {
-  const parser = require('posthtml-parser');
-  const render = require('posthtml-render');
-
-  let parsedContent = parser(content);
-  parsedContent = replaceClassRecursively(parsedContent, styles);
-  content = render(parsedContent);
-  if (typeof document !== 'undefined') {
-    content = renderScratchBlocks(content, styles);
-  }
-  return content;
-};
-
+/**
+ * Render scratchblocks
+ * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
+ * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ */
 const replaceTagObject = (obj) => {
   const tag = obj['tag'];
   if (tag in replaceTags) {
@@ -43,6 +42,12 @@ const replaceTagObject = (obj) => {
   }
 };
 
+/**
+ * Render scratchblocks
+ * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
+ * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ */
 const insertHeaderIcons = (obj) => {
   const icons = {
     'check': require('assets/graphics/check.svg'),
@@ -70,6 +75,12 @@ const insertHeaderIcons = (obj) => {
   return obj;
 };
 
+/**
+ * Render scratchblocks
+ * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
+ * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ */
 const replaceClass = (obj, styles) => {
   let newObj = {};
   for (let k in obj) {
@@ -84,6 +95,12 @@ const replaceClass = (obj, styles) => {
   return newObj;
 };
 
+/**
+ * Render scratchblocks
+ * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
+ * @returns {string} <pre class="blocks">...</pre> replaced with SVG
+ */
 const replaceClassRecursively = (obj, styles) => {
   if (Array.isArray(obj)) {
     return obj.map((val, idx) => replaceClassRecursively(val, styles));
@@ -100,8 +117,7 @@ const replaceClassRecursively = (obj, styles) => {
 
 
 /**
- * Render scratchblocks.
- *
+ * Render scratchblocks
  * @param content {string} HTML with <pre class="blocks">...</pre>
  * @param styles {object} css-modules object
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
@@ -134,4 +150,21 @@ const renderScratchBlocks = (content, styles) => {
   return returnContent;
 };
 
-export default processContent;
+/**
+ * Process all of the content
+ * @param content {string} HTML with <pre class="blocks">...</pre>
+ * @param styles {object} css-modules object
+ * @returns {string} The HTML as a string
+ */
+export const processContent = (content, styles) => {
+  const parser = require('posthtml-parser');
+  const render = require('posthtml-render');
+
+  let parsedContent = parser(content);
+  parsedContent = replaceClassRecursively(parsedContent, styles);
+  content = render(parsedContent);
+  if (typeof document !== 'undefined') {
+    content = renderScratchBlocks(content, styles);
+  }
+  return content;
+};
