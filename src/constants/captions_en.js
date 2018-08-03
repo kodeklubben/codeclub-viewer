@@ -22,7 +22,7 @@ export default {
     courses: 'Courses',
     lessoncount: 'Lessons: {{count}}',
     otherwebsitecourses: 'Courses on other webpages',
-    continueButton: 'Continue',
+    continueButton: 'Last visited',
     teacherinfobox: {
       header: 'Hello! You are now in teachermode',
       changemode: 'Are you not a teacher or supervisor? Click the student / teacher button in the navigation menu ' +

@@ -24,7 +24,7 @@ export default {
     courses: 'Kurs',
     lessoncount: 'Oppgåver: {{count}}',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    continueButton: 'Fortset',
+    continueButton: 'Sist besøkt',
     teacherinfobox: {
       header: 'Hei! Du er no i lærarmodus',
       changemode: 'Er du ikkje lærar eller rettleiar? Klikk elev/lærar-knappen i navigasjonsmenyen ' +

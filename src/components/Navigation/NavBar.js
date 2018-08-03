@@ -80,7 +80,7 @@ const NavBar = ({isStudentMode, t, params}) => {
         <div className={styles.widgets + ' ' + widgetClass}>
           <BreadCrumb {...params}/>
           <div className={styles.gadgetGroup}>
-            <ContinueButton/>
+            <ContinueButton {...params}/>
             <LanguageDropdown/>
             <ModeDropdown/>
           </div>
