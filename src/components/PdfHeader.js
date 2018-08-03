@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PdfHeader.scss';
-import {getAvailableLanguages} from '../utils/util';
+import {getAvailableLanguages} from '../utils/filterUtils';
 import {getCourseIcon} from '../resources/courseIcon';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 

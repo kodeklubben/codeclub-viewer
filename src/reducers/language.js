@@ -1,4 +1,4 @@
-import {getAvailableLanguages} from '../utils/util';
+import {getAvailableLanguages} from '../utils/filterUtils';
 import {storeItem} from '../utils/localStorage';
 
 

@@ -1,5 +1,6 @@
 import memoize from 'fast-memoize';
-import {getAvailableLanguages, assignDeep} from '../utils/util';
+import {assignDeep} from '../utils/util';
+import {getAvailableLanguages} from '../utils/filterUtils';
 import {capitalize} from '../utils/stringUtils';
 
 // lessonSrc/*/index*.md, only frontmatter

@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize';
-import {cleanseTags} from '../utils/util';
+import {cleanseTags} from '../utils/filterUtils';
 
 // lessonSrc/*/course.yml
 const coursesContext =

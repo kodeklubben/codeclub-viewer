@@ -6,7 +6,7 @@ import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {getAvailableLanguages} from '../../utils/util';
+import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
