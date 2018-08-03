@@ -1,6 +1,6 @@
 import {createSelector} from 'reselect';
 import {getCourseTags, getExternalCourses} from '../resources/courses';
-import {tagsMatchFilter} from '../util';
+import {tagsMatchFilter} from '../utils/filterUtils';
 import {getCourseLanguages} from '../resources/courseFrontmatter';
 import {getFilteredLessons} from './lesson';
 import {getTagsFilter} from './filter';

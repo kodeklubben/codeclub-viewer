@@ -10,7 +10,7 @@ import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import {getTranslator} from '../selectors/translate';
-import {setCheckboxes, createCheckboxesKey} from '../util';
+import {setCheckboxes, createCheckboxesKey} from '../utils/checkboxUtils';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
 import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';

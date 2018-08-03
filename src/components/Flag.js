@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Flag.scss';
-import {getAvailableLanguages} from '../util';
+import {getAvailableLanguages} from '../utils/filterUtils';
 import {getTranslateFilter} from '../selectors/translate';
 
 const Flag = ({language, translateFilter}) =>

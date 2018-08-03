@@ -1,4 +1,4 @@
-import {storeItem} from '../localStorage';
+import {storeItem} from '../utils/localStorage';
 
 /////////////////////
 // ACTION CREATORS //

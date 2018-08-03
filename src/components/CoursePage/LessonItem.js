@@ -9,7 +9,7 @@ import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
 import Flag from '../Flag';
-import {createCheckboxesKey} from '../../util';
+import {createCheckboxesKey} from '../../utils/checkboxUtils';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 import {getLevel} from '../../resources/lessons';
 import {getLessonIntro} from '../../resources/lessonContent';

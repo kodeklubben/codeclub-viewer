@@ -7,7 +7,7 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './MainLanguageButton.scss';
 import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
-import {getAvailableLanguages} from '../../util';
+import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
 const MainLanguageButton = ({path, enabled, language, buttonText}) => {
