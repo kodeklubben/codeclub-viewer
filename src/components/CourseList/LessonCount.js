@@ -1,34 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import Grid from '@material-ui/core/Grid';
+import {withStyles} from '@material-ui/core/styles';
+import grey from '@material-ui/core/colors/grey';
 import Flag from '../Flag';
-import styles from './LessonCount.scss';
 import {getTranslator} from '../../selectors/translate';
 import {getFilteredLessonsInCourseCountPerLanguage} from '../../selectors/lesson';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
-const LessonCount = ({lessonsPerLanguage, showFlag, t}) => {
+const styles = {
+  grey: {
+    color: grey[600],
+  },
+};
+
+const LessonCount = ({classes, lessonsPerLanguage, showFlag, t}) => {
   const totalNumberOfLessons = Object.values(lessonsPerLanguage).reduce((sum, n) => sum + n, 0);
   return (
-    <div className={styles.container}>
-      <div className={styles.center}>{t('frontpage.lessoncount', {count: totalNumberOfLessons})}</div>
+    <Grid container direction='column' alignItems='center'>
+      <Grid item className={classes.grey}>{t('frontpage.lessoncount', {count: totalNumberOfLessons})}</Grid>
       {showFlag ?
-        <div className={styles.center}>
+        <Grid item container justify='center' spacing={8}>
           {Object.keys(lessonsPerLanguage).map(language =>
-            <span key={language} className={styles.flag}>
+            <Grid item key={language}>
               <Flag {...{language}}/>
-            </span>)
-          }
-        </div> :
+            </Grid>
+          )}
+        </Grid> :
         null
       }
-    </div>
+    </Grid>
   );
 };
 
 LessonCount.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
 
   // mapStateToProps

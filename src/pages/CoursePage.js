@@ -1,28 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import styles from './CoursePage.scss';
 import {getTranslator} from '../selectors/translate';
 import {getShowFiltergroups} from '../selectors/playlist';
+import {getFilteredLevelsInCourse} from '../selectors/lesson';
 import LessonFilter from '../components/Filter/LessonFilter';
 import LessonList from '../components/CoursePage/LessonList';
 import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 import CourseInfo from '../components/CoursePage/CourseInfo';
+import Head from '../components/Head';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 import {getCourseIntroText} from '../resources/courseContent';
-import {getFilteredLevelsInCourse} from '../selectors/lesson';
-import Head from '../components/Head';
 
-const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) => {
+const styles = theme => ({
+  topMargin: {
+    marginTop: '0',
+    [theme.breakpoints.up('sm')]: {
+      marginTop: '63px',
+    },
+  },
+  container: {
+    paddingLeft: '15px',
+    paddingRight: '15px',
+  },
+});
+
+const CoursePage = ({classes, params, courseTitle, levels, t, showPlaylists, language}) => {
   const {course} = params;
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
-  const filter = <div className={styles.topMargin}><LessonFilter course={course}/></div>;
+  const filter = <div className={classes.topMargin}><LessonFilter course={course}/></div>;
   return (
     <div>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
-      <div className={styles.container}>
+      <div className={classes.container}>
         <Grid container direction='column'>
           <h1>{courseTitle}</h1>
           <CourseInfo courseName={course}/>
@@ -33,7 +45,7 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) =
               :
               <Grid item xs={12} sm={8} lg={10}>
                 {lessonLists.length ? lessonLists :
-                  <h2 className={styles.topMargin}><b>{t('coursepage.nomatchinglessons')}</b></h2>
+                  <h2 className={classes.topMargin}><b>{t('coursepage.nomatchinglessons')}</b></h2>
                 }
               </Grid>
             }
@@ -47,6 +59,7 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) =
 
 CoursePage.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }).isRequired,
