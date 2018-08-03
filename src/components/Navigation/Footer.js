@@ -9,7 +9,7 @@ import styles from './Footer.scss';
 
 const Footer = ({t, isStudentMode}) => {
   const url = {
-    oppgaver: 'https://github.com/kodeklubben/oppgaver/',
+    wiki: 'https://github.com/kodeklubben/oppgaver/wiki',
     sparebank: 'https://www.sparebank1.no',
     ibok: 'https://ibok.no/',
     excited: 'http://www.ntnu.edu/web/excited',
@@ -60,14 +60,14 @@ const Footer = ({t, isStudentMode}) => {
   return (
     <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher} role='contentinfo'>
       <Row className={styles.githubIcon}>
-        <a href={url.oppgaver} target="_blank">
+        <a href={url.wiki} target="_blank">
           <img className={styles.svg} src={require('../../assets/graphics/github.png')}
             alt={'GitHub'}
           />
         </a>
       </Row>
       <Row className={styles.contribute}>
-        <p><a href={url.oppgaver} target="_blank">{t('footer.contribute')}</a></p>
+        <p><a href={url.wiki} target="_blank">{t('footer.contribute')}</a></p>
       </Row>
       <Row>
         <div className={styles.divider}/>

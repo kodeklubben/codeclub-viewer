@@ -113,7 +113,7 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    contribute: 'Contribute?'
+    contribute: 'Create your own lessons'
   },
   404: {
     header: 'Sorry',

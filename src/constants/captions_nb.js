@@ -114,7 +114,7 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    contribute: 'Bidra?'
+    contribute: 'Lag egne oppgaver'
   },
   404: {
     header: 'Beklager',
