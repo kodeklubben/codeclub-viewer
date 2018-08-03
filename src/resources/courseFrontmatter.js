@@ -1,5 +1,7 @@
 import memoize from 'fast-memoize';
-import {assignDeep, capitalize, getAvailableLanguages} from '../util';
+import {assignDeep} from '../utils/util';
+import {getAvailableLanguages} from '../utils/filterUtils';
+import {capitalize} from '../utils/stringUtils';
 
 // lessonSrc/*/index*.md, only frontmatter
 // The keys are of the form './course/index*.md'
@@ -50,7 +52,7 @@ const getData = memoize(
       const [/* ignore */, course, file] = key.match(/^[.][/]([^/]+)[/](index[^.]*)[.]md$/);
       const {title = '', external = '', language} = courseFrontmatterContext(key);
       if (getAvailableLanguages().includes(language)) {
-        const path = `/${course}/${file}`; // TODO: Add publicpath?
+        const path = `/${course}/${file}`;
         const data = {title, external, path, key};
         assignDeep(courses, [course, language], data);
       } else {

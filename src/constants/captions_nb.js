@@ -13,8 +13,11 @@ export default {
       4: 'Ekspert'
     }
   },
-  title: {
-    codeclub: 'Kodeklubben',
+  head: {
+    title: 'Kodeklubben',
+    description: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker å lære programmering. ' +
+                  'Alt innholdet på siden er gratis å bruke, ' +
+                  'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
   },
   frontpage: {
     courses: 'Kurs',
@@ -69,6 +72,7 @@ export default {
     reset: 'Fjern avkrysninger',
     tomainlanguage: 'På {{lang}}',
     nottranslated: 'Denne siden finnes ikke på {{lang}}',
+    license: 'Lisens: ',
     improvepage: {
       header: 'Forbedre denne siden',
       textline1: 'Funnet en feil? Kunne noe vært bedre?',
@@ -113,7 +117,7 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    contribute: 'Bidra?'
+    contribute: 'Lag egne oppgaver'
   },
   404: {
     header: 'Beklager',

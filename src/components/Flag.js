@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Flag.scss';
-import {getAvailableLanguages} from '../util';
-import {getTranslateTag} from '../selectors/translate';
+import {getAvailableLanguages} from '../utils/filterUtils';
+import {getTranslateFilter} from '../selectors/translate';
 
-const Flag = ({language, translateTag}) =>
+const Flag = ({language, translateFilter}) =>
   <img
     className={styles.flag}
     src={require(`../assets/graphics/flag_${language}.svg`)}
-    alt={translateTag('language', language)}
+    alt={translateFilter('language', language)}
   />;
 
 Flag.propTypes = {
@@ -18,11 +18,11 @@ Flag.propTypes = {
   language: PropTypes.oneOf(getAvailableLanguages()).isRequired,
 
   // mapStateToProps
-  translateTag: PropTypes.func.isRequired,
+  translateFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  translateTag: getTranslateTag(state),
+  translateFilter: getTranslateFilter(state),
 });
 
 export default connect(

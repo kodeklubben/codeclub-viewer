@@ -2,7 +2,7 @@
 // TODO: Perhaps use code-splitting / react-loadable / bundle-loader or similar here.
 
 import {getLessonFrontmatter} from './lessonFrontmatter';
-import {extractFirstPartOfHtml} from '../util';
+import {extractFirstPartOfHtml} from '../utils/stringUtils';
 
 // Gets all lessonSrc/*/*/*.md except lessonSrc/*/playlists/*
 // Gets only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)
@@ -37,3 +37,14 @@ export const getLessonIntro = (course, lesson, language, isReadme) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   return extractFirstPartOfHtml(lessonContent, path);
 };
+
+/**
+ * Get the text in the first part of HTML markup for the lesson.
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} language E.g. 'nb'
+ * @param {boolean} isReadme
+ * @returns {string} Text to e.g. display in a description.
+ */
+export const getLessonIntroText = (course, lesson, language, isReadme) =>
+  getLessonIntro(course, lesson, language, isReadme).replace(/<[^>]*>/g, '');

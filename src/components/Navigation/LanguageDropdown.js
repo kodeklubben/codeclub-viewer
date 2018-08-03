@@ -7,19 +7,19 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import {getAvailableLanguages} from '../../util';
+import {getAvailableLanguages} from '../../utils/filterUtils';
 import styles from './LanguageDropdown.scss';
-import {getTranslateTag} from '../../selectors/translate';
+import {getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 
 const availableLanguages = getAvailableLanguages();
 
-const LanguageItem = ({language, translateTag, onlyFlag}) => (
+const LanguageItem = ({language, translateFilter, onlyFlag}) => (
   // Note that the block with "float" (the flag) must be first in the containing div
   <div className={styles.languageItemContainer}>
     <Flag language={language}/>
     <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
-      {translateTag('language', language)}
+      {translateFilter('language', language)}
     </span>
   </div>
 );
@@ -30,10 +30,10 @@ LanguageItem.propTypes = {
 
   // mapStateToProps
   language: PropTypes.oneOf(availableLanguages).isRequired,
-  translateTag: PropTypes.func.isRequired
+  translateFilter: PropTypes.func.isRequired
 };
 
-const LanguageDropdown = ({isStudentMode, language, translateTag,
+const LanguageDropdown = ({isStudentMode, language, translateFilter,
   resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
   const mode = isStudentMode ? 'student' : 'teacher';
   return (
@@ -42,7 +42,7 @@ const LanguageDropdown = ({isStudentMode, language, translateTag,
         noCaret
         pullRight
         bsStyle={'language-' + mode}
-        title={<LanguageItem onlyFlag={true} {...{language, translateTag}}/>}
+        title={<LanguageItem onlyFlag={true} {...{language, translateFilter}}/>}
         onSelect={(eventKey) => {
           resetOneFilter('language', eventKey);
           setLanguage(eventKey);
@@ -52,7 +52,7 @@ const LanguageDropdown = ({isStudentMode, language, translateTag,
         {
           availableLanguages.map(key =>
             <MenuItem {...{key}} eventKey={key} active={language === key}>
-              <LanguageItem onlyFlag={false} language={key} {...{translateTag}}/>
+              <LanguageItem onlyFlag={false} language={key} {...{translateFilter}}/>
             </MenuItem>
           )
         }
@@ -64,7 +64,7 @@ const LanguageDropdown = ({isStudentMode, language, translateTag,
 LanguageDropdown.propTypes = {
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
-  translateTag: PropTypes.func.isRequired,
+  translateFilter: PropTypes.func.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
@@ -75,7 +75,7 @@ LanguageDropdown.propTypes = {
 
 const mapStateToProps = (state) => ({
   language: state.language,
-  translateTag: getTranslateTag(state),
+  translateFilter: getTranslateFilter(state),
   isStudentMode: state.isStudentMode,
 });
 

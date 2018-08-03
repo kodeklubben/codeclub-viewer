@@ -11,8 +11,11 @@ export default {
       4: 'Expert'
     }
   },
-  title: {
-    codeclub: 'Code club',
+  head: {
+    title: 'Code club',
+    description: 'On this page you will find tasks for people of all ages who wants to learn programming. ' +
+                  'All content on the site is free to use, ' +
+                  'and is often used in the code club and programming subjects at school.',
   },
   frontpage: {
     courses: 'Courses',
@@ -68,6 +71,7 @@ export default {
     reset: 'Clear checkboxes',
     tomainlanguage: 'In {{lang}}',
     nottranslated: 'This page does not exist in {{lang}}',
+    license: 'License: ',
     improvepage: {
       header: 'Improve this page',
       textline1: 'Found an error? Could anything be better?',
@@ -112,7 +116,7 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    contribute: 'Contribute?'
+    contribute: 'Create your own lessons'
   },
   404: {
     header: 'Sorry',

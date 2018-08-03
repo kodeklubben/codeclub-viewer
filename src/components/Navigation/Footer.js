@@ -8,7 +8,7 @@ import styles from './Footer.scss';
 
 const Footer = ({t, isStudentMode}) => {
   const url = {
-    oppgaver: 'https://github.com/kodeklubben/oppgaver/',
+    wiki: 'https://github.com/kodeklubben/oppgaver/wiki',
     sparebank: 'https://www.sparebank1.no',
     ibok: 'https://ibok.no/',
     excited: 'http://www.ntnu.edu/web/excited',
@@ -59,12 +59,10 @@ const Footer = ({t, isStudentMode}) => {
   return (
     <Grid container direction='column' alignItems='center' justify='center'
       className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
-      <a className={styles.githubIcon} href={url.oppgaver} target="_blank">
-        <img className={styles.svg} src={require('../../assets/graphics/github.png')}
-          alt={'GitHub'}
-        />
+      <a className={styles.githubIcon} href={url.wiki} target="_blank">
+        <img className={styles.svg} src={require('../../assets/graphics/github.png')} alt={'GitHub'}/>
       </a>
-      <a className={styles.contribute} href={url.oppgaver} target="_blank">{t('footer.contribute')}</a>
+      <a className={styles.contribute} href={url.wiki} target="_blank">{t('footer.contribute')}</a>
       <div className={styles.divider}/>
       {sponsors}
     </Grid>);

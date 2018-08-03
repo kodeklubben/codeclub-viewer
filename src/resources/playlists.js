@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize';
-import {assignDeep} from '../util';
+import {assignDeep} from '../utils/util';
 
 // lessonSrc/*/playlists/*.txt
 export const playlistContext =

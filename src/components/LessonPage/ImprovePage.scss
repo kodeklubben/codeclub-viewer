@@ -8,7 +8,7 @@
 
 /* Container for improve box */
 .container {
-  margin: 10px 30px;
+  margin: 10px 0;
 
   @media print {
     display: none;
@@ -22,7 +22,6 @@
   text-align: center;
   padding: 5px;
   margin: auto;
-  max-width: 650px;
   border-radius: 10px;
 }
 

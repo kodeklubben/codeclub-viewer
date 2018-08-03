@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {anyCheckboxTrue, createCheckboxesKey} from '../../util';
+import {anyCheckboxTrue, createCheckboxesKey} from '../../utils/checkboxUtils';
 import MainLanguageButton from './MainLanguageButton';
 import ResetButton from './ResetButton';
 import InstructionButton from '../InstructionButton';

@@ -39,40 +39,32 @@ export const getTranslator = (state) => {
 };
 
 /**
- * Get a translater function to get name of filter groups in current language
+ * Get a translater function to get filter groups, tags, and tooltips in current language
  * @param {object} state The redux state object
- * @returns {function} with params (groupKey), where
- *   param {string} groupKey The name of the filter group, e.g. 'language' or 'topic'
- *   returns {string} The translated name of the group, e.g. 'Språk' or 'Tema'
- */
-export const getTranslateGroup = (state) => {
-  const captions = require('lessonFiltertags/translation_' + state.language + '.yml');
-  return (groupKey) => {
-    const translatedGroup = (captions[groupKey] || {}).NAME;
-    if (!translatedGroup) {
-      console.warn(`Could not translate group with groupKey '${groupKey}'`);
-      return '';
-    }
-    return translatedGroup;
-  };
-};
-
-/**
- * Get a translater function to get name of filter tags in current language
- * @param {object} state The redux state object
- * @returns {function} with params (groupKey, tagKey), where
+ * @returns {function} with params (groupKey, tagKey, showTagTooltip = false), where
  *   param {string} groupKey The name of the filter group, e.g. 'language' or 'topic'
  *   param {string} tagKey The name of the filter tag, e.g. 'en' or 'game'
- *   returns {string} The translated name of the tag, e.g. 'Engelsk' or 'Spill'
+ *   param {bool} showTagTooltip Set to true to get the tooltip of the tag.
+ *   returns {string} The translated filter group, tag og tooltip of the tag, e.g. 'Tema', 'Spill', or 'Lage spill.'
  */
-export const getTranslateTag = (state) => {
+export const getTranslateFilter = (state) => {
   const captions = require('lessonFiltertags/translation_' + state.language + '.yml');
-  return (groupKey, tagKey) => {
-    const translatedTag = (((captions[groupKey] || {}).TAGS || {})[tagKey] || {}).NAME;
-    if (!translatedTag) {
-      console.warn(`Could not translate tag with groupKey '${groupKey}' and tagKey '${tagKey}'`);
-      return '';
+  return (groupKey, tagKey, showTagTooltip = false) => {
+    const group = captions[groupKey] || {};
+    if (!tagKey) {
+      // return the translated group name
+      if (!group['NAME']) {
+        console.warn(`Could not translate group with groupKey '${groupKey}'`);
+      }
+      return group['NAME'] || '';
+    } else {
+      // else return the translated tag or tag tooltip
+      const tag = (group['TAGS'] || {})[tagKey] || {};
+      if (!tag['NAME'] && !showTagTooltip) {
+        console.warn(`Could not translate tag with groupKey '${groupKey}' and tagKey '${tagKey}'`);
+      }
+      const nameOrTooltip = showTagTooltip ? 'TOOLTIP' : 'NAME';
+      return tag[nameOrTooltip] || '';
     }
-    return translatedTag;
   };
 };

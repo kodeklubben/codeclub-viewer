@@ -1,5 +1,5 @@
-import {storeItem} from '../localStorage';
-import {createCheckboxesKey as createKey} from '../util';
+import {storeItem} from '../utils/localStorage';
+import {createCheckboxesKey} from '../utils/checkboxUtils';
 
 /////////////////////
 // ACTION CREATORS //
@@ -64,11 +64,11 @@ export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case 'SET_CHECKBOXES': {
       const {path, checkboxes} = action.payload;
-      return newCheckboxState(state, createKey(path), checkboxes);
+      return newCheckboxState(state, createCheckboxesKey(path), checkboxes);
     }
     case 'SET_CHECKBOX': {
       const {path, hash, value} = action.payload;
-      const key = createKey(path);
+      const key = createCheckboxesKey(path);
       const checkboxes = {
         ...(state[key] || {}), // Get checkboxes if it exists, and create a copy...
         [hash]: value          // ...and add the new value.
