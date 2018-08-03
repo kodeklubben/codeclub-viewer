@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ImprovePage.scss';
-import {capitalize} from '../../util.js';
+import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';

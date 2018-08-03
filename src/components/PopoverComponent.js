@@ -4,7 +4,7 @@ import styles from './PopoverComponent.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import {hashCode} from '../util';
+import {hashCode} from '../utils/util';
 
 const PopoverComponent = ({children, popoverContent}) => {
   const createMarkup = () => {

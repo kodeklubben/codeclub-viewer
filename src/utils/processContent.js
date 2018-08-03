@@ -16,19 +16,11 @@ const replaceTags = {
   }
 };
 
-const processContent = (content, styles) => {
-  const parser = require('posthtml-parser');
-  const render = require('posthtml-render');
-
-  let parsedContent = parser(content);
-  parsedContent = replaceClassRecursively(parsedContent, styles);
-  content = render(parsedContent);
-  if (typeof document !== 'undefined') {
-    content = renderScratchBlocks(content, styles);
-  }
-  return content;
-};
-
+/**
+ * Replaces div's with class togglebutton
+ * @param {object} obj
+ * @returns {object}
+ */
 const replaceTagObject = (obj) => {
   const tag = obj['tag'];
   if (tag in replaceTags) {
@@ -43,6 +35,11 @@ const replaceTagObject = (obj) => {
   }
 };
 
+/**
+ * Adding pictures to h2's with correct classnames
+ * @param {object} obj
+ * @returns {object}
+ */
 const insertHeaderIcons = (obj) => {
   const icons = {
     'check': require('assets/graphics/check.svg'),
@@ -70,6 +67,12 @@ const insertHeaderIcons = (obj) => {
   return obj;
 };
 
+/**
+ * Replaces classes
+ * @param {object} obj
+ * @param {object} styles css-modules object
+ * @returns {object}
+ */
 const replaceClass = (obj, styles) => {
   let newObj = {};
   for (let k in obj) {
@@ -84,6 +87,12 @@ const replaceClass = (obj, styles) => {
   return newObj;
 };
 
+/**
+ * Replaces classes recursively
+ * @param {object} obj
+ * @param {object} styles css-modules object
+ * @returns {object}
+ */
 const replaceClassRecursively = (obj, styles) => {
   if (Array.isArray(obj)) {
     return obj.map((val, idx) => replaceClassRecursively(val, styles));
@@ -100,10 +109,9 @@ const replaceClassRecursively = (obj, styles) => {
 
 
 /**
- * Render scratchblocks.
- *
- * @param content {string} HTML with <pre class="blocks">...</pre>
- * @param styles {object} css-modules object
+ * Render scratchblocks
+ * @param {string} content HTML with <pre class="blocks">...</pre>
+ * @param {object} styles css-modules object
  * @returns {string} <pre class="blocks">...</pre> replaced with SVG
  */
 const renderScratchBlocks = (content, styles) => {
@@ -134,4 +142,21 @@ const renderScratchBlocks = (content, styles) => {
   return returnContent;
 };
 
-export default processContent;
+/**
+ * Process all of the content
+ * @param {string} content HTML with <pre class="blocks">...</pre>
+ * @param {object} styles css-modules object
+ * @returns {string} The HTML as a string
+ */
+export const processContent = (content, styles) => {
+  const parser = require('posthtml-parser');
+  const render = require('posthtml-render');
+
+  let parsedContent = parser(content);
+  parsedContent = replaceClassRecursively(parsedContent, styles);
+  content = render(parsedContent);
+  if (typeof document !== 'undefined') {
+    content = renderScratchBlocks(content, styles);
+  }
+  return content;
+};

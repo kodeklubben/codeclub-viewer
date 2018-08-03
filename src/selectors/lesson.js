@@ -1,7 +1,7 @@
 import createCachedSelector from 're-reselect';
 import {createSelector} from 'reselect';
 import {getLessonTags, getLessonsInCourse, getLevel, isLessonIndexed} from '../resources/lessons';
-import {languagesMatchFilter, tagsMatchFilter} from '../util';
+import {languagesMatchFilter, tagsMatchFilter} from '../utils/filterUtils';
 import {getCourses} from '../resources/courses';
 import {getLessonLanguages} from '../resources/lessonFrontmatter';
 import {getCheckedFilterLanguages, getTagsFilter} from './filter';

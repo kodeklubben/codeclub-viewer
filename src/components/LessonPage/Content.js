@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 import styles from './Content.scss';
-import processContent from '../../processContent';
+import {processContent} from '../../utils/processContent';
 import {getLessonContent} from '../../resources/lessonContent';
 
 const createMarkup = (lessonContent) => {

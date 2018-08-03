@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './PrintInfo.scss';
 import {getTranslator, getTranslateFilter} from '../../selectors/translate';
-import {capitalize} from '../../util';
+import {capitalize} from '../../utils/stringUtils';
 import {getLessonTags} from '../../resources/lessons';
 
 const PrintInfo = ({course, t, translateFilter, tags}) =>
