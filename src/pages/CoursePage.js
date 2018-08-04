@@ -50,7 +50,6 @@ const CoursePage = ({classes, params, courseTitle, levels, t, showPlaylists, lan
               </Grid>
             }
           </Grid>
-        }
         </Grid>
       </div>
     </div>
