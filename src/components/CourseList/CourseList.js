@@ -5,7 +5,7 @@ import CourseItem from './CourseItem';
 import Grid from '@material-ui/core/Grid';
 
 const CourseList = ({courses, language}) => (
-  <Grid container>
+  <Grid container spacing={8}>
     {courses.map(course => (
       <Grid key={course} item xs={6} sm={6} md={4} lg={3} xl={2}>
         <CourseItem {...{course, language}}/>
