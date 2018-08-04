@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '../LessonPage/ButtonRow';
 
 .container {
   padding-top: 7px;
@@ -6,9 +7,5 @@
 }
 
 .textMargin {
-  margin-left: 10px;
-
-  @media (max-width: $screen-xs-max) {
-    display: none;
-  }
+  @include textMargin;
 }

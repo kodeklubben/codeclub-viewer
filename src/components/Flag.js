@@ -6,12 +6,13 @@ import styles from './Flag.scss';
 import {getAvailableLanguages} from '../utils/filterUtils';
 import {getTranslator, getTranslateFilter} from '../selectors/translate';
 
-const Flag = ({language, translateFilter, t}) =>
+const Flag = ({language, translateFilter, t}) => (
   <img
     className={styles.flag}
     src={require(`../assets/graphics/flag_${language}.svg`)}
-    alt={t('general.picture') + translateFilter('language', language)}
-  />;
+    alt={t('general.picture'), {title: translateFilter('language', language)}}
+  />
+);
 
 Flag.propTypes = {
   // ownProps

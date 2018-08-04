@@ -10,7 +10,7 @@ export default {
       3: 'Experienced',
       4: 'Expert'
     },
-    picture: 'Picture of '
+    picture: 'Picture of {{title}}'
   },
   head: {
     title: 'Code club',

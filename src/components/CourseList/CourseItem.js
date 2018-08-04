@@ -20,18 +20,23 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
-
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
     </PopoverComponent>
     : null;
-
+  const courseIcon = (
+    <img
+      className={styles.courseLogo}
+      src={getCourseIcon(course)}
+      alt={t('general.picture', {title: courseTitle})}
+    />
+  );
   return (
     <div>
       {externalLink ?
         <a className={styles.courseItem} href={externalLink} target='_blank'>
-          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={t('general.picture') + courseTitle}/>
+          {courseIcon}
           <span className={styles.courseName}>
             {courseTitle}
             {popoverButton}
@@ -41,7 +46,7 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
         </a>
         :
         <Link className={styles.courseItem} to={coursePath}>
-          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={t('general.picture') + courseTitle}/>
+          {courseIcon}
           <span className={styles.courseName}>{courseTitle}{popoverButton}</span>
           {showLessonCount ? <LessonCount {...{course}}/> : null}
         </Link>

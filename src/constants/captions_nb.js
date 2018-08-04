@@ -12,7 +12,7 @@ export default {
       3: 'Erfaren',
       4: 'Ekspert'
     },
-    picture: 'Bilde av '
+    picture: 'Bilde av {{title}}'
   },
   head: {
     title: 'Kodeklubben',

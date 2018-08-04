@@ -28,7 +28,7 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const courseTitle = getCourseTitle(course, courseLanguage);
   const coursePath = getLanguageIndependentCoursePath(course);
   const courseCrumb = <NavLink to={coursePath} className={styles.crumb}>
-    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={t('general.picture') + courseTitle}/>
+    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
     <span className={styles.lesson}>{courseTitle}</span>
   </NavLink>;
 

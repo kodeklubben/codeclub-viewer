@@ -22,10 +22,11 @@ const PopoverComponent = ({children, popoverContent}) => {
     onClick: e => {
       e.stopPropagation();
       e.preventDefault();
-    }
+    },
+    overlay,
   };
   return (
-    <OverlayTrigger {...options} {...{overlay}}>
+    <OverlayTrigger {...options}>
       {children}
     </OverlayTrigger>
   );
