@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import LevelIcon from '../LevelIcon';
 import LessonWrapper from './LessonWrapper';
 import {getTranslator} from '../../selectors/translate';
@@ -14,13 +15,16 @@ const LessonList = ({course, level, lessonsInLevel, t}) => {
       <h3>
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </h3>
-      <ListGroup>
+      <List>
+        <Divider/>
         {lessonsInLevel.map(lesson =>
           isLessonIndexed(course, lesson) ?
-            <LessonWrapper key={lesson} {...{course, lesson}}/>
+            <div key={lesson}>
+              <LessonWrapper {...{course, lesson}}/>
+            </div>
             : null
         )}
-      </ListGroup>
+      </List>
     </div>
   );
 };

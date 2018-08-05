@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import Link from 'react-router/lib/Link';
+import {withStyles} from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -16,80 +18,92 @@ import {getLessonIntro} from '../../resources/lessonContent';
 import {getTranslator} from '../../selectors/translate';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
-import styles from './LessonItem.scss';
 
+const bar = {
+  position: 'absolute',
+  left: '0',
+  bottom: '0',
+  height: '10px',
+};
 
-const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
+const styles = {
+  progressBarLevel1: {
+    ...bar,
+    'background-color': '#46cc46',
+  },
+  progressBarLevel2: {
+    ...bar,
+    'background-color': '#368bd8',
+  },
+  progressBarLevel3: {
+    ...bar,
+    'background-color': '#d63838',
+  },
+  progressBarLevel4: {
+    ...bar,
+    'background-color': '#333',
+  },
+  flag: {
+    marginRight: '10px',
+  },
+};
+
+const Progress = ({classes, checkedCheckboxes, totalCheckboxes}) => {
   return checkedCheckboxes > 0 ?
-    <div className={styles.progress}>
+    <span>
       {`(${checkedCheckboxes}/${totalCheckboxes})`}
-    </div> :
+    </span> :
     null;
 };
 
-const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
+const Progressbar = ({classes, checkedCheckboxes, totalCheckboxes, level}) => {
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   return level > 0 ?
-    <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%'}}/> :
+    <span className={classes['progressBarLevel' + level]} style={{width: progressPercent + '%'}}/> :
     null;
 };
 
 const LessonItem = ({
-  course,
-  lesson,
-  language,
-  title,
-  path,
-  external,
-  popoverContent,
-  isStudentMode,
-  onlyCheckedMainLanguage,
-  t,
-  checkedCheckboxes,
-  totalCheckboxes
+  classes, course, lesson, language,
+  title, path, external, popoverContent, isStudentMode, onlyCheckedMainLanguage,
+  t, checkedCheckboxes, totalCheckboxes
 }) => {
   const level = getLevel(course, lesson);
 
-  const flag = !onlyCheckedMainLanguage ?
-    <div className={styles.flag}><Flag language={language}/></div> : null;
+  const flag = onlyCheckedMainLanguage ? null :
+    <div className={classes.flag}><Flag language={language}/></div>;
 
   const instructionButton = isStudentMode ? null :
     <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
-      <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+      <Glyphicon glyph='info-sign'/>
     </PopoverComponent>
     : null;
-
+  const progress = <Progress {...{checkedCheckboxes, totalCheckboxes}}/>;
   return (
     <div>
       {external ?
-        <ListGroupItem href={external} target="_blank" className={styles.row}>
+        <ListItem component={Link} to={external} button target='_blank'>
           {flag}
           <LevelIcon level={level}/>
-          <div className={styles.title}>{title}</div>
-          <Glyphicon glyph="new-window"/>
-          <span className={styles.rightSide}>
-            {instructionButton}
-            {popoverButton}
-          </span>
-        </ListGroupItem>
+          <ListItemText primary={title}/>
+          <Glyphicon glyph='new-window'/>
+          {instructionButton}
+          {popoverButton}
+        </ListItem>
         :
-        <LinkContainer to={path}>
-          <ListGroupItem className={styles.row}>
-            {flag}
-            <Progressbar {...{checkedCheckboxes, totalCheckboxes, level}}/>
-            <LevelIcon level={level}/>
-            <div className={styles.title}>{title}</div>
-            <Progress {...{checkedCheckboxes, totalCheckboxes}}/>
-            <span className={styles.rightSide}>
-              {instructionButton}
-              {popoverButton}
-            </span>
-          </ListGroupItem>
-        </LinkContainer>
+        <ListItem button component={Link} to={path}>
+          {flag}
+          <Progressbar {...{classes, checkedCheckboxes, totalCheckboxes, level}}/>
+          <LevelIcon level={level}/>
+          <ListItemText primary={title} secondary={progress}/>
+          {instructionButton}
+          {popoverButton}
+        </ListItem>
       }
+      <Divider/>
     </div>
   );
 };

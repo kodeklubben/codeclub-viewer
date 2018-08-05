@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Divider from '@material-ui/core/Divider';
 import LessonItem from './LessonItem';
 import {getTranslator} from '../../selectors/translate';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
@@ -21,8 +22,12 @@ const PlaylistNavigation = ({course, language, t}) => {
           {header}
         </ExpansionPanelSummary>
         {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
-          lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
-          <ExpansionPanelDetails>{t('coursepage.lessonsnottranslated')}</ExpansionPanelDetails>
+          lessons.map(lesson =>
+            <div key={lesson}>
+              <Divider/>
+              <LessonItem key={lesson} {...{course, lesson, language}}/>
+            </div>
+          ) : <ExpansionPanelDetails>{t('coursepage.lessonsnottranslated')}</ExpansionPanelDetails>
         }
       </ExpansionPanel>
     );
