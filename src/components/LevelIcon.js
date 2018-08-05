@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './LevelIcon.scss';
+import {withStyles} from '@material-ui/core/styles';
 
-const LevelIcon = ({level}) => {
+const styles = {
+  levelIcon: {
+    marginRight: '0.3em',
+    width: '0.75em',
+    height: '0.75em',
+  },
+};
+
+const LevelIcon = ({classes, level}) => {
   return level ?
-    <img className={styles.levelIcon} src={require('../assets/graphics/level-' + level + '.svg')}
+    <img className={classes.levelIcon} src={require('../assets/graphics/level-' + level + '.svg')}
       alt={'Level ' + level}
     />
     : null;
@@ -13,6 +20,7 @@ const LevelIcon = ({level}) => {
 
 LevelIcon.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   level: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
