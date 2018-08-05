@@ -1,37 +1,91 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './PopoverComponent.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Popover from 'react-bootstrap/lib/Popover';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import {hashCode} from '../utils/util';
+import {withStyles} from '@material-ui/core/styles';
+import Popover from '@material-ui/core/Popover';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
 
-const PopoverComponent = ({children, popoverContent}) => {
-  const createMarkup = () => {
-    return {__html: popoverContent};
+const styles = theme => ({
+  popover: {
+    maxWidth: '600px',
+    '& img': {
+      width: '100%',
+      height: '100%',
+      maxWidth: '200px',
+      maxHeight: '250px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      '& img': {
+        maxWidth: '100px',
+        maxHeight: '125px',
+      },
+    },
+  },
+  content: {
+    padding: '10px',
+    display: 'flex',
+    'justify-content': 'space-between',
+    '& img': {
+      marginRight: '15px',
+    },
+  },
+});
+
+class PopoverComponent extends React.Component {
+  state = {
+    ancherel: null,
   };
-  const animation = true;
-  const trigger = 'click';
-  const placement = 'bottom';
-  const onClick = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
+
+  handleClick = event => {
+    event.stopPropagation();
+    event.preventDefault();
+    this.setState({
+      anchorEl: event.currentTarget,
+    });
   };
-  const overlay =
-    <Popover id={hashCode(popoverContent)} className={styles.popover}>
-      <div className={styles.content} dangerouslySetInnerHTML={createMarkup()}/>
-    </Popover>;
-  return (
-    <OverlayTrigger rootClose {...{animation, placement, trigger, onClick, overlay}}>
-      {children}
-    </OverlayTrigger>
-  );
-};
+
+  handleClose = event => {
+    event.stopPropagation();
+    event.preventDefault();
+    this.setState({
+      anchorEl: null,
+    });
+  };
+
+  render() {
+    const {classes, popoverContent} = this.props;
+    const {anchorEl} = this.state;
+    const createMarkup = () => {
+      return {__html: popoverContent};
+    };
+    const options = {
+      className: classes.popover,
+      open: Boolean(anchorEl),
+      anchorEl,
+      onClose: this.handleClose,
+      anchorOrigin: {
+        vertical: 'bottom',
+        horizontal: 'center',
+      },
+    };
+    return (
+      <div>
+        <IconButton onClick={this.handleClick} aria-label='Info'>
+          <InfoIcon/>
+        </IconButton>
+        <Popover {...options}>
+          <div className={classes.content} dangerouslySetInnerHTML={createMarkup()}/>
+        </Popover>
+      </div>
+    );
+  }
+}
 
 PopoverComponent.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   children: PropTypes.node,
   popoverContent: PropTypes.string,
 };
 
-export default withStyles(styles)(PopoverComponent);
+export default (withStyles(styles)(PopoverComponent));
