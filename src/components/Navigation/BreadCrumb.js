@@ -29,10 +29,10 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
-  const courseCrumb = coursePath ? <NavLink to={coursePath} className={styles.crumb}>
+  const courseCrumb = <NavLink to={coursePath} className={styles.crumb}>
     <img className={styles.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
     <span className={styles.lesson}>{courseTitle}</span>
-  </NavLink> : null;
+  </NavLink>;
 
   const lessonCrumb = <NavLink to={lessonPath} className={styles.crumb} aria-label={lessonTitle}>
     <LevelIcon level={getLevel(course, lesson)}/>
