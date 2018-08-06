@@ -12,7 +12,7 @@ import Head from '../components/Head';
 const App = ({params, location, children, showDyslexicFont}) => {
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
-  const className = showDyslexicFont ? styles.dyslexia : styles.appContainer;
+  const className = showDyslexicFont ? styles.contentDyslexia : styles.appContainer;
   return (
     <div>
       <Head/>

@@ -9,10 +9,10 @@
 
 .appContainer {
   @include container;
-  font-family: Helvetica;
+  font-family: $font-family-standard;
 }
 
-.dyslexia {
+.contentDyslexia {
   @include container;
   font-family: $font-family-dyslexic;
 }

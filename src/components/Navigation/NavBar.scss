@@ -134,6 +134,7 @@ $widget-height: 50px;
   display: inline-block;
   width: 100%;
   min-height: $widget-height;
+  font-weight: 300;
   border-radius: 0;
   margin-bottom: -5px; // to get rid of the 5px spacing below, don't understand why it is there
 }

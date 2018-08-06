@@ -3,6 +3,7 @@
 .container {
   margin-top: 100px;
   padding-top: 20px;
+  text-align: center;
   a {
     text-decoration: none;
     color: black;
@@ -58,18 +59,13 @@
   font-size: 1.5em;
 }
 
-.githubIcon {
-  text-align: center;
-}
-
 .sponsors {
   text-align: center;
   margin-top: 20px;
   overflow: hidden;
 }
 
-.githubSwitch {
+.centerSwitch {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
 }

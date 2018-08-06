@@ -1,7 +1,8 @@
 /* eslint-env node */
 
 import {createStore} from 'redux';
-import {getInitialFilter, createCheckboxesKey} from './util';
+import {createCheckboxesKey} from './utils/checkboxUtils';
+import {getInitialFilter} from './utils/filterUtils';
 import {getLessonFrontmatter, getLessonLanguages} from './resources/lessonFrontmatter';
 import {setCheckboxes} from './reducers/checkboxes';
 import {setFilter, resetOneFilter} from './reducers/filter';
@@ -12,7 +13,7 @@ import {setMode} from './reducers/mode';
 import {setShowPlaylists} from './reducers/showPlaylists';
 import {setShowDyslexicFont} from './reducers/showDyslexicFont';
 import reducer from './reducer';
-import {loadFromLocalStorage} from './localStorage';
+import {loadFromLocalStorage} from './utils/localStorage';
 import {getCourses} from './resources/courses';
 import {getLessonsInCourse} from './resources/lessons';
 

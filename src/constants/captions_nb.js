@@ -11,7 +11,8 @@ export default {
       2: 'Nybegynner',
       3: 'Erfaren',
       4: 'Ekspert'
-    }
+    },
+    picture: 'Bilde av {{title}}'
   },
   head: {
     title: 'Kodeklubben',
@@ -23,11 +24,7 @@ export default {
     courses: 'Kurs',
     lessoncount: 'Oppgaver: {{count}}',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    button: {
-      start: 'Start her!',
-      startlink: '/scratch/astrokatt/astrokatt',
-      continue: 'Fortsett...',
-    },
+    continueButton: 'Sist besøkt',
     teacherinfobox: {
       header: 'Hei! Du er nå i lærermodus',
       changemode: 'Er du ikke er en lærer eller veileder? Klikk elev / lærer-knappen i navigasjonsmenyen ' +

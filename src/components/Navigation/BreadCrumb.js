@@ -6,7 +6,7 @@ import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import {getAvailableLanguages} from '../../util';
+import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
@@ -28,8 +28,8 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const courseTitle = getCourseTitle(course, courseLanguage);
   const coursePath = getLanguageIndependentCoursePath(course);
   const courseCrumb = <NavLink to={coursePath} className={styles.crumb}>
-    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={courseTitle}/>
-    <span className={styles.lesson}>{getCourseTitle(course, courseLanguage)}</span>
+    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
+    <span className={styles.lesson}>{courseTitle}</span>
   </NavLink>;
 
   const {path:lessonPath} = getLessonFrontmatter(course, lesson, lessonLanguage, isReadme);
