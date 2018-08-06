@@ -12,7 +12,7 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
 const styles = {
   container: {
-    marginLeft: '10px',
+    marginLeft: '15px',
     marginTop: '5px',
   },
 };

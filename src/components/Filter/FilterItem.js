@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './FilterItem.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {withStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import PopoverComponent from '../PopoverComponent';
+
+const styles = {
+
+};
 
 const FilterItem = ({tagName, checked, onCheck, popoverContent}) => {
   const popover = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
   return (
-    <div className="checkbox">
-      <label className={styles.label}>
-        <input type="checkbox" onChange={onCheck} {...{checked}}/>
-        <span>{tagName}</span>
-      </label>
+    <Grid container wrap='nowrap' alignItems='center' justify='space-between'>
+      <FormControlLabel label={tagName} control={
+        <Checkbox color='default' checked={checked} onChange={onCheck}/>
+      }/>
       {popover}
-    </div>
+    </Grid>
   );
 };
 
@@ -25,4 +30,4 @@ FilterItem.propTypes = {
   popoverContent: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(FilterItem);
+export default (withStyles(styles)(FilterItem));
