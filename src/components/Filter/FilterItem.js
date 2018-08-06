@@ -2,15 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './FilterItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import PopoverComponent from '../PopoverComponent';
 
 const FilterItem = ({tagName, checked, onCheck, popoverContent}) => {
-  const popover = popoverContent ?
-    <PopoverComponent {...{popoverContent}}>
-      <span className={styles.tagInfo}><Glyphicon glyph="info-sign"/></span>
-    </PopoverComponent>
-    : null;
+  const popover = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
   return (
     <div className="checkbox">
       <label className={styles.label}>

@@ -1,40 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './RadioButtons.scss';
+import {withStyles} from '@material-ui/core/styles';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {getTranslator} from '../../selectors/translate';
 import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
-  const RadioButton = ({checked, onChange, text}) =>
-    <label className={styles.label}>
-      <input type='radio' name='radioGroup' {...{checked, onChange}}/>
-      <span className={styles.marginLeft}>{text}</span>
-    </label>;
-  return (
-    <form>
-      <RadioButton
+const styles = {
+  container: {
+    marginLeft: '10px',
+    marginTop: '5px',
+  },
+};
+
+const RadioButtons = ({
+  classes, showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups
+}) => (
+  <RadioGroup className={classes.container} aria-label='Modes'>
+    <FormControlLabel label={t('filter.radio.playlists')} control={
+      <Radio
         checked={showPlaylists}
         onChange={() => {
           setShowPlaylists(true);
           resetAllFilters('language', language);
           collapseAllFilterGroups(true);
         }}
-        text={t('filter.radio.playlists')}
-      />
-      <RadioButton
+        name='radioGroup'
+        color='default'
+      />}
+    />
+    <FormControlLabel label={t('filter.radio.lessons')} control={
+      <Radio
         checked={!showPlaylists}
         onChange={() => setShowPlaylists(false)}
-        text={t('filter.radio.lessons')}
-      />
-    </form>
-  );
-};
+        name='radioGroup'
+        color='default'
+      />}
+    />
+  </RadioGroup>
+);
 
 RadioButtons.propTypes = {
+  // ownProps
+  classes: PropTypes.object.isRequired,
+
   // mapStateToProps
   showPlaylists: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,

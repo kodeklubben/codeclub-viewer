@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
+import LaunchIcon from '@material-ui/icons/Launch';
 import Link from 'react-router/lib/Link';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import PopoverComponent from '../PopoverComponent';
 import Flag from '../Flag';
 import LessonCount from './LessonCount';
@@ -45,11 +45,12 @@ const styles = theme => ({
       fontSize: '1.1em',
     },
   },
-  popoverGlyph: {
-    margin: [0, 3, 0, 5],
-    '&:hover': {
-      color: grey[600],
-    },
+  popover: {
+    marginBottom: '4px',
+  },
+  icon: {
+    marginLeft: '3px',
+    'padding-top': '4px',
   },
 });
 
@@ -57,22 +58,16 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
-
-  const popoverButton = popoverContent ?
-    <PopoverComponent {...{popoverContent}}>
-      <Glyphicon className={classes.popoverGlyph} glyph='info-sign'/>
-    </PopoverComponent>
-    : null;
-
+  const popoverButton = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
   return (
     <Grid container direction='column'>
       {externalLink ?
         <a className={classes.courseItem} href={externalLink} target='_blank'>
           <img className={classes.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
-          <Grid container wrap='nowrap' justify='center' spacing={8} className={classes.courseName}>
+          <Grid container  alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
             <Grid item>{courseTitle}</Grid>
-            <Grid item>{popoverButton}</Grid>
-            <Grid item><Glyphicon glyph='new-window'/></Grid>
+            <Grid item className={classes.icon}><LaunchIcon/></Grid>
+            <Grid item className={classes.popover}>{popoverButton}</Grid>
           </Grid>
           {!onlyCheckedMainLanguage ?
             <Grid container justify='center'>
@@ -83,9 +78,9 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
         :
         <Link className={classes.courseItem} to={coursePath}>
           <img className={classes.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
-          <Grid container wrap='nowrap' justify='center' spacing={8} className={classes.courseName}>
+          <Grid container alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
             <Grid item>{courseTitle}</Grid>
-            <Grid item>{popoverButton}</Grid>
+            <Grid item className={classes.popover}>{popoverButton}</Grid>
           </Grid>
           {showLessonCount ? <LessonCount {...{course}}/> : null}
         </Link>

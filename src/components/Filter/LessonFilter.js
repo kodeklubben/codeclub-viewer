@@ -10,7 +10,6 @@ import {getShowRadiobuttons, getShowFiltergroups} from '../../selectors/playlist
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
 import PopoverComponent from '../PopoverComponent';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
 import ClearFilterButton from './ClearFilterButton';
@@ -20,9 +19,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
   const header =
     <span>
       {t('filter.header')}
-      <PopoverComponent popoverContent={t('filter.tooltip')}>
-        <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
-      </PopoverComponent>
+      <PopoverComponent popoverContent={t('filter.tooltip')}/>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
   const radioButtons = showRadiobuttons ? <RadioButtons/> : null;

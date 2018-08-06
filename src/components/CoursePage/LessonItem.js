@@ -6,7 +6,6 @@ import {withStyles} from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -76,12 +75,10 @@ const LessonItem = ({
   const instructionButton = isStudentMode ? null :
     <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
 
-  const popoverButton = popoverContent ?
-    <PopoverComponent {...{popoverContent}}>
-      <Glyphicon glyph='info-sign'/>
-    </PopoverComponent>
-    : null;
+  const popoverButton = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
+
   const progress = <Progress {...{checkedCheckboxes, totalCheckboxes}}/>;
+
   return (
     <div>
       {external ?
