@@ -8,7 +8,7 @@ import styles from './BreadCrumb.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
-import {getCourseFrontmatter} from '../../resources/courseFrontmatter';
+import {getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 import {getCourseIcon} from '../../resources/courseIcon';
 import {getTranslator} from '../../selectors/translate';
@@ -22,7 +22,7 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const {title:lessonTitle, path:lessonPath} = isLesson ?
     getLessonFrontmatter(course, lesson, lessonLanguage, isReadme) : {};
 
-  const {title:courseTitle} = getCourseFrontmatter(course, courseLanguage);
+  const courseTitle = getCourseTitle(course, courseLanguage);
   const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';
 
   const homeCrumb = <NavLink to={'/'} aria-label={t('general.home')}>
@@ -41,8 +41,8 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
 
   return <div className={styles.breadcrumb}>
     {homeCrumb}
-    {isCourse || isLesson ? <span> / </span> : null}
-    {courseCrumb}
+    {coursePath ? <span> / </span> : null}
+    {coursePath ? courseCrumb : null}
     {isLesson ? <span> / </span> : null}
     {isLesson ? lessonCrumb : null}
   </div>;

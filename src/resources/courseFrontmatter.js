@@ -69,7 +69,7 @@ const getData = memoize(
  * @param {string} language E.g. 'nb'
  * @return {object} E.g. {title: 'Scratch', key: './scratch/index.md'}
  */
-export const getCourseFrontmatter = (course, language) => (getData()[course] || {})[language] || {};
+const getCourseFrontmatter = (course, language) => (getData()[course] || {})[language] || {};
 
 /**
  * Get the title of a course for a given language
