@@ -41,8 +41,9 @@ ContinueButton.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, file}) => {
-  const {language, isReadme} = lesson ? getLanguageAndIsReadme(course, lesson, file) : {};
-  const {path} = lesson ? getLessonFrontmatter(course, lesson, language, isReadme) : {};
+  const isLesson = !!lesson;
+  const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
+  const {path} = isLesson ? getLessonFrontmatter(course, lesson, language, isReadme) || {} : {};
   return {
     path,
     t: getTranslator(state),
