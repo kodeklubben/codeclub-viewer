@@ -12,7 +12,7 @@
   font-family: $font-family-standard;
 }
 
-.contentDyslexia {
+.appContainerDyslexia {
   @include container;
   font-family: $font-family-dyslexic;
 }
