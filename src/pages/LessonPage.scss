@@ -19,12 +19,6 @@
   @include responsiveFontSizes;
 }
 
-.box {
-  display: none;
-  font-style: italic;
-  font-size: 0.75em;
-
-  @media print {
-    display: block;
-  }
+.license {
+  margin: 30px 0;
 }

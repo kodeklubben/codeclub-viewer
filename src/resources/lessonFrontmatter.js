@@ -1,5 +1,5 @@
 import memoize from 'fast-memoize';
-import {assignDeep} from '../util';
+import {assignDeep} from '../utils/util';
 
 // Gets all lessonSrc/*/*/*.md except lessonSrc/*/playlists/*
 // Gets only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)
@@ -19,7 +19,6 @@ const lessonFrontmatterContext =
  *       nn: {
  *         0: {
  *           title: 'Astrokatt',
- *           level: 1,
  *           author: 'Geir',
  *           translator: 'Kari',
  *           external: 'https://www.example.com/external', // doesn't always exist
@@ -28,7 +27,6 @@ const lessonFrontmatterContext =
  *         },
  *         1: {
  *           title: 'Lærerveiledning for Astrokatt',
- *           level: 1,
  *           author: 'Gro',
  *           translator: 'Per',
  *           path: '/scratch/astrokatt/README_nn',
@@ -56,13 +54,13 @@ const getData = memoize(
     for (const key of lessonFrontmatterContext.keys()) {
       const [/* ignore */, course, lesson, file] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]([^.]+)[.]md$/);
       const {
-        language, title = '', level = 0, author = '', translator = '', external = ''
+        language, title = '', author = '', translator = '', external = ''
       } = lessonFrontmatterContext(key);
       if (!title) { console.warn('WARNING: The lesson', key, 'did not specify title.'); }
       if (language) {
         const isReadmeKey = file.startsWith('README') ? 1 : 0;
         const path = `/${course}/${lesson}/${file}`;
-        const lessonData = {title, level, author, translator, external, path, key};
+        const lessonData = {title, author, translator, external, path, key};
         assignDeep(lessons, [course, lesson, language, isReadmeKey], lessonData);
       } else {
         console.warn('WARNING: The lesson', key, 'did not specify language, so lesson will not be used.');
@@ -101,7 +99,6 @@ export const getLanguageAndIsReadme = (course, lesson, file) => {
  * @returns {object|{}} If lesson exists, returns the following structure:
  *   {
  *     title: 'Astrokatt',
- *     level: 1,
  *     author: 'Geir',
  *     translator: 'Kari',
  *     external: 'https://www.example.com/external',

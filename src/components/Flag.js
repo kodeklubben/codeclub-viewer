@@ -3,26 +3,29 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Flag.scss';
-import {getAvailableLanguages} from '../util';
-import {getTranslateTag} from '../selectors/translate';
+import {getAvailableLanguages} from '../utils/filterUtils';
+import {getTranslator, getTranslateFilter} from '../selectors/translate';
 
-const Flag = ({language, translateTag}) =>
+const Flag = ({language, translateFilter, t}) => (
   <img
     className={styles.flag}
     src={require(`../assets/graphics/flag_${language}.svg`)}
-    alt={translateTag('language', language)}
-  />;
+    alt={t('general.picture', {title: translateFilter('language', language)})}
+  />
+);
 
 Flag.propTypes = {
   // ownProps
   language: PropTypes.oneOf(getAvailableLanguages()).isRequired,
 
   // mapStateToProps
-  translateTag: PropTypes.func.isRequired,
+  translateFilter: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  translateTag: getTranslateTag(state),
+  translateFilter: getTranslateFilter(state),
+  t: getTranslator(state),
 });
 
 export default connect(

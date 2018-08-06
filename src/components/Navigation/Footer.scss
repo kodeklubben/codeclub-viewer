@@ -3,8 +3,7 @@
 .container {
   margin-top: 100px;
   padding-top: 20px;
-  font-weight: 300;
-  font-family: $font-family-roboto;
+  text-align: center;
   a {
     text-decoration: none;
     color: black;
@@ -37,9 +36,7 @@
 }
 
 .img {
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-bottom: 20px;
+  margin: 10px 5px 20px;
   width: auto;
   height: 50px;
   transition: all 0.075s ease-in-out;
@@ -49,7 +46,7 @@
   margin-left: auto;
   margin-right: auto;
   border-top: 1px solid;
-  width: 50%;
+  width: 96%;
 }
 
 .img:hover {
@@ -58,16 +55,15 @@
 }
 
 .contribute {
-  text-align: center;
   font-size: 1.5em;
-  //font-weight: bold;
-}
-
-.githubIcon {
-  text-align: center;
 }
 
 .sponsors {
-  text-align: center;
   margin-top: 20px;
+  overflow: hidden;
+}
+
+.centerSwitch {
+  display: flex;
+  justify-content: center;
 }

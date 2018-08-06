@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ImprovePage.scss';
-import {capitalize} from '../../util.js';
+import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
@@ -37,15 +37,15 @@ const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => 
           </div>
           <div className={styles.linkRow}>
             <div>
-              <Button href={url.newIssue} bsStyle="white-grey" target="_blank">
+              <Button href={url.newIssue} bsStyle='white-grey' target='_blank' rel='noopener'>
                 {t('lessons.improvepage.newissuebutton')}</Button>
             </div>
             <div>
-              <Button href={url.forum} bsStyle="guide" target="_blank">
+              <Button href={url.forum} bsStyle='guide' target='_blank' rel='noopener'>
                 {t('lessons.improvepage.forumbutton')}</Button>
             </div>
             <div>
-              <Button href={url.showCode} bsStyle="orange" target="_blank">
+              <Button href={url.showCode} bsStyle='orange' target='_blank' rel='noopener'>
                 {t('lessons.improvepage.showcodebutton')}</Button>
             </div>
           </div>
