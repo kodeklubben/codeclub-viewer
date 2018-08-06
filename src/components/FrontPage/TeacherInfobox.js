@@ -27,7 +27,7 @@ class TeacherInfobox extends React.Component {
     return (
       <div className={styles.center}>
         <div className={styles.infoBox}>
-          <h3 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h3>
+          <h1 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h1>
           <br />
           {t('frontpage.teacherinfobox.changemode')}
           <br />

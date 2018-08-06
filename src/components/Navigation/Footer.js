@@ -58,7 +58,7 @@ const Footer = ({t, isStudentMode}) => {
     </Row>);
 
   return (
-    <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+    <Grid fluid={true} className={isStudentMode ? styles.containerStudent : styles.containerTeacher} role='contentinfo'>
       <Row className={styles.githubIcon}>
         <a href={url.wiki} target="_blank">
           <img className={styles.svg} src={require('../../assets/graphics/github.png')}

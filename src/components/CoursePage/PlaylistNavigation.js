@@ -33,11 +33,11 @@ const PlaylistNavigation = ({course, language, t}) => {
       </Panel>
     );
   });
-  
+
   return (
     playlists.length > 0 ?
       <div className={styles.container}>
-        <h3>{t('coursepage.lessoncollections')}</h3>
+        <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
         <Accordion>
           {playlistListItems}
         </Accordion>

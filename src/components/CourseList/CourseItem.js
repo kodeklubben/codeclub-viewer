@@ -14,23 +14,29 @@ import {getCourseIcon} from '../../resources/courseIcon';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 import {getCourseExternalLink, getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
+import {getTranslator} from '../../selectors/translate';
 
-const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedMainLanguage}) => {
+const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedMainLanguage, t}) => {
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
-
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
     </PopoverComponent>
     : null;
-
+  const courseIcon = (
+    <img
+      className={styles.courseLogo}
+      src={getCourseIcon(course)}
+      alt={t('general.picture', {title: courseTitle})}
+    />
+  );
   return (
     <div>
       {externalLink ?
         <a className={styles.courseItem} href={externalLink} target='_blank'>
-          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
+          {courseIcon}
           <span className={styles.courseName}>
             {courseTitle}
             {popoverButton}
@@ -40,7 +46,7 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
         </a>
         :
         <Link className={styles.courseItem} to={coursePath}>
-          <img className={styles.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
+          {courseIcon}
           <span className={styles.courseName}>{courseTitle}{popoverButton}</span>
           {showLessonCount ? <LessonCount {...{course}}/> : null}
         </Link>
@@ -57,12 +63,14 @@ CourseItem.propTypes = {
   showLessonCount: PropTypes.bool.isRequired,
   coursePath: PropTypes.string,
   onlyCheckedMainLanguage: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, {course}) => ({
   showLessonCount: getShowFiltergroups(state),
   coursePath: getLanguageIndependentCoursePath(course),
   onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
+  t: getTranslator(state),
 });
 
 export default connect(

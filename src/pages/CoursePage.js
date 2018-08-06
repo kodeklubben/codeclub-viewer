@@ -34,7 +34,7 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) =
       </AutoAffix>
     </Col> : null;
   return (
-    <div>
+    <div role='main'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
       <Grid fluid={true} ref={grid => thispage = grid}>
         <Row>
