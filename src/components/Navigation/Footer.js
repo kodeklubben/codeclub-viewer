@@ -72,7 +72,7 @@ const Footer = ({t, isStudentMode}) => {
   );
 
   return (
-    <div className={isStudentMode ? styles.containerStudent : styles.containerTeacher}>
+    <div className={isStudentMode ? styles.containerStudent : styles.containerTeacher} role='contentinfo'>
       {github}
       <div className={styles.centerSwitch}><DyslexiaSwitch/></div>
       <div className={styles.divider}/>

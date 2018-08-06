@@ -38,14 +38,14 @@ class TeacherInfobox extends React.Component {
           </div>
           <Collapse in={showCourseInfo}>
             <div>
-              <h3>{t('frontpage.teacherinfobox.teacher')}</h3>
+              <h2 className={styles.headers}>{t('frontpage.teacherinfobox.teacher')}</h2>
               {t('frontpage.teacherinfobox.info1')}
               <br />
               <a className={styles.link} href={url[0]} target='_blank' rel='noopener'>
                 {t('frontpage.teacherinfobox.link1')}
               </a>
               <br />
-              <h3>{t('frontpage.teacherinfobox.assistant')}</h3>
+              <h2 className={styles.headers}>{t('frontpage.teacherinfobox.assistant')}</h2>
               {t('frontpage.teacherinfobox.info2')}
               <br />
               <a className={styles.link} href={url[1]} target='_blank' rel='noopener'>
