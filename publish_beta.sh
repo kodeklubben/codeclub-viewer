@@ -197,6 +197,8 @@ function syncDistToBeta {
     git reset --hard  # Make sure working folder is in sync with checkout out branch
     git checkout -B ${BETA_BRANCH}
     registerCheckoutInPath "${BETA_PATH}"
+    setRemoteAlias "${BETA_FORKED_URL}"
+    git branch -u "${remoteAlias}/${BETA_BRANCH}" "${BETA_BRANCH}"
     git rm -rf --quiet .      # Remove all tracked files and folders in BETA_PATH
     git clean -fxd    # Remove all untracked files and folders in BETA_PATH
     cp -a ${BUILD_PATH}/* ${BETA_PATH}
