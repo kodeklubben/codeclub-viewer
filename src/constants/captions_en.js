@@ -113,7 +113,8 @@ export default {
     placeholder: 'Search'
   },
   footer: {
-    contribute: 'Create your own lessons'
+    contribute: 'Create your own lessons',
+    dyslexia: 'Text for dyslexics'
   },
   404: {
     header: 'Sorry',

@@ -114,7 +114,8 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    contribute: 'Lag egne oppgaver'
+    contribute: 'Lag egne oppgaver',
+    dyslexia: 'Skrift for dyslektikere'
   },
   404: {
     header: 'Beklager',

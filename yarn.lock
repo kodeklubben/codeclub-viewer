@@ -6903,6 +6903,12 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
+react-switch@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-switch/-/react-switch-3.0.4.tgz#52958b2736b4d21b4f0050997955c5365019ca7b"
+  dependencies:
+    prop-types "^15.6.1"
+
 react-transition-group@^2.2.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-2.3.1.tgz#31d611b33e143a5e0f2d94c348e026a0f3b474b6"
