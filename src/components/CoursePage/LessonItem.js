@@ -65,7 +65,7 @@ const LessonItem = ({
   return (
     <div>
       {external ?
-        <ListGroupItem href={external} target="_blank" className={styles.row}>
+        <ListGroupItem href={external} target='_blank' rel='noopener' className={styles.row}>
           {flag}
           <LevelIcon level={level}/>
           <div className={styles.title}>{title}</div>

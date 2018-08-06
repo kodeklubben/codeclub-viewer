@@ -35,7 +35,7 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
   return (
     <div>
       {externalLink ?
-        <a className={styles.courseItem} href={externalLink} target='_blank'>
+        <a className={styles.courseItem} href={externalLink} target='_blank' rel='noopener'>
           {courseIcon}
           <span className={styles.courseName}>
             {courseTitle}
