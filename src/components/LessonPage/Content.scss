@@ -241,7 +241,6 @@ table {
 input[type="checkbox"] {
   position: absolute;
   opacity: 0;
-  margin: 0.4em 0.6em 0 -1.9em;
 }
 
 input[type="checkbox"] + label {
@@ -269,6 +268,5 @@ input[type="checkbox"]:checked + label::before {
 }
 
 input[type="checkbox"]:focus + label::before {
-  background: #ffc;
-  outline: 5px solid #ffc;
+  background: darken($checkbox-blue, 20%);
 }
