@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {withStyles} from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,17 +9,10 @@ import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const styles = {
-  container: {
-    marginLeft: '15px',
-    marginTop: '5px',
-  },
-};
-
 const RadioButtons = ({
   classes, showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups
 }) => (
-  <RadioGroup className={classes.container} aria-label='Modes'>
+  <RadioGroup aria-label='Radio'>
     <FormControlLabel label={t('filter.radio.playlists')} control={
       <Radio
         checked={showPlaylists}
@@ -45,9 +37,6 @@ const RadioButtons = ({
 );
 
 RadioButtons.propTypes = {
-  // ownProps
-  classes: PropTypes.object.isRequired,
-
   // mapStateToProps
   showPlaylists: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
@@ -74,4 +63,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(RadioButtons));
+)(RadioButtons);

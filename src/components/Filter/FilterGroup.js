@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import {filterChecked} from '../../reducers/filter';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
-import styles from './FilterGroup.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Collapse from 'react-bootstrap/lib/Collapse';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
@@ -35,7 +35,6 @@ const FilterGroup = ({
 
     const nothingChecked = !somethingChecked;
     const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
-    const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
     const onGroupClick = () => {
       if (nothingChecked) {
         collapseFilterGroup(groupKey, !isCollapsed);
@@ -43,15 +42,15 @@ const FilterGroup = ({
     };
 
     return (
-      <ListGroupItem>
-        <div className={headingStyle} onClick={onGroupClick} role='button' tabIndex='0' onKeyPress={onGroupClick}>
-          <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
-          {groupName}
-        </div>
+      <li>
+        <ListItem button disableGutters onClick={onGroupClick} disabled={somethingChecked}>
+          {!isCollapsed ? <ExpandLess/> : <ExpandMore/>}
+          <ListItemText primary={groupName}/>
+        </ListItem>
         <Collapse in={!isCollapsed}>
-          <div>{filterItems}</div>
+          {filterItems}
         </Collapse>
-      </ListGroupItem>
+      </li>
     );
   }
   else {
@@ -89,4 +88,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(FilterGroup));
+)(FilterGroup);

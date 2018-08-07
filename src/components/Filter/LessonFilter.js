@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {withStyles} from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
 import Hidden from '@material-ui/core/Hidden';
-import styles from './LessonFilter.scss';
-import Panel from 'react-bootstrap/lib/Panel';
 import {getTranslator} from '../../selectors/translate';
 import {getShowRadiobuttons, getShowFiltergroups} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
 import PopoverComponent from '../PopoverComponent';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
+const styles = {
+  marginTop: {
+    marginTop: '28px',
+  },
+};
+
+const LessonFilter = ({classes, filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
     <span>
@@ -22,26 +26,26 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
       <PopoverComponent popoverContent={t('filter.tooltip')}/>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
-  const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
+  const radioButtons = showRadiobuttons ? <li><RadioButtons/></li> : null;
   const groups = showFiltergroups ? filterGroups : null;
   return (
-    <div className={styles.marginTop}>
+    <div className={classes.marginTop}>
       {/*Filter desktop*/}
       <Hidden only='xs'>
-        <Panel {...{header, bsStyle}}>
-          <ListGroup fill>
+        <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
+          <List>
             {radioButtons}
             {groups}
-          </ListGroup>
-        </Panel>
+          </List>
+        </CollapsiblePanel>
       </Hidden>
       {/*Filter mobile*/}
       <Hidden only={['sm', 'md', 'lg', 'xl']}>
         <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
-          <ListGroup fill>
+          <List>
             {radioButtons}
             {groups}
-          </ListGroup>
+          </List>
         </CollapsiblePanel>
       </Hidden>
       <ClearFilterButton/>
@@ -51,6 +55,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
 
 LessonFilter.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string,
 
   // mapStateToProps

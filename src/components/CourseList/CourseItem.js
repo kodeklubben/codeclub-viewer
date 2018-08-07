@@ -20,7 +20,7 @@ import {getTranslator} from '../../selectors/translate';
 const styles = theme => ({
   courseItem: {
     color: grey[800],
-    margin: '25px',
+    margin: '25px auto',
     maxWidth: '175px',
     cursor: 'pointer',
     '&:link': {
@@ -62,7 +62,7 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
   const popoverButton = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
   const courseIcon = (
     <img
-      className={styles.courseLogo}
+      className={classes.courseLogo}
       src={getCourseIcon(course)}
       alt={t('general.picture', {title: courseTitle})}
     />

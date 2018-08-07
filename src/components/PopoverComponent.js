@@ -59,7 +59,7 @@ class PopoverComponent extends React.Component {
     const createMarkup = () => {
       return {__html: popoverContent};
     };
-    const options = {
+    let options = {
       className: classes.popover,
       open: Boolean(anchorEl),
       anchorEl,
@@ -67,6 +67,10 @@ class PopoverComponent extends React.Component {
       anchorOrigin: {
         vertical: 'bottom',
         horizontal: 'center',
+      },
+      transformOrigin: {
+        vertical: 'top',
+        horizontal: 'right',
       },
     };
     const content = showDyslexicFont ? '' : classes.content;

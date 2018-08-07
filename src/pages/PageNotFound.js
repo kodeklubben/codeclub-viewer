@@ -10,7 +10,7 @@ const PageNotFound = ({t}) => (
   <div role='main'>
     <Head title={'404'}/>
     <Grid container direction='column' alignItems='center'>
-      <h3>{t('404.header')}</h3>
+      <h1>{t('404.header')}</h1>
       <p>{t('404.textline')}</p>
       <p><Link to="/">{t('404.tofrontpage')}</Link></p>
     </Grid>

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -10,7 +11,13 @@ import {getTranslator} from '../../selectors/translate';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
 import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistLessons';
 
-const PlaylistNavigation = ({course, language, t}) => {
+const styles = {
+  headerText: {
+    fontSize: '1.75em',
+  },
+};
+
+const PlaylistNavigation = ({classes,course, language, t}) => {
   const playlists = getPlaylistsForCourse(course);
   const playlistListItems = playlists.map(playlist => {
     const lessons = getPlaylistLessons(course, playlist);
@@ -36,7 +43,7 @@ const PlaylistNavigation = ({course, language, t}) => {
   return (
     playlists.length > 0 ?
       <div>
-        <h2>{t('coursepage.lessoncollections')}</h2>
+        <h2 className={classes.headerText}>{t('coursepage.lessoncollections')}</h2>
         {playlistListItems}
       </div> :
       null
@@ -45,6 +52,7 @@ const PlaylistNavigation = ({course, language, t}) => {
 
 PlaylistNavigation.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
 
   // mapStateToProps
@@ -59,4 +67,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps
-)(PlaylistNavigation);
+)(withStyles(styles)(PlaylistNavigation));
