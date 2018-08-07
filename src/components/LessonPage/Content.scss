@@ -267,3 +267,8 @@ input[type="checkbox"]:checked + label::before {
   line-height: 1.1em;
   padding-left: 0.1em;
 }
+
+input[type="checkbox"]:focus + label::before {
+  background: #ffc;
+  outline: 5px solid #ffc;
+}
