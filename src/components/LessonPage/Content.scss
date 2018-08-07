@@ -18,7 +18,7 @@ $checkbox-blue: #abdbea;
     margin: 0 0 20px;
   }
   ul.task-list li.task-list-item::before {
-    display: none;
+    opacity: 0;
   }
   li {
     list-style: none;
