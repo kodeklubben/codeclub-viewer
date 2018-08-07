@@ -59,7 +59,7 @@ class PopoverComponent extends React.Component {
     const createMarkup = () => {
       return {__html: popoverContent};
     };
-    let options = {
+    const options = {
       className: classes.popover,
       open: Boolean(anchorEl),
       anchorEl,

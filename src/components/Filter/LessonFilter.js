@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import Hidden from '@material-ui/core/Hidden';
+import Grid from '@material-ui/core/Grid';
 import {getTranslator} from '../../selectors/translate';
 import {getShowRadiobuttons, getShowFiltergroups} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
@@ -21,33 +21,20 @@ const styles = {
 const LessonFilter = ({classes, filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
-    <span>
+    <Grid container alignItems='center' justify='space-between'>
       {t('filter.header')}
       <PopoverComponent popoverContent={t('filter.tooltip')}/>
-    </span>;
-  const bsStyle = (isStudentMode ? 'student' : 'teacher');
+    </Grid>;
   const radioButtons = showRadiobuttons ? <li><RadioButtons/></li> : null;
   const groups = showFiltergroups ? filterGroups : null;
   return (
     <div className={classes.marginTop}>
-      {/*Filter desktop*/}
-      <Hidden only='xs'>
-        <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
-          <List>
-            {radioButtons}
-            {groups}
-          </List>
-        </CollapsiblePanel>
-      </Hidden>
-      {/*Filter mobile*/}
-      <Hidden only={['sm', 'md', 'lg', 'xl']}>
-        <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
-          <List>
-            {radioButtons}
-            {groups}
-          </List>
-        </CollapsiblePanel>
-      </Hidden>
+      <CollapsiblePanel defaultExpanded={true} {...{header}}>
+        <List>
+          {radioButtons}
+          {groups}
+        </List>
+      </CollapsiblePanel>
       <ClearFilterButton/>
     </div>
   );

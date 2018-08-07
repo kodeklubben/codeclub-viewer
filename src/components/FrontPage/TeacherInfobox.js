@@ -1,65 +1,89 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './TeacherInfobox.scss';
-import Button from 'react-bootstrap/lib/Button';
-import Collapse from 'react-bootstrap/lib/Collapse';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {withStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import Collapse from '@material-ui/core/Collapse';
 import {getTranslator} from '../../selectors/translate';
 
+const styles = {
+  infoBox: {
+    padding: '10px',
+    maxWidth: '600px',
+    border: '1px solid black',
+    borderRadius: '10px',
+    fontWeight: 300,
+    position: 'relative',
+    marginBottom: '30px',
+    backgroundColor: '#eff6f6',
+  },
+  bigHeader: {
+    fontSize: '1.9em',
+    textAlign: 'center',
+  },
+  smallHeader: {
+    fontSize: '1.5em',
+  },
+  link: {
+    color: 'black',
+    borderBottom: '1px black dotted',
+    '&:hover': {
+      textDecoration: 'none',
+    },
+  },
+};
+
 class TeacherInfobox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {showCourseInfo: false};
-  }
+  state = {
+    showCourseInfo: false,
+  };
 
   changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
 
   render() {
-    const {t} = this.props;
+    const {classes, t} = this.props;
     const {showCourseInfo} = this.state;
-    const url = [
-      'http://kidsakoder.no/skole/valgfag/',
-      'http://kidsakoder.no/kodeklubben/'
-    ];
+    const url = {
+      valgfag: 'http://kidsakoder.no/skole/valgfag/',
+      kodeklubb: 'http://kidsakoder.no/kodeklubben/',
+    };
     const ariaLabel = showCourseInfo ? t('frontpage.teacherinfobox.minus') : t('frontpage.teacherinfobox.plus');
     return (
-      <div className={styles.center}>
-        <div className={styles.infoBox}>
-          <h1 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h1>
+      <div className={classes.infoBox}>
+        <h1 className={classes.bigHeader}>{t('frontpage.teacherinfobox.header')}</h1>
+        {t('frontpage.teacherinfobox.changemode')}
+        <Grid container justify='center'>
+          <IconButton onClick={() => this.changeState()} aria-label={ariaLabel}>
+            {showCourseInfo ? <RemoveCircleIcon/> : <AddCircleIcon/>}
+          </IconButton>
+        </Grid>
+        <Collapse in={showCourseInfo}>
+          <h2 className={classes.smallHeader}>{t('frontpage.teacherinfobox.teacher')}</h2>
+          {t('frontpage.teacherinfobox.info1')}
           <br />
-          {t('frontpage.teacherinfobox.changemode')}
+          <a className={classes.link} href={url.valgfag} target='_blank' rel='noopener'>
+            {t('frontpage.teacherinfobox.link1')}
+          </a>
           <br />
-          <div className={styles.center}>
-            <Button className={styles.plusSign} onClick={() => this.changeState()} aria-label={ariaLabel}>
-              <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
-            </Button>
-          </div>
-          <Collapse in={showCourseInfo}>
-            <div>
-              <h2 className={styles.headers}>{t('frontpage.teacherinfobox.teacher')}</h2>
-              {t('frontpage.teacherinfobox.info1')}
-              <br />
-              <a className={styles.link} href={url[0]} target='_blank' rel='noopener'>
-                {t('frontpage.teacherinfobox.link1')}
-              </a>
-              <br />
-              <h2 className={styles.headers}>{t('frontpage.teacherinfobox.assistant')}</h2>
-              {t('frontpage.teacherinfobox.info2')}
-              <br />
-              <a className={styles.link} href={url[1]} target='_blank' rel='noopener'>
-                {t('frontpage.teacherinfobox.link2')}
-              </a>
-            </div>
-          </Collapse>
-        </div>
+          <h2 className={classes.smallHeader}>{t('frontpage.teacherinfobox.assistant')}</h2>
+          {t('frontpage.teacherinfobox.info2')}
+          <br />
+          <a className={classes.link} href={url.kodeklubb} target='_blank' rel='noopener'>
+            {t('frontpage.teacherinfobox.link2')}
+          </a>
+        </Collapse>
       </div>
     );
   }
 }
 
 TeacherInfobox.propTypes = {
+  // ownProps
+  classes: PropTypes.object.isRequired,
+
   // mapStateToProps
   t: PropTypes.func.isRequired
 };

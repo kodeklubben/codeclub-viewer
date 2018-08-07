@@ -4,8 +4,9 @@ import {connect} from 'react-redux';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import LockIcon from '@material-ui/icons/Lock';
 import {filterChecked} from '../../reducers/filter';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
@@ -44,8 +45,9 @@ const FilterGroup = ({
     return (
       <li>
         <ListItem button disableGutters onClick={onGroupClick} disabled={somethingChecked}>
-          {!isCollapsed ? <ExpandLess/> : <ExpandMore/>}
+          {!isCollapsed ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
           <ListItemText primary={groupName}/>
+          {somethingChecked ? <LockIcon/> : null}
         </ListItem>
         <Collapse in={!isCollapsed}>
           {filterItems}

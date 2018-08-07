@@ -18,7 +18,7 @@ const styles = theme => ({
   topMargin: {
     marginTop: '0',
     [theme.breakpoints.up('sm')]: {
-      marginTop: '63px',
+      marginTop: '72px',
     },
   },
   container: {

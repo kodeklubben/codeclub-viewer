@@ -1,38 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Panel from 'react-bootstrap/lib/Panel';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-class CollapsiblePanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {expanded: this.props.initiallyExpanded};
-  }
+const styles = {
+  studentRoot: {
+    fontSize: '1.5em',
+    backgroundColor: '#b1daae',
+  },
+  teacherRoot: {
+    fontSize: '1.5em',
+    backgroundColor: '#a3cccb',
+  },
+  studentContent: {
+    backgroundColor: '#eef7ee',
+  },
+  teacherContent: {
+    backgroundColor: '#eff6f6',
+  },
+};
 
-  render() {
-    const {children, bsStyle, header} = this.props;
-    const {expanded} = this.state;
-    const onClick = () => this.setState({expanded: !expanded});
-    const headerWithChevron = <span>
-      <Glyphicon glyph={expanded ? 'chevron-down' : 'chevron-right'}/>{header}
-    </span>;
-    return (
-      <Panel collapsible header={headerWithChevron} onSelect={onClick} {...{expanded, bsStyle}}>
-        {children}
-      </Panel>
-    );
-  }
-}
+const CollapsiblePanel = ({classes, defaultExpanded, children, header, isStudentMode}) => (
+  <ExpansionPanel {...{defaultExpanded}}>
+    <ExpansionPanelSummary
+      classes={{root: isStudentMode ? classes.studentRoot : classes.teacherRoot}}
+      expandIcon={<ExpandMoreIcon/>}
+    >
+      {header}
+    </ExpansionPanelSummary>
+    <ExpansionPanelDetails classes={{root: isStudentMode ? classes.studentContent : classes.teacherContent}}>
+      {children}
+    </ExpansionPanelDetails>
+  </ExpansionPanel>
+);
 
 CollapsiblePanel.propTypes = {
   // ownProps
-  initiallyExpanded: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
+  defaultExpanded: PropTypes.bool.isRequired,
   header: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object
-  ]),
-  bsStyle: PropTypes.oneOf(['student', 'teacher']),
-  children: PropTypes.object
+  ]).isRequired,
+  children: PropTypes.object.isRequired,
+
+  // mapStateToProps
+  isStudentMode: PropTypes.bool.isRequired,
 };
 
-export default CollapsiblePanel;
+const mapStateToProps = (state) => ({
+  isStudentMode: state.isStudentMode,
+});
+
+export default connect(
+  mapStateToProps,
+)(withStyles(styles)(CollapsiblePanel));

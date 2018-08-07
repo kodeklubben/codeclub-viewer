@@ -16,7 +16,9 @@ const styles = {
 
 const FrontPage = ({classes, isStudentMode}) => (
   <div className={classes.container} role='main'>
-    {isStudentMode ? null : <TeacherInfobox />}
+    <Grid container justify='center'>
+      {isStudentMode ? null : <TeacherInfobox />}
+    </Grid>
     <Grid container spacing={40}>
       <Grid item xs={12} sm={4} lg={2}><LessonFilter/></Grid>
       <Grid item xs={12} sm={8} lg={10}><Courses/></Grid>
