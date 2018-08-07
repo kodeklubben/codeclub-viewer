@@ -32,7 +32,7 @@ const CoursePage = ({classes, params, courseTitle, levels, t, showPlaylists, lan
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <div className={classes.topMargin}><LessonFilter course={course}/></div>;
   return (
-    <div>
+    <div role='main'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
       <div className={classes.container}>
         <Grid container direction='column'>

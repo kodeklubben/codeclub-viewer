@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import IconButton from '@material-ui/core/IconButton';
@@ -53,7 +54,7 @@ class PopoverComponent extends React.Component {
   };
 
   render() {
-    const {classes, popoverContent} = this.props;
+    const {classes, popoverContent, showDyslexicFont} = this.props;
     const {anchorEl} = this.state;
     const createMarkup = () => {
       return {__html: popoverContent};
@@ -68,13 +69,14 @@ class PopoverComponent extends React.Component {
         horizontal: 'center',
       },
     };
+    const content = showDyslexicFont ? '' : classes.content;
     return (
       <div>
         <IconButton onClick={this.handleClick} aria-label='Info'>
           <InfoIcon/>
         </IconButton>
         <Popover {...options}>
-          <div className={classes.content} dangerouslySetInnerHTML={createMarkup()}/>
+          <div className={content} role='region' dangerouslySetInnerHTML={createMarkup()}/>
         </Popover>
       </div>
     );
@@ -86,6 +88,15 @@ PopoverComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.node,
   popoverContent: PropTypes.string,
+
+  // mapStateToProps
+  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
-export default (withStyles(styles)(PopoverComponent));
+const mapStateToProps = (state) => ({
+  showDyslexicFont: state.showDyslexicFont,
+});
+
+export default connect(
+  mapStateToProps,
+)(withStyles(styles)(PopoverComponent));

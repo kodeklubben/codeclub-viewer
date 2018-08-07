@@ -11,6 +11,7 @@ import {setLanguage} from './reducers/language';
 import {setLastLesson} from './reducers/lastLesson';
 import {setMode} from './reducers/mode';
 import {setShowPlaylists} from './reducers/showPlaylists';
+import {setShowDyslexicFont} from './reducers/showDyslexicFont';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './utils/localStorage';
 import {getCourses} from './resources/courses';
@@ -36,6 +37,7 @@ const defaultLanguage = 'nb';
 const defaultLastLesson = '';
 const defaultCheckboxes = {};
 const defaultPlaylists = true;
+const defaultDyslexicFont = false;
 
 let filter = getInitialFilter(defaultLanguage);
 store.dispatch(setFilter(filter));
@@ -49,11 +51,13 @@ export const updateStoreFromLocalStorage = () => {
   const initialLanguage = loadFromLocalStorage('language', defaultLanguage);
   const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
   const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultPlaylists);
+  const initialDyslexicFont = loadFromLocalStorage('showDyslexicFont', defaultDyslexicFont);
 
   store.dispatch(setMode(initialMode));
   store.dispatch(setLanguage(initialLanguage));
   store.dispatch(setLastLesson(initialLastLesson));
   store.dispatch(setShowPlaylists(initialPlaylists));
+  store.dispatch(setShowDyslexicFont(initialDyslexicFont));
   store.dispatch(resetOneFilter('language', initialLanguage));
 
   for (const course of getCourses()){

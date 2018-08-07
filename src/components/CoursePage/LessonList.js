@@ -12,9 +12,9 @@ import {isLessonIndexed} from '../../resources/lessons';
 const LessonList = ({course, level, lessonsInLevel, t}) => {
   return (
     <div>
-      <h3>
+      <h2>
         <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
-      </h3>
+      </h2>
       <List>
         <Divider/>
         {lessonsInLevel.map(lesson =>

@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import LessonFilter from '../components/Filter/LessonFilter';
 import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
-import StartButton from '../components/FrontPage/StartButton';
 
 const styles = {
   container: {
@@ -16,8 +15,8 @@ const styles = {
 };
 
 const FrontPage = ({classes, isStudentMode}) => (
-  <div className={classes.container}>
-    {isStudentMode ? <StartButton /> : <TeacherInfobox />}
+  <div className={classes.container} role='main'>
+    {isStudentMode ? null : <TeacherInfobox />}
     <hr/>
     <Grid container spacing={40}>
       <Grid item xs={12} sm={4} lg={2}><LessonFilter/></Grid>

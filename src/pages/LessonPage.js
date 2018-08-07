@@ -58,11 +58,11 @@ class LessonPage extends React.Component {
       {t('lessons.license')}
       {license ?
         <MarkdownRenderer src={license} inline={true}/> :
-        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank' rel='noopener'>CC BY-SA 4.0</a>
       }
     </div>;
     return (
-      <div>
+      <div role='main'>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>

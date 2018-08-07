@@ -11,18 +11,18 @@ const Courses = ({t, courses, externalCourses}) => (
   <div>
     {courses.length > 0 ?
       <div>
-        <h2><b>{t('frontpage.courses')}</b></h2>
+        <h1>{t('frontpage.courses')}</h1>
         <CourseList {...{courses}}/>
       </div>
       : null}
     {externalCourses.length > 0 ?
       <div>
-        <h2><b>{t('frontpage.otherwebsitecourses')}</b></h2>
+        <h1>{t('frontpage.otherwebsitecourses')}</h1>
         <ExternalCourseList coursesWithLanguage={externalCourses}/>
       </div>
       : null}
     {courses.length + externalCourses.length !== 0 ? null :
-      <h2><b>{t('coursepage.nomatchinglessons')}</b></h2>}
+      <h1>{t('coursepage.nomatchinglessons')}</h1>}
   </div>
 );
 

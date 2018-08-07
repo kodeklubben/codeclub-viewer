@@ -6,6 +6,7 @@ import checkboxes from './reducers/checkboxes';
 import lastLesson from './reducers/lastLesson';
 import filterGroupsCollapsed from './reducers/filterGroupsCollapsed';
 import showPlaylists from './reducers/showPlaylists';
+import showDyslexicFont from './reducers/showDyslexicFont';
 
 export default combineReducers({
   filter,
@@ -15,4 +16,5 @@ export default combineReducers({
   lastLesson,
   filterGroupsCollapsed,
   showPlaylists,
+  showDyslexicFont,
 });

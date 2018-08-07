@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import {getAvailableLanguages} from '../utils/filterUtils';
-import {getTranslateFilter} from '../selectors/translate';
+import {getTranslator, getTranslateFilter} from '../selectors/translate';
 
 const styles = {
   flag: {
@@ -12,12 +12,13 @@ const styles = {
   },
 };
 
-const Flag = ({classes, language, translateFilter}) =>
+const Flag = ({classes, language, translateFilter, t}) => (
   <img
     className={classes.flag}
     src={require(`../assets/graphics/flag_${language}.svg`)}
-    alt={translateFilter('language', language)}
-  />;
+    alt={t('general.picture', {title: translateFilter('language', language)})}
+  />
+);
 
 Flag.propTypes = {
   // ownProps
@@ -26,10 +27,12 @@ Flag.propTypes = {
 
   // mapStateToProps
   translateFilter: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   translateFilter: getTranslateFilter(state),
+  t: getTranslator(state),
 });
 
 export default connect(

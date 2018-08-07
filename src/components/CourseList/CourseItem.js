@@ -15,6 +15,7 @@ import {getCourseIcon} from '../../resources/courseIcon';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 import {getCourseExternalLink, getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
+import {getTranslator} from '../../selectors/translate';
 
 const styles = theme => ({
   courseItem: {
@@ -54,16 +55,23 @@ const styles = theme => ({
   },
 });
 
-const CourseItem = ({classes, course, language, showLessonCount, coursePath, onlyCheckedMainLanguage}) => {
+const CourseItem = ({classes, course, language, showLessonCount, coursePath, onlyCheckedMainLanguage, t}) => {
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
   const popoverButton = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
+  const courseIcon = (
+    <img
+      className={styles.courseLogo}
+      src={getCourseIcon(course)}
+      alt={t('general.picture', {title: courseTitle})}
+    />
+  );
   return (
     <Grid container direction='column'>
       {externalLink ?
-        <a className={classes.courseItem} href={externalLink} target='_blank'>
-          <img className={classes.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
+        <a className={classes.courseItem} href={externalLink} target='_blank' rel='noopener'>
+          {courseIcon}
           <Grid container  alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
             <Grid item>{courseTitle}</Grid>
             <Grid item className={classes.icon}><LaunchIcon/></Grid>
@@ -77,7 +85,7 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
         </a>
         :
         <Link className={classes.courseItem} to={coursePath}>
-          <img className={classes.courseLogo} src={getCourseIcon(course)} alt={courseTitle}/>
+          {courseIcon}
           <Grid container alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
             <Grid item>{courseTitle}</Grid>
             <Grid item className={classes.popover}>{popoverButton}</Grid>
@@ -98,12 +106,14 @@ CourseItem.propTypes = {
   showLessonCount: PropTypes.bool.isRequired,
   coursePath: PropTypes.string,
   onlyCheckedMainLanguage: PropTypes.bool.isRequired,
+  t: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, {course}) => ({
   showLessonCount: getShowFiltergroups(state),
   coursePath: getLanguageIndependentCoursePath(course),
   onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
+  t: getTranslator(state),
 });
 
 export default connect(

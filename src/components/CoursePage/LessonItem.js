@@ -82,7 +82,7 @@ const LessonItem = ({
   return (
     <div>
       {external ?
-        <ListItem component={Link} to={external} button target='_blank'>
+        <ListItem component={Link} to={external} button target='_blank' rel='noopener'>
           {flag}
           <LevelIcon level={level}/>
           <ListItemText primary={title}/>

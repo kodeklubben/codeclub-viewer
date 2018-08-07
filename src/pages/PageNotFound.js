@@ -7,7 +7,7 @@ import {getTranslator} from '../selectors/translate';
 import Head from '../components/Head';
 
 const PageNotFound = ({t}) => (
-  <div>
+  <div role='main'>
     <Head title={'404'}/>
     <Grid container direction='column' alignItems='center'>
       <h3>{t('404.header')}</h3>
