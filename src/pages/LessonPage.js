@@ -1,26 +1,47 @@
-/* eslint-env node */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './LessonPage.scss';
+import {withStyles} from '@material-ui/core/styles';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
+import MarkdownRenderer from '../components/MarkdownRenderer';
+import ButtonRow from '../components/LessonPage/ButtonRow';
+import Content from '../components/LessonPage/Content';
+import Head from '../components/Head';
+import PrintInfo from '../components/LessonPage/PrintInfo';
 import {getTranslator} from '../selectors/translate';
 import {setCheckboxes, createCheckboxesKey} from '../utils/checkboxUtils';
 import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
-import MarkdownRenderer from '../components/MarkdownRenderer';
-import ButtonRow from '../components/LessonPage/ButtonRow';
-import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
 import {getLevel, getLicense} from '../resources/lessons';
-import Head from '../components/Head';
-import PrintInfo from '../components/LessonPage/PrintInfo';
+
+const styles = theme => ({
+  container: {
+    maxWidth: '800px',
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '0.85em',
+    },
+    '& figure > img': {
+      display: 'block',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      padding: '20px',
+      maxWidth: '100%',
+      height: 'auto',
+    },
+  },
+  license: {
+    margin: '30px 0',
+  },
+});
 
 const renderToggleButtons = () => {
   const nodes = [...document.getElementsByClassName('togglebutton')];
@@ -43,13 +64,13 @@ class LessonPage extends React.Component {
 
   render() {
     const {
-      course, lesson, language, isReadme,
+      classes, course, lesson, language, isReadme,
       t, title, author, translator, license,
     } = this.props;
     const authorNode = author ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> : null;
     const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
-    const licenseRow = <div className={styles.license}>
+    const licenseRow = <div className={classes.license}>
       {t('lessons.license')}
       {license ?
         <MarkdownRenderer src={license} inline={true}/> :
@@ -59,7 +80,7 @@ class LessonPage extends React.Component {
     return (
       <div role='main'>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
-        <div className={styles.container}>
+        <div className={classes.container}>
           <h1>
             <LevelIcon level={getLevel(course, lesson)}/>
             {title}
@@ -79,6 +100,7 @@ class LessonPage extends React.Component {
 
 LessonPage.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,

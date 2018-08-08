@@ -7,12 +7,12 @@ import LessonFilter from '../components/Filter/LessonFilter';
 import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 
-const styles = {
+const styles = theme => ({
   container: {
-    paddingLeft: '15px',
-    paddingRight: '15px',
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
   },
-};
+});
 
 const FrontPage = ({classes, isStudentMode}) => (
   <div className={classes.container} role='main'>

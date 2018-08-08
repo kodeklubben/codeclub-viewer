@@ -14,7 +14,8 @@ import Flag from '../Flag';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
     padding: '9px',
   },
   text: {

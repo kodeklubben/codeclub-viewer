@@ -9,11 +9,11 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import Collapse from '@material-ui/core/Collapse';
 import {getTranslator} from '../../selectors/translate';
 
-const styles = {
+const styles = theme => ({
   infoBox: {
-    padding: '10px',
+    padding: theme.spacing.unit * 2,
     maxWidth: '600px',
-    border: '1px solid black',
+    border: '1px solid #a3cccb',
     borderRadius: '10px',
     fontWeight: 300,
     position: 'relative',
@@ -31,10 +31,11 @@ const styles = {
     color: 'black',
     borderBottom: '1px black dotted',
     '&:hover': {
+      color: 'black',
       textDecoration: 'none',
     },
   },
-};
+});
 
 class TeacherInfobox extends React.Component {
   state = {

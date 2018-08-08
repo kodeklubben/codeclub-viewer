@@ -1,14 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './ImprovePage.scss';
+import {withStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import ForumIcon from '@material-ui/icons/Forum';
+import ReportProblemIcon from '@material-ui/icons/ReportProblem';
+import CodeIcon from '@material-ui/icons/Code';
 import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
-import Button from 'react-bootstrap/lib/Button';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
-const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => {
+const container = {
+  textAlign: 'center',
+  borderRadius: '10px',
+  '@media print': {
+    display: 'none',
+  },
+};
+
+const styles = theme => ({
+  studentContainer: {
+    ...container,
+    marginTop: theme.spacing.unit,
+    padding: theme.spacing.unit,
+    backgroundColor: '#eef7ee',
+    border: '1px solid #b1daae',
+  },
+  teacherContainer: {
+    ...container,
+    marginTop: theme.spacing.unit,
+    padding: theme.spacing.unit,
+    backgroundColor: '#eff6f6',
+    border: '1px solid #a3cccb',
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+  buttonText: {
+    marginLeft: theme.spacing.unit,
+  },
+});
+
+const ImprovePage = ({classes, course, lesson, language, isReadme, t, isStudentMode}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src/${course}/${lesson}`;
   const linkToLesson = `http://oppgaver.kidsakoder.no/${path}`;
@@ -19,44 +53,49 @@ const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => 
                        '%0A%0A' + t('lessons.improvepage.newissuelink.info') + '%0A';
 
   const url = {
-    // Link to making a new issue + title and body fill
     newIssue: 'https://github.com/kodeklubben/oppgaver/issues/new/' + newIssueFill,
-    // Link to source code
     showCode: linkToSourceCode,
-    //Link to forum
     forum: 'https://forum.kidsakoder.no/c/oppgaver'
   };
+  const options = {
+    variant: 'outlined',
+    size: 'small',
+    target: '_blank',
+    rel: 'noopener',
+    className: classes.button,
+  };
+  const buttons = (
+    <Grid container justify='center'>
+      <Button href={url.newIssue} {...options}>
+        <ReportProblemIcon/>
+        <span className={classes.buttonText}>{t('lessons.improvepage.newissuebutton')}</span>
+      </Button>
+      <Button href={url.forum} {...options}>
+        <ForumIcon/>
+        <span className={classes.buttonText}>{t('lessons.improvepage.forumbutton')}</span>
+      </Button>
+      <Button href={url.showCode} {...options}>
+        <CodeIcon/>
+        <span className={classes.buttonText}>{t('lessons.improvepage.showcodebutton')}</span>
+      </Button>
+    </Grid>
+  );
   return (
-    <div className={styles.container}>
-      <div className={isStudentMode ? styles.student : styles.teacher}>
-        <div className={styles.improvePageBox}>
-          <div className={isStudentMode ? styles.textRowStudent : styles.textRowTeacher}>
-            <h2>{t('lessons.improvepage.header')}</h2>
-            <p>{t('lessons.improvepage.textline1')} <br/>
-              {t('lessons.improvepage.textline2')}</p>
-          </div>
-          <div className={styles.linkRow}>
-            <div>
-              <Button href={url.newIssue} bsStyle='white-grey' target='_blank' rel='noopener'>
-                {t('lessons.improvepage.newissuebutton')}</Button>
-            </div>
-            <div>
-              <Button href={url.forum} bsStyle='guide' target='_blank' rel='noopener'>
-                {t('lessons.improvepage.forumbutton')}</Button>
-            </div>
-            <div>
-              <Button href={url.showCode} bsStyle='orange' target='_blank' rel='noopener'>
-                {t('lessons.improvepage.showcodebutton')}</Button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className={isStudentMode ? classes.studentContainer : classes.teacherContainer}>
+      <h2>{t('lessons.improvepage.header')}</h2>
+      <p>
+        {t('lessons.improvepage.textline1')}
+        <br/>
+        {t('lessons.improvepage.textline2')}
+      </p>
+      {buttons}
     </div>
   );
 };
 
 ImprovePage.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,

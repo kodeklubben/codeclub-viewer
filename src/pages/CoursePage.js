@@ -22,8 +22,8 @@ const styles = theme => ({
     },
   },
   container: {
-    paddingLeft: '15px',
-    paddingRight: '15px',
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
   },
 });
 

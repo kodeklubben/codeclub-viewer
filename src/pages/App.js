@@ -1,24 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import {withStyles} from '@material-ui/core/styles';
 import PdfHeader from '../components/PdfHeader';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
-import styles from './App.scss';
-import '../styles/customBootstrapStyles';
 import Head from '../components/Head';
 
-const App = ({params, location, children, showDyslexicFont}) => {
+const container = {
+  display: 'flex',
+  minHeight: '100vh',
+  'flex-direction': 'column',
+};
+
+const styles = {
+  appContainer: {
+    ...container,
+  },
+  appContainerDyslexia: {
+    ...container,
+  },
+  stickyFooter: {
+    flex: 1,
+  },
+};
+
+const App = ({classes, params, location, children, showDyslexicFont}) => {
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
-  const className = showDyslexicFont ? styles.appContainerDyslexia : styles.appContainer;
+  const className = showDyslexicFont ? classes.appContainerDyslexia : classes.appContainer;
   return (
     <div>
       <Head/>
       <div {...{className}}>
         {renderPdf ? <PdfHeader  {...{params}}/> : <NavBar {...{params}}/>}
-        <div className={styles.stickyFooter}>{children}</div>
+        <div className={classes.stickyFooter}>{children}</div>
         {renderPdf ? null : <Footer/>}
       </div>
     </div>
@@ -27,6 +43,7 @@ const App = ({params, location, children, showDyslexicFont}) => {
 
 App.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   params: PropTypes.object,
   location: PropTypes.shape({
     query: PropTypes.object.isRequired,
