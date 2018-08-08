@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ClearIcon from '@material-ui/icons/Clear';
 import {getTranslator} from '../../selectors/translate';
@@ -8,7 +9,16 @@ import {somethingCheckedInFilter} from '../../selectors/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
-const ClearFilterButton = ({t, language, resetAllFilters, collapseAllFilterGroups, somethingChecked}) => {
+const styles = theme => ({
+  button: {
+    width: '100%',
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit,
+  },
+});
+
+const ClearFilterButton = ({classes, t, language, resetAllFilters, collapseAllFilterGroups, somethingChecked}) => {
   const options = {
     variant: 'outlined',
     color: 'default',
@@ -16,16 +26,20 @@ const ClearFilterButton = ({t, language, resetAllFilters, collapseAllFilterGroup
       resetAllFilters('language', language);
       collapseAllFilterGroups(true);
     },
+    className: classes.button,
   };
   return somethingChecked ?
     <Button {...options}>
-      <ClearIcon/>
+      <ClearIcon className={classes.leftIcon}/>
       {t('filter.removefilter')}
     </Button>
     : null;
 };
 
 ClearFilterButton.propTypes = {
+  // ownProps
+  classes: PropTypes.object.isRequired,
+
   // mapStateToProps
   language: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
@@ -50,4 +64,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ClearFilterButton);
+)(withStyles(styles)(ClearFilterButton));

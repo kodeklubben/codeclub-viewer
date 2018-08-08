@@ -1,34 +1,55 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Button from 'react-bootstrap/lib/Button';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './InstructionButton.scss';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Link from 'react-router/lib/Link';
+import {withStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import SchoolIcon from '@material-ui/icons/School';
 import {getTranslator} from '../selectors/translate';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 
-const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
-  const buttonArgs = {
-    className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
-    bsStyle: 'guide',
-    bsSize: onlyIcon ? 'xs' : 'small',
-    componentClass: insideLink ? 'div' : 'a',
-  };
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    '@media print': {
+      display: 'none',
+    },
+  },
+  text: {
+    marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+});
+
+const InstructionButton = ({classes, course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
-  return (path ?
-    <LinkContainer to={path}>
-      <Button  {...buttonArgs} aria-label={buttonText}>
-        <Glyphicon className={styles.icon} glyph={isReadme ? 'education' : 'pencil'}/>
-        <span className={onlyIcon ? '' : styles.textMargin}>{buttonText}</span>
-      </Button>
-    </LinkContainer> :
-    null);
+  const iconButton = !path ? null :
+    <IconButton component={Link} to={path} aria-label={buttonText}>
+      <SchoolIcon/>
+    </IconButton>;
+  const options = {
+    component: Link,
+    to: path,
+    variant: 'outlined',
+    color: 'default',
+    size: 'small',
+    className: classes.button,
+  };
+  const button = !path ? null :
+    <Button {...options}>
+      {isReadme ? <SchoolIcon/> : <EditIcon/>}
+      <span className={classes.text}>{buttonText}</span>
+    </Button>;
+  return insideLink ? iconButton : button;
 };
 
 InstructionButton.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,

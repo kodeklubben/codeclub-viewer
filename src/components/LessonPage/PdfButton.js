@@ -3,34 +3,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './PdfButton.scss';
+import {withStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import {getTranslator} from '../../selectors/translate';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
-const PdfButton = ({course, lesson, language, isReadme, t}) => {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    '@media print': {
+      display: 'none',
+    },
+  },
+  text: {
+    marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+});
+
+const PdfButton = ({classes, course, lesson, language, isReadme, t}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const options = {
     href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
-    bsStyle: 'pdf',
-    bsSize: 'small',
-    className: styles.container,
+    className: classes.button,
     download: true,
+    variant: 'outlined',
+    color: 'default',
+    size: 'small',
+    'aria-label': t('lessons.pdf'),
   };
-  // Note that we need to use href in button, and not LinkContainer,
-  // since we don't want to go through React Router when getting the pdf.
   return (
-    <Button {...options} aria-label={t('lessons.pdf')}>
-      <Glyphicon className={styles.icon} glyph={'cloud-download'}/>
-      <span className={styles.textMargin}>{t('lessons.pdf')}</span>
+    <Button {...options}>
+      <CloudDownloadIcon/>
+      <span className={classes.text}>{t('lessons.pdf')}</span>
     </Button>
   );
 };
 
 PdfButton.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,

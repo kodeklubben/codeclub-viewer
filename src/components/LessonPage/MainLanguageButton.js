@@ -1,33 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Button from 'react-bootstrap/lib/Button';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import styles from './MainLanguageButton.scss';
+import Link from 'react-router/lib/Link';
+import {withStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
-const MainLanguageButton = ({path, enabled, language, buttonText}) => {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    padding: '9px',
+    '@media print': {
+      display: 'none',
+    },
+  },
+  text: {
+    marginLeft: '8px',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+});
+
+const MainLanguageButton = ({classes, path, enabled, language, buttonText}) => {
   const options = {
-    className: styles.container,
-    bsStyle: 'info',
-    bsSize: 'small',
+    className: classes.button,
+    component: Link,
+    to: path,
+    variant: 'outlined',
+    color: 'default',
+    size: 'small',
     disabled: !enabled,
   };
-  const button = (
+  return (
     <Button {...options}>
       <Flag language={language}/>
-      <span className={styles.textMargin}>{buttonText}</span>
+      <span className={classes.text}>{buttonText}</span>
     </Button>
   );
-  return enabled ? <LinkContainer to={path}>{button}</LinkContainer> : button;
 };
 
 MainLanguageButton.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,

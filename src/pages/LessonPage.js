@@ -11,11 +11,9 @@ import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import {getTranslator} from '../selectors/translate';
 import {setCheckboxes, createCheckboxesKey} from '../utils/checkboxUtils';
-import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
 import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
 import MarkdownRenderer from '../components/MarkdownRenderer';
-import Progress from '../components/LessonPage/Progress';
 import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
@@ -47,13 +45,10 @@ class LessonPage extends React.Component {
     const {
       course, lesson, language, isReadme,
       t, title, author, translator, license,
-      checkedCheckboxes, totalCheckboxes,
     } = this.props;
     const authorNode = author ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> : null;
     const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
-    const progress = (checkedCheckboxes > 0 && !isReadme) ?
-      <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     const licenseRow = <div className={styles.license}>
       {t('lessons.license')}
       {license ?
@@ -73,7 +68,6 @@ class LessonPage extends React.Component {
           {translatorNode}
           <PrintInfo {...{course, lesson}}/>
           <ButtonRow {...{course, lesson, language, isReadme}}/>
-          {progress}
           <Content {...{course, lesson, language, isReadme}}/>
           {licenseRow}
           <ImprovePage {...{course, lesson, language, isReadme}}/>
@@ -98,8 +92,6 @@ LessonPage.propTypes = {
   translator: PropTypes.string.isRequired,
   license: PropTypes.string,
   checkboxes: PropTypes.object,
-  checkedCheckboxes: PropTypes.number.isRequired,
-  totalCheckboxes: PropTypes.number.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -116,8 +108,6 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
     translator,
     license: getLicense(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
-    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
-    totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
   };
 };
 

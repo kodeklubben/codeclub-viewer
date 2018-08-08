@@ -1,22 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './DyslexiaSwitch.scss';
-import Switch from 'react-switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
 import {getTranslator} from '../../selectors/translate';
 
 const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => (
-  <label htmlFor='switch' className={styles.container}>
-    <span className={styles.text}>{t('footer.dyslexia')}</span>
+  <FormControlLabel label={t('footer.dyslexia')} control={
     <Switch
       onChange={() => setShowDyslexicFont(!showDyslexicFont)}
       checked={showDyslexicFont}
-      id='switch'
-      onColor='#000'
-    />
-  </label>
+    />}
+  />
 );
 
 DyslexiaSwitch.propTypes = {
@@ -40,4 +36,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(DyslexiaSwitch));
+)(DyslexiaSwitch);

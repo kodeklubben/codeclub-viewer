@@ -1,29 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Button from 'react-bootstrap/lib/Button';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './ResetButton.scss';
+import {withStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import ClearIcon from '@material-ui/icons/Clear';
 import {getTranslator} from '../../selectors/translate';
 import {setCheckbox} from '../../reducers/checkboxes';
 import {setCheckboxes} from '../../utils/checkboxUtils';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-const ResetButton = ({path, t, setCheckbox}) => {
-  const bsStyle = 'warning';
-  const bsSize = 'small';
-  const onClick = () => setCheckboxes(path, {}, setCheckbox);
-  const className = styles.container;
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    '@media print': {
+      display: 'none',
+    },
+  },
+  text: {
+    marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+});
+
+const ResetButton = ({classes, path, t, setCheckbox}) => {
+  const options = {
+    onClick: () => setCheckboxes(path, {}, setCheckbox),
+    'aria-label': t('lessons.reset'),
+    className: classes.button,
+    variant: 'outlined',
+    color: 'default',
+    size: 'small',
+  };
   return (
-    <Button {...{className, bsSize, bsStyle, onClick}} aria-label={t('lessons.reset')}>
-      <Glyphicon className={styles.icon} glyph={'remove'}/>
-      <span className={styles.textMargin}>{t('lessons.reset')}</span>
+    <Button {...options}>
+      <ClearIcon/>
+      <span className={classes.text}>{t('lessons.reset')}</span>
     </Button>
   );
 };
 
 ResetButton.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   path: PropTypes.string.isRequired,
 
   // mapStateToProps
