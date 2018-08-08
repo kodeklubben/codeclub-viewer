@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import ForumIcon from '@material-ui/icons/Forum';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
 import CodeIcon from '@material-ui/icons/Code';
+import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
 import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
@@ -24,15 +26,15 @@ const styles = theme => ({
     ...container,
     marginTop: theme.spacing.unit,
     padding: theme.spacing.unit,
-    backgroundColor: '#eef7ee',
-    border: '1px solid #b1daae',
+    backgroundColor: green[50],
+    border: `1px solid ${green[200]}`,
   },
   teacherContainer: {
     ...container,
     marginTop: theme.spacing.unit,
     padding: theme.spacing.unit,
-    backgroundColor: '#eff6f6',
-    border: '1px solid #a3cccb',
+    backgroundColor: blue[50],
+    border: `1px solid ${blue[200]}`,
   },
   button: {
     margin: theme.spacing.unit,

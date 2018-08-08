@@ -10,23 +10,13 @@ const styles = {
   container: {
     width: '100%',
     'min-height': '50px',
-    background: {
-      color: '#b1daae',
-    },
-    borderBottom: {
-      width: '1px',
-      color: '#b1daae',
-      style: 'solid',
-    },
   },
   courseIcon: {
     height: '50px',
     padding: [10, 10, 15, 15],
   },
   course: {
-    font: {
-      size: '20px',
-    },
+    fontSize: '20px',
   },
 };
 

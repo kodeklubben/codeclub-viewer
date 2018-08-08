@@ -7,18 +7,19 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import Collapse from '@material-ui/core/Collapse';
+import blue from '@material-ui/core/colors/blue';
 import {getTranslator} from '../../selectors/translate';
 
 const styles = theme => ({
   infoBox: {
     padding: theme.spacing.unit * 2,
     maxWidth: '600px',
-    border: '1px solid #a3cccb',
+    border: `1px solid ${blue[200]}`,
     borderRadius: '10px',
     fontWeight: 300,
     position: 'relative',
     marginBottom: '30px',
-    backgroundColor: '#eff6f6',
+    backgroundColor: blue[50],
   },
   bigHeader: {
     fontSize: '1.9em',

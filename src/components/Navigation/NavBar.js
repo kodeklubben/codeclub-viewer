@@ -5,6 +5,8 @@ import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
 import BreadCrumb from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import ModeDropdown from './ModeDropdown';
@@ -17,11 +19,11 @@ const container = {
 const styles = {
   studentContainer: {
     ...container,
-    backgroundColor: '#b1daae',
+    backgroundColor: green[200],
   },
   teacherContainer: {
     ...container,
-    backgroundColor: '#a3cccb',
+    backgroundColor: blue[200],
   },
 };
 

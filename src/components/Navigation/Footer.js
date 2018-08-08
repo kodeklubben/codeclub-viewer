@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
 import {getTranslator} from '../../selectors/translate';
 import DyslexiaSwitch from './DyslexiaSwitch';
 
@@ -18,11 +20,11 @@ const container = {
 const styles = {
   studentContainer: {
     ...container,
-    backgroundColor: '#b1daae',
+    backgroundColor: green[200],
   },
   teacherContainer: {
     ...container,
-    backgroundColor: '#a3cccb',
+    backgroundColor: blue[200],
   },
   image: {
     margin: '10px 5px 20px',

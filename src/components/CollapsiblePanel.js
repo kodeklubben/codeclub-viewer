@@ -6,21 +6,23 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
 
 const styles = {
   studentRoot: {
     fontSize: '1.5em',
-    backgroundColor: '#b1daae',
+    backgroundColor: green[200],
   },
   teacherRoot: {
     fontSize: '1.5em',
-    backgroundColor: '#a3cccb',
+    backgroundColor: blue[200],
   },
   studentContent: {
-    backgroundColor: '#eef7ee',
+    backgroundColor: green[50],
   },
   teacherContent: {
-    backgroundColor: '#eff6f6',
+    backgroundColor: blue[50],
   },
 };
 
