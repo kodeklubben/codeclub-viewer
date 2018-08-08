@@ -1,7 +1,8 @@
 /* eslint-env node */
+/* global IS_HOT */
 
 import React from 'react';
-import {render} from 'react-dom';
+import {render, hydrate} from 'react-dom';
 import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import Router from 'react-router/lib/Router';
 import useRouterHistory from 'react-router/lib/useRouterHistory';
@@ -28,7 +29,16 @@ const renderDynamic = () => {
     };
   };
 
-  render(
+  // If we are in a browser, we need a global variable to say if hydration has been completed.
+  // This variable could also have been placed in the redux tree, or passed down using a react context.
+  if (window) { window.ccv_hydrationCompleted = false; }
+  const callback = () => {
+    updateStoreFromLocalStorage();
+    if (window) { window.ccv_hydrationCompleted = true; }
+  };
+
+  const renderFunc = IS_HOT ? render : hydrate;
+  renderFunc(
     <Provider store={store}>
       <WithStylesContext onInsertCss={onInsertCss}>
         <Router routes={routes}
@@ -38,7 +48,7 @@ const renderDynamic = () => {
       </WithStylesContext>
     </Provider>,
     document.getElementById('app'),
-    updateStoreFromLocalStorage,
+    callback,
   );
 };
 

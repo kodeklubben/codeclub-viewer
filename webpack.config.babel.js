@@ -230,6 +230,9 @@ const createConfig = (env = {}) => {
     },
 
     plugins: [
+      new webpack.DefinePlugin({
+        'IS_HOT': JSON.stringify(isHot),
+      }),
       new webpack.LoaderOptionsPlugin({
         options: {
           context: __dirname,   // needed for bootstrap-loader

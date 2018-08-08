@@ -61,6 +61,7 @@ class LessonPage extends React.Component {
         <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank' rel='noopener'>CC BY-SA 4.0</a>
       }
     </div>;
+    const isHydrated = !!(window && window.ccv_hydrationCompleted);
     return (
       <div role='main'>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
@@ -74,7 +75,7 @@ class LessonPage extends React.Component {
           <PrintInfo {...{course, lesson}}/>
           <ButtonRow {...{course, lesson, language, isReadme}}/>
           {progress}
-          <Content {...{course, lesson, language, isReadme}}/>
+          <Content {...{course, lesson, language, isReadme, isHydrated}}/>
           {licenseRow}
           <ImprovePage {...{course, lesson, language, isReadme}}/>
         </div>

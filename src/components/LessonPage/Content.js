@@ -7,8 +7,8 @@ import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
 import {getLessonContent} from '../../resources/lessonContent';
 
-const createMarkup = (lessonContent) => {
-  return ({__html: processContent(lessonContent, styles)});
+const createMarkup = (lessonContent, isHydrated) => {
+  return ({__html: processContent(lessonContent, styles, isHydrated)});
 };
 
 // const Loading = () => <div>Loading...</div>;
@@ -20,9 +20,9 @@ const createMarkup = (lessonContent) => {
 
 //console.log('lessonContext.keys:', lessonContext.keys());
 
-const Content = ({course, lesson, language, isReadme}) => {
+const Content = ({course, lesson, language, isReadme, isHydrated}) => {
   const lessonContent = getLessonContent(course, lesson, language, isReadme);
-  return <div dangerouslySetInnerHTML={createMarkup(lessonContent)}/>;
+  return <div dangerouslySetInnerHTML={createMarkup(lessonContent, isHydrated)}/>;
 };
 Content.propTypes = {
   // ownProps
@@ -30,6 +30,7 @@ Content.propTypes = {
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
+  isHydrated: PropTypes.bool.isRequired, // require isHydrated as a prop to force rerender when it changes
 };
 
 export default withStyles(styles)(Content);
