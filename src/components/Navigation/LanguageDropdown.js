@@ -1,71 +1,99 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import {setLanguage} from '../../reducers/language';
 import {resetOneFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import {getAvailableLanguages} from '../../utils/filterUtils';
-import styles from './LanguageDropdown.scss';
 import {getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+    padding: '9px',
+  },
+  text: {
+    marginLeft: '8px',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    }
+  },
+  menuItemText: {
+    marginLeft: '8px',
+  },
+});
+
 const availableLanguages = getAvailableLanguages();
 
-const LanguageItem = ({language, translateFilter, onlyFlag}) => (
-  // Note that the block with "float" (the flag) must be first in the containing div
-  <div className={styles.languageItemContainer}>
-    <Flag language={language}/>
-    <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
-      {translateFilter('language', language)}
-    </span>
-  </div>
-);
+class LanguageDropdown extends React.Component {
+  state = {
+    anchorEl: null,
+  };
 
-LanguageItem.propTypes = {
-  // ownProps
-  onlyFlag: PropTypes.bool.isRequired,
+  handleClick = event => {
+    this.setState({anchorEl: event.currentTarget});
+  };
 
-  // mapStateToProps
-  language: PropTypes.oneOf(availableLanguages).isRequired,
-  translateFilter: PropTypes.func.isRequired
-};
+  handleClose = event => {
+    this.setState({anchorEl: null});
+  };
 
-const LanguageDropdown = ({isStudentMode, language, translateFilter,
-  resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
-  const mode = isStudentMode ? 'student' : 'teacher';
-  return (
-    <div className={styles.gadgetContainer}>
-      <DropdownButton id='language-dropdown'
-        noCaret
-        pullRight
-        bsStyle={'language-' + mode}
-        title={<LanguageItem onlyFlag={true} {...{language, translateFilter}}/>}
-        onSelect={(eventKey) => {
-          resetOneFilter('language', eventKey);
-          setLanguage(eventKey);
-          collapseAllFilterGroups(true);
-        }}>
-
-        {
-          availableLanguages.map(key =>
-            <MenuItem {...{key}} eventKey={key} active={language === key}>
-              <LanguageItem onlyFlag={false} language={key} {...{translateFilter}}/>
+  render() {
+    const {classes, language, translateFilter, resetOneFilter, setLanguage, collapseAllFilterGroups} =  this.props;
+    const {anchorEl} = this.state;
+    const options = {
+      'aria-owns': anchorEl ? 'language-menu' : null,
+      'aria-haspopup': true,
+      variant: 'outlined',
+      size: 'small',
+      onClick: this.handleClick,
+      className: classes.button,
+    };
+    return (
+      <div>
+        <Button {...options}>
+          <Flag {...{language}}/>
+          <span className={classes.text}>{translateFilter('language', language)}</span>
+        </Button>
+        <Menu
+          id='language-menu'
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}
+        >
+          {availableLanguages.map(languageKey =>
+            <MenuItem
+              key={languageKey}
+              selected={language === languageKey}
+              onClick={() => {
+                resetOneFilter('language', languageKey);
+                setLanguage(languageKey);
+                collapseAllFilterGroups(true);
+                this.handleClose();
+              }}
+            >
+              <Flag language={languageKey}/>
+              <span className={classes.menuItemText}>{translateFilter('language', languageKey)}</span>
             </MenuItem>
-          )
-        }
-      </DropdownButton>
-    </div>
-  );
-};
+          )}
+        </Menu>
+      </div>
+    );
+  }
+}
 
 LanguageDropdown.propTypes = {
+  // ownProps
+  classes: PropTypes.object.isRequired,
+
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
   translateFilter: PropTypes.func.isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
@@ -76,7 +104,6 @@ LanguageDropdown.propTypes = {
 const mapStateToProps = (state) => ({
   language: state.language,
   translateFilter: getTranslateFilter(state),
-  isStudentMode: state.isStudentMode,
 });
 
 const mapDispatchToProps = {

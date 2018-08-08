@@ -10,9 +10,6 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
 const styles = theme => ({
-  button: {
-    width: '100%',
-  },
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
@@ -26,7 +23,7 @@ const ClearFilterButton = ({classes, t, language, resetAllFilters, collapseAllFi
       resetAllFilters('language', language);
       collapseAllFilterGroups(true);
     },
-    className: classes.button,
+    fullWidth: true,
   };
   return somethingChecked ?
     <Button {...options}>

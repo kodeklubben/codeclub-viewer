@@ -1,31 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Button from 'react-bootstrap/lib/Button';
+import {withStyles} from '@material-ui/core/styles';
+import Link from 'react-router/lib/Link';
+import Button from '@material-ui/core/Button';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {getTranslator} from '../../selectors/translate';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getLessonFrontmatter, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
 
-const ContinueButton = ({path, t, lastLesson, isStudentMode}) => {
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  text: {
+    marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+});
+
+const ContinueButton = ({classes, path, t, lastLesson, isStudentMode}) => {
   const hasLastLesson = lastLesson !== '';
   const pathIsNotLastLesson = lastLesson !== path;
   const options = {
     'aria-label': t('frontpage.continueButton'),
-    bsStyle: isStudentMode ? 'language-student' : 'language-teacher'
+    className: classes.button,
+    to: lastLesson,
+    component: Link,
+    size: 'small',
+    variant: 'outlined',
   };
   return hasLastLesson && pathIsNotLastLesson ?
-    <LinkContainer active={false} to={lastLesson}>
-      <Button {...options}>
-        <Glyphicon glyph={'arrow-right'}/>
-        <span>{t('frontpage.continueButton')}</span>
-      </Button>
-    </LinkContainer>
+    <Button {...options}>
+      <ArrowForwardIcon/>
+      <span className={classes.text}>{t('frontpage.continueButton')}</span>
+    </Button>
     : null;
 };
 
 ContinueButton.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string,
   lesson: PropTypes.string,
   file: PropTypes.string,
@@ -51,4 +67,4 @@ const mapStateToProps = (state, {course, lesson, file}) => {
 
 export default connect(
   mapStateToProps
-)(ContinueButton);
+)(withStyles(styles)(ContinueButton));

@@ -37,7 +37,7 @@ const MainLanguageButton = ({classes, path, enabled, language, buttonText}) => {
   };
   return (
     <Button {...options}>
-      <Flag language={language}/>
+      <Flag {...{language}}/>
       <span className={classes.text}>{buttonText}</span>
     </Button>
   );

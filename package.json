@@ -60,7 +60,6 @@
     "react-router": "^3.2.1",
     "react-router-bootstrap": "^0.23.3",
     "react-router-scroll": "^0.4.4",
-    "react-switch": "^3.0.4",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
     "scratchblocks": "github:Skagevang/scratchblocks#c36ce1df0d00a33ea07c5ca195f9403ee493136b"

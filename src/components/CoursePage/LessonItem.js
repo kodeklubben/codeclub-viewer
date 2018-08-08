@@ -6,6 +6,7 @@ import {withStyles} from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import LaunchIcon from '@material-ui/icons/Launch';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -25,7 +26,7 @@ const bar = {
   height: '10px',
 };
 
-const styles = {
+const styles = theme => ({
   progressBarLevel1: {
     ...bar,
     'background-color': '#46cc46',
@@ -45,7 +46,10 @@ const styles = {
   flag: {
     marginRight: '10px',
   },
-};
+  launchIcon: {
+    marginRight: theme.spacing.unit * 1.5,
+  },
+});
 
 const Progress = ({classes, checkedCheckboxes, totalCheckboxes}) => {
   return checkedCheckboxes > 0 ?
@@ -86,7 +90,7 @@ const LessonItem = ({
           {flag}
           <LevelIcon level={level}/>
           <ListItemText primary={title}/>
-          <Glyphicon glyph='new-window'/>
+          <LaunchIcon className={classes.launchIcon}/>
           {instructionButton}
           {popoverButton}
         </ListItem>
