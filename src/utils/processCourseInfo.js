@@ -16,6 +16,7 @@ const processObject = (refObj, options) => {
       if (!oldHref.startsWith('http:') && !oldHref.startsWith('https:')) {
         const baseurl = `${publicPath}${options.baseurl.slice(1)}`;
         let href = `${baseurl}${oldHref.startsWith('/') ? '' : '/'}${oldHref}`;
+        if (href.endsWith('.html')) { href = href.slice(0, -5); }
         if (href !== oldHref) {
           obj = {
             ...obj,
