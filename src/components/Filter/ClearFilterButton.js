@@ -11,8 +11,7 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
 const styles = theme => ({
-  marginTop: {
-    marginTop: theme.spacing.unit,
+  button: {
     color: theme.palette.getContrastText(grey[700]),
     backgroundColor: grey[700],
     '&:hover': {
@@ -33,7 +32,7 @@ const ClearFilterButton = ({classes, t, language, resetAllFilters, collapseAllFi
       collapseAllFilterGroups(true);
     },
     fullWidth: true,
-    className: classes.marginTop,
+    className: classes.button,
   };
   return somethingChecked ?
     <Button {...options}>

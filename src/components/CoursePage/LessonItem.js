@@ -7,6 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import LaunchIcon from '@material-ui/icons/Launch';
+import blue from '@material-ui/core/colors/blue';
+import green from '@material-ui/core/colors/green';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -43,8 +45,8 @@ const styles = theme => ({
     ...bar,
     'background-color': '#333',
   },
-  flag: {
-    marginRight: '10px',
+  marginLeft: {
+    marginLeft: theme.spacing.unit * 1.5,
   },
   launchIcon: {
     marginRight: theme.spacing.unit * 1.5,
@@ -53,6 +55,12 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'nowrap',
     alignItems: 'center',
+  },
+  studentRoot: {
+    backgroundColor: green[50],
+  },
+  teacherRoot: {
+    backgroundColor: blue[50],
   },
 });
 
@@ -79,7 +87,9 @@ const LessonItem = ({
   const level = getLevel(course, lesson);
 
   const flag = onlyCheckedMainLanguage ? null :
-    <div className={classes.flag}><Flag language={language}/></div>;
+    <div className={classes.marginLeft}><Flag language={language}/></div>;
+
+  const levelIcon = <div className={classes.marginLeft}><LevelIcon {...{level}}/></div>;
 
   const instructionButton = isStudentMode ? null :
     <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
@@ -89,26 +99,25 @@ const LessonItem = ({
   const progress = <Progress {...{checkedCheckboxes, totalCheckboxes}}/>;
 
   return (
-    <div>
+    <div className={isStudentMode ? classes.studentRoot : classes.teacherRoot}>
       <div className={classes.container}>
         {external ?
-          <ListItem component={Link} to={external} button target='_blank' rel='noopener'>
+          <ListItem disableGutters component={Link} button to={external} target='_blank' rel='noopener'>
             {flag}
-            <LevelIcon level={level}/>
+            {levelIcon}
             <ListItemText primary={title}/>
             <LaunchIcon className={classes.launchIcon}/>
-            {popoverButton}
           </ListItem>
           :
-          <ListItem button component={Link} to={path}>
+          <ListItem disableGutters component={Link} button to={path}>
             {flag}
             <Progressbar {...{classes, checkedCheckboxes, totalCheckboxes, level}}/>
-            <LevelIcon level={level}/>
+            {levelIcon}
             <ListItemText primary={title} secondary={progress}/>
-            {popoverButton}
           </ListItem>
         }
         {instructionButton}
+        {popoverButton}
       </div>
       <Divider/>
     </div>

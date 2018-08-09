@@ -22,7 +22,7 @@ const LessonFilter = ({classes, filterGroupKeys, isStudentMode, t, showRadiobutt
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
     <Grid container alignItems='center' justify='space-between'>
-      {t('filter.header')}
+      <h4>{t('filter.header')}</h4>
       <PopoverComponent popoverContent={t('filter.tooltip')}/>
     </Grid>;
   const radioButtons = showRadiobuttons ? <li><RadioButtons/></li> : null;

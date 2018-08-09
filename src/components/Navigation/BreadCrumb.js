@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Link from 'react-router/lib/Link';
 import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
@@ -16,10 +18,6 @@ import {getTranslator} from '../../selectors/translate';
 import {getLevel} from '../../resources/lessons';
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-  },
   button: {
     color: 'black',
     '&:hover, &:active, &:focus, &:visited': {
@@ -27,7 +25,7 @@ const styles = theme => ({
       textDecoration: 'none',
     },
     marginTop: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
     '@media print': {
       display: 'none',
     },
@@ -41,12 +39,6 @@ const styles = theme => ({
       display: 'none',
     },
   },
-
-  slash: {
-    color: 'black',
-    fontSize: '1.8em',
-    margin: 0,
-  }
 });
 
 const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
@@ -80,13 +72,13 @@ const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
     <span className={classes.text}>{lessonTitle}</span>
   </Button>;
 
-  return <div>
+  return <Grid container alignItems='center' wrap='nowrap'>
     {homeCrumb}
-    {coursePath ? <span className={classes.slash}> / </span> : null}
+    {coursePath ? <Typography noWrap>/</Typography> : null}
     {coursePath ? courseCrumb : null}
-    {isLesson ? <span className={classes.slash}> / </span> : null}
+    {isLesson ? <Typography noWrap>/</Typography> : null}
     {isLesson ? lessonCrumb : null}
-  </div>;
+  </Grid>;
 };
 
 BreadCrumb.propTypes = {

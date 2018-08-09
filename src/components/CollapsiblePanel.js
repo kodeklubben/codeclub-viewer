@@ -9,7 +9,14 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import blue from '@material-ui/core/colors/blue';
 import green from '@material-ui/core/colors/green';
 
-const styles = {
+const styles = theme => ({
+  container: {
+    marginTop: 0,
+    marginBottom: theme.spacing.unit * 4,
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: theme.spacing.unit,
+    },
+  },
   studentRoot: {
     fontSize: '1.5em',
     backgroundColor: green[200],
@@ -24,10 +31,10 @@ const styles = {
   teacherContent: {
     backgroundColor: blue[50],
   },
-};
+});
 
 const CollapsiblePanel = ({classes, defaultExpanded, children, header, isStudentMode}) => (
-  <ExpansionPanel {...{defaultExpanded}}>
+  <ExpansionPanel className={classes.container} {...{defaultExpanded}}>
     <ExpansionPanelSummary
       classes={{root: isStudentMode ? classes.studentRoot : classes.teacherRoot}}
       expandIcon={<ExpandMoreIcon/>}

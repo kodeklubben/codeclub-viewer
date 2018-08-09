@@ -32,18 +32,14 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  hidden: {
-    visibility: 'hidden',
-  },
 });
 
 const InstructionButton = ({classes, course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
-  const iconButton = (
-    <IconButton className={path ? '' : classes.hidden} component={Link} to={path} aria-label={buttonText}>
+  const iconButton = !path ? null :
+    <IconButton component={Link} to={path} aria-label={buttonText}>
       <SchoolIcon/>
-    </IconButton>
-  );
+    </IconButton>;
   const options = {
     component: Link,
     to: path,
