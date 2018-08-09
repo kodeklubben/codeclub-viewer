@@ -15,7 +15,7 @@ const styles = theme => ({
   button: {
     color: theme.palette.getContrastText(red[700]),
     backgroundColor: red[700],
-    '&:hover, &:active, &:focus, &:visited': {
+    '&:hover, &:active, &:focus': {
       backgroundColor: red[900],
       color: theme.palette.getContrastText(red[900]),
       textDecoration: 'none',

@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {getTranslator} from '../../selectors/translate';
 import {setModeStudent, setModeTeacher} from '../../reducers/mode';
+import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -19,15 +20,33 @@ const styles = theme => ({
       marginLeft: theme.spacing.unit,
     },
   },
+  dyslexicText: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    fontFamily: fontFamilyDyslexic,
+  },
   modeText: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     [theme.breakpoints.down('xs')]: {
       display: 'none',
-    }
+    },
+  },
+  modeDyslexicText: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    fontFamily: fontFamilyDyslexic,
   },
   menuItemText: {
     marginLeft: theme.spacing.unit,
+  },
+  menuItemDyslexicText: {
+    marginLeft: theme.spacing.unit,
+    fontFamily: fontFamilyDyslexic,
   },
 });
 
@@ -46,7 +65,7 @@ class ModeDropdown extends React.Component {
   };
 
   render() {
-    const {classes, t,  isStudentMode, setModeStudent, setModeTeacher} = this.props;
+    const {classes, t,  isStudentMode, showDyslexicFont, setModeStudent, setModeTeacher} = this.props;
     const {anchorEl} = this.state;
     const modes = ['student', 'teacher'];
     const buttonTexts = {
@@ -66,8 +85,12 @@ class ModeDropdown extends React.Component {
       <div>
         <Button {...options}>
           {isStudentMode ? <EditIcon/> :  <SchoolIcon/>}
-          <span className={classes.modeText}>{t('navbar.mode') + ': '}</span>
-          <span className={classes.text}>{buttonTexts[mode]}</span>
+          <span className={showDyslexicFont ? classes.modeDyslexicText : classes.modeText}>
+            {t('navbar.mode') + ':'}
+          </span>
+          <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>
+            {buttonTexts[mode]}
+          </span>
         </Button>
         <Menu
           id='mode-menu'
@@ -85,7 +108,9 @@ class ModeDropdown extends React.Component {
               }}
             >
               {modeKey === 'teacher' ? <SchoolIcon/> : <EditIcon/>}
-              <span className={classes.menuItemText}>{buttonTexts[modeKey]}</span>
+              <span className={showDyslexicFont ? classes.menuItemDyslexicText : classes.menuItemText}>
+                {buttonTexts[modeKey]}
+              </span>
             </MenuItem>
           )}
         </Menu>
@@ -101,6 +126,7 @@ ModeDropdown.propTypes = {
   //mapStateToProps
   t: PropTypes.func.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
+  showDyslexicFont: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setModeStudent: PropTypes.func.isRequired,
@@ -109,7 +135,8 @@ ModeDropdown.propTypes = {
 
 const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
+  t: getTranslator(state),
+  showDyslexicFont: state.showDyslexicFont,
 });
 
 const mapDispatchToProps = {

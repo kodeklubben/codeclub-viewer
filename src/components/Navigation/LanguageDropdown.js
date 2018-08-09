@@ -11,6 +11,7 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
+import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -24,8 +25,19 @@ const styles = theme => ({
       display: 'none',
     }
   },
+  dyslexicText: {
+    marginLeft: '8px',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    fontFamily: fontFamilyDyslexic,
+  },
   menuItemText: {
     marginLeft: '8px',
+  },
+  menuItemDyslexicText: {
+    marginLeft: '8px',
+    fontFamily: fontFamilyDyslexic,
   },
 });
 
@@ -45,7 +57,11 @@ class LanguageDropdown extends React.Component {
   };
 
   render() {
-    const {classes, language, translateFilter, resetOneFilter, setLanguage, collapseAllFilterGroups} =  this.props;
+    const {
+      classes,
+      language, translateFilter, showDyslexicFont,
+      resetOneFilter, setLanguage, collapseAllFilterGroups
+    } =  this.props;
     const {anchorEl} = this.state;
     const options = {
       'aria-owns': anchorEl ? 'language-menu' : null,
@@ -59,7 +75,9 @@ class LanguageDropdown extends React.Component {
       <div>
         <Button {...options}>
           <Flag {...{language}}/>
-          <span className={classes.text}>{translateFilter('language', language)}</span>
+          <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>
+            {translateFilter('language', language)}
+          </span>
         </Button>
         <Menu
           id='language-menu'
@@ -79,7 +97,9 @@ class LanguageDropdown extends React.Component {
               }}
             >
               <Flag language={languageKey}/>
-              <span className={classes.menuItemText}>{translateFilter('language', languageKey)}</span>
+              <span className={showDyslexicFont ? classes.menuItemDyslexicText : classes.menuItemText}>
+                {translateFilter('language', languageKey)}
+              </span>
             </MenuItem>
           )}
         </Menu>
@@ -95,6 +115,7 @@ LanguageDropdown.propTypes = {
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
   translateFilter: PropTypes.func.isRequired,
+  showDyslexicFont: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
@@ -105,6 +126,7 @@ LanguageDropdown.propTypes = {
 const mapStateToProps = (state) => ({
   language: state.language,
   translateFilter: getTranslateFilter(state),
+  showDyslexicFont: state.showDyslexicFont,
 });
 
 const mapDispatchToProps = {

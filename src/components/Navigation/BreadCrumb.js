@@ -16,6 +16,7 @@ import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/less
 import {getCourseIcon} from '../../resources/courseIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLevel} from '../../resources/lessons';
+import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -39,9 +40,16 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  dyslexicText: {
+    marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    fontFamily: fontFamilyDyslexic,
+  },
 });
 
-const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
+const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t, showDyslexicFont}) => {
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
 
@@ -64,12 +72,12 @@ const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
 
   const courseCrumb = <Button {...options} to={coursePath}>
     <img className={classes.courseImage} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
-    <span className={classes.text}>{courseTitle}</span>
+    <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>{courseTitle}</span>
   </Button>;
 
   const lessonCrumb = <Button {...options} to={lessonPath} aria-label={lessonTitle}>
     <LevelIcon level={getLevel(course, lesson)}/>
-    <span className={classes.text}>{lessonTitle}</span>
+    <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>{lessonTitle}</span>
   </Button>;
 
   return <Grid container alignItems='center' wrap='nowrap'>
@@ -91,11 +99,13 @@ BreadCrumb.propTypes = {
 
   // mapStateToProps
   courseLanguage: PropTypes.oneOf(getAvailableLanguages()).isRequired,
+  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   courseLanguage: state.language,
   t: getTranslator(state),
+  showDyslexicFont: state.showDyslexicFont,
 });
 
 export default connect(
