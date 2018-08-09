@@ -5,17 +5,27 @@ import {withStyles} from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import {fontFamilyDyslexic} from '../styles/fonts';
+
+const contentStyles = {
+  maxWidth: '600px',
+  padding: '20px',
+  display: 'flex',
+  'justify-content': 'space-between',
+  '& img': {
+    marginRight: '15px',
+  },
+};
 
 const styles = theme => ({
   popover: {
-    maxWidth: '600px',
     '& img': {
       width: '100%',
       height: '100%',
       maxWidth: '200px',
       maxHeight: '250px',
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       '& img': {
         maxWidth: '100px',
         maxHeight: '125px',
@@ -23,12 +33,11 @@ const styles = theme => ({
     },
   },
   content: {
-    padding: '10px',
-    display: 'flex',
-    'justify-content': 'space-between',
-    '& img': {
-      marginRight: '15px',
-    },
+    ...contentStyles,
+  },
+  dyslexicContent: {
+    ...contentStyles,
+    fontFamily: fontFamilyDyslexic,
   },
 });
 
@@ -73,7 +82,7 @@ class PopoverComponent extends React.Component {
         horizontal: 'right',
       },
     };
-    const content = showDyslexicFont ? '' : classes.content;
+    const content = showDyslexicFont ? classes.dyslexicContent : classes.content;
     return (
       <div>
         <IconButton onClick={this.handleClick} aria-label='Info'>
