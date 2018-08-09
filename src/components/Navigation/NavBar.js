@@ -29,23 +29,20 @@ const styles = {
 
 const NavBar = ({classes, params, isStudentMode}) => {
   return (
-    <div role='banner'>
-      <p>TEST</p>
-      <AppBar classes={{root: isStudentMode ? classes.studentContainer : classes.teacherContainer}} position='static'>
-        <Toolbar disableGutters>
-          <Grid container wrap='nowrap' alignItems='center' justify='space-between'>
-            <Grid item><BreadCrumb {...params}/></Grid>
-            <Grid item>
-              <Grid container wrap='nowrap'>
-                <ContinueButton {...params}/>
-                <LanguageDropdown/>
-                <ModeDropdown/>
-              </Grid>
+    <AppBar classes={{root: isStudentMode ? classes.studentContainer : classes.teacherContainer}} position='static'>
+      <Toolbar disableGutters>
+        <Grid container wrap='nowrap' alignItems='center' justify='space-between'>
+          <Grid item><BreadCrumb {...params}/></Grid>
+          <Grid item>
+            <Grid container wrap='nowrap'>
+              <ContinueButton {...params}/>
+              <LanguageDropdown/>
+              <ModeDropdown/>
             </Grid>
           </Grid>
-        </Toolbar>
-      </AppBar>
-    </div>
+        </Grid>
+      </Toolbar>
+    </AppBar>
   );
 };
 

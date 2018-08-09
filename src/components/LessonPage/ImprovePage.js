@@ -36,8 +36,25 @@ const styles = theme => ({
     backgroundColor: blue[50],
     border: `1px solid ${blue[200]}`,
   },
-  button: {
+  blueButton: {
     margin: theme.spacing.unit,
+    color: theme.palette.getContrastText(blue[700]),
+    backgroundColor: blue[700],
+    '&:hover, &:active, &:focus': {
+      backgroundColor: blue[900],
+      color: theme.palette.getContrastText(blue[900]),
+      textDecoration: 'none',
+    },
+  },
+  greenButton: {
+    margin: theme.spacing.unit,
+    color: theme.palette.getContrastText(green[700]),
+    backgroundColor: green[700],
+    '&:hover, &:active, &:focus': {
+      backgroundColor: green[900],
+      color: theme.palette.getContrastText(green[900]),
+      textDecoration: 'none',
+    },
   },
   buttonText: {
     marginLeft: theme.spacing.unit,
@@ -64,7 +81,7 @@ const ImprovePage = ({classes, course, lesson, language, isReadme, t, isStudentM
     size: 'small',
     target: '_blank',
     rel: 'noopener',
-    className: classes.button,
+    className: isStudentMode ? classes.greenButton : classes.blueButton,
   };
   const buttons = (
     <Grid container justify='center'>

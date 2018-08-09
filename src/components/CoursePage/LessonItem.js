@@ -49,6 +49,11 @@ const styles = theme => ({
   launchIcon: {
     marginRight: theme.spacing.unit * 1.5,
   },
+  container: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    alignItems: 'center',
+  },
 });
 
 const Progress = ({classes, checkedCheckboxes, totalCheckboxes}) => {
@@ -85,25 +90,26 @@ const LessonItem = ({
 
   return (
     <div>
-      {external ?
-        <ListItem component={Link} to={external} button target='_blank' rel='noopener'>
-          {flag}
-          <LevelIcon level={level}/>
-          <ListItemText primary={title}/>
-          <LaunchIcon className={classes.launchIcon}/>
-          {instructionButton}
-          {popoverButton}
-        </ListItem>
-        :
-        <ListItem button component={Link} to={path}>
-          {flag}
-          <Progressbar {...{classes, checkedCheckboxes, totalCheckboxes, level}}/>
-          <LevelIcon level={level}/>
-          <ListItemText primary={title} secondary={progress}/>
-          {instructionButton}
-          {popoverButton}
-        </ListItem>
-      }
+      <div className={classes.container}>
+        {external ?
+          <ListItem component={Link} to={external} button target='_blank' rel='noopener'>
+            {flag}
+            <LevelIcon level={level}/>
+            <ListItemText primary={title}/>
+            <LaunchIcon className={classes.launchIcon}/>
+            {popoverButton}
+          </ListItem>
+          :
+          <ListItem button component={Link} to={path}>
+            {flag}
+            <Progressbar {...{classes, checkedCheckboxes, totalCheckboxes, level}}/>
+            <LevelIcon level={level}/>
+            <ListItemText primary={title} secondary={progress}/>
+            {popoverButton}
+          </ListItem>
+        }
+        {instructionButton}
+      </div>
       <Divider/>
     </div>
   );

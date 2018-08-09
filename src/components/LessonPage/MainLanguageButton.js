@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Link from 'react-router/lib/Link';
 import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import green from '@material-ui/core/colors/green';
 import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 import {getAvailableLanguages} from '../../utils/filterUtils';
@@ -11,7 +12,15 @@ import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    color: theme.palette.getContrastText(green[700]),
+    backgroundColor: green[700],
+    '&:hover, &:active, &:focus': {
+      backgroundColor: green[900],
+      color: theme.palette.getContrastText(green[900]),
+      textDecoration: 'none',
+    },
+    marginTop: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
     padding: '9px',
     '@media print': {
       display: 'none',

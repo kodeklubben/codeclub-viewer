@@ -9,6 +9,7 @@ import Head from '../components/Head';
 
 const container = {
   display: 'flex',
+  overflowX: 'hidden',
   minHeight: '100vh',
   'flex-direction': 'column',
 };

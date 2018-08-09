@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import blue from '@material-ui/core/colors/blue';
 import green from '@material-ui/core/colors/green';
@@ -12,6 +11,7 @@ import DyslexiaSwitch from './DyslexiaSwitch';
 const container = {
   padding: '15px',
   marginTop: '100px',
+  textAlign: 'center',
   '@media print': {
     display: 'none',
   },
@@ -38,6 +38,8 @@ const styles = {
   githubIcon: {
     width: '100px',
     height: 'auto',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   githubText: {
     fontSize: '1.5em',
@@ -48,6 +50,9 @@ const styles = {
     },
   },
   sponsors: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     marginTop: '20px',
     overflow: 'hidden',
   },
@@ -66,7 +71,7 @@ const Footer = ({classes, t, isStudentMode}) => {
   };
 
   const sponsors = (
-    <Grid item className={classes.sponsors}>
+    <div className={classes.sponsors}>
       <a href={url.sparebank} target='_blank' rel='noopener'>
         <img className={classes.image} src={require('../../assets/graphics/smn.jpg')}
           alt={'SpareBank1'}
@@ -102,33 +107,30 @@ const Footer = ({classes, t, isStudentMode}) => {
           alt={'UIO institutt for informatikk'}
         />
       </a>
-    </Grid>
+    </div>
   );
 
   const github = (
-    <Grid item>
+    <div className={classes.github}>
       <a href={url.wiki} target='_blank' rel='noopener'>
         <img className={classes.githubIcon} src={require('../../assets/graphics/github.png')}
           alt={'GitHub'}
         />
       </a>
-      <a className={classes.githubText} href={url.wiki} target='_blank' rel='noopener'>{t('footer.contribute')}</a>
-    </Grid>
+      <p>
+        <a className={classes.githubText} href={url.wiki} target='_blank' rel='noopener'>{t('footer.contribute')}</a>
+      </p>
+    </div>
   );
 
   return (
-    <Grid
-      container
-      alignItems='center'
-      direction='column'
-      role='contentinfo'
-      className={isStudentMode ? classes.studentContainer : classes.teacherContainer}
-    >
+    <div role='contentinfo' className={isStudentMode ? classes.studentContainer : classes.teacherContainer}>
       {github}
-      <Grid item><DyslexiaSwitch/></Grid>
-      <Grid item><Divider/></Grid>
+      <DyslexiaSwitch/>
+      <Divider/>
       {sponsors}
-    </Grid>);
+    </div>
+  );
 };
 
 Footer.propTypes = {

@@ -5,13 +5,22 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import red from '@material-ui/core/colors/red';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    color: theme.palette.getContrastText(red[700]),
+    backgroundColor: red[700],
+    '&:hover, &:active, &:focus, &:visited': {
+      backgroundColor: red[900],
+      color: theme.palette.getContrastText(red[900]),
+      textDecoration: 'none',
+    },
+    marginTop: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
     '@media print': {
       display: 'none',
     },

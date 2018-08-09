@@ -4,12 +4,21 @@ import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ClearIcon from '@material-ui/icons/Clear';
+import grey from '@material-ui/core/colors/grey';
 import {getTranslator} from '../../selectors/translate';
 import {somethingCheckedInFilter} from '../../selectors/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
 const styles = theme => ({
+  marginTop: {
+    marginTop: theme.spacing.unit,
+    color: theme.palette.getContrastText(grey[700]),
+    backgroundColor: grey[700],
+    '&:hover': {
+      backgroundColor: grey[900],
+    },
+  },
   leftIcon: {
     marginRight: theme.spacing.unit,
   },
@@ -24,6 +33,7 @@ const ClearFilterButton = ({classes, t, language, resetAllFilters, collapseAllFi
       collapseAllFilterGroups(true);
     },
     fullWidth: true,
+    className: classes.marginTop,
   };
   return somethingChecked ?
     <Button {...options}>

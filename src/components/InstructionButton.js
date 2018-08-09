@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Link from 'react-router/lib/Link';
 import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import blue from '@material-ui/core/colors/blue';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import SchoolIcon from '@material-ui/icons/School';
@@ -12,7 +13,15 @@ import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit,
+    color: theme.palette.getContrastText(blue[700]),
+    backgroundColor: blue[700],
+    '&:hover, &:active, &:focus': {
+      backgroundColor: blue[900],
+      color: theme.palette.getContrastText(blue[900]),
+      textDecoration: 'none',
+    },
+    marginTop: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
     '@media print': {
       display: 'none',
     },
@@ -23,14 +32,18 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  hidden: {
+    visibility: 'hidden',
+  },
 });
 
 const InstructionButton = ({classes, course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
-  const iconButton = !path ? null :
-    <IconButton component={Link} to={path} aria-label={buttonText}>
+  const iconButton = (
+    <IconButton className={path ? '' : classes.hidden} component={Link} to={path} aria-label={buttonText}>
       <SchoolIcon/>
-    </IconButton>;
+    </IconButton>
+  );
   const options = {
     component: Link,
     to: path,

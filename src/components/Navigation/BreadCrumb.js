@@ -16,6 +16,22 @@ import {getTranslator} from '../../selectors/translate';
 import {getLevel} from '../../resources/lessons';
 
 const styles = theme => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  button: {
+    color: 'black',
+    '&:hover, &:active, &:focus, &:visited': {
+      color: 'black',
+      textDecoration: 'none',
+    },
+    marginTop: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    '@media print': {
+      display: 'none',
+    },
+  },
   courseImage: {
     height: '20px',
   },
@@ -25,6 +41,12 @@ const styles = theme => ({
       display: 'none',
     },
   },
+
+  slash: {
+    color: 'black',
+    fontSize: '1.8em',
+    margin: 0,
+  }
 });
 
 const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
@@ -38,25 +60,31 @@ const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
   const courseTitle = getCourseTitle(course, courseLanguage);
   const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';
 
-  const homeCrumb = <IconButton component={Link} to={'/'} aria-label={t('general.home')}>
+  const options = {
+    component: Link,
+    className: classes.button,
+    size: 'small',
+  };
+
+  const homeCrumb = <IconButton {...options} to={'/'} aria-label={t('general.home')}>
     <HomeIcon/>
   </IconButton>;
 
-  const courseCrumb = <Button size='small' component={Link} to={coursePath}>
+  const courseCrumb = <Button {...options} to={coursePath}>
     <img className={classes.courseImage} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
     <span className={classes.text}>{courseTitle}</span>
   </Button>;
 
-  const lessonCrumb = <Button size='small' component={Link} to={lessonPath} aria-label={lessonTitle}>
+  const lessonCrumb = <Button {...options} to={lessonPath} aria-label={lessonTitle}>
     <LevelIcon level={getLevel(course, lesson)}/>
     <span className={classes.text}>{lessonTitle}</span>
   </Button>;
 
   return <div>
     {homeCrumb}
-    {coursePath ? <span> / </span> : null}
+    {coursePath ? <span className={classes.slash}> / </span> : null}
     {coursePath ? courseCrumb : null}
-    {isLesson ? <span> / </span> : null}
+    {isLesson ? <span className={classes.slash}> / </span> : null}
     {isLesson ? lessonCrumb : null}
   </div>;
 };

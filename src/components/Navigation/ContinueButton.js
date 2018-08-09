@@ -11,6 +11,10 @@ import {getLessonFrontmatter, getLanguageAndIsReadme} from '../../resources/less
 const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
+    '&:hover, &:active, &:focus, &:visited': {
+      color: 'black',
+      textDecoration: 'none',
+    },
   },
   text: {
     marginLeft: theme.spacing.unit,
