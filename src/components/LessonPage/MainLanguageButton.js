@@ -9,6 +9,7 @@ import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -32,9 +33,16 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  dyslexicText: {
+    marginLeft: '8px',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    fontFamily: fontFamilyDyslexic,
+  },
 });
 
-const MainLanguageButton = ({classes, path, enabled, language, buttonText}) => {
+const MainLanguageButton = ({classes, path, enabled, language, buttonText, showDyslexicFont}) => {
   const options = {
     className: classes.button,
     component: Link,
@@ -47,7 +55,7 @@ const MainLanguageButton = ({classes, path, enabled, language, buttonText}) => {
   return (
     <Button {...options}>
       <Flag {...{language}}/>
-      <span className={classes.text}>{buttonText}</span>
+      <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>{buttonText}</span>
     </Button>
   );
 };
@@ -64,6 +72,7 @@ MainLanguageButton.propTypes = {
   enabled: PropTypes.bool,
   language: PropTypes.oneOf(getAvailableLanguages()),
   buttonText: PropTypes.string.isRequired,
+  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {course, lesson, isReadme}) => {
@@ -78,6 +87,7 @@ const mapStateToProps = (state, {course, lesson, isReadme}) => {
     enabled,
     language,
     buttonText: t(enabled ? 'lessons.tomainlanguage' : 'lessons.nottranslated', {lang}),
+    showDyslexicFont: state.showDyslexicFont,
   };
 };
 

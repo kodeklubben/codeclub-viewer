@@ -1,21 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
 import {getTranslator} from '../../selectors/translate';
+import {fontFamilyDyslexic} from '../../styles/fonts';
 
-const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => (
-  <FormControlLabel label={t('footer.dyslexia')} control={
-    <Switch
-      onChange={() => setShowDyslexicFont(!showDyslexicFont)}
-      checked={showDyslexicFont}
-    />}
-  />
-);
+const styles = {
+  dyslexicText: {
+    fontSize: '1.6em',
+    fontFamily: fontFamilyDyslexic,
+  },
+};
+
+const DyslexiaSwitch = ({classes, t, showDyslexicFont, setShowDyslexicFont}) => {
+  const label = <span className={classes.dyslexicText}>{t('footer.dyslexia')}</span>;
+  return (
+    <FormControlLabel {...{label}} control={
+      <Switch
+        color='default'
+        onChange={() => setShowDyslexicFont(!showDyslexicFont)}
+        checked={showDyslexicFont}
+      />}
+    />
+  );
+};
 
 DyslexiaSwitch.propTypes = {
+  // ownProps
+  classes: PropTypes.object.isRequired,
+
   // mapStateToProps
   t: PropTypes.func.isRequired,
   showDyslexicFont: PropTypes.bool.isRequired,
@@ -36,4 +52,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DyslexiaSwitch);
+)(withStyles(styles)(DyslexiaSwitch));

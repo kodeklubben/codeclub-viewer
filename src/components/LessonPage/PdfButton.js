@@ -9,6 +9,7 @@ import red from '@material-ui/core/colors/red';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -31,9 +32,16 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  dyslexicText: {
+    marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    fontFamily: fontFamilyDyslexic,
+  },
 });
 
-const PdfButton = ({classes, course, lesson, language, isReadme, t}) => {
+const PdfButton = ({classes, course, lesson, language, isReadme, t, showDyslexicFont}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const options = {
     href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
@@ -47,7 +55,7 @@ const PdfButton = ({classes, course, lesson, language, isReadme, t}) => {
   return (
     <Button {...options}>
       <CloudDownloadIcon/>
-      <span className={classes.text}>{t('lessons.pdf')}</span>
+      <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>{t('lessons.pdf')}</span>
     </Button>
   );
 };
@@ -62,10 +70,12 @@ PdfButton.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
+  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
+  showDyslexicFont: state.showDyslexicFont,
 });
 
 export default connect(

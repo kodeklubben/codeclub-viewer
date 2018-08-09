@@ -8,6 +8,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import {getTranslator} from '../../selectors/translate';
 import {setCheckbox} from '../../reducers/checkboxes';
 import {setCheckboxes} from '../../utils/checkboxUtils';
+import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -28,9 +29,16 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  dyslexicText: {
+    marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    fontFamily: fontFamilyDyslexic,
+  },
 });
 
-const ResetButton = ({classes, path, t, setCheckbox}) => {
+const ResetButton = ({classes, path, t, setCheckbox, showDyslexicFont}) => {
   const options = {
     onClick: () => setCheckboxes(path, {}, setCheckbox),
     'aria-label': t('lessons.reset'),
@@ -42,7 +50,7 @@ const ResetButton = ({classes, path, t, setCheckbox}) => {
   return (
     <Button {...options}>
       <ClearIcon/>
-      <span className={classes.text}>{t('lessons.reset')}</span>
+      <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>{t('lessons.reset')}</span>
     </Button>
   );
 };
@@ -54,13 +62,15 @@ ResetButton.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
+  showDyslexicFont: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  t: getTranslator(state)
+  t: getTranslator(state),
+  showDyslexicFont: state.showDyslexicFont,
 });
 
 const mapDispatchToProps = {

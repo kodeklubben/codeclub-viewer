@@ -72,7 +72,7 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
       {externalLink ?
         <a className={classes.courseItem} href={externalLink} target='_blank' rel='noopener'>
           {courseIcon}
-          <Grid container  alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
+          <Grid container alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
             <Grid item>{courseTitle}</Grid>
             <Grid item className={classes.icon}><LaunchIcon/></Grid>
             <Grid item className={classes.popover}>{popoverButton}</Grid>
