@@ -16,7 +16,8 @@ import {setHydrationComplete} from './reducers/hydration';
 
 const renderDynamic = () => {
   const basename = process.env.PUBLICPATH_WITHOUT_SLASH;
-  const browserHistory = useRouterHistory(createBrowserHistory)({basename});
+  const historyOptions = basename === '/' ? {} : {basename};
+  const browserHistory = useRouterHistory(createBrowserHistory)(historyOptions);
 
   // The following onInsertCss function allows multiple styles as arguments in withStyles().
   // If we only require one style, it would suffice with onInsertCss = style => style._insertCss()
