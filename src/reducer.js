@@ -7,6 +7,7 @@ import lastLesson from './reducers/lastLesson';
 import filterGroupsCollapsed from './reducers/filterGroupsCollapsed';
 import showPlaylists from './reducers/showPlaylists';
 import showDyslexicFont from './reducers/showDyslexicFont';
+import hydration from './reducers/hydration';
 
 export default combineReducers({
   filter,
@@ -17,4 +18,5 @@ export default combineReducers({
   filterGroupsCollapsed,
   showPlaylists,
   showDyslexicFont,
+  hydration,
 });
