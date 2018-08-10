@@ -12,6 +12,7 @@ import {Provider} from 'react-redux';
 import routes from './routes';
 import WithStylesContext from './WithStylesContext';
 import store, {updateStoreFromLocalStorage} from './store';
+import {setHydrationComplete} from './reducers/hydration';
 
 const renderDynamic = () => {
   const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
@@ -29,12 +30,9 @@ const renderDynamic = () => {
     };
   };
 
-  // If we are in a browser, we need a global variable to say if hydration has been completed.
-  // This variable could also have been placed in the redux tree, or passed down using a react context.
-  if (window) { window.ccv_hydrationCompleted = false; }
   const callback = () => {
     updateStoreFromLocalStorage();
-    if (window) { window.ccv_hydrationCompleted = true; }
+    store.dispatch(setHydrationComplete());
   };
 
   const renderFunc = IS_HOT ? render : hydrate;
@@ -47,7 +45,9 @@ const renderDynamic = () => {
         />
       </WithStylesContext>
     </Provider>,
+
     document.getElementById('app'),
+
     callback,
   );
 };
