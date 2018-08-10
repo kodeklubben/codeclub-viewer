@@ -15,6 +15,9 @@ const renderStatic = (locals, callback) => {
   const pathWithoutHtml = locals.path.replace(/\.html$/, '');
   const location = history.createLocation(pathWithoutHtml);
 
+  // console.log('locals.path', locals.path);
+  // console.log('locals.assets', locals.assets);
+
   match({ routes, location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
     let css = [];
     // The following onInsertCss function allows multiple styles as arguments in withStyles().
