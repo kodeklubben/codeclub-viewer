@@ -15,10 +15,8 @@ import store, {updateStoreFromLocalStorage} from './store';
 import {setHydrationComplete} from './reducers/hydration';
 
 const renderDynamic = () => {
-  const publicPath = process.env.PUBLICPATH_WITHOUT_SLASH;
-  const historyOptions = publicPath === '/' ? {} : {
-    basename: publicPath
-  };
+  const basename = process.env.PUBLICPATH_WITHOUT_SLASH;
+  const historyOptions = basename === '/' ? {} : {basename};
   const browserHistory = useRouterHistory(createBrowserHistory)(historyOptions);
 
   // The following onInsertCss function allows multiple styles as arguments in withStyles().
