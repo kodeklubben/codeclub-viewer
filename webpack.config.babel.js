@@ -54,7 +54,6 @@ import WebpackShellPlugin from 'webpack-shell-plugin';
 
 import {
   assets,
-  bootstrapStyles,
   buildBaseDir,
   buildDir,
   filenameBase,
@@ -74,7 +73,6 @@ const createConfig = (env = {}) => {
   if (env.verbose) {
     console.log('Build constants:');
     console.log('  assets:', assets);
-    console.log('  bootstrapStyles:', bootstrapStyles);
     console.log('  buildBaseDir:', buildBaseDir);
     console.log('  buildDir:', buildDir);
     console.log('  filenameBase:', filenameBase);
@@ -112,7 +110,6 @@ const createConfig = (env = {}) => {
     entry: {
       main: [
         'babel-polyfill',
-        isHot ? 'bootstrap-loader' : 'bootstrap-loader/extractStyles',
         './src/index.js',
       ],
     },
@@ -134,7 +131,6 @@ const createConfig = (env = {}) => {
         lessonSrc,
         lessonFiltertags,
         assets,
-        bootstrapStyles
       }
     },
 

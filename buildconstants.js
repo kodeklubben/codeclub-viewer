@@ -20,7 +20,6 @@ const lessonRepo = path.resolve(__dirname, '../oppgaver');
 const lessonSrc = path.resolve(lessonRepo, 'src');
 const lessonFiltertags = path.resolve(__dirname, '../oppgaver/filtertags');
 const assets = path.resolve(__dirname, './src/assets');
-const bootstrapStyles = path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/bootstrap');
 
 const filenameBase = isHot ? '[name]' : '[name].[chunkhash:6]';
 
@@ -34,6 +33,5 @@ module.exports = {
   lessonSrc,
   lessonFiltertags,
   assets,
-  bootstrapStyles,
   filenameBase,
 };
