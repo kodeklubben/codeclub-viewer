@@ -1,9 +1,0 @@
-// It seems like overflow-y is set to "auto" for screensize below screen-md-min (768px)
-// (see node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_navbar.scss:60)
-// but this doesn't make any sense to me.
-// Perhaps the menu shouldn't show like that on mobile, but should be displayed differently?
-// Setting this to visible to always show dropdown menus for now.
-.navbar-collapse.in {
-  overflow-y: visible;
-}
-

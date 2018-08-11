@@ -1,4 +1,3 @@
-@import "pre-customizations";
 @import "~bootstrapStyles/variables";
 
 // Colors
@@ -47,9 +46,6 @@ $color-scratchblock-moreblocks: #71009a;
 $font-size-xs-pct: 106.25%; // 17px if base font is 16px
 $font-size-sm-pct: 118.75%; // 19px if base font is 16px
 $font-size-md-pct: 125%; // 20px if base font is 16px
-
-$font-size-xlarge: ceil($font-size-base * 1.5);
-$font-size-xsmall: ceil($font-size-base * 0.7);
 
 $font-family-standard: Helvetica, Arial, sans-serif;
 $font-family-dyslexic: 'OpenDyslexic-Regular', Helvetica, Arial, sans-serif;

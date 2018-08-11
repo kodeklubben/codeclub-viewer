@@ -4,12 +4,6 @@
 // and
 // codeclub_lesson_builder/styles/lesson.less
 //////////////////////////////////////////////
-@import '../../../node_modules/highlight.js/styles/idea';
-@import '../../styles/variables';
-@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/mixins';
-@import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/tables';
-
-$checkbox-blue: #abdbea;
 
 @mixin styledList {
   ul,
@@ -29,7 +23,7 @@ $checkbox-blue: #abdbea;
   li::before {
     content: " ";
     border-radius: 20px;
-    border: 3px solid $checkbox-blue;
+    border: 3px solid #abdbea;
     padding: 8px;
     float: left;
     margin-left: -40px;
@@ -205,13 +199,6 @@ code {
   }
 }
 
-//// tables
-table {
-  // add table class to all tables, assumes that tables are only used
-  // for listing stuff and is not in use for other components like calendars
-  @extend .table;
-}
-
 // horisontal scroll on screens, do not wrap
 // not keyword negate _whole_ media query,
 // making `(not print) and (min-width: @screen-sm)` impossible
@@ -257,7 +244,7 @@ input[type="checkbox"] + label::before {
   height: 1.3em;
   margin: 0 0.6em 0 -2.2em;
   line-height: 1.1em;
-  border: 3px solid $checkbox-blue;
+  border: 3px solid #abdbea;
   border-radius: 3px;
 }
 
@@ -268,5 +255,5 @@ input[type="checkbox"]:checked + label::before {
 }
 
 input[type="checkbox"]:focus + label::before {
-  background: darken($checkbox-blue, 20%);
+  background: darken(#abdbea, 20%);
 }

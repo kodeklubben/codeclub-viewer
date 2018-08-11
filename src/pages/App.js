@@ -12,7 +12,7 @@ const container = {
   display: 'flex',
   overflowX: 'hidden',
   minHeight: '100vh',
-  'flex-direction': 'column',
+  flexDirection: 'column',
 };
 
 const styles = {

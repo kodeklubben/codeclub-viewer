@@ -32,11 +32,3 @@
     position: static; // To avoid bottom part of outline from being overwritten by the next element
   }
 }
-
-.panel-student {
-  @include panel-kodeklubben($color-green-dark, $color-green-light, $color-green-lighter);
-}
-
-.panel-teacher {
-  @include panel-kodeklubben($color-blue-dark, $color-blue-light, $color-blue-lighter);
-}
