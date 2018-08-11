@@ -16,7 +16,7 @@ const styles = {
 };
 
 const LessonCount = ({classes, lessonsPerLanguage, showFlag, t}) => {
-  const totalNumberOfLessons = Object.values(lessonsPerLanguage).reduce((sum, n) => sum + n, 0);
+  const totalNumberOfLessons = Object.keys(lessonsPerLanguage).reduce((sum, n) => sum + lessonsPerLanguage[n], 0);
   return (
     <Grid container direction='column' alignItems='center'>
       <Grid item className={classes.grey}>{t('frontpage.lessoncount', {count: totalNumberOfLessons})}</Grid>

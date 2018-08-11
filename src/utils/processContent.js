@@ -146,16 +146,17 @@ const renderScratchBlocks = (content, styles) => {
  * Process all of the content
  * @param {string} content HTML with <pre class="blocks">...</pre>
  * @param {object} styles css-modules object
+ * @param {boolean} isHydrated
  * @returns {string} The HTML as a string
  */
-export const processContent = (content, styles) => {
+export const processContent = (content, styles, isHydrated) => {
   const parser = require('posthtml-parser');
   const render = require('posthtml-render');
 
   let parsedContent = parser(content);
   parsedContent = replaceClassRecursively(parsedContent, styles);
   content = render(parsedContent);
-  if (typeof document !== 'undefined') {
+  if (typeof document !== 'undefined' && isHydrated) {
     content = renderScratchBlocks(content, styles);
   }
   return content;
