@@ -58,6 +58,47 @@ export const getFilteredLessons = createSelector(
 export const getFilteredLessonsInCourse = (state, course) => getFilteredLessons(state)[course] || [];
 
 /**
+ * Get number of lessons per checked language for all courses.
+ * Doesn't return courses or languages without lessons.
+ * @param {object} state The redux state object
+ * @returns {object} An object which shows how many lessons per checked filter language, e.g.
+ * {
+ *   scratch: {
+ *     nb: 5,
+ *     en: 2,
+ *   },
+ *   python: {
+ *     nb: 7,
+ *     nn: 4,
+ *   },
+ *   ...
+ * }
+ */
+export const getFilteredLessonCountPerLanguage = createSelector(
+  // Input selectors:
+  getFilteredLessons,
+  getCheckedFilterLanguages,
+
+  // Output selector (resultfunc):
+  (lessons, filterLanguages) => {
+    const resultObj = {};
+    for (const course of Object.keys(lessons)) {
+      const lessonsInCourse = lessons[course];
+      for (const lesson of lessonsInCourse) {
+        for (const language of getLessonLanguages(course, lesson)) {
+          if (filterLanguages.includes(language)) {
+            const courseObj = resultObj[course] || {};
+            courseObj[language] = (courseObj[language] || 0) + 1;
+            resultObj[course] = courseObj;
+          }
+        }
+      }
+    }
+    return resultObj;
+  }
+);
+
+/**
  * Get number of lessons (in a course) per checked language. Doesn't return languages without lessons.
  * @param {object} state The redux state object
  * @param {string} course Which course to count lessons for
@@ -67,26 +108,8 @@ export const getFilteredLessonsInCourse = (state, course) => getFilteredLessons(
  *   en: 2,
  * }
  */
-export const getFilteredLessonsInCourseCountPerLanguage = createSelector(
-  // Input selectors:
-  (state, course) => course,
-  getFilteredLessonsInCourse,
-  getCheckedFilterLanguages,
-
-  // Output selector (resultfunc):
-  (course, lessons, filterLanguages) => {
-    const lessonsPerLanguage = {};
-    for (const lesson of lessons) {
-      for (const language of getLessonLanguages(course, lesson)) {
-        if (filterLanguages.includes(language)) {
-          lessonsPerLanguage[language] = (lessonsPerLanguage[language] || 0) + 1;
-        }
-      }
-    }
-    return lessonsPerLanguage;
-  }
-);
-
+export const getFilteredLessonsInCourseCountPerLanguage = (state, course) =>
+  getFilteredLessonCountPerLanguage(state)[course] || [];
 
 /**
  * Get filtered lessons in a course for a specific level
