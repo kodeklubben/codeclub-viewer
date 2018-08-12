@@ -135,7 +135,7 @@ const createConfig = (env = {}) => {
         lessonSrc,
         lessonFiltertags,
         assets,
-        bootstrapStyles
+        bootstrapStyles,
       }
     },
 
