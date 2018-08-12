@@ -14,7 +14,7 @@ const PopoverComponent = ({children, popoverContent, showDyslexicFont}) => {
   const className = showDyslexicFont ? styles.contentDyslexia : styles.content;
   const overlay =
     <Popover id={hashCode(popoverContent)} className={styles.popover}>
-      <div {...{className}} dangerouslySetInnerHTML={createMarkup()}/>
+      <div {...{className}} role='region' dangerouslySetInnerHTML={createMarkup()}/>
     </Popover>;
   const options = {
     animation: true,

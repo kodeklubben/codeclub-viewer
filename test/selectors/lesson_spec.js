@@ -3,7 +3,7 @@ import deepFreeze from 'deep-freeze';
 
 import {
   getFilteredLessons,
-  getFilteredLessonsInCourseCountPerLanguage,
+  getFilteredLessonCountPerLanguage,
   getFilteredLessonsInCourseForLevel,
   getFilteredLevelsInCourse,
 } from '../../src/selectors/lesson';
@@ -59,53 +59,79 @@ describe('[selectors/lesson.js] Selector', () => {
     });
   });
 
-  describe('getFilteredLessonsInCourseCountPerLanguage', () => {
-    it('should return full lesson count', () => {
-      const course = 'elm';
-      const lessons = ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+  describe('getFilteredLessonCountPerLanguage', () => {
+    it('should return full lesson count for one course', () => {
+      const lessons = {
+        elm: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'],
+      };
       const filterLanguages = ['nb', 'nn', 'en'];
-      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const actual = getFilteredLessonCountPerLanguage.resultFunc(lessons, filterLanguages);
       const expected = {
-        nb: 6,
-        en: 3,
-        nn: 2,
+        elm: {
+          nb: 6,
+          en: 3,
+          nn: 2,
+        },
       };
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
 
-    it('should return correct lesson count', () => {
-      const course = 'elm';
-      const lessons = ['lessonA', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+    it('should return correct lesson count for one course', () => {
+      const lessons = {
+        elm: ['lessonA', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'],
+      };
       const filterLanguages = ['nb', 'en'];
-      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const actual = getFilteredLessonCountPerLanguage.resultFunc(lessons, filterLanguages);
       const expected = {
-        nb: 5,
-        en: 3,
+        elm: {
+          nb: 5,
+          en: 3,
+        },
       };
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
 
-    it('should return empty object when all lessons removed by filter', () => {
-      const course = 'elm';
-      const lessons = [];
+    it('should return empty object when all lessons removed by filter, only one course', () => {
+      const lessons = {
+        elm: [],
+      };
       const filterLanguages = ['nb', 'nn', 'en'];
-      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const actual = getFilteredLessonCountPerLanguage.resultFunc(lessons, filterLanguages);
       const expected = {};
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
     });
 
-    it('should return empty object since no languages checked in filter', () => {
-      const course = 'elm';
-      const lessons = ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'];
+    it('should return empty object since no languages checked in filter, only one course', () => {
+      const lessons = {
+        elm: ['lessonA', 'lessonB', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'],
+      };
       const filterLanguages = [];
-      const actual = getFilteredLessonsInCourseCountPerLanguage.resultFunc(course, lessons, filterLanguages);
+      const actual = getFilteredLessonCountPerLanguage.resultFunc(lessons, filterLanguages);
       const expected = {};
+      deepFreeze(actual);
+      deepFreeze(expected);
+      expect(actual).to.deep.equal(expected);
+    });
+
+    it('should return only one course when the other has no lessons', () => {
+      const lessons = {
+        elm: ['lessonA', 'lessonC', 'lessonD', 'lessonE', 'lessonF', 'lessonG', 'lessonH'],
+        python: [],
+      };
+      const filterLanguages = ['nb', 'en'];
+      const actual = getFilteredLessonCountPerLanguage.resultFunc(lessons, filterLanguages);
+      const expected = {
+        elm: {
+          nb: 5,
+          en: 3,
+        }
+      };
       deepFreeze(actual);
       deepFreeze(expected);
       expect(actual).to.deep.equal(expected);
