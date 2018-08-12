@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import {getTranslator} from '../selectors/translate';
 import {getShowFiltergroups} from '../selectors/playlist';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
@@ -21,10 +22,6 @@ const styles = theme => ({
       marginTop: '72px',
     },
   },
-  container: {
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
-  },
 });
 
 const CoursePage = ({classes, params, courseTitle, levels, t, showPlaylists, language}) => {
@@ -34,24 +31,24 @@ const CoursePage = ({classes, params, courseTitle, levels, t, showPlaylists, lan
   return (
     <div role='main'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
-      <div className={classes.container}>
-        <Grid container direction='column'>
-          <h1>{courseTitle}</h1>
-          <CourseInfo courseName={course}/>
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={4} lg={2}>{filter}</Grid>
-            {showPlaylists ?
-              <Grid item xs={12} sm={8} lg={10}><PlaylistNavigation {...{course}}/></Grid>
-              :
-              <Grid item xs={12} sm={8} lg={10}>
-                {lessonLists.length ? lessonLists :
-                  <h2 className={classes.topMargin}><b>{t('coursepage.nomatchinglessons')}</b></h2>
-                }
-              </Grid>
-            }
-          </Grid>
+      <Grid container direction='column'>
+        <Typography variant='headline'>{courseTitle}</Typography>
+        <CourseInfo courseName={course}/>
+        <Grid item container spacing={24}>
+          <Grid item xs={12} sm={4} lg={2}>{filter}</Grid>
+          {showPlaylists ?
+            <Grid item xs={12} sm={8} lg={10}><PlaylistNavigation {...{course}}/></Grid>
+            :
+            <Grid item xs={12} sm={8} lg={10}>
+              {lessonLists.length ? lessonLists :
+                <Typography variant='headline' className={classes.topMargin}>
+                  {t('coursepage.nomatchinglessons')}
+                </Typography>
+              }
+            </Grid>
+          }
         </Grid>
-      </div>
+      </Grid>
     </div>
   );
 };

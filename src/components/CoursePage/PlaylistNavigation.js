@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -21,14 +22,17 @@ const styles = theme => ({
   panel: {
     marginTop: theme.spacing.unit,
   },
-  headerText: {
-    fontSize: '1.75em',
-  },
   studentRoot: {
     backgroundColor: green[200],
   },
   teacherRoot: {
     backgroundColor: blue[200],
+  },
+  studentContent: {
+    backgroundColor: green[50],
+  },
+  teacherContent: {
+    backgroundColor: blue[50],
   },
 });
 
@@ -50,7 +54,6 @@ class PlaylistNavigation extends React.Component {
     const playlistListItems = playlists.map((playlist, index) => {
       const lessons = getPlaylistLessons(course, playlist);
       const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
-      const header = <h4 role='presentation'>{title}</h4>;
       return (
         <ExpansionPanel
           key={playlist}
@@ -62,7 +65,7 @@ class PlaylistNavigation extends React.Component {
             classes={{root: isStudentMode ? classes.studentRoot : classes.teacherRoot}}
             expandIcon={<ExpandMoreIcon/>}
           >
-            {header}
+            <Typography variant='title'>{title}</Typography>
           </ExpansionPanelSummary>
           {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
             lessons.map(lesson =>
@@ -73,7 +76,7 @@ class PlaylistNavigation extends React.Component {
             )
             :
             <ExpansionPanelDetails classes={{root: isStudentMode ? classes.studentContent : classes.teacherContent}}>
-              {t('coursepage.lessonsnottranslated')}
+              <Typography variant='body2'>{t('coursepage.lessonsnottranslated')}</Typography>
             </ExpansionPanelDetails>
           }
         </ExpansionPanel>
@@ -83,7 +86,7 @@ class PlaylistNavigation extends React.Component {
     return (
       playlists.length > 0 ?
         <div className={classes.container}>
-          <h2 className={classes.headerText}>{t('coursepage.lessoncollections')}</h2>
+          <Typography variant='headline'>{t('coursepage.lessoncollections')}</Typography>
           {playlistListItems}
         </div> :
         null

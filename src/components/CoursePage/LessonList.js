@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import LevelIcon from '../LevelIcon';
 import LessonWrapper from './LessonWrapper';
@@ -9,18 +9,12 @@ import {getTranslator} from '../../selectors/translate';
 import {getFilteredLessonsInCourseForLevel} from '../../selectors/lesson';
 import {isLessonIndexed} from '../../resources/lessons';
 
-const styles = {
-  headerText: {
-    fontSize: '1.75em',
-  },
-};
-
-const LessonList = ({classes, course, level, lessonsInLevel, t}) => {
+const LessonList = ({course, level, lessonsInLevel, t}) => {
   return (
     <div>
-      <h2 className={classes.headerText}>
-        <LevelIcon level={level}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
-      </h2>
+      <Typography variant='title'>
+        <LevelIcon {...{level}}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
+      </Typography>
       <List>
         {lessonsInLevel.map(lesson =>
           isLessonIndexed(course, lesson) ?
@@ -36,7 +30,6 @@ const LessonList = ({classes, course, level, lessonsInLevel, t}) => {
 
 LessonList.propTypes = {
   // ownProps
-  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
 
@@ -52,4 +45,4 @@ const mapStateToProps = (state, {course, level}) => ({
 
 export default connect(
   mapStateToProps
-)(withStyles(styles)(LessonList));
+)(LessonList);

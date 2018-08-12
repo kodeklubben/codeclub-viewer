@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
@@ -22,8 +23,6 @@ import {getLevel, getLicense} from '../resources/lessons';
 const styles = theme => ({
   container: {
     maxWidth: '800px',
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
     marginLeft: 'auto',
     marginRight: 'auto',
     [theme.breakpoints.down('xs')]: {
@@ -78,21 +77,19 @@ class LessonPage extends React.Component {
       }
     </div>;
     return (
-      <div role='main'>
+      <div className={classes.container} role='main'>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
-        <div className={classes.container}>
-          <h1>
-            <LevelIcon level={getLevel(course, lesson)}/>
-            {title}
-          </h1>
-          {authorNode}
-          {translatorNode}
-          <PrintInfo {...{course, lesson}}/>
-          <ButtonRow {...{course, lesson, language, isReadme}}/>
-          <Content {...{course, lesson, language, isReadme}}/>
-          {licenseRow}
-          <ImprovePage {...{course, lesson, language, isReadme}}/>
-        </div>
+        <Typography variant='headline'>
+          <LevelIcon level={getLevel(course, lesson)}/>
+          {title}
+        </Typography>
+        {authorNode}
+        {translatorNode}
+        <PrintInfo {...{course, lesson}}/>
+        <ButtonRow {...{course, lesson, language, isReadme}}/>
+        <Content {...{course, lesson, language, isReadme}}/>
+        {licenseRow}
+        <ImprovePage {...{course, lesson, language, isReadme}}/>
       </div>
     );
   }

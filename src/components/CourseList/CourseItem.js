@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
-import grey from '@material-ui/core/colors/grey';
+import Typography from '@material-ui/core/Typography';
 import LaunchIcon from '@material-ui/icons/Launch';
 import Link from 'react-router/lib/Link';
 import PopoverComponent from '../PopoverComponent';
@@ -19,29 +19,24 @@ import {getTranslator} from '../../selectors/translate';
 
 const styles = theme => ({
   courseItem: {
-    color: grey[800],
     margin: '25px auto',
     maxWidth: '175px',
-    cursor: 'pointer',
     '&:link': {
-      'text-decoration': 'none',
+      textDecoration: 'none',
     },
   },
   courseLogo: {
     maxWidth: '100%',
-    padding: '5px',
     height: '170px',
-    marginBottom: '15px',
     [theme.breakpoints.up('sm')]: {
       '&:hover': {
-        padding: '0',
+        transform: 'scale(1.1)',
       },
     },
   },
   courseName: {
     fontSize: '1.3em',
-    'white-space': 'nowrap',
-    color: grey[900],
+    whiteSpace: 'nowrap',
     [theme.breakpoints.down('xs')]: {
       fontSize: '1.1em',
     },
@@ -50,8 +45,9 @@ const styles = theme => ({
     marginBottom: '4px',
   },
   icon: {
+    color: 'black',
     marginLeft: '3px',
-    'padding-top': '4px',
+    paddingTop: '4px',
   },
 });
 
@@ -73,13 +69,13 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
         <a className={classes.courseItem} href={externalLink} target='_blank' rel='noopener'>
           {courseIcon}
           <Grid container alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
-            <Grid item>{courseTitle}</Grid>
+            <Typography variant='title'>{courseTitle}</Typography>
             <Grid item className={classes.icon}><LaunchIcon/></Grid>
             <Grid item className={classes.popover}>{popoverButton}</Grid>
           </Grid>
           {!onlyCheckedMainLanguage ?
             <Grid container justify='center'>
-              <Flag language={language}/>
+              <Flag {...{language}}/>
             </Grid>
             : null}
         </a>
@@ -87,7 +83,7 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
         <Link className={classes.courseItem} to={coursePath}>
           {courseIcon}
           <Grid container alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
-            <Grid item>{courseTitle}</Grid>
+            <Typography variant='title'>{courseTitle}</Typography>
             <Grid item className={classes.popover}>{popoverButton}</Grid>
           </Grid>
           {showLessonCount ? <LessonCount {...{course}}/> : null}

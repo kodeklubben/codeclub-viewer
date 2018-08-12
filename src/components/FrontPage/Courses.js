@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../../selectors/course';
 import {getTranslator} from '../../selectors/translate';
 import {getCoursesWithPlaylists} from '../../resources/playlists';
@@ -11,18 +12,18 @@ const Courses = ({t, courses, externalCourses}) => (
   <div>
     {courses.length > 0 ?
       <div>
-        <h1>{t('frontpage.courses')}</h1>
+        <Typography variant='headline'>{t('frontpage.courses')}</Typography>
         <CourseList {...{courses}}/>
       </div>
       : null}
     {externalCourses.length > 0 ?
       <div>
-        <h1>{t('frontpage.otherwebsitecourses')}</h1>
+        <Typography variant='headline'>{t('frontpage.otherwebsitecourses')}</Typography>
         <ExternalCourseList coursesWithLanguage={externalCourses}/>
       </div>
       : null}
     {courses.length + externalCourses.length !== 0 ? null :
-      <h1>{t('coursepage.nomatchinglessons')}</h1>}
+      <Typography variant='headline'>{t('coursepage.nomatchinglessons')}</Typography>}
   </div>
 );
 

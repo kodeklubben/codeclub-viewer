@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Grid from '@material-ui/core/Grid';
 import {withStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
 import Flag from '../Flag';
 import {getTranslator} from '../../selectors/translate';
@@ -19,7 +20,9 @@ const LessonCount = ({classes, lessonsPerLanguage, showFlag, t}) => {
   const totalNumberOfLessons = Object.keys(lessonsPerLanguage).reduce((sum, n) => sum + lessonsPerLanguage[n], 0);
   return (
     <Grid container direction='column' alignItems='center'>
-      <Grid item className={classes.grey}>{t('frontpage.lessoncount', {count: totalNumberOfLessons})}</Grid>
+      <Typography className={classes.grey} variant='subheading'>
+        {t('frontpage.lessoncount', {count: totalNumberOfLessons})}
+      </Typography>
       {showFlag ?
         <Grid item container justify='center' spacing={8}>
           {Object.keys(lessonsPerLanguage).map(language =>

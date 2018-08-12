@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -39,10 +40,10 @@ const CollapsiblePanel = ({classes, defaultExpanded, children, header, isStudent
       classes={{root: isStudentMode ? classes.studentRoot : classes.teacherRoot}}
       expandIcon={<ExpandMoreIcon/>}
     >
-      {header}
+      <Typography variant='title'>{header}</Typography>
     </ExpansionPanelSummary>
     <ExpansionPanelDetails classes={{root: isStudentMode ? classes.studentContent : classes.teacherContent}}>
-      {children}
+      <Typography variant='body2'>{children}</Typography>
     </ExpansionPanelDetails>
   </ExpansionPanel>
 );

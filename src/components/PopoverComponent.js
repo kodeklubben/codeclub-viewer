@@ -5,6 +5,7 @@ import {withStyles} from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import Typography from '@material-ui/core/Typography';
 import {fontFamilyDyslexic} from '../styles/fonts';
 
 const contentStyles = {
@@ -89,7 +90,7 @@ class PopoverComponent extends React.Component {
           <InfoIcon/>
         </IconButton>
         <Popover {...options}>
-          <div className={content} role='region' dangerouslySetInnerHTML={createMarkup()}/>
+          <Typography component='div' className={content} role='region' dangerouslySetInnerHTML={createMarkup()}/>
         </Popover>
       </div>
     );
