@@ -10,13 +10,14 @@ const { buildBaseDir, buildDir, publicPathWithoutSlash } = require('./buildconst
 
 // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
 const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
+const slash = regexpCompPath('/');
 
 const app = express();
 app.use(compression());
 
 
 // serve our static stuff (i.e. urls that match files that exists)
-app.use(publicPathWithoutSlash, express.static(path.resolve(buildDir), {redirect: false}));
+app.use(publicPathWithoutSlash, express.static(path.normalize(buildDir), {redirect: false}));
 
 // send all requests other requests here
 app.get('*', function (req, res) {
@@ -28,18 +29,15 @@ app.get('*', function (req, res) {
   } else {
     let filepath;
     if (url === publicPathWithoutSlash || url === publicPathWithoutSlash + '/') {
-      filepath = path.resolve(buildDir, 'index.html');
+      filepath = path.join(buildDir, 'index.html');
     } else {
-      filepath = path.resolve(buildBaseDir, url.slice(1)); // Remove leading slash
-      if (filepath.endsWith(regexpCompPath('/'))) {
-        filepath = filepath.slice(0, -1);
-      } // Remove trailing slash if it exists
-      if (new RegExp('^(.*' + regexpCompPath('/') + '[^.]+)$').test(filepath)) { // if urlpath has no extension...
+      filepath = path.join(buildBaseDir, url, url.endsWith('/') ? 'index.html' : '');
+      if (new RegExp(`^(.*${slash}[^.${slash}]+)$`).test(filepath)) { // if urlpath has no extension...
         filepath = filepath + '.html';  // ... add .html extension
       }
       if (!fs.existsSync(filepath)) { // if file doesn't exist, send to 404.html
         console.log('Could not find file at path', filepath);
-        filepath = path.resolve(buildDir, '404.html');
+        filepath = path.join(buildDir, '404.html');
       }
     }
     res.sendFile(filepath); // Otherwise serve file

@@ -51,6 +51,20 @@ const rewritePath = (nextState, replace) => {
         ' when rendering static pages (' + nextpath + ')');
     }
   }
+  else if (nextpath !== '/' && nextpath.endsWith('/')) {
+    // Github pages looks for /.../index (or index.html) if url ends with slash,
+    // e.g if url is /scratch/ then github looks for /scratch/index (or /scratch/index.html)
+    // Since we don't have this index file (only /scratch.html), github pages serves 404.html.
+    // But, once the js has loaded, react router doesn't care about the last slash,
+    // so it renders the page anyway. But any relative urls in that page won't work, so the page is broken (looks bad).
+    // Thus we need to make sure that urls become what they are actually treated as.
+    if (typeof document !== 'undefined') {
+      replace(nextpath + 'index' + nextState.location.search);
+    } else {
+      console.error('The router cannot handle paths that end in /' +
+        ' when rendering static pages (' + nextpath + ')');
+    }
+  }
 };
 
 const appOnEnter = (nextState, replace) => {
