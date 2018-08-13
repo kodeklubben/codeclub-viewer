@@ -56,7 +56,7 @@ class TeacherInfobox extends React.Component {
             {showCourseInfo ? <RemoveCircleIcon/> : <AddCircleIcon/>}
           </IconButton>
         </Grid>
-        <Collapse in={showCourseInfo}>
+        <Collapse in={showCourseInfo} mountOnEnter unmountOnExit>
           <Typography variant='title' gutterBottom>{t('frontpage.teacherinfobox.teacher')}</Typography>
           <Typography variant='body2' paragraph>
             {t('frontpage.teacherinfobox.info1')}

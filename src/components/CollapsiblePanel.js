@@ -33,7 +33,10 @@ const styles = theme => ({
 });
 
 const CollapsiblePanel = ({classes, defaultExpanded, children, header, isStudentMode}) => (
-  <ExpansionPanel className={classes.container} {...{defaultExpanded}}>
+  <ExpansionPanel
+    CollapseProps={{mountOnEnter: true, unmountOnExit: true}}
+    className={classes.container} {...{defaultExpanded}}
+  >
     <ExpansionPanelSummary
       classes={{root: isStudentMode ? classes.studentRoot : classes.teacherRoot}}
       expandIcon={<ExpandMoreIcon/>}

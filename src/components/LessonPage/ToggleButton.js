@@ -44,7 +44,7 @@ class ToggleButton extends React.Component {
         <Button {...options}>
           {buttonText}
         </Button>
-        <Collapse in={open}>
+        <Collapse in={open} mountOnEnter unmountOnExit>
           <div className={classes.content}>
             <div dangerouslySetInnerHTML={this.createMarkup()}/>
           </div>

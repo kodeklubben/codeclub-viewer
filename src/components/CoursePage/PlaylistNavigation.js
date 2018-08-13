@@ -60,6 +60,7 @@ class PlaylistNavigation extends React.Component {
           expanded={expanded === index}
           onChange={this.handleChange(index)}
           className={classes.panel}
+          CollapseProps={{mountOnEnter: true, unmountOnExit: true}}
         >
           <ExpansionPanelSummary
             classes={{root: isStudentMode ? classes.studentRoot : classes.teacherRoot}}

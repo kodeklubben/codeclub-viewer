@@ -56,7 +56,7 @@ const FilterGroup = ({
           <ListItemText primary={groupName}/>
           {somethingChecked ? <LockIcon className={classes.lockIcon}/> : null}
         </ListItem>
-        <Collapse in={!isCollapsed}>
+        <Collapse in={!isCollapsed} mountOnEnter unmountOnExit>
           {filterItems}
         </Collapse>
       </div>
