@@ -31,10 +31,7 @@ app.get('*', function (req, res) {
     if (url === publicPathWithoutSlash || url === publicPathWithoutSlash + '/') {
       filepath = path.join(buildDir, 'index.html');
     } else {
-      filepath = path.join(buildBaseDir, url);
-      if (filepath.endsWith('/')) {
-        filepath = filepath + 'index.html';
-      }
+      filepath = path.join(buildBaseDir, url, url.endsWith('/') ? 'index.html' : '');
       if (new RegExp(`^(.*${slash}[^.${slash}]+)$`).test(filepath)) { // if urlpath has no extension...
         filepath = filepath + '.html';  // ... add .html extension
       }
