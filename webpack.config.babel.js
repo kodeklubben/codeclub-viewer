@@ -39,6 +39,7 @@ import path from 'path';
 import MarkdownItAttrs from 'markdown-it-attrs';
 import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
+import MarkdownItKatex from 'markdown-it-katex';
 import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
 import highlight from './src/highlighting';
 
@@ -134,7 +135,7 @@ const createConfig = (env = {}) => {
         lessonSrc,
         lessonFiltertags,
         assets,
-        bootstrapStyles
+        bootstrapStyles,
       }
     },
 
@@ -247,6 +248,7 @@ const createConfig = (env = {}) => {
               MarkdownItAttrs,
               MarkdownItHeaderSections,
               MarkdownItImplicitFigures,
+              MarkdownItKatex,
               [MarkdownItTaskCheckbox, {disabled: false}],
             ],
             highlight,
