@@ -34,13 +34,11 @@ const App = ({classes, params, location, children, showDyslexicFont}) => {
   const renderPdf = Object.keys(location.query).includes('pdf');
   const className = showDyslexicFont ? classes.appContainerDyslexia : classes.appContainer;
   return (
-    <div>
+    <div {...{className}}>
       <Head/>
-      <div {...{className}}>
-        {renderPdf ? <PdfHeader  {...{params}}/> : <NavBar {...{params}}/>}
-        <div className={classes.stickyFooter}>{children}</div>
-        {renderPdf ? null : <Footer/>}
-      </div>
+      {renderPdf ? <PdfHeader  {...{params}}/> : <NavBar {...{params}}/>}
+      <div className={classes.stickyFooter}>{children}</div>
+      {renderPdf ? null : <Footer/>}
     </div>
   );
 };

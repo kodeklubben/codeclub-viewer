@@ -33,6 +33,9 @@ const styles = theme => ({
       },
     },
   },
+  smallIcon: {
+    fontSize: 18,
+  },
   content: {
     ...contentStyles,
   },
@@ -44,7 +47,7 @@ const styles = theme => ({
 
 class PopoverComponent extends React.Component {
   state = {
-    ancherel: null,
+    anchorEl: null,
   };
 
   handleClick = event => {
@@ -64,7 +67,7 @@ class PopoverComponent extends React.Component {
   };
 
   render() {
-    const {classes, popoverContent, showDyslexicFont} = this.props;
+    const {classes, inFilter, popoverContent, showDyslexicFont} = this.props;
     const {anchorEl} = this.state;
     const createMarkup = () => {
       return {__html: popoverContent};
@@ -87,7 +90,7 @@ class PopoverComponent extends React.Component {
     return (
       <div>
         <IconButton onClick={this.handleClick} aria-label='Info'>
-          <InfoIcon/>
+          <InfoIcon classes={{root: inFilter ? classes.smallIcon : ''}} />
         </IconButton>
         <Popover {...options}>
           <Typography component='div' className={content} role='region' dangerouslySetInnerHTML={createMarkup()}/>
@@ -100,7 +103,7 @@ class PopoverComponent extends React.Component {
 PopoverComponent.propTypes = {
   // ownProps
   classes: PropTypes.object.isRequired,
-  children: PropTypes.node,
+  inFilter: PropTypes.bool.isRequired,
   popoverContent: PropTypes.string,
 
   // mapStateToProps

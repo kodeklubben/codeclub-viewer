@@ -101,6 +101,7 @@
     "markdown-it-attrs": "^0.5.1",
     "markdown-it-header-sections": "^0.2.2",
     "markdown-it-implicit-figures": "^0.3.0",
+    "markdown-it-katex": "^2.0.3",
     "markdown-it-loader": "^0.6.0",
     "markdown-it-task-checkbox": "^1.0.6",
     "mocha": "^3.2.0",

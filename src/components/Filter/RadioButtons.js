@@ -9,10 +9,8 @@ import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButtons = ({
-  classes, showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups
-}) => (
-  <RadioGroup aria-label='Radio'>
+const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => (
+  <RadioGroup aria-label='RadioButtonGroup'>
     <FormControlLabel label={t('filter.radio.playlists')} control={
       <Radio
         checked={showPlaylists}

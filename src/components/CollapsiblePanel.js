@@ -19,11 +19,9 @@ const styles = theme => ({
     },
   },
   studentRoot: {
-    fontSize: '1.5em',
     backgroundColor: green[200],
   },
   teacherRoot: {
-    fontSize: '1.5em',
     backgroundColor: blue[200],
   },
   studentContent: {

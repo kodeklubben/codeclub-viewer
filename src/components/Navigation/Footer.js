@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import blue from '@material-ui/core/colors/blue';
 import green from '@material-ui/core/colors/green';
@@ -42,8 +43,8 @@ const styles = {
     marginRight: 'auto',
   },
   githubText: {
-    fontSize: '1.5em',
     color: 'black',
+    textDecoration: 'none',
     '&:hover': {
       textDecoration: 'none',
       color: 'black',
@@ -117,9 +118,9 @@ const Footer = ({classes, t, isStudentMode}) => {
           alt={'GitHub'}
         />
       </a>
-      <p>
+      <Typography variant='title' paragraph>
         <a className={classes.githubText} href={url.wiki} target='_blank' rel='noopener'>{t('footer.contribute')}</a>
-      </p>
+      </Typography>
     </div>
   );
 

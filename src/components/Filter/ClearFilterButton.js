@@ -18,8 +18,8 @@ const styles = theme => ({
       backgroundColor: grey[900],
     },
   },
-  leftIcon: {
-    marginRight: theme.spacing.unit,
+  text: {
+    marginLeft: theme.spacing.unit,
   },
 });
 
@@ -36,8 +36,8 @@ const ClearFilterButton = ({classes, t, language, resetAllFilters, collapseAllFi
   };
   return somethingChecked ?
     <Button {...options}>
-      <ClearIcon className={classes.leftIcon}/>
-      {t('filter.removefilter')}
+      <ClearIcon/>
+      <span className={classes.text}>{t('filter.removefilter')}</span>
     </Button>
     : null;
 };

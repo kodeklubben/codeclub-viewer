@@ -100,7 +100,7 @@ const LessonItem = ({
   const instructionButton = isStudentMode ? null :
     <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
 
-  const popoverButton = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
+  const popoverButton = popoverContent ? <PopoverComponent inFilter={false} {...{popoverContent}}/> : null;
 
   const progress = <Progress {...{classes, checkedCheckboxes, totalCheckboxes, showDyslexicFont}}/>;
 

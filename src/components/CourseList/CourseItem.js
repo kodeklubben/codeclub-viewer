@@ -55,7 +55,7 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
-  const popoverButton = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
+  const popoverButton = popoverContent ? <PopoverComponent inFilter={false} {...{popoverContent}}/> : null;
   const courseIcon = (
     <img
       className={classes.courseLogo}

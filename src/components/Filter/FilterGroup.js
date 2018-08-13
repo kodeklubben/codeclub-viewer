@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
@@ -13,8 +14,14 @@ import FilterItem from './FilterItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
+const styles = theme=> ({
+  lockIcon: {
+    marginRight: theme.spacing.unit * 1.4,
+  },
+});
+
 const FilterGroup = ({
-  groupKey, filterTags, filterChecked,
+  classes, groupKey, filterTags, filterChecked,
   collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateFilter
 }) => {
   const groupName = translateFilter(groupKey);
@@ -43,16 +50,16 @@ const FilterGroup = ({
     };
 
     return (
-      <li>
+      <div>
         <ListItem button disableGutters onClick={onGroupClick} disabled={somethingChecked}>
           {!isCollapsed ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
           <ListItemText primary={groupName}/>
-          {somethingChecked ? <LockIcon/> : null}
+          {somethingChecked ? <LockIcon className={classes.lockIcon}/> : null}
         </ListItem>
         <Collapse in={!isCollapsed}>
           {filterItems}
         </Collapse>
-      </li>
+      </div>
     );
   }
   else {
@@ -62,6 +69,7 @@ const FilterGroup = ({
 
 FilterGroup.propTypes = {
   // ownProps:
+  classes: PropTypes.object.isRequired,
   groupKey: PropTypes.string,
 
   // mapStateToProps:
@@ -90,4 +98,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FilterGroup);
+)(withStyles(styles)(FilterGroup));

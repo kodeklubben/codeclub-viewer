@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import {getTranslator} from '../../selectors/translate';
 import {getShowRadiobuttons, getShowFiltergroups} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
@@ -13,6 +13,9 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import ClearFilterButton from './ClearFilterButton';
 
 const styles = {
+  content: {
+    maxWidth: '100%',
+  },
   marginTop: {
     marginTop: '28px',
   },
@@ -21,19 +24,19 @@ const styles = {
 const LessonFilter = ({classes, filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
-    <Grid container alignItems='center' justify='space-between'>
-      <h4>{t('filter.header')}</h4>
-      <PopoverComponent popoverContent={t('filter.tooltip')}/>
+    <Grid container alignItems='center'>
+      <Typography variant='title'>{t('filter.header')}</Typography>
+      <PopoverComponent inFilter={false} popoverContent={t('filter.tooltip')}/>
     </Grid>;
-  const radioButtons = showRadiobuttons ? <li><RadioButtons/></li> : null;
+  const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
   const groups = showFiltergroups ? filterGroups : null;
   return (
     <div className={classes.marginTop}>
       <CollapsiblePanel defaultExpanded={true} {...{header}}>
-        <List>
+        <div className={classes.content}>
           {radioButtons}
           {groups}
-        </List>
+        </div>
       </CollapsiblePanel>
       <ClearFilterButton/>
     </div>
