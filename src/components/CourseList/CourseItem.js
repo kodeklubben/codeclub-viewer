@@ -39,11 +39,10 @@ const styles = theme => ({
     fontSize: 20,
     whiteSpace: 'nowrap',
     [theme.breakpoints.down('xs')]: {
-      fontSize: 18,
+      fontSize: 17,
     },
   },
   popover: {
-    marginLeft: 4,
     marginBottom: 4,
   },
   icon: {
@@ -70,8 +69,8 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
       {externalLink ?
         <a className={classes.courseItem} href={externalLink} target='_blank' rel='noopener'>
           {courseIcon}
-          <Grid container alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
-            <Typography variant='title'>{courseTitle}</Typography>
+          <Grid container alignItems='center' wrap='nowrap' justify='center'>
+            <Typography className={classes.courseName} variant='title'>{courseTitle}</Typography>
             <Grid item className={classes.icon}><LaunchIcon/></Grid>
             <Grid item className={classes.popover}>{popoverButton}</Grid>
           </Grid>
@@ -84,8 +83,8 @@ const CourseItem = ({classes, course, language, showLessonCount, coursePath, onl
         :
         <Link className={classes.courseItem} to={coursePath}>
           {courseIcon}
-          <Grid container alignItems='center' wrap='nowrap' justify='center' className={classes.courseName}>
-            <Typography variant='title'>{courseTitle}</Typography>
+          <Grid container alignItems='center' wrap='nowrap' justify='center'>
+            <Typography className={classes.courseName} variant='title'>{courseTitle}</Typography>
             <Grid item className={classes.popover}>{popoverButton}</Grid>
           </Grid>
           {showLessonCount ? <LessonCount {...{course}}/> : null}

@@ -48,6 +48,9 @@ class LanguageDropdown extends React.Component {
   };
 
   handleClose = event => {
+    if (this.anchorEl.contains(event.target)) {
+      return;
+    }
     this.setState({open: false});
   };
 
@@ -65,6 +68,7 @@ class LanguageDropdown extends React.Component {
       size: 'small',
       onClick: this.handleToggle,
       className: classes.button,
+      buttonRef: node => {this.anchorEl = node;},
     };
     return (
       <div>
