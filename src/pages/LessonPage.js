@@ -25,10 +25,8 @@ const styles = theme => ({
     maxWidth: 800,
     marginLeft: 'auto',
     marginRight: 'auto',
-    container: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingRight: theme.spacing.unit * 2,
-    },
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
     [theme.breakpoints.down('xs')]: {
       fontSize: 14,
     },

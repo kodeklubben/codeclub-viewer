@@ -31,6 +31,9 @@ const styles = theme => ({
   menuItemText: {
     marginLeft: 8,
   },
+  popper: {
+    zIndex: 1,
+  },
 });
 
 const availableLanguages = getAvailableLanguages();
@@ -69,7 +72,7 @@ class LanguageDropdown extends React.Component {
           <Flag {...{language}}/>
           <span className={classes.text}>{translateFilter('language', language)}</span>
         </Button>
-        <Popper {...{open}} anchorEl={this.anchorEl} transition disablePortal>
+        <Popper {...{open}} anchorEl={this.anchorEl} transition disablePortal className={classes.popper}>
           {({TransitionProps, placement}) => (
             <Grow {...TransitionProps} id='language-menu' style={{transformOrigin: 'center top'}}>
               <Paper>

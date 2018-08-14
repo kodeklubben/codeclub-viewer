@@ -29,12 +29,16 @@ const styles = theme => ({
     height: 36,
   },
   content: {
+    fontSize: 16,
     maxWidth: 600,
     padding: 20,
     display: 'flex',
     justifyContent: 'space-between',
     '& img': {
       marginRight: 15,
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 14,
     },
   },
 });

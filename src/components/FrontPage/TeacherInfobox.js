@@ -31,7 +31,7 @@ const styles = theme => ({
     },
   },
   text: {
-    fontSize: 18,
+    fontSize: 16,
   },
 });
 

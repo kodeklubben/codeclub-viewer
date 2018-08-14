@@ -10,7 +10,7 @@ import {getTranslator} from '../../selectors/translate';
 import DyslexiaSwitch from './DyslexiaSwitch';
 
 const container = {
-  padding: 15,
+  padding: 20,
   marginTop: 100,
   textAlign: 'center',
   '@media print': {

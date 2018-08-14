@@ -35,12 +35,13 @@ const styles = theme => ({
 });
 
 const InstructionButton = ({
-  classes, course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
+  classes, course, lesson, language, isReadme, insideLink, t}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const iconButton = !path ? null :
-    <IconButton component={Link} to={path} aria-label={buttonText}>
+    <IconButton component={Link} to={path} aria-label={t('lessons.toteacherinstruction') + ' ' + lesson}>
       <SchoolIcon/>
     </IconButton>;
+  const buttonText = isReadme ? t('lessons.toteacherinstruction') : t('lessons.tolesson');
   const options = {
     component: Link,
     to: path,
@@ -48,6 +49,7 @@ const InstructionButton = ({
     color: 'default',
     size: 'small',
     className: classes.button,
+    'aria-label': buttonText,
   };
   const button = !path ? null :
     <Button {...options}>
@@ -64,19 +66,15 @@ InstructionButton.propTypes = {
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
-  onlyIcon: PropTypes.bool,
   insideLink: PropTypes.bool, // set to true if button is nested inside a <a>...</a>
 
   // mapStateToProps
-  buttonText: PropTypes.string,
+  t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, {isReadme, onlyIcon}) => {
-  const t = getTranslator(state);
-  return {
-    buttonText: onlyIcon ? '' : t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson'),
-  };
-};
+const mapStateToProps = (state) => ({
+  t: getTranslator(state),
+});
 
 export default connect(
   mapStateToProps

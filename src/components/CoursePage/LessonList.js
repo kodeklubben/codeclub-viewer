@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import LevelIcon from '../LevelIcon';
 import LessonWrapper from './LessonWrapper';
 import {getTranslator} from '../../selectors/translate';
@@ -16,13 +17,14 @@ const styles = {
   },
 };
 
-const LessonList = ({classes, course, level, lessonsInLevel, t}) => {
+const LessonList = ({classes, course, level, lessonsInLevel, t, isStudentMode}) => {
   return (
     <div className={classes.container}>
       <Typography variant='headline'>
         <LevelIcon {...{level}}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </Typography>
       <List>
+        <Divider/>
         {lessonsInLevel.map(lesson =>
           isLessonIndexed(course, lesson) ?
             <li key={lesson}>
@@ -43,12 +45,14 @@ LessonList.propTypes = {
 
   // mapStateToProps
   lessonsInLevel: PropTypes.arrayOf(PropTypes.string).isRequired,
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
+  isStudentMode: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {course, level}) => ({
   lessonsInLevel: getFilteredLessonsInCourseForLevel(state, course, level),
-  t: getTranslator(state)
+  t: getTranslator(state),
+  isStudentMode: state.isStudentMode,
 });
 
 export default connect(

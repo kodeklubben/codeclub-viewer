@@ -33,6 +33,10 @@ const styles = theme => ({
   menuItemText: {
     marginLeft: theme.spacing.unit,
   },
+  popper: {
+    marginLeft: theme.spacing.unit,
+    zIndex: 1,
+  },
 });
 
 
@@ -77,7 +81,7 @@ class ModeDropdown extends React.Component {
             {buttonTexts[mode]}
           </span>
         </Button>
-        <Popper {...{open}} anchorEl={this.anchorEl} transition disablePortal>
+        <Popper {...{open}} anchorEl={this.anchorEl} transition disablePortal className={classes.popper}>
           {({TransitionProps, placement}) => (
             <Grow {...TransitionProps} id='mode-menu' style={{transformOrigin: 'center top'}}>
               <Paper>

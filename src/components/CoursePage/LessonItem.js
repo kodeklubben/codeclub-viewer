@@ -7,8 +7,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import LaunchIcon from '@material-ui/icons/Launch';
-import blue from '@material-ui/core/colors/blue';
-import green from '@material-ui/core/colors/green';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -56,12 +54,6 @@ const styles = theme => ({
     flexWrap: 'nowrap',
     alignItems: 'center',
   },
-  studentRoot: {
-    backgroundColor: green[50],
-  },
-  teacherRoot: {
-    backgroundColor: blue[50],
-  },
 });
 
 const Progress = ({classes, checkedCheckboxes, totalCheckboxes}) => {
@@ -95,7 +87,7 @@ const LessonItem = ({
   const progress = <Progress {...{classes, checkedCheckboxes, totalCheckboxes}}/>;
 
   return (
-    <div className={isStudentMode ? classes.studentRoot : classes.teacherRoot}>
+    <div>
       <div className={classes.container}>
         {external ?
           <ListItem disableGutters component={Link} button to={external} target='_blank' rel='noopener'>
