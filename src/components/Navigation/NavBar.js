@@ -11,6 +11,7 @@ import BreadCrumb from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import ModeDropdown from './ModeDropdown';
 import ContinueButton from './ContinueButton';
+import LkkNav from './LkkNav';
 
 const container = {
   marginBottom: 30,
@@ -27,8 +28,9 @@ const styles = {
   },
 };
 
-const NavBar = ({classes, params, isStudentMode}) => {
-  return (
+const NavBar = ({classes, params, isStudentMode}) => (
+  <div>
+    <LkkNav/>
     <AppBar classes={{root: isStudentMode ? classes.studentContainer : classes.teacherContainer}} position='static'>
       <Toolbar disableGutters>
         <Grid container wrap='nowrap' alignItems='center' justify='space-between'>
@@ -43,8 +45,9 @@ const NavBar = ({classes, params, isStudentMode}) => {
         </Grid>
       </Toolbar>
     </AppBar>
-  );
-};
+  </div>
+);
+
 
 NavBar.propTypes = {
   // ownProps

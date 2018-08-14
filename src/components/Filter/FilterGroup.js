@@ -14,7 +14,7 @@ import FilterItem from './FilterItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
-const styles = theme=> ({
+const styles = theme => ({
   lockIcon: {
     marginRight: theme.spacing.unit * 1.4,
   },
