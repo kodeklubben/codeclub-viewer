@@ -39,6 +39,24 @@ const styles = theme => ({
     color: green[800],
     textDecoration: 'none',
   },
+  linkMenu: {
+    backgroundColor: grey[900],
+    '&:hover, &:focus': {
+      backgroundColor: green[800],
+    },
+  },
+  white: {
+    color: 'white',
+  },
+  alwaysGreen: {
+    backgroundColor: green[800],
+    '&:hover': {
+      backgroundColor: green[800],
+    },
+  },
+  blackBackground: {
+    backgroundColor: grey[900],
+  }
 });
 
 class LkkNav extends React.Component {
@@ -70,37 +88,40 @@ class LkkNav extends React.Component {
     );
     const linkMenu = (
       <div>
-        <ListItem button onClick={this.handleClick}>
+        <ListItem button onClick={this.handleClick} classes={{root: classes.linkMenu}}>
           <Grid container justify='space-around'>
-            <ListItemText primary={t('navbar.menu')}/>
-            {open ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+            <ListItemText classes={{primary: classes.white}} primary={t('navbar.menu')}/>
+            {open ? <ExpandLessIcon className={classes.white}/> : <ExpandMoreIcon className={classes.white}/>}
           </Grid>
         </ListItem>
         <Collapse in={open} mountOnEnter unmountOnExit>
-          <List component='nav'>
-            <ListItem button component='a' href='https://kidsakoder.no/om-lkk/'>
-              <ListItemText primary={t('navbar.lkknav.aboutlkk')}/>
+          <List component='nav' className={classes.blackBackground}>
+            <ListItem classes={{root: classes.linkMenu}} button component='a' href='https://kidsakoder.no/om-lkk/'>
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.aboutlkk')}/>
             </ListItem>
-            <ListItem button component='a' href='https://kidsakoder.no/nyheter/'>
-              <ListItemText primary={t('navbar.lkknav.news')}/>
+            <ListItem classes={{root: classes.linkMenu}} button component='a' href='https://kidsakoder.no/nyheter/'>
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.news')}/>
             </ListItem>
-            <ListItem button component={Link} to={'/'}>
-              <ListItemText primary={t('navbar.lkknav.lessons')}/>
+            <ListItem classes={{root: classes.alwaysGreen}} button component={Link} to={'/'}>
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.lessons')}/>
             </ListItem>
-            <ListItem button component='a' href='https://kidsakoder.no/kodeklubben/kodeklubboversikt/'>
-              <ListItemText primary={t('navbar.lkknav.findcodeclub')}/>
+            <ListItem
+              classes={{root: classes.linkMenu}}
+              button component='a' href='https://kidsakoder.no/kodeklubben/kodeklubboversikt/'
+            >
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.findcodeclub')}/>
             </ListItem>
-            <ListItem button component='a' href='https://kidsakoder.no/kodeklubben/'>
-              <ListItemText primary={t('navbar.lkknav.codeclub')}/>
+            <ListItem classes={{root: classes.linkMenu}} button component='a' href='https://kidsakoder.no/kodeklubben/'>
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.codeclub')}/>
             </ListItem>
-            <ListItem button component='a'  href='https://kidsakoder.no/skole/'>
-              <ListItemText primary={t('navbar.lkknav.school')}/>
+            <ListItem classes={{root: classes.linkMenu}} button component='a'  href='https://kidsakoder.no/skole/'>
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.school')}/>
             </ListItem>
-            <ListItem button component='a' href='https://kidsakoder.no/kodetimen/'>
-              <ListItemText primary={t('navbar.lkknav.codehour')}/>
+            <ListItem classes={{root: classes.linkMenu}} button component='a' href='https://kidsakoder.no/kodetimen/'>
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.codehour')}/>
             </ListItem>
-            <ListItem button component='a' href='https://kidsakoder.no/bidra/'>
-              <ListItemText primary={t('navbar.lkknav.contribute')}/>
+            <ListItem classes={{root: classes.linkMenu}} button component='a' href='https://kidsakoder.no/bidra/'>
+              <ListItemText classes={{primary: classes.white}} primary={t('navbar.lkknav.contribute')}/>
             </ListItem>
           </List>
         </Collapse>

@@ -24,7 +24,7 @@ const LessonList = ({classes, course, level, lessonsInLevel, t, isStudentMode}) 
         <LevelIcon {...{level}}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </Typography>
       <List>
-        <Divider/>
+        <Divider component='li'/>
         {lessonsInLevel.map(lesson =>
           isLessonIndexed(course, lesson) ?
             <li key={lesson}>

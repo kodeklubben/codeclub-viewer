@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import LaunchIcon from '@material-ui/icons/Launch';
+import StarIcon from '@material-ui/icons/Star';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -54,6 +55,9 @@ const styles = theme => ({
     flexWrap: 'nowrap',
     alignItems: 'center',
   },
+  star: {
+    marginRight: theme.spacing.unit,
+  },
 });
 
 const Progress = ({classes, checkedCheckboxes, totalCheckboxes}) => {
@@ -73,19 +77,14 @@ const LessonItem = ({
   t, checkedCheckboxes, totalCheckboxes
 }) => {
   const level = getLevel(course, lesson);
-
   const flag = onlyCheckedMainLanguage ? null :
     <div className={classes.marginLeft}><Flag language={language}/></div>;
-
   const levelIcon = <div className={classes.marginLeft}><LevelIcon {...{level}}/></div>;
-
   const instructionButton = isStudentMode ? null :
     <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
-
   const popoverButton = popoverContent ? <PopoverComponent inFilter={false} {...{popoverContent}}/> : null;
-
+  const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const progress = <Progress {...{classes, checkedCheckboxes, totalCheckboxes}}/>;
-
   return (
     <div>
       <div className={classes.container}>
@@ -102,6 +101,7 @@ const LessonItem = ({
             <Progressbar {...{classes, checkedCheckboxes, totalCheckboxes, level}}/>
             {levelIcon}
             <ListItemText primary={title} secondary={progress}/>
+            {progressPercent === 100 ? <StarIcon color='action' className={classes.star}/> : null}
           </ListItem>
         }
         {instructionButton}
