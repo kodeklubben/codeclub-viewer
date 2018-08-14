@@ -16,11 +16,19 @@ import {getCourseTitle} from '../resources/courseFrontmatter';
 import {getCourseIntroText} from '../resources/courseContent';
 
 const styles = theme => ({
+  container: {
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+  },
   topMargin: {
-    marginTop: 0,
+    marginTop: 20,
     [theme.breakpoints.up('sm')]: {
-      marginTop: 72,
+      marginTop: 71,
     },
+  },
+  courseTitle: {
+    marginBottom: 10,
+    fontSize: 36,
   },
 });
 
@@ -29,12 +37,12 @@ const CoursePage = ({classes, params, courseTitle, levels, t, showPlaylists, lan
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <div className={classes.topMargin}><LessonFilter course={course}/></div>;
   return (
-    <div role='main'>
+    <div role='main' className={classes.container}>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
       <Grid container direction='column'>
-        <Typography variant='headline'>{courseTitle}</Typography>
+        <Typography variant='headline' className={classes.courseTitle}>{courseTitle}</Typography>
         <CourseInfo courseName={course}/>
-        <Grid item container spacing={24}>
+        <Grid item container spacing={32}>
           <Grid item xs={12} sm={4} lg={2}>{filter}</Grid>
           {showPlaylists ?
             <Grid item xs={12} sm={8} lg={10}><PlaylistNavigation {...{course}}/></Grid>

@@ -30,6 +30,9 @@ const styles = theme => ({
       textDecoration: 'none',
     },
   },
+  text: {
+    fontSize: 18,
+  },
 });
 
 class TeacherInfobox extends React.Component {
@@ -49,24 +52,28 @@ class TeacherInfobox extends React.Component {
     const ariaLabel = showCourseInfo ? t('frontpage.teacherinfobox.minus') : t('frontpage.teacherinfobox.plus');
     return (
       <div className={classes.infoBox}>
-        <Typography variant='headline' align='center' gutterBottom>{t('frontpage.teacherinfobox.header')}</Typography>
-        <Typography variant='body2' paragraph>{t('frontpage.teacherinfobox.changemode')}</Typography>
+        <Typography variant='headline' align='center' gutterBottom paragraph>
+          {t('frontpage.teacherinfobox.header')}
+        </Typography>
+        <Typography variant='body2' paragraph className={classes.text}>
+          {t('frontpage.teacherinfobox.changemode')}
+        </Typography>
         <Grid container justify='center'>
           <IconButton onClick={() => this.changeState()} aria-label={ariaLabel}>
             {showCourseInfo ? <RemoveCircleIcon/> : <AddCircleIcon/>}
           </IconButton>
         </Grid>
         <Collapse in={showCourseInfo} mountOnEnter unmountOnExit>
-          <Typography variant='title' gutterBottom>{t('frontpage.teacherinfobox.teacher')}</Typography>
-          <Typography variant='body2' paragraph>
+          <Typography variant='headline'>{t('frontpage.teacherinfobox.teacher')}</Typography>
+          <Typography variant='body2' paragraph className={classes.text}>
             {t('frontpage.teacherinfobox.info1')}
             <br/>
             <a className={classes.link} href={url.valgfag} target='_blank' rel='noopener'>
               {t('frontpage.teacherinfobox.link1')}
             </a>
           </Typography>
-          <Typography variant='title'>{t('frontpage.teacherinfobox.assistant')}</Typography>
-          <Typography variant='body2' paragraph>
+          <Typography variant='headline'>{t('frontpage.teacherinfobox.assistant')}</Typography>
+          <Typography variant='body2' paragraph className={classes.text}>
             {t('frontpage.teacherinfobox.info2')}
             <br/>
             <a className={classes.link} href={url.kodeklubb} target='_blank' rel='noopener'>

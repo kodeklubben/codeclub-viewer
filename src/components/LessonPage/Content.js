@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import Typography from '@material-ui/core/Typography';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
@@ -12,7 +13,7 @@ const createMarkup = (lessonContent, isHydrated) => {
 
 const Content = ({course, lesson, language, isReadme, isHydrated}) => {
   const lessonContent = getLessonContent(course, lesson, language, isReadme);
-  return <div dangerouslySetInnerHTML={createMarkup(lessonContent, isHydrated)}/>;
+  return <Typography component='div' dangerouslySetInnerHTML={createMarkup(lessonContent, isHydrated)}/>;
 };
 Content.propTypes = {
   // ownProps

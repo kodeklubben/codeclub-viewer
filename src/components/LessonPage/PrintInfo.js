@@ -10,7 +10,7 @@ const styles = {
   container: {
     display: 'none',
     fontStyle: 'italic',
-    fontSize: '0.75em',
+    fontSize: 12,
     '@media print': {
       display: 'block',
     },

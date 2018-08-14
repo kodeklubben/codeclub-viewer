@@ -4,7 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
   levelIcon: {
-    marginRight: '0.3em',
+    marginRight: 5,
     width: '0.75em',
     height: '0.75em',
   },

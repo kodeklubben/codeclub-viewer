@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {getTranslator} from '../../selectors/translate';
@@ -12,31 +11,22 @@ import PopoverComponent from '../PopoverComponent';
 import CollapsiblePanel from '../CollapsiblePanel';
 import ClearFilterButton from './ClearFilterButton';
 
-const styles = {
-  content: {
-    maxWidth: '100%',
-  },
-  marginTop: {
-    marginTop: 28,
-  },
-};
-
-const LessonFilter = ({classes, filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
+const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
-    <Grid container alignItems='center'>
+    <Grid container alignItems='center' justify='space-between'>
       <Typography variant='title'>{t('filter.header')}</Typography>
       <PopoverComponent inFilter={false} popoverContent={t('filter.tooltip')}/>
     </Grid>;
   const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
   const groups = showFiltergroups ? filterGroups : null;
   return (
-    <div className={classes.marginTop}>
+    <div>
       <CollapsiblePanel defaultExpanded={true} {...{header}}>
-        <div className={classes.content}>
+        <Typography variant='body2'>
           {radioButtons}
           {groups}
-        </div>
+        </Typography>
       </CollapsiblePanel>
       <ClearFilterButton/>
     </div>
@@ -45,7 +35,6 @@ const LessonFilter = ({classes, filterGroupKeys, isStudentMode, t, showRadiobutt
 
 LessonFilter.propTypes = {
   // ownProps
-  classes: PropTypes.object.isRequired,
   course: PropTypes.string,
 
   // mapStateToProps
@@ -66,4 +55,4 @@ const mapStateToProps = (state, {course}) => ({
 
 export default connect(
   mapStateToProps
-)(withStyles(styles)(LessonFilter));
+)(LessonFilter);

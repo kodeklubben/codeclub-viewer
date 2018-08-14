@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   container: {
@@ -22,6 +23,10 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       padding: 0,
     },
+  },
+  linkBar: {
+    display: 'flex',
+    justifyContent: 'space-around',
   },
   link: {
     color: 'black',
@@ -50,18 +55,18 @@ class LkkNav extends React.Component {
     const {open} = this.state;
     const className = classes.link;
     const linkBar = (
-      <Grid item container justify='space-around'>
-        <a {...{className}} href='https://kidsakoder.no/om-lkk/'>{t('navbar.lkknav.aboutlkk')}</a>,
-        <a {...{className}} href='https://kidsakoder.no/nyheter/'>{t('navbar.lkknav.news')}</a>,
-        <Link className={classes.currentLink} to={'/'}>{t('navbar.lkknav.lessons')}</Link>,
+      <Typography variant='subheading' className={classes.linkBar}>
+        <a {...{className}} href='https://kidsakoder.no/om-lkk/'>{t('navbar.lkknav.aboutlkk')}</a>
+        <a {...{className}} href='https://kidsakoder.no/nyheter/'>{t('navbar.lkknav.news')}</a>
+        <Link className={classes.currentLink} to={'/'}>{t('navbar.lkknav.lessons')}</Link>
         <a {...{className}} href='https://kidsakoder.no/kodeklubben/kodeklubboversikt/'>
           {t('navbar.lkknav.findcodeclub')}
-        </a>,
-        <a {...{className}} href='https://kidsakoder.no/kodeklubben/'>{t('navbar.lkknav.codeclub')}</a>,
-        <a {...{className}} href='https://kidsakoder.no/skole/'>{t('navbar.lkknav.school')}</a>,
-        <a {...{className}} href='https://kidsakoder.no/kodetimen/'>{t('navbar.lkknav.codehour')}</a>,
-        <a {...{className}} href='https://kidsakoder.no/bidra/'>{t('navbar.lkknav.contribute')}</a>,
-      </Grid>
+        </a>
+        <a {...{className}} href='https://kidsakoder.no/kodeklubben/'>{t('navbar.lkknav.codeclub')}</a>
+        <a {...{className}} href='https://kidsakoder.no/skole/'>{t('navbar.lkknav.school')}</a>
+        <a {...{className}} href='https://kidsakoder.no/kodetimen/'>{t('navbar.lkknav.codehour')}</a>
+        <a {...{className}} href='https://kidsakoder.no/bidra/'>{t('navbar.lkknav.contribute')}</a>
+      </Typography>
     );
     const linkMenu = (
       <div>

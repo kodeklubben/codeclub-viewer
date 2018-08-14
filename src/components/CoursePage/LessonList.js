@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import LevelIcon from '../LevelIcon';
@@ -9,10 +10,16 @@ import {getTranslator} from '../../selectors/translate';
 import {getFilteredLessonsInCourseForLevel} from '../../selectors/lesson';
 import {isLessonIndexed} from '../../resources/lessons';
 
-const LessonList = ({course, level, lessonsInLevel, t}) => {
+const styles = {
+  container: {
+    marginTop: 30,
+  },
+};
+
+const LessonList = ({classes, course, level, lessonsInLevel, t}) => {
   return (
-    <div>
-      <Typography variant='title'>
+    <div className={classes.container}>
+      <Typography variant='headline'>
         <LevelIcon {...{level}}/>{t('general.levels.' + level)}{' - ' + t('general.level') + ' ' + level}
       </Typography>
       <List>
@@ -30,6 +37,7 @@ const LessonList = ({course, level, lessonsInLevel, t}) => {
 
 LessonList.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
 
@@ -45,4 +53,4 @@ const mapStateToProps = (state, {course, level}) => ({
 
 export default connect(
   mapStateToProps
-)(LessonList);
+)(withStyles(styles)(LessonList));

@@ -28,6 +28,7 @@ const styles = theme => ({
   courseLogo: {
     maxWidth: '100%',
     height: 170,
+    padding: 5,
     [theme.breakpoints.up('sm')]: {
       '&:hover': {
         transform: 'scale(1.1)',
@@ -35,13 +36,14 @@ const styles = theme => ({
     },
   },
   courseName: {
-    fontSize: '1.3em',
+    fontSize: 20,
     whiteSpace: 'nowrap',
     [theme.breakpoints.down('xs')]: {
-      fontSize: '1.1em',
+      fontSize: 18,
     },
   },
   popover: {
+    marginLeft: 4,
     marginBottom: 4,
   },
   icon: {

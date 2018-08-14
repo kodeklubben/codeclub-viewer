@@ -18,6 +18,11 @@ const container = {
 };
 
 const styles = {
+  hide: {
+    '@media print': {
+      display: 'none',
+    },
+  },
   studentContainer: {
     ...container,
     backgroundColor: green[200],
@@ -29,7 +34,7 @@ const styles = {
 };
 
 const NavBar = ({classes, params, isStudentMode}) => (
-  <div>
+  <div className={classes.hide}>
     <LkkNav/>
     <AppBar classes={{root: isStudentMode ? classes.studentContainer : classes.teacherContainer}} position='static'>
       <Toolbar disableGutters>

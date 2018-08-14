@@ -25,8 +25,12 @@ const styles = theme => ({
     maxWidth: 800,
     marginLeft: 'auto',
     marginRight: 'auto',
+    container: {
+      paddingLeft: theme.spacing.unit * 2,
+      paddingRight: theme.spacing.unit * 2,
+    },
     [theme.breakpoints.down('xs')]: {
-      fontSize: '0.85em',
+      fontSize: 14,
     },
     '& figure > img': {
       display: 'block',

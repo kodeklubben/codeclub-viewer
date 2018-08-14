@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ForumIcon from '@material-ui/icons/Forum';
 import ReportProblemIcon from '@material-ui/icons/ReportProblem';
@@ -107,12 +108,9 @@ const ImprovePage = ({classes, course, lesson, language, isReadme, t, isStudentM
   );
   return (
     <div className={isStudentMode ? classes.studentContainer : classes.teacherContainer}>
-      <h2>{t('lessons.improvepage.header')}</h2>
-      <p>
-        {t('lessons.improvepage.textline1')}
-        <br/>
-        {t('lessons.improvepage.textline2')}
-      </p>
+      <Typography paragraph gutterBottom variant='headline'>{t('lessons.improvepage.header')}</Typography>
+      <Typography paragraph variant='body2'>{t('lessons.improvepage.textline1')}</Typography>
+      <Typography paragraph variant='body2'>{t('lessons.improvepage.textline2')}</Typography>
       {buttons}
     </div>
   );
