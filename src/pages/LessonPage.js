@@ -18,7 +18,7 @@ import MarkdownRenderer from '../components/MarkdownRenderer';
 import Progress from '../components/LessonPage/Progress';
 import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
-import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
+import {getLessonTitle, getLessonAuthor, getLessonTranslator, getLessonPath} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
 import {getLevel, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
@@ -107,13 +107,13 @@ LessonPage.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, title, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
     path,
-    title,
-    author,
-    translator,
+    title: getLessonTitle(course, lesson, language, isReadme),
+    author: getLessonAuthor(course, lesson, language, isReadme),
+    translator: getLessonTranslator(course, lesson, language, isReadme),
     license: getLicense(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),

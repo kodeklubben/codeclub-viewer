@@ -117,6 +117,72 @@ export const getLessonFrontmatter = (course, lesson, language, isReadme) => {
 
 /**
  *
+ * @param {string} course
+ * @param {string} lesson
+ * @param {string} language
+ * @param {boolean} isReadme
+ * @returns {string|''} If key exists for lesson, return key
+ */
+export const getLessonKey = (course, lesson, language, isReadme) =>
+  getLessonFrontmatter(course, lesson, language, isReadme).key || '';
+
+/**
+ *
+ * @param {string} course
+ * @param {string} lesson
+ * @param {string} language
+ * @param {boolean} isReadme
+ * @returns {string|''} If title exists for lesson, return title
+ */
+export const getLessonTitle = (course, lesson, language, isReadme) =>
+  getLessonFrontmatter(course, lesson, language, isReadme).title || '';
+
+  /**
+   *
+   * @param {string} course
+   * @param {string} lesson
+   * @param {string} language
+   * @param {boolean} isReadme
+   * @returns {string|''} If author exists for lesson, return author
+   */
+export const getLessonAuthor = (course, lesson, language, isReadme) =>
+  getLessonFrontmatter(course, lesson, language, isReadme).author || '';
+
+  /**
+   *
+   * @param {string} course
+   * @param {string} lesson
+   * @param {string} language
+   * @param {boolean} isReadme
+   * @returns {string|''} If translator exists for lesson, return translator
+   */
+export const getLessonTranslator = (course, lesson, language, isReadme) =>
+  getLessonFrontmatter(course, lesson, language, isReadme).translator || '';
+
+  /**
+   *
+   * @param {string} course
+   * @param {string} lesson
+   * @param {string} language
+   * @param {boolean} isReadme
+   * @returns {string|''} If external exists lesson, return external
+   */
+export const getLessonExternal = (course, lesson, language, isReadme) =>
+  getLessonFrontmatter(course, lesson, language, isReadme).external || '';
+
+  /**
+   *
+   * @param {string} course
+   * @param {string} lesson
+   * @param {string} language
+   * @param {boolean} isReadme
+   * @returns {string|''} If path exists for lesson, return path
+   */
+export const getLessonPath = (course, lesson, language, isReadme) =>
+  getLessonFrontmatter(course, lesson, language, isReadme).path || '';
+
+/**
+ *
  * @param {string} course E.g. 'scratch'
  * @param {string} lesson E.g. 'astrokatt'
  * @return {string[]} An array of languages this lesson exists in, e.g. ['nb', 'en']
