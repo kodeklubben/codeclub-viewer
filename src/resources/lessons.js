@@ -37,8 +37,9 @@ const getData = memoize(
     for (const key of lessonsContext.keys()) {
       const [/* ignore */, course, lesson] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]lesson[.]yml$/);
       const {level, license, tags, indexed} = lessonsContext(key);
-      if (!level) { console.warn(`The lesson ${course}/${lesson} is missing 'level'.`); }
-      const data = {level, license, tags: cleanseTags(tags, key), indexed: indexed !== false};
+      const isIndexed = indexed !== false;
+      if (!level && isIndexed) { console.warn(`The indexed lesson ${course}/${lesson} is missing 'level'.`); }
+      const data = {level, license, tags: cleanseTags(tags, key), isIndexed};
       assignDeep(lessons, [course, lesson], data);
     }
     return lessons;
@@ -51,17 +52,27 @@ const getData = memoize(
  * @param {string} course
  * @param {string} lesson
  * @returns {object} A Metadata object, e.g. {
-    indexed: false,
+    isIndexed: false,
     tags: {
       topic: ['block_based', 'app'],
       subject: ['technology', 'programming'],
       grade: ['secondary', 'junior'],
     }
   }
-  Note that 'indexed' key might be missing, in which case it is assumed to be true.
-  If 'indexed' === false it means that this lesson will only show up in the playlists (oppgavesamlinger)
+  If 'indexed' === false it won't show up using the filter in "all lessons",
+  but can be used as an "instruction lesson" in e.g the playlist or in course info.
+  Note that instructions for a specific lessons should be named README[_xx].md in
+  that the lesson folder.
  */
 const getLessonMetadata = (course, lesson) => (getData()[course] || {})[lesson] || {};
+
+/**
+ * Returns whether or not a lesson.yml file exists for this lesson
+ * @param course
+ * @param lesson
+ * @return {boolean}
+ */
+export const isLesson = (course, lesson) => !!((getData()[course] || {})[lesson]);
 
 /**
  * Get lesson tags (without language included)
@@ -82,7 +93,7 @@ export const getLessonTags = (course, lesson) => getLessonMetadata(course, lesso
  * @param {string} lesson E.g. 'astrokatt'
  * @returns {boolean} Whether or not the lesson is indexed
  */
-export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, lesson).indexed;
+export const isLessonIndexed = (course, lesson) => getLessonMetadata(course, lesson).isIndexed;
 
 /**
  * Get license for lesson.
