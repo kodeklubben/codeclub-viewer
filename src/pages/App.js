@@ -6,7 +6,6 @@ import PdfHeader from '../components/PdfHeader';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
 import Head from '../components/Head';
-import {fontFamilyRoboto, fontFamilyDyslexic} from '../styles/fonts';
 
 const container = {
   display: 'flex',
@@ -18,11 +17,11 @@ const container = {
 const styles = {
   appContainer: {
     ...container,
-    fontFamily: fontFamilyRoboto,
+    fontFamily: 'Roboto',
   },
   appContainerDyslexia: {
     ...container,
-    fontFamily: fontFamilyDyslexic,
+    fontFamily: 'sans-serif',
   },
   stickyFooter: {
     flex: 1,

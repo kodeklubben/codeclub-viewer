@@ -6,12 +6,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
 import {getTranslator} from '../../selectors/translate';
-import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = {
   dyslexicText: {
-    fontSize: '1.6em',
-    fontFamily: fontFamilyDyslexic,
+    fontSize: 20,
+    fontFamily: 'arial',
   },
 };
 

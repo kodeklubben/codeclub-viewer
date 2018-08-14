@@ -12,7 +12,6 @@ import green from '@material-ui/core/colors/green';
 import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
-import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const container = {
   textAlign: 'center',
@@ -60,13 +59,9 @@ const styles = theme => ({
   text: {
     marginLeft: theme.spacing.unit,
   },
-  dyslexicText: {
-    marginLeft: theme.spacing.unit,
-    fontFamily: fontFamilyDyslexic,
-  },
 });
 
-const ImprovePage = ({classes, course, lesson, language, isReadme, t, isStudentMode, showDyslexicFont}) => {
+const ImprovePage = ({classes, course, lesson, language, isReadme, t, isStudentMode}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src/${course}/${lesson}`;
   const linkToLesson = `http://oppgaver.kidsakoder.no/${path}`;
@@ -92,19 +87,19 @@ const ImprovePage = ({classes, course, lesson, language, isReadme, t, isStudentM
     <Grid container justify='center'>
       <Button href={url.newIssue} {...options}>
         <ReportProblemIcon/>
-        <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>
+        <span className={classes.text}>
           {t('lessons.improvepage.newissuebutton')}
         </span>
       </Button>
       <Button href={url.forum} {...options}>
         <ForumIcon/>
-        <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>
+        <span className={classes.text}>
           {t('lessons.improvepage.forumbutton')}
         </span>
       </Button>
       <Button href={url.showCode} {...options}>
         <CodeIcon/>
-        <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>
+        <span className={classes.text}>
           {t('lessons.improvepage.showcodebutton')}
         </span>
       </Button>

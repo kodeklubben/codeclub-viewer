@@ -10,7 +10,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import SchoolIcon from '@material-ui/icons/School';
 import {getTranslator} from '../selectors/translate';
 import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
-import {fontFamilyDyslexic} from '../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -33,19 +32,10 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  dyslexicText: {
-    marginLeft: theme.spacing.unit,
-    [theme.breakpoints.down('xs')]: {
-      display: 'none',
-    },
-    fontFamily: fontFamilyDyslexic,
-  },
 });
 
 const InstructionButton = ({
-  classes, course, lesson, language, isReadme, onlyIcon, insideLink,
-  buttonText, showDyslexicFont
-}) => {
+  classes, course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
   const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
   const iconButton = !path ? null :
     <IconButton component={Link} to={path} aria-label={buttonText}>
@@ -62,7 +52,7 @@ const InstructionButton = ({
   const button = !path ? null :
     <Button {...options}>
       {isReadme ? <SchoolIcon/> : <EditIcon/>}
-      <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>{buttonText}</span>
+      <span className={classes.text}>{buttonText}</span>
     </Button>;
   return insideLink ? iconButton : button;
 };
@@ -79,14 +69,12 @@ InstructionButton.propTypes = {
 
   // mapStateToProps
   buttonText: PropTypes.string,
-  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {isReadme, onlyIcon}) => {
   const t = getTranslator(state);
   return {
     buttonText: onlyIcon ? '' : t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson'),
-    showDyslexicFont: state.showDyslexicFont,
   };
 };
 

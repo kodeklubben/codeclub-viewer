@@ -1,22 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Popover from '@material-ui/core/Popover';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import Typography from '@material-ui/core/Typography';
-import {fontFamilyDyslexic} from '../styles/fonts';
-
-const contentStyles = {
-  maxWidth: 600,
-  padding: 20,
-  display: 'flex',
-  justifyContent: 'space-between',
-  '& img': {
-    marginRight: 15,
-  },
-};
 
 const styles = theme => ({
   popover: {
@@ -41,11 +29,13 @@ const styles = theme => ({
     height: 36,
   },
   content: {
-    ...contentStyles,
-  },
-  dyslexicContent: {
-    ...contentStyles,
-    fontFamily: fontFamilyDyslexic,
+    maxWidth: 600,
+    padding: 20,
+    display: 'flex',
+    justifyContent: 'space-between',
+    '& img': {
+      marginRight: 15,
+    },
   },
 });
 
@@ -71,7 +61,7 @@ class PopoverComponent extends React.Component {
   };
 
   render() {
-    const {classes, inFilter, popoverContent, showDyslexicFont} = this.props;
+    const {classes, inFilter, popoverContent} = this.props;
     const {anchorEl} = this.state;
     const createMarkup = () => {
       return {__html: popoverContent};
@@ -90,14 +80,18 @@ class PopoverComponent extends React.Component {
         horizontal: 'right',
       },
     };
-    const content = showDyslexicFont ? classes.dyslexicContent : classes.content;
     return (
       <div>
-        <IconButton classes={{root: classes.iconButton}} onClick={this.handleClick} aria-label='Info'>
+        <IconButton classes={{root: inFilter ? classes.iconButton : ''}} onClick={this.handleClick} aria-label='Info'>
           <InfoIcon classes={{root: inFilter ? classes.smallIcon : ''}} />
         </IconButton>
         <Popover {...options}>
-          <Typography component='div' className={content} role='region' dangerouslySetInnerHTML={createMarkup()}/>
+          <Typography
+            component='div'
+            className={classes.content}
+            role='region'
+            dangerouslySetInnerHTML={createMarkup()}
+          />
         </Popover>
       </div>
     );
@@ -109,15 +103,5 @@ PopoverComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   inFilter: PropTypes.bool.isRequired,
   popoverContent: PropTypes.string,
-
-  // mapStateToProps
-  showDyslexicFont: PropTypes.bool.isRequired,
 };
-
-const mapStateToProps = (state) => ({
-  showDyslexicFont: state.showDyslexicFont,
-});
-
-export default connect(
-  mapStateToProps,
-)(withStyles(styles)(PopoverComponent));
+export default (withStyles(styles)(PopoverComponent));

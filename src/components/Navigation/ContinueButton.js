@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {getTranslator} from '../../selectors/translate';
 import {getLessonFrontmatter, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
-import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -23,16 +22,9 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  dyslexicText: {
-    marginLeft: theme.spacing.unit,
-    [theme.breakpoints.down('xs')]: {
-      display: 'none',
-    },
-    fontFamily: fontFamilyDyslexic,
-  },
 });
 
-const ContinueButton = ({classes, path, t, lastLesson, isStudentMode, showDyslexicFont}) => {
+const ContinueButton = ({classes, path, t, lastLesson, isStudentMode}) => {
   const hasLastLesson = lastLesson !== '';
   const pathIsNotLastLesson = lastLesson !== path;
   const options = {
@@ -46,7 +38,7 @@ const ContinueButton = ({classes, path, t, lastLesson, isStudentMode, showDyslex
   return hasLastLesson && pathIsNotLastLesson ?
     <Button {...options}>
       <ArrowForwardIcon/>
-      <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>{t('frontpage.continueButton')}</span>
+      <span className={classes.text}>{t('frontpage.continueButton')}</span>
     </Button>
     : null;
 };
@@ -63,7 +55,6 @@ ContinueButton.propTypes = {
   t: PropTypes.func.isRequired,
   lastLesson: PropTypes.string.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
-  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {course, lesson, file}) => {
@@ -75,7 +66,6 @@ const mapStateToProps = (state, {course, lesson, file}) => {
     t: getTranslator(state),
     lastLesson: state.lastLesson,
     isStudentMode: state.isStudentMode,
-    showDyslexicFont: state.showDyslexicFont,
   };
 };
 

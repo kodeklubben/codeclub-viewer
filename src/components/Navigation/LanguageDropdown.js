@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {withStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
+import Grow from '@material-ui/core/Grow';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import {setLanguage} from '../../reducers/language';
 import {resetOneFilter} from '../../reducers/filter';
@@ -11,7 +15,6 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
-import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const styles = theme => ({
   button: {
@@ -25,19 +28,8 @@ const styles = theme => ({
       display: 'none',
     }
   },
-  dyslexicText: {
-    marginLeft: 8,
-    [theme.breakpoints.down('xs')]: {
-      display: 'none',
-    },
-    fontFamily: fontFamilyDyslexic,
-  },
   menuItemText: {
     marginLeft: 8,
-  },
-  menuItemDyslexicText: {
-    marginLeft: 8,
-    fontFamily: fontFamilyDyslexic,
   },
 });
 
@@ -45,64 +37,65 @@ const availableLanguages = getAvailableLanguages();
 
 class LanguageDropdown extends React.Component {
   state = {
-    anchorEl: null,
+    open: false,
   };
 
-  handleClick = event => {
-    this.setState({anchorEl: event.currentTarget});
+  handleToggle = () => {
+    this.setState(state => ({open: !state.open}));
   };
 
   handleClose = event => {
-    this.setState({anchorEl: null});
+    this.setState({open: false});
   };
 
   render() {
     const {
       classes,
-      language, translateFilter, showDyslexicFont,
+      language, translateFilter,
       resetOneFilter, setLanguage, collapseAllFilterGroups
     } =  this.props;
-    const {anchorEl} = this.state;
+    const {open} = this.state;
     const options = {
-      'aria-owns': anchorEl ? 'language-menu' : null,
+      'aria-owns': open ? 'language-menu' : null,
       'aria-haspopup': true,
       variant: 'outlined',
       size: 'small',
-      onClick: this.handleClick,
+      onClick: this.handleToggle,
       className: classes.button,
     };
     return (
       <div>
         <Button {...options}>
           <Flag {...{language}}/>
-          <span className={showDyslexicFont ? classes.dyslexicText : classes.text}>
-            {translateFilter('language', language)}
-          </span>
+          <span className={classes.text}>{translateFilter('language', language)}</span>
         </Button>
-        <Menu
-          id='language-menu'
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          {availableLanguages.map(languageKey =>
-            <MenuItem
-              key={languageKey}
-              selected={language === languageKey}
-              onClick={() => {
-                resetOneFilter('language', languageKey);
-                setLanguage(languageKey);
-                collapseAllFilterGroups(true);
-                this.handleClose();
-              }}
-            >
-              <Flag language={languageKey}/>
-              <span className={showDyslexicFont ? classes.menuItemDyslexicText : classes.menuItemText}>
-                {translateFilter('language', languageKey)}
-              </span>
-            </MenuItem>
+        <Popper {...{open}} anchorEl={this.anchorEl} transition disablePortal>
+          {({TransitionProps, placement}) => (
+            <Grow {...TransitionProps} id='language-menu' style={{transformOrigin: 'center top'}}>
+              <Paper>
+                <ClickAwayListener onClickAway={this.handleClose}>
+                  <MenuList>
+                    {availableLanguages.map(languageKey =>
+                      <MenuItem
+                        key={languageKey}
+                        selected={language === languageKey}
+                        onClick={() => {
+                          resetOneFilter('language', languageKey);
+                          setLanguage(languageKey);
+                          collapseAllFilterGroups(true);
+                          this.handleClose();
+                        }}
+                      >
+                        <Flag language={languageKey}/>
+                        <span className={classes.menuItemText}>{translateFilter('language', languageKey)}</span>
+                      </MenuItem>
+                    )}
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
           )}
-        </Menu>
+        </Popper>
       </div>
     );
   }
@@ -115,7 +108,6 @@ LanguageDropdown.propTypes = {
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
   translateFilter: PropTypes.func.isRequired,
-  showDyslexicFont: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
@@ -126,7 +118,6 @@ LanguageDropdown.propTypes = {
 const mapStateToProps = (state) => ({
   language: state.language,
   translateFilter: getTranslateFilter(state),
-  showDyslexicFont: state.showDyslexicFont,
 });
 
 const mapDispatchToProps = {
