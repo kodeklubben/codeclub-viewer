@@ -9,14 +9,14 @@ import {getCourseTitle} from '../resources/courseFrontmatter';
 const styles = {
   container: {
     width: '100%',
-    'min-height': '50px',
+    minHeight: 50,
   },
   courseIcon: {
-    height: '50px',
+    height: 50,
     padding: [10, 10, 15, 15],
   },
   course: {
-    fontSize: '20px',
+    fontSize: 20,
   },
 };
 

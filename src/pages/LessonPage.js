@@ -22,7 +22,7 @@ import {getLevel, getLicense} from '../resources/lessons';
 
 const styles = theme => ({
   container: {
-    maxWidth: '800px',
+    maxWidth: 800,
     marginLeft: 'auto',
     marginRight: 'auto',
     [theme.breakpoints.down('xs')]: {
@@ -32,7 +32,7 @@ const styles = theme => ({
       display: 'block',
       marginLeft: 'auto',
       marginRight: 'auto',
-      padding: '20px',
+      padding: 20,
       maxWidth: '100%',
       height: 'auto',
     },

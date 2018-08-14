@@ -32,7 +32,7 @@ const styles = theme => ({
     },
   },
   courseImage: {
-    height: '20px',
+    height: 20,
   },
   text: {
     marginLeft: theme.spacing.unit,

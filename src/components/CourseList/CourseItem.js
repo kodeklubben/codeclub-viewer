@@ -20,14 +20,14 @@ import {getTranslator} from '../../selectors/translate';
 const styles = theme => ({
   courseItem: {
     margin: '25px auto',
-    maxWidth: '175px',
+    maxWidth: 175,
     '&:link': {
       textDecoration: 'none',
     },
   },
   courseLogo: {
     maxWidth: '100%',
-    height: '170px',
+    height: 170,
     [theme.breakpoints.up('sm')]: {
       '&:hover': {
         transform: 'scale(1.1)',
@@ -42,12 +42,12 @@ const styles = theme => ({
     },
   },
   popover: {
-    marginBottom: '4px',
+    marginBottom: 4,
   },
   icon: {
     color: 'black',
-    marginLeft: '3px',
-    paddingTop: '4px',
+    marginLeft: 3,
+    paddingTop: 4,
   },
 });
 

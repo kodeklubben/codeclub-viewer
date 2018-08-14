@@ -17,7 +17,7 @@ import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistL
 
 const styles = theme => ({
   container: {
-    marginTop: '31px',
+    marginTop: 31,
   },
   panel: {
     marginTop: theme.spacing.unit,

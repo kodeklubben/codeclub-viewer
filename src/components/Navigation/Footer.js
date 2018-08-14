@@ -10,8 +10,8 @@ import {getTranslator} from '../../selectors/translate';
 import DyslexiaSwitch from './DyslexiaSwitch';
 
 const container = {
-  padding: '15px',
-  marginTop: '100px',
+  padding: 15,
+  marginTop: 100,
   textAlign: 'center',
   '@media print': {
     display: 'none',
@@ -30,14 +30,14 @@ const styles = {
   image: {
     margin: '10px 5px 20px',
     width: 'auto',
-    height: '50px',
+    height: 50,
     '&:hover': {
       transform: 'scale(1.1)',
       boxShadow: '10px 10px 20px 10px rgba(0, 0, 0, 0.5)',
     },
   },
   githubIcon: {
-    width: '100px',
+    width: 100,
     height: 'auto',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -54,7 +54,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     flexWrap: 'wrap',
-    marginTop: '20px',
+    marginTop: 20,
     overflow: 'hidden',
   },
 };

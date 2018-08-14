@@ -17,9 +17,9 @@ import {getCourseIntroText} from '../resources/courseContent';
 
 const styles = theme => ({
   topMargin: {
-    marginTop: '0',
+    marginTop: 0,
     [theme.breakpoints.up('sm')]: {
-      marginTop: '72px',
+      marginTop: 72,
     },
   },
 });

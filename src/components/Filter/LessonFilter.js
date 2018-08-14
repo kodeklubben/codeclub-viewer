@@ -17,7 +17,7 @@ const styles = {
     maxWidth: '100%',
   },
   marginTop: {
-    marginTop: '28px',
+    marginTop: 28,
   },
 };
 

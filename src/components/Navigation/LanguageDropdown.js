@@ -17,26 +17,26 @@ const styles = theme => ({
   button: {
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
-    padding: '9px',
+    padding: 9,
   },
   text: {
-    marginLeft: '8px',
+    marginLeft: 8,
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     }
   },
   dyslexicText: {
-    marginLeft: '8px',
+    marginLeft: 8,
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
     fontFamily: fontFamilyDyslexic,
   },
   menuItemText: {
-    marginLeft: '8px',
+    marginLeft: 8,
   },
   menuItemDyslexicText: {
-    marginLeft: '8px',
+    marginLeft: 8,
     fontFamily: fontFamilyDyslexic,
   },
 });

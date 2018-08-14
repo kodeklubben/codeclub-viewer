@@ -27,7 +27,6 @@ const FilterItem = ({classes, tagName, checked, onCheck, popoverContent}) => (
   <Grid container wrap='nowrap' alignItems='center' justify='space-between'>
     <FormControlLabel label={tagName} classes={{root: classes.label, label: classes.text}} control={
       <Checkbox
-        disableRipple
         color='default'
         checked={checked}
         onChange={onCheck}

@@ -7,13 +7,13 @@ import Collapse from '@material-ui/core/Collapse';
 const styles = {
   container: {
     margin: '10px 0',
-    padding: '10px',
+    padding: 10,
     border: '1px solid black',
-    borderRadius: '5px',
+    borderRadius: 5,
     backgroundColor: '#eee',
   },
   content: {
-    paddingTop: '20px',
+    paddingTop: 20,
   },
 };
 

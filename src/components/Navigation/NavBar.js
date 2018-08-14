@@ -13,7 +13,7 @@ import ModeDropdown from './ModeDropdown';
 import ContinueButton from './ContinueButton';
 
 const container = {
-  marginBottom: '30px',
+  marginBottom: 30,
 };
 
 const styles = {

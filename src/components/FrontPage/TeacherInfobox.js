@@ -14,12 +14,12 @@ import {getTranslator} from '../../selectors/translate';
 const styles = theme => ({
   infoBox: {
     padding: theme.spacing.unit * 2,
-    maxWidth: '600px',
+    maxWidth: 600,
     border: `1px solid ${blue[200]}`,
-    borderRadius: '10px',
+    borderRadius: 10,
     fontWeight: 300,
     position: 'relative',
-    marginBottom: '30px',
+    marginBottom: 30,
     backgroundColor: blue[50],
   },
   link: {

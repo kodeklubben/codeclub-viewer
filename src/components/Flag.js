@@ -7,8 +7,8 @@ import {getTranslator, getTranslateFilter} from '../selectors/translate';
 
 const styles = {
   flag: {
-    width: '30px',
-    height: '20px',
+    width: 30,
+    height: 20,
   },
 };
 

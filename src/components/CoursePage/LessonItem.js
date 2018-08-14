@@ -24,27 +24,27 @@ import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const bar = {
   position: 'absolute',
-  left: '0',
-  bottom: '0',
-  height: '10px',
+  left: 0,
+  bottom: 0,
+  height: 10,
 };
 
 const styles = theme => ({
   progressBarLevel1: {
     ...bar,
-    'background-color': '#46cc46',
+    backgroundColor: '#46cc46',
   },
   progressBarLevel2: {
     ...bar,
-    'background-color': '#368bd8',
+    backgroundColor: '#368bd8',
   },
   progressBarLevel3: {
     ...bar,
-    'background-color': '#d63838',
+    backgroundColor: '#d63838',
   },
   progressBarLevel4: {
     ...bar,
-    'background-color': '#333',
+    backgroundColor: '#333',
   },
   marginLeft: {
     marginLeft: theme.spacing.unit * 1.5,

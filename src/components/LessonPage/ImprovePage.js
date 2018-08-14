@@ -16,7 +16,7 @@ import {fontFamilyDyslexic} from '../../styles/fonts';
 
 const container = {
   textAlign: 'center',
-  borderRadius: '10px',
+  borderRadius: 10,
   '@media print': {
     display: 'none',
   },

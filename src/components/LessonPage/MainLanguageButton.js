@@ -22,19 +22,19 @@ const styles = theme => ({
     },
     marginTop: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    padding: '9px',
+    padding: 9,
     '@media print': {
       display: 'none',
     },
   },
   text: {
-    marginLeft: '8px',
+    marginLeft: 8,
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
   },
   dyslexicText: {
-    marginLeft: '8px',
+    marginLeft: 8,
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },

@@ -9,12 +9,12 @@ import Typography from '@material-ui/core/Typography';
 import {fontFamilyDyslexic} from '../styles/fonts';
 
 const contentStyles = {
-  maxWidth: '600px',
-  padding: '20px',
+  maxWidth: 600,
+  padding: 20,
   display: 'flex',
-  'justify-content': 'space-between',
+  justifyContent: 'space-between',
   '& img': {
-    marginRight: '15px',
+    marginRight: 15,
   },
 };
 
@@ -23,18 +23,22 @@ const styles = theme => ({
     '& img': {
       width: '100%',
       height: '100%',
-      maxWidth: '200px',
-      maxHeight: '250px',
+      maxWidth: 200,
+      maxHeight: 250,
     },
     [theme.breakpoints.down('xs')]: {
       '& img': {
-        maxWidth: '100px',
-        maxHeight: '125px',
+        maxWidth: 100,
+        maxHeight: 125,
       },
     },
   },
   smallIcon: {
     fontSize: 18,
+  },
+  iconButton: {
+    width: 36,
+    height: 36,
   },
   content: {
     ...contentStyles,
@@ -89,7 +93,7 @@ class PopoverComponent extends React.Component {
     const content = showDyslexicFont ? classes.dyslexicContent : classes.content;
     return (
       <div>
-        <IconButton onClick={this.handleClick} aria-label='Info'>
+        <IconButton classes={{root: classes.iconButton}} onClick={this.handleClick} aria-label='Info'>
           <InfoIcon classes={{root: inFilter ? classes.smallIcon : ''}} />
         </IconButton>
         <Popover {...options}>
