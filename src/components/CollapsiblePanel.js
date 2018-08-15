@@ -24,9 +24,11 @@ const styles = theme => ({
     backgroundColor: blue[200],
   },
   studentContent: {
+    padding: theme.spacing.unit,
     backgroundColor: green[50],
   },
   teacherContent: {
+    padding: theme.spacing.unit,
     backgroundColor: blue[50],
   },
 });

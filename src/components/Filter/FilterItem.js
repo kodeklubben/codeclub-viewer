@@ -8,30 +8,32 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import PopoverComponent from '../PopoverComponent';
 
-const styles = {
-  test: {
-    fontSize: 12,
+const styles = theme => ({
+  container: {
+    paddingLeft: theme.spacing.unit * 2,
   },
   label: {
     marginRight: 0,
   },
-  text: {
-    fontSize: 16
+  checkbox: {
+    width: 32,
+    height: 32,
   },
-  sizeIcon: {
+  size: {
     fontSize: 16,
   },
-};
+});
 
 const FilterItem = ({classes, tagName, checked, onCheck, popoverContent}) => (
-  <Grid container wrap='nowrap' alignItems='center' justify='space-between'>
-    <FormControlLabel label={tagName} classes={{root: classes.label, label: classes.text}} control={
+  <Grid container wrap='nowrap' alignItems='center' justify='space-between' className={classes.container}>
+    <FormControlLabel label={tagName} classes={{root: classes.label, label: classes.size}} control={
       <Checkbox
         color='default'
         checked={checked}
         onChange={onCheck}
-        icon={<CheckBoxOutlineBlankIcon className={classes.sizeIcon} />}
-        checkedIcon={<CheckBoxIcon className={classes.sizeIcon} />}
+        classes={{root: classes.checkbox}}
+        icon={<CheckBoxOutlineBlankIcon className={classes.size}/>}
+        checkedIcon={<CheckBoxIcon className={classes.size}/>}
       />
     }/>
     {popoverContent ? <PopoverComponent inFilter={true} {...{popoverContent}}/> : null}

@@ -15,8 +15,11 @@ import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
 const styles = theme => ({
+  listWidth: {
+    width: '100%',
+  },
   lockIcon: {
-    marginRight: theme.spacing.unit * 1.4,
+    marginRight: 6,
   },
 });
 
@@ -50,7 +53,7 @@ const FilterGroup = ({
     };
 
     return (
-      <div>
+      <div className={classes.listWidth}>
         <ListItem button disableGutters onClick={onGroupClick} disabled={somethingChecked}>
           {!isCollapsed ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
           <ListItemText primary={groupName}/>

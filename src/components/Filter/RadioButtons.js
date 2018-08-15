@@ -1,17 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import {getTranslator} from '../../selectors/translate';
 import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => (
-  <RadioGroup aria-label='RadioButtonGroup'>
-    <FormControlLabel label={t('filter.radio.playlists')} control={
+const styles = {
+  container: {
+    marginLeft: 6,
+  },
+  label: {
+    fontSize: 16,
+  },
+  radioSize: {
+    fontSize: 20,
+  },
+  radio: {
+    width: 40,
+    heigth: 40,
+  },
+};
+
+const RadioButtons = ({
+  classes, showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups
+}) => (
+  <RadioGroup aria-label='RadioButtonGroup' className={classes.container}>
+    <FormControlLabel classes={{label: classes.label}} label={t('filter.radio.playlists')} control={
       <Radio
         checked={showPlaylists}
         onChange={() => {
@@ -21,20 +42,29 @@ const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFil
         }}
         name='radioGroup'
         color='default'
+        className={classes.radio}
+        icon={<RadioButtonUncheckedIcon className={classes.radioSize}/>}
+        checkedIcon={<RadioButtonCheckedIcon className={classes.radioSize}/>}
       />}
     />
-    <FormControlLabel label={t('filter.radio.lessons')} control={
+    <FormControlLabel classes={{label: classes.label}} label={t('filter.radio.lessons')} control={
       <Radio
         checked={!showPlaylists}
         onChange={() => setShowPlaylists(false)}
         name='radioGroup'
         color='default'
+        className={classes.radio}
+        icon={<RadioButtonUncheckedIcon className={classes.radioSize}/>}
+        checkedIcon={<RadioButtonCheckedIcon className={classes.radioSize}/>}
       />}
     />
   </RadioGroup>
 );
 
 RadioButtons.propTypes = {
+  // ownProps
+  classes: PropTypes.object.isRequired,
+
   // mapStateToProps
   showPlaylists: PropTypes.bool.isRequired,
   language: PropTypes.string.isRequired,
@@ -61,4 +91,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(RadioButtons);
+)(withStyles(styles)(RadioButtons));

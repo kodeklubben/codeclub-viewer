@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {withStyles} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {getTranslator} from '../../selectors/translate';
@@ -11,7 +12,13 @@ import PopoverComponent from '../PopoverComponent';
 import CollapsiblePanel from '../CollapsiblePanel';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
+const styles = {
+  test: {
+    width: '100%',
+  },
+};
+
+const LessonFilter = ({classes, filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
     <Grid container alignItems='center' justify='space-between'>
@@ -23,10 +30,10 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
   return (
     <div>
       <CollapsiblePanel defaultExpanded={true} {...{header}}>
-        <Typography variant='body2'>
+        <div className={classes.test}>
           {radioButtons}
           {groups}
-        </Typography>
+        </div>
       </CollapsiblePanel>
       <ClearFilterButton/>
     </div>
@@ -35,6 +42,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
 
 LessonFilter.propTypes = {
   // ownProps
+  classes: PropTypes.object.isRequired,
   course: PropTypes.string,
 
   // mapStateToProps
@@ -55,4 +63,4 @@ const mapStateToProps = (state, {course}) => ({
 
 export default connect(
   mapStateToProps
-)(LessonFilter);
+)(withStyles(styles)(LessonFilter));

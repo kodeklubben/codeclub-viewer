@@ -49,10 +49,7 @@ class ModeDropdown extends React.Component {
     this.setState(state => ({open: !state.open}));
   };
 
-  handleClose = event => {
-    if (this.anchorEl.contains(event.target)) {
-      return;
-    }
+  handleClose = () => {
     this.setState({open: false});
   };
 
