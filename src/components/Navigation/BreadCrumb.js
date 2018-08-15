@@ -19,6 +19,7 @@ import {getLevel} from '../../resources/lessons';
 
 const styles = theme => ({
   button: {
+    fontSize: 16,
     color: 'black',
     '&:hover, &:active, &:focus, &:visited': {
       color: 'black',
@@ -31,7 +32,10 @@ const styles = theme => ({
     },
   },
   courseImage: {
-    height: 20,
+    height: 24,
+  },
+  homeIcon: {
+    fontSize: 30,
   },
   text: {
     marginLeft: theme.spacing.unit,
@@ -55,11 +59,10 @@ const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
   const options = {
     component: Link,
     className: classes.button,
-    size: 'small',
   };
 
   const homeCrumb = <IconButton {...options} to={'/'} aria-label={t('general.home')}>
-    <HomeIcon/>
+    <HomeIcon classes={{root: classes.homeIcon}}/>
   </IconButton>;
 
   const courseCrumb = <Button {...options} to={coursePath}>

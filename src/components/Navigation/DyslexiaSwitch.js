@@ -10,7 +10,7 @@ import {getTranslator} from '../../selectors/translate';
 const styles = {
   dyslexicText: {
     fontSize: 20,
-    fontFamily: 'arial',
+    fontFamily: 'OpenDyslexic-Regular',
   },
 };
 

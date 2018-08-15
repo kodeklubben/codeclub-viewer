@@ -21,6 +21,9 @@ const styles = theme => ({
   lockIcon: {
     marginRight: 6,
   },
+  label: {
+    fontSize: 18,
+  },
 });
 
 const FilterGroup = ({
@@ -56,7 +59,7 @@ const FilterGroup = ({
       <div className={classes.listWidth}>
         <ListItem button disableGutters onClick={onGroupClick} disabled={somethingChecked}>
           {!isCollapsed ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
-          <ListItemText primary={groupName}/>
+          <ListItemText classes={{primary: classes.label}} primary={groupName}/>
           {somethingChecked ? <LockIcon className={classes.lockIcon}/> : null}
         </ListItem>
         <Collapse in={!isCollapsed} mountOnEnter unmountOnExit>

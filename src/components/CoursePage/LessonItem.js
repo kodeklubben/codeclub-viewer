@@ -55,9 +55,6 @@ const styles = theme => ({
     flexWrap: 'nowrap',
     alignItems: 'center',
   },
-  star: {
-    marginRight: theme.spacing.unit,
-  },
 });
 
 const Progress = ({classes, checkedCheckboxes, totalCheckboxes}) => {
@@ -89,19 +86,19 @@ const LessonItem = ({
     <div>
       <div className={classes.container}>
         {external ?
-          <ListItem disableGutters component={Link} button to={external} target='_blank' rel='noopener'>
+          <ListItem component={Link} button to={external} target='_blank' rel='noopener'>
             {flag}
             {levelIcon}
             <ListItemText primary={title}/>
             <LaunchIcon className={classes.launchIcon}/>
           </ListItem>
           :
-          <ListItem disableGutters component={Link} button to={path}>
+          <ListItem component={Link} button to={path}>
             {flag}
             <Progressbar {...{classes, checkedCheckboxes, totalCheckboxes, level}}/>
             {levelIcon}
             <ListItemText primary={title} secondary={progress}/>
-            {progressPercent === 100 ? <StarIcon color='action' className={classes.star}/> : null}
+            {progressPercent === 100 ? <StarIcon color='action'/> : null}
           </ListItem>
         }
         {instructionButton}

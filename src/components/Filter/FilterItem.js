@@ -12,8 +12,11 @@ const styles = theme => ({
   container: {
     paddingLeft: theme.spacing.unit * 2,
   },
-  label: {
+  labelRoot: {
     marginRight: 0,
+  },
+  label: {
+    fontSize: 18,
   },
   checkbox: {
     width: 32,
@@ -26,7 +29,7 @@ const styles = theme => ({
 
 const FilterItem = ({classes, tagName, checked, onCheck, popoverContent}) => (
   <Grid container wrap='nowrap' alignItems='center' justify='space-between' className={classes.container}>
-    <FormControlLabel label={tagName} classes={{root: classes.label, label: classes.size}} control={
+    <FormControlLabel label={tagName} classes={{root: classes.labelRoot, label: classes.label}} control={
       <Checkbox
         color='default'
         checked={checked}

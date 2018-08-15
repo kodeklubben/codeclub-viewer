@@ -17,7 +17,7 @@ const styles = {
     marginLeft: 6,
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
   },
   radioSize: {
     fontSize: 20,
