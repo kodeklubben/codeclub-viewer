@@ -8,6 +8,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import LaunchIcon from '@material-ui/icons/Launch';
 import StarIcon from '@material-ui/icons/Star';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import green from '@material-ui/core/colors/green';
+import blue from '@material-ui/core/colors/blue';
+import red from '@material-ui/core/colors/red';
+import grey from '@material-ui/core/colors/grey';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -20,29 +25,34 @@ import {getTranslator} from '../../selectors/translate';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 
-const bar = {
-  position: 'absolute',
-  left: 0,
-  bottom: 0,
-  height: 10,
-};
-
 const styles = theme => ({
   progressBarLevel1: {
-    ...bar,
     backgroundColor: '#46cc46',
   },
   progressBarLevel2: {
-    ...bar,
     backgroundColor: '#368bd8',
   },
   progressBarLevel3: {
-    ...bar,
     backgroundColor: '#d63838',
   },
   progressBarLevel4: {
-    ...bar,
     backgroundColor: '#333',
+  },
+  rootLevel1: {
+    height: 8,
+    backgroundColor: green[50],
+  },
+  rootLevel2: {
+    height: 8,
+    backgroundColor: blue[50],
+  },
+  rootLevel3: {
+    height: 8,
+    backgroundColor: red[50],
+  },
+  rootLevel4: {
+    height: 8,
+    backgroundColor: grey[50],
   },
   marginLeft: {
     marginLeft: theme.spacing.unit * 1.5,
@@ -57,17 +67,6 @@ const styles = theme => ({
   },
 });
 
-const Progress = ({classes, checkedCheckboxes, totalCheckboxes}) => {
-  return checkedCheckboxes > 0 ? <span>{`(${checkedCheckboxes}/${totalCheckboxes})`}</span> : null;
-};
-
-const Progressbar = ({classes, checkedCheckboxes, totalCheckboxes, level}) => {
-  const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
-  return level > 0 ?
-    <span className={classes['progressBarLevel' + level]} style={{width: progressPercent + '%'}}/> :
-    null;
-};
-
 const LessonItem = ({
   classes, course, lesson, language,
   title, path, external, popoverContent, isStudentMode, onlyCheckedMainLanguage,
@@ -80,8 +79,18 @@ const LessonItem = ({
   const instructionButton = isStudentMode ? null :
     <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
   const popoverButton = popoverContent ? <PopoverComponent inFilter={false} {...{popoverContent}}/> : null;
+  const progress = checkedCheckboxes && level > 0 ? <span>{`(${checkedCheckboxes}/${totalCheckboxes})`}</span> : null;
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
-  const progress = <Progress {...{classes, checkedCheckboxes, totalCheckboxes}}/>;
+  const progressBar = checkedCheckboxes && level > 0 ?
+    <LinearProgress
+      classes={{
+        bar: classes['progressBarLevel' + level],
+        root: classes['rootLevel' + level]
+      }}
+      variant='determinate'
+      value={progressPercent}
+    />
+    : null;
   return (
     <div>
       <div className={classes.container}>
@@ -95,7 +104,6 @@ const LessonItem = ({
           :
           <ListItem component={Link} button to={path}>
             {flag}
-            <Progressbar {...{classes, checkedCheckboxes, totalCheckboxes, level}}/>
             {levelIcon}
             <ListItemText primary={title} secondary={progress}/>
             {progressPercent === 100 ? <StarIcon color='action'/> : null}
@@ -104,6 +112,7 @@ const LessonItem = ({
         {instructionButton}
         {popoverButton}
       </div>
+      {progressBar}
       <Divider/>
     </div>
   );
