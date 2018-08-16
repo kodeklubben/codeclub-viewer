@@ -1,6 +1,6 @@
 language: node_js
 before_install:
-  - git clone --depth=50 https://github.com/kodeklubben/oppgaver.git ../oppgaver
+  - git clone --depth 1 --branch master https://github.com/kodeklubben/oppgaver.git ../oppgaver
 cache: yarn
 script:
   - yarn eslint

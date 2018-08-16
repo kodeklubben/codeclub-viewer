@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "Building production files, except PDF files, while checking for errors."
+echo "Building production files while checking for errors."
 
 if yarn run build:travis | grep --after-context=5 ERROR
 then
