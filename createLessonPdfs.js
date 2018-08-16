@@ -9,11 +9,25 @@ const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
-const concurrentPDFrenders = 10;
+const concurrentPDFrenders = 8;
 const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 const isWin = process.platform === 'win32';
 let localWebServer = null;
+const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
+
+const puppeteerArgs = [];
+if (isTravis) {
+  puppeteerArgs.push('--no-sandbox');             // needed for travis to work
+  puppeteerArgs.push('--disable-dev-shm-usage');  // to minimize page crashes in (especially) linux/docker
+}
+
+console.log('concurrentPDFrenders:', concurrentPDFrenders);
+console.log('maxRetriesPerPDF:', maxRetriesPerPDF);
+console.log('urlBase:', urlBase);
+console.log('isWin:', isWin);
+console.log('isTravis:', isTravis);
+console.log('Puppeteer args:', puppeteerArgs);
 
 const cleanup = () => {
   if (localWebServer && !localWebServer.killed) {
@@ -37,6 +51,8 @@ const convertUrl = async (browser, lesson) => {
   const pdfFolder = path.dirname(pdfFile);
   fse.mkdirsSync(pdfFolder);
   const page = await browser.newPage();
+  page.on('error', () => { console.log('ERROR IN PUPPETEER: page crashed (event: "error")'); });
+  page.on('pageerror', () => { console.log('ERROR IN PUPPETEER: uncaught exception in page (event: "pageerror")'); });
   const url = urlBase + lesson + '?pdf';
   await page.goto(url, {waitUntil: 'networkidle0'});
   //await page.emulateMedia('screen');
@@ -60,7 +76,7 @@ const doConvert = () => {
 
   (async () => {
     try {
-      const browser = await puppeteer.launch({args: ['--no-sandbox']}); // --no-sandbox needed for travis to work
+      const browser = await puppeteer.launch({args: puppeteerArgs});
       const queue = new PQueue({concurrency: concurrentPDFrenders});
 
       let completedPDFs = 0;
