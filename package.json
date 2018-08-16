@@ -9,7 +9,7 @@
     "build": "webpack --progress",
     "build:prod": "webpack -p --progress --env.NODE_ENV=production --env.BUILD_PDF",
     "build:analyse:": "webpack --progress --profile --json > stats.json",
-    "build:travis": "webpack -p --env.NODE_ENV=production",
+    "build:travis": "webpack -p --env.NODE_ENV=production --env.BUILD_PDF",
     "serve": "node server.js",
     "test": "mocha \"test/**/*@(.js|.jsx)\"",
     "test:links": "node test-links.js",

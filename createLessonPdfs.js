@@ -60,7 +60,7 @@ const doConvert = () => {
 
   (async () => {
     try {
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({args: ['--no-sandbox']}); // --no-sandbox needed for travis to work
       const queue = new PQueue({concurrency: concurrentPDFrenders});
 
       let completedPDFs = 0;
