@@ -9,13 +9,12 @@ const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
-const concurrentPDFrenders = 8;
+const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
+const concurrentPDFrenders = isTravis ? 1 : 8;
 const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 const isWin = process.platform === 'win32';
 let localWebServer = null;
-const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
-
 const puppeteerArgs = [];
 if (isTravis) {
   puppeteerArgs.push('--no-sandbox');             // needed for travis to work
