@@ -1,4 +1,8 @@
 language: node_js
+stages:
+  - name: deploy
+    if: branch = master AND type = push # AND fork = false
+
 before_install:
   - git clone --depth 1 --branch master https://github.com/kodeklubben/oppgaver.git ../oppgaver
 cache: yarn
@@ -7,3 +11,14 @@ script:
   - yarn stylelint
   - yarn test
   - ./travis_build.sh
+deploy:
+  provider: pages
+  github-token: $GITHUB_TOKEN
+  skip-cleanup: true
+  keep-history: true
+  local-dir: dist
+  repo: norwegiankiwi/kodeklubben.github.io
+  target-branch: master
+  fqdn: oppgaver.kidsakoder.no
+  on:
+    branch: master
