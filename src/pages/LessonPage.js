@@ -35,7 +35,7 @@ const renderToggleButtons = () => {
   }
 };
 
-class LessonPage extends React.Component {
+class LessonPage extends React.PureComponent {
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
