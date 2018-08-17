@@ -10,7 +10,7 @@ const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
 const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
-const concurrentPDFrenders = isTravis ? 2 : 8;
+const concurrentPDFrenders = isTravis ? 4 : 8;
 const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 const isWin = process.platform === 'win32';
@@ -33,12 +33,11 @@ const cleanup = () => {
     console.log('Killing localWebServer');
     if (isWin) {
       spawn('taskkill', ['/pid', localWebServer.pid, '/f', '/t']);
-      localWebServer.killed = true;
     } else {
-      const killSignal = 'SIGTERM'; // 'SIGINT';
-      const killSuccess = localWebServer.kill(killSignal);
-      console.log('Successfully killed localWebServer with ' + killSignal + ':', killSuccess);
+      spawn('kill', [localWebServer.pid]);
     }
+    localWebServer.killed = true;
+    console.log('Killed localWebServer');
     localWebServer.stdout.removeAllListeners();
     localWebServer.stderr.removeAllListeners();
     localWebServer.removeAllListeners();
