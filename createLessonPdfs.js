@@ -45,20 +45,34 @@ const cleanup = () => {
   }
 };
 
+const getMsSince = (startTime) => {
+  const currentTime = new Date().getTime();
+  return Math.round(currentTime - startTime);
+};
+
 const idlePages = [];
 
 const convertUrl = async (browser, lesson) => {
   const pdfFile = path.join(buildDir, lesson + '.pdf');
   const pdfFolder = path.dirname(pdfFile);
   fse.mkdirsSync(pdfFolder);
-  const page = idlePages.length > 0 ? idlePages.pop() : await browser.newPage();
-  page.on('error', () => { console.log('ERROR IN PUPPETEER: page crashed (event: "error")'); });
-  page.on('pageerror', () => { console.log('ERROR IN PUPPETEER: uncaught exception in page (event: "pageerror")'); });
+  let page;
+  if (idlePages.length > 0) {
+    page = idlePages.pop();
+  } else {
+    page = await browser.newPage();
+    page.on('error', () => { console.log('ERROR IN PUPPETEER: page crashed (event: "error")'); });
+    page.on('pageerror', () => { console.log('ERROR IN PUPPETEER: uncaught exception in page (event: "pageerror")'); });
+  }
   const url = urlBase + lesson + '?pdf';
-  page.setJavaScriptEnabled(false);
+  //page.setJavaScriptEnabled(false);
+  console.log('Loading page: ', url);
+  let startTime = new Date().getTime();
   await page.goto(url, {waitUntil: 'networkidle0'});
+  console.log(`Loaded page (${getMsSince(startTime)}ms): ${url}`);
   //await page.emulateMedia('screen');
-  console.log('Rendering PDF: ' + url + ' ---> ' + path.relative(__dirname, pdfFile));
+  console.log('Rendering PDF:', url, '--->', path.relative(__dirname, pdfFile));
+  startTime = new Date().getTime();
   await page.pdf({
     path: pdfFile,
     printBackground: true,
@@ -70,6 +84,7 @@ const convertUrl = async (browser, lesson) => {
       right: '0.5in',
     }
   });
+  console.log(`Rendered page (${getMsSince(startTime)}ms): ${url}`);
   idlePages.push(page);
 };
 
