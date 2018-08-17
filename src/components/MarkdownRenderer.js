@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import markdownGenerator from 'markdown-it';
+import renderHTML from 'react-render-html';
 
 const markdown = markdownGenerator();
 
 const MarkdownRenderer = ({src, inline}) => {
   if (src) {
     return inline ?
-      <span dangerouslySetInnerHTML={{__html: markdown.renderInline(src)}}/> :
-      <div dangerouslySetInnerHTML={{__html: markdown.render(src)}}/>;
+      <span>{renderHTML(markdown.renderInline(src))}</span> :
+      <div>{renderHTML(markdown.render(src))}</div>;
   } else {
     return null;
   }

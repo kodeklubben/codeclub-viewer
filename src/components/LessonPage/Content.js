@@ -1,27 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import renderHTML from 'react-render-html';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
 import {getLessonContent} from '../../resources/lessonContent';
 
-const createMarkup = (lessonContent, isHydrated) => {
-  return ({__html: processContent(lessonContent, styles, isHydrated)});
-};
-
-// const Loading = () => <div>Loading...</div>;
-//
-// const getLesson = (path) => Loadable({
-//   loader: () => import('./Content'),
-//   loading: Loading,
-// });
-
-//console.log('lessonContext.keys:', lessonContext.keys());
-
 const Content = ({course, lesson, language, isReadme, isHydrated}) => {
   const lessonContent = getLessonContent(course, lesson, language, isReadme);
-  return <div dangerouslySetInnerHTML={createMarkup(lessonContent, isHydrated)}/>;
+  return <div>{renderHTML(processContent(lessonContent, styles, isHydrated))}</div>;
 };
 Content.propTypes = {
   // ownProps
