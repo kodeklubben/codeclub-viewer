@@ -7,13 +7,11 @@ import Col from 'react-bootstrap/lib/Col';
 import LessonFilter from '../components/Filter/LessonFilter';
 import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
-import StartButton from '../components/FrontPage/StartButton';
 
 const FrontPage = ({isStudentMode}) => {
   return (
-    <Grid fluid={true}>
-      {isStudentMode ? <StartButton /> : <TeacherInfobox />}
-      <hr/>
+    <Grid fluid={true} role='main'>
+      {isStudentMode ? null : <TeacherInfobox/>}
       <Row>
         <Col sm={4} md={3} lg={2}>
           <LessonFilter/>
@@ -26,13 +24,13 @@ const FrontPage = ({isStudentMode}) => {
 
 FrontPage.propTypes = {
   // mapStateToProps
-  isStudentMode: PropTypes.bool
+  isStudentMode: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
-  isStudentMode: state.isStudentMode
+  isStudentMode: state.isStudentMode,
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
 )(FrontPage);

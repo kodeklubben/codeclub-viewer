@@ -59,6 +59,7 @@
     "react-router-bootstrap": "^0.23.3",
     "react-router-scroll": "^0.4.4",
     "react-scroll-to-component": "^1.0.2",
+    "react-switch": "^3.0.4",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
     "scratchblocks": "github:Skagevang/scratchblocks#c36ce1df0d00a33ea07c5ca195f9403ee493136b"
@@ -101,6 +102,7 @@
     "markdown-it-attrs": "^0.5.1",
     "markdown-it-header-sections": "^0.2.2",
     "markdown-it-implicit-figures": "^0.3.0",
+    "markdown-it-katex": "^2.0.3",
     "markdown-it-loader": "^0.6.0",
     "markdown-it-task-checkbox": "^1.0.6",
     "mocha": "^3.2.0",

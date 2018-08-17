@@ -12,6 +12,7 @@ import {getTranslator} from '../../selectors/translate';
 import BreadCrumb from './BreadCrumb';
 import LanguageDropdown from './LanguageDropdown';
 import ModeDropdown from './ModeDropdown';
+import ContinueButton from './ContinueButton';
 
 const LkkBrand = () => {
   return <Navbar.Brand>
@@ -65,7 +66,7 @@ MenuToggle.propTypes = {
 const NavBar = ({isStudentMode, t, params}) => {
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
-    <div className={styles.navbarWrapper}>
+    <div className={styles.navbarWrapper} role='banner'>
       <Navbar fluid={true} staticTop>
         <Navbar.Header>
           <LkkBrand/>
@@ -79,9 +80,9 @@ const NavBar = ({isStudentMode, t, params}) => {
         <div className={styles.widgets + ' ' + widgetClass}>
           <BreadCrumb {...params}/>
           <div className={styles.gadgetGroup}>
+            <ContinueButton {...params}/>
             <LanguageDropdown/>
             <ModeDropdown/>
-            {/*<SearchBox {...{t}}/>*/}
           </div>
         </div>
       </Navbar>

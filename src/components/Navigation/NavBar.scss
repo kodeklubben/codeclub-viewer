@@ -134,10 +134,9 @@ $widget-height: 50px;
   display: inline-block;
   width: 100%;
   min-height: $widget-height;
-  font-family: $font-family-roboto;
   font-weight: 300;
   border-radius: 0;
-  margin-bottom: -5px; // to get rid of the 5px spacing below, don't understand why it is there
+  margin-bottom: -7px; // to get rid of the 7px spacing below, don't understand why it is there
 }
 
 .widgetStudent {

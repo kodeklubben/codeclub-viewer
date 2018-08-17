@@ -18,7 +18,7 @@ $checkbox-blue: #abdbea;
     margin: 0 0 20px;
   }
   ul.task-list li.task-list-item::before {
-    display: none;
+    opacity: 0;
   }
   li {
     list-style: none;
@@ -239,7 +239,8 @@ table {
 }
 
 input[type="checkbox"] {
-  display: none;
+  position: absolute;
+  opacity: 0;
 }
 
 input[type="checkbox"] + label {
@@ -256,7 +257,6 @@ input[type="checkbox"] + label::before {
   height: 1.3em;
   margin: 0 0.6em 0 -2.2em;
   line-height: 1.1em;
-  text-align: center;
   border: 3px solid $checkbox-blue;
   border-radius: 3px;
 }
@@ -265,4 +265,8 @@ input[type="checkbox"]:checked + label::before {
   content: '\2714'; // checkmark
   line-height: 1.1em;
   padding-left: 0.1em;
+}
+
+input[type="checkbox"]:focus + label::before {
+  background: darken($checkbox-blue, 20%);
 }

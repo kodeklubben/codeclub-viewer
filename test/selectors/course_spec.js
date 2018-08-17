@@ -11,9 +11,18 @@ describe('[selectors/course.js] Selector', () => {
   describe('getFilteredCourses', () => {
     it('should return courses sorted by number of lessons', () => {
       const filteredLessons = {
-        scratch: ['astrokatt', 'straffespark'],
-        python: ['hangman'],
-        microbit: ['python_hello_world', 'python_images', 'python_music'],
+        scratch: {
+          nb: 5,
+          en: 2,
+        },
+        python: {
+          nb: 5,
+        },
+        microbit: {
+          nb: 6,
+          nn: 3,
+          en: 2,
+        },
       };
       deepFreeze(filteredLessons);
       expect(getFilteredCourses.resultFunc(filteredLessons)).to.deep.equal(['microbit', 'scratch', 'python']);

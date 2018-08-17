@@ -10,7 +10,7 @@ import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import {getTranslator} from '../selectors/translate';
-import {setCheckboxes, createCheckboxesKey} from '../util';
+import {setCheckboxes, createCheckboxesKey} from '../utils/checkboxUtils';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
 import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
@@ -58,11 +58,11 @@ class LessonPage extends React.Component {
       {t('lessons.license')}
       {license ?
         <MarkdownRenderer src={license} inline={true}/> :
-        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank'>CC BY-SA 4.0</a>
+        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank' rel='noopener'>CC BY-SA 4.0</a>
       }
     </div>;
     return (
-      <div>
+      <div role='main'>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>

@@ -9,7 +9,7 @@ import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
 import Flag from '../Flag';
-import {createCheckboxesKey} from '../../util';
+import {createCheckboxesKey} from '../../utils/checkboxUtils';
 import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
 import {getLevel} from '../../resources/lessons';
 import {getLessonIntro} from '../../resources/lessonContent';
@@ -65,7 +65,7 @@ const LessonItem = ({
   return (
     <div>
       {external ?
-        <ListGroupItem href={external} target="_blank" className={styles.row}>
+        <ListGroupItem href={external} target='_blank' rel='noopener' className={styles.row}>
           {flag}
           <LevelIcon level={level}/>
           <div className={styles.title}>{title}</div>

@@ -6,7 +6,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ResetButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import {setCheckbox} from '../../reducers/checkboxes';
-import {setCheckboxes} from '../../util';
+import {setCheckboxes} from '../../utils/checkboxUtils';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const ResetButton = ({path, t, setCheckbox}) => {

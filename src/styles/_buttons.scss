@@ -55,8 +55,6 @@
 
 @mixin button-frontpage($color, $background) {
   @include button-variant($color, $background, transparent);
-  font-family: $font-family-roboto;
-  font-weight: 300;
   font-size: 1.5em;
   margin: 10px 20px;
   width: 250px;

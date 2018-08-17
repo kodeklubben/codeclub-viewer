@@ -11,7 +11,8 @@ export default {
       2: 'Nybyrjar',
       3: 'Erfaren',
       4: 'Ekspert'
-    }
+    },
+    picture: 'Bilete av {{title}}'
   },
   head: {
     title: 'Kodeklubben',
@@ -23,11 +24,7 @@ export default {
     courses: 'Kurs',
     lessoncount: 'Oppgåver: {{count}}',
     otherwebsitecourses: 'Kurs på andre nettsider',
-    button: {
-      start: 'Start her!',
-      startlink: '/scratch/astrokatt/astrokatt',
-      continue: 'Fortset...',
-    },
+    continueButton: 'Sist besøkt',
     teacherinfobox: {
       header: 'Hei! Du er no i lærarmodus',
       changemode: 'Er du ikkje lærar eller rettleiar? Klikk elev/lærar-knappen i navigasjonsmenyen ' +
@@ -118,7 +115,8 @@ export default {
     placeholder: 'Søk'
   },
   footer: {
-    contribute: 'Lag eigne oppgåver'
+    contribute: 'Lag eigne oppgåver',
+    dyslexia: 'Skrift for dyslektikarar'
   },
   404: {
     header: 'Orsak',

@@ -1,8 +1,8 @@
 import {createSelector} from 'reselect';
 import {getCourseTags, getExternalCourses} from '../resources/courses';
-import {tagsMatchFilter} from '../util';
+import {tagsMatchFilter} from '../utils/filterUtils';
 import {getCourseLanguages} from '../resources/courseFrontmatter';
-import {getFilteredLessons} from './lesson';
+import {getFilteredLessonCountPerLanguage} from './lesson';
 import {getTagsFilter} from './filter';
 
 /**
@@ -13,12 +13,17 @@ import {getTagsFilter} from './filter';
  */
 export const getFilteredCourses = createSelector(
   // Input selectors:
-  getFilteredLessons,
+  getFilteredLessonCountPerLanguage,
 
   // Output selector (resultfunc):
-  (filteredLessons) => {
-    const filteredCourses = Object.keys(filteredLessons);
-    const sortFunc = (courseA, courseB) => filteredLessons[courseB].length - filteredLessons[courseA].length;
+  (filteredLessonCount) => {
+    const courseCount = {};
+    const filteredCourses = Object.keys(filteredLessonCount);
+    for (const course of filteredCourses) {
+      const courseObj = filteredLessonCount[course];
+      courseCount[course] = Object.keys(courseObj).reduce((sum, n) => sum + courseObj[n], 0);
+    }
+    const sortFunc = (courseA, courseB) => courseCount[courseB] - courseCount[courseA];
     filteredCourses.sort(sortFunc);
     return filteredCourses;
   }

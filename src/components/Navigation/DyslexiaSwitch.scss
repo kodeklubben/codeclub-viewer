@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.text {
+  font-family: $font-family-dyslexic;
+  margin-right: 10px;
+}
+
+.container {
+  display: flex;
+  align-content: center;
+  margin-right: 10px;
+  margin-left: 10px;
+}

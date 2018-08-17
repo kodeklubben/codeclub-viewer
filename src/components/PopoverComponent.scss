@@ -18,10 +18,19 @@
   }
 }
 
-.content {
+@mixin content {
   display: flex;
   justify-content: space-between;
   img {
     margin-right: 15px;
   }
+}
+
+.content {
+  @include content;
+}
+
+.contentDyslexia {
+  @include content;
+  font-family: $font-family-dyslexic;
 }

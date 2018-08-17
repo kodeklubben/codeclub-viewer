@@ -1,5 +1,6 @@
 import memoize from 'fast-memoize';
-import {assignDeep} from '../util';
+import {assignDeep} from '../utils/util';
+import {isLesson} from './lessons';
 
 // Gets all lessonSrc/*/*/*.md except lessonSrc/*/playlists/*
 // Gets only frontmatter (includes README-files, i.e. lærerveiledninger/teacher instructions)
@@ -53,17 +54,21 @@ const getData = memoize(
     const lessons = {};
     for (const key of lessonFrontmatterContext.keys()) {
       const [/* ignore */, course, lesson, file] = key.match(/^[.][/]([^/]+)[/]([^/]+)[/]([^.]+)[.]md$/);
-      const {
-        language, title = '', author = '', translator = '', external = ''
-      } = lessonFrontmatterContext(key);
-      if (!title) { console.warn('WARNING: The lesson', key, 'did not specify title.'); }
-      if (language) {
-        const isReadmeKey = file.startsWith('README') ? 1 : 0;
-        const path = `/${course}/${lesson}/${file}`;
-        const lessonData = {title, author, translator, external, path, key};
-        assignDeep(lessons, [course, lesson, language, isReadmeKey], lessonData);
+      if (isLesson(course, lesson)) {
+        const {
+          language, title = '', author = '', translator = '', external = ''
+        } = lessonFrontmatterContext(key);
+        if (!title) { console.warn('WARNING: The lesson', key, 'did not specify title.'); }
+        if (language) {
+          const isReadmeKey = file.startsWith('README') ? 1 : 0;
+          const path = `/${course}/${lesson}/${file}`;
+          const lessonData = {title, author, translator, external, path, key};
+          assignDeep(lessons, [course, lesson, language, isReadmeKey], lessonData);
+        } else {
+          console.warn('WARNING: The lesson', key, 'did not specify language, so lesson will not be used.');
+        }
       } else {
-        console.warn('WARNING: The lesson', key, 'did not specify language, so lesson will not be used.');
+        console.warn(`WARNING: The lesson ${course}/${lesson}/${file} did not have a lesson.yml file, skipping...`);
       }
     }
     return lessons;
