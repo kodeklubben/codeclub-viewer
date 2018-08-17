@@ -45,11 +45,6 @@ const cleanup = () => {
   }
 };
 
-const getMsSince = (startTime) => {
-  const currentTime = new Date().getTime();
-  return Math.round(currentTime - startTime);
-};
-
 const idlePages = [];
 
 const convertUrl = async (browser, lesson) => {
@@ -66,13 +61,9 @@ const convertUrl = async (browser, lesson) => {
   }
   const url = urlBase + lesson + '?pdf';
   //page.setJavaScriptEnabled(false);
-  console.log('Loading page: ', url);
-  let startTime = new Date().getTime();
-  await page.goto(url, {waitUntil: 'networkidle0'});
-  console.log(`    Loaded page (${getMsSince(startTime)}ms): ${url}`);
-  //await page.emulateMedia('screen');
   console.log('Rendering PDF:', url, '--->', path.relative(__dirname, pdfFile));
-  startTime = new Date().getTime();
+  await page.goto(url, {waitUntil: 'networkidle0'});
+  //await page.emulateMedia('screen');
   await page.pdf({
     path: pdfFile,
     printBackground: true,
@@ -84,7 +75,6 @@ const convertUrl = async (browser, lesson) => {
       right: '0.5in',
     }
   });
-  console.log(`    Rendered page (${getMsSince(startTime)}ms): ${url}`);
   idlePages.push(page);
 };
 
