@@ -1,7 +1,8 @@
 #!/bin/sh
 echo "Building production files while checking for errors."
 
-if yarn run build:travis | grep --after-context=5 ERROR
+# Include the pipe to tee in order for the output to be sent to the output log as well as grep
+if yarn build:travis | tee /dev/tty | grep --after-context=5 ERROR
 then
    echo "Build FAILED!"
    exit 1

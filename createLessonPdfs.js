@@ -10,7 +10,7 @@ const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
 const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
-const concurrentPDFrenders = isTravis ? 1 : 8;
+const concurrentPDFrenders = isTravis ? 2 : 8;
 const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
 const isWin = process.platform === 'win32';
@@ -69,7 +69,7 @@ const convertUrl = async (browser, lesson) => {
   console.log('Loading page: ', url);
   let startTime = new Date().getTime();
   await page.goto(url, {waitUntil: 'networkidle0'});
-  console.log(`Loaded page (${getMsSince(startTime)}ms): ${url}`);
+  console.log(`    Loaded page (${getMsSince(startTime)}ms): ${url}`);
   //await page.emulateMedia('screen');
   console.log('Rendering PDF:', url, '--->', path.relative(__dirname, pdfFile));
   startTime = new Date().getTime();
@@ -84,7 +84,7 @@ const convertUrl = async (browser, lesson) => {
       right: '0.5in',
     }
   });
-  console.log(`Rendered page (${getMsSince(startTime)}ms): ${url}`);
+  console.log(`    Rendered page (${getMsSince(startTime)}ms): ${url}`);
   idlePages.push(page);
 };
 
