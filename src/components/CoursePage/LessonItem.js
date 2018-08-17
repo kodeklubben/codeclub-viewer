@@ -52,7 +52,7 @@ const styles = theme => ({
   },
   rootLevel4: {
     height: 8,
-    backgroundColor: grey[50],
+    backgroundColor: grey[300],
   },
   marginLeft: {
     marginLeft: theme.spacing.unit * 1.5,

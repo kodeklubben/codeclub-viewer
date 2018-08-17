@@ -17,6 +17,15 @@ const styles = theme => ({
       marginBottom: theme.spacing.unit,
     },
   },
+  zeroMargin: {
+    marginTop: 2,
+    marginBottom: 2,
+    '&$expanded': {
+      marginTop: 2,
+      marginBottom: 2,
+    },
+  },
+  expanded: {},
   studentRoot: {
     backgroundColor: green[200],
   },
@@ -39,7 +48,11 @@ const CollapsiblePanel = ({classes, defaultExpanded, children, header, isStudent
     className={classes.container} {...{defaultExpanded}}
   >
     <ExpansionPanelSummary
-      classes={{root: isStudentMode ? classes.studentRoot : classes.teacherRoot}}
+      classes={{
+        root: isStudentMode ? classes.studentRoot : classes.teacherRoot,
+        content: classes.zeroMargin,
+        expanded: classes.expanded
+      }}
       expandIcon={<ExpandMoreIcon/>}
     >
       {header}
