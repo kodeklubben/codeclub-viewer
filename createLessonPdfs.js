@@ -45,14 +45,17 @@ const cleanup = () => {
   }
 };
 
+const idlePages = [];
+
 const convertUrl = async (browser, lesson) => {
   const pdfFile = path.join(buildDir, lesson + '.pdf');
   const pdfFolder = path.dirname(pdfFile);
   fse.mkdirsSync(pdfFolder);
-  const page = await browser.newPage();
+  const page = idlePages.length > 0 ? idlePages.pop() : await browser.newPage();
   page.on('error', () => { console.log('ERROR IN PUPPETEER: page crashed (event: "error")'); });
   page.on('pageerror', () => { console.log('ERROR IN PUPPETEER: uncaught exception in page (event: "pageerror")'); });
   const url = urlBase + lesson + '?pdf';
+  page.setJavaScriptEnabled(false);
   await page.goto(url, {waitUntil: 'networkidle0'});
   //await page.emulateMedia('screen');
   console.log('Rendering PDF: ' + url + ' ---> ' + path.relative(__dirname, pdfFile));
@@ -67,6 +70,7 @@ const convertUrl = async (browser, lesson) => {
       right: '0.5in',
     }
   });
+  idlePages.push(page);
 };
 
 const doConvert = () => {
