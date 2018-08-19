@@ -9,11 +9,11 @@ const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
+const isWin = process.platform === 'win32';
 const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
 const concurrentPDFrenders = isTravis ? 4 : 8;
 const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
-const isWin = process.platform === 'win32';
 let localWebServer = null;
 const puppeteerArgs = [];
 if (isTravis) {
@@ -30,12 +30,14 @@ console.log('Puppeteer args:', puppeteerArgs);
 
 const cleanup = () => {
   if (localWebServer && !localWebServer.killed) {
-    console.log('Killing localWebServer');
+    console.log('Killing localWebServer, PID:', localWebServer.pid);
+
     if (isWin) {
       spawn('taskkill', ['/pid', localWebServer.pid, '/f', '/t']);
     } else {
-      spawn('kill', [localWebServer.pid]);
+      process.kill(-localWebServer.pid);
     }
+
     localWebServer.killed = true;
     console.log('Killed localWebServer');
     localWebServer.stdout.removeAllListeners();
@@ -187,9 +189,7 @@ nodeCleanup(function (exitCode, signal) {
   cleanup();
 });
 
-localWebServer = spawn('yarn serve', {
-  shell: true
-});
+localWebServer = spawn('yarn', ['serve'], {detached: true});
 
 localWebServer.stdout.on('data', checkStarted);
 localWebServer.stderr.on('data', checkStarted);
