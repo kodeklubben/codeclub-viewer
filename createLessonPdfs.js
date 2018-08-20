@@ -62,6 +62,7 @@ const convertUrl = async (browser, lesson) => {
     });
     page.on('pageerror', (err) => {
       console.log('Puppeteer pageerror --- uncaught exception in page:', err);
+      process.exit(1);
     });
   }
   const url = urlBase + lesson + '?pdf';
