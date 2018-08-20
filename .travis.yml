@@ -10,7 +10,7 @@ script:
   - yarn eslint
   - yarn stylelint
   - yarn test
-  - ./travis_build.sh
+  - yarn build:travis
 deploy:
   provider: pages
   github-token: $GITHUB_TOKEN
