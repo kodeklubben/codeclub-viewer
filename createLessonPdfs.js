@@ -57,11 +57,14 @@ const convertUrl = async (browser, lesson) => {
     page = idlePages.pop();
   } else {
     page = await browser.newPage();
+    page.on('console', consoleMsg => {
+      console.log(`[Puppeteer console] ${consoleMsg.type()}: ${consoleMsg.text()} [[${page.url()}]]`);
+    });
     page.on('error', (err) => {
-      console.log('Puppeteer error --- page crashed:', err);
+      console.log(`[Puppeteer error] Page crashed: ${err} [[${page.url()}]]`);
     });
     page.on('pageerror', (err) => {
-      console.log('Puppeteer pageerror --- uncaught exception in page:', err);
+      console.log(`[Puppeteer pageerror] Uncaught exception in page: ${err} [[${page.url()}]]`);
       process.exit(1);
     });
   }
