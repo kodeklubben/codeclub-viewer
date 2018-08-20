@@ -57,8 +57,12 @@ const convertUrl = async (browser, lesson) => {
     page = idlePages.pop();
   } else {
     page = await browser.newPage();
-    page.on('error', () => { console.log('ERROR IN PUPPETEER: page crashed (event: "error")'); });
-    page.on('pageerror', () => { console.log('ERROR IN PUPPETEER: uncaught exception in page (event: "pageerror")'); });
+    page.on('error', (err) => {
+      console.log('Puppeteer error --- page crashed:', err);
+    });
+    page.on('pageerror', (err) => {
+      console.log('Puppeteer pageerror --- uncaught exception in page:', err);
+    });
   }
   const url = urlBase + lesson + '?pdf';
   //page.setJavaScriptEnabled(false);
