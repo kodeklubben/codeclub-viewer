@@ -1,7 +1,7 @@
 language: node_js
 stages:
   - name: deploy
-    if: branch = master AND type = push # AND fork = false
+    if: branch = master AND type = push AND fork = false
 
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
