@@ -8,11 +8,10 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
-class TeacherInfobox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {showCourseInfo: false};
-  }
+class TeacherInfobox extends React.PureComponent {
+  state = {
+    showCourseInfo: false,
+  };
 
   changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
 

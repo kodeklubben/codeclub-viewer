@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
 import Collapse from 'react-bootstrap/lib/Collapse';
 
-class ToggleButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {open: false};
-  }
+class ToggleButton extends React.PureComponent {
+  state = {
+    open: false,
+  };
 
   createMarkup = () => ({__html: this.props.hiddenHTML})
 
