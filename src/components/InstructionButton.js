@@ -7,7 +7,7 @@ import styles from './InstructionButton.scss';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../selectors/translate';
-import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
+import {getLessonPath} from '../resources/lessonFrontmatter';
 
 const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
   const buttonArgs = {
@@ -16,7 +16,7 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, inside
     bsSize: onlyIcon ? 'xs' : 'small',
     componentClass: insideLink ? 'div' : 'a',
   };
-  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   return (path ?
     <LinkContainer to={path}>
       <Button  {...buttonArgs} aria-label={buttonText}>

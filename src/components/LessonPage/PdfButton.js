@@ -8,10 +8,10 @@ import styles from './PdfButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const PdfButton = ({course, lesson, language, isReadme, t}) => {
-  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   const options = {
     href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
     bsStyle: 'pdf',

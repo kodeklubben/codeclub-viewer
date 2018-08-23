@@ -6,10 +6,10 @@ import styles from './ImprovePage.scss';
 import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
-import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => {
-  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src/${course}/${lesson}`;
   const linkToLesson = `http://oppgaver.kidsakoder.no/${path}`;
   const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' +

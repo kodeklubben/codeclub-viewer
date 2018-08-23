@@ -1,7 +1,7 @@
 /* eslint-env node */
 // TODO: Perhaps use code-splitting / react-loadable / bundle-loader or similar here.
 
-import {getLessonFrontmatter} from './lessonFrontmatter';
+import {getLessonKey, getLessonPath} from './lessonFrontmatter';
 import {extractFirstPartOfHtml} from '../utils/stringUtils';
 
 // Gets all lessonSrc/*/*/*.md except lessonSrc/*/playlists/*
@@ -19,10 +19,9 @@ const lessonContentContext =
  * @param {boolean} isReadme
  * @return {string} HTML markup
  */
-export const getLessonContent = (course, lesson, language, isReadme) => {
-  const {key} = getLessonFrontmatter(course, lesson, language, isReadme);
-  return key ? lessonContentContext(key) : '';
-};
+export const getLessonContent = (course, lesson, language, isReadme) =>
+  lessonContentContext(getLessonKey(course, lesson, language, isReadme));
+
 
 /**
  * Get first part of HTML markup for the lesson.
@@ -34,7 +33,7 @@ export const getLessonContent = (course, lesson, language, isReadme) => {
  */
 export const getLessonIntro = (course, lesson, language, isReadme) => {
   const lessonContent = getLessonContent(course, lesson, language, isReadme);
-  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   return extractFirstPartOfHtml(lessonContent, path);
 };
 
