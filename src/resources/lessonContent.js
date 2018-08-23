@@ -19,10 +19,9 @@ const lessonContentContext =
  * @param {boolean} isReadme
  * @return {string} HTML markup
  */
-export const getLessonContent = (course, lesson, language, isReadme) => {
-  const key = getLessonKey(course, lesson, language, isReadme);
-  return key ? lessonContentContext(key) : '';
-};
+export const getLessonContent = (course, lesson, language, isReadme) =>
+  lessonContentContext(getLessonKey(course, lesson, language, isReadme));
+
 
 /**
  * Get first part of HTML markup for the lesson.

@@ -183,13 +183,9 @@ export const getLessonExternal = (course, lesson, language, isReadme) =>
    * @param {boolean} isReadme
    * @returns {string}
    */
-export const getLessonPath = (course, lesson, language, isReadme) => {
-  const path = getLessonFrontmatter(course, lesson, language, isReadme).path;
-  if (!path) {
-    throw Error(`path does not exist for ${course}/${lesson}/${language}/${isReadme}`);
-  }
-  return path;
-};
+export const getLessonPath = (course, lesson, language, isReadme) =>
+  getLessonFrontmatter(course, lesson, language, isReadme).path;
+
 
 /**
  *
