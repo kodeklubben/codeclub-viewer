@@ -4,24 +4,31 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ListGroup from 'react-bootstrap/lib/ListGroup';
+import Col from 'react-bootstrap/lib/Col';
+import Button from 'react-bootstrap/lib/Button';
 import {getTranslator} from '../../selectors/translate';
 import {getShowRadiobuttons, getShowFiltergroups} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
 import PopoverComponent from '../PopoverComponent';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
 import CollapsiblePanel from '../CollapsiblePanel';
-import Col from 'react-bootstrap/lib/Col';
 import ClearFilterButton from './ClearFilterButton';
 
 const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
-    <span>
+    <span className={styles.headerContainer}>
       {t('filter.header')}
       <PopoverComponent popoverContent={t('filter.tooltip')}>
-        <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
+        <Button
+          bsSize='xs'
+          className={styles.popButton}
+          aria-label={t('general.glyphicon', {title: t('filter.header')})}
+        >
+          <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
+        </Button>
       </PopoverComponent>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');

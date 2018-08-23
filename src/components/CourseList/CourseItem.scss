@@ -12,14 +12,6 @@
   &:link {
     text-decoration: none;
   }
-
-  @media screen and (min-width: $screen-sm-min) {
-    &:hover {
-      .courseLogo {
-        padding: 0; // Remove padding to make the logo look bigger
-      }
-    }
-  }
 }
 
 .courseLogo {
@@ -27,6 +19,12 @@
   padding: 5px;
   height: 170px;
   margin-bottom: 15px;
+
+  @media screen and (min-width: $screen-sm-min) {
+    &:hover {
+      padding: 0; // Remove padding to make the logo look bigger
+    }
+  }
 }
 
 .courseName {
@@ -43,9 +41,20 @@
   margin-left: 5px;
 }
 
-.popoverGlyph {
-  margin: 0 3px 0 5px;
+.popButton {
+  margin-bottom: 2px;
+  &,
+  &:hover,
+  &:focus {
+    background: transparent;
+    text-decoration: none;
+    border: none;
+  }
+}
 
+.popoverGlyph {
+  margin-top: 3px;
+  font-size: 1.4em;
   &:hover {
     color: $color-gray;
   }

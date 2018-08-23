@@ -5,6 +5,7 @@ import styles from './CourseItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from 'react-bootstrap/lib/Button';
 import PopoverComponent from '../PopoverComponent';
 import Flag from '../Flag';
 import LessonCount from './LessonCount';
@@ -22,7 +23,9 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
   const popoverContent = getCourseIntro(course, language);
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
-      <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+      <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: courseTitle})}>
+        <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+      </Button>
     </PopoverComponent>
     : null;
   const courseIcon = (

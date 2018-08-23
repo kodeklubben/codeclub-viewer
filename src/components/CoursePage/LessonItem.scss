@@ -39,10 +39,10 @@
 }
 
 .popoverGlyph {
-  margin-bottom: 2px;
-  font-size: 1.3em;
+  margin-top: 3px;
+  font-size: 1.4em;
   &:hover {
-    color: black;
+    color: $color-gray;
   }
 }
 
@@ -50,4 +50,15 @@
   display: flex;
   align-items: center;
   margin-left: auto;
+}
+
+.popButton {
+  padding: 3px;
+  &,
+  &:hover,
+  &:focus {
+    background: transparent;
+    text-decoration: none;
+    border: none;
+  }
 }

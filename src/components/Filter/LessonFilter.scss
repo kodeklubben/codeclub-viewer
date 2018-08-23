@@ -1,16 +1,25 @@
 @import '../../styles/variables';
 
 .filterInfo {
-  font-size: 1.1em;
-  float: right;
-  padding-top: 1px;
-  cursor: pointer;
-
+  font-size: 1.4em;
   &:hover {
     color: $color-gray;
   }
+}
 
-  &:active {
-    color: black;
+.popButton {
+  padding-top: 2px;
+  &,
+  &:hover,
+  &:active:focus,
+  &:focus {
+    background: transparent;
+    text-decoration: none;
+    border: none;
   }
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
 }

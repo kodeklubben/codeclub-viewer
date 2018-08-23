@@ -12,7 +12,8 @@ export default {
       3: 'Erfaren',
       4: 'Ekspert'
     },
-    picture: 'Bilde av {{title}}'
+    picture: 'Bilde av {{title}}',
+    glyphicon: 'Info for {{title}}'
   },
   head: {
     title: 'Kodeklubben',
