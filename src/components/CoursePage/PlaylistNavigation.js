@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Accordion from 'react-bootstrap/lib/Accordion';
+import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 import Badge from 'react-bootstrap/lib/Badge';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
@@ -22,8 +22,16 @@ const PlaylistNavigation = ({course, language, t}) => {
       <Badge pullRight>{lessons.length}</Badge>
       <span className={styles.link}>{title}</span>
     </h4>;
+    const options = {
+      header,
+      key: playlist,
+      eventKey: playlist,
+      role: 'button',
+      tabIndex: '0',
+      onKeyPress: () => console.log('Skal åpne panelet'),
+    };
     return (
-      <Panel key={playlist} {...{header}} eventKey={playlist}>
+      <Panel {...options}>
         <ListGroup fill>
           {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
             lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
@@ -38,9 +46,9 @@ const PlaylistNavigation = ({course, language, t}) => {
     playlists.length > 0 ?
       <div className={styles.container}>
         <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
-        <Accordion>
+        <PanelGroup accordion>
           {playlistListItems}
-        </Accordion>
+        </PanelGroup>
       </div> :
       null
   );

@@ -17,9 +17,19 @@ class CollapsiblePanel extends React.PureComponent {
     const headerWithChevron = <span>
       <Glyphicon className={styles.chevron} glyph={expanded ? 'chevron-down' : 'chevron-right'}/>{header}
     </span>;
+    const options = {
+      expanded,
+      bsStyle,
+      tabIndex: '0',
+      onKeyPress: onClick,
+      onSelect: onClick,
+      collapsible: true,
+      header: headerWithChevron,
+      role:'button',
+    };
     return (
       <div className={styles.container}>
-        <Panel collapsible header={headerWithChevron} onSelect={onClick} {...{expanded, bsStyle}}>
+        <Panel {...options}>
           {children}
         </Panel>
       </div>
