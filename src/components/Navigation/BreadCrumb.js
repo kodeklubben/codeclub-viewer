@@ -23,16 +23,17 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   const lessonPath = isLesson ? getLessonPath(course, lesson, lessonLanguage, isReadme) : null;
 
   const courseTitle = getCourseTitle(course, courseLanguage);
-  const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';
+  const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : null;
 
   const homeCrumb = <NavLink to={'/'} aria-label={t('general.home')}>
     <Glyphicon glyph='home' className={styles.homeIcon}/>
   </NavLink>;
 
-  const courseCrumb = <NavLink to={coursePath} className={styles.crumb}>
-    <img className={styles.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
-    <span className={styles.lesson}>{courseTitle}</span>
-  </NavLink>;
+  const courseCrumb = !coursePath ? null :
+    <NavLink to={coursePath} className={styles.crumb}>
+      <img className={styles.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
+      <span className={styles.lesson}>{courseTitle}</span>
+    </NavLink>;
 
   const lessonCrumb = !lessonPath ? null :
     <NavLink to={lessonPath} className={styles.crumb} aria-label={lessonTitle}>
@@ -43,9 +44,9 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
   return <div className={styles.breadcrumb}>
     {homeCrumb}
     {coursePath ? <span> / </span> : null}
-    {coursePath ? courseCrumb : null}
+    {courseCrumb}
     {isLesson ? <span> / </span> : null}
-    {isLesson ? lessonCrumb : null}
+    {lessonCrumb}
   </div>;
 };
 
