@@ -20,7 +20,7 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
 
   const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
   const lessonTitle = getLessonTitle(course, lesson, lessonLanguage, isReadme);
-  const lessonPath = getLessonPath(course, lesson, lessonLanguage, isReadme);
+  const lessonPath = isLesson ? getLessonPath(course, lesson, lessonLanguage, isReadme) : null;
 
   const courseTitle = getCourseTitle(course, courseLanguage);
   const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';
@@ -34,10 +34,11 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
     <span className={styles.lesson}>{courseTitle}</span>
   </NavLink>;
 
-  const lessonCrumb = <NavLink to={lessonPath} className={styles.crumb} aria-label={lessonTitle}>
-    <LevelIcon level={getLevel(course, lesson)}/>
-    <span className={styles.lesson}>{lessonTitle}</span>
-  </NavLink>;
+  const lessonCrumb = !lessonPath ? null :
+    <NavLink to={lessonPath} className={styles.crumb} aria-label={lessonTitle}>
+      <LevelIcon level={getLevel(course, lesson)}/>
+      <span className={styles.lesson}>{lessonTitle}</span>
+    </NavLink>;
 
   return <div className={styles.breadcrumb}>
     {homeCrumb}

@@ -43,7 +43,7 @@ ContinueButton.propTypes = {
 const mapStateToProps = (state, {course, lesson, file}) => {
   const isLesson = !!lesson;
   const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const path = getLessonPath(course, lesson, language, isReadme);
+  const path = isLesson ? getLessonPath(course, lesson, language, isReadme) : null;
   return {
     path,
     t: getTranslator(state),

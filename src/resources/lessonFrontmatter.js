@@ -121,15 +121,14 @@ const getLessonFrontmatter = (course, lesson, language, isReadme) => {
  * @param {string} lesson E.g. 'astrokatt'
  * @param {string} language E.g. 'nb'
  * @param {boolean} isReadme
- * @returns {string|''}
+ * @returns {string}
  */
 export const getLessonKey = (course, lesson, language, isReadme) => {
-  try {
-    return getLessonFrontmatter(course, lesson, language, isReadme).key;
+  const key = getLessonFrontmatter(course, lesson, language, isReadme).key;
+  if (!key) {
+    throw Error(`key does not exist for ${course}/${lesson}/${language}/${isReadme}`);
   }
-  catch (e) {
-    return console.error('key not defined');
-  }
+  return key;
 };
 
 /**
@@ -182,15 +181,14 @@ export const getLessonExternal = (course, lesson, language, isReadme) =>
    * @param {string} lesson E.g. 'astrokatt'
    * @param {string} language E.g. 'nb'
    * @param {boolean} isReadme
-   * @returns {string|''}
+   * @returns {string}
    */
 export const getLessonPath = (course, lesson, language, isReadme) => {
-  try {
-    return getLessonFrontmatter(course, lesson, language, isReadme).path;
+  const path = getLessonFrontmatter(course, lesson, language, isReadme).path;
+  if (!path) {
+    throw Error(`path does not exist for ${course}/${lesson}/${language}/${isReadme}`);
   }
-  catch (e) {
-    return console.error('path not defined');
-  }
+  return path;
 };
 
 /**
