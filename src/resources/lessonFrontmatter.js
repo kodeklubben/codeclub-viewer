@@ -123,8 +123,14 @@ const getLessonFrontmatter = (course, lesson, language, isReadme) => {
  * @param {boolean} isReadme
  * @returns {string|''}
  */
-export const getLessonKey = (course, lesson, language, isReadme) =>
-  getLessonFrontmatter(course, lesson, language, isReadme).key || '';
+export const getLessonKey = (course, lesson, language, isReadme) => {
+  try {
+    return getLessonFrontmatter(course, lesson, language, isReadme).key;
+  }
+  catch (e) {
+    return console.error('key not defined');
+  }
+};
 
 /**
  * If title exists for lesson, return title
@@ -178,8 +184,14 @@ export const getLessonExternal = (course, lesson, language, isReadme) =>
    * @param {boolean} isReadme
    * @returns {string|''}
    */
-export const getLessonPath = (course, lesson, language, isReadme) =>
-  getLessonFrontmatter(course, lesson, language, isReadme).path || '';
+export const getLessonPath = (course, lesson, language, isReadme) => {
+  try {
+    return getLessonFrontmatter(course, lesson, language, isReadme).path;
+  }
+  catch (e) {
+    return console.error('path not defined');
+  }
+};
 
 /**
  *
