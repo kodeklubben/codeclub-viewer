@@ -19,7 +19,7 @@ import ClearFilterButton from './ClearFilterButton';
 const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
-    <span className={styles.headerContainer}>
+    <span>
       {t('filter.header')}
       <PopoverComponent popoverContent={t('filter.tooltip')}>
         <Button

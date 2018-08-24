@@ -51,5 +51,7 @@
 }
 
 .popButton {
+  margin-bottom: 3px;
+
   @include popoverButton;
 }

@@ -14,5 +14,7 @@
 }
 
 .popButton {
+  float: right;
+
   @include popoverButton;
 }
