@@ -9,3 +9,13 @@
 .headerText {
   font-size: 1.75em;
 }
+
+.title {
+  & a {
+    &,
+    &:hover,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}

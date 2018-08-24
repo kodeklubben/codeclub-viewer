@@ -12,7 +12,8 @@
       padding: 10px 15px;
       cursor: pointer;
 
-      &:hover {
+      &:hover,
+      &:focus {
         text-decoration: none;
         box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.05);
       }

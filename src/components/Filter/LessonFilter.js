@@ -38,8 +38,9 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
     <div>
       {/*Filter desktop*/}
       <Col xsHidden>
-        <Panel {...{header, bsStyle}}>
-          <ListGroup fill>
+        <Panel {...{bsStyle}}>
+          <Panel.Heading><Panel.Title>{header}</Panel.Title></Panel.Heading>
+          <ListGroup>
             {radioButtons}
             {groups}
           </ListGroup>
@@ -48,7 +49,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
       {/*Filter mobile*/}
       <Col smHidden mdHidden lgHidden>
         <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
-          <ListGroup fill>
+          <ListGroup>
             {radioButtons}
             {groups}
           </ListGroup>

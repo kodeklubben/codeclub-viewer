@@ -18,26 +18,23 @@ const PlaylistNavigation = ({course, language, t}) => {
   const playlistListItems = playlists.map(playlist => {
     const lessons = getPlaylistLessons(course, playlist);
     const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
-    const header = <h4 role="presentation">
-      <Badge pullRight>{lessons.length}</Badge>
-      <span className={styles.link}>{title}</span>
-    </h4>;
-    const options = {
-      header,
-      key: playlist,
-      eventKey: playlist,
-      role: 'button',
-      tabIndex: '0',
-      onKeyPress: () => console.log('Skal åpne panelet'),
-    };
+    const header = (
+      <div>
+        <Badge pullRight>{lessons.length}</Badge>
+        <span className={styles.link}>{title}</span>
+      </div>
+    );
     return (
-      <Panel {...options}>
-        <ListGroup fill>
-          {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
-            lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
-            <span>{t('coursepage.lessonsnottranslated')}</span>
-          }
-        </ListGroup>
+      <Panel key={playlist} eventKey={playlist} className={styles.title}>
+        <Panel.Heading><Panel.Title toggle>{header}</Panel.Title></Panel.Heading>
+        <Panel.Collapse role='tab'>
+          <ListGroup>
+            {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
+              lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
+              <span>{t('coursepage.lessonsnottranslated')}</span>
+            }
+          </ListGroup>
+        </Panel.Collapse>
       </Panel>
     );
   });
@@ -46,7 +43,7 @@ const PlaylistNavigation = ({course, language, t}) => {
     playlists.length > 0 ?
       <div className={styles.container}>
         <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
-        <PanelGroup accordion>
+        <PanelGroup accordion id='PanelGroup'>
           {playlistListItems}
         </PanelGroup>
       </div> :

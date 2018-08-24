@@ -30,10 +30,6 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, inside
     null);
 };
 
-InstructionButton.contextTypes = {
-  router: PropTypes.object,
-};
-
 InstructionButton.propTypes = {
   // ownProps
   course: PropTypes.string.isRequired,
@@ -45,6 +41,10 @@ InstructionButton.propTypes = {
 
   // mapStateToProps
   buttonText: PropTypes.string.isRequired,
+};
+
+InstructionButton.contextTypes = {
+  router: PropTypes.object,
 };
 
 const mapStateToProps = (state, {isReadme}) => {
