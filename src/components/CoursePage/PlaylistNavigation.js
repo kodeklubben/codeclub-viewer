@@ -12,44 +12,54 @@ import styles from './PlaylistNavigation.scss';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
 import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistLessons';
 
-const PlaylistNavigation = ({course, language, t}) => {
-  const playlists = getPlaylistsForCourse(course);
+class PlaylistNavigation extends React.PureComponent {
+  state = {
+    activeKey: '0'
+  }
 
-  const playlistListItems = playlists.map(playlist => {
-    const lessons = getPlaylistLessons(course, playlist);
-    const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
-    const header = (
-      <div>
-        <Badge pullRight>{lessons.length}</Badge>
-        <span className={styles.link}>{title}</span>
-      </div>
-    );
+  handleSelect = activeKey => this.setState({activeKey})
+
+  render () {
+    const {course, language, t} =  this.props;
+    const {activeKey} = this.state;
+    const playlists = getPlaylistsForCourse(course);
+
+    const playlistListItems = playlists.map((playlist, i) => {
+      const lessons = getPlaylistLessons(course, playlist);
+      const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
+      const header = (
+        <div>
+          <Badge pullRight>{lessons.length}</Badge>
+          <span className={styles.link}>{title}</span>
+        </div>
+      );
+      return (
+        <Panel key={playlist} eventKey={i} className={styles.title}>
+          <Panel.Heading><Panel.Title toggle>{header}</Panel.Title></Panel.Heading>
+          <Panel.Collapse role='tab'>
+            <ListGroup>
+              {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
+                lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
+                <span>{t('coursepage.lessonsnottranslated')}</span>
+              }
+            </ListGroup>
+          </Panel.Collapse>
+        </Panel>
+      );
+    });
+
     return (
-      <Panel key={playlist} eventKey={playlist} className={styles.title}>
-        <Panel.Heading><Panel.Title toggle>{header}</Panel.Title></Panel.Heading>
-        <Panel.Collapse role='tab'>
-          <ListGroup>
-            {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
-              lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
-              <span>{t('coursepage.lessonsnottranslated')}</span>
-            }
-          </ListGroup>
-        </Panel.Collapse>
-      </Panel>
+      playlists.length > 0 ?
+        <div className={styles.container}>
+          <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
+          <PanelGroup accordion id='PanelGroup' onSelect={this.handleSelect} {...{activeKey}}>
+            {playlistListItems}
+          </PanelGroup>
+        </div> :
+        null
     );
-  });
-
-  return (
-    playlists.length > 0 ?
-      <div className={styles.container}>
-        <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
-        <PanelGroup accordion id='PanelGroup'>
-          {playlistListItems}
-        </PanelGroup>
-      </div> :
-      null
-  );
-};
+  }
+}
 
 PlaylistNavigation.propTypes = {
   // ownProps
