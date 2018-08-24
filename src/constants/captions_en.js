@@ -92,7 +92,8 @@ export default {
       'want to work with.',
     radio: {
       playlists: 'Playlists',
-      lessons: 'All lessons'
+      lessons: 'All lessons',
+      group: 'Group with two choices'
     },
     removefilter: 'Clear filter'
   },

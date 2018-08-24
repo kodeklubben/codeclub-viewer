@@ -94,7 +94,8 @@ export default {
     tooltip: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
     radio: {
       playlists: `Oppgåve${softHyphen}samlingar`,
-      lessons: 'Alle oppgåver'
+      lessons: 'Alle oppgåver',
+      group: 'Gruppe med to val'
     },
     removefilter: 'Nullstill filter'
   },

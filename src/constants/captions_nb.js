@@ -93,7 +93,8 @@ export default {
       'så kan man i filteret sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
     radio: {
       playlists: `Oppgave${softHyphen}samlinger`,
-      lessons: 'Alle oppgaver'
+      lessons: 'Alle oppgaver',
+      group: 'Gruppe med to valg'
     },
     removefilter: 'Nullstill filter'
   },
