@@ -9,7 +9,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
 
-const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
+const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}, {router}) => {
+  const path = getLessonPath(course, lesson, language, isReadme);
   const options = {
     className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
     bsStyle: 'guide',
@@ -17,9 +18,8 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, inside
     componentClass: insideLink ? 'div' : 'a',
     tabIndex: '0',
     'aria-label': buttonText,
-    onKeyPress: () => console.log('Skal sendes til lærerveiledning'),
+    onKeyPress: () => router.push(path),
   };
-  const path = getLessonPath(course, lesson, language, isReadme);
   return (path ?
     <LinkContainer to={path}>
       <Button  {...options}>
@@ -28,6 +28,10 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, inside
       </Button>
     </LinkContainer> :
     null);
+};
+
+InstructionButton.contextTypes = {
+  router: PropTypes.object,
 };
 
 InstructionButton.propTypes = {
