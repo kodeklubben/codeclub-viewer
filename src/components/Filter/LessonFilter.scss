@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
 .filterInfo {
   font-size: 1.4em;
@@ -7,19 +8,11 @@
   }
 }
 
-.popButton {
-  padding-top: 2px;
-  &,
-  &:hover,
-  &:active:focus,
-  &:focus {
-    background: transparent;
-    text-decoration: none;
-    border: none;
-  }
-}
-
 .headerContainer {
   display: flex;
   justify-content: space-between;
+}
+
+.popButton {
+  @include popoverButton;
 }
