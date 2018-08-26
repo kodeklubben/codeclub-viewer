@@ -2,13 +2,13 @@
 
 cd $(dirname "$0") # Change directory to where the script is
 SCRIPT_PATH=$(pwd)
-URL_PATH_PREFIX="beta"
+URL_PATH_PREFIX=""
 URL_PATH_PREFIX_FILE=url-path-prefix.config
 
 CCV_PATH=${SCRIPT_PATH}
-CCV_BRANCH="master"
-CCV_REPO="kodeklubben/codeclub-viewer"
-CCV_URL="${CCV_REPO}.git"
+#CCV_BRANCH="master"
+#CCV_REPO="kodeklubben/codeclub-viewer"
+#CCV_URL="${CCV_REPO}.git"
 
 OPPGAVER_PATH=$(dirname ${SCRIPT_PATH})/oppgaver    # ../oppgaver
 OPPGAVER_BRANCH="master"
@@ -128,8 +128,8 @@ function prepareRepo {
 
     # Check that path has no uncommitted changes. If not: abort.
     if [[ -n $(git status --porcelain) ]]; then
-        echo "[ERROR] The repo in $(pwd) has uncommitted changes."
-        cleanupAndAbort
+        echo "[WARNING] The repo in $(pwd) has uncommitted changes. Are you sure you want to continue?"
+        askContinue
     fi
 
     setRemoteAlias ${giturl}
@@ -207,6 +207,8 @@ function syncDistToBeta {
     touch .nojekyll
     git add -A
     local CCV_COMMIT=$(cd ${CCV_PATH} && git log -n 1 | head -1)
+    local CCV_BRANCH=$(cd ${CCV_PATH} && git symbolic-ref --short -q HEAD)
+    if [[ -z ${CCV_BRANCH} ]]; then CCV_BRANCH="DETACHED_HEAD"; fi
     local OPPGAVER_COMMIT=$(cd ${OPPGAVER_PATH} && git log -n 1 | head -1)
     git commit -m "Publish site from oppgaver/${OPPGAVER_BRANCH} ${OPPGAVER_COMMIT} and codeclub-viewer/${CCV_BRANCH} ${CCV_COMMIT}"
 }
@@ -230,7 +232,8 @@ BETA_FORKED_URL="git@github.com:${BETA_FORKED_REPO}.git"          # Specify git@
 
 echo
 echo "This script will compile"
-echo "    ${CCV_REPO} (branch '${CCV_BRANCH}') and"
+#echo "    ${CCV_REPO} (branch '${CCV_BRANCH}') and"
+echo "    the current branch of codeclub-viewer and"
 echo "    ${OPPGAVER_REPO} (branch '${OPPGAVER_BRANCH}')"
 echo "and publish the result to"
 echo "    ${BETA_FORKED_REPO} (branch '${BETA_BRANCH}')."
@@ -243,7 +246,7 @@ checkRequirements
 
 echo
 echo "[INFO] ### PREPARING REPOS FOR BUILD ###"
-prepareRepo "${CCV_PATH}"         "${CCV_BRANCH}"         "${CCV_URL}"
+#prepareRepo "${CCV_PATH}"         "${CCV_BRANCH}"         "${CCV_URL}"
 prepareRepo "${OPPGAVER_PATH}"    "${OPPGAVER_BRANCH}"    "${OPPGAVER_URL}"
 prepareRepo "${BETA_PATH}"        "${BETA_BRANCH}"        "${BETA_URL}"
 
