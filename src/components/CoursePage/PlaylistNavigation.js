@@ -15,27 +15,25 @@ import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistL
 class PlaylistNavigation extends React.PureComponent {
   state = {
     activeKey: '0'
-  }
+  };
 
-  handleSelect = activeKey => this.setState({activeKey})
+  handleSelect = activeKey => this.setState({activeKey});
 
   render () {
     const {course, language, t} =  this.props;
     const {activeKey} = this.state;
     const playlists = getPlaylistsForCourse(course);
-
     const playlistListItems = playlists.map((playlist, i) => {
       const lessons = getPlaylistLessons(course, playlist);
       const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
-      const header = (
-        <div>
-          <Badge pullRight>{lessons.length}</Badge>
-          <span className={styles.link}>{title}</span>
-        </div>
-      );
       return (
-        <Panel key={playlist} eventKey={i} className={styles.title}>
-          <Panel.Heading><Panel.Title toggle>{header}</Panel.Title></Panel.Heading>
+        <Panel key={playlist} eventKey={i}>
+          <Panel.Heading>
+            <Panel.Title toggle>
+              <Badge pullRight>{lessons.length}</Badge>
+              <span className={styles.link}>{title}</span>
+            </Panel.Title>
+          </Panel.Heading>
           <Panel.Collapse role='tab'>
             <ListGroup>
               {areAllLessonsInPlaylistTranslated(course, playlist, language) ?

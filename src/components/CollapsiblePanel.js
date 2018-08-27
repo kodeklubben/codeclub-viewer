@@ -10,18 +10,18 @@ class CollapsiblePanel extends React.PureComponent {
     expanded: this.props.initiallyExpanded,
   };
 
+  handleToggle = () => this.setState({expanded: !this.state.expanded});
+
   render() {
     const {children, bsStyle, header} = this.props;
     const {expanded} = this.state;
-    const headerWithChevron = <span>
-      <Glyphicon className={styles.chevron} glyph={expanded ? 'chevron-down' : 'chevron-right'}/>{header}
-    </span>;
     return (
       <div className={styles.container}>
-        <Panel {...{expanded, bsStyle}} onToggle={() => this.setState({expanded: !expanded})}>
+        <Panel {...{expanded, bsStyle}} onToggle={this.handleToggle}>
           <Panel.Heading>
             <Panel.Title toggle>
-              {headerWithChevron}
+              <Glyphicon className={styles.chevron} glyph={expanded ? 'chevron-down' : 'chevron-right'}/>
+              {header}
             </Panel.Title>
           </Panel.Heading>
           <Panel.Collapse>

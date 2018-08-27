@@ -8,10 +8,10 @@ export default {
       1: 'Introduction',
       2: 'Beginner',
       3: 'Experienced',
-      4: 'Expert'
+      4: 'Expert',
     },
     picture: 'Picture of {{title}}',
-    glyphicon: 'Info for {{title}}'
+    glyphicon: 'Info for {{title}}',
   },
   head: {
     title: 'Code club',
@@ -43,10 +43,10 @@ export default {
              'programming, where Python / Web / Processing is the most common to proceed with afterwards.',
       link2: 'Learn more about running a code club',
       plus: 'Show more information',
-      minus: 'Show less information'
+      minus: 'Show less information',
     },
     showhidefilter: 'Show/hide filter',
-    forumbutton: 'Go to forum'
+    forumbutton: 'Go to forum',
   },
   coursepage: {
     courseinfo: 'Information about the course',
@@ -80,11 +80,11 @@ export default {
         title: 'Problem with',
         lesson: 'Lesson',
         sourcecode: 'The lesson\'s source code',
-        info: 'Describe the problem. Adding your operating system, browser and any code you have written will help.'
+        info: 'Describe the problem. Adding your operating system, browser and any code you have written will help.',
       },
       showcodebutton: 'Show code and fix yourself',
-      forumbutton: 'Go to forum'
-    }
+      forumbutton: 'Go to forum',
+    },
   },
   filter: {
     header: 'Filter',
@@ -93,9 +93,9 @@ export default {
     radio: {
       playlists: 'Playlists',
       lessons: 'All lessons',
-      group: 'Group with two choices'
+      group: 'Group with two choices',
     },
-    removefilter: 'Clear filter'
+    removefilter: 'Clear filter',
   },
   navbar: {
     mode: 'Mode',
@@ -107,20 +107,20 @@ export default {
       codeclub: 'Kodeklubben',
       school: 'School',
       codehour: 'Kodetimen',
-      contribute: 'Contribute?'
+      contribute: 'Contribute?',
     },
-    menu: 'Menu'
+    menu: 'Menu',
   },
   search: {
-    placeholder: 'Search'
+    placeholder: 'Search',
   },
   footer: {
     contribute: 'Create your own lessons',
-    dyslexia: 'Text for dyslexics'
+    dyslexia: 'Text for dyslexics',
   },
   404: {
     header: 'Sorry',
     textline: 'We can\'t find the page you are looking for.',
-    tofrontpage: 'To frontpage'
-  }
+    tofrontpage: 'To frontpage',
+  },
 };
