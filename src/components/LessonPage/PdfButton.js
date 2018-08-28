@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import red from '@material-ui/core/colors/red';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import {getTranslator} from '../../selectors/translate';
-import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const styles = theme => ({
   button: {
@@ -34,7 +34,7 @@ const styles = theme => ({
 });
 
 const PdfButton = ({classes, course, lesson, language, isReadme, t}) => {
-  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   const options = {
     href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
     className: classes.button,

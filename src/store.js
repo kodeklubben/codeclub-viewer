@@ -3,7 +3,7 @@
 import {createStore} from 'redux';
 import {createCheckboxesKey} from './utils/checkboxUtils';
 import {getInitialFilter} from './utils/filterUtils';
-import {getLessonFrontmatter, getLessonLanguages} from './resources/lessonFrontmatter';
+import {getLessonPath, getLessonLanguages} from './resources/lessonFrontmatter';
 import {setCheckboxes} from './reducers/checkboxes';
 import {setFilter, resetOneFilter} from './reducers/filter';
 import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
@@ -63,7 +63,7 @@ export const updateStoreFromLocalStorage = () => {
   for (const course of getCourses()){
     for (const lesson of getLessonsInCourse(course)) {
       for (const language of getLessonLanguages(course, lesson)) {
-        const {path} = getLessonFrontmatter(course, lesson, language, false);
+        const path = getLessonPath(course, lesson, language, false);
         const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);
         if(Object.keys(checkboxes).length !== 0) {
           store.dispatch(setCheckboxes(path, checkboxes));

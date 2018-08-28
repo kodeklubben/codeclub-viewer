@@ -35,7 +35,7 @@ const styles = theme => ({
   },
 });
 
-class TeacherInfobox extends React.Component {
+class TeacherInfobox extends React.PureComponent {
   state = {
     showCourseInfo: false,
   };

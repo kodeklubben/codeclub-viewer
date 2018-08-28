@@ -36,7 +36,7 @@ const styles = theme => ({
   },
 });
 
-class PlaylistNavigation extends React.Component {
+class PlaylistNavigation extends React.PureComponent {
   state = {
     expanded: null,
   };

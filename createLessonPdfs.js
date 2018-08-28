@@ -9,38 +9,70 @@ const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
-const concurrentPDFrenders = 10;
+const isWin = process.platform === 'win32';
+const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
+const concurrentPDFrenders = isTravis ? 4 : 8;
 const maxRetriesPerPDF = 3;
 const urlBase = 'http://127.0.0.1:8080' + publicPath;
-const isWin = process.platform === 'win32';
 let localWebServer = null;
+const puppeteerArgs = [];
+if (isTravis) {
+  puppeteerArgs.push('--no-sandbox');             // needed for travis to work
+  puppeteerArgs.push('--disable-dev-shm-usage');  // to minimize page crashes in (especially) linux/docker
+}
+
+console.log('concurrentPDFrenders:', concurrentPDFrenders);
+console.log('maxRetriesPerPDF:', maxRetriesPerPDF);
+console.log('urlBase:', urlBase);
+console.log('isWin:', isWin);
+console.log('isTravis:', isTravis);
+console.log('Puppeteer args:', puppeteerArgs);
 
 const cleanup = () => {
   if (localWebServer && !localWebServer.killed) {
-    console.log('Killing localWebServer');
+    console.log('Killing localWebServer, PID:', localWebServer.pid);
+
     if (isWin) {
       spawn('taskkill', ['/pid', localWebServer.pid, '/f', '/t']);
-      localWebServer.killed = true;
     } else {
-      const killSignal = 'SIGTERM'; // 'SIGINT';
-      const killSuccess = localWebServer.kill(killSignal);
-      console.log('Successfully killed localWebServer with ' + killSignal + ':', killSuccess);
+      process.kill(-localWebServer.pid);
     }
+
+    localWebServer.killed = true;
+    console.log('Killed localWebServer');
     localWebServer.stdout.removeAllListeners();
     localWebServer.stderr.removeAllListeners();
     localWebServer.removeAllListeners();
   }
 };
 
+const idlePages = [];
+
 const convertUrl = async (browser, lesson) => {
   const pdfFile = path.join(buildDir, lesson + '.pdf');
   const pdfFolder = path.dirname(pdfFile);
   fse.mkdirsSync(pdfFolder);
-  const page = await browser.newPage();
+  let page;
+  if (idlePages.length > 0) {
+    page = idlePages.pop();
+  } else {
+    page = await browser.newPage();
+    page.on('console', consoleMsg => {
+      console.log(`[Puppeteer console] ${consoleMsg.type()}: ${consoleMsg.text()} [[${page.url()}]]`);
+    });
+    page.on('error', (err) => {
+      console.log(`[Puppeteer error] Page crashed: ${err} [[${page.url()}]]`);
+    });
+    page.on('pageerror', (err) => {
+      console.log(`[Puppeteer pageerror] Uncaught exception in page: ${err} [[${page.url()}]]`);
+      process.exit(1);
+    });
+  }
   const url = urlBase + lesson + '?pdf';
+  //page.setJavaScriptEnabled(false);
+  console.log('Rendering PDF:', url, '--->', path.relative(__dirname, pdfFile));
   await page.goto(url, {waitUntil: 'networkidle0'});
   //await page.emulateMedia('screen');
-  console.log('Rendering PDF: ' + url + ' ---> ' + path.relative(__dirname, pdfFile));
   await page.pdf({
     path: pdfFile,
     printBackground: true,
@@ -52,6 +84,7 @@ const convertUrl = async (browser, lesson) => {
       right: '0.5in',
     }
   });
+  idlePages.push(page);
 };
 
 const doConvert = () => {
@@ -60,7 +93,7 @@ const doConvert = () => {
 
   (async () => {
     try {
-      const browser = await puppeteer.launch();
+      const browser = await puppeteer.launch({args: puppeteerArgs});
       const queue = new PQueue({concurrency: concurrentPDFrenders});
 
       let completedPDFs = 0;
@@ -164,9 +197,7 @@ nodeCleanup(function (exitCode, signal) {
   cleanup();
 });
 
-localWebServer = spawn('yarn serve', {
-  shell: true
-});
+localWebServer = spawn('yarn', ['serve'], {detached: true});
 
 localWebServer.stdout.on('data', checkStarted);
 localWebServer.stderr.on('data', checkStarted);

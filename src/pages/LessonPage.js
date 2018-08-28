@@ -16,7 +16,7 @@ import {getTranslator} from '../selectors/translate';
 import {setCheckboxes, createCheckboxesKey} from '../utils/checkboxUtils';
 import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
-import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
+import {getLessonTitle, getLessonAuthor, getLessonTranslator, getLessonPath} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
 import {getLevel, getLicense} from '../resources/lessons';
 
@@ -55,7 +55,7 @@ const renderToggleButtons = () => {
   }
 };
 
-class LessonPage extends React.Component {
+class LessonPage extends React.PureComponent {
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
@@ -120,13 +120,13 @@ LessonPage.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path, title, author, translator} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   return {
     t: getTranslator(state),
     path,
-    title,
-    author,
-    translator,
+    title: getLessonTitle(course, lesson, language, isReadme),
+    author: getLessonAuthor(course, lesson, language, isReadme),
+    translator: getLessonTranslator(course, lesson, language, isReadme),
     license: getLicense(course, lesson),
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
   };

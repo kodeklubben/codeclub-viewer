@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-class ToggleButton extends React.Component {
+class ToggleButton extends React.PureComponent {
   state = {
     open: false,
   };

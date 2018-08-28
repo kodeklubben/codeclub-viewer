@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import SchoolIcon from '@material-ui/icons/School';
 import {getTranslator} from '../selectors/translate';
-import {getLessonFrontmatter} from '../resources/lessonFrontmatter';
+import {getLessonPath} from '../resources/lessonFrontmatter';
 
 const styles = theme => ({
   button: {
@@ -36,7 +36,7 @@ const styles = theme => ({
 
 const InstructionButton = ({
   classes, course, lesson, language, isReadme, insideLink, t}) => {
-  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   const iconButton = !path ? null :
     <IconButton component={Link} to={path} aria-label={t('lessons.toteacherinstruction') + ' ' + lesson}>
       <SchoolIcon/>

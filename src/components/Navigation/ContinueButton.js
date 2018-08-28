@@ -6,7 +6,7 @@ import Link from 'react-router/lib/Link';
 import Button from '@material-ui/core/Button';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {getTranslator} from '../../selectors/translate';
-import {getLessonFrontmatter, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
+import {getLessonPath, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
 
 const styles = theme => ({
   button: {
@@ -60,7 +60,7 @@ ContinueButton.propTypes = {
 const mapStateToProps = (state, {course, lesson, file}) => {
   const isLesson = !!lesson;
   const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const {path} = isLesson ? getLessonFrontmatter(course, lesson, language, isReadme) || {} : {};
+  const path = getLessonPath(course, lesson, language, isReadme);
   return {
     path,
     t: getTranslator(state),

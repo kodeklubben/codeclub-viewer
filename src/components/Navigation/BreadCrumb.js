@@ -12,7 +12,7 @@ import LevelIcon from '../LevelIcon';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
-import {getLanguageAndIsReadme, getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getLanguageAndIsReadme, getLessonTitle, getLessonPath} from '../../resources/lessonFrontmatter';
 import {getCourseIcon} from '../../resources/courseIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLevel} from '../../resources/lessons';
@@ -50,8 +50,8 @@ const BreadCrumb = ({classes, course, lesson, file, courseLanguage, t}) => {
   const isCourse = course && !isLesson;
 
   const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const {title:lessonTitle, path:lessonPath} = isLesson ?
-    getLessonFrontmatter(course, lesson, lessonLanguage, isReadme) : {};
+  const lessonTitle = getLessonTitle(course, lesson, lessonLanguage, isReadme);
+  const lessonPath = getLessonPath(course, lesson, lessonLanguage, isReadme);
 
   const courseTitle = getCourseTitle(course, courseLanguage);
   const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';

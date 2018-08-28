@@ -8,7 +8,7 @@ import green from '@material-ui/core/colors/green';
 import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 import {getAvailableLanguages} from '../../utils/filterUtils';
-import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatter';
 
 const styles = theme => ({
   button: {
@@ -71,7 +71,8 @@ const mapStateToProps = (state, {course, lesson, isReadme}) => {
   const tf = getTranslateFilter(state);
   const language = state.language; // E.g. 'en'
   const lang = tf('language', language); // Name of language, e.g. 'English'
-  const {path, external} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
+  const external = getLessonExternal(course, lesson, language, isReadme);
   const enabled = path && !external;
   return {
     path,
