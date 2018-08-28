@@ -1,21 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {getTranslator} from '../../selectors/translate';
 import styles from './FilterItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from 'react-bootstrap/lib/Button';
 import PopoverComponent from '../PopoverComponent';
 
-const FilterItem = ({tagName, checked, onCheck, popoverContent}) => {
+const FilterItem = ({tagName, checked, onCheck, popoverContent, t}) => {
   const popover = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
-      <span className={styles.tagInfo}><Glyphicon glyph="info-sign"/></span>
+      <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: tagName})}>
+        <span className={styles.tagInfo}><Glyphicon className={styles.glyph} glyph="info-sign"/></span>
+      </Button>
     </PopoverComponent>
     : null;
   return (
-    <div className="checkbox">
+    <div className={styles.container}>
       <label className={styles.label}>
-        <input type="checkbox" onChange={onCheck} {...{checked}}/>
-        <span>{tagName}</span>
+        <input type='checkbox' onChange={onCheck} {...{checked}}/>
+        <span className={styles.labelText}>{tagName}</span>
       </label>
       {popover}
     </div>
@@ -28,6 +33,15 @@ FilterItem.propTypes = {
   checked: PropTypes.bool,
   onCheck: PropTypes.func.isRequired,
   popoverContent: PropTypes.string.isRequired,
+
+  // mapStateToProps
+  t: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(FilterItem);
+const mapStateToProps = (state) => ({
+  t: getTranslator(state),
+});
+
+export default connect(
+  mapStateToProps,
+)(withStyles(styles)(FilterItem));

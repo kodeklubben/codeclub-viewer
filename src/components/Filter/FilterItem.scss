@@ -1,20 +1,37 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
 
 .label {
   text-overflow: ellipsis;
   overflow-x: hidden;
+  font-weight: normal;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.labelText {
+  margin-left: 7px;
 }
 
 .tagInfo {
-  float: right;
-  padding-top: 1px;
-  cursor: pointer;
-
   &:hover {
     color: $color-gray;
   }
+}
 
-  &:active {
-    color: black;
-  }
+.glyph {
+  font-size: 1.1em;
+}
+
+.popButton {
+  margin-bottom: 1px;
+
+  @include popoverButton;
 }

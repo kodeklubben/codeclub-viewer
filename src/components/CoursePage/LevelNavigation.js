@@ -29,15 +29,16 @@ const LevelNavigation = ({t, levels, isStudentMode}) => {
   return (
     <div>
       <Col xsHidden>
-        <Panel {...{bsStyle, header}}>
-          <ListGroup fill>
+        <Panel {...{bsStyle}}>
+          <Panel.Heading><Panel.Title>{header}</Panel.Title></Panel.Heading>
+          <ListGroup>
             {levelListItems}
           </ListGroup>
         </Panel>
       </Col>
       <Col smHidden mdHidden lgHidden>
         <CollapsiblePanel initiallyExpanded={false} {...{bsStyle, header}}>
-          <ListGroup fill>
+          <ListGroup>
             {levelListItems}
           </ListGroup>
         </CollapsiblePanel>

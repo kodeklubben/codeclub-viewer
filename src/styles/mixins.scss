@@ -13,3 +13,14 @@
     font-size: $font-size-md-pct;
   }
 }
+
+@mixin popoverButton {
+  &,
+  &:hover,
+  &:active:focus,
+  &:focus {
+    background: transparent;
+    text-decoration: none;
+    border: none;
+  }
+}

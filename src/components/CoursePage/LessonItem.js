@@ -5,6 +5,7 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import Button from 'react-bootstrap/lib/Button';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
@@ -58,7 +59,9 @@ const LessonItem = ({
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
-      <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+      <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: lesson})}>
+        <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+      </Button>
     </PopoverComponent>
     : null;
 

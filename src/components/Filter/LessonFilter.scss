@@ -1,16 +1,20 @@
 @import '../../styles/variables';
+@import '../../styles/mixins';
 
 .filterInfo {
-  font-size: 1.1em;
-  float: right;
-  padding-top: 1px;
-  cursor: pointer;
-
+  font-size: 1.4em;
   &:hover {
     color: $color-gray;
   }
+}
 
-  &:active {
-    color: black;
-  }
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.popButton {
+  float: right;
+
+  @include popoverButton;
 }

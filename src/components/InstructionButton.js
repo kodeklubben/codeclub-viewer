@@ -9,19 +9,22 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
 
-const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}) => {
-  const buttonArgs = {
+const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}, {router}) => {
+  const path = getLessonPath(course, lesson, language, isReadme);
+  const options = {
     className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
     bsStyle: 'guide',
     bsSize: onlyIcon ? 'xs' : 'small',
     componentClass: insideLink ? 'div' : 'a',
+    tabIndex: '0',
+    'aria-label': buttonText,
+    onKeyPress: () => router.push(path),
   };
-  const path = getLessonPath(course, lesson, language, isReadme);
   return (path ?
     <LinkContainer to={path}>
-      <Button  {...buttonArgs} aria-label={buttonText}>
+      <Button  {...options}>
         <Glyphicon className={styles.icon} glyph={isReadme ? 'education' : 'pencil'}/>
-        <span className={onlyIcon ? '' : styles.textMargin}>{buttonText}</span>
+        <span className={onlyIcon ? '' : styles.textMargin}>{onlyIcon ? '' : buttonText}</span>
       </Button>
     </LinkContainer> :
     null);
@@ -37,13 +40,17 @@ InstructionButton.propTypes = {
   insideLink: PropTypes.bool, // set to true if button is nested inside a <a>...</a>
 
   // mapStateToProps
-  buttonText: PropTypes.string,
+  buttonText: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, {isReadme, onlyIcon}) => {
+InstructionButton.contextTypes = {
+  router: PropTypes.object,
+};
+
+const mapStateToProps = (state, {isReadme}) => {
   const t = getTranslator(state);
   return {
-    buttonText: onlyIcon ? '' : t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson'),
+    buttonText: t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson'),
   };
 };
 

@@ -10,9 +10,10 @@ export default {
       1: 'Introduksjon',
       2: 'Nybyrjar',
       3: 'Erfaren',
-      4: 'Ekspert'
+      4: 'Ekspert',
     },
-    picture: 'Bilete av {{title}}'
+    picture: 'Bilete av {{title}}',
+    glyphicon: 'Info for {{title}}',
   },
   head: {
     title: 'Kodeklubben',
@@ -45,9 +46,9 @@ export default {
               'er dei vanlegaste å gå vidare med etterpå.',
       link2: 'Lær meir om å drive ein kodeklubb',
       plus: 'Vis meir informasjon',
-      minus: 'Vis mindre informasjon'
+      minus: 'Vis mindre informasjon',
     },
-    showhidefilter: 'Vis/skjul filter'
+    showhidefilter: 'Vis/skjul filter',
   },
   coursepage: {
     courseinfo: 'Informasjon om kurset',
@@ -82,20 +83,21 @@ export default {
         lesson: 'Oppgåve',
         sourcecode: 'Kjeldekoden til oppgåva',
         info: 'Beskriv problemet ditt her. Ta gjerne med operativsystemet ditt, nettlesaren din ' +
-              'og eventuell kode du har skrive.'
+              'og eventuell kode du har skrive.',
       },
       showcodebutton: 'Vis koden og fiks det sjølv',
-      forumbutton: 'Gå til forumet'
-    }
+      forumbutton: 'Gå til forumet',
+    },
   },
   filter: {
     header: 'Filter',
     tooltip: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
     radio: {
       playlists: `Oppgåve${softHyphen}samlingar`,
-      lessons: 'Alle oppgåver'
+      lessons: 'Alle oppgåver',
+      group: 'Gruppe med to val',
     },
-    removefilter: 'Nullstill filter'
+    removefilter: 'Nullstill filter',
   },
   navbar: {
     mode: 'Modus',
@@ -107,20 +109,20 @@ export default {
       codeclub: 'Kodeklubben',
       school: 'Skule',
       codehour: 'Kodetimen',
-      contribute: 'Bidra?'
+      contribute: 'Bidra?',
     },
-    menu: 'Meny'
+    menu: 'Meny',
   },
   search: {
-    placeholder: 'Søk'
+    placeholder: 'Søk',
   },
   footer: {
     contribute: 'Lag eigne oppgåver',
-    dyslexia: 'Skrift for dyslektikarar'
+    dyslexia: 'Skrift for dyslektikarar',
   },
   404: {
     header: 'Orsak',
     textline: 'Me finn ikkje sida du leitar etter.',
-    tofrontpage: 'Til framsida'
-  }
+    tofrontpage: 'Til framsida',
+  },
 };

@@ -15,7 +15,7 @@ const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFil
       <span className={styles.marginLeft}>{text}</span>
     </label>;
   return (
-    <form>
+    <form role='group' aria-label={t('filter.radio.group')}>
       <RadioButton
         checked={showPlaylists}
         onChange={() => {
