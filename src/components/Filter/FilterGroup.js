@@ -12,52 +12,55 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
-const FilterGroup = ({
-  groupKey, filterTags, filterChecked,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateFilter
-}) => {
-  const groupName = translateFilter(groupKey);
-  if (groupName) {
-    const filterItems = Object.keys(filterTags).map(key => {
-      const onCheck = () => filterChecked(groupKey, key); // TODO: FIX
-      const tagName = translateFilter(groupKey, key);
-      const popoverContent = translateFilter(groupKey, key, true);
+class FilterGroup extends React.PureComponent {
+  handleCheck = (groupKey, key) => this.props.filterChecked(groupKey, key);
 
-      const checked = filterTags[key];
-      return tagName ? <FilterItem {...{key, checked, tagName, onCheck, popoverContent}}/>
-        : null;
-    }).filter(item => !!item); // filter out null-values;
-
-    // Sort filterItems alphabetically except grades
-    if (groupKey !== 'grade') {
-      filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
+  handleClick = (nothingChecked, groupKey, isCollapsed) => {
+    if (nothingChecked) {
+      this.props.collapseFilterGroup(groupKey, !isCollapsed);
     }
+  };
 
-    const nothingChecked = !somethingChecked;
-    const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
-    const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
-    const onGroupClick = () => {
-      if (nothingChecked) {
-        collapseFilterGroup(groupKey, !isCollapsed);
+  render() {
+    const {groupKey, filterTags, filterGroupsCollapsed, somethingChecked, translateFilter} = this.props;
+    const groupName = translateFilter(groupKey);
+    if (groupName) {
+      const filterItems = Object.keys(filterTags).map(key => {
+        const tagName = translateFilter(groupKey, key);
+        const popoverContent = translateFilter(groupKey, key, true);
+        const onCheck = this.handleCheck.bind(this, groupKey, key);
+        const checked = filterTags[key];
+        return tagName ?
+          <FilterItem {...{key, checked, onCheck, tagName, popoverContent}}/> : null;
+      }).filter(item => !!item); // filter out null-values;
+
+      // Sort filterItems alphabetically except grades
+      if (groupKey !== 'grade') {
+        filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
       }
-    };
 
-    return (
-      <ListGroupItem>
-        <div className={headingStyle} onClick={onGroupClick} role='button' tabIndex='0' onKeyPress={onGroupClick}>
-          <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
-          {groupName}
-        </div>
-        <Collapse in={!isCollapsed}>
-          <div>{filterItems}</div>
-        </Collapse>
-      </ListGroupItem>
-    );
+      const nothingChecked = !somethingChecked;
+      const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
+      const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
+      const onGroupClick = this.handleClick.bind(this, nothingChecked, groupKey, isCollapsed);
+
+      return (
+        <ListGroupItem>
+          <div className={headingStyle} onClick={onGroupClick} role='button' tabIndex='0' onKeyPress={onGroupClick}>
+            <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
+            {groupName}
+          </div>
+          <Collapse in={!isCollapsed}>
+            <div>{filterItems}</div>
+          </Collapse>
+        </ListGroupItem>
+      );
+    }
+    else {
+      return null;
+    }
   }
-  else {
-    return null;
-  }
-};
+}
 
 FilterGroup.propTypes = {
   // ownProps:
