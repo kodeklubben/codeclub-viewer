@@ -9,26 +9,35 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
 
-const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink, buttonText}, {router}) => {
-  const path = getLessonPath(course, lesson, language, isReadme);
-  const options = {
-    className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
-    bsStyle: 'guide',
-    bsSize: onlyIcon ? 'xs' : 'small',
-    componentClass: insideLink ? 'div' : 'a',
-    tabIndex: '0',
-    'aria-label': buttonText,
-    onKeyPress: () => router.push(path),
+class InstructionButton extends React.PureComponent {
+  handleKeyPress = () => {
+    const {course, lesson, language, isReadme} = this.props;
+    return this.context.router.push(getLessonPath(course, lesson, language, isReadme));
   };
-  return (path ?
-    <LinkContainer to={path}>
-      <Button  {...options}>
-        <Glyphicon className={styles.icon} glyph={isReadme ? 'education' : 'pencil'}/>
-        <span className={onlyIcon ? '' : styles.textMargin}>{onlyIcon ? '' : buttonText}</span>
-      </Button>
-    </LinkContainer> :
-    null);
-};
+
+  render() {
+    const {course, lesson, language, isReadme, onlyIcon, insideLink, buttonText} = this.props;
+    const path = getLessonPath(course, lesson, language, isReadme);
+    const options = {
+      className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
+      bsStyle: 'guide',
+      bsSize: onlyIcon ? 'xs' : 'small',
+      componentClass: insideLink ? 'div' : 'a',
+      tabIndex: '0',
+      'aria-label': buttonText,
+      onKeyPress: this.handleKeyPress,
+    };
+    return (path ?
+      <LinkContainer to={path}>
+        <Button  {...options}>
+          <Glyphicon className={styles.icon} glyph={isReadme ? 'education' : 'pencil'}/>
+          <span className={onlyIcon ? '' : styles.textMargin}>{onlyIcon ? '' : buttonText}</span>
+        </Button>
+      </LinkContainer> :
+      null
+    );
+  }
+}
 
 InstructionButton.propTypes = {
   // ownProps

@@ -19,7 +19,7 @@ class PlaylistNavigation extends React.PureComponent {
 
   handleSelect = activeKey => this.setState({activeKey});
 
-  render () {
+  render() {
     const {course, language, t} =  this.props;
     const {activeKey} = this.state;
     const playlists = getPlaylistsForCourse(course);

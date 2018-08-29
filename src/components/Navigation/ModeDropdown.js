@@ -9,30 +9,38 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 import {setModeStudent, setModeTeacher} from '../../reducers/mode';
 
-const ModeDropdown = ({t, setModeStudent, setModeTeacher, isStudentMode}) => {
-  const modes = ['student', 'teacher'];
-  const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
-  const mode = isStudentMode ? modes[0] : modes[1];
-  const bsStyle = 'language-' + mode;
-  const onSelect = eventKey => eventKey === 'teacher' ? setModeTeacher() : setModeStudent();
-  const title = <div>
-    <Glyphicon className={styles.icon} glyph={isStudentMode ? 'pencil' : 'education'}/>
-    <span>
-      <span className={styles.onlyMode}>{t('navbar.mode') + ': '}</span>
-      {texts[mode]}
-    </span>
-  </div>;
-  return <div className={styles.gadgetContainer}>
-    <DropdownButton id='mode-dropdown' noCaret pullRight {...{bsStyle, onSelect, title}}>
-      {modes.map(key =>
-        <MenuItem {...{key}} eventKey={key} active={mode === key}>
-          <Glyphicon className={styles.icon} glyph={key === 'student' ? 'pencil' : 'education'}/>
-          {texts[key]}
-        </MenuItem>)
-      }
-    </DropdownButton>
-  </div>;
-};
+class ModeDropdown extends React.PureComponent {
+  handleSelect = eventKey => eventKey === 'teacher' ? this.props.setModeTeacher() : this.props.setModeStudent();
+
+  render() {
+    const {t, isStudentMode} = this.props;
+    const modes = ['student', 'teacher'];
+    const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
+    const mode = isStudentMode ? modes[0] : modes[1];
+    const bsStyle = 'language-' + mode;
+    const title = (
+      <div>
+        <Glyphicon className={styles.icon} glyph={isStudentMode ? 'pencil' : 'education'}/>
+        <span>
+          <span className={styles.onlyMode}>{t('navbar.mode') + ': '}</span>
+          {texts[mode]}
+        </span>
+      </div>
+    );
+    return (
+      <div className={styles.gadgetContainer}>
+        <DropdownButton id='mode-dropdown' noCaret pullRight onSelect={this.handleSelect} {...{bsStyle, title}}>
+          {modes.map(key =>
+            <MenuItem {...{key}} eventKey={key} active={mode === key}>
+              <Glyphicon className={styles.icon} glyph={key === 'student' ? 'pencil' : 'education'}/>
+              {texts[key]}
+            </MenuItem>)
+          }
+        </DropdownButton>
+      </div>
+    );
+  }
+}
 
 ModeDropdown.propTypes = {
   //mapStateToProps

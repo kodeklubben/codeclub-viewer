@@ -7,32 +7,36 @@ import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import {hashCode} from '../utils/util';
 
-const PopoverComponent = ({children, popoverContent, showDyslexicFont}) => {
-  const createMarkup = () => {
-    return {__html: popoverContent};
+class PopoverComponent extends React.PureComponent {
+  createMarkup = () => ({__html: this.props.popoverContent});
+
+  handleClick = event => {
+    event.stopPropagation();
+    event.preventDefault();
   };
-  const className = showDyslexicFont ? styles.contentDyslexia : styles.content;
-  const overlay =
-    <Popover id={hashCode(popoverContent)} className={styles.popover}>
-      <div {...{className}} role='region' dangerouslySetInnerHTML={createMarkup()}/>
-    </Popover>;
-  const options = {
-    animation: true,
-    rootClose: true,
-    trigger: 'click',
-    placement: 'bottom',
-    onClick: e => {
-      e.stopPropagation();
-      e.preventDefault();
-    },
-    overlay,
-  };
-  return (
-    <OverlayTrigger {...options}>
-      {children}
-    </OverlayTrigger>
-  );
-};
+
+  render() {
+    const {children, popoverContent, showDyslexicFont} = this.props;
+    const className = showDyslexicFont ? styles.contentDyslexia : styles.content;
+    const overlay =
+      <Popover id={hashCode(popoverContent)} className={styles.popover}>
+        <div {...{className}} role='region' dangerouslySetInnerHTML={this.createMarkup()}/>
+      </Popover>;
+    const options = {
+      animation: true,
+      rootClose: true,
+      trigger: 'click',
+      placement: 'bottom',
+      onClick: this.handleClick,
+      overlay,
+    };
+    return (
+      <OverlayTrigger {...options}>
+        {children}
+      </OverlayTrigger>
+    );
+  }
+}
 
 PopoverComponent.propTypes = {
   // ownProps
