@@ -19,7 +19,7 @@ class LevelNavigation extends React.PureComponent {
   render() {
     const {t, levels, isStudentMode} = this.props;
     const levelListItems = levels.map(level => (
-      <ListGroupItem key={level} onClick={this.handleClick.bind(this, level)}>
+      <ListGroupItem key={level} onClick={() => this.handleClick(level)}>
         <span className={styles.name}>
           <LevelIcon {...{level}}/>{t('general.levels.' + level)}
         </span>

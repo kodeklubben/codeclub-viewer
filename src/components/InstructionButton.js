@@ -22,7 +22,7 @@ class InstructionButton extends React.PureComponent {
       componentClass: insideLink ? 'div' : 'a',
       tabIndex: '0',
       'aria-label': buttonText,
-      onKeyPress: this.handleKeyPress.bind(this, path),
+      onKeyPress: () => this.handleKeyPress(path),
     };
     return (path ?
       <LinkContainer to={path}>

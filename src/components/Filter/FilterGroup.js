@@ -28,7 +28,7 @@ class FilterGroup extends React.PureComponent {
       const filterItems = Object.keys(filterTags).map(key => {
         const tagName = translateFilter(groupKey, key);
         const popoverContent = translateFilter(groupKey, key, true);
-        const onCheck = this.handleCheck.bind(this, groupKey, key);
+        const onCheck = () => this.handleCheck(groupKey, key);
         const checked = filterTags[key];
         return tagName ?
           <FilterItem {...{key, checked, onCheck, tagName, popoverContent}}/> : null;
@@ -42,7 +42,7 @@ class FilterGroup extends React.PureComponent {
       const nothingChecked = !somethingChecked;
       const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
       const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
-      const onGroupClick = this.handleClick.bind(this, nothingChecked, groupKey, isCollapsed);
+      const onGroupClick = () => this.handleClick(nothingChecked, groupKey, isCollapsed);
 
       return (
         <ListGroupItem>
