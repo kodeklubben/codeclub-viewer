@@ -12,6 +12,8 @@ class ToggleButton extends React.PureComponent {
 
   createMarkup = () => ({__html: this.props.hiddenHTML});
 
+  handleClick = () => this.setState({open: !this.state.open});
+
   render() {
     const containerStyle = {
       margin: '10px 0',
@@ -25,7 +27,7 @@ class ToggleButton extends React.PureComponent {
     };
     return (
       <div style={containerStyle}>
-        <Button onClick={() => this.setState({open: !this.state.open})}>
+        <Button onClick={this.handleClick}>
           {this.props.buttonText}
         </Button>
         <Collapse in={this.state.open}>

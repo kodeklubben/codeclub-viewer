@@ -19,7 +19,7 @@ const FilterGroup = ({
   const groupName = translateFilter(groupKey);
   if (groupName) {
     const filterItems = Object.keys(filterTags).map(key => {
-      const onCheck = () => filterChecked(groupKey, key);
+      const onCheck = () => filterChecked(groupKey, key); // TODO: FIX
       const tagName = translateFilter(groupKey, key);
       const popoverContent = translateFilter(groupKey, key, true);
 

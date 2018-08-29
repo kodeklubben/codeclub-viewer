@@ -15,7 +15,7 @@ import {lessonListId} from './LessonList';
 
 const LevelNavigation = ({t, levels, isStudentMode}) => {
   const levelListItems = levels.map(level => {
-    const onClick=() => scrollToComponent(document.getElementById(lessonListId(level)), {align: 'top'});
+    const onClick = () => scrollToComponent(document.getElementById(lessonListId(level)), {align: 'top'}); // TODO: FIX
     return (
       <ListGroupItem key={level} {...{onClick}}>
         <span className={styles.name}>
