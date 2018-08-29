@@ -202,8 +202,7 @@ function syncDistToBeta {
     git rm -rf --quiet .      # Remove all tracked files and folders in BETA_PATH
     git clean -fxd    # Remove all untracked files and folders in BETA_PATH
     cp -a ${BUILD_PATH}/* ${BETA_PATH}
-    #git checkout HEAD -- CNAME                        # Restore back CNAME
-    echo 'beta.oppgaver.kidsakoder.no' > CNAME
+    if [[ -f CNAME ]]; then rm -f CNAME; fi
     git checkout HEAD -- google91a144a83c954edb.html  # Restore back google search console verification file
     touch .nojekyll
     git add -A
