@@ -10,10 +10,7 @@ import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
 
 class InstructionButton extends React.PureComponent {
-  handleKeyPress = () => {
-    const {course, lesson, language, isReadme} = this.props;
-    return this.context.router.push(getLessonPath(course, lesson, language, isReadme));
-  };
+  handleKeyPress = path => this.context.router.push(path);
 
   render() {
     const {course, lesson, language, isReadme, onlyIcon, insideLink, buttonText} = this.props;
@@ -25,7 +22,7 @@ class InstructionButton extends React.PureComponent {
       componentClass: insideLink ? 'div' : 'a',
       tabIndex: '0',
       'aria-label': buttonText,
-      onKeyPress: this.handleKeyPress,
+      onKeyPress: this.handleKeyPress.bind(this, path),
     };
     return (path ?
       <LinkContainer to={path}>
