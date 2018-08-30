@@ -16,7 +16,7 @@ import {lessonListId} from './LessonList';
 class LevelNavigation extends React.PureComponent {
   handleClick = event => {
     scrollToComponent(document.getElementById(lessonListId(event.currentTarget.dataset.level)), {align: 'top'});
-  }
+  };
 
   render() {
     const {t, levels, isStudentMode} = this.props;

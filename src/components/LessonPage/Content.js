@@ -10,7 +10,7 @@ class Content extends React.PureComponent {
   createMarkup = () => {
     const {course, lesson, language, isReadme, isHydrated} = this.props;
     const lessonContent = getLessonContent(course, lesson, language, isReadme);
-    return ({__html: processContent(lessonContent, styles, isHydrated)});
+    return {__html: processContent(lessonContent, styles, isHydrated)};
   };
 
   render() {

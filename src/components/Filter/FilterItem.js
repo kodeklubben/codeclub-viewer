@@ -10,7 +10,7 @@ import PopoverComponent from '../PopoverComponent';
 import {filterChecked} from '../../reducers/filter';
 
 class FilterItem extends React.PureComponent {
-  handleChange = event => this.props.filterChecked(this.props.groupKey, this.props.itemKey);
+  handleChange = () => this.props.filterChecked(this.props.groupKey, this.props.itemKey);
 
   render() {
     const {tagName, checked, popoverContent, t} = this.props;
@@ -24,7 +24,7 @@ class FilterItem extends React.PureComponent {
     return (
       <div className={styles.container}>
         <label className={styles.label}>
-          <input type='checkbox'onChange={this.handleChange} {...{checked}}/>
+          <input type='checkbox' onChange={this.handleChange} {...{checked}}/>
           <span className={styles.labelText}>{tagName}</span>
         </label>
         {popover}

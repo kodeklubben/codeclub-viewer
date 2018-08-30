@@ -26,10 +26,15 @@ class FilterGroup extends React.PureComponent {
     if (groupName) {
       const filterItems = Object.keys(filterTags).map(key => {
         const tagName = translateFilter(groupKey, key);
-        const popoverContent = translateFilter(groupKey, key, true);
-        const checked = filterTags[key];
-        return tagName ?
-          <FilterItem itemKey={key} {...{key, groupKey, checked, tagName, popoverContent}}/> : null;
+        const options = {
+          key,
+          groupKey,
+          tagName,
+          itemKey: key,
+          checked: filterTags[key],
+          popoverContent: translateFilter(groupKey, key, true),
+        };
+        return tagName ? <FilterItem {...options}/> : null;
       }).filter(item => !!item); // filter out null-values;
 
       // Sort filterItems alphabetically except grades
@@ -37,8 +42,7 @@ class FilterGroup extends React.PureComponent {
         filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
       }
 
-      const nothingChecked = !somethingChecked;
-      const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
+      const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
       const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
 
       return (
