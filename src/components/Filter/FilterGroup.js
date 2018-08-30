@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {filterChecked} from '../../reducers/filter';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
@@ -13,8 +12,6 @@ import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
 class FilterGroup extends React.PureComponent {
-  handleCheck = event => this.props.filterChecked(event.target.dataset.groupkey, event.target.dataset.itemkey);
-
   handleClick = () => {
     const {somethingChecked, collapseFilterGroup, filterGroupsCollapsed, groupKey} = this.props;
     const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
@@ -32,11 +29,7 @@ class FilterGroup extends React.PureComponent {
         const popoverContent = translateFilter(groupKey, key, true);
         const checked = filterTags[key];
         return tagName ?
-          <FilterItem
-            itemKey={key}
-            onCheck={this.handleCheck}
-            {...{key, groupKey, checked, tagName, popoverContent}}
-          /> : null;
+          <FilterItem itemKey={key} {...{key, groupKey, checked, tagName, popoverContent}}/> : null;
       }).filter(item => !!item); // filter out null-values;
 
       // Sort filterItems alphabetically except grades
@@ -83,7 +76,6 @@ FilterGroup.propTypes = {
   translateFilter: PropTypes.func.isRequired,
 
   // mapDispatchToProps:
-  filterChecked: PropTypes.func.isRequired,
   collapseFilterGroup: PropTypes.func.isRequired,
 };
 
@@ -95,7 +87,6 @@ const mapStateToProps = (state, {groupKey}) => ({
 });
 
 const mapDispatchToProps = {
-  filterChecked,
   collapseFilterGroup,
 };
 

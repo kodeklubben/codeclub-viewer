@@ -7,12 +7,14 @@ import {processContent} from '../../utils/processContent';
 import {getLessonContent} from '../../resources/lessonContent';
 
 class Content extends React.PureComponent {
-  createMarkup = (lessonContent, isHydrated) => ({__html: processContent(lessonContent, styles, isHydrated)});
-
-  render() {
+  createMarkup = () => {
     const {course, lesson, language, isReadme, isHydrated} = this.props;
     const lessonContent = getLessonContent(course, lesson, language, isReadme);
-    return <div dangerouslySetInnerHTML={this.createMarkup(lessonContent, isHydrated)}/>;
+    return ({__html: processContent(lessonContent, styles, isHydrated)});
+  };
+
+  render() {
+    return <div dangerouslySetInnerHTML={this.createMarkup()}/>;
   }
 }
 

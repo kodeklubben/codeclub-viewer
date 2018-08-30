@@ -9,7 +9,6 @@ const LevelIcon = ({level}) => {
       className={styles.levelIcon}
       src={require('../assets/graphics/level-' + level + '.svg')}
       alt={'Level ' + level}
-      data-level={level}
     />
     : null;
 };

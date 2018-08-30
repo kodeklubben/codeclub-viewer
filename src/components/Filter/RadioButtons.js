@@ -16,13 +16,13 @@ const RadioButton = ({checked, onChange, text}) => (
 );
 
 class RadioButtons extends React.PureComponent {
-  handleChangePlaylists = () => {
+  handleChangeToPlaylists = () => {
     this.props.setShowPlaylists(true);
     this.props.resetAllFilters('language', this.props.language);
     this.props.collapseAllFilterGroups(true);
   };
 
-  handleChangeLessons = () => this.props.setShowPlaylists(false);
+  handleChangeToLessons = () => this.props.setShowPlaylists(false);
 
   render() {
     const {showPlaylists, t} = this.props;
@@ -30,12 +30,12 @@ class RadioButtons extends React.PureComponent {
       <form role='group' aria-label={t('filter.radio.group')}>
         <RadioButton
           checked={showPlaylists}
-          onChange={this.handleChangePlaylists}
+          onChange={this.handleChangeToPlaylists}
           text={t('filter.radio.playlists')}
         />
         <RadioButton
           checked={!showPlaylists}
-          onChange={this.handleChangeLessons}
+          onChange={this.handleChangeToLessons}
           text={t('filter.radio.lessons')}
         />
       </form>
