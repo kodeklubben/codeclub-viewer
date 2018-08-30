@@ -13,11 +13,13 @@ import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
 class FilterGroup extends React.PureComponent {
-  handleCheck = (groupKey, key) => this.props.filterChecked(groupKey, key);
+  handleCheck = event => this.props.filterChecked(event.target.dataset.groupkey, event.target.dataset.itemkey);
 
-  handleClick = (nothingChecked, groupKey, isCollapsed) => {
-    if (nothingChecked) {
-      this.props.collapseFilterGroup(groupKey, !isCollapsed);
+  handleClick = () => {
+    const {somethingChecked, collapseFilterGroup, filterGroupsCollapsed, groupKey} = this.props;
+    const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
+    if (!somethingChecked) {
+      collapseFilterGroup(groupKey, !isCollapsed);
     }
   };
 
@@ -28,10 +30,13 @@ class FilterGroup extends React.PureComponent {
       const filterItems = Object.keys(filterTags).map(key => {
         const tagName = translateFilter(groupKey, key);
         const popoverContent = translateFilter(groupKey, key, true);
-        const onCheck = () => this.handleCheck(groupKey, key);
         const checked = filterTags[key];
         return tagName ?
-          <FilterItem {...{key, checked, onCheck, tagName, popoverContent}}/> : null;
+          <FilterItem
+            itemKey={key}
+            onCheck={this.handleCheck}
+            {...{key, groupKey, checked, tagName, popoverContent}}
+          /> : null;
       }).filter(item => !!item); // filter out null-values;
 
       // Sort filterItems alphabetically except grades
@@ -42,11 +47,16 @@ class FilterGroup extends React.PureComponent {
       const nothingChecked = !somethingChecked;
       const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
       const headingStyle = styles.name + (somethingChecked ? ' ' + styles.somethingChecked : '');
-      const onGroupClick = () => this.handleClick(nothingChecked, groupKey, isCollapsed);
 
       return (
         <ListGroupItem>
-          <div className={headingStyle} onClick={onGroupClick} role='button' tabIndex='0' onKeyPress={onGroupClick}>
+          <div
+            className={headingStyle}
+            onClick={this.handleClick}
+            role='button'
+            tabIndex='0'
+            onKeyPress={this.handleClick}
+          >
             <Glyphicon className={styles.glyph} glyph={isCollapsed ? 'chevron-right' : 'chevron-down'}/>
             {groupName}
           </div>

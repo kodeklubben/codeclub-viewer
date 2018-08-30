@@ -14,12 +14,13 @@ import scrollToComponent from 'react-scroll-to-component';
 import {lessonListId} from './LessonList';
 
 class LevelNavigation extends React.PureComponent {
-  handleClick = level => scrollToComponent(document.getElementById(lessonListId(level)), {align: 'top'});
+  handleClick = event =>
+    scrollToComponent(document.getElementById(lessonListId(event.target.dataset.level)), {align: 'top'});
 
   render() {
     const {t, levels, isStudentMode} = this.props;
     const levelListItems = levels.map(level => (
-      <ListGroupItem key={level} onClick={() => this.handleClick(level)}>
+      <ListGroupItem key={level} data-level={level} onClick={this.handleClick}>
         <span className={styles.name}>
           <LevelIcon {...{level}}/>{t('general.levels.' + level)}
         </span>

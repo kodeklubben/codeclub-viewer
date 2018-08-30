@@ -8,7 +8,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import PopoverComponent from '../PopoverComponent';
 
-const FilterItem = ({tagName, checked, onCheck, popoverContent, t}) => {
+const FilterItem = ({itemKey, groupKey, tagName, checked, onCheck, popoverContent, t}) => {
   const popover = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: tagName})}>
@@ -19,7 +19,7 @@ const FilterItem = ({tagName, checked, onCheck, popoverContent, t}) => {
   return (
     <div className={styles.container}>
       <label className={styles.label}>
-        <input type='checkbox' onChange={onCheck} {...{checked}}/>
+        <input type='checkbox' data-itemkey={itemKey} data-groupkey={groupKey} onChange={onCheck} {...{checked}}/>
         <span className={styles.labelText}>{tagName}</span>
       </label>
       {popover}
@@ -29,6 +29,8 @@ const FilterItem = ({tagName, checked, onCheck, popoverContent, t}) => {
 
 FilterItem.propTypes = {
   // ownProps
+  itemKey: PropTypes.string.isRequired,
+  groupKey: PropTypes.string.isRequired,
   tagName: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   onCheck: PropTypes.func.isRequired,
