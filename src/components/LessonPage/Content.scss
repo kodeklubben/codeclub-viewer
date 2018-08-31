@@ -268,5 +268,5 @@ input[type="checkbox"]:checked + label::before {
 }
 
 input[type="checkbox"]:focus + label::before {
-  background: darken($checkbox-blue, 20%);
+  outline: darken($checkbox-blue, 20%) auto 5px;
 }
