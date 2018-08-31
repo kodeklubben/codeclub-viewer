@@ -10,6 +10,13 @@ import {Helmet} from 'react-helmet';
 import store from './store';
 const template = require('./html-template.ejs');
 
+let css = [];
+// The following onInsertCss function allows multiple styles as arguments in withStyles().
+// If we only require one style, it would suffice with onInsertCss = style => css.push(style._getCss())
+const onInsertCss = (...styles) => {
+  styles.forEach(style => css.push(style._getCss()));
+};
+
 const renderStatic = (locals, callback) => {
   const history = createMemoryHistory();
   const pathWithoutHtml = locals.path.replace(/\.html$/, '');
@@ -19,12 +26,6 @@ const renderStatic = (locals, callback) => {
   // console.log('locals.assets', locals.assets);
 
   match({ routes, location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
-    let css = [];
-    // The following onInsertCss function allows multiple styles as arguments in withStyles().
-    // If we only require one style, it would suffice with onInsertCss = style => css.push(style._getCss())
-    const onInsertCss = (...styles) => {
-      styles.forEach(style => css.push(style._getCss()));
-    };
     const appHtml = ReactDOMServer.renderToString(
       <Provider store={store}>
         <WithStylesContext onInsertCss={onInsertCss}>

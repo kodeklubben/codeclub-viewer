@@ -142,47 +142,47 @@ export const getLessonKey = (course, lesson, language, isReadme) => {
 export const getLessonTitle = (course, lesson, language, isReadme) =>
   getLessonFrontmatter(course, lesson, language, isReadme).title || '';
 
-  /**
-   * If author exists for lesson, return author
-   * @param {string} course E.g. 'scratch'
-   * @param {string} lesson E.g. 'astrokatt'
-   * @param {string} language E.g. 'nb'
-   * @param {boolean} isReadme
-   * @returns {string|''}
-   */
+/**
+ * If author exists for lesson, return author
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} language E.g. 'nb'
+ * @param {boolean} isReadme
+ * @returns {string|''}
+ */
 export const getLessonAuthor = (course, lesson, language, isReadme) =>
   getLessonFrontmatter(course, lesson, language, isReadme).author || '';
 
-  /**
-   * If translator exists for lesson, return translator
-   * @param {string} course E.g. 'scratch'
-   * @param {string} lesson E.g. 'astrokatt'
-   * @param {string} language E.g. 'nb'
-   * @param {boolean} isReadme
-   * @returns {string|''}
-   */
+/**
+ * If translator exists for lesson, return translator
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} language E.g. 'nb'
+ * @param {boolean} isReadme
+ * @returns {string|''}
+ */
 export const getLessonTranslator = (course, lesson, language, isReadme) =>
   getLessonFrontmatter(course, lesson, language, isReadme).translator || '';
 
-  /**
-   * If external exists lesson, return external
-   * @param {string} course E.g. 'scratch'
-   * @param {string} lesson E.g. 'astrokatt'
-   * @param {string} language E.g. 'nb'
-   * @param {boolean} isReadme
-   * @returns {string|''}
-   */
+/**
+ * If external exists lesson, return external
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} language E.g. 'nb'
+ * @param {boolean} isReadme
+ * @returns {string|''}
+ */
 export const getLessonExternal = (course, lesson, language, isReadme) =>
   getLessonFrontmatter(course, lesson, language, isReadme).external || '';
 
-  /**
-   * If path exists for lesson, return path
-   * @param {string} course E.g. 'scratch'
-   * @param {string} lesson E.g. 'astrokatt'
-   * @param {string} language E.g. 'nb'
-   * @param {boolean} isReadme
-   * @returns {string}
-   */
+/**
+ * If path exists for lesson, return path
+ * @param {string} course E.g. 'scratch'
+ * @param {string} lesson E.g. 'astrokatt'
+ * @param {string} language E.g. 'nb'
+ * @param {boolean} isReadme
+ * @returns {string}
+ */
 export const getLessonPath = (course, lesson, language, isReadme) =>
   getLessonFrontmatter(course, lesson, language, isReadme).path;
 
