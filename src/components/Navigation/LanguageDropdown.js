@@ -33,33 +33,38 @@ LanguageItem.propTypes = {
   translateFilter: PropTypes.func.isRequired
 };
 
-const LanguageDropdown = ({isStudentMode, language, translateFilter,
-  resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
-  const mode = isStudentMode ? 'student' : 'teacher';
-  return (
-    <div className={styles.gadgetContainer}>
-      <DropdownButton id='language-dropdown'
-        noCaret
-        pullRight
-        bsStyle={'language-' + mode}
-        title={<LanguageItem onlyFlag={true} {...{language, translateFilter}}/>}
-        onSelect={(eventKey) => {
-          resetOneFilter('language', eventKey);
-          setLanguage(eventKey);
-          collapseAllFilterGroups(true);
-        }}>
+class LanguageDropdown extends React.PureComponent {
+  handleSelect = eventKey => {
+    this.props.resetOneFilter('language', eventKey);
+    this.props.setLanguage(eventKey);
+    this.props.collapseAllFilterGroups(true);
+  };
 
-        {
-          availableLanguages.map(key =>
-            <MenuItem {...{key}} eventKey={key} active={language === key}>
-              <LanguageItem onlyFlag={false} language={key} {...{translateFilter}}/>
-            </MenuItem>
-          )
-        }
-      </DropdownButton>
-    </div>
-  );
-};
+  render() {
+    const {isStudentMode, language, translateFilter} = this.props;
+    const mode = isStudentMode ? 'student' : 'teacher';
+    return (
+      <div className={styles.gadgetContainer}>
+        <DropdownButton id='language-dropdown'
+          noCaret
+          pullRight
+          bsStyle={'language-' + mode}
+          title={<LanguageItem onlyFlag={true} {...{language, translateFilter}}/>}
+          onSelect={this.handleSelect}
+        >
+
+          {
+            availableLanguages.map(key =>
+              <MenuItem {...{key}} eventKey={key} active={language === key}>
+                <LanguageItem onlyFlag={false} language={key} {...{translateFilter}}/>
+              </MenuItem>
+            )
+          }
+        </DropdownButton>
+      </div>
+    );
+  }
+}
 
 LanguageDropdown.propTypes = {
   // mapStateToProps:

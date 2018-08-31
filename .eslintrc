@@ -26,6 +26,7 @@
     "no-unused-vars": ["error", { "vars": "all", "args": "none" }], // only warn of unused args and vars
     "react/jsx-uses-vars": [1],      // avoid no-unused-vars for imports used as react components
     "react/jsx-uses-react": [1],     // avoid no-unused-vars for importing React
+    "react/jsx-no-bind": ["error"],
     "react/react-in-jsx-scope": [1], // make sure React is in scope when writing jsx
     "no-var": ["error"],
     "jsx-a11y/label-has-for": [ "error", {

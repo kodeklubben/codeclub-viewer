@@ -10,7 +10,7 @@ import {getLessonTags} from '../../resources/lessons';
 const PrintInfo = ({course, t, translateFilter, tags}) =>
   <div className={styles.container}>
     <div>{t('lessons.course')} {capitalize(course)}</div>
-    {tags ? Object.keys(tags).map( group =>
+    {tags ? Object.keys(tags).map(group =>
       <div key={group}>
         {translateFilter(group) + ': ' + tags[group].map(tag => translateFilter(group, tag)).join(', ')}
       </div>

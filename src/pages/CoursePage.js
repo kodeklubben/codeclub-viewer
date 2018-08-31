@@ -26,17 +26,16 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) =
     <LessonFilter course={course}/>
   </Col>;
   const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
-  let thispage = null;
   const jumpToAffixed = jumpTo ?
     <Col xsHidden sm={3} className={styles.jumpTo}>
-      <AutoAffix viewportOffsetTop={15} container={() => thispage}>
+      <AutoAffix viewportOffsetTop={15}>
         {jumpTo}
       </AutoAffix>
     </Col> : null;
   return (
     <div role='main'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
-      <Grid fluid={true} ref={grid => thispage = grid}>
+      <Grid fluid={true}>
         <Row>
           <Col xs={12}><h1>{courseTitle}</h1></Col>
           <Col xs={12}><CourseInfo courseName={course}/></Col>

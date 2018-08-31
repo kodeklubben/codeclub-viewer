@@ -13,7 +13,7 @@ class TeacherInfobox extends React.PureComponent {
     showCourseInfo: false,
   };
 
-  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  handleClick = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
 
   render() {
     const {t} = this.props;
@@ -31,7 +31,7 @@ class TeacherInfobox extends React.PureComponent {
           {t('frontpage.teacherinfobox.changemode')}
           <br />
           <div className={styles.center}>
-            <Button className={styles.plusSign} onClick={() => this.changeState()} aria-label={ariaLabel}>
+            <Button className={styles.plusSign} onClick={this.handleClick} aria-label={ariaLabel}>
               <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
             </Button>
           </div>
