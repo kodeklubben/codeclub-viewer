@@ -267,6 +267,7 @@ input[type="checkbox"]:checked + label::before {
   padding-left: 0.1em;
 }
 
+input[type="checkbox"]:active + label::before,
 input[type="checkbox"]:focus + label::before {
   background: darken($checkbox-blue, 20%);
 }

@@ -58,22 +58,12 @@ const Footer = ({t, isStudentMode}) => {
     </div>
   );
 
-  const github = (
-    <div>
-      <a href={url.wiki} target='_blank' rel='noopener'>
-        <img className={styles.svg} src={require('../../assets/graphics/github.png')}
-          alt={'GitHub'}
-        />
-      </a>
-      <p className={styles.contribute}>
-        <a href={url.wiki} target='_blank' rel='noopener'>{t('footer.contribute')}</a>
-      </p>
-    </div>
-  );
-
   return (
     <div className={isStudentMode ? styles.containerStudent : styles.containerTeacher} role='contentinfo'>
-      {github}
+      <a href={url.wiki} target='_blank' rel='noopener'>
+        <img className={styles.svg} src={require('../../assets/graphics/github.png')} alt={'GitHub'}/>
+        <p className={styles.contribute}>{t('footer.contribute')}</p>
+      </a>
       <div className={styles.centerSwitch}><DyslexiaSwitch/></div>
       <div className={styles.divider}/>
       {sponsors}
