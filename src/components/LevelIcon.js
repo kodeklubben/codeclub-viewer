@@ -12,7 +12,9 @@ const styles = {
 
 const LevelIcon = ({classes, level}) => {
   return level ?
-    <img className={classes.levelIcon} src={require('../assets/graphics/level-' + level + '.svg')}
+    <img
+      className={classes.levelIcon}
+      src={require('../assets/graphics/level-' + level + '.svg')}
       alt={'Level ' + level}
     />
     : null;

@@ -23,24 +23,29 @@ const styles = theme => ({
   },
 });
 
-const ClearFilterButton = ({classes, t, language, resetAllFilters, collapseAllFilterGroups, somethingChecked}) => {
-  const options = {
-    variant: 'outlined',
-    color: 'default',
-    onClick: () => {
-      resetAllFilters('language', language);
-      collapseAllFilterGroups(true);
-    },
-    fullWidth: true,
-    className: classes.button,
+class ClearFilterButton extends React.PureComponent {
+  handleClick = () => {
+    this.props.resetAllFilters('language', this.props.language);
+    this.props.collapseAllFilterGroups(true);
   };
-  return somethingChecked ?
-    <Button {...options}>
-      <ClearIcon/>
-      <span className={classes.text}>{t('filter.removefilter')}</span>
-    </Button>
-    : null;
-};
+
+  render() {
+    const {classes, t, somethingChecked} = this.props;
+    const options = {
+      variant: 'outlined',
+      color: 'default',
+      onClick: this.handleClick,
+      fullWidth: true,
+      className: classes.button,
+    };
+    return somethingChecked ?
+      <Button {...options}>
+        <ClearIcon/>
+        <span className={classes.text}>{t('filter.removefilter')}</span>
+      </Button>
+      : null;
+  }
+}
 
 ClearFilterButton.propTypes = {
   // ownProps

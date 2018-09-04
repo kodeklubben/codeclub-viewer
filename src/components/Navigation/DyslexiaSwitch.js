@@ -14,18 +14,20 @@ const styles = {
   },
 };
 
-const DyslexiaSwitch = ({classes, t, showDyslexicFont, setShowDyslexicFont}) => {
-  const label = <span className={classes.dyslexicText}>{t('footer.dyslexia')}</span>;
-  return (
-    <FormControlLabel {...{label}} control={
-      <Switch
-        color='default'
-        onChange={() => setShowDyslexicFont(!showDyslexicFont)}
-        checked={showDyslexicFont}
-      />}
-    />
-  );
-};
+class DyslexiaSwitch extends React.PureComponent {
+  handleChange = () => this.props.setShowDyslexicFont(!this.props.showDyslexicFont);
+
+  render() {
+    const {classes, t, showDyslexicFont} = this.props;
+    const label = <span className={classes.dyslexicText}>{t('footer.dyslexia')}</span>;
+    return (
+      <FormControlLabel
+        {...{label}}
+        control={<Switch color='default' onChange={this.handleChange} checked={showDyslexicFont}/>}
+      />
+    );
+  }
+}
 
 DyslexiaSwitch.propTypes = {
   // ownProps

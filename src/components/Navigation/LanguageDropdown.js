@@ -38,7 +38,7 @@ const styles = theme => ({
 
 const availableLanguages = getAvailableLanguages();
 
-class LanguageDropdown extends React.Component {
+class LanguageDropdown extends React.PureComponent {
   state = {
     open: false,
   };
@@ -51,12 +51,15 @@ class LanguageDropdown extends React.Component {
     this.setState({open: false});
   };
 
+  handleClick = event => {
+    this.props.resetOneFilter('language', event.currentTarget.dataset.key);
+    this.props.setLanguage(event.currentTarget.dataset.key);
+    this.props.collapseAllFilterGroups(true);
+    this.handleClose();
+  };
+
   render() {
-    const {
-      classes,
-      language, translateFilter,
-      resetOneFilter, setLanguage, collapseAllFilterGroups
-    } =  this.props;
+    const {classes, language, translateFilter} =  this.props;
     const {open} = this.state;
     const options = {
       'aria-owns': open ? 'language-menu' : null,
@@ -82,13 +85,9 @@ class LanguageDropdown extends React.Component {
                     {availableLanguages.map(languageKey =>
                       <MenuItem
                         key={languageKey}
+                        data-key={languageKey}
                         selected={language === languageKey}
-                        onClick={() => {
-                          resetOneFilter('language', languageKey);
-                          setLanguage(languageKey);
-                          collapseAllFilterGroups(true);
-                          this.handleClose();
-                        }}
+                        onClick={this.handleClick}
                       >
                         <Flag language={languageKey}/>
                         <span className={classes.menuItemText}>{translateFilter('language', languageKey)}</span>

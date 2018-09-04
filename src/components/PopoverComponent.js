@@ -43,10 +43,12 @@ const styles = theme => ({
   },
 });
 
-class PopoverComponent extends React.Component {
+class PopoverComponent extends React.PureComponent {
   state = {
     anchorEl: null,
   };
+
+  createMarkup = () => ({__html: this.props.popoverContent});
 
   handleClick = event => {
     event.stopPropagation();
@@ -65,11 +67,8 @@ class PopoverComponent extends React.Component {
   };
 
   render() {
-    const {classes, inFilter, popoverContent} = this.props;
+    const {classes, inFilter} = this.props;
     const {anchorEl} = this.state;
-    const createMarkup = () => {
-      return {__html: popoverContent};
-    };
     const options = {
       className: classes.popover,
       open: Boolean(anchorEl),
@@ -94,7 +93,7 @@ class PopoverComponent extends React.Component {
             component='div'
             className={classes.content}
             role='region'
-            dangerouslySetInnerHTML={createMarkup()}
+            dangerouslySetInnerHTML={this.createMarkup()}
           />
         </Popover>
       </div>

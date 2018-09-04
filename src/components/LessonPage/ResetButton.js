@@ -30,22 +30,27 @@ const styles = theme => ({
   },
 });
 
-const ResetButton = ({classes, path, t, setCheckbox}) => {
-  const options = {
-    onClick: () => setCheckboxes(path, {}, setCheckbox),
-    'aria-label': t('lessons.reset'),
-    classes: {root: classes.button},
-    variant: 'outlined',
-    color: 'default',
-    size: 'small',
-  };
-  return (
-    <Button {...options}>
-      <ClearIcon/>
-      <span className={classes.text}>{t('lessons.reset')}</span>
-    </Button>
-  );
-};
+class ResetButton extends React.PureComponent {
+  handleClick = () => setCheckboxes(this.props.path, {}, this.props.setCheckbox);
+
+  render() {
+    const {classes, t} = this.props;
+    const options = {
+      onClick: this.handleClick,
+      'aria-label': t('lessons.reset'),
+      classes: {root: classes.button},
+      variant: 'outlined',
+      color: 'default',
+      size: 'small',
+    };
+    return (
+      <Button {...options}>
+        <ClearIcon/>
+        <span className={classes.text}>{t('lessons.reset')}</span>
+      </Button>
+    );
+  }
+}
 
 ResetButton.propTypes = {
   // ownProps

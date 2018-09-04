@@ -22,11 +22,7 @@ class ToggleButton extends React.PureComponent {
     open: false,
   };
 
-  handleClick = () => {
-    this.setState({
-      open: !this.state.open,
-    });
-  };
+  handleClick = () => this.setState({open: !this.state.open});
 
   createMarkup = () => ({__html: this.props.hiddenHTML});
 

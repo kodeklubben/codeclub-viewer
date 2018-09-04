@@ -28,38 +28,45 @@ const styles = {
   },
 };
 
-const RadioButtons = ({
-  classes, showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups
-}) => (
-  <RadioGroup aria-label='RadioButtonGroup' className={classes.container}>
-    <FormControlLabel classes={{label: classes.label}} label={t('filter.radio.playlists')} control={
-      <Radio
-        checked={showPlaylists}
-        onChange={() => {
-          setShowPlaylists(true);
-          resetAllFilters('language', language);
-          collapseAllFilterGroups(true);
-        }}
-        name='radioGroup'
-        color='default'
-        className={classes.radio}
-        icon={<RadioButtonUncheckedIcon className={classes.radioSize}/>}
-        checkedIcon={<RadioButtonCheckedIcon className={classes.radioSize}/>}
-      />}
-    />
-    <FormControlLabel classes={{label: classes.label}} label={t('filter.radio.lessons')} control={
-      <Radio
-        checked={!showPlaylists}
-        onChange={() => setShowPlaylists(false)}
-        name='radioGroup'
-        color='default'
-        className={classes.radio}
-        icon={<RadioButtonUncheckedIcon className={classes.radioSize}/>}
-        checkedIcon={<RadioButtonCheckedIcon className={classes.radioSize}/>}
-      />}
-    />
-  </RadioGroup>
-);
+class RadioButtons extends React.PureComponent {
+  handleChangeToPlaylists = () => {
+    this.props.setShowPlaylists(true);
+    this.props.resetAllFilters('language', this.props.language);
+    this.props.collapseAllFilterGroups(true);
+  };
+
+  handleChangeToLessons = () => this.props.setShowPlaylists(false);
+
+  render() {
+    const {classes, showPlaylists, t} = this.props;
+    return (
+      <RadioGroup aria-label='RadioButtonGroup' className={classes.container}>
+        <FormControlLabel classes={{label: classes.label}} label={t('filter.radio.playlists')} control={
+          <Radio
+            checked={showPlaylists}
+            onChange={this.handleChangeToPlaylists}
+            name='radioGroup'
+            color='default'
+            className={classes.radio}
+            icon={<RadioButtonUncheckedIcon className={classes.radioSize}/>}
+            checkedIcon={<RadioButtonCheckedIcon className={classes.radioSize}/>}
+          />}
+        />
+        <FormControlLabel classes={{label: classes.label}} label={t('filter.radio.lessons')} control={
+          <Radio
+            checked={!showPlaylists}
+            onChange={this.handleChangeToLessons}
+            name='radioGroup'
+            color='default'
+            className={classes.radio}
+            icon={<RadioButtonUncheckedIcon className={classes.radioSize}/>}
+            checkedIcon={<RadioButtonCheckedIcon className={classes.radioSize}/>}
+          />}
+        />
+      </RadioGroup>
+    );
+  }
+}
 
 RadioButtons.propTypes = {
   // ownProps

@@ -59,7 +59,7 @@ const styles = theme => ({
   }
 });
 
-class LkkNav extends React.Component {
+class LkkNav extends React.PureComponent {
   state = {
     open: false,
   };

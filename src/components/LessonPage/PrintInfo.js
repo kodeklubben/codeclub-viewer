@@ -20,7 +20,7 @@ const styles = {
 const PrintInfo = ({classes, course, t, translateFilter, tags}) =>
   <div className={classes.container}>
     <div>{t('lessons.course')} {capitalize(course)}</div>
-    {tags ? Object.keys(tags).map( group =>
+    {tags ? Object.keys(tags).map(group =>
       <div key={group}>
         {translateFilter(group) + ': ' + tags[group].map(tag => translateFilter(group, tag)).join(', ')}
       </div>

@@ -40,7 +40,7 @@ const styles = theme => ({
 });
 
 
-class ModeDropdown extends React.Component {
+class ModeDropdown extends React.PureComponent {
   state = {
     open: false,
   };
@@ -53,8 +53,13 @@ class ModeDropdown extends React.Component {
     this.setState({open: false});
   };
 
+  handleClick = event => {
+    event.currentTarget.dataset.key === 'student' ? this.props.setModeStudent() : this.props.setModeTeacher();
+    this.handleClose();
+  };
+
   render() {
-    const {classes, t,  isStudentMode, setModeStudent, setModeTeacher} = this.props;
+    const {classes, t,  isStudentMode} = this.props;
     const {open} = this.state;
     const modes = ['student', 'teacher'];
     const buttonTexts = {
@@ -89,14 +94,7 @@ class ModeDropdown extends React.Component {
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList>
                     {modes.map(modeKey =>
-                      <MenuItem
-                        key={modeKey}
-                        selected={mode === modeKey}
-                        onClick={() => {
-                          modeKey === 'student' ? setModeStudent() : setModeTeacher();
-                          this.handleClose();
-                        }}
-                      >
+                      <MenuItem key={modeKey} data-key={modeKey} selected={mode === modeKey} onClick={this.handleClick}>
                         {modeKey === 'teacher' ? <SchoolIcon/> : <EditIcon/>}
                         <span className={classes.menuItemText}>
                           {buttonTexts[modeKey]}

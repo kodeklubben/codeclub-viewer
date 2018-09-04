@@ -7,14 +7,18 @@ import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
 import {getLessonContent} from '../../resources/lessonContent';
 
-const createMarkup = (lessonContent, isHydrated) => {
-  return ({__html: processContent(lessonContent, styles, isHydrated)});
-};
+class Content extends React.PureComponent {
+  createMarkup = () => {
+    const {course, lesson, language, isReadme, isHydrated} = this.props;
+    const lessonContent = getLessonContent(course, lesson, language, isReadme);
+    return {__html: processContent(lessonContent, styles, isHydrated)};
+  };
 
-const Content = ({course, lesson, language, isReadme, isHydrated}) => {
-  const lessonContent = getLessonContent(course, lesson, language, isReadme);
-  return <Typography component='div' dangerouslySetInnerHTML={createMarkup(lessonContent, isHydrated)}/>;
-};
+  render() {
+    return <Typography component='div' dangerouslySetInnerHTML={this.createMarkup()}/>;
+  }
+}
+
 Content.propTypes = {
   // ownProps
   course: PropTypes.string.isRequired,

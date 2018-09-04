@@ -40,7 +40,7 @@ class TeacherInfobox extends React.PureComponent {
     showCourseInfo: false,
   };
 
-  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  handleClick = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
 
   render() {
     const {classes, t} = this.props;
@@ -59,7 +59,7 @@ class TeacherInfobox extends React.PureComponent {
           {t('frontpage.teacherinfobox.changemode')}
         </Typography>
         <Grid container justify='center'>
-          <IconButton onClick={() => this.changeState()} aria-label={ariaLabel}>
+          <IconButton onClick={this.handleClick} aria-label={ariaLabel}>
             {showCourseInfo ? <RemoveCircleIcon/> : <AddCircleIcon/>}
           </IconButton>
         </Grid>

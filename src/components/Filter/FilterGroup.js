@@ -8,7 +8,6 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LockIcon from '@material-ui/icons/Lock';
-import {filterChecked} from '../../reducers/filter';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
@@ -26,52 +25,55 @@ const styles = theme => ({
   },
 });
 
-const FilterGroup = ({
-  classes, groupKey, filterTags, filterChecked,
-  collapseFilterGroup, filterGroupsCollapsed, somethingChecked, translateFilter
-}) => {
-  const groupName = translateFilter(groupKey);
-  if (groupName) {
-    const filterItems = Object.keys(filterTags).map(key => {
-      const onCheck = () => filterChecked(groupKey, key);
-      const tagName = translateFilter(groupKey, key);
-      const popoverContent = translateFilter(groupKey, key, true);
-
-      const checked = filterTags[key];
-      return tagName ? <FilterItem {...{key, checked, tagName, onCheck, popoverContent}}/>
-        : null;
-    }).filter(item => !!item); // filter out null-values;
-
-    // Sort filterItems alphabetically except grades
-    if (groupKey !== 'grade') {
-      filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
+class FilterGroup extends React.PureComponent {
+  handleClick = () => {
+    const {somethingChecked, collapseFilterGroup, filterGroupsCollapsed, groupKey} = this.props;
+    const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
+    if (!somethingChecked) {
+      collapseFilterGroup(groupKey, !isCollapsed);
     }
+  };
 
-    const nothingChecked = !somethingChecked;
-    const isCollapsed = nothingChecked && filterGroupsCollapsed[groupKey];
-    const onGroupClick = () => {
-      if (nothingChecked) {
-        collapseFilterGroup(groupKey, !isCollapsed);
+  render() {
+    const {classes, groupKey, filterTags, filterGroupsCollapsed, somethingChecked, translateFilter} = this.props;
+    const groupName = translateFilter(groupKey);
+    if (groupName) {
+      const filterItems = Object.keys(filterTags).map(key => {
+        const tagName = translateFilter(groupKey, key);
+        const options = {
+          key,
+          groupKey,
+          tagName,
+          itemKey: key,
+          checked: filterTags[key],
+          popoverContent: translateFilter(groupKey, key, true),
+        };
+        return tagName ? <FilterItem {...options}/> : null;
+      }).filter(item => !!item); // filter out null-values;
+
+      // Sort filterItems alphabetically except grades
+      if (groupKey !== 'grade') {
+        filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
       }
-    };
-
-    return (
-      <div className={classes.listWidth}>
-        <ListItem button disableGutters onClick={onGroupClick} disabled={somethingChecked}>
-          {!isCollapsed ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
-          <ListItemText classes={{primary: classes.label}} primary={groupName}/>
-          {somethingChecked ? <LockIcon className={classes.lockIcon}/> : null}
-        </ListItem>
-        <Collapse in={!isCollapsed} mountOnEnter unmountOnExit>
-          {filterItems}
-        </Collapse>
-      </div>
-    );
+      const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
+      return (
+        <div className={classes.listWidth}>
+          <ListItem button disableGutters onClick={this.handleClick} disabled={somethingChecked}>
+            {!isCollapsed ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+            <ListItemText classes={{primary: classes.label}} primary={groupName}/>
+            {somethingChecked ? <LockIcon className={classes.lockIcon}/> : null}
+          </ListItem>
+          <Collapse in={!isCollapsed} mountOnEnter unmountOnExit>
+            {filterItems}
+          </Collapse>
+        </div>
+      );
+    }
+    else {
+      return null;
+    }
   }
-  else {
-    return null;
-  }
-};
+}
 
 FilterGroup.propTypes = {
   // ownProps:
@@ -85,7 +87,6 @@ FilterGroup.propTypes = {
   translateFilter: PropTypes.func.isRequired,
 
   // mapDispatchToProps:
-  filterChecked: PropTypes.func.isRequired,
   collapseFilterGroup: PropTypes.func.isRequired,
 };
 
@@ -97,7 +98,6 @@ const mapStateToProps = (state, {groupKey}) => ({
 });
 
 const mapDispatchToProps = {
-  filterChecked,
   collapseFilterGroup,
 };
 

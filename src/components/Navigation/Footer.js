@@ -42,14 +42,6 @@ const styles = {
     marginLeft: 'auto',
     marginRight: 'auto',
   },
-  githubText: {
-    color: 'black',
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'none',
-      color: 'black',
-    },
-  },
   sponsors: {
     display: 'flex',
     justifyContent: 'center',
@@ -111,22 +103,12 @@ const Footer = ({classes, t, isStudentMode}) => {
     </div>
   );
 
-  const github = (
-    <div className={classes.github}>
-      <a href={url.wiki} target='_blank' rel='noopener'>
-        <img className={classes.githubIcon} src={require('../../assets/graphics/github.png')}
-          alt={'GitHub'}
-        />
-      </a>
-      <Typography variant='title' paragraph>
-        <a className={classes.githubText} href={url.wiki} target='_blank' rel='noopener'>{t('footer.contribute')}</a>
-      </Typography>
-    </div>
-  );
-
   return (
     <div role='contentinfo' className={isStudentMode ? classes.studentContainer : classes.teacherContainer}>
-      {github}
+      <a className={classes.github} href={url.wiki} target='_blank' rel='noopener'>
+        <img className={classes.githubIcon} src={require('../../assets/graphics/github.png')} alt={'GitHub'}/>
+        <Typography variant='title' paragraph>{t('footer.contribute')}</Typography>
+      </a>
       <DyslexiaSwitch/>
       <Divider/>
       {sponsors}
