@@ -131,6 +131,7 @@
     "url-loader": "^0.5.7",
     "webpack": "3.10.0",
     "webpack-dev-server": "^2.11.2",
+    "webpack-pwa-manifest": "^3.7.1",
     "webpack-shell-plugin": "^0.5.0",
     "yaml-front-matter": "^4.0.0",
     "yamljs": "^0.3.0",
