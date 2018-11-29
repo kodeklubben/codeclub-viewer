@@ -36,7 +36,7 @@ const defaultMode = true;
 const defaultLanguage = 'nb';
 const defaultLastLesson = '';
 const defaultCheckboxes = {};
-const defaultPlaylists = true;
+const defaultPlaylists = false;
 const defaultDyslexicFont = false;
 
 let filter = getInitialFilter(defaultLanguage);
