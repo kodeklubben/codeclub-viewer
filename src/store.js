@@ -36,7 +36,7 @@ const defaultMode = true;
 const defaultLanguage = 'nb';
 const defaultLastLesson = '';
 const defaultCheckboxes = {};
-const defaultPlaylists = false;
+const defaultShowPlaylists = false;
 const defaultDyslexicFont = false;
 
 let filter = getInitialFilter(defaultLanguage);
@@ -50,7 +50,7 @@ export const updateStoreFromLocalStorage = () => {
   const initialMode = loadFromLocalStorage('isStudentMode', defaultMode);
   const initialLanguage = loadFromLocalStorage('language', defaultLanguage);
   const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
-  const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultPlaylists);
+  const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultShowPlaylists);
   const initialDyslexicFont = loadFromLocalStorage('showDyslexicFont', defaultDyslexicFont);
 
   store.dispatch(setMode(initialMode));
