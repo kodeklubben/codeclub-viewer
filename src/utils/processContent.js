@@ -121,12 +121,14 @@ const renderScratchBlocks = (content, styles) => {
     replace.push({
       start: '<pre class="' + styles.blocks + '">',
       end: '</pre>',
+      options: {languages: ['en']}
     });
   }
   if ('b' in styles) {
     replace.push({
       start: '<code class="' + styles.b + '">',
       end: '</code>',
+      options: {inline: true, languages: ['en']}
     });
   }
   let returnContent = content;
@@ -139,9 +141,10 @@ const renderScratchBlocks = (content, styles) => {
         let code = block.substring(r.start.length, block.length - r.end.length);
         let doc = scratchblocks.parse(code, r.options);
         let docView = scratchblocks.newView(doc, {style: 'scratch3'});
-        let SVG = docView.render();
-        console.log(SVG);
-        returnContent = returnContent.replace(block, SVG);
+        let svg = docView.render();
+        svg.style.transform = 'scale(0.7)';
+        svg.style.transformOrigin = '0 0';
+        returnContent = returnContent.replace(block, svg.outerHTML);
       });
     }
   });
