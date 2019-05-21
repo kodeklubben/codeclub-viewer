@@ -1,3 +1,5 @@
+import {getAvailableLanguages} from './filterUtils';
+
 // Structure of replaceTags:
 // {
 //   <oldtag>: {
@@ -116,19 +118,20 @@ const replaceClassRecursively = (obj, styles) => {
  */
 const renderScratchBlocks = (content, styles) => {
   const scratchblocks = require('scratchblocks/browser.js');
+  require('scratchblocks/locales-src/translations-all.js');
   let replace = [];
   if ('blocks' in styles) {
     replace.push({
       start: '<pre class="' + styles.blocks + '">',
       end: '</pre>',
-      options: {languages: ['en']}
+      options: {languages: getAvailableLanguages()}
     });
   }
   if ('b' in styles) {
     replace.push({
       start: '<code class="' + styles.b + '">',
       end: '</code>',
-      options: {inline: true, languages: ['en']}
+      options: {inline: true, languages: getAvailableLanguages()}
     });
   }
   let returnContent = content;
