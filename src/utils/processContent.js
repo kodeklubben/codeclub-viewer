@@ -131,7 +131,7 @@ const renderScratchBlocks = (content, styles) => {
     replace.push({
       start: '<code class="' + styles.b + '">',
       end: '</code>',
-      options: {inline: true, languages: getAvailableLanguages()}
+      options: {languages: getAvailableLanguages()}
     });
   }
   let returnContent = content;
@@ -145,8 +145,6 @@ const renderScratchBlocks = (content, styles) => {
         let doc = scratchblocks.parse(code, r.options);
         let docView = scratchblocks.newView(doc, {style: 'scratch3'});
         let svg = docView.render();
-        svg.style.transform = 'scale(0.7)';
-        svg.style.transformOrigin = '0 0';
         returnContent = returnContent.replace(block, svg.outerHTML);
       });
     }
