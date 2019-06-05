@@ -7641,9 +7641,9 @@ schema-utils@^0.4.0:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-"scratchblocks@https://github.com/scratchblocks/scratchblocks.git#5854607e6e6077199b17f7b270f34504de77582a":
+"scratchblocks@github:scratchblocks/scratchblocks#5854607e6e6077199b17f7b270f34504de77582a":
   version "3.4.0"
-  resolved "https://github.com/scratchblocks/scratchblocks.git#5854607e6e6077199b17f7b270f34504de77582a"
+  resolved "https://codeload.github.com/scratchblocks/scratchblocks/tar.gz/5854607e6e6077199b17f7b270f34504de77582a"
   dependencies:
     "@babel/polyfill" "^7.4.4"
 
