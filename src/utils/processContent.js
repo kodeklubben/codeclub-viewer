@@ -131,7 +131,7 @@ const renderScratchBlocks = (content, styles) => {
     replace.push({
       start: '<code class="' + styles.b + '">',
       end: '</code>',
-      options: {languages: getAvailableLanguages()}
+      options: {inline: true, languages: getAvailableLanguages()}
     });
   }
   let returnContent = content;
