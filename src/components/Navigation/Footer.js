@@ -15,7 +15,8 @@ const Footer = ({t, isStudentMode}) => {
     ntnu_idi: 'https://www.ntnu.edu/idi/',
     uio_ifi: 'http://www.mn.uio.no/ifi/',
     teknograd: 'https://www.teknograd.no/',
-    tekna: 'https://www.tekna.no/'
+    tekna: 'https://www.tekna.no/',
+    samsung: 'https://www.samsung.com/no/innovation/'
   };
 
   const sponsors = (
@@ -53,6 +54,11 @@ const Footer = ({t, isStudentMode}) => {
       <a href={url.uio_ifi} target='_blank' rel='noopener'>
         <img className={styles.img} src={require('../../assets/graphics/uio_ifi.png')}
           alt={'UIO institutt for informatikk'}
+        />
+      </a>
+      <a href={url.samsung} target='_blank' rel='noopener'>
+        <img className={styles.img} src={require('../../assets/graphics/samsung.png')}
+          alt={'Samsung'}
         />
       </a>
     </div>
