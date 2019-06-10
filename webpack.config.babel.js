@@ -261,6 +261,9 @@ const createConfig = (env = {}) => {
         { // Copy extra files that need to be included
           from: './src/assets/deploy/',
           to: buildDir
+        },
+        {
+          from: './src/assets/favicon.ico'
         }
       ]),
 
