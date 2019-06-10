@@ -9,19 +9,21 @@ import {somethingCheckedInFilter} from '../../selectors/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
-const ClearFilterButton = ({t, language, resetAllFilters, collapseAllFilterGroups, somethingChecked}) => {
-  const onClick = () => {
-    resetAllFilters('language', language);
-    collapseAllFilterGroups(true);
+class ClearFilterButton extends React.PureComponent {
+  handleClick = () => {
+    this.props.resetAllFilters('language', this.props.language);
+    this.props.collapseAllFilterGroups(true);
   };
-  const bsStyle = 'white-grey-lighter';
-  const className = styles.marginBottom;
-  return somethingChecked ?
-    <Button block {...{className, bsStyle, onClick}}>
-      {t('filter.removefilter')}
-    </Button>
-    : null;
-};
+
+  render() {
+    const {t, somethingChecked} = this.props;
+    return somethingChecked ?
+      <Button block onClick={this.handleClick} className={styles.marginBottom} bsStyle={'white-grey-lighter'}>
+        {t('filter.removefilter')}
+      </Button>
+      : null;
+  }
+}
 
 ClearFilterButton.propTypes = {
   // mapStateToProps

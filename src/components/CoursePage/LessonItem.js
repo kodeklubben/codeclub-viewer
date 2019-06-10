@@ -5,12 +5,13 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import Button from 'react-bootstrap/lib/Button';
 import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
 import Flag from '../Flag';
 import {createCheckboxesKey} from '../../utils/checkboxUtils';
-import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getLessonTitle, getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatter';
 import {getLevel} from '../../resources/lessons';
 import {getLessonIntro} from '../../resources/lessonContent';
 import {getTranslator} from '../../selectors/translate';
@@ -58,7 +59,9 @@ const LessonItem = ({
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
-      <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+      <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: lesson})}>
+        <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+      </Button>
     </PopoverComponent>
     : null;
 
@@ -113,11 +116,11 @@ LessonItem.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language}) => {
-  const {title, path, external} = getLessonFrontmatter(course, lesson, language, false);
+  const path = getLessonPath(course, lesson, language, false);
   return {
-    title,
+    title: getLessonTitle(course, lesson, language, false),
     path,
-    external,
+    external: getLessonExternal(course, lesson, language, false),
     popoverContent: getLessonIntro(course, lesson, language, false),
     isStudentMode: state.isStudentMode,
     onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),

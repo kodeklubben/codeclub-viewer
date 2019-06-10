@@ -10,9 +10,10 @@ export default {
       1: 'Introduksjon',
       2: 'Nybegynner',
       3: 'Erfaren',
-      4: 'Ekspert'
+      4: 'Ekspert',
     },
-    picture: 'Bilde av {{title}}'
+    picture: 'Bilde av {{title}}',
+    glyphicon: 'Info for {{title}}',
   },
   head: {
     title: 'Kodeklubben',
@@ -45,9 +46,9 @@ export default {
               'er de vanligste å gå videre med etterpå.',
       link2: 'Lær mer om å drive en kodeklubb',
       plus: 'Vis mer informasjon',
-      minus: 'Vis mindre informasjon'
+      minus: 'Vis mindre informasjon',
     },
-    showhidefilter: 'Vis/skjul filter'
+    showhidefilter: 'Vis/skjul filter',
   },
   coursepage: {
     courseinfo: 'Informasjon om kurset',
@@ -83,8 +84,8 @@ export default {
         info: 'Beskriv ditt problem her. Ta gjerne med operativsystem, nettleser og eventuell kode du har skrevet.'
       },
       showcodebutton: 'Vis koden og fiks selv',
-      forumbutton: 'Gå til forumet'
-    }
+      forumbutton: 'Gå til forumet',
+    },
   },
   filter: {
     header: 'Filter',
@@ -92,9 +93,10 @@ export default {
       'så kan man i filteret sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
     radio: {
       playlists: `Oppgave${softHyphen}samlinger`,
-      lessons: 'Alle oppgaver'
+      lessons: 'Alle oppgaver',
+      group: 'Gruppe med to valg',
     },
-    removefilter: 'Nullstill filter'
+    removefilter: 'Nullstill filter',
   },
   navbar: {
     mode: 'Modus',
@@ -106,20 +108,20 @@ export default {
       codeclub: 'Kodeklubben',
       school: 'Skole',
       codehour: 'Kodetimen',
-      contribute: 'Bidra?'
+      contribute: 'Bidra?',
     },
-    menu: 'Meny'
+    menu: 'Meny',
   },
   search: {
-    placeholder: 'Søk'
+    placeholder: 'Søk',
   },
   footer: {
     contribute: 'Lag egne oppgaver',
-    dyslexia: 'Skrift for dyslektikere'
+    dyslexia: 'Skrift for dyslektikere',
   },
   404: {
     header: 'Beklager',
     textline: 'Vi finner ikke siden du leter etter.',
-    tofrontpage: 'Til forsiden'
-  }
+    tofrontpage: 'Til forsiden',
+  },
 };

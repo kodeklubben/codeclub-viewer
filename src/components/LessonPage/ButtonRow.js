@@ -6,7 +6,7 @@ import MainLanguageButton from './MainLanguageButton';
 import ResetButton from './ResetButton';
 import InstructionButton from '../InstructionButton';
 import PdfButton from './PdfButton';
-import {getLessonFrontmatter} from '../../resources/lessonFrontmatter';
+import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 
 const ButtonRow = ({
@@ -48,7 +48,7 @@ ButtonRow.propTypes = {
 };
 
 const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const {path} = getLessonFrontmatter(course, lesson, language, isReadme);
+  const path = getLessonPath(course, lesson, language, isReadme);
   return {
     path,
     mainLanguage: state.language,

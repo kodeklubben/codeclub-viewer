@@ -1,5 +1,5 @@
-@import '../../styles/variables.scss';
-@import '../../styles/mixins.scss';
+@import '../../styles/variables';
+@import '../../styles/mixins';
 
 .row {
   display: flex;
@@ -26,7 +26,7 @@
 }
 
 .progress {
-  opacity: 0.5;
+  opacity: 0.82;
   margin-right: 5px;
 }
 
@@ -39,10 +39,10 @@
 }
 
 .popoverGlyph {
-  margin-bottom: 2px;
-  font-size: 1.3em;
+  margin-top: 3px;
+  font-size: 1.4em;
   &:hover {
-    color: black;
+    color: $color-gray;
   }
 }
 
@@ -50,4 +50,8 @@
   display: flex;
   align-items: center;
   margin-left: auto;
+}
+
+.popButton {
+  @include popoverButton;
 }

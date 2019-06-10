@@ -242,12 +242,18 @@ const createConfig = (env = {}) => {
         }
       }),
 
-      new CopyWebpackPlugin([{
-        context: lessonSrc,
-        from: lessonSrc + '/**/*',
-        ignore: '*.md',
-        to: buildDir + '/[path][name].[ext]'
-      }]),
+      new CopyWebpackPlugin([
+        { // Copy all resource files (i.e. all files not included via javascript)
+          context: lessonSrc,
+          from: lessonSrc + '/**/*',
+          ignore: ['*.md', '*.yml'],
+          to: buildDir + '/[path][name].[ext]'
+        },
+        { // Copy extra files that need to be included
+          from: './src/assets/deploy/',
+          to: buildDir
+        }
+      ]),
 
       new CaseSensitivePathsPlugin(),
 

@@ -8,13 +8,12 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
-class TeacherInfobox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {showCourseInfo: false};
-  }
+class TeacherInfobox extends React.PureComponent {
+  state = {
+    showCourseInfo: false,
+  };
 
-  changeState = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
+  handleClick = () => this.setState({['showCourseInfo']: !this.state['showCourseInfo']});
 
   render() {
     const {t} = this.props;
@@ -32,7 +31,7 @@ class TeacherInfobox extends React.Component {
           {t('frontpage.teacherinfobox.changemode')}
           <br />
           <div className={styles.center}>
-            <Button className={styles.plusSign} onClick={() => this.changeState()} aria-label={ariaLabel}>
+            <Button className={styles.plusSign} onClick={this.handleClick} aria-label={ariaLabel}>
               <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
             </Button>
           </div>

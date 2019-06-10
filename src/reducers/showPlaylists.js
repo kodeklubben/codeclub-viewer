@@ -16,7 +16,7 @@ export function setShowPlaylists(showPlaylists) {
 // REDUCER //
 /////////////
 
-const INITIAL_STATE = true;
+const INITIAL_STATE = false;
 
 export default function(state = INITIAL_STATE, action) {
   switch(action.type) {

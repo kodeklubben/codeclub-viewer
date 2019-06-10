@@ -7,7 +7,7 @@ import styles from './ContinueButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {getLessonFrontmatter, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
+import {getLessonPath, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
 
 const ContinueButton = ({path, t, lastLesson, isStudentMode}) => {
   const hasLastLesson = lastLesson !== '';
@@ -43,7 +43,7 @@ ContinueButton.propTypes = {
 const mapStateToProps = (state, {course, lesson, file}) => {
   const isLesson = !!lesson;
   const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const {path} = isLesson ? getLessonFrontmatter(course, lesson, language, isReadme) || {} : {};
+  const path = getLessonPath(course, lesson, language, isReadme);
   return {
     path,
     t: getTranslator(state),

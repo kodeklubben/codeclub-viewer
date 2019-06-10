@@ -8,31 +8,40 @@ import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
-  const RadioButton = ({checked, onChange, text}) =>
-    <label className={styles.label}>
-      <input type='radio' name='radioGroup' {...{checked, onChange}}/>
-      <span className={styles.marginLeft}>{text}</span>
-    </label>;
-  return (
-    <form>
-      <RadioButton
-        checked={showPlaylists}
-        onChange={() => {
-          setShowPlaylists(true);
-          resetAllFilters('language', language);
-          collapseAllFilterGroups(true);
-        }}
-        text={t('filter.radio.playlists')}
-      />
-      <RadioButton
-        checked={!showPlaylists}
-        onChange={() => setShowPlaylists(false)}
-        text={t('filter.radio.lessons')}
-      />
-    </form>
-  );
-};
+const RadioButton = ({checked, onChange, text}) => (
+  <label className={styles.label}>
+    <input type='radio' name='radioGroup' {...{checked, onChange}}/>
+    <span className={styles.marginLeft}>{text}</span>
+  </label>
+);
+
+class RadioButtons extends React.PureComponent {
+  handleChangeToPlaylists = () => {
+    this.props.setShowPlaylists(true);
+    this.props.resetAllFilters('language', this.props.language);
+    this.props.collapseAllFilterGroups(true);
+  };
+
+  handleChangeToLessons = () => this.props.setShowPlaylists(false);
+
+  render() {
+    const {showPlaylists, t} = this.props;
+    return (
+      <form role='group' aria-label={t('filter.radio.group')}>
+        <RadioButton
+          checked={showPlaylists}
+          onChange={this.handleChangeToPlaylists}
+          text={t('filter.radio.playlists')}
+        />
+        <RadioButton
+          checked={!showPlaylists}
+          onChange={this.handleChangeToLessons}
+          text={t('filter.radio.lessons')}
+        />
+      </form>
+    );
+  }
+}
 
 RadioButtons.propTypes = {
   // mapStateToProps

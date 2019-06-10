@@ -3,7 +3,7 @@
 import {createStore} from 'redux';
 import {createCheckboxesKey} from './utils/checkboxUtils';
 import {getInitialFilter} from './utils/filterUtils';
-import {getLessonFrontmatter, getLessonLanguages} from './resources/lessonFrontmatter';
+import {getLessonPath, getLessonLanguages} from './resources/lessonFrontmatter';
 import {setCheckboxes} from './reducers/checkboxes';
 import {setFilter, resetOneFilter} from './reducers/filter';
 import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
@@ -36,7 +36,7 @@ const defaultMode = true;
 const defaultLanguage = 'nb';
 const defaultLastLesson = '';
 const defaultCheckboxes = {};
-const defaultPlaylists = true;
+const defaultShowPlaylists = false;
 const defaultDyslexicFont = false;
 
 let filter = getInitialFilter(defaultLanguage);
@@ -50,7 +50,7 @@ export const updateStoreFromLocalStorage = () => {
   const initialMode = loadFromLocalStorage('isStudentMode', defaultMode);
   const initialLanguage = loadFromLocalStorage('language', defaultLanguage);
   const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
-  const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultPlaylists);
+  const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultShowPlaylists);
   const initialDyslexicFont = loadFromLocalStorage('showDyslexicFont', defaultDyslexicFont);
 
   store.dispatch(setMode(initialMode));
@@ -63,7 +63,7 @@ export const updateStoreFromLocalStorage = () => {
   for (const course of getCourses()){
     for (const lesson of getLessonsInCourse(course)) {
       for (const language of getLessonLanguages(course, lesson)) {
-        const {path} = getLessonFrontmatter(course, lesson, language, false);
+        const path = getLessonPath(course, lesson, language, false);
         const checkboxes = loadFromLocalStorage(createCheckboxesKey(path), defaultCheckboxes);
         if(Object.keys(checkboxes).length !== 0) {
           store.dispatch(setCheckboxes(path, checkboxes));

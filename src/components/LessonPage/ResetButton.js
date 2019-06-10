@@ -9,18 +9,26 @@ import {setCheckbox} from '../../reducers/checkboxes';
 import {setCheckboxes} from '../../utils/checkboxUtils';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-const ResetButton = ({path, t, setCheckbox}) => {
-  const bsStyle = 'warning';
-  const bsSize = 'small';
-  const onClick = () => setCheckboxes(path, {}, setCheckbox);
-  const className = styles.container;
-  return (
-    <Button {...{className, bsSize, bsStyle, onClick}} aria-label={t('lessons.reset')}>
-      <Glyphicon className={styles.icon} glyph={'remove'}/>
-      <span className={styles.textMargin}>{t('lessons.reset')}</span>
-    </Button>
-  );
-};
+class ResetButton extends React.PureComponent {
+  handleClick = () => setCheckboxes(this.props.path, {}, this.props.setCheckbox);
+
+  render() {
+    const {t} = this.props;
+    const options = {
+      bsStyle: 'warning',
+      bsSize: 'small',
+      className: styles.container,
+      'aria-label': t('lessons.reset'),
+      onClick: this.handleClick,
+    };
+    return (
+      <Button {...options}>
+        <Glyphicon className={styles.icon} glyph={'remove'}/>
+        <span className={styles.textMargin}>{t('lessons.reset')}</span>
+      </Button>
+    );
+  }
+}
 
 ResetButton.propTypes = {
   // ownProps

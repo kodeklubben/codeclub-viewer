@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import Panel from 'react-bootstrap/lib/Panel';
 import CollapsiblePanel from '../CollapsiblePanel';
 import {getCourseInfo} from '../../resources/courseContent';
 import {getTranslator} from '../../selectors/translate';
@@ -12,9 +13,9 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
   return (
     <CollapsiblePanel initiallyExpanded={false} header={t('coursepage.courseinfo')} {...{bsStyle}}>
       {courseInfo.__html ?
-        <div dangerouslySetInnerHTML={courseInfo}/>
+        <Panel.Body><div dangerouslySetInnerHTML={courseInfo}/></Panel.Body>
         :
-        <h4>{t('coursepage.courseinfonotfound')}</h4>
+        <Panel.Body><h4>{t('coursepage.courseinfonotfound')}</h4></Panel.Body>
       }
     </CollapsiblePanel>
   );
