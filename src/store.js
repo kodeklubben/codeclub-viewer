@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* global IS_HOT */
 
 import {createStore} from 'redux';
 import {createCheckboxesKey} from './utils/checkboxUtils';
@@ -18,10 +19,9 @@ import {getCourses} from './resources/courses';
 import {getLessonsInCourse} from './resources/lessons';
 
 const initialState = {};
-const isProduction = process.env.NODE_ENV === 'production';
 let store;
 
-if (isProduction) {
+if (!IS_HOT) {
   store = createStore(reducer, initialState);
 } else {
   //Only use the DevTools extension when in development

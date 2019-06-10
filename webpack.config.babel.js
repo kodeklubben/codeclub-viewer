@@ -117,6 +117,12 @@ const createConfig = (env = {}) => {
       libraryTarget: 'umd',
     },
 
+    mode: 'production',
+
+    performance: {
+      hints: false //set this to 'warning' if you want to look after big files
+    },
+
     resolve: {
       extensions: ['.js'],
       alias: {
@@ -218,8 +224,11 @@ const createConfig = (env = {}) => {
 
     plugins: [
       new webpack.DefinePlugin({
+        'process.env.PUBLICPATH': JSON.stringify(publicPath),
+        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
         'IS_HOT': JSON.stringify(isHot),
       }),
+
       new webpack.LoaderOptionsPlugin({
         options: {
           context: __dirname,   // needed for bootstrap-loader
@@ -257,17 +266,6 @@ const createConfig = (env = {}) => {
 
       new CaseSensitivePathsPlugin(),
 
-      new webpack.DefinePlugin({
-        'process.env.PUBLICPATH': JSON.stringify(publicPath),
-        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
-      }),
-
-      ...(env.NODE_ENV === 'production' ? [
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify('production')
-        }),
-      ] : []),
-
       ...(env.BUILD_PDF ? [
         new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']})
       ] : [
@@ -294,9 +292,6 @@ const createConfig = (env = {}) => {
       ] : [
         new CleanWebpackPlugin(buildBaseDir),
         new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
-        // }),
         new StaticSiteGeneratorPlugin({
           entry: 'main',
           paths: staticSitePaths,
