@@ -356,8 +356,8 @@ const createConfig = (env = {}) => {
       ]),
 
       new WebpackPwaManifest({
-        name: 'Kodeklubben',
-        short_name: 'Kodeklubben',
+        name: 'Lær Kidsa Koding',
+        short_name: 'LKK',
         description: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
                       'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
                       'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
@@ -366,7 +366,6 @@ const createConfig = (env = {}) => {
         background_color: '#fff',
         theme_color: '#fff',
         filename: 'manifest.webmanifest',
-        start_url: '/',
         icons: [
           {
             src: path.resolve('src/assets/favicon.png'),
