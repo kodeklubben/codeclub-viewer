@@ -9,7 +9,6 @@ const {buildDir, publicPath} = require('./buildconstants');
 const {lessonPaths} = require('./pathlists');
 const PQueue = require('p-queue');
 
-const isWin = process.platform === 'win32';
 const isTravis = 'TRAVIS' in process.env && 'CI' in process.env;
 const concurrentPDFrenders = isTravis ? 4 : 8;
 const maxRetriesPerPDF = 3;
@@ -24,20 +23,13 @@ if (isTravis) {
 console.log('concurrentPDFrenders:', concurrentPDFrenders);
 console.log('maxRetriesPerPDF:', maxRetriesPerPDF);
 console.log('urlBase:', urlBase);
-console.log('isWin:', isWin);
 console.log('isTravis:', isTravis);
 console.log('Puppeteer args:', puppeteerArgs);
 
 const cleanup = () => {
   if (localWebServer && !localWebServer.killed) {
     console.log('Killing localWebServer, PID:', localWebServer.pid);
-
-    if (isWin) {
-      spawn('taskkill', ['/pid', localWebServer.pid, '/f', '/t']);
-    } else {
-      process.kill(-localWebServer.pid);
-    }
-
+    spawn('taskkill', ['/pid', localWebServer.pid, '/f', '/t']);
     localWebServer.killed = true;
     console.log('Killed localWebServer');
     localWebServer.stdout.removeAllListeners();
