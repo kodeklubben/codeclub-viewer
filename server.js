@@ -15,14 +15,12 @@ const slash = regexpCompPath('/');
 const app = express();
 app.use(compression());
 
-
 // serve our static stuff (i.e. urls that match files that exists)
 app.use(publicPathWithoutSlash, express.static(path.normalize(buildDir), {redirect: false}));
 
 // send all requests other requests here
 app.get('*', function (req, res) {
-  const url = req.params[0];
-  //console.log('url', url);
+  let url = req.params[0];
   if (!url.startsWith(publicPathWithoutSlash)) {
     console.log('Redirecting to', publicPathWithoutSlash);
     res.redirect(publicPathWithoutSlash);
@@ -31,7 +29,10 @@ app.get('*', function (req, res) {
     if (url === publicPathWithoutSlash || url === publicPathWithoutSlash + '/') {
       filepath = path.join(buildDir, 'index.html');
     } else {
-      filepath = path.join(buildBaseDir, url, url.endsWith('/') ? 'index.html' : '');
+      if (url.endsWith('/')) {
+        url = url.slice(0, -1);
+      }
+      filepath = path.join(buildBaseDir, url);
       if (new RegExp(`^(.*${slash}[^.${slash}]+)$`).test(filepath)) { // if urlpath has no extension...
         filepath = filepath + '.html';  // ... add .html extension
       }

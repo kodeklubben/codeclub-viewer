@@ -59,7 +59,7 @@ const rewritePath = (nextState, replace) => {
     // so it renders the page anyway. But any relative urls in that page won't work, so the page is broken (looks bad).
     // Thus we need to make sure that urls become what they are actually treated as.
     if (typeof document !== 'undefined') {
-      replace(nextpath + 'index' + nextState.location.search);
+      replace(nextpath.slice(0, -1) + nextState.location.search);
     } else {
       console.error('The router cannot handle paths that end in /' +
         ' when rendering static pages (' + nextpath + ')');
