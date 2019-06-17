@@ -180,7 +180,7 @@ const checkYarnVersion = () => {
   const version = execSync('yarn --version', {shell: true}).toString().trim();
   const lowestVersion = '1.3.2';
   const [major = 0, minor = 0, patch = 0] = version.split('.');
-  const [lowestMajor = 0, lowestMinor = 0, lowestPatch = 0] = lowestVersion.split('.');
+  const [lowestMajor = 0, lowestMinor = 0, lowestPatch = 0] = lowestVersion.split('.').map(n => parseInt(n, 10));
   const tooLow = () => {
     console.log('ERROR: The version of yarn (' + version + ') is too low. Must be >= ' + lowestVersion);
     process.exit(1);
