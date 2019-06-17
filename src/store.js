@@ -12,6 +12,7 @@ import {setLastLesson} from './reducers/lastLesson';
 import {setMode} from './reducers/mode';
 import {setShowPlaylists} from './reducers/showPlaylists';
 import {setShowDyslexicFont} from './reducers/showDyslexicFont';
+import {setExpandedAccordion} from './reducers/expandedAccordion';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './utils/localStorage';
 import {getCourses} from './resources/courses';
@@ -38,6 +39,7 @@ const defaultLastLesson = '';
 const defaultCheckboxes = {};
 const defaultShowPlaylists = false;
 const defaultDyslexicFont = false;
+const defaultExpandedAccordion = -1;
 
 let filter = getInitialFilter(defaultLanguage);
 store.dispatch(setFilter(filter));
@@ -52,12 +54,14 @@ export const updateStoreFromLocalStorage = () => {
   const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
   const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultShowPlaylists);
   const initialDyslexicFont = loadFromLocalStorage('showDyslexicFont', defaultDyslexicFont);
+  const initialExpandedAccordion = loadFromLocalStorage('expandedAccordion', defaultExpandedAccordion);
 
   store.dispatch(setMode(initialMode));
   store.dispatch(setLanguage(initialLanguage));
   store.dispatch(setLastLesson(initialLastLesson));
   store.dispatch(setShowPlaylists(initialPlaylists));
   store.dispatch(setShowDyslexicFont(initialDyslexicFont));
+  store.dispatch(setExpandedAccordion(initialExpandedAccordion));
   store.dispatch(resetOneFilter('language', initialLanguage));
 
   for (const course of getCourses()){
