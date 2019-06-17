@@ -180,16 +180,16 @@ section.challenge {
 // manual colors for scratch code
 // example: Press `motion`{.blockmotion} ...
 code {
-  &.blockmotion { background-color: #4C97FF; }
-  &.blocklooks { background-color: #9966FF; }
-  &.blocksound { background-color: #CF63CF; }
-  &.blockpen { background-color: #0FBD8C; }
-  &.blockdata { background-color: #FF8C1A; }
-  &.blockevents { background-color: #FFBF00; }
-  &.blockcontrol { background-color: #FFAB19; }
-  &.blocksensing { background-color: #5CB1D6; }
-  &.blockoperators { background-color: #59C059; }
-  &.blockmoreblocks { background-color: #FF6680; }
+  &.blockmotion { background-color: #4c97ff; }
+  &.blocklooks { background-color: #96f; }
+  &.blocksound { background-color: #cf63cf; }
+  &.blockpen { background-color: #0fbd8c; }
+  &.blockdata { background-color: #ff8c1a; }
+  &.blockevents { background-color: #ffbf00; }
+  &.blockcontrol { background-color: #ffab19; }
+  &.blocksensing { background-color: #5cb1d6; }
+  &.blockoperators { background-color: #59c059; }
+  &.blockmoreblocks { background-color: #ff6680; }
 
   &.blockmotion,
   &.blocklooks,
