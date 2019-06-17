@@ -25,8 +25,8 @@ if (!IS_HOT) {
   store = createStore(reducer, initialState);
 } else {
   //Only use the DevTools extension when in development
-  const devTools = typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ?
-    window.devToolsExtension() :
+  const devTools = typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ?
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() :
     f => f;
 
   store = createStore(reducer, initialState, devTools);
