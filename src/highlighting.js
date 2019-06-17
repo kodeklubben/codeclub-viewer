@@ -9,6 +9,11 @@ export default function (code, lang) {
     return `<pre class=blocks>${safeCode}</pre>`;
   }
 
+  if (lang === 'microblocks') {
+    let safeCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return `<pre class=microblocks>${safeCode}</pre>`;
+  }
+
   if (lang && hljs.getLanguage(lang)) {
     try {
       return hljs.highlight(lang, code).value;
