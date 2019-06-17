@@ -75,10 +75,18 @@
 
 .btn-language-student {
   @include button-variant($color-green-dark, transparent, $color-green-dark);
+  &:focus {
+    border-style: solid;
+    border-color: #66a3ea;
+  }
 }
 
 .btn-language-teacher {
   @include button-variant($color-blue-dark, transparent, $color-blue-dark);
+  &:focus {
+    border-style: solid;
+    border-color: #66a3ea;
+  }
 }
 
 .btn-student-frontpage {
