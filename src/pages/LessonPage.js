@@ -39,6 +39,7 @@ class LessonPage extends React.PureComponent {
   componentDidMount() {
     const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
     setCheckboxes(path, checkboxes, setCheckbox);
+    console.log(checkboxes); // This is empty when link from URL
     setLastLesson(path);
     renderToggleButtons();
   }
