@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-const spawn = require('cross-spawn');
+const { spawn, execSync } = require('child_process');
 const nodeCleanup = require('node-cleanup');
 const puppeteer = require('puppeteer');
 const path = require('path');
@@ -35,7 +35,7 @@ const cleanup = () => {
     if (isWin) {
       spawn('taskkill', ['/pid', localWebServer.pid, '/f', '/t']);
     } else {
-      process.kill(localWebServer.pid);
+      process.kill(-localWebServer.pid);
     }
 
     localWebServer.killed = true;
@@ -176,12 +176,28 @@ const checkStarted = (data) => {
   }
 };
 
+const checkYarnVersion = () => {
+  const version = execSync('yarn --version', {shell: true}).toString().trim();
+  const lowestVersion = '1.3.2';
+  const [major = 0, minor = 0, patch = 0] = version.split('.');
+  const [lowestMajor = 0, lowestMinor = 0, lowestPatch = 0] = lowestVersion.split('.').map(n => parseInt(n, 10));
+  const tooLow = () => {
+    console.log('ERROR: The version of yarn (' + version + ') is too low. Must be >= ' + lowestVersion);
+    process.exit(1);
+  };
+  if (major < lowestMajor) { tooLow(); }
+  if (major === lowestMajor && minor < lowestMinor) { tooLow(); }
+  if (major === lowestMajor && minor === lowestMinor && patch < lowestPatch) { tooLow(); }
+};
+
+checkYarnVersion();
+
 nodeCleanup(function (exitCode, signal) {
   console.log('Exiting node script... (exitCode:' + exitCode + ', signal:' + signal + ')');
   cleanup();
 });
 
-localWebServer = spawn('yarn', ['serve']);
+localWebServer = spawn('yarn', ['serve'], {shell: true});
 
 localWebServer.stdout.on('data', checkStarted);
 localWebServer.stderr.on('data', checkStarted);
