@@ -39,7 +39,7 @@ const defaultLastLesson = '';
 const defaultCheckboxes = {};
 const defaultShowPlaylists = false;
 const defaultDyslexicFont = false;
-const defaultExpandedAccordion = -1;
+const defaultExpandedAccordion = {};
 
 let filter = getInitialFilter(defaultLanguage);
 store.dispatch(setFilter(filter));

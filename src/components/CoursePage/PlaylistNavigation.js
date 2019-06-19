@@ -15,10 +15,11 @@ import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistL
 
 class PlaylistNavigation extends React.PureComponent {
 
-  handleSelect = activeKey => this.props.setExpandedAccordion(activeKey);
+  handleSelect = activeKey => this.props.setExpandedAccordion(this.props.course, activeKey);
 
   render() {
     const {course, language, t, expandedAccordion} =  this.props;
+    console.log(expandedAccordion);
     const playlists = getPlaylistsForCourse(course);
     const playlistListItems = playlists.map((playlist, i) => {
       const lessons = getPlaylistLessons(course, playlist);
@@ -46,7 +47,7 @@ class PlaylistNavigation extends React.PureComponent {
       playlists.length > 0 ?
         <div className={styles.container}>
           <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
-          <PanelGroup accordion id='PanelGroup' onSelect={this.handleSelect} activeKey={expandedAccordion}>
+          <PanelGroup accordion id='PanelGroup' onSelect={this.handleSelect} activeKey={expandedAccordion[course]}>
             {playlistListItems}
           </PanelGroup>
         </div> :
@@ -62,7 +63,7 @@ PlaylistNavigation.propTypes = {
   // mapStateToProps
   language: PropTypes.string.isRequired,
   t: PropTypes.func.isRequired,
-  expandedAccordion: PropTypes.number.isRequired,
+  expandedAccordion: PropTypes.object.isRequired,
 
   // mapDispatchToProps
   setExpandedAccordion: PropTypes.func.isRequired
