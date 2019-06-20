@@ -19,7 +19,6 @@ class PlaylistNavigation extends React.PureComponent {
 
   render() {
     const {course, language, t, expandedAccordion} =  this.props;
-    console.log(expandedAccordion);
     const playlists = getPlaylistsForCourse(course);
     const playlistListItems = playlists.map((playlist, i) => {
       const lessons = getPlaylistLessons(course, playlist);

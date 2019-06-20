@@ -17,6 +17,7 @@ import reducer from './reducer';
 import {loadFromLocalStorage} from './utils/localStorage';
 import {getCourses} from './resources/courses';
 import {getLessonsInCourse} from './resources/lessons';
+import {getCoursesWithPlaylists} from './resources/playlists';
 
 const initialState = {};
 const isProduction = process.env.NODE_ENV === 'production';
@@ -61,8 +62,18 @@ export const updateStoreFromLocalStorage = () => {
   store.dispatch(setLastLesson(initialLastLesson));
   store.dispatch(setShowPlaylists(initialPlaylists));
   store.dispatch(setShowDyslexicFont(initialDyslexicFont));
-  store.dispatch(setExpandedAccordion(initialExpandedAccordion));
   store.dispatch(resetOneFilter('language', initialLanguage));
+
+  let playlists = getCoursesWithPlaylists();
+  for (let key in playlists) {
+    let playlist = playlists[key];
+    if (initialExpandedAccordion.hasOwnProperty(playlist)) {
+      store.dispatch(setExpandedAccordion(playlist, initialExpandedAccordion[playlist]));
+    }
+    else {
+      store.dispatch(setExpandedAccordion(playlist, null));
+    }
+  }
 
   for (const course of getCourses()){
     for (const lesson of getLessonsInCourse(course)) {

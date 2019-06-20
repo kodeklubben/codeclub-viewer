@@ -20,7 +20,8 @@ export function setExpandedAccordion(course, activeKey) {
 const INITIAL_STATE = {
   /*
   expandedAccordion {
-    computercraft: 0
+    appinventor: null,
+    computercraft: 0,
     scratch: 2
   }
  */
@@ -30,7 +31,7 @@ export default function(state = INITIAL_STATE, action) {
   switch(action.type) {
     case 'SET_EXPANDED_ACCORDION': {
       const {course, activeKey} = action;
-      const expandedAccordion = {[course]: activeKey};
+      const expandedAccordion = {...state, [course]: activeKey};
       return storeItem('expandedAccordion', expandedAccordion);
     }
   }
