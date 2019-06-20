@@ -77,7 +77,7 @@
   @include button-variant($color-green-dark, transparent, $color-green-dark);
   &:focus {
     border-style: solid;
-    border-color: #66a3ea;
+    border-color: $color-blue-focus;
   }
 }
 
@@ -85,7 +85,7 @@
   @include button-variant($color-blue-dark, transparent, $color-blue-dark);
   &:focus {
     border-style: solid;
-    border-color: #66a3ea;
+    border-color: $color-blue-focus;
   }
 }
 
