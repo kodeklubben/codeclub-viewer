@@ -1,23 +1,29 @@
 import {expect} from 'chai';
 import deepFreeze from 'deep-freeze';
 
-import reducer from '../../src/reducers/expandedAccordion';
+import reducer, {setExpandedAccordion} from '../../src/reducers/expandedAccordion';
 
 describe('expandedAccordion reducer', () => {
   describe('SET_EXPANDED_ACCORDION', () => {
-    it('Should set accordion value for course to null', () => {
+    it('add scratch if it does not exists', () => {
       const initialState = {};
-      const action = {
-        type: 'SET_EXPANDED_ACCORDION',
-        course: 'scratch',
-        activeKey: null
-      };
+      const action = setExpandedAccordion('scratch', null);
 
       deepFreeze(initialState);
       deepFreeze(action);
       const nextState = reducer(initialState, action);
 
-      expect(nextState).to.equal(action.path);
+      expect(nextState).to.deep.equal({...initialState, scratch: null});
+    });
+    it('change scratch if it does exists', () => {
+      const initialState = {scratch: 1};
+      const action = setExpandedAccordion('scratch', 0);
+
+      deepFreeze(initialState);
+      deepFreeze(action);
+      const nextState = reducer(initialState, action);
+
+      expect(nextState).to.deep.equal({...initialState, scratch: 0});
     });
   });
 });
