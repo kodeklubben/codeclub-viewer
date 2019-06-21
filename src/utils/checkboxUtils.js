@@ -23,7 +23,6 @@ export const setCheckboxes = (path, checkboxes, setCheckbox) => {
     if (input && input.type === 'checkbox') {
       let hash = hashCode(label.textContent);
       input.checked = !!checkboxes[hash];
-      setCheckbox(path, hash, !!checkboxes[hash]);
       input.onclick = (e) => {
         setCheckbox(path, hash, !!e.target.checked);
       };

@@ -43,6 +43,13 @@ class LessonPage extends React.PureComponent {
     renderToggleButtons();
   }
 
+  componentDidUpdate(prevProps) {
+    const {path, checkboxes, setCheckbox} = this.props;
+    if (checkboxes !== prevProps.checkboxes) {
+      setCheckboxes(path, checkboxes, setCheckbox);
+    }
+  }
+
   render() {
     const {
       course, lesson, language, isReadme,
