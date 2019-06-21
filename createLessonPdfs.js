@@ -197,7 +197,7 @@ nodeCleanup(function (exitCode, signal) {
   cleanup();
 });
 
-localWebServer = spawn('yarn', ['serve'], {detached: true});
+localWebServer = spawn('yarn', ['serve'], {detached: !isWin, shell: isWin});
 
 localWebServer.stdout.on('data', checkStarted);
 localWebServer.stderr.on('data', checkStarted);
