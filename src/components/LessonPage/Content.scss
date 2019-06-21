@@ -47,9 +47,8 @@ $checkbox-blue: #abdbea;
   @include styledList;
 }
 
-// scratch and microbit code blocks
+// scratch code blocks
 pre.blocks,
-pre.microblocks,
 code.b {
   background-color: inherit;
   border: 0;
