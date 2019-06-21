@@ -66,7 +66,7 @@ import {
   publicPath,
   publicPathWithoutSlash,
 } from './buildconstants';
-import {getStaticSitePaths, lessonPaths} from './pathlists';
+import {getStaticSitePaths, lessonPaths, coursePaths} from './pathlists';
 
 const staticSitePaths = getStaticSitePaths();
 
@@ -352,6 +352,20 @@ const createConfig = (env = {}) => {
           }
         }),
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
+        // Insert index.html-files with redirects for all courses, e.g. /scratch/index.html redirects to /scratch
+        // This is because on github, an url with a slash at the end,
+        // e.g. scratch/, is interpreted as scratch.index.html
+        new CopyWebpackPlugin(coursePaths().map(coursePath => ({
+          from: 'src/redirect-template.ejs',
+          to: path.join(buildDir, coursePath, 'index.html'),
+          // split + join to replace all occurrances
+          transform: (content) => content.toString('utf8').split('<%-REDIRECT-URL%>').join(publicPath + coursePath)
+        })), {
+          // Must include copyUnmodified:true since we always copy from same file,
+          // otherwise only the first path is copied to.
+          // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+          copyUnmodified: true,
+        }),
       ]),
 
     ],
