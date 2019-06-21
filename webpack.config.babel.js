@@ -52,6 +52,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 
 import {
   assets,
@@ -367,6 +368,25 @@ const createConfig = (env = {}) => {
           copyUnmodified: true,
         }),
       ]),
+
+      new WebpackPwaManifest({
+        name: 'Lær Kidsa Koding',
+        short_name: 'LKK',
+        description: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
+                      'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
+                      'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
+        display: 'standalone',
+        orientation: 'any',
+        background_color: '#fff',
+        theme_color: '#fff',
+        filename: 'manifest.webmanifest',
+        icons: [
+          {
+            src: path.resolve('src/assets/favicon.png'),
+            sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512, 1024]
+          }
+        ]
+      }),
 
     ],
 
