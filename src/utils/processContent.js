@@ -143,38 +143,6 @@ const renderScratchBlocks = (content, styles) => {
 };
 
 /**
- * Render microbitblocks
- * @param {string} content HTML with <pre class="microblocks">...</pre>
- * @param {object} styles css-modules object
- * @returns {string} <pre class="microblocks">...</pre> replaced with SVG
- */
-const renderMicrobitBlocks = (content, styles) => {
-  let replace = [];
-  if ('microblocks' in styles) {
-    replace.push({start: '<pre class="' + styles.microblocks + '">', end: '</pre>'});
-  }
-  let returnContent = content;
-  replace.forEach(r => {
-    const re = new RegExp(r.start + '[\\s\\S]*?' + r.end, 'g');
-    let microblocks = content.match(re);
-    if (microblocks) {
-      microblocks.forEach(block => {
-        const f = document.createElement('iframe');
-        f.id = 'makecoderenderer';
-        f.style.position = 'absolute';
-        f.style.left = 0;
-        f.style.bottom = 0;
-        f.style.width = '1px';
-        f.style.height = '1px';            
-        f.src = 'https://makecode.microbit.org/--docs?render=1';
-        returnContent = returnContent.replace(block, f.outerHTML);
-      });
-    }
-  });
-  return returnContent;
-};
-
-/**
  * Process all of the content
  * @param {string} content HTML with <pre class="blocks">...</pre>
  * @param {object} styles css-modules object
@@ -190,7 +158,6 @@ export const processContent = (content, styles, isHydrated) => {
   content = render(parsedContent);
   if (typeof document !== 'undefined' && isHydrated) {
     content = renderScratchBlocks(content, styles);
-    content = renderMicrobitBlocks(content, styles);
   }
   return content;
 };
