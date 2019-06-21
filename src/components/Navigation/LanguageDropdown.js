@@ -24,7 +24,7 @@ const LanguageItem = ({language, onlyFlag}) => (
   <div className={styles.languageItemContainer}>
     <Flag {...{language}}/>
     <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
-      {languages[language]}
+      {languages[language] || language}
     </span>
   </div>
 );
