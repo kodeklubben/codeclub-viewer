@@ -64,16 +64,10 @@ export const updateStoreFromLocalStorage = () => {
   store.dispatch(setShowDyslexicFont(initialDyslexicFont));
   store.dispatch(resetOneFilter('language', initialLanguage));
 
-  let playlists = getCoursesWithPlaylists();
-  for (let key in playlists) {
-    let playlist = playlists[key];
-    if (initialExpandedAccordion.hasOwnProperty(playlist)) {
-      store.dispatch(setExpandedAccordion(playlist, initialExpandedAccordion[playlist]));
-    }
-    else {
-      store.dispatch(setExpandedAccordion(playlist, null));
-    }
-  }
+  getCoursesWithPlaylists().forEach(playlist => {
+    let hasVal = playlist in initialExpandedAccordion;
+    store.dispatch(setExpandedAccordion(playlist, hasVal ? initialExpandedAccordion[playlist] : null));
+  });
 
   for (const course of getCourses()){
     for (const lesson of getLessonsInCourse(course)) {
