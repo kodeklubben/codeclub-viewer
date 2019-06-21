@@ -68,9 +68,11 @@
           img.src = msg.uri;
           img.width = msg.width;
           img.height = msg.height;
-          var code = document.getElementsByTagName("pre");
-          code[0].parentElement.insertBefore(img, code[0]);
-          code[0].parentElement.removeChild(code[0]);
+          var code = document.getElementsByTagName("pre")[0];
+          if (code.className === 'microbit') {
+            code.parentElement.insertBefore(img, code);
+            code.parentElement.removeChild(code);
+          }
           break;
       }
     }, false);
