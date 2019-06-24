@@ -10,9 +10,9 @@ import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import {getTranslator} from '../selectors/translate';
-import {setCheckboxes, createCheckboxesKey} from '../utils/checkboxUtils';
+import {setCheckboxesInDoc, createCheckboxesKey} from '../utils/checkboxUtils';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
-import {setCheckbox} from '../reducers/checkboxes';
+import {setCheckbox, removeCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import Progress from '../components/LessonPage/Progress';
@@ -37,16 +37,16 @@ const renderToggleButtons = () => {
 
 class LessonPage extends React.PureComponent {
   componentDidMount() {
-    const {path, checkboxes, setCheckbox, setLastLesson, isHydrated} = this.props;
-    if (isHydrated) { setCheckboxes(path, checkboxes, setCheckbox); }
+    const {path, checkboxes, setCheckbox, removeCheckbox, setLastLesson, isHydrated} = this.props;
+    if (isHydrated) { setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox); }
     setLastLesson(path);
     renderToggleButtons();
   }
 
   componentDidUpdate(prevProps) {
-    const {path, checkboxes, setCheckbox} = this.props;
+    const {path, checkboxes, setCheckbox, removeCheckbox} = this.props;
     if (checkboxes !== prevProps.checkboxes) {
-      setCheckboxes(path, checkboxes, setCheckbox);
+      setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
     }
   }
 
@@ -132,6 +132,7 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
 
 const mapDispatchToProps = {
   setCheckbox,
+  removeCheckbox,
   setLastLesson
 };
 
