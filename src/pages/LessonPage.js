@@ -37,8 +37,8 @@ const renderToggleButtons = () => {
 
 class LessonPage extends React.PureComponent {
   componentDidMount() {
-    const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
-    setCheckboxes(path, checkboxes, setCheckbox);
+    const {path, checkboxes, setCheckbox, setLastLesson, isHydrated} = this.props;
+    if (isHydrated) { setCheckboxes(path, checkboxes, setCheckbox); }
     setLastLesson(path);
     renderToggleButtons();
   }
@@ -107,6 +107,7 @@ LessonPage.propTypes = {
   checkboxes: PropTypes.object,
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
+  isHydrated: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setCheckbox: PropTypes.func.isRequired,
@@ -125,6 +126,7 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
     checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
     checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
     totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
+    isHydrated: state.hydration,
   };
 };
 

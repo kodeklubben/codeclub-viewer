@@ -22,7 +22,12 @@ export const setCheckboxes = (path, checkboxes, setCheckbox) => {
     const input = document.getElementById(label.htmlFor);
     if (input && input.type === 'checkbox') {
       let hash = hashCode(label.textContent);
-      input.checked = !!checkboxes[hash];
+      if (hash in checkboxes) {
+        input.checked = !!checkboxes[hash];
+      } else {
+        input.checked = false;
+        setCheckbox(path, hash, false);
+      }
       input.onclick = (e) => {
         setCheckbox(path, hash, !!e.target.checked);
       };
