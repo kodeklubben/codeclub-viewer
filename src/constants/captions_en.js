@@ -117,6 +117,7 @@ export default {
   footer: {
     contribute: 'Create your own lessons',
     dyslexia: 'Text for dyslexics',
+    darkmode: 'Activate dark mode',
   },
   404: {
     header: 'Sorry',

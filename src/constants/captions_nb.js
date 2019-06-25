@@ -118,6 +118,7 @@ export default {
   footer: {
     contribute: 'Lag egne oppgaver',
     dyslexia: 'Skrift for dyslektikere',
+    darkmode: 'Aktiver nattmodus',
   },
   404: {
     header: 'Beklager',

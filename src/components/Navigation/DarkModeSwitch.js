@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import styles from './DyslexiaSwitch.scss';
+import styles from './DarkModeSwitch.scss';
 import Switch from 'react-switch';
 import {setShowDarkMode} from '../../reducers/showDarkMode';
 import {getTranslator} from '../../selectors/translate';
@@ -13,12 +13,12 @@ class DarkModeSwtich extends React.PureComponent {
   render() {
     const {t, showDarkMode} = this.props;
     return (
-      <label htmlFor='switch' className={styles.container}>
-        <span className={styles.text}>{t('footer.dyslexia')}</span>
+      <label htmlFor='darkmodeswitch' className={styles.container}>
+        <span className={styles.text}>{t('footer.darkmode')}</span>
         <Switch
           onChange={this.handleChange}
           checked={showDarkMode}
-          id='switch'
+          id='darkmodeswitch'
           onColor='#000'
         />
       </label>

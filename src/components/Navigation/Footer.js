@@ -71,8 +71,8 @@ const Footer = ({t, isStudentMode}) => {
         <img className={styles.svg} src={require('../../assets/graphics/github.png')} alt={'GitHub'}/>
         <p className={styles.contribute}>{t('footer.contribute')}</p>
       </a>
-      <div className={styles.centerSwitch}><DyslexiaSwitch/></div>
       <div className={styles.centerSwitch}><DarkModeSwitch/></div>
+      <div className={styles.centerSwitch}><DyslexiaSwitch/></div>
       <div className={styles.divider}/>
       {sponsors}
     </div>);
