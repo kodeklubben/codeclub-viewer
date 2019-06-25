@@ -9,6 +9,7 @@ import showPlaylists from './reducers/showPlaylists';
 import showDyslexicFont from './reducers/showDyslexicFont';
 import hydration from './reducers/hydration';
 import expandedAccordion from './reducers/expandedAccordion';
+import showDarkMode from './reducers/showDarkMode';
 
 export default combineReducers({
   filter,
@@ -21,4 +22,5 @@ export default combineReducers({
   showDyslexicFont,
   hydration,
   expandedAccordion,
+  showDarkMode
 });
