@@ -66,7 +66,9 @@ const LessonItem = ({
   return (
     <div>
       {external ?
-        <ListGroupItem href={external} target='_blank' rel='noopener' className={styles.row}>
+        <ListGroupItem href={external} target='_blank' rel='noopener'
+          className={isStudentMode ? styles.rowStudent : styles.rowTeacher}
+        >
           {flag}
           <LevelIcon level={level}/>
           <div className={styles.title}>{title}</div>
@@ -78,7 +80,7 @@ const LessonItem = ({
         </ListGroupItem>
         :
         <LinkContainer to={getLessonPath(course, lesson, language, false)}>
-          <ListGroupItem className={styles.row}>
+          <ListGroupItem className={isStudentMode ? styles.rowStudent : styles.rowTeacher}>
             {flag}
             <Progressbar {...{checkedCheckboxes, totalCheckboxes, level}}/>
             <LevelIcon level={level}/>

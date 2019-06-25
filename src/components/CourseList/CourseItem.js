@@ -17,21 +17,21 @@ import {getCourseExternalLink, getCourseTitle} from '../../resources/courseFront
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getTranslator} from '../../selectors/translate';
 
-const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedMainLanguage, t}) => {
+const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedMainLanguage, t, showDarkMode}) => {
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
       <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: courseTitle})}>
-        <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
+        <Glyphicon className={showDarkMode ? styles.popoverGlyphWhite : styles.popoverGlyphDark} glyph='info-sign'/>
       </Button>
     </PopoverComponent>
     : null;
   const courseIcon = (
     <img
       className={styles.courseLogo}
-      src={getCourseIcon(course)}
+      src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
       alt={t('general.picture', {title: courseTitle})}
     />
   );
@@ -40,17 +40,19 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
       {externalLink ?
         <a className={styles.courseItem} href={externalLink} target='_blank' rel='noopener'>
           {courseIcon}
-          <span className={styles.courseName}>
+          <span className={showDarkMode ? styles.courseNameWhite : styles.courseName}>
             {courseTitle}
             {popoverButton}
-            <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
+            <Glyphicon className={showDarkMode ? styles.externalGlyphWhite : styles.externalGlyph} glyph='new-window'/>
           </span>
           {!onlyCheckedMainLanguage ? <span><Flag language={language}/></span> : null}
         </a>
         :
         <Link className={styles.courseItem} to={coursePath}>
           {courseIcon}
-          <span className={styles.courseName}>{courseTitle}{popoverButton}</span>
+          <span className={showDarkMode ? styles.courseNameWhite : styles.courseName}>
+            {courseTitle}{popoverButton}
+          </span>
           {showLessonCount ? <LessonCount {...{course}}/> : null}
         </Link>
       }
@@ -67,6 +69,7 @@ CourseItem.propTypes = {
   coursePath: PropTypes.string,
   onlyCheckedMainLanguage: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
+  showDarkMode: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {course}) => ({
@@ -74,6 +77,7 @@ const mapStateToProps = (state, {course}) => ({
   coursePath: getLanguageIndependentCoursePath(course),
   onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
   t: getTranslator(state),
+  showDarkMode: state.showDarkMode
 });
 
 export default connect(

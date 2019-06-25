@@ -28,25 +28,56 @@
   }
 }
 
-.courseName {
+@mixin courseNameContainer {
   white-space: nowrap;
   font-size: 1.3em;
-  color: black;
 
   @media screen and (max-width: $screen-xs-max) {
     font-size: 1.1em;
   }
 }
 
+.courseName {
+  @include courseNameContainer;
+  color: black;
+}
+
+.courseNameWhite {
+  @include courseNameContainer;
+  color: white;
+}
+
 .externalGlyph {
   margin-left: 5px;
 }
 
-.popoverGlyph {
+.externalGlyphWhite {
+  margin-left: 5px;
+  color: white;
+}
+
+@mixin popoverGlyph {
   margin-top: 3px;
   font-size: 1.4em;
   &:hover {
     color: $color-gray;
+  }
+}
+
+.popoverGlyphDark {
+  margin-top: 3px;
+  font-size: 1.4em;
+  &:hover {
+    color: $color-gray;
+  }
+}
+
+.popoverGlyphWhite {
+  color: white;
+  margin-top: 3px;
+  font-size: 1.4em;
+  &:hover {
+    color: lightgray;
   }
 }
 
