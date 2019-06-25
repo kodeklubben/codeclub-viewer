@@ -1,20 +1,20 @@
 @import '../styles/variables';
 
-@mixin container {
+.appContainer {
   display: flex;
   overflow-x: hidden;
   min-height: 100vh;
   flex-direction: column;
-}
-
-.appContainer {
-  @include container;
   font-family: $font-family-standard;
 }
 
-.appContainerDyslexia {
-  @include container;
+.dyslexia {
   font-family: $font-family-dyslexic;
+}
+
+.darkmode {
+  background-color: #222222;
+  color: white;
 }
 
 .stickyFooter {
