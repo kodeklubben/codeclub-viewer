@@ -9,17 +9,22 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import styles from './LanguageDropdown.scss';
-import {getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 
 const availableLanguages = getAvailableLanguages();
 
-const LanguageItem = ({language, translateFilter, onlyFlag}) => (
+const languages = {
+  nb: 'Bokmål',
+  en: 'English',
+  nn: 'Nynorsk',
+};
+
+const LanguageItem = ({language, onlyFlag}) => (
   // Note that the block with "float" (the flag) must be first in the containing div
   <div className={styles.languageItemContainer}>
-    <Flag language={language}/>
+    <Flag {...{language}}/>
     <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
-      {translateFilter('language', language)}
+      {languages[language] || language}
     </span>
   </div>
 );
@@ -30,7 +35,6 @@ LanguageItem.propTypes = {
 
   // mapStateToProps
   language: PropTypes.oneOf(availableLanguages).isRequired,
-  translateFilter: PropTypes.func.isRequired
 };
 
 class LanguageDropdown extends React.PureComponent {
@@ -41,7 +45,7 @@ class LanguageDropdown extends React.PureComponent {
   };
 
   render() {
-    const {isStudentMode, language, translateFilter} = this.props;
+    const {isStudentMode, language} = this.props;
     const mode = isStudentMode ? 'student' : 'teacher';
     return (
       <div className={styles.gadgetContainer}>
@@ -49,14 +53,14 @@ class LanguageDropdown extends React.PureComponent {
           noCaret
           pullRight
           bsStyle={'language-' + mode}
-          title={<LanguageItem onlyFlag={true} {...{language, translateFilter}}/>}
+          title={<LanguageItem onlyFlag={true} {...{language}}/>}
           onSelect={this.handleSelect}
         >
 
           {
             availableLanguages.map(key =>
               <MenuItem {...{key}} eventKey={key} active={language === key}>
-                <LanguageItem onlyFlag={false} language={key} {...{translateFilter}}/>
+                <LanguageItem onlyFlag={false} language={key}/>
               </MenuItem>
             )
           }
@@ -69,7 +73,6 @@ class LanguageDropdown extends React.PureComponent {
 LanguageDropdown.propTypes = {
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
-  translateFilter: PropTypes.func.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
@@ -80,7 +83,6 @@ LanguageDropdown.propTypes = {
 
 const mapStateToProps = (state) => ({
   language: state.language,
-  translateFilter: getTranslateFilter(state),
   isStudentMode: state.isStudentMode,
 });
 

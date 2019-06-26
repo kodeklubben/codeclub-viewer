@@ -10,9 +10,6 @@ import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import {getTranslator} from '../selectors/translate';
-import {setCheckboxes, createCheckboxesKey} from '../utils/checkboxUtils';
-import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../selectors/checkboxes';
-import {setCheckbox} from '../reducers/checkboxes';
 import {setLastLesson} from '../reducers/lastLesson';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import Progress from '../components/LessonPage/Progress';
@@ -37,23 +34,21 @@ const renderToggleButtons = () => {
 
 class LessonPage extends React.PureComponent {
   componentDidMount() {
-    const {path, checkboxes, setCheckbox, setLastLesson} = this.props;
-    setCheckboxes(path, checkboxes, setCheckbox);
+    const {course, lesson, language, isReadme, setLastLesson} = this.props;
+    const path = getLessonPath(course, lesson, language, isReadme);
     setLastLesson(path);
     renderToggleButtons();
   }
 
   render() {
-    const {
-      course, lesson, language, isReadme,
-      t, title, author, translator, license,
-      checkedCheckboxes, totalCheckboxes,
-    } = this.props;
+    const {course, lesson, language, isReadme, t} = this.props;
+    const title = getLessonTitle(course, lesson, language, isReadme);
+    const author = getLessonAuthor(course, lesson, language, isReadme);
+    const translator = getLessonTranslator(course, lesson, language, isReadme);
+    const license = getLicense(course, lesson);
     const authorNode = author ?
       <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> : null;
     const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
-    const progress = (checkedCheckboxes > 0 && !isReadme) ?
-      <Progress {...{checkedCheckboxes, totalCheckboxes}}/> : null;
     const licenseRow = <div className={styles.license}>
       {t('lessons.license')}
       {license ?
@@ -73,7 +68,7 @@ class LessonPage extends React.PureComponent {
           {translatorNode}
           <PrintInfo {...{course, lesson}}/>
           <ButtonRow {...{course, lesson, language, isReadme}}/>
-          {progress}
+          <Progress {...{course, lesson, language, isReadme}}/>
           <Content {...{course, lesson, language, isReadme}}/>
           {licenseRow}
           <ImprovePage {...{course, lesson, language, isReadme}}/>
@@ -92,37 +87,16 @@ LessonPage.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  path: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  translator: PropTypes.string.isRequired,
-  license: PropTypes.string,
-  checkboxes: PropTypes.object,
-  checkedCheckboxes: PropTypes.number.isRequired,
-  totalCheckboxes: PropTypes.number.isRequired,
 
   // mapDispatchToProps
-  setCheckbox: PropTypes.func.isRequired,
   setLastLesson: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const path = getLessonPath(course, lesson, language, isReadme);
-  return {
-    t: getTranslator(state),
-    path,
-    title: getLessonTitle(course, lesson, language, isReadme),
-    author: getLessonAuthor(course, lesson, language, isReadme),
-    translator: getLessonTranslator(course, lesson, language, isReadme),
-    license: getLicense(course, lesson),
-    checkboxes: state.checkboxes[createCheckboxesKey(path)] || {},
-    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
-    totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
-  };
-};
+const mapStateToProps = (state) => ({
+  t: getTranslator(state),
+});
 
 const mapDispatchToProps = {
-  setCheckbox,
   setLastLesson
 };
 

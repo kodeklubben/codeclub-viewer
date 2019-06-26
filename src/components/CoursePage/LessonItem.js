@@ -10,7 +10,6 @@ import LevelIcon from '../LevelIcon';
 import PopoverComponent from '../PopoverComponent';
 import InstructionButton from '../InstructionButton';
 import Flag from '../Flag';
-import {createCheckboxesKey} from '../../utils/checkboxUtils';
 import {getLessonTitle, getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatter';
 import {getLevel} from '../../resources/lessons';
 import {getLessonIntro} from '../../resources/lessonContent';
@@ -40,7 +39,6 @@ const LessonItem = ({
   lesson,
   language,
   title,
-  path,
   external,
   popoverContent,
   isStudentMode,
@@ -79,7 +77,7 @@ const LessonItem = ({
           </span>
         </ListGroupItem>
         :
-        <LinkContainer to={path}>
+        <LinkContainer to={getLessonPath(course, lesson, language, false)}>
           <ListGroupItem className={styles.row}>
             {flag}
             <Progressbar {...{checkedCheckboxes, totalCheckboxes, level}}/>
@@ -105,7 +103,6 @@ LessonItem.propTypes = {
 
   // mapStateToProps
   title: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
   external: PropTypes.string,
   popoverContent: PropTypes.string,
   isStudentMode: PropTypes.bool.isRequired,
@@ -115,20 +112,16 @@ LessonItem.propTypes = {
   totalCheckboxes: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, {course, lesson, language}) => {
-  const path = getLessonPath(course, lesson, language, false);
-  return {
-    title: getLessonTitle(course, lesson, language, false),
-    path,
-    external: getLessonExternal(course, lesson, language, false),
-    popoverContent: getLessonIntro(course, lesson, language, false),
-    isStudentMode: state.isStudentMode,
-    onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
-    t: getTranslator(state),
-    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, createCheckboxesKey(path)),
-    totalCheckboxes: getTotalNumberOfCheckboxes(state, createCheckboxesKey(path)),
-  };
-};
+const mapStateToProps = (state, {course, lesson, language}) => ({
+  title: getLessonTitle(course, lesson, language, false),
+  external: getLessonExternal(course, lesson, language, false),
+  popoverContent: getLessonIntro(course, lesson, language, false),
+  isStudentMode: state.isStudentMode,
+  onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
+  t: getTranslator(state),
+  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, course, lesson, language, false),
+  totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, false),
+});
 
 export default connect(
   mapStateToProps

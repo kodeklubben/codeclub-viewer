@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Progress.scss';
 import ProgressBar from 'react-bootstrap/lib/ProgressBar';
+import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 
-const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
+const Progress = ({checkedCheckboxes, totalCheckboxes, isReadme}) => {
+  if (checkedCheckboxes <= 0 || isReadme) { return null; } 
   const now = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const active = checkedCheckboxes < totalCheckboxes;
   const bsStyle = active ? 'danger' : 'success';
@@ -18,8 +21,21 @@ const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
 
 Progress.propTypes = {
   // ownProps
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
+  language: PropTypes.string.isRequired,
+  isReadme: PropTypes.bool.isRequired,
+
+  // mapStateToProps
   checkedCheckboxes: PropTypes.number.isRequired,
   totalCheckboxes: PropTypes.number.isRequired,
 };
 
-export default withStyles(styles)(Progress);
+const mapStateToProps = (state, {course, lesson, language, isReadme}) => ({
+  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, course, lesson, language, isReadme),
+  totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, isReadme),
+});
+
+export default connect(
+  mapStateToProps,
+)(withStyles(styles)(Progress));
