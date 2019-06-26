@@ -52,6 +52,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 
 import {
   assets,
@@ -66,7 +67,7 @@ import {
   publicPath,
   publicPathWithoutSlash,
 } from './buildconstants';
-import {getStaticSitePaths, lessonPaths} from './pathlists';
+import {getStaticSitePaths, lessonPaths, coursePaths} from './pathlists';
 
 const staticSitePaths = getStaticSitePaths();
 
@@ -352,7 +353,40 @@ const createConfig = (env = {}) => {
           }
         }),
         new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
+        // Insert index.html-files with redirects for all courses, e.g. /scratch/index.html redirects to /scratch
+        // This is because on github, an url with a slash at the end,
+        // e.g. scratch/, is interpreted as scratch.index.html
+        new CopyWebpackPlugin(coursePaths().concat(lessonPaths()).map(p => ({
+          from: 'src/redirect-template.ejs',
+          to: path.join(buildDir, p, 'index.html'),
+          // split + join to replace all occurrances
+          transform: (content) => content.toString('utf8').split('<%-REDIRECT-URL%>').join(publicPath + p)
+        })), {
+          // Must include copyUnmodified:true since we always copy from same file,
+          // otherwise only the first path is copied to.
+          // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+          copyUnmodified: true,
+        }),
       ]),
+
+      new WebpackPwaManifest({
+        name: 'Lær Kidsa Koding',
+        short_name: 'LKK',
+        description: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
+                      'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
+                      'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
+        display: 'standalone',
+        orientation: 'any',
+        background_color: '#fff',
+        theme_color: '#fff',
+        filename: 'manifest.webmanifest',
+        icons: [
+          {
+            src: path.resolve('src/assets/favicon.png'),
+            sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512, 1024]
+          }
+        ]
+      }),
 
     ],
 

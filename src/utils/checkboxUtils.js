@@ -15,19 +15,29 @@ export const createCheckboxesKey = (path = 'undefined') => {
  * @param {string} path path for the lesson
  * @param {object} checkboxes checkbox object in state
  * @param {function} setCheckbox function for updating the state and localstorage
+ * @param {function} removeCheckbox function for updating the state and localstorage
  */
-export const setCheckboxes = (path, checkboxes, setCheckbox) => {
+export const setCheckboxesInDoc = (path, checkboxes, setCheckbox, removeCheckbox) => {
+  const hashes = new Set(Object.keys(checkboxes));
   const labels = [...document.getElementsByTagName('label')];
   for (let label of labels) {
     const input = document.getElementById(label.htmlFor);
     if (input && input.type === 'checkbox') {
-      let hash = hashCode(label.textContent);
-      input.checked = !!checkboxes[hash];
-      setCheckbox(path, hash, !!checkboxes[hash]);
+      let hash = hashCode(label.textContent).toString(); // js converts ints to strings in objects, so do it explicitly
+      if (hash in checkboxes) {
+        input.checked = !!checkboxes[hash];
+        hashes.delete(hash);
+      } else {
+        input.checked = false;
+        setCheckbox(path, hash, false);
+      }
       input.onclick = (e) => {
         setCheckbox(path, hash, !!e.target.checked);
       };
     }
+  }
+  for (let hash of hashes) {
+    removeCheckbox(path, hash); // Remove any stored checkboxes that don't exist anymore, e.g. because content changed
   }
 };
 
