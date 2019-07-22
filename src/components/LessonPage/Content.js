@@ -57,6 +57,8 @@ class Content extends React.PureComponent {
           img.src = msg.uri;
           img.width = msg.width;
           img.height = msg.height;
+          img.style.display = 'block';
+          img.style.margin = '0 auto 15px';
           let code = document.getElementsByTagName('pre')[0];
           if (code.className === 'microbit') {
             code.parentElement.insertBefore(img, code);
