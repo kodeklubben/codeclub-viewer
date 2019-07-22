@@ -142,6 +142,44 @@ const renderScratchBlocks = (content, styles) => {
   return returnContent;
 };
 
+export const renderSnippets = () => {
+  Array.from(document.getElementsByTagName('pre')).forEach(pre => {
+    const f = document.getElementById('makecoderenderer');
+    f.contentWindow.postMessage({
+      type: 'renderblocks',
+      id: pre.id,
+      code: pre.innerText
+    }, 'https://makecode.microbit.org/');
+  });
+};
+
+export const createImage = msg => {
+  let img = document.createElement('img');
+  img.src = msg.uri;
+  img.width = msg.width;
+  img.height = msg.height;
+  img.style.display = 'block';
+  img.style.margin = '0 auto 15px';
+  let code = document.getElementsByTagName('pre')[0];
+  if (typeof code === 'undefined') return;
+  if (code.className === 'microbit') {
+    code.parentElement.insertBefore(img, code);
+    code.parentElement.removeChild(code);
+  }
+};
+
+export const createIframe = () => {
+  const f = document.createElement('iframe');
+  f.id = 'makecoderenderer';
+  f.style.position = 'absolute';
+  f.style.left = 0;
+  f.style.bottom = 0;
+  f.style.width = '1px';
+  f.style.height = '1px';            
+  f.src = 'https://makecode.microbit.org/--docs?render=1';
+  document.body.appendChild(f);
+};
+
 /**
  * Process all of the content
  * @param {string} content HTML with <pre class="blocks">...</pre>
