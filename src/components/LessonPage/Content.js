@@ -10,6 +10,43 @@ import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
 import {setCheckbox, removeCheckbox} from '../../reducers/checkboxes';
 import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 
+const createIframe = () => {
+  const f = document.createElement('iframe');
+  f.id = 'makecoderenderer';
+  f.style.position = 'absolute';
+  f.style.left = 0;
+  f.style.bottom = 0;
+  f.style.width = '1px';
+  f.style.height = '1px';            
+  f.src = 'https://makecode.microbit.org/--docs?render=1';
+  document.body.appendChild(f);
+};
+
+const createImage = msg => {
+  let img = document.createElement('img');
+  img.src = msg.uri;
+  img.width = msg.width;
+  img.height = msg.height;
+  img.style.display = 'block';
+  img.style.margin = '0 auto 15px';
+  let code = document.getElementsByTagName('pre')[0];
+  if (code.className === 'microbit') {
+    code.parentElement.insertBefore(img, code);
+    code.parentElement.removeChild(code);
+  }
+};
+
+const renderSnippets = () => {
+  Array.from(document.getElementsByTagName('pre')).forEach(pre => {
+    const f = document.getElementById('makecoderenderer');
+    f.contentWindow.postMessage({
+      type: 'renderblocks',
+      id: pre.id,
+      code: pre.innerText
+    }, 'https://makecode.microbit.org/');
+  });
+};
+
 class Content extends React.PureComponent {
   createMarkup = () => {
     const {course, lesson, language, isReadme, isHydrated} = this.props;
@@ -24,48 +61,17 @@ class Content extends React.PureComponent {
   };
 
   componentDidMount() {
-    const f = document.createElement('iframe');
-    f.id = 'makecoderenderer';
-    f.style.position = 'absolute';
-    f.style.left = 0;
-    f.style.bottom = 0;
-    f.style.width = '1px';
-    f.style.height = '1px';            
-    f.src = 'https://makecode.microbit.org/--docs?render=1';
-    document.body.appendChild(f);
-    // listen for messages
+    createIframe();
     window.addEventListener('message', ev => {
       let msg = ev.data;
       if (msg.source != 'makecode') return;
       switch (msg.type) {
-        case 'renderready': {
-          // start rendering snippets!
-          let pres = document.getElementsByTagName('pre');
-          Array.prototype.forEach.call(pres, pre => {
-            const f = document.getElementById('makecoderenderer');
-            f.contentWindow.postMessage({
-              type: 'renderblocks',
-              id: pre.id,
-              code: pre.innerText
-            }, 'https://makecode.microbit.org/');
-          });
+        case 'renderready':
+          renderSnippets();
           break;
-        }
-        case 'renderblocks': {
-          // replace text with img
-          let img = document.createElement('img');
-          img.src = msg.uri;
-          img.width = msg.width;
-          img.height = msg.height;
-          img.style.display = 'block';
-          img.style.margin = '0 auto 15px';
-          let code = document.getElementsByTagName('pre')[0];
-          if (code.className === 'microbit') {
-            code.parentElement.insertBefore(img, code);
-            code.parentElement.removeChild(code);
-          }
+        case 'renderblocks':
+          createImage(msg);
           break;
-        }
       }
     }, false);
     if (this.props.isHydrated) { this.updateCheckboxes(); } // When clicking in from different page
