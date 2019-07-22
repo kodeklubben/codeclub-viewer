@@ -1,6 +1,3 @@
-import {getAvailableLanguages} from './filterUtils';
-import { get } from 'http';
-
 // Structure of replaceTags:
 // {
 //   <oldtag>: {
