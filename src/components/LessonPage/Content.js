@@ -39,7 +39,7 @@ class Content extends React.PureComponent {
   componentDidMount() {
     if (this.props.isHydrated) { this.updateCheckboxes(); } // When clicking in from different page
     if (this.props.course === 'microbit') {
-      createIframe();
+      createIframe(this.props.language);
       window.addEventListener('message', this.createMicrobitImage);
     }
   }

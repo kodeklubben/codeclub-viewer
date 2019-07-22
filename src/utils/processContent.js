@@ -1,3 +1,6 @@
+import {getAvailableLanguages} from './filterUtils';
+import { get } from 'http';
+
 // Structure of replaceTags:
 // {
 //   <oldtag>: {
@@ -154,6 +157,10 @@ export const renderSnippets = () => {
   });
 };
 
+/**
+ * Creates an image from the rendered microbit code
+ * @param {object} msg 
+ */
 export const createImage = msg => {
   let img = document.createElement('img');
   img.src = msg.uri;
@@ -169,15 +176,25 @@ export const createImage = msg => {
   }
 };
 
-export const createIframe = () => {
+/**
+ * Creates an iframe that is being used to render the code
+ * @param {object} language Lesson language
+ */
+export const createIframe = language => {
+  const supportedLanguages = ['en', 'no', 'da', 'is'];
   const f = document.createElement('iframe');
   f.id = 'makecoderenderer';
   f.style.position = 'absolute';
   f.style.left = 0;
   f.style.bottom = 0;
   f.style.width = '1px';
-  f.style.height = '1px';            
-  f.src = 'https://makecode.microbit.org/--docs?render=1';
+  f.style.height = '1px';   
+  if (supportedLanguages.includes(language)) {
+    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=' + language;
+  }
+  else {
+    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=no';
+  }
   document.body.appendChild(f);
 };
 
