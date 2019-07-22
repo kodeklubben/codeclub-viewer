@@ -141,9 +141,10 @@ const renderScratchBlocks = (content, styles) => {
 
   return returnContent;
 };
-
+  
+// Taken from https://makecode.microbit.org/blocks-embed
 export const renderSnippets = () => {
-  Array.from(document.getElementsByTagName('pre')).forEach(pre => {
+  Array.from(document.getElementsByClassName('microbit')).forEach(pre => {
     const f = document.getElementById('makecoderenderer');
     f.contentWindow.postMessage({
       type: 'renderblocks',
