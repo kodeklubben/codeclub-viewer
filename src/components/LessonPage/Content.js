@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Content.scss';
-import {processContent, renderSnippets, makeCodeInjectRenderer} from '../../utils/processContent';
+import {processContent} from '../../utils/processContent';
 import {getLessonContent} from '../../resources/lessonContent';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
@@ -31,7 +31,7 @@ class Content extends React.PureComponent {
     f.style.bottom = 0;
     f.style.width = '1px';
     f.style.height = '1px';            
-    f.src = 'https://makecode.microbit.org/--docs?render=1&lang';
+    f.src = 'https://makecode.microbit.org/--docs?render=1';
     document.body.appendChild(f);
     // listen for messages
     window.addEventListener('message', ev => {
