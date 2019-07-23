@@ -1,4 +1,3 @@
-/* eslint-env node */
 /* global IS_HOT */
 
 import {createStore} from 'redux';

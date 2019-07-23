@@ -118,8 +118,6 @@ const createConfig = (env = {}) => {
       libraryTarget: 'umd',
     },
 
-    mode: 'production',
-
     performance: {
       hints: false //set this to 'warning' if you want to look after big files
     },
