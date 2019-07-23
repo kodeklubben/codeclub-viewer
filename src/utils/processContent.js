@@ -178,19 +178,35 @@ export const createImage = msg => {
  * @param {object} language Lesson language
  */
 export const createIframe = language => {
-  const supportedLanguages = ['en', 'no', 'da', 'is'];
+  const microbitLanguages = { // Taken from https://support.crowdin.com/api/language-codes/
+    da: 'da', // Danish
+    de: 'de', // German
+    el: 'el', // Greek
+    en: 'en', // English
+    es: 'es-ES', // Spanish
+    fi: 'fi', // Finnish
+    fr: 'fr', //French
+    hu: 'hu', // Hungarian
+    is: 'is', // Icelandic
+    it: 'it', // Italian
+    nl: 'nl', // Dutch
+    nb: 'no', // Norwegian
+    nn: 'no', // Norwegian
+    sv: 'sv-SE', // Swedish
+    tr: 'tr', // Turkish
+  };
   const f = document.createElement('iframe');
   f.id = 'makecoderenderer';
   f.style.position = 'absolute';
   f.style.left = 0;
   f.style.bottom = 0;
   f.style.width = '1px';
-  f.style.height = '1px';   
-  if (supportedLanguages.includes(language)) {
-    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=' + language;
+  f.style.height = '1px';
+  if (language in microbitLanguages) {
+    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=' + microbitLanguages[language];
   }
   else {
-    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=no';
+    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=en';
   }
   document.body.appendChild(f);
 };
