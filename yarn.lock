@@ -10626,9 +10626,10 @@ webpack-log@^2.0.0:
     ansi-colors "^3.0.0"
     uuid "^3.3.2"
 
-webpack-shell-plugin@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/webpack-shell-plugin/-/webpack-shell-plugin-0.5.0.tgz#29b8a1d80ddeae0ddb10e729667f728653c2c742"
+webpack-shell-plugin-alt@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/webpack-shell-plugin-alt/-/webpack-shell-plugin-alt-1.3.0.tgz#ca2aea37ef42f2d5e8fc54d2e443566aa14513b9"
+  integrity sha512-8G/5B5Z0kZTK6McXgZXNW+DyxYH7A3X4Ob2/uYZwKdtmLKzJ2WtLPQ8p5X+ZhyCc6JC3z7XnFVwjNeJN2OcJpg==
 
 webpack-sources@^0.2.0:
   version "0.2.3"

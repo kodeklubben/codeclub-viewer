@@ -50,7 +50,7 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
-import WebpackShellPlugin from 'webpack-shell-plugin';
+import WebpackShellPluginAlt from 'webpack-shell-plugin-alt';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
 
 import {
@@ -266,7 +266,7 @@ const createConfig = (env = {}) => {
       new CaseSensitivePathsPlugin(),
 
       ...(env.BUILD_PDF ? [
-        new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']})
+        new WebpackShellPluginAlt({onBuildEnd:['node createLessonPdfs.js']})
       ] : [
         // copy FakeLessonPDF.pdf to all the lessons
         // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
