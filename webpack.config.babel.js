@@ -321,6 +321,7 @@ const createConfig = (env = {}) => {
       new WebappWebpackPlugin({
         logo: './src/assets/favicon.png',
         inject: 'force',
+        prefix: 'icons-[hash:5]/',
         favicons: {
           appName: 'Lær Kidsa Koding',
           appShortName: 'LKK',
@@ -335,7 +336,6 @@ const createConfig = (env = {}) => {
           display: 'standalone',
           orientation: 'any',
           start_url: '/',
-          // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
           icons: {
             coast: false,
             yandex: false,
