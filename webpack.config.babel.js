@@ -51,7 +51,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPlugin from 'webpack-shell-plugin';
-import WebpackPwaManifest from 'webpack-pwa-manifest';
+import WebappWebpackPlugin from 'webapp-webpack-plugin';
 
 import {
   assets,
@@ -260,9 +260,6 @@ const createConfig = (env = {}) => {
         { // Copy extra files that need to be included
           from: './src/assets/deploy/',
           to: buildDir
-        },
-        {
-          from: './src/assets/favicon.ico'
         }
       ]),
 
@@ -321,23 +318,29 @@ const createConfig = (env = {}) => {
         }),
       ]),
 
-      new WebpackPwaManifest({
-        name: 'Lær Kidsa Koding',
-        short_name: 'LKK',
-        description: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
-                      'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
-                      'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
-        display: 'standalone',
-        orientation: 'any',
-        background_color: '#fff',
-        theme_color: '#fff',
-        filename: 'manifest.webmanifest',
-        icons: [
-          {
-            src: path.resolve('src/assets/favicon.png'),
-            sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512, 1024]
-          }
-        ]
+      new WebappWebpackPlugin({
+        logo: './src/assets/favicon.png',
+        inject: 'force',
+        favicons: {
+          appName: 'Lær Kidsa Koding',
+          appShortName: 'LKK',
+          appDescription: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
+                          'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
+                          'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
+          developerName: null,
+          developerURL: null,
+          lang: 'nb',
+          background: '#fff',
+          theme_color: '#fff',
+          display: 'standalone',
+          orientation: 'any',
+          start_url: '/',
+          // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+          icons: {
+            coast: false,
+            yandex: false,
+          },
+        },
       }),
 
     ],
