@@ -52,6 +52,7 @@ import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPluginAlt from 'webpack-shell-plugin-alt';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
+import ImageminPlugin from 'imagemin-webpack-plugin'
 
 import {
   assets,
@@ -342,6 +343,11 @@ const createConfig = (env = {}) => {
           },
         },
       }),
+
+      new ImageminPlugin({
+        disable: process.env.NODE_ENV !== 'production', //Disable during development
+        minFileSize: 244000, // Only apply this one to files over 244kB. Webpacks recommended size limit
+      })
 
     ],
 
