@@ -146,7 +146,11 @@ const renderScratchBlocks = (content, styles) => {
         let docView = scratchblocks.newView(doc, {style: 'scratch3'});
         let svg = docView.render();
         if (r.options.inline) {
+          svg.style.margin = '3px 0';
           svg.style.verticalAlign = 'middle';
+        }
+        else {
+          svg.style.marginBottom = '15px';
         }
         returnContent = returnContent.replace(block, svg.outerHTML);
       });
