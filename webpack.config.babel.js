@@ -52,7 +52,7 @@ import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPluginAlt from 'webpack-shell-plugin-alt';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
-import ImageminPlugin from 'imagemin-webpack-plugin'
+import ImageminPlugin from 'imagemin-webpack-plugin';
 
 import {
   assets,
