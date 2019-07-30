@@ -10,6 +10,9 @@ import {Helmet} from 'react-helmet';
 import store from './store';
 const template = require('./html-template.ejs');
 
+const faviconTagArray = require('assets/favicon.png');
+const faviconHtml = faviconTagArray.join('');
+
 const getOnInsertCss = (css) => {
   // The following onInsertCss function allows multiple styles as arguments in withStyles().
   // If we only require one style, it would suffice with onInsertCss = style => css.push(style._getCss())
@@ -45,7 +48,7 @@ const renderStatic = (locals, callback) => {
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
     const jsAssets = assets.filter(p => /\.js$/.test(p)).map(p => locals.publicPath + p);
 
-    const html = template({ cssAssets, jsAssets, appCss, appHtml, helmet });
+    const html = template({ cssAssets, jsAssets, appCss, appHtml, faviconHtml, helmet });
 
     callback(null, html);
   });

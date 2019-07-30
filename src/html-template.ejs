@@ -7,6 +7,8 @@
   <%- helmet.title.toString() %>
   <%- helmet.meta.toString() %>
 
+  <%- faviconHtml %>
+
   <% cssAssets.forEach(function(file){ %>
   <link href="<%- file -%>" rel="stylesheet">
   <% }); %>

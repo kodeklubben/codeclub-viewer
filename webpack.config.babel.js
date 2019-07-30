@@ -71,6 +71,31 @@ import {getStaticSitePaths, lessonPaths, coursePaths} from './pathlists';
 
 const staticSitePaths = getStaticSitePaths();
 
+const webappWebpackPlugin = new WebappWebpackPlugin({
+  logo: path.join(assets, 'favicon.png'),
+  inject: 'force',
+  prefix: 'icons-[hash:5]/',
+  favicons: {
+    appName: 'Lær Kidsa Koding',
+    appShortName: 'LKK',
+    appDescription: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
+                    'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
+                    'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
+    developerName: null,
+    developerURL: null,
+    lang: 'nb',
+    background: '#fff',
+    theme_color: '#fff',
+    display: 'standalone',
+    orientation: 'any',
+    start_url: '/',
+    icons: {
+      coast: false,
+      yandex: false,
+    },
+  },
+});
+
 const createConfig = (env = {}) => {
 
   if (env.verbose) {
@@ -179,6 +204,7 @@ const createConfig = (env = {}) => {
             'sass-loader'
           ],
         },
+        webappWebpackPlugin.rule(), // must come before any other image rules
         {
           test: inCurrentRepo('(png|jpg|jpeg|gif)'),
           loader: 'file-loader',
@@ -319,30 +345,7 @@ const createConfig = (env = {}) => {
         }),
       ]),
 
-      new WebappWebpackPlugin({
-        logo: './src/assets/favicon.png',
-        inject: 'force',
-        prefix: 'icons-[hash:5]/',
-        favicons: {
-          appName: 'Lær Kidsa Koding',
-          appShortName: 'LKK',
-          appDescription: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
-                          'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
-                          'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
-          developerName: null,
-          developerURL: null,
-          lang: 'nb',
-          background: '#fff',
-          theme_color: '#fff',
-          display: 'standalone',
-          orientation: 'any',
-          start_url: '/',
-          icons: {
-            coast: false,
-            yandex: false,
-          },
-        },
-      }),
+      webappWebpackPlugin,
 
       new ImageminPlugin({
         disable: process.env.NODE_ENV !== 'production', //Disable during development
