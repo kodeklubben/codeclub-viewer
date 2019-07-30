@@ -150,7 +150,8 @@ const renderScratchBlocks = (content, styles) => {
           svg.style.verticalAlign = 'middle';
         }
         else {
-          svg.style.marginBottom = '15px';
+          svg.style.display = 'block';
+          svg.style.margin = '0 auto 15px';
         }
         returnContent = returnContent.replace(block, svg.outerHTML);
       });
