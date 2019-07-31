@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
@@ -13,47 +13,45 @@ import {setExpandedAccordion} from '../../reducers/expandedAccordion';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
 import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistLessons';
 
-class PlaylistNavigation extends React.PureComponent {
+const PlaylistNavigation = ({course, language, t, expandedAccordion, setExpandedAccordion}) => {
+  const handleSelect = useCallback(activeKey =>
+    setExpandedAccordion(course, activeKey), [setExpandedAccordion, course]
+  );
 
-  handleSelect = activeKey => this.props.setExpandedAccordion(this.props.course, activeKey);
-
-  render() {
-    const {course, language, t, expandedAccordion} =  this.props;
-    const playlists = getPlaylistsForCourse(course);
-    const playlistListItems = playlists.map((playlist, i) => {
-      const lessons = getPlaylistLessons(course, playlist);
-      const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
-      return (
-        <Panel key={playlist} eventKey={i}>
-          <Panel.Heading>
-            <Panel.Title toggle>
-              <Badge pullRight>{lessons.length}</Badge>
-              <span className={styles.link}>{title}</span>
-            </Panel.Title>
-          </Panel.Heading>
-          <Panel.Collapse role='tab'>
-            <ListGroup>
-              {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
-                lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
-                <span>{t('coursepage.lessonsnottranslated')}</span>
-              }
-            </ListGroup>
-          </Panel.Collapse>
-        </Panel>
-      );
-    });
+  const playlists = getPlaylistsForCourse(course);
+  const playlistListItems = playlists.map((playlist, i) => {
+    const lessons = getPlaylistLessons(course, playlist);
+    const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
     return (
-      playlists.length > 0 ?
-        <div className={styles.container}>
-          <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
-          <PanelGroup accordion id='PanelGroup' onSelect={this.handleSelect} activeKey={expandedAccordion[course]}>
-            {playlistListItems}
-          </PanelGroup>
-        </div> :
-        null
+      <Panel key={playlist} eventKey={i}>
+        <Panel.Heading>
+          <Panel.Title toggle>
+            <Badge pullRight>{lessons.length}</Badge>
+            <span className={styles.link}>{title}</span>
+          </Panel.Title>
+        </Panel.Heading>
+        <Panel.Collapse role='tab'>
+          <ListGroup>
+            {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
+              lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
+              <span>{t('coursepage.lessonsnottranslated')}</span>
+            }
+          </ListGroup>
+        </Panel.Collapse>
+      </Panel>
     );
-  }
-}
+  });
+  return (
+    playlists.length > 0 ?
+      <div className={styles.container}>
+        <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
+        <PanelGroup accordion id='PanelGroup' onSelect={handleSelect} activeKey={expandedAccordion[course]}>
+          {playlistListItems}
+        </PanelGroup>
+      </div> :
+      null
+  );
+};
 
 PlaylistNavigation.propTypes = {
   // ownProps

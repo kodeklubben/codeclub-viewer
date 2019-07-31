@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -9,21 +9,18 @@ import {somethingCheckedInFilter} from '../../selectors/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
-class ClearFilterButton extends React.PureComponent {
-  handleClick = () => {
-    this.props.resetAllFilters('language', this.props.language);
-    this.props.collapseAllFilterGroups(true);
-  };
+const ClearFilterButton = ({t, language, somethingChecked, resetAllFilters, collapseAllFilterGroups}) => {
+  const handleClick = useCallback(() => {
+    resetAllFilters('language', language);
+    collapseAllFilterGroups(true);
+  }, [resetAllFilters, language, collapseAllFilterGroups]);
 
-  render() {
-    const {t, somethingChecked} = this.props;
-    return somethingChecked ?
-      <Button block onClick={this.handleClick} className={styles.marginBottom} bsStyle={'white-grey-lighter'}>
-        {t('filter.removefilter')}
-      </Button>
-      : null;
-  }
-}
+  return somethingChecked ?
+    <Button block onClick={handleClick} className={styles.marginBottom} bsStyle={'white-grey-lighter'}>
+      {t('filter.removefilter')}
+    </Button>
+    : null;
+};
 
 ClearFilterButton.propTypes = {
   // mapStateToProps
