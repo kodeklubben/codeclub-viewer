@@ -46,13 +46,13 @@ import highlight from './src/highlighting';
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
-import WebpackShellPlugin from 'webpack-shell-plugin';
-import WebpackPwaManifest from 'webpack-pwa-manifest';
+import WebpackShellPluginAlt from 'webpack-shell-plugin-alt';
+import WebappWebpackPlugin from 'webapp-webpack-plugin';
+import ImageminPlugin from 'imagemin-webpack-plugin';
 
 import {
   assets,
@@ -70,6 +70,31 @@ import {
 import {getStaticSitePaths, lessonPaths, coursePaths} from './pathlists';
 
 const staticSitePaths = getStaticSitePaths();
+
+const webappWebpackPlugin = new WebappWebpackPlugin({
+  logo: path.join(assets, 'favicon.png'),
+  inject: 'force',
+  prefix: 'icons-[hash:5]/',
+  favicons: {
+    appName: 'Lær Kidsa Koding',
+    appShortName: 'LKK',
+    appDescription: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
+                    'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
+                    'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
+    developerName: null,
+    developerURL: null,
+    lang: 'nb',
+    background: '#fff',
+    theme_color: '#fff',
+    display: 'standalone',
+    orientation: 'any',
+    start_url: '/',
+    icons: {
+      coast: false,
+      yandex: false,
+    },
+  },
+});
 
 const createConfig = (env = {}) => {
 
@@ -91,17 +116,6 @@ const createConfig = (env = {}) => {
     console.log('  env.BUILD_PDF:', env.BUILD_PDF);
     console.log();
   }
-
-  const faviconstatsFilename = 'faviconstats.json';
-
-  const cssModuleLoader = {
-    loader: 'css-loader',
-    options: {
-      modules: true,
-      importLoaders: 1,
-      localIdentName: '[name]__[local]__[hash:base64:5]',
-    },
-  };
 
   // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
   const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
@@ -128,6 +142,10 @@ const createConfig = (env = {}) => {
       // static-site-generator must have files compiled to UMD or CommonJS
       // so they can be required in a Node context:
       libraryTarget: 'umd',
+    },
+
+    performance: {
+      hints: false //set this to 'warning' if you want to look after big files
     },
 
     resolve: {
@@ -170,24 +188,23 @@ const createConfig = (env = {}) => {
           loader: 'babel-loader'
         },
         {
-          test: inCurrentRepo('css'),
-          exclude: /node_modules/,
-          use: [
-            'isomorphic-style-loader',
-            cssModuleLoader,
-            'postcss-loader'
-          ],
-        },
-        {
           test: inCurrentRepo('scss'),
           exclude: /node_modules/,
           use: [
             'isomorphic-style-loader',
-            cssModuleLoader,
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 2,
+                localIdentName: '[name]__[local]__[hash:base64:5]',
+              }
+            },
             'postcss-loader',
             'sass-loader'
           ],
         },
+        webappWebpackPlugin.rule(), // must come before any other image rules
         {
           test: inCurrentRepo('(png|jpg|jpeg|gif)'),
           loader: 'file-loader',
@@ -233,8 +250,11 @@ const createConfig = (env = {}) => {
 
     plugins: [
       new webpack.DefinePlugin({
+        'process.env.PUBLICPATH': JSON.stringify(publicPath),
+        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
         'IS_HOT': JSON.stringify(isHot),
       }),
+
       new webpack.LoaderOptionsPlugin({
         options: {
           context: __dirname,   // needed for bootstrap-loader
@@ -272,48 +292,8 @@ const createConfig = (env = {}) => {
 
       new CaseSensitivePathsPlugin(),
 
-      new webpack.DefinePlugin({
-        'process.env.PUBLICPATH': JSON.stringify(publicPath),
-        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
-      }),
-
-      new FaviconsWebpackPlugin({
-        logo: './src/assets/favicon.png',
-        prefix: 'icons-[hash:5]/',
-        emitStats: false,
-        inject: true, // only works for htmlWebpackPlugin; need to do it manually for template in renderStatic
-        statsFilename: faviconstatsFilename, // not emitted, but available in webpack's assets
-        // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
-        title: 'LKK',
-        // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
-        icons: {
-          android: true,              // Android homescreen icon.
-          appleIcon: true,            // Apple touch icons.
-          appleStartup: true,         // Apple startup images.
-          coast: false,               // Opera Coast icon.
-          favicons: true,             // Regular favicons.
-          firefox: true,              // Firefox OS icons.
-          opengraph: false,
-          twitter: false,
-          yandex: false,              // Yandex browser icon.
-          windows: true,              // Windows 8 tile icons.
-        },
-      }),
-
-      ...(env.NODE_ENV === 'production' ? [
-        new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify('production')
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-          sourceMap: true,
-          compress: {
-            warnings: false,
-          }
-        }),
-      ] : []),
-
       ...(env.BUILD_PDF ? [
-        new WebpackShellPlugin({onBuildEnd:['node createLessonPdfs.js']})
+        new WebpackShellPluginAlt({onBuildEnd:['node createLessonPdfs.js']})
       ] : [
         // copy FakeLessonPDF.pdf to all the lessons
         // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
@@ -338,21 +318,17 @@ const createConfig = (env = {}) => {
       ] : [
         new CleanWebpackPlugin(buildBaseDir),
         new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //   names: ['vendor', 'manifest']  // Extract vendor and manifest files; only if vendor is defined in entry
-        // }),
         new StaticSiteGeneratorPlugin({
           entry: 'main',
           paths: staticSitePaths,
           locals: {
-            publicPath,
-            faviconstatsFilename,
+            publicPath
           },
           globals: {
             window: {}
           }
         }),
-        new SitemapPlugin('http://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
+        new SitemapPlugin('https://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
         // Insert index.html-files with redirects for all courses, e.g. /scratch/index.html redirects to /scratch
         // This is because on github, an url with a slash at the end,
         // e.g. scratch/, is interpreted as scratch.index.html
@@ -369,24 +345,12 @@ const createConfig = (env = {}) => {
         }),
       ]),
 
-      new WebpackPwaManifest({
-        name: 'Lær Kidsa Koding',
-        short_name: 'LKK',
-        description: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
-                      'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
-                      'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
-        display: 'standalone',
-        orientation: 'any',
-        background_color: '#fff',
-        theme_color: '#fff',
-        filename: 'manifest.webmanifest',
-        icons: [
-          {
-            src: path.resolve('src/assets/favicon.png'),
-            sizes: [72, 96, 128, 144, 152, 192, 256, 384, 512, 1024]
-          }
-        ]
-      }),
+      webappWebpackPlugin,
+
+      new ImageminPlugin({
+        disable: process.env.NODE_ENV !== 'production', //Disable during development
+        minFileSize: 244000, // Only apply this one to files over 244kB. Webpacks recommended size limit
+      })
 
     ],
 
