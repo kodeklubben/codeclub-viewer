@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Flag from '../Flag';
 import styles from './LessonCount.scss';
 import {getTranslator} from '../../selectors/translate';
@@ -9,6 +9,7 @@ import {getFilteredLessonsInCourseCountPerLanguage} from '../../selectors/lesson
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
 const LessonCount = ({lessonsPerLanguage, showFlag, t}) => {
+  useStyles(styles);
   const totalNumberOfLessons = Object.keys(lessonsPerLanguage).reduce((sum, n) => sum + lessonsPerLanguage[n], 0);
   return (
     <div className={styles.container}>
@@ -43,6 +44,4 @@ const mapStateToProps = (state, {course}) => ({
   t: getTranslator(state),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(LessonCount));
+export default connect(mapStateToProps)(LessonCount);

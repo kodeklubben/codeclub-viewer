@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
 import ToggleButton from '../components/LessonPage/ToggleButton';
@@ -41,6 +41,7 @@ class LessonPage extends React.PureComponent {
   }
 
   render() {
+    useStyles(styles);
     const {course, lesson, language, isReadme, t} = this.props;
     const title = getLessonTitle(course, lesson, language, isReadme);
     const author = getLessonAuthor(course, lesson, language, isReadme);
@@ -100,7 +101,4 @@ const mapDispatchToProps = {
   setLastLesson
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(LessonPage));
+export default connect(mapStateToProps, mapDispatchToProps)(LessonPage);

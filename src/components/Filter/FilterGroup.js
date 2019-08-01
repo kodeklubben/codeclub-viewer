@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
@@ -16,6 +16,7 @@ const FilterGroup = ({
   filterTags, filterGroupsCollapsed, somethingChecked, translateFilter,
   collapseFilterGroup
 }) => {
+  useStyles(styles);
   const handleClick = useCallback(() => {
     const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
     if (!somethingChecked) {
@@ -94,7 +95,4 @@ const mapDispatchToProps = {
   collapseFilterGroup,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(FilterGroup));
+export default connect(mapStateToProps, mapDispatchToProps)(FilterGroup);

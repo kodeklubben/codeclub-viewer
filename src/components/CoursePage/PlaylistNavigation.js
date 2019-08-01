@@ -7,13 +7,14 @@ import Badge from 'react-bootstrap/lib/Badge';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import LessonItem from './LessonItem';
 import {getTranslator} from '../../selectors/translate';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PlaylistNavigation.scss';
 import {setExpandedAccordion} from '../../reducers/expandedAccordion';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
 import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistLessons';
 
 const PlaylistNavigation = ({course, language, t, expandedAccordion, setExpandedAccordion}) => {
+  useStyles(styles);
   const handleSelect = useCallback(activeKey =>
     setExpandedAccordion(course, activeKey), [setExpandedAccordion, course]
   );
@@ -76,7 +77,4 @@ const mapDispatchToProps = {
   setExpandedAccordion
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(PlaylistNavigation));
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistNavigation);

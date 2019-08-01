@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
 import {getLessonContent} from '../../resources/lessonContent';
@@ -33,6 +33,7 @@ class Content extends React.PureComponent {
   }
 
   render() {
+    useStyles(styles)
     return <div dangerouslySetInnerHTML={this.createMarkup()}/>;
   }
 }
@@ -63,7 +64,4 @@ const mapDispatchToProps = {
   removeCheckbox,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withStyles(styles)(Content));
+export default connect(mapStateToProps, mapDispatchToProps)(Content);

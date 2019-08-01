@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './TeacherInfobox.scss';
 import Button from 'react-bootstrap/lib/Button';
 import Collapse from 'react-bootstrap/lib/Collapse';
@@ -9,6 +9,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
 const TeacherInfobox = ({t}) => {
+  useStyles(styles);
   const [showCourseInfo, handleClick] = useState(false);
 
   const url = [
@@ -64,6 +65,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(TeacherInfobox));
+export default connect(mapStateToProps)(TeacherInfobox);

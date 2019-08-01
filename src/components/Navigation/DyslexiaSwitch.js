@@ -1,13 +1,14 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './DyslexiaSwitch.scss';
 import Switch from 'react-switch';
 import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
 import {getTranslator} from '../../selectors/translate';
 
 const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => {
+  useStyles(styles);
   const handleChange = useCallback(() => 
     setShowDyslexicFont(!showDyslexicFont), [showDyslexicFont, setShowDyslexicFont]
   );
@@ -44,7 +45,4 @@ const mapDispatchToProps = {
   setShowDyslexicFont,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withStyles(styles)(DyslexiaSwitch));
+export default connect(mapStateToProps, mapDispatchToProps)(DyslexiaSwitch);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './NavBar.scss';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -15,6 +15,7 @@ import ModeDropdown from './ModeDropdown';
 import ContinueButton from './ContinueButton';
 
 const LkkBrand = () => {
+  useStyles(styles);
   return <Navbar.Brand>
     <a href="http://kidsakoder.no" className={styles.logo}>
       <img src={require('../../assets/graphics/LKK_small.png')} alt={'LKK logo'}/>
@@ -23,6 +24,7 @@ const LkkBrand = () => {
 };
 
 const LkkNav = ({t}) => {
+  useStyles(styles);
   return <div className={styles.navContainer}>
     <Nav>
       <NavItem href="http://kidsakoder.no/om-lkk/">{t('navbar.lkknav.aboutlkk')}</NavItem>
@@ -47,6 +49,7 @@ LkkNav.propTypes = {
 };
 
 const MenuToggle = ({t}) => {
+  useStyles(styles);
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
     <span className={styles.toggleContent}>
@@ -64,6 +67,7 @@ MenuToggle.propTypes = {
 };
 
 const NavBar = ({isStudentMode, t, params}) => {
+  useStyles(styles);
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
     <div className={styles.navbarWrapper} role='banner'>
@@ -108,6 +112,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(NavBar));
+export default connect(mapStateToProps)(NavBar);

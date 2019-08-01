@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Button from 'react-bootstrap/lib/Button';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import styles from './MainLanguageButton.scss';
@@ -11,6 +11,7 @@ import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatter';
 
 const MainLanguageButton = ({path, enabled, language, buttonText}) => {
+  useStyles(styles);
   const options = {
     className: styles.container,
     bsStyle: 'info',
@@ -55,6 +56,4 @@ const mapStateToProps = (state, {course, lesson, isReadme}) => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(MainLanguageButton));
+export default connect(mapStateToProps)(MainLanguageButton);

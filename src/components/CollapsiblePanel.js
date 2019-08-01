@@ -2,10 +2,11 @@ import React, {useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './CollapsiblePanel.scss';
 
 const CollapsiblePanel = ({initiallyExpanded, header, bsStyle, children}) => {
+  useStyles(styles);
   const [expanded, handleToggle] = useState(initiallyExpanded);
 
   return (
@@ -36,4 +37,4 @@ CollapsiblePanel.propTypes = {
   children: PropTypes.object
 };
 
-export default withStyles(styles)(CollapsiblePanel);
+export default CollapsiblePanel;

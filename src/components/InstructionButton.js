@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Button from 'react-bootstrap/lib/Button';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './InstructionButton.scss';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -10,6 +10,7 @@ import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
 
 const InstructionButton = ({isReadme, onlyIcon, insideLink, path, buttonText}) => {
+  useStyles(styles);
   const options = {
     className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
     bsStyle: 'guide',
@@ -56,6 +57,4 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(InstructionButton));
+export default connect(mapStateToProps)(InstructionButton);

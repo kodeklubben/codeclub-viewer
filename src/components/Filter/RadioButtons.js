@@ -1,21 +1,24 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './RadioButtons.scss';
 import {getTranslator} from '../../selectors/translate';
 import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButton = ({checked, onChange, text}) => (
-  <label className={styles.label}>
-    <input type='radio' name='radioGroup' {...{checked, onChange}}/>
-    <span className={styles.marginLeft}>{text}</span>
-  </label>
-);
+const RadioButton = ({checked, onChange, text}) => {
+  useStyles(styles);
+  return (
+    <label className={styles.label}>
+      <input type='radio' name='radioGroup' {...{checked, onChange}}/>
+      <span className={styles.marginLeft}>{text}</span>
+    </label>);
+};
 
 const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
+  useStyles(styles);
   const handleChangeToPlaylists = useCallback(() => {
     setShowPlaylists(true);
     resetAllFilters('language', language);
@@ -64,7 +67,4 @@ const mapDispatchToProps = {
   collapseAllFilterGroups,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withStyles(styles)(RadioButtons));
+export default connect(mapStateToProps, mapDispatchToProps)(RadioButtons);

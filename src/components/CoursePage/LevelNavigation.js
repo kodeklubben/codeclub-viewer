@@ -7,7 +7,7 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Col from 'react-bootstrap/lib/Col';
 import {getTranslator} from '../../selectors/translate';
 import LevelIcon from '../LevelIcon';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LevelNavigation.scss';
 import CollapsiblePanel from '../CollapsiblePanel';
 import scrollToComponent from 'react-scroll-to-component';
@@ -18,6 +18,7 @@ const handleClick = event => {
 };
 
 const LevelNavigation= ({t, levels, isStudentMode}) => {
+  useStyles(styles);
   const levelListItems = levels.map(level => (
     <ListGroupItem key={level} data-level={level} onClick={handleClick}>
       <span className={styles.name}>
@@ -62,6 +63,4 @@ const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(LevelNavigation));
+export default connect(mapStateToProps)(LevelNavigation);

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {getTranslator} from '../../selectors/translate';
 import styles from './FilterItem.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import PopoverComponent from '../PopoverComponent';
 import {filterChecked} from '../../reducers/filter';
 
 const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent, t, filterChecked}) => {
+  useStyles(styles);
   const handleChange = useCallback(() => filterChecked(groupKey, itemKey), [filterChecked, groupKey, itemKey]);
 
   const popover = popoverContent ?
@@ -53,7 +54,4 @@ const mapDispatchToProps = {
   filterChecked,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withStyles(styles)(FilterItem));
+export default connect(mapStateToProps, mapDispatchToProps)(FilterItem);

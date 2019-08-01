@@ -5,17 +5,13 @@ import {render, hydrate} from 'react-dom';
 import {Router, browserHistory} from 'react-router';
 import {Provider} from 'react-redux';
 import routes from './routes';
-import WithStylesContext from './WithStylesContext';
+import StyleContext from 'isomorphic-style-loader/StyleContext';
 import store, {updateStoreFromLocalStorage} from './store';
 import {setHydrationComplete} from './reducers/hydration';
 
-// The following onInsertCss function allows multiple styles as arguments in withStyles().
-// If we only require one style, it would suffice with onInsertCss = style => style._insertCss()
-const onInsertCss = (...styles) => {
+const insertCss = (...styles) => {
   const removeCss = styles.map(style => style._insertCss());
-  return () => {
-    removeCss.forEach(f => f());
-  };
+  return () => removeCss.forEach(dispose => dispose());
 };
 
 const renderDynamic = () => {
@@ -29,9 +25,9 @@ const renderDynamic = () => {
   const renderFunc = IS_HOT ? render : hydrate;
   renderFunc(
     <Provider {...{store}}>
-      <WithStylesContext {...{onInsertCss}}>
+      <StyleContext.Provider value={{insertCss}}>
         <Router {...{routes}} history={browserHistory} {...{onUpdate}} />
-      </WithStylesContext>
+      </StyleContext.Provider>
     </Provider>,
 
     document.getElementById('app'),

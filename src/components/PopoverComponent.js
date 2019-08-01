@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import styles from './PopoverComponent.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import {hashCode} from '../utils/util';
 
 const PopoverComponent = ({children, popoverContent, showDyslexicFont}) => {
+  useStyles(styles);
   const handleClick = event => {
     event.stopPropagation();
     event.preventDefault();
@@ -46,6 +47,4 @@ const mapStateToProps = (state) => ({
   showDyslexicFont: state.showDyslexicFont,
 });
 
-export default connect(
-  mapStateToProps,
-)(withStyles(styles)(PopoverComponent));
+export default connect(mapStateToProps)(PopoverComponent);

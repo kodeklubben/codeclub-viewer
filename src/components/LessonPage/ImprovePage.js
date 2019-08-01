@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './ImprovePage.scss';
 import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/lib/Button';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => {
+  useStyles(styles);
   const path = getLessonPath(course, lesson, language, isReadme);
   const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src/${course}/${lesson}`;
   const linkToLesson = `http://oppgaver.kidsakoder.no/${path}`;
@@ -72,6 +73,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(ImprovePage));
+export default connect(mapStateToProps)(ImprovePage);

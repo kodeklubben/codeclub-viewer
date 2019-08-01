@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import LevelIcon from '../LevelIcon';
 import LessonWrapper from './LessonWrapper';
 import {getTranslator} from '../../selectors/translate';
@@ -13,6 +13,7 @@ import styles from './LessonList.scss';
 export const lessonListId = (level) => 'lessonlist-level-' + level;
 
 const LessonList = ({course, level, lessonsInLevel, t}) => {
+  useStyles(styles);
   return (
     <div className={styles.list}>
       <h2 className={styles.headerText} id={lessonListId(level)}>
@@ -44,6 +45,4 @@ const mapStateToProps = (state, {course, level}) => ({
   t: getTranslator(state)
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(LessonList));
+export default connect(mapStateToProps)(LessonList);

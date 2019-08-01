@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Link from 'react-router/lib/Link';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';
 import Head from '../components/Head';
 
 const PageNotFound = ({t}) => {
+  useStyles(styles);
   return (
     <div role='main'>
       <Head title={'404'}/>
@@ -29,6 +30,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(PageNotFound));
+export default connect(mapStateToProps)(PageNotFound);

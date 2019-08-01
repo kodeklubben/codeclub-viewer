@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './ModeDropdown.scss';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
@@ -10,6 +10,7 @@ import {getTranslator} from '../../selectors/translate';
 import {setModeStudent, setModeTeacher} from '../../reducers/mode';
 
 const ModeDropdown = ({t, isStudentMode, setModeStudent, setModeTeacher}) => {
+  useStyles(styles);
   const handleSelect = useCallback(eventKey =>
     eventKey === 'teacher' ? setModeTeacher() : setModeStudent(), [setModeStudent, setModeTeacher]);
   const modes = ['student', 'teacher'];
@@ -59,7 +60,4 @@ const mapDispatchToProps = {
   setModeTeacher
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(ModeDropdown));
+export default connect(mapStateToProps, mapDispatchToProps)(ModeDropdown);

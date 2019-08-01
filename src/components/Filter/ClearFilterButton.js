@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './ClearFilterButton.scss';
 import Button from 'react-bootstrap/lib/Button';
 import {getTranslator} from '../../selectors/translate';
@@ -10,6 +10,7 @@ import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
 const ClearFilterButton = ({t, language, somethingChecked, resetAllFilters, collapseAllFilterGroups}) => {
+  useStyles(styles);
   const handleClick = useCallback(() => {
     resetAllFilters('language', language);
     collapseAllFilterGroups(true);
@@ -44,7 +45,4 @@ const mapDispatchToProps = {
   collapseAllFilterGroups,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(ClearFilterButton));
+export default connect(mapStateToProps, mapDispatchToProps)(ClearFilterButton);

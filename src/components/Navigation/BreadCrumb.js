@@ -5,7 +5,7 @@ import NavLink from './NavLink';
 import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
@@ -15,6 +15,7 @@ import {getTranslator} from '../../selectors/translate';
 import {getLevel} from '../../resources/lessons';
 
 const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
+  useStyles(styles);
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
 
@@ -64,6 +65,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(BreadCrumb));
+export default connect(mapStateToProps)(BreadCrumb);

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Button from 'react-bootstrap/lib/Button';
@@ -20,6 +20,7 @@ import styles from './LessonItem.scss';
 
 
 const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
+  useStyles(styles);
   return checkedCheckboxes > 0 ?
     <div className={styles.progress}>
       {`(${checkedCheckboxes}/${totalCheckboxes})`}
@@ -28,6 +29,7 @@ const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
 };
 
 const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
+  useStyles(styles);
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   return level > 0 ?
     <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%',}}/> :
@@ -47,6 +49,7 @@ const LessonItem = ({
   checkedCheckboxes,
   totalCheckboxes
 }) => {
+  useStyles(styles);
   const level = getLevel(course, lesson);
 
   const flag = !onlyCheckedMainLanguage ?
@@ -123,6 +126,4 @@ const mapStateToProps = (state, {course, lesson, language}) => ({
   totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, false),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(LessonItem));
+export default connect(mapStateToProps)(LessonItem);

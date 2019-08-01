@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Courses.scss';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -12,6 +12,7 @@ import CourseList from '../CourseList/CourseList';
 import ExternalCourseList from '../CourseList/ExternalCourseList';
 
 const Courses = ({t, courses, externalCourses}) => {
+  useStyles(styles);
   return (
     <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
       {courses.length > 0 ?
@@ -52,6 +53,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(Courses));
+export default connect(mapStateToProps)(Courses);

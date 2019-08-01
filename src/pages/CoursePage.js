@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -20,6 +20,7 @@ import {getFilteredLevelsInCourse} from '../selectors/lesson';
 import Head from '../components/Head';
 
 const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) => {
+  useStyles(styles);
   const {course} = params;
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={styles.topMargin}>
@@ -85,6 +86,4 @@ const mapStateToProps = (state, {params}) => ({
   language: state.language,
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(CoursePage));
+export default connect(mapStateToProps)(CoursePage);
