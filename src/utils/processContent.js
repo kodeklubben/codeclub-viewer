@@ -118,7 +118,18 @@ const replaceClassRecursively = (obj, styles) => {
  */
 const renderScratchBlocks = (content, styles) => {
   const scratchblocks = require('scratchblocks/browser.js');
-  require('scratchblocks/locales-src/translations-all.js');
+  
+  // NOTE: English (en) is included by default. All other languages
+  //       that exist in getAvailableLanguages() should be loaded here,
+  //       otherwise rendering will fail.
+  //       It is also possible to just do a
+  //           require('scratchblocks/locales-src/translations-all.js')
+  //       but that includes many unnecessary files.
+  scratchblocks.loadLanguages({
+    nb: require('scratchblocks/locales/nb.json'),
+    nn: require('scratchblocks/locales/nn.json'),
+  });
+  
   let replace = [];
   if ('blocks' in styles) {
     replace.push({
