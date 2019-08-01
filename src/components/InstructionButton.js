@@ -10,8 +10,6 @@ import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
 
 const InstructionButton = ({isReadme, onlyIcon, insideLink, path, buttonText}) => {
-  const handleKeyPress = useCallback(() => this.context.router.push(path), [path]);
-
   const options = {
     className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
     bsStyle: 'guide',
@@ -19,7 +17,7 @@ const InstructionButton = ({isReadme, onlyIcon, insideLink, path, buttonText}) =
     componentClass: insideLink ? 'div' : 'a',
     tabIndex: '0',
     'aria-label': buttonText,
-    onKeyPress: handleKeyPress,
+    onKeyPress: useCallback(() => this.context.router.push(path), [path]),
   };
   return (path ?
     <LinkContainer to={path}>

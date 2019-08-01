@@ -1,13 +1,8 @@
-/* eslint-env node */
 /* global IS_HOT */
 
 import React from 'react';
 import {render, hydrate} from 'react-dom';
-import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
-import Router from 'react-router/lib/Router';
-import useRouterHistory from 'react-router/lib/useRouterHistory';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-import useScroll from 'react-router-scroll/lib/useScroll';
+import {Router, browserHistory} from 'react-router';
 import {Provider} from 'react-redux';
 import routes from './routes';
 import WithStylesContext from './WithStylesContext';
@@ -24,10 +19,6 @@ const onInsertCss = (...styles) => {
 };
 
 const renderDynamic = () => {
-  const basename = process.env.PUBLICPATH_WITHOUT_SLASH;
-  const historyOptions = basename === '/' ? {} : {basename};
-  const browserHistory = useRouterHistory(createBrowserHistory)(historyOptions);
-
   const callback = () => {
     updateStoreFromLocalStorage();
     store.dispatch(setHydrationComplete());
@@ -35,12 +26,9 @@ const renderDynamic = () => {
 
   const renderFunc = IS_HOT ? render : hydrate;
   renderFunc(
-    <Provider store={store}>
-      <WithStylesContext onInsertCss={onInsertCss}>
-        <Router routes={routes}
-          history={browserHistory}
-          render={applyRouterMiddleware(useScroll())}
-        />
+    <Provider {...{store}}>
+      <WithStylesContext {...{onInsertCss}}>
+        <Router {...{routes}} history={browserHistory}/>
       </WithStylesContext>
     </Provider>,
 
