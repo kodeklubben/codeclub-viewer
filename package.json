@@ -62,7 +62,7 @@
     "react-switch": "^3.0.4",
     "redux": "^3.5.2",
     "reselect": "^2.5.1",
-    "scratchblocks": "github:Skagevang/scratchblocks#c36ce1df0d00a33ea07c5ca195f9403ee493136b"
+    "scratchblocks": "github:tjesi/scratchblocks#d4290bd3700de57e9746c6d56fc0bdce82f70c6c"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.0",
