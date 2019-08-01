@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 import Button from 'react-bootstrap/lib/Button';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './InstructionButton.scss';
@@ -18,7 +19,7 @@ const InstructionButton = ({isReadme, onlyIcon, insideLink, path, buttonText}) =
     componentClass: insideLink ? 'div' : 'a',
     tabIndex: '0',
     'aria-label': buttonText,
-    onKeyPress: useCallback(() => this.context.router.push(path), [path]),
+    onKeyPress: useCallback(() => browserHistory.push(path), [path]),
   };
   return (path ?
     <LinkContainer to={path}>
