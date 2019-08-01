@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
@@ -32,52 +32,47 @@ const renderToggleButtons = () => {
   }
 };
 
-class LessonPage extends React.PureComponent {
-  componentDidMount() {
-    const {course, lesson, language, isReadme, setLastLesson} = this.props;
-    const path = getLessonPath(course, lesson, language, isReadme);
-    setLastLesson(path);
+const LessonPage = ({course, lesson, language, isReadme, t, setLastLesson}) => {
+  useEffect(() => {
+    setLastLesson(getLessonPath(course, lesson, language, isReadme));
     renderToggleButtons();
-  }
+  });
 
-  render() {
-    useStyles(styles);
-    const {course, lesson, language, isReadme, t} = this.props;
-    const title = getLessonTitle(course, lesson, language, isReadme);
-    const author = getLessonAuthor(course, lesson, language, isReadme);
-    const translator = getLessonTranslator(course, lesson, language, isReadme);
-    const license = getLicense(course, lesson);
-    const authorNode = author ?
-      <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> : null;
-    const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
-    const licenseRow = <div className={styles.license}>
-      {t('lessons.license')}
-      {license ?
-        <MarkdownRenderer src={license} inline={true}/> :
-        <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank' rel='noopener'>CC BY-SA 4.0</a>
-      }
-    </div>;
-    return (
-      <div role='main'>
-        <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
-        <div className={styles.container}>
-          <h1>
-            <LevelIcon level={getLevel(course, lesson)}/>
-            {title}
-          </h1>
-          {authorNode}
-          {translatorNode}
-          <PrintInfo {...{course, lesson}}/>
-          <ButtonRow {...{course, lesson, language, isReadme}}/>
-          <Progress {...{course, lesson, language, isReadme}}/>
-          <Content {...{course, lesson, language, isReadme}}/>
-          {licenseRow}
-          <ImprovePage {...{course, lesson, language, isReadme}}/>
-        </div>
+  useStyles(styles);
+  const title = getLessonTitle(course, lesson, language, isReadme);
+  const author = getLessonAuthor(course, lesson, language, isReadme);
+  const translator = getLessonTranslator(course, lesson, language, isReadme);
+  const license = getLicense(course, lesson);
+  const authorNode = author ?
+    <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> : null;
+  const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
+  const licenseRow = <div className={styles.license}>
+    {t('lessons.license')}
+    {license ?
+      <MarkdownRenderer src={license} inline={true}/> :
+      <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank' rel='noopener'>CC BY-SA 4.0</a>
+    }
+  </div>;
+  return (
+    <div role='main'>
+      <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
+      <div className={styles.container}>
+        <h1>
+          <LevelIcon level={getLevel(course, lesson)}/>
+          {title}
+        </h1>
+        {authorNode}
+        {translatorNode}
+        <PrintInfo {...{course, lesson}}/>
+        <ButtonRow {...{course, lesson, language, isReadme}}/>
+        <Progress {...{course, lesson, language, isReadme}}/>
+        <Content {...{course, lesson, language, isReadme}}/>
+        {licenseRow}
+        <ImprovePage {...{course, lesson, language, isReadme}}/>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 LessonPage.propTypes = {
   // ownProps

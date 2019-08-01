@@ -9,7 +9,6 @@ import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
 const RadioButton = ({checked, onChange, text}) => {
-  useStyles(styles);
   return (
     <label className={styles.label}>
       <input type='radio' name='radioGroup' {...{checked, onChange}}/>

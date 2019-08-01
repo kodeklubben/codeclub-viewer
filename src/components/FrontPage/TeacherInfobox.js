@@ -9,8 +9,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
 const TeacherInfobox = ({t}) => {
-  useStyles(styles);
   const [showCourseInfo, handleClick] = useState(false);
+  useStyles(styles);
 
   const url = [
     'http://kidsakoder.no/skole/valgfag/',

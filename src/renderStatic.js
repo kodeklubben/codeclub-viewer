@@ -22,7 +22,7 @@ const renderStatic = (locals, callback) => {
   // console.log('locals.assets', locals.assets);
 
   match({ routes, location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
-    let css = [];
+    let css = new Set();
     const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
     const appHtml = ReactDOMServer.renderToString(
       <Provider {...{store}}>

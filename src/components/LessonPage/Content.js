@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -10,33 +10,16 @@ import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
 import {setCheckbox, removeCheckbox} from '../../reducers/checkboxes';
 import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 
-class Content extends React.PureComponent {
-  createMarkup = () => {
-    const {course, lesson, language, isReadme, isHydrated} = this.props;
-    const lessonContent = getLessonContent(course, lesson, language, isReadme);
-    return {__html: processContent(lessonContent, styles, isHydrated)};
-  };
+const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox}) => {
+  useEffect(() => {
+    setCheckboxesInDoc(getLessonPath(course, lesson, language, isReadme), checkboxes, setCheckbox, removeCheckbox);
+  });
 
-  updateCheckboxes = () => {
-    const {course, lesson, language, isReadme, checkboxes, setCheckbox, removeCheckbox} = this.props;
-    const path = getLessonPath(course, lesson, language, isReadme);
-    setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
-  };
-
-  componentDidMount() {
-    if (this.props.isHydrated) { this.updateCheckboxes(); } // When clicking in from different page
-  }
-
-  componentDidUpdate(prevProps) {
-    const wasHydratedThisUpdate = !prevProps.isHydrated && this.props.isHydrated;
-    if (wasHydratedThisUpdate) { this.updateCheckboxes(); } // When reloading page
-  }
-
-  render() {
-    useStyles(styles)
-    return <div dangerouslySetInnerHTML={this.createMarkup()}/>;
-  }
-}
+  useStyles(styles);
+  return <div dangerouslySetInnerHTML={
+    {__html: processContent(getLessonContent(course, lesson, language, isReadme), styles, isHydrated)}
+  }/>;
+};
 
 Content.propTypes = {
   // ownProps

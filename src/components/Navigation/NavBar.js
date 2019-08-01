@@ -15,7 +15,6 @@ import ModeDropdown from './ModeDropdown';
 import ContinueButton from './ContinueButton';
 
 const LkkBrand = () => {
-  useStyles(styles);
   return <Navbar.Brand>
     <a href="http://kidsakoder.no" className={styles.logo}>
       <img src={require('../../assets/graphics/LKK_small.png')} alt={'LKK logo'}/>
@@ -24,7 +23,6 @@ const LkkBrand = () => {
 };
 
 const LkkNav = ({t}) => {
-  useStyles(styles);
   return <div className={styles.navContainer}>
     <Nav>
       <NavItem href="http://kidsakoder.no/om-lkk/">{t('navbar.lkknav.aboutlkk')}</NavItem>
@@ -49,7 +47,6 @@ LkkNav.propTypes = {
 };
 
 const MenuToggle = ({t}) => {
-  useStyles(styles);
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
     <span className={styles.toggleContent}>

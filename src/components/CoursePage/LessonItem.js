@@ -20,7 +20,6 @@ import styles from './LessonItem.scss';
 
 
 const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
-  useStyles(styles);
   return checkedCheckboxes > 0 ?
     <div className={styles.progress}>
       {`(${checkedCheckboxes}/${totalCheckboxes})`}
@@ -29,7 +28,6 @@ const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
 };
 
 const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
-  useStyles(styles);
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   return level > 0 ?
     <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%',}}/> :

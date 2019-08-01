@@ -6,8 +6,8 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './CollapsiblePanel.scss';
 
 const CollapsiblePanel = ({initiallyExpanded, header, bsStyle, children}) => {
-  useStyles(styles);
   const [expanded, handleToggle] = useState(initiallyExpanded);
+  useStyles(styles);
 
   return (
     <div className={styles.container}>

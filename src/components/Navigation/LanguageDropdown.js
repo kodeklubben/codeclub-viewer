@@ -19,18 +19,16 @@ const languages = {
   nn: 'Nynorsk',
 };
 
-const LanguageItem = ({language, onlyFlag}) => {
-  useStyles(styles);
-  return (
-    // Note that the block with "float" (the flag) must be first in the containing div
-    <div className={styles.languageItemContainer}>
-      <Flag {...{language}}/>
-      <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
-        {languages[language] || language}
-      </span>
-    </div>
-  );
-};
+const LanguageItem = ({language, onlyFlag}) => (
+  // Note that the block with "float" (the flag) must be first in the containing div
+  <div className={styles.languageItemContainer}>
+    <Flag {...{language}}/>
+    <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
+      {languages[language] || language}
+    </span>
+  </div>
+);
+
 
 LanguageItem.propTypes = {
   // ownProps
