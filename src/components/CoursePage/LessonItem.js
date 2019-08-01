@@ -30,7 +30,7 @@ const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
 const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   return level > 0 ?
-    <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%'}}/> :
+    <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%',}}/> :
     null;
 };
 

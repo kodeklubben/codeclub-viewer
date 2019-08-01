@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -7,24 +7,23 @@ import Switch from 'react-switch';
 import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
 import {getTranslator} from '../../selectors/translate';
 
-class DyslexiaSwitch extends React.PureComponent {
-  handleChange = () => this.props.setShowDyslexicFont(!this.props.showDyslexicFont);
+const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => {
+  const handleChange = useCallback(() => 
+    setShowDyslexicFont(!showDyslexicFont), [showDyslexicFont, setShowDyslexicFont]
+  );
 
-  render() {
-    const {t, showDyslexicFont} = this.props;
-    return (
-      <label htmlFor='switch' className={styles.container}>
-        <span className={styles.text}>{t('footer.dyslexia')}</span>
-        <Switch
-          onChange={this.handleChange}
-          checked={showDyslexicFont}
-          id='switch'
-          onColor='#000'
-        />
-      </label>
-    );
-  }
-}
+  return (
+    <label htmlFor='switch' className={styles.container}>
+      <span className={styles.text}>{t('footer.dyslexia')}</span>
+      <Switch
+        onChange={handleChange}
+        checked={showDyslexicFont}
+        id='switch'
+        onColor='#000'
+      />
+    </label>
+  );
+};
 
 
 DyslexiaSwitch.propTypes = {

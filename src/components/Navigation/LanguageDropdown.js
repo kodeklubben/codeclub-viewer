@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
@@ -37,38 +37,34 @@ LanguageItem.propTypes = {
   language: PropTypes.oneOf(availableLanguages).isRequired,
 };
 
-class LanguageDropdown extends React.PureComponent {
-  handleSelect = eventKey => {
-    this.props.resetOneFilter('language', eventKey);
-    this.props.setLanguage(eventKey);
-    this.props.collapseAllFilterGroups(true);
-  };
+const LanguageDropdown = ({isStudentMode, language, resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
+  const handleSelect = useCallback(eventKey => {
+    resetOneFilter('language', eventKey);
+    setLanguage(eventKey);
+    collapseAllFilterGroups(true);
+  }, [resetOneFilter, setLanguage, collapseAllFilterGroups]);
 
-  render() {
-    const {isStudentMode, language} = this.props;
-    const mode = isStudentMode ? 'student' : 'teacher';
-    return (
-      <div className={styles.gadgetContainer}>
-        <DropdownButton id='language-dropdown'
-          noCaret
-          pullRight
-          bsStyle={'language-' + mode}
-          title={<LanguageItem onlyFlag={true} {...{language}}/>}
-          onSelect={this.handleSelect}
-        >
-
-          {
-            availableLanguages.map(key =>
-              <MenuItem {...{key}} eventKey={key} active={language === key}>
-                <LanguageItem onlyFlag={false} language={key}/>
-              </MenuItem>
-            )
-          }
-        </DropdownButton>
-      </div>
-    );
-  }
-}
+  const mode = isStudentMode ? 'student' : 'teacher';
+  return (
+    <div className={styles.gadgetContainer}>
+      <DropdownButton id='language-dropdown'
+        noCaret
+        pullRight
+        bsStyle={'language-' + mode}
+        title={<LanguageItem onlyFlag={true} {...{language}}/>}
+        onSelect={handleSelect}
+      >
+        {
+          availableLanguages.map(key =>
+            <MenuItem {...{key}} eventKey={key} active={language === key}>
+              <LanguageItem onlyFlag={false} language={key}/>
+            </MenuItem>
+          )
+        }
+      </DropdownButton>
+    </div>
+  );
+};
 
 LanguageDropdown.propTypes = {
   // mapStateToProps:
