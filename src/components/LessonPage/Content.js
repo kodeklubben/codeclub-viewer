@@ -12,7 +12,9 @@ import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 
 const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox}) => {
   useEffect(() => {
-    setCheckboxesInDoc(getLessonPath(course, lesson, language, isReadme), checkboxes, setCheckbox, removeCheckbox);
+    isHydrated ?
+      setCheckboxesInDoc(getLessonPath(course, lesson, language, isReadme), checkboxes, setCheckbox, removeCheckbox)
+      : null;
   });
 
   useStyles(styles);

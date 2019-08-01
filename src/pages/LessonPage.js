@@ -32,10 +32,10 @@ const renderToggleButtons = () => {
   }
 };
 
-const LessonPage = ({course, lesson, language, isReadme, t, setLastLesson}) => {
+const LessonPage = ({course, lesson, language, isReadme, t, isHydrated, setLastLesson}) => {
   useEffect(() => {
     setLastLesson(getLessonPath(course, lesson, language, isReadme));
-    renderToggleButtons();
+    isHydrated ? renderToggleButtons() : null;
   });
 
   useStyles(styles);
@@ -83,6 +83,7 @@ LessonPage.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
+  isHydrated: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setLastLesson: PropTypes.func.isRequired
@@ -90,6 +91,7 @@ LessonPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
+  isHydrated: state.hydration,
 });
 
 const mapDispatchToProps = {
