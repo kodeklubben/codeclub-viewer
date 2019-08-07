@@ -71,7 +71,7 @@ const convertUrl = async (browser, lesson) => {
   const url = urlBase + lesson + '?pdf';
   //page.setJavaScriptEnabled(false);
   console.log('Rendering PDF:', url, '--->', path.relative(__dirname, pdfFile));
-  await page.goto(url, {waitUntil: 'networkidle0'});
+  await page.goto(url, {waitUntil: ['domcontentloaded', 'networkidle0']});
   //await page.emulateMedia('screen');
   await page.pdf({
     path: pdfFile,
