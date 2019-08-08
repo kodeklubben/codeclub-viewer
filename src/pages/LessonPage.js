@@ -32,11 +32,41 @@ const renderToggleButtons = () => {
   }
 };
 
+const renderSpinner = course => {
+  if (course === 'microbit') {
+    const pres = [...document.getElementsByTagName('pre')];
+    for (let pre of pres) {
+      if ([...pre.childNodes][0].className === 'python') return;
+      pre.style.display = 'none';
+      let div = document.createElement('div');
+      div.id = 'loader';
+      div.style.border = '8px solid #f3f3f3';
+      div.style.borderRadius = '50%';
+      div.style.borderTop = '8px solid #3498db';
+      div.style.width = '50px';
+      div.style.height = '50px';
+      div.style.display = 'block';
+      div.style.margin = '0 auto';
+      div.animate(
+        [
+          {transform: 'rotate(0deg)'}, 
+          {transform: 'rotate(360deg)'}
+        ],
+        { 
+          duration: 1000,
+          iterations: Infinity
+        });
+      pre.parentElement.insertBefore(div, pre);
+    }
+  }
+};
+
 class LessonPage extends React.PureComponent {
   componentDidMount() {
     const {course, lesson, language, isReadme, setLastLesson} = this.props;
     const path = getLessonPath(course, lesson, language, isReadme);
     setLastLesson(path);
+    renderSpinner(course);
     renderToggleButtons();
   }
 

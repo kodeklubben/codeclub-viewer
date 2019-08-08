@@ -166,6 +166,8 @@ export const createImage = msg => {
   img.style.display = 'block';
   img.style.margin = '0 auto 15px';
   let code = document.getElementsByTagName('pre')[0];
+  let spinner = document.getElementById('loader');
+  if (document.body.contains(spinner)) {spinner.remove();}
   if (typeof code === 'undefined') return;
   if (code.className === 'microbit') {
     code.parentElement.insertBefore(img, code);
