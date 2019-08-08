@@ -165,6 +165,7 @@ export const createImage = msg => {
   img.height = msg.height;
   img.style.display = 'block';
   img.style.margin = '0 auto 15px';
+  img.style.maxWidth = '100%';
   let code = document.getElementsByTagName('pre')[0];
   let spinner = document.getElementById('loader');
   if (document.body.contains(spinner)) {spinner.remove();}
