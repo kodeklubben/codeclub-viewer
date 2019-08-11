@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Content.scss';
-import {processContent, renderSnippets, createImage, createIframe} from '../../utils/processContent';
+import {processContent} from '../../utils/processContent';
+import {renderMicrobit} from '../../utils/processMicrobit';
 import {getLessonContent} from '../../resources/lessonContent';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
@@ -17,19 +18,6 @@ class Content extends React.PureComponent {
     return {__html: processContent(lessonContent, styles, isHydrated)};
   };
 
-  createMicrobitImage = e => {
-    let msg = e.data;
-    if (msg.source != 'makecode') return;
-    switch (msg.type) {
-      case 'renderready':
-        renderSnippets();
-        break;
-      case 'renderblocks':
-        createImage(msg);
-        break;
-    }
-  };
-
   updateCheckboxes = () => {
     const {course, lesson, language, isReadme, checkboxes, setCheckbox, removeCheckbox} = this.props;
     const path = getLessonPath(course, lesson, language, isReadme);
@@ -38,22 +26,12 @@ class Content extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.isHydrated) { this.updateCheckboxes(); } // When clicking in from different page
-    if (this.props.course === 'microbit') {
-      createIframe(this.props.language);
-      window.addEventListener('message', this.createMicrobitImage);
-    }
+    if (this.props.course === 'microbit') { renderMicrobit(this.props.language); }
   }
 
   componentDidUpdate(prevProps) {
     const wasHydratedThisUpdate = !prevProps.isHydrated && this.props.isHydrated;
     if (wasHydratedThisUpdate) { this.updateCheckboxes(); } // When reloading page
-  }
-
-  componentWillUnmount() {
-    if (this.props.course === 'microbit') {
-      document.getElementById('makecoderenderer').remove();
-      window.removeEventListener('message', this.createMicrobitImage);
-    }
   }
 
   render() {

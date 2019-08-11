@@ -141,78 +141,7 @@ const renderScratchBlocks = (content, styles) => {
 
   return returnContent;
 };
-  
-// Taken from https://makecode.microbit.org/blocks-embed
-export const renderSnippets = () => {
-  Array.from(document.getElementsByClassName('microbit')).forEach(pre => {
-    const f = document.getElementById('makecoderenderer');
-    f.contentWindow.postMessage({
-      type: 'renderblocks',
-      id: pre.id,
-      code: pre.innerText
-    }, 'https://makecode.microbit.org/');
-  });
-};
 
-/**
- * Creates an image from the rendered microbit code
- * @param {object} msg 
- */
-export const createImage = msg => {
-  let img = document.createElement('img');
-  img.src = msg.uri;
-  img.width = msg.width;
-  img.height = msg.height;
-  img.style.display = 'block';
-  img.style.margin = '0 auto 15px';
-  img.style.maxWidth = '100%';
-  let code = document.getElementsByTagName('pre')[0];
-  let spinner = document.getElementById('loader');
-  if (document.body.contains(spinner)) {spinner.remove();}
-  if (typeof code === 'undefined') return;
-  if (code.className === 'microbit') {
-    code.parentElement.insertBefore(img, code);
-    code.parentElement.removeChild(code);
-  }
-};
-
-/**
- * Creates an iframe that is being used to render the code
- * @param {object} language Lesson language
- */
-export const createIframe = language => {
-  const microbitLanguages = { // Taken from https://support.crowdin.com/api/language-codes/
-    da: 'da', // Danish
-    de: 'de', // German
-    el: 'el', // Greek
-    en: 'en', // English
-    es: 'es-ES', // Spanish
-    fi: 'fi', // Finnish
-    fr: 'fr', //French
-    hu: 'hu', // Hungarian
-    is: 'is', // Icelandic
-    it: 'it', // Italian
-    nl: 'nl', // Dutch
-    nb: 'no', // Norwegian
-    nn: 'no', // Norwegian
-    sv: 'sv-SE', // Swedish
-    tr: 'tr', // Turkish
-  };
-  const f = document.createElement('iframe');
-  f.id = 'makecoderenderer';
-  f.style.position = 'absolute';
-  f.style.left = 0;
-  f.style.bottom = 0;
-  f.style.width = '1px';
-  f.style.height = '1px';
-  if (language in microbitLanguages) {
-    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=' + microbitLanguages[language];
-  }
-  else {
-    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=en';
-  }
-  document.body.appendChild(f);
-};
 
 /**
  * Process all of the content
