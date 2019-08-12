@@ -80,7 +80,7 @@ const createImage = msg => {
   img.style.margin = '0 auto 15px';
   img.style.maxWidth = '100%';
   let code = document.getElementsByTagName('pre')[0];
-  let spinner = document.getElementById('loader');
+  let spinner = document.getElementById('spinner');
   if (document.body.contains(spinner)) {spinner.remove();}
   if (typeof code === 'undefined') return;
   if (code.className === 'microbit') {

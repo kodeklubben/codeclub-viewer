@@ -142,7 +142,6 @@ const renderScratchBlocks = (content, styles) => {
   return returnContent;
 };
 
-
 /**
  * Process all of the content
  * @param {string} content HTML with <pre class="blocks">...</pre>
