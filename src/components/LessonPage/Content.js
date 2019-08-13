@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
+import {renderMicrobit} from '../../utils/processMicrobit';
 import {getLessonContent} from '../../resources/lessonContent';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
@@ -25,6 +26,7 @@ class Content extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.isHydrated) { this.updateCheckboxes(); } // When clicking in from different page
+    if (this.props.course === 'microbit') { renderMicrobit(this.props.language); }
   }
 
   componentDidUpdate(prevProps) {
