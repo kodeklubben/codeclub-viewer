@@ -15,9 +15,9 @@ const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, se
   useEffect(() => {
     if (isHydrated) {
       setCheckboxesInDoc(getLessonPath(course, lesson, language, isReadme), checkboxes, setCheckbox, removeCheckbox);
+      if (course === 'microbit') { renderMicrobit(language); }
     }
-    if (course === 'microbit') { renderMicrobit(language); }
-  });
+  }, [course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox]);
 
   useStyles(styles);
   return <div dangerouslySetInnerHTML={

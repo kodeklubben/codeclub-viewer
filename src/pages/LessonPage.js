@@ -55,9 +55,11 @@ const renderSpinner = course => {
 const LessonPage = ({course, lesson, language, isReadme, t, isHydrated, setLastLesson}) => {
   useEffect(() => {
     setLastLesson(getLessonPath(course, lesson, language, isReadme));
-    if (isHydrated) { renderToggleButtons(); }
-    renderSpinner(course);
-  });
+    if (isHydrated) {
+      renderToggleButtons();
+      renderSpinner(course);
+    }
+  }, [course, lesson, language, isReadme, isHydrated, setLastLesson]);
 
   useStyles(styles);
   const title = getLessonTitle(course, lesson, language, isReadme);
