@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
+import {renderMicrobit} from '../../utils/processMicrobit';
 import {getLessonContent} from '../../resources/lessonContent';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
@@ -12,9 +13,10 @@ import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 
 const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox}) => {
   useEffect(() => {
-    isHydrated ?
-      setCheckboxesInDoc(getLessonPath(course, lesson, language, isReadme), checkboxes, setCheckbox, removeCheckbox)
-      : null;
+    if (isHydrated) {
+      setCheckboxesInDoc(getLessonPath(course, lesson, language, isReadme), checkboxes, setCheckbox, removeCheckbox);
+    }
+    if (course === 'microbit') { renderMicrobit(language); }
   });
 
   useStyles(styles);

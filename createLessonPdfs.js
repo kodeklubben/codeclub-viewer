@@ -71,7 +71,14 @@ const convertUrl = async (browser, lesson) => {
   const url = urlBase + lesson + '?pdf';
   //page.setJavaScriptEnabled(false);
   console.log('Rendering PDF:', url, '--->', path.relative(__dirname, pdfFile));
-  await page.goto(url, {waitUntil: 'networkidle0'});
+  await page.goto(url, {waitUntil: ['load', 'networkidle0']});
+  //console.log('    page.goto complete for', pdfFile);
+  
+  // Wait for microbit iframe to be removed, which signals that microbit rendering is done.
+  // Selector must match microbitIframeId in utils/processMicrobit.js
+  await page.waitForSelector('#makecoderenderer', {hidden: true});
+  //console.log('    page.waitForSelector complete for', pdfFile);
+  
   //await page.emulateMedia('screen');
   await page.pdf({
     path: pdfFile,

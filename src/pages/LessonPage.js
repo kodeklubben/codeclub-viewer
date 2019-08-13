@@ -28,14 +28,35 @@ const renderToggleButtons = () => {
     const buttonText = strongNode ? strongNode.textContent : 'Hint';
     const hiddenNode = node.getElementsByTagName('hide')[0];
     const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-    ReactDOM.render(<ToggleButton {...{buttonText, hiddenHTML}}/>,node);
+    ReactDOM.render(<ToggleButton {...{buttonText, hiddenHTML}}/>, node);
+  }
+};
+
+const renderSpinner = course => {
+  if (course === 'microbit') {
+    const pres = [...document.getElementsByTagName('pre')];
+    for (let pre of pres) {
+      if ([...pre.childNodes][0].className === 'python') return;
+      pre.style.display = 'none';
+      let img = document.createElement('img');
+      img.id = 'spinner';
+      img.src = require('../assets/graphics/spinner.gif');
+      img.alt = 'Spinner';
+      img.width = '50';
+      img.height = '50';
+      img.style.maxWidth = '100%';
+      img.style.display = 'block';
+      img.style.margin = '0 auto 15px';
+      pre.parentElement.insertBefore(img, pre);
+    }
   }
 };
 
 const LessonPage = ({course, lesson, language, isReadme, t, isHydrated, setLastLesson}) => {
   useEffect(() => {
     setLastLesson(getLessonPath(course, lesson, language, isReadme));
-    isHydrated ? renderToggleButtons() : null;
+    if (isHydrated) { renderToggleButtons(); }
+    renderSpinner(course);
   });
 
   useStyles(styles);
