@@ -67,6 +67,7 @@ export default {
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
+    darkmode: 'Test dark mode',
     tomainlanguage: 'In {{lang}}',
     nottranslated: 'This page does not exist in {{lang}}',
     license: 'License: ',

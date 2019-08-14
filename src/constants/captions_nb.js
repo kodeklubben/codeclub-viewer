@@ -68,6 +68,7 @@ export default {
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
     reset: 'Fjern avkrysninger',
+    darkmode: 'Test nattmodus',
     tomainlanguage: 'På {{lang}}',
     nottranslated: 'Denne siden finnes ikke på {{lang}}',
     license: 'Lisens: ',

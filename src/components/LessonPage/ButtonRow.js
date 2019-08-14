@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {anyCheckboxTrue, createCheckboxesKey} from '../../utils/checkboxUtils';
 import MainLanguageButton from './MainLanguageButton';
 import ResetButton from './ResetButton';
+import DarkModeButton from './DarkModeButton';
 import InstructionButton from '../InstructionButton';
 import PdfButton from './PdfButton';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
@@ -25,6 +26,7 @@ const ButtonRow = ({
 
   return (
     <div>
+      <DarkModeButton/>
       {mainLanguageButton}
       {resetButton}
       {lessonOrReadmeButton}
