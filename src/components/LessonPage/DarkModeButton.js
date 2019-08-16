@@ -12,17 +12,19 @@ class DarkModeButton extends React.PureComponent {
   handleClick = () => this.props.setShowDarkMode(!this.props.showDarkMode);
 
   render() {
-    const {t} = this.props;
+    const {t, showDarkMode} = this.props;
     const options = {
       bsSize: 'small',
       className: styles.container,
-      'aria-label': t('lessons.darkmode'),
+      'aria-label': showDarkMode ? t('lessons.darkmode') : t('lessons.lightmode'),
       onClick: this.handleClick,
     };
     return (
       <Button {...options}>
         <Glyphicon className={styles.icon} glyph={'lamp'}/>
-        <span className={styles.textMargin}>{t('lessons.darkmode')}</span>
+        <span className={styles.textMargin}>
+          {showDarkMode ? t('lessons.darkmode') : t('lessons.lightmode')}
+        </span>
       </Button>
     );
   }
