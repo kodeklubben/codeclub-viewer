@@ -96,7 +96,7 @@ const webappWebpackPlugin = new WebappWebpackPlugin({
   },
 });
 
-const createConfig = (env = {}) => {
+const createConfig = (env = {}, argv) => {
 
   if (env.verbose) {
     console.log('Build constants:');
@@ -347,7 +347,7 @@ const createConfig = (env = {}) => {
       webappWebpackPlugin,
 
       new ImageminPlugin({
-        disable: process.env.NODE_ENV !== 'production', // Disable during development
+        disable: argv.mode !== 'production', // Disable during development
         minFileSize: 244000, // Only apply this one to files over 244kB. Webpacks recommended size limit
         optipng: { optimizationLevel: 5 },
         jpegtran: { progressive: true },
