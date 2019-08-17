@@ -52,7 +52,6 @@ import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebpackShellPluginAlt from 'webpack-shell-plugin-alt';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
-import ImageminPlugin from 'imagemin-webpack-plugin';
 
 import {
   assets,
@@ -96,7 +95,7 @@ const webappWebpackPlugin = new WebappWebpackPlugin({
   },
 });
 
-const createConfig = (env = {}) => {
+const createConfig = (env = {}, argv) => {
 
   if (env.verbose) {
     console.log('Build constants:');
@@ -145,7 +144,7 @@ const createConfig = (env = {}) => {
     },
 
     performance: {
-      hints: false //set this to 'warning' if you want to look after big files
+      hints: argv.mode === 'production' ? 'warning' : false,
     },
 
     resolve: {
@@ -345,11 +344,6 @@ const createConfig = (env = {}) => {
       ]),
 
       webappWebpackPlugin,
-
-      new ImageminPlugin({
-        disable: process.env.NODE_ENV !== 'production', //Disable during development
-        minFileSize: 244000, // Only apply this one to files over 244kB. Webpacks recommended size limit
-      })
 
     ],
 
