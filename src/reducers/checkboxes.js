@@ -16,6 +16,16 @@ export function setCheckbox(path, hash, value) {
   };
 }
 
+export function removeCheckbox(path, hash) {
+  return {
+    type: 'REMOVE_CHECKBOX',
+    payload: {
+      path,
+      hash,
+    }
+  };
+}
+
 export function setCheckboxes(path, checkboxes) {
   return {
     type: 'SET_CHECKBOXES',
@@ -73,6 +83,15 @@ export default function(state = INITIAL_STATE, action) {
         ...(state[key] || {}), // Get checkboxes if it exists, and create a copy...
         [hash]: value          // ...and add the new value.
       };
+      return newCheckboxState(state, key, checkboxes);
+    }
+    case 'REMOVE_CHECKBOX': {
+      const {path, hash} = action.payload;
+      const key = createCheckboxesKey(path);
+      const checkboxes = {...(state[key] || {})}; // Get checkboxes if it exists, and create a copy.
+      if (hash in checkboxes) {
+        delete checkboxes[hash];
+      }
       return newCheckboxState(state, key, checkboxes);
     }
   }

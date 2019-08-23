@@ -1,59 +1,6 @@
 @import '~bootstrapStyles/mixins/buttons';
 @import './variables';
 
-@mixin button-nav($color, $background, $border, $darken) {
-  color: $color;
-  background-color: $background;
-  border-color: $border;
-
-  &:focus,
-  &.focus {
-    color: $color;
-    background-color: darken($background, $darken);
-    border-color: darken($border, $darken);
-  }
-  &:hover {
-    color: $color;
-    background-color: darken($background, $darken);
-    border-color: darken($border, $darken);
-  }
-  &:active,
-  &.active,
-  .open > &.dropdown-toggle {
-    color: $color;
-    background-color: darken($background, $darken);
-    border-color: darken($border, $darken);
-
-    &:hover,
-    &:focus,
-    &.focus {
-      color: $color;
-      background-color: darken($background, $darken);
-      border-color: darken($border, $darken);
-    }
-  }
-  &:active,
-  &.active,
-  .open > &.dropdown-toggle {
-    background-image: none;
-  }
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &:hover,
-    &:focus,
-    &.focus {
-      background-color: $background;
-      border-color: $border;
-    }
-  }
-
-  .badge {
-    color: $background;
-    background-color: $color;
-  }
-}
-
 @mixin button-frontpage($color, $background) {
   @include button-variant($color, $background, transparent);
   font-size: 1.5em;

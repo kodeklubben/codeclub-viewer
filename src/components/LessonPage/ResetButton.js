@@ -6,11 +6,11 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './ResetButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import {setCheckbox} from '../../reducers/checkboxes';
-import {setCheckboxes} from '../../utils/checkboxUtils';
+import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 class ResetButton extends React.PureComponent {
-  handleClick = () => setCheckboxes(this.props.path, {}, this.props.setCheckbox);
+  handleClick = () => setCheckboxesInDoc(this.props.path, {}, this.props.setCheckbox);
 
   render() {
     const {t} = this.props;

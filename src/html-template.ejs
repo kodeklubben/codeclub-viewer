@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html <%- helmet.htmlAttributes.toString() %>>
 <head>
-  <script>
-    var loc = window.location;
-    if (loc.hostname !== 'localhost' && loc.hostname !== '127.0.0.1' && loc.protocol === 'http:') {
-      loc.protocol = 'https:'
-    }
-  </script>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 

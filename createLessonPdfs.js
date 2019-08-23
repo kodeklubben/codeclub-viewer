@@ -71,7 +71,14 @@ const convertUrl = async (browser, lesson) => {
   const url = urlBase + lesson + '?pdf';
   //page.setJavaScriptEnabled(false);
   console.log('Rendering PDF:', url, '--->', path.relative(__dirname, pdfFile));
-  await page.goto(url, {waitUntil: 'networkidle0'});
+  await page.goto(url, {waitUntil: ['load', 'networkidle0']});
+  //console.log('    page.goto complete for', pdfFile);
+  
+  // Wait for microbit iframe to be removed, which signals that microbit rendering is done.
+  // Selector must match microbitIframeId in utils/processMicrobit.js
+  await page.waitForSelector('#makecoderenderer', {hidden: true});
+  //console.log('    page.waitForSelector complete for', pdfFile);
+  
   //await page.emulateMedia('screen');
   await page.pdf({
     path: pdfFile,
@@ -180,7 +187,7 @@ const checkYarnVersion = () => {
   const version = execSync('yarn --version', {shell: true}).toString().trim();
   const lowestVersion = '1.3.2';
   const [major = 0, minor = 0, patch = 0] = version.split('.');
-  const [lowestMajor = 0, lowestMinor = 0, lowestPatch = 0] = lowestVersion.split('.');
+  const [lowestMajor = 0, lowestMinor = 0, lowestPatch = 0] = lowestVersion.split('.').map(n => parseInt(n, 10));
   const tooLow = () => {
     console.log('ERROR: The version of yarn (' + version + ') is too low. Must be >= ' + lowestVersion);
     process.exit(1);
@@ -197,7 +204,7 @@ nodeCleanup(function (exitCode, signal) {
   cleanup();
 });
 
-localWebServer = spawn('yarn', ['serve'], {detached: true});
+localWebServer = spawn('yarn', ['serve'], {detached: !isWin, shell: isWin});
 
 localWebServer.stdout.on('data', checkStarted);
 localWebServer.stderr.on('data', checkStarted);

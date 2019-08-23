@@ -1,4 +1,4 @@
-/* eslint-env node */
+/* global IS_HOT */
 
 import {createStore} from 'redux';
 import {createCheckboxesKey} from './utils/checkboxUtils';
@@ -12,21 +12,22 @@ import {setLastLesson} from './reducers/lastLesson';
 import {setMode} from './reducers/mode';
 import {setShowPlaylists} from './reducers/showPlaylists';
 import {setShowDyslexicFont} from './reducers/showDyslexicFont';
+import {setExpandedAccordion} from './reducers/expandedAccordion';
 import reducer from './reducer';
 import {loadFromLocalStorage} from './utils/localStorage';
 import {getCourses} from './resources/courses';
 import {getLessonsInCourse} from './resources/lessons';
+import {getCoursesWithPlaylists} from './resources/playlists';
 
 const initialState = {};
-const isProduction = process.env.NODE_ENV === 'production';
 let store;
 
-if (isProduction) {
+if (!IS_HOT) {
   store = createStore(reducer, initialState);
 } else {
   //Only use the DevTools extension when in development
-  const devTools = typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ?
-    window.devToolsExtension() :
+  const devTools = typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ?
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() :
     f => f;
 
   store = createStore(reducer, initialState, devTools);
@@ -38,6 +39,7 @@ const defaultLastLesson = '';
 const defaultCheckboxes = {};
 const defaultShowPlaylists = false;
 const defaultDyslexicFont = false;
+const defaultExpandedAccordion = {};
 
 let filter = getInitialFilter(defaultLanguage);
 store.dispatch(setFilter(filter));
@@ -52,6 +54,7 @@ export const updateStoreFromLocalStorage = () => {
   const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
   const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultShowPlaylists);
   const initialDyslexicFont = loadFromLocalStorage('showDyslexicFont', defaultDyslexicFont);
+  const initialExpandedAccordion = loadFromLocalStorage('expandedAccordion', defaultExpandedAccordion);
 
   store.dispatch(setMode(initialMode));
   store.dispatch(setLanguage(initialLanguage));
@@ -59,6 +62,11 @@ export const updateStoreFromLocalStorage = () => {
   store.dispatch(setShowPlaylists(initialPlaylists));
   store.dispatch(setShowDyslexicFont(initialDyslexicFont));
   store.dispatch(resetOneFilter('language', initialLanguage));
+
+  getCoursesWithPlaylists().forEach(playlist => {
+    let hasVal = playlist in initialExpandedAccordion;
+    store.dispatch(setExpandedAccordion(playlist, hasVal ? initialExpandedAccordion[playlist] : null));
+  });
 
   for (const course of getCourses()){
     for (const lesson of getLessonsInCourse(course)) {

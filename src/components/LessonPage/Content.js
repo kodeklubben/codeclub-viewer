@@ -4,7 +4,12 @@ import {connect} from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
+import {renderMicrobit} from '../../utils/processMicrobit';
 import {getLessonContent} from '../../resources/lessonContent';
+import {getLessonPath} from '../../resources/lessonFrontmatter';
+import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
+import {setCheckbox, removeCheckbox} from '../../reducers/checkboxes';
+import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 
 class Content extends React.PureComponent {
   createMarkup = () => {
@@ -12,6 +17,22 @@ class Content extends React.PureComponent {
     const lessonContent = getLessonContent(course, lesson, language, isReadme);
     return {__html: processContent(lessonContent, styles, isHydrated)};
   };
+
+  updateCheckboxes = () => {
+    const {course, lesson, language, isReadme, checkboxes, setCheckbox, removeCheckbox} = this.props;
+    const path = getLessonPath(course, lesson, language, isReadme);
+    setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
+  };
+
+  componentDidMount() {
+    if (this.props.isHydrated) { this.updateCheckboxes(); } // When clicking in from different page
+    if (this.props.course === 'microbit') { renderMicrobit(this.props.language); }
+  }
+
+  componentDidUpdate(prevProps) {
+    const wasHydratedThisUpdate = !prevProps.isHydrated && this.props.isHydrated;
+    if (wasHydratedThisUpdate) { this.updateCheckboxes(); } // When reloading page
+  }
 
   render() {
     return <div dangerouslySetInnerHTML={this.createMarkup()}/>;
@@ -27,12 +48,24 @@ Content.propTypes = {
 
   // mapStateToProps
   isHydrated: PropTypes.bool.isRequired, // require isHydrated as a prop to force rerender when it changes
+  checkboxes: PropTypes.object,
+
+  // mapDispatchToProps
+  setCheckbox: PropTypes.func.isRequired,
+  removeCheckbox: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, {course, lesson, language, isReadme}) => ({
   isHydrated: state.hydration,
+  checkboxes: getCheckboxesForLesson(state, course, lesson, language, isReadme),
 });
+
+const mapDispatchToProps = {
+  setCheckbox,
+  removeCheckbox,
+};
 
 export default connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(withStyles(styles)(Content));
