@@ -5,62 +5,61 @@ export default {
     teacher: 'Kennari',
     level: 'Stig',
     levels: {
-      1: 'Introduction',
-      2: 'Byrjendur',
+      1: 'Kynning',
+      2: 'Byrjandi',
       3: 'Með reynslu',
       4: 'Sérfræðingur',
     },
     picture: 'Mynd af {{title}}',
-    glyphicon: 'Upplysingar fyrir {{title}}',
+    glyphicon: 'Upplýsingar um {{title}}',
   },
   head: {
     title: 'Kóðaklúbburinn',
-    description: 'On this page you will find tasks for people of all ages who wants to learn programming. ' +
-                  'All content on the site is free to use, ' +
-                  'and is often used in the code club and programming subjects at school.',
+    description: 'Á þessari síðu finnurðu verkefni sem henta fólki á öllum aldri sem vill læra forritun. ' +
+                  'Það er gjaldfrjálst að nota allt efni á þessari síðu, ' +
+                  'og það er oft notað í kóðaklúbbnum og forritunarkennslu í skólum.',
   },
   frontpage: {
     courses: 'Námskeið',
-    lessoncount: 'Lessons: {{count}}',
+    lessoncount: 'Verkefni: {{count}}',
     otherwebsitecourses: 'Námskeið á öðrum vefsíðum',
-    continueButton: 'Síðasti heimsökn',
+    continueButton: 'Heimsótt síðast',
     teacherinfobox: {
-      header: 'Hello! You are now in teachermode',
-      changemode: 'Are you not a teacher or supervisor? Click the student / teacher button in the navigation menu ' +
-                  'to switch mode. For more information, click the plus sign below',
+      header: 'Halló! Þú ert núna á síðu fyrir kennara',
+      changemode: 'Ertu ekki kennari eða leiðbeinandi? Smelltu á nemanda- eða kennarahnappinn uppi í hægra horni ' +
+                  'til að skipta á milli. Frekari upplýsingar fást með því að smella á plúsinn að neðan.',
       teacher: 'Kennari',
-      info1: 'Check out our filters and tutorials. On the left side you can filter on different school subjects, ' +
-             'to find relevant lessons for your teaching. Once you have finished checking for subjects, you will ' +
-             'only see the lessons that our teachers have considered relevant and you can choose which language ' +
-             'you want to teach. Each lesson set has a guide and you will find what specific curriculum goals you ' +
-             'can work with in the various subjects.',
-      link1: 'Learn more about programming in the classroom',
+      info1: 'Skoðaðu flipana og leiðbeiningarnar okkar. Á vinstri hlið finnurðu flipa fyrir mismunandi fög ' +
+             'þar sem þú getur fundið viðeigandi verkefni fyrir þína kennslu. Þegar þú hefur valið fög geturðu ' +
+             'einungis séð þau verkefni sem okkar kennarar telja viðeigandi og þú getur valið á hvaða tungumáli ' +
+             'þú vilt kenna.',
+      link1: 'Hér geturðu lært meira um forritun í kennslustofunni (á norsku)',
       assistant: 'Leiðbeinandi',
-      info2: 'Our assignment sets out make the children work a lot on their own with different projects, ' +
-             'but we recommend starting each session with 10-15 minute intro to what to do and what may be ' +
-             'new this time. Now you can easily filter tasks on topics, and all assignments have instructions ' +
-             'that you can check in preparation for the sessions. For beginners, we recommend block-based ' +
-             'programming, where Python / Web / Processing is the most common to proceed with afterwards.',
-      link2: 'Learn more about running a code club',
-      plus: 'Show more information',
-      minus: 'Show less information',
+      info2: 'Verkefnin okkar gera ráð fyrir að börnin vinni mikið sjálfstætt, ' +
+             'en við mælum með að byrja hverja kennslustund á 10-15 mínútna kynningu á verkefninu og því sem gæti verið' +
+             'nýtt í þetta skiptið. Núna geturðu auðveldlega flokkað verkefni eftir þema og öllum verkefnum fylgja leiðbeiningar ' +
+             'sem þú getur skoðað við undirbúning fyrir kennsluna. Við mælum með forritun byggðri á kubbum fyrir byrjendur ' +
+             ', en síðan er algengt að vinna í Python / Web / Processing í framhaldi.',
+      link2: 'Hér geturðu lært meira um að stjórna kóðaklúbbi (á norsku)',
+      plus: 'Smelltu hér fyrir frekari upplýsingar',
+      minus: 'Smelltu hér fyrir færri upplýsingar',
     },
-    showhidefilter: 'Show/hide filter',
-    forumbutton: 'Go to forum',
+    showhidefilter: 'Sýna/fela flipa',
+    forumbutton: 'Spjallborð',
   },
   coursepage: {
-    courseinfo: 'Information about the course',
-    courseinfonotfound: 'Oops, someone forgot to write course information!',
-    instructionbutton: 'Teacher Instructions',
-    levelnavigation: 'Navigate to',
-    lessoncollections: 'Collections of Lessons',
-    nomatchinglessons: 'No matching lessons for this combination',
-    missingtitle: 'Playlist',
-    lessonsnottranslated: 'The lessons in this playlist have not been translated to English yet.',
+    courseinfo: 'Upplýsingar um námskeiðið',
+    courseinfonotfound: 'Úbs, einhver gleymdi að skrifa inn námskeiðsupplýsingar!',
+    instructionbutton: 'Leiðbeiningar fyrir kennara',
+    levelnavigation: 'Flýtileiðir',
+    lessoncollections: 'Verkefnalisti',
+    nomatchinglessons: 'Það eru engin verkefni sem passa við valda flipa',
+    missingtitle: 'Verkefnalisti',
+    lessonsnottranslated: 'Verkefnin á þessum lista hafa ekki enn verið þýdd yfir á íslensku.',
   },
   lessons: {
-    writtenby: 'Eftir:',
-    translatedby: 'Þýding eftir:',
+    writtenby: 'Höfundur:',
+    translatedby: 'Þýðandi:',
     course: 'Námskeið:',
     pdf: 'Sækja PDF',
     print: 'Prenta',
@@ -69,58 +68,58 @@ export default {
     reset: 'Endurstilla tékklista',
     tomainlanguage: 'Tungumál: {{lang}}',
     nottranslated: 'Síðan er ekki til á íslensku',
-    license: 'License: ',
+    license: 'Leyfi: ',
     improvepage: {
       header: 'Bættu við síðuna',
-      textline1: 'Found an error? Could anything be better?',
-      textline2: 'If yes, please give us feedback by making an issue on Github or fix the error by yourself. ' +
-                 'We are grateful for any feedback!',
-      newissuebutton: 'Report a problem',
+      textline1: 'Er eitthvað sem gæti verið betra? Fannstu villu? ',
+      textline2: 'Ef svo er, vinsamlegast láttu okkur vita með því að koma með ábendingu á GitHub eða með því að laga villuna af sjálfdáðum. ' +
+                 'Við erum þakklát fyrir alla endurgjöf!',
+      newissuebutton: 'Tilkynna vandamál',
       newissuelink: {
-        title: 'Problem with',
-        lesson: 'Lesson',
-        sourcecode: 'The lesson\'s source code',
-        info: 'Describe the problem. Adding your operating system, browser and any code you have written will help.',
+        title: 'Vandamál',
+        lesson: 'Verkefni',
+        sourcecode: 'Kóði verkefnisins',
+        info: 'Lýstu vandamálinu og láttu fylgja hvaða stýrikerfi og vafra þú notar. Ef þú hefur skrifað kóða sem gæti hjálpað láttu hann endilega fylgja með líka.',
       },
-      showcodebutton: 'Show code and fix yourself',
-      forumbutton: 'Go to forum',
+      showcodebutton: 'Sýna kóða og laga sjálf/ur',
+      forumbutton: 'Spjallborð',
     },
   },
   filter: {
-    header: 'Filter',
-    tooltip: 'The filter allows you to sort out the lessons you want to solve according to the topics you ' +
-      'want to work with.',
+    header: 'Flipar',
+    tooltip: 'Fliparnir gera þér kleift að flokka verkefnin sem þú vilt leysa í samhengi við það þema sem þú ' +
+      'vilt vinna með.',
     radio: {
-      playlists: 'Playlists',
-      lessons: 'All lessons',
-      group: 'Group with two choices',
+      playlists: 'Verkefnalisti',
+      lessons: 'Öll verkefni',
+      group: 'Hópur með tveimur valmöguleikum',
     },
-    removefilter: 'Clear filter',
+    removefilter: 'Hreinsa flipa',
   },
   navbar: {
-    mode: 'Mode',
+    mode: 'Máti',
     lkknav: {
-      aboutlkk: 'About LKK',
+      aboutlkk: 'Um LKK',
       news: 'Fréttir',
-      lessons: 'Lessons',
-      findcodeclub: 'Find kodeklubb',
-      codeclub: 'Kóðaklúbburinn',
+      lessons: 'Verkefni',
+      findcodeclub: 'Finndu kóðaklúbb',
+      codeclub: 'Kóðaklúbbur',
       school: 'Skóli',
-      codehour: 'Kodetimen',
-      contribute: 'Contribute?',
+      codehour: 'Klukkustund kóðunar',
+      contribute: 'Legga til',
     },
-    menu: 'Menu',
+    menu: 'Valmynd',
   },
   search: {
-    placeholder: 'Search',
+    placeholder: 'Leita',
   },
   footer: {
-    contribute: 'Create your own lessons',
-    dyslexia: 'Text for dyslexics',
+    contribute: 'Búðu til þitt eigið verkefni',
+    dyslexia: 'Texti fyrir lesblinda',
   },
   404: {
-    header: 'Sorry',
-    textline: 'We can\'t find the page you are looking for.',
-    tofrontpage: 'To frontpage',
+    header: 'Afsakið',
+    textline: 'Við getum ekki fundið síðuna sem þú leitar að.',
+    tofrontpage: 'Forsíða',
   },
 };
