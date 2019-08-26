@@ -15,9 +15,10 @@ export default {
   },
   head: {
     title: 'Kóðaklúbburinn',
-    description: 'Á þessari síðu finnurðu verkefni sem henta fólki á öllum aldri sem vill læra forritun. ' +
-                  'Það er gjaldfrjálst að nota allt efni á þessari síðu, ' +
-                  'og það er oft notað í kóðaklúbbnum og forritunarkennslu í skólum.',
+    description: 'Á þessari síðu finnurðu verkefni sem henta fólki á öllum ' +
+                'aldri sem vill læra forritun. Það er gjaldfrjálst að nota ' +
+                'allt efni á þessari síðu, og það er oft notað í ' +
+                'kóðaklúbbnum og forritunarkennslu í skólum.',
   },
   frontpage: {
     courses: 'Námskeið',
@@ -26,20 +27,25 @@ export default {
     continueButton: 'Heimsótt síðast',
     teacherinfobox: {
       header: 'Halló! Þú ert núna á síðu fyrir kennara',
-      changemode: 'Ertu ekki kennari eða leiðbeinandi? Smelltu á nemanda- eða kennarahnappinn uppi í hægra horni ' +
-                  'til að skipta á milli. Frekari upplýsingar fást með því að smella á plúsinn að neðan.',
+      changemode: 'Ertu ekki kennari eða leiðbeinandi? Smelltu á nemanda- eða ' +
+                'kennarahnappinn uppi í hægra horni til að skipta á milli. ' +
+                'Frekari upplýsingar fást með því að smella á plúsinn að neðan.',
       teacher: 'Kennari',
-      info1: 'Skoðaðu flipana og leiðbeiningarnar okkar. Á vinstri hlið finnurðu flipa fyrir mismunandi fög ' +
-             'þar sem þú getur fundið viðeigandi verkefni fyrir þína kennslu. Þegar þú hefur valið fög geturðu ' +
-             'einungis séð þau verkefni sem okkar kennarar telja viðeigandi og þú getur valið á hvaða tungumáli ' +
-             'þú vilt kenna.',
+      info1: 'Skoðaðu flipana og leiðbeiningarnar okkar. Á vinstri hlið ' +
+            'finnurðu flipa fyrir mismunandi fög þar sem þú getur fundið ' +
+            'viðeigandi verkefni fyrir þína kennslu. Þegar þú hefur valið ' +
+            'fög geturðu einungis séð þau verkefni sem okkar kennarar telja ' +
+            'viðeigandi og þú getur valið á hvaða tungumáli þú vilt kenna.',
       link1: 'Hér geturðu lært meira um forritun í kennslustofunni (á norsku)',
       assistant: 'Leiðbeinandi',
-      info2: 'Verkefnin okkar gera ráð fyrir að börnin vinni mikið sjálfstætt, ' +
-             'en við mælum með að byrja hverja kennslustund á 10-15 mínútna kynningu á verkefninu og því sem gæti verið' +
-             'nýtt í þetta skiptið. Núna geturðu auðveldlega flokkað verkefni eftir þema og öllum verkefnum fylgja leiðbeiningar ' +
-             'sem þú getur skoðað við undirbúning fyrir kennsluna. Við mælum með forritun byggðri á kubbum fyrir byrjendur ' +
-             ', en síðan er algengt að vinna í Python / Web / Processing í framhaldi.',
+      info2: 'Verkefnin okkar gera ráð fyrir að börnin vinni mikið ' +
+            'sjálfstætt, en við mælum með að byrja hverja kennslustund á ' +
+            '10-15 mínútna kynningu á verkefninu og því sem gæti verið nýtt ' +
+             'í þetta skiptið. Núna geturðu auðveldlega flokkað verkefni ' +
+             'eftir þema og öllum verkefnum fylgja leiðbeiningar sem þú ' +
+             'getur skoðað við undirbúning fyrir kennsluna. Við mælum með ' +
+             'forritun byggðri á kubbum fyrir byrjendur, en síðan er algengt ' +
+             'að vinna í Python / Web / Processing í framhaldi.',
       link2: 'Hér geturðu lært meira um að stjórna kóðaklúbbi (á norsku)',
       plus: 'Smelltu hér fyrir frekari upplýsingar',
       minus: 'Smelltu hér fyrir færri upplýsingar',
@@ -72,14 +78,17 @@ export default {
     improvepage: {
       header: 'Bættu við síðuna',
       textline1: 'Er eitthvað sem gæti verið betra? Fannstu villu? ',
-      textline2: 'Ef svo er, vinsamlegast láttu okkur vita með því að koma með ábendingu á GitHub eða með því að laga villuna af sjálfdáðum. ' +
-                 'Við erum þakklát fyrir alla endurgjöf!',
+      textline2: 'Ef svo er, vinsamlegast láttu okkur vita með því að koma ' +
+        'með ábendingu á GitHub eða með því að laga villuna af sjálfdáðum. ' +
+        'Við erum þakklát fyrir alla endurgjöf!',
       newissuebutton: 'Tilkynna vandamál',
       newissuelink: {
         title: 'Vandamál',
         lesson: 'Verkefni',
         sourcecode: 'Kóði verkefnisins',
-        info: 'Lýstu vandamálinu og láttu fylgja hvaða stýrikerfi og vafra þú notar. Ef þú hefur skrifað kóða sem gæti hjálpað láttu hann endilega fylgja með líka.',
+        info: 'Lýstu vandamálinu og láttu fylgja hvaða stýrikerfi og vafra ' +
+          'þú notar. Ef þú hefur skrifað kóða sem gæti hjálpað láttu hann ' +
+          'endilega fylgja með líka.',
       },
       showcodebutton: 'Sýna kóða og laga sjálf/ur',
       forumbutton: 'Spjallborð',
@@ -87,8 +96,8 @@ export default {
   },
   filter: {
     header: 'Flipar',
-    tooltip: 'Fliparnir gera þér kleift að flokka verkefnin sem þú vilt leysa í samhengi við það þema sem þú ' +
-      'vilt vinna með.',
+    tooltip: 'Fliparnir gera þér kleift að flokka verkefnin sem þú vilt ' +
+      'leysa í samhengi við það þema sem þú vilt vinna með.',
     radio: {
       playlists: 'Verkefnalisti',
       lessons: 'Öll verkefni',
