@@ -17,6 +17,7 @@ const languages = {
   nb: 'Bokmål',
   en: 'English',
   nn: 'Nynorsk',
+  is: 'Íslenska',
 };
 
 const LanguageItem = ({language, onlyFlag}) => (
