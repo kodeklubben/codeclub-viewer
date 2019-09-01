@@ -22,12 +22,12 @@ const Footer = ({t, isStudentMode}) => {
   const sponsors = (
     <div className={styles.sponsors}>
       <a href={url.sparebank} target='_blank' rel='noopener'>
-        <img className={styles.img} src={require('../../assets/graphics/smn.png')}
+        <img className={styles.img} src={require('../../assets/graphics/smn.jpg')}
           alt={'SpareBank1'}
         />
       </a>
       <a href={url.ibok} target='_blank' rel='noopener'>
-        <img className={styles.img} src={require('../../assets/graphics/ibok.png')}
+        <img className={styles.img} src={require('../../assets/graphics/ibok.jpg')}
           alt={'Ibok'}
         />
       </a>
@@ -37,7 +37,7 @@ const Footer = ({t, isStudentMode}) => {
         />
       </a>
       <a href={url.tekna} target='_blank' rel='noopener'>
-        <img className={styles.img} src={require('../../assets/graphics/tekna.png')}
+        <img className={styles.img} src={require('../../assets/graphics/tekna.jpg')}
           alt={'Tekna'}
         />
       </a>
