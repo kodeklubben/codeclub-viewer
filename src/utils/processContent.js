@@ -118,7 +118,7 @@ const replaceClassRecursively = (obj, styles) => {
  */
 const renderScratchBlocks = (content, styles) => {
   const scratchblocks = require('scratchblocks/browser.js');
-  
+
   // NOTE: English (en) is included by default. All other languages
   //       that exist in getAvailableLanguages() should be loaded here,
   //       otherwise rendering will fail.
@@ -128,8 +128,9 @@ const renderScratchBlocks = (content, styles) => {
   scratchblocks.loadLanguages({
     nb: require('scratchblocks/locales/nb.json'),
     nn: require('scratchblocks/locales/nn.json'),
+    is: require('scratchblocks/locales/is.json'),
   });
-  
+
   let replace = [];
   if ('blocks' in styles) {
     replace.push({
@@ -156,6 +157,8 @@ const renderScratchBlocks = (content, styles) => {
         let doc = scratchblocks.parse(code, r.options);
         let docView = scratchblocks.newView(doc, {style: 'scratch3'});
         let svg = docView.render();
+        svg.setAttribute('viewBox', `0 0 ${svg.getAttribute('width')} ${svg.getAttribute('height')}`);
+        svg.style.maxWidth = '100%';
         if (r.options.inline) {
           svg.style.margin = '3px 0';
           svg.style.verticalAlign = 'middle';
