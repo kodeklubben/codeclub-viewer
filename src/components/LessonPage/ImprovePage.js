@@ -10,8 +10,8 @@ import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const ImprovePage = ({course, lesson, language, isReadme, t, isStudentMode}) => {
   const path = getLessonPath(course, lesson, language, isReadme);
-  const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src/${course}/${lesson}`;
-  const linkToLesson = `http://oppgaver.kidsakoder.no/${path}`;
+  const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src${path}.md`;
+  const linkToLesson = `https://oppgaver.kidsakoder.no${path}`;
   const newIssueFill = '?title=' + t('lessons.improvepage.newissuelink.title') + ' \'' +
                        capitalize(course) + ': ' + capitalize(lesson).replace(/_/g, ' ') + '\'' +
                        '&body=' + t('lessons.improvepage.newissuelink.lesson') + ': ' + linkToLesson +
