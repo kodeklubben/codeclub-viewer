@@ -32,8 +32,12 @@
   "bugs": {
     "url": "https://github.com/NorwegianKiwi/codeclub-viewer/issues"
   },
+  "browserslist": [
+    "defaults"
+  ],
   "homepage": "https://github.com/NorwegianKiwi/codeclub-viewer#readme",
   "dependencies": {
+    "core-js": "^3.2.1",
     "fast-memoize": "^2.3.2",
     "highlight.js": "^9.11.0",
     "history": "^2.1.2",
