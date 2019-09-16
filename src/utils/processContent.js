@@ -157,6 +157,8 @@ const renderScratchBlocks = (content, styles) => {
         let doc = scratchblocks.parse(code, r.options);
         let docView = scratchblocks.newView(doc, {style: 'scratch3'});
         let svg = docView.render();
+        svg.setAttribute('viewBox', `0 0 ${svg.getAttribute('width')} ${svg.getAttribute('height')}`);
+        svg.style.maxWidth = '100%';
         if (r.options.inline) {
           svg.style.margin = '3px 0';
           svg.style.verticalAlign = 'middle';
