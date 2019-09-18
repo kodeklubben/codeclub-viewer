@@ -10,11 +10,17 @@
 .rowStudent {
   @include row;
   background-color: $color-green-lighter;
+  &:hover {
+    background-color: #ddefdd !important;
+  }
 }
 
 .rowTeacher {
   @include row;
   background-color: $color-blue-lighter;
+  &:hover {
+    background-color: #dfeded !important;
+  }
 }
 
 @mixin progressBar($color) {
