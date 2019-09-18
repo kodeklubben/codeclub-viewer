@@ -1,7 +1,12 @@
 @import '../../styles/variables';
 
-.container {
+.containerDark {
   color: $color-gray;
+  text-align: center;
+}
+
+.containerWhite {
+  color: lightgray;
   text-align: center;
 }
 

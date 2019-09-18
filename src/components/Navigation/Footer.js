@@ -5,6 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
 import DyslexiaSwitch from './DyslexiaSwitch';
+import DarkModeSwitch from './DarkModeSwitch';
 
 const Footer = ({t, isStudentMode}) => {
   const url = {
@@ -70,7 +71,10 @@ const Footer = ({t, isStudentMode}) => {
         <img className={styles.svg} src={require('../../assets/graphics/github.png')} alt={'GitHub'}/>
         <p className={styles.contribute}>{t('footer.contribute')}</p>
       </a>
-      <div className={styles.centerSwitch}><DyslexiaSwitch/></div>
+      <div className={styles.centerSwitch}>
+        <DarkModeSwitch/>
+        <DyslexiaSwitch/>
+      </div>
       <div className={styles.divider}/>
       {sponsors}
     </div>);

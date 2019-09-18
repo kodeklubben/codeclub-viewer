@@ -68,8 +68,6 @@ export default {
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
     reset: 'Fjern avkrysninger',
-    lightmode: 'Slå på nattmodus',
-    darkmode: 'Slå av nattmodus',
     tomainlanguage: 'På {{lang}}',
     nottranslated: 'Denne siden finnes ikke på {{lang}}',
     license: 'Lisens: ',
@@ -119,6 +117,7 @@ export default {
   },
   footer: {
     contribute: 'Lag egne oppgaver',
+    darkmode: 'Nattmodus',
     dyslexia: 'Skrift for dyslektikere',
   },
   404: {

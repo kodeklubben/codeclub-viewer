@@ -124,6 +124,7 @@ export default {
   },
   footer: {
     contribute: 'Búðu til þitt eigið verkefni',
+    darkmode: 'Næturstillingu',
     dyslexia: 'Texti fyrir lesblinda',
   },
   404: {

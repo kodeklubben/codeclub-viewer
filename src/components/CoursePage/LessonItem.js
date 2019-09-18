@@ -30,7 +30,7 @@ const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
 const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   return level > 0 ?
-    <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%'}}/> :
+    <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%',}}/> :
     null;
 };
 
@@ -66,7 +66,9 @@ const LessonItem = ({
   return (
     <div>
       {external ?
-        <ListGroupItem href={external} target='_blank' rel='noopener' className={styles.row}>
+        <ListGroupItem href={external} target='_blank' rel='noopener'
+          className={isStudentMode ? styles.rowStudent : styles.rowTeacher}
+        >
           {flag}
           <LevelIcon level={level}/>
           <div className={styles.title}>{title}</div>
@@ -78,7 +80,7 @@ const LessonItem = ({
         </ListGroupItem>
         :
         <LinkContainer to={getLessonPath(course, lesson, language, false)}>
-          <ListGroupItem className={styles.row}>
+          <ListGroupItem className={isStudentMode ? styles.rowStudent : styles.rowTeacher}>
             {flag}
             <Progressbar {...{checkedCheckboxes, totalCheckboxes, level}}/>
             <LevelIcon level={level}/>

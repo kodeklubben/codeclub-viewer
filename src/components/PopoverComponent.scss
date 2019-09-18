@@ -1,6 +1,6 @@
 @import '../styles/variables';
 
-.popover {
+@mixin popover {
   max-width: $screen-xs-max;
   img {
     width: 100%;
@@ -15,6 +15,20 @@
       max-width: 100px;
       max-height: 125px;
     }
+  }
+}
+
+.popoverWhite {
+  @include popover;
+}
+
+.popoverDark {
+  @include popover;
+  background-color: #222;
+  color: white;
+
+  div:first-child::after {
+    border-bottom-color: #222 !important;
   }
 }
 

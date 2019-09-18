@@ -67,8 +67,6 @@ export default {
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
     reset: 'Clear checkboxes',
-    lightmode: 'Turn on dark mode',
-    darkmode: 'Turn off dark mode',
     tomainlanguage: 'In {{lang}}',
     nottranslated: 'This page does not exist in {{lang}}',
     license: 'License: ',
@@ -118,6 +116,7 @@ export default {
   },
   footer: {
     contribute: 'Create your own lessons',
+    darkmode: 'Dark mode',
     dyslexia: 'Text for dyslexics',
   },
   404: {

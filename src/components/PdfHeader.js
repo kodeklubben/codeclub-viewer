@@ -11,7 +11,7 @@ const PdfHeader = ({course, language}) => {
   const courseTitle = getCourseTitle(course, language);
   return (
     <div className={styles.container}>
-      <img className={styles.courseIcon} src={getCourseIcon(course)} alt={courseTitle}/>
+      <img className={styles.courseIcon} src={getCourseIcon(course, 'black')} alt={courseTitle}/>
       <span className={styles.course}>{courseTitle}</span>
     </div>
   );

@@ -1,6 +1,7 @@
 @import '../../styles/variables';
 
 .container {
+  margin-top: 100px;
   padding-top: 20px;
   text-align: center;
   a {
@@ -14,18 +15,13 @@
 }
 
 .containerStudent {
-  composes: container;
+  @extend .container;
   background-color: $color-green-light;
 }
 
 .containerTeacher {
-  composes: container;
+  @extend .container;
   background-color: $color-blue-light;
-}
-
-.inline {
-  display: inline-block;
-  margin: 20px 10px;
 }
 
 .svg {
@@ -63,6 +59,8 @@
 }
 
 .centerSwitch {
+  max-width: 360px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
 }

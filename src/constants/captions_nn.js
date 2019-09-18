@@ -69,8 +69,6 @@ export default {
     toteacherinstruction: 'Til lærarrettleiing',
     tolesson: 'Til oppgåve',
     reset: 'Fjern avkryssingar',
-    lightmode: 'Slå på nattmodus',
-    darkmode: 'Slå av nattmodus',
     tomainlanguage: 'På {{lang}}',
     nottranslated: 'Denne sida finst ikkje på {{lang}}',
     license: 'Lisens: ',
@@ -120,6 +118,7 @@ export default {
   },
   footer: {
     contribute: 'Lag eigne oppgåver',
+    darkmode: 'Nattmodus',
     dyslexia: 'Skrift for dyslektikarar',
   },
   404: {

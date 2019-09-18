@@ -16,10 +16,10 @@ class PopoverComponent extends React.PureComponent {
   };
 
   render() {
-    const {children, popoverContent, showDyslexicFont} = this.props;
+    const {children, popoverContent, showDyslexicFont, showDarkMode} = this.props;
     const className = showDyslexicFont ? styles.contentDyslexia : styles.content;
     const overlay =
-      <Popover id={hashCode(popoverContent)} className={styles.popover}>
+      <Popover id={hashCode(popoverContent)} className={showDarkMode ? styles.popoverDark : styles.popoverWhite}>
         <div {...{className}} role='region' dangerouslySetInnerHTML={this.createMarkup()}/>
       </Popover>;
     const options = {
@@ -45,10 +45,12 @@ PopoverComponent.propTypes = {
 
   // mapStateToProps
   showDyslexicFont: PropTypes.bool.isRequired,
+  showDarkMode: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   showDyslexicFont: state.showDyslexicFont,
+  showDarkMode: state.showDarkMode,
 });
 
 export default connect(

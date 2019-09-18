@@ -14,7 +14,27 @@
   }
 }
 
-.gadgetContainer {
+@mixin gadgetContainer {
   display: inline-block;
   padding: 3px 5px;
+}
+
+.gadgetContainerWhite {
+  @include gadgetContainer;
+}
+
+.gadgetContainerDark {
+  @include gadgetContainer;
+
+  ul {
+    background-color: #222;
+
+    a:hover {
+      background-color: #444;
+    }
+  }
+}
+
+.whiteText {
+  color: white;
 }

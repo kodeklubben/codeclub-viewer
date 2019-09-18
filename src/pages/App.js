@@ -9,10 +9,14 @@ import styles from './App.scss';
 import '../styles/customBootstrapStyles';
 import Head from '../components/Head';
 
-const App = ({params, location, children, showDyslexicFont}) => {
+const App = ({params, location, children, showDyslexicFont, showDarkMode}) => {
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
-  const className = showDyslexicFont ? styles.appContainerDyslexia : styles.appContainer;
+  const appStyle = {
+    dyslexia: showDyslexicFont ? styles.dyslexia : '',
+    darkmode: showDarkMode ? styles.darkmode : '',
+  };
+  const className = styles.appContainer + ' ' + appStyle.dyslexia + ' ' + appStyle.darkmode;
   return (
     <div>
       <Head/>
@@ -35,10 +39,12 @@ App.propTypes = {
 
   // mapStateToProps
   showDyslexicFont: PropTypes.bool.isRequired,
+  showDarkMode: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   showDyslexicFont: state.showDyslexicFont,
+  showDarkMode: state.showDarkMode,
 });
 
 export default connect(

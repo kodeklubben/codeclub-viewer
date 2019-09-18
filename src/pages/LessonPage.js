@@ -62,7 +62,7 @@ class LessonPage extends React.PureComponent {
   }
 
   render() {
-    const {course, lesson, language, isReadme, t, showDarkMode} = this.props;
+    const {course, lesson, language, isReadme, t} = this.props;
     const title = getLessonTitle(course, lesson, language, isReadme);
     const author = getLessonAuthor(course, lesson, language, isReadme);
     const translator = getLessonTranslator(course, lesson, language, isReadme);
@@ -78,7 +78,7 @@ class LessonPage extends React.PureComponent {
       }
     </div>;
     return (
-      <div role='main' className={showDarkMode ? styles.darkmode : styles.lightmode}>
+      <div role='main'>
         <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
         <div className={styles.container}>
           <h1>
@@ -108,7 +108,6 @@ LessonPage.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  showDarkMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setLastLesson: PropTypes.func.isRequired
@@ -116,7 +115,6 @@ LessonPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
-  showDarkMode: state.showDarkMode,
 });
 
 const mapDispatchToProps = {

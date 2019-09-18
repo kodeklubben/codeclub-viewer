@@ -8,10 +8,10 @@ import {getTranslator} from '../../selectors/translate';
 import {getFilteredLessonsInCourseCountPerLanguage} from '../../selectors/lesson';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
-const LessonCount = ({lessonsPerLanguage, showFlag, t}) => {
+const LessonCount = ({lessonsPerLanguage, showFlag, t, showDarkMode}) => {
   const totalNumberOfLessons = Object.keys(lessonsPerLanguage).reduce((sum, n) => sum + lessonsPerLanguage[n], 0);
   return (
-    <div className={styles.container}>
+    <div className={showDarkMode ? styles.containerWhite : styles.containerDark}>
       <div className={styles.center}>{t('frontpage.lessoncount', {count: totalNumberOfLessons})}</div>
       {showFlag ?
         <div className={styles.center}>
@@ -35,12 +35,14 @@ LessonCount.propTypes = {
   lessonsPerLanguage: PropTypes.objectOf(PropTypes.number),
   showFlag: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
+  showDarkMode: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, {course}) => ({
   lessonsPerLanguage: getFilteredLessonsInCourseCountPerLanguage(state, course),
   showFlag: !onlyCheckedMainLanguage(state),
   t: getTranslator(state),
+  showDarkMode: state.showDarkMode,
 });
 
 export default connect(

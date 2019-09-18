@@ -20,11 +20,14 @@ const languages = {
   is: 'Íslenska',
 };
 
-const LanguageItem = ({language, onlyFlag}) => (
+const LanguageItem = ({language, onlyFlag, showDarkMode}) => (
   // Note that the block with "float" (the flag) must be first in the containing div
   <div className={styles.languageItemContainer}>
     <Flag {...{language}}/>
-    <span className={styles.language + (onlyFlag ? ' ' + styles.onlyFlag : '')}>
+    <span className={styles.language +
+      (onlyFlag ? ' ' + styles.onlyFlag : '') +
+      (showDarkMode ? ' ' + styles.whiteText : '')}
+    >
       {languages[language] || language}
     </span>
   </div>
@@ -33,6 +36,7 @@ const LanguageItem = ({language, onlyFlag}) => (
 LanguageItem.propTypes = {
   // ownProps
   onlyFlag: PropTypes.bool.isRequired,
+  showDarkMode: PropTypes.bool,
 
   // mapStateToProps
   language: PropTypes.oneOf(availableLanguages).isRequired,
@@ -46,10 +50,10 @@ class LanguageDropdown extends React.PureComponent {
   };
 
   render() {
-    const {isStudentMode, language} = this.props;
+    const {isStudentMode, language, showDarkMode} = this.props;
     const mode = isStudentMode ? 'student' : 'teacher';
     return (
-      <div className={styles.gadgetContainer}>
+      <div className={showDarkMode ? styles.gadgetContainerDark : styles.gadgetContainerWhite}>
         <DropdownButton id='language-dropdown'
           noCaret
           pullRight
@@ -61,7 +65,7 @@ class LanguageDropdown extends React.PureComponent {
           {
             availableLanguages.map(key =>
               <MenuItem {...{key}} eventKey={key} active={language === key}>
-                <LanguageItem onlyFlag={false} language={key}/>
+                <LanguageItem {...{showDarkMode}} onlyFlag={false} language={key}/>
               </MenuItem>
             )
           }
@@ -75,6 +79,7 @@ LanguageDropdown.propTypes = {
   // mapStateToProps:
   language: PropTypes.oneOf(availableLanguages).isRequired,
   isStudentMode: PropTypes.bool.isRequired,
+  showDarkMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps:
   setLanguage: PropTypes.func.isRequired,
@@ -85,6 +90,7 @@ LanguageDropdown.propTypes = {
 const mapStateToProps = (state) => ({
   language: state.language,
   isStudentMode: state.isStudentMode,
+  showDarkMode: state.showDarkMode,
 });
 
 const mapDispatchToProps = {

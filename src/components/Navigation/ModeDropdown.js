@@ -13,14 +13,14 @@ class ModeDropdown extends React.PureComponent {
   handleSelect = eventKey => eventKey === 'teacher' ? this.props.setModeTeacher() : this.props.setModeStudent();
 
   render() {
-    const {t, isStudentMode} = this.props;
+    const {t, isStudentMode, showDarkMode} = this.props;
     const modes = ['student', 'teacher'];
     const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
     const mode = isStudentMode ? modes[0] : modes[1];
     const bsStyle = 'language-' + mode;
     const title = (
       <div>
-        <Glyphicon className={styles.icon} glyph={isStudentMode ? 'pencil' : 'education'}/>
+        <Glyphicon className={styles.darkIcon} glyph={isStudentMode ? 'pencil' : 'education'}/>
         <span>
           <span className={styles.onlyMode}>{t('navbar.mode') + ': '}</span>
           {texts[mode]}
@@ -28,12 +28,14 @@ class ModeDropdown extends React.PureComponent {
       </div>
     );
     return (
-      <div className={styles.gadgetContainer}>
+      <div className={showDarkMode ? styles.gadgetContainerDark : styles.gadgetContainerWhite}>
         <DropdownButton id='mode-dropdown' noCaret pullRight onSelect={this.handleSelect} {...{bsStyle, title}}>
           {modes.map(key =>
             <MenuItem {...{key}} eventKey={key} active={mode === key}>
-              <Glyphicon className={styles.icon} glyph={key === 'student' ? 'pencil' : 'education'}/>
-              {texts[key]}
+              <Glyphicon className={showDarkMode ? styles.whiteIcon : styles.darkIcon}
+                glyph={key === 'student' ? 'pencil' : 'education'}
+              />
+              <span className={showDarkMode ? styles.whiteText : ''}>{texts[key]}</span>
             </MenuItem>)
           }
         </DropdownButton>
@@ -46,6 +48,7 @@ ModeDropdown.propTypes = {
   //mapStateToProps
   t: PropTypes.func.isRequired,
   isStudentMode: PropTypes.bool.isRequired,
+  showDarkMode: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setModeStudent: PropTypes.func.isRequired,
@@ -54,7 +57,8 @@ ModeDropdown.propTypes = {
 
 const mapStateToProps = (state) => ({
   isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
+  t: getTranslator(state),
+  showDarkMode: state.showDarkMode,
 });
 
 const mapDispatchToProps = {
