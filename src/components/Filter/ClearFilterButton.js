@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -11,10 +11,10 @@ import {resetAllFilters} from '../../reducers/filter';
 
 const ClearFilterButton = ({t, language, somethingChecked, resetAllFilters, collapseAllFilterGroups}) => {
   useStyles(styles);
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     resetAllFilters('language', language);
     collapseAllFilterGroups(true);
-  }, [resetAllFilters, language, collapseAllFilterGroups]);
+  };
 
   return somethingChecked ?
     <Button block onClick={handleClick} className={styles.marginBottom} bsStyle={'white-grey-lighter'}>

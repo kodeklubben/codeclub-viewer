@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -9,15 +9,12 @@ import {getTranslator} from '../../selectors/translate';
 
 const DyslexiaSwitch = ({t, showDyslexicFont, setShowDyslexicFont}) => {
   useStyles(styles);
-  const handleChange = useCallback(() => 
-    setShowDyslexicFont(!showDyslexicFont), [showDyslexicFont, setShowDyslexicFont]
-  );
 
   return (
     <label htmlFor='switch' className={styles.container}>
       <span className={styles.text}>{t('footer.dyslexia')}</span>
       <Switch
-        onChange={handleChange}
+        onChange={() => setShowDyslexicFont(!showDyslexicFont)}
         checked={showDyslexicFont}
         id='switch'
         onColor='#000'

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
@@ -15,9 +15,7 @@ import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistL
 
 const PlaylistNavigation = ({course, language, t, expandedAccordion, setExpandedAccordion}) => {
   useStyles(styles);
-  const handleSelect = useCallback(activeKey =>
-    setExpandedAccordion(course, activeKey), [setExpandedAccordion, course]
-  );
+  const handleSelect = activeKey => setExpandedAccordion(course, activeKey);
 
   const playlists = getPlaylistsForCourse(course);
   const playlistListItems = playlists.map((playlist, i) => {

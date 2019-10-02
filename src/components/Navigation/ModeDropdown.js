@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -11,8 +11,7 @@ import {setModeStudent, setModeTeacher} from '../../reducers/mode';
 
 const ModeDropdown = ({t, isStudentMode, setModeStudent, setModeTeacher}) => {
   useStyles(styles);
-  const handleSelect = useCallback(eventKey =>
-    eventKey === 'teacher' ? setModeTeacher() : setModeStudent(), [setModeStudent, setModeTeacher]);
+  const handleSelect = eventKey => eventKey === 'teacher' ? setModeTeacher() : setModeStudent();
   const modes = ['student', 'teacher'];
   const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
   const mode = isStudentMode ? modes[0] : modes[1];

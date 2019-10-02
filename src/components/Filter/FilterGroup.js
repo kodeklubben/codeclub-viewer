@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
@@ -17,12 +17,12 @@ const FilterGroup = ({
   collapseFilterGroup
 }) => {
   useStyles(styles);
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
     if (!somethingChecked) {
       collapseFilterGroup(groupKey, !isCollapsed);
     }
-  }, [collapseFilterGroup, filterGroupsCollapsed, somethingChecked, groupKey]);
+  };
 
   const groupName = translateFilter(groupKey);
   if (groupName) {

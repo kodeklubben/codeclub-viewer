@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
@@ -41,11 +41,11 @@ LanguageItem.propTypes = {
 
 const LanguageDropdown = ({isStudentMode, language, resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
   useStyles(styles);
-  const handleSelect = useCallback(eventKey => {
+  const handleSelect = eventKey => {
     resetOneFilter('language', eventKey);
     setLanguage(eventKey);
     collapseAllFilterGroups(true);
-  }, [resetOneFilter, setLanguage, collapseAllFilterGroups]);
+  };
 
   const mode = isStudentMode ? 'student' : 'teacher';
   return (

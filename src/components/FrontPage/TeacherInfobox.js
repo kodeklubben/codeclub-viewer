@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -27,7 +27,7 @@ const TeacherInfobox = ({t}) => {
         <div className={styles.center}>
           <Button
             className={styles.plusSign}
-            onClick={useCallback(() => handleClick(!showCourseInfo), [showCourseInfo])}
+            onClick={() => handleClick(!showCourseInfo)}
             aria-label={ariaLabel}
           >
             <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>

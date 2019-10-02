@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
 import Collapse from 'react-bootstrap/lib/Collapse';
@@ -20,7 +20,7 @@ const ToggleButton = ({buttonText, hiddenHTML}) => {
   };
   return (
     <div style={containerStyle}>
-      <Button onClick={useCallback(() => handleClick(!open), [open])}>
+      <Button onClick={() => handleClick(!open)}>
         {buttonText}
       </Button>
       <Collapse in={open}>

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
@@ -19,7 +19,7 @@ const InstructionButton = ({isReadme, onlyIcon, insideLink, path, buttonText}) =
     componentClass: insideLink ? 'div' : 'a',
     tabIndex: '0',
     'aria-label': buttonText,
-    onKeyPress: useCallback(() => browserHistory.push(path), [path]),
+    onKeyPress: () => browserHistory.push(path),
   };
   return (path ?
     <LinkContainer to={path}>

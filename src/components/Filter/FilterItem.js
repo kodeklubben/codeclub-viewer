@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {getTranslator} from '../../selectors/translate';
@@ -11,7 +11,7 @@ import {filterChecked} from '../../reducers/filter';
 
 const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent, t, filterChecked}) => {
   useStyles(styles);
-  const handleChange = useCallback(() => filterChecked(groupKey, itemKey), [filterChecked, groupKey, itemKey]);
+  const handleChange = () => filterChecked(groupKey, itemKey);
 
   const popover = popoverContent ?
     <PopoverComponent {...{popoverContent}}>

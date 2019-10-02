@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Button from 'react-bootstrap/lib/Button';
@@ -11,14 +11,13 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const ResetButton = ({path, t, setCheckbox}) => {
   useStyles(styles);
-  const handleClick = useCallback(() => setCheckboxesInDoc(path, {}, setCheckbox), [path, setCheckbox]);
 
   const options = {
     bsStyle: 'warning',
     bsSize: 'small',
     className: styles.container,
     'aria-label': t('lessons.reset'),
-    onClick: handleClick,
+    onClick: () => setCheckboxesInDoc(path, {}, setCheckbox),
   };
   return (
     <Button {...options}>

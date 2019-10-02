@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -18,13 +18,11 @@ const RadioButton = ({checked, onChange, text}) => {
 
 const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
   useStyles(styles);
-  const handleChangeToPlaylists = useCallback(() => {
+  const handleChangeToPlaylists = () => {
     setShowPlaylists(true);
     resetAllFilters('language', language);
     collapseAllFilterGroups(true);
-  }, [collapseAllFilterGroups, resetAllFilters, language, setShowPlaylists]);
-
-  const handleChangeToLessons = useCallback(() => setShowPlaylists(false), [setShowPlaylists]);
+  };
 
   return (
     <form role='group' aria-label={t('filter.radio.group')}>
@@ -35,7 +33,7 @@ const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFil
       />
       <RadioButton
         checked={!showPlaylists}
-        onChange={handleChangeToLessons}
+        onChange={() => setShowPlaylists(false)}
         text={t('filter.radio.lessons')}
       />
     </form>
