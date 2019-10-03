@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/lib/Button';
 import Collapse from 'react-bootstrap/lib/Collapse';
 
 const ToggleButton = ({buttonText, hiddenHTML}) => {
-  const [open, handleClick] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const containerStyle = {
     margin: '10px 0',
@@ -20,7 +20,7 @@ const ToggleButton = ({buttonText, hiddenHTML}) => {
   };
   return (
     <div style={containerStyle}>
-      <Button onClick={() => handleClick(!open)}>
+      <Button onClick={() => setOpen(!open)}>
         {buttonText}
       </Button>
       <Collapse in={open}>

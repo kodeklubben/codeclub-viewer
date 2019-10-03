@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {Provider} from 'react-redux';
-import createMemoryHistory from 'react-router/lib/createMemoryHistory';
-import RouterContext from 'react-router/lib/RouterContext';
-import match from 'react-router/lib/match';
+import {createMemoryHistory, match, RouterContext} from 'react-router';
 import routes from './routes';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import {Helmet} from 'react-helmet';
 import store from './store';
-const template = require('./html-template.ejs');
 
+const template = require('./html-template.ejs');
 const faviconTagArray = require('assets/favicon.png');
 const faviconHtml = faviconTagArray.join('');
 
@@ -17,9 +15,6 @@ const renderStatic = (locals, callback) => {
   const history = createMemoryHistory();
   const pathWithoutHtml = locals.path.replace(/\.html$/, '');
   const location = history.createLocation(pathWithoutHtml);
-
-  // console.log('locals.path', locals.path);
-  // console.log('locals.assets', locals.assets);
 
   match({ routes, location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
     let css = new Set();

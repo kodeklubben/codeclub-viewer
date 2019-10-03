@@ -9,7 +9,7 @@ import styles from './App.scss';
 import '../styles/customBootstrapStyles';
 import Head from '../components/Head';
 
-const App = ({params, location, children, showDyslexicFont, context}) => {
+const App = ({params, location, children, showDyslexicFont}) => {
   useStyles(styles);
 
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"

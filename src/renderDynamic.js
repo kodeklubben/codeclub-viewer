@@ -20,13 +20,11 @@ const renderDynamic = () => {
     store.dispatch(setHydrationComplete());
   };
 
-  const onUpdate = () => window.scrollTo(0, 0);
-
   const renderFunc = IS_HOT ? render : hydrate;
   renderFunc(
     <Provider {...{store}}>
       <StyleContext.Provider value={{insertCss}}>
-        <Router {...{routes}} history={browserHistory} {...{onUpdate}} />
+        <Router {...{routes}} history={browserHistory} onUpdate={() => window.scrollTo(0, 0)} />
       </StyleContext.Provider>
     </Provider>,
 

@@ -6,12 +6,12 @@ import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './CollapsiblePanel.scss';
 
 const CollapsiblePanel = ({initiallyExpanded, header, bsStyle, children}) => {
-  const [expanded, setToggle] = useState(initiallyExpanded);
+  const [expanded, setExpanded] = useState(initiallyExpanded);
   useStyles(styles);
 
   return (
     <div className={styles.container}>
-      <Panel {...{expanded, bsStyle}} onToggle={() => setToggle(!expanded)}>
+      <Panel {...{expanded, bsStyle}} onToggle={() => setExpanded(!expanded)}>
         <Panel.Heading>
           <Panel.Title toggle>
             <Glyphicon className={styles.chevron} glyph={expanded ? 'chevron-down' : 'chevron-right'}/>

@@ -9,7 +9,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
 const TeacherInfobox = ({t}) => {
-  const [showCourseInfo, handleClick] = useState(false);
+  const [showCourseInfo, setShowCourseInfo] = useState(false);
   useStyles(styles);
 
   const url = [
@@ -27,7 +27,7 @@ const TeacherInfobox = ({t}) => {
         <div className={styles.center}>
           <Button
             className={styles.plusSign}
-            onClick={() => handleClick(!showCourseInfo)}
+            onClick={() => setShowCourseInfo(!showCourseInfo)}
             aria-label={ariaLabel}
           >
             <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
