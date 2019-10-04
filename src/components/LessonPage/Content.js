@@ -18,8 +18,11 @@ const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, se
       const path = getLessonPath(course, lesson, language, isReadme);
       setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
     }
-    if (course === 'microbit') { renderMicrobit(language); }
   }, [course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox]);
+
+  useEffect(() => {
+    if (course === 'microbit') { renderMicrobit(language); }
+  }, [course, language]);
 
   const lessonContent = getLessonContent(course, lesson, language, isReadme);
 
