@@ -52,14 +52,16 @@ const renderSpinner = course => {
   }
 };
 
-const LessonPage = ({course, lesson, language, isReadme, t, isHydrated, setLastLesson}) => {
+const LessonPage = ({course, lesson, language, isReadme, t, setLastLesson}) => {
   useEffect(() => {
-    setLastLesson(getLessonPath(course, lesson, language, isReadme));
-    if (isHydrated) {
-      renderToggleButtons();
-      renderSpinner(course);
-    }
-  }, [course, lesson, language, isReadme, isHydrated, setLastLesson]);
+    const path = getLessonPath(course, lesson, language, isReadme);
+    setLastLesson(path);
+    renderToggleButtons();
+  }, [course, lesson, language, isReadme, setLastLesson]);
+
+  useEffect(() => {
+    renderSpinner(course);
+  }, [course]);
 
   useStyles(styles);
   const title = getLessonTitle(course, lesson, language, isReadme);
@@ -106,7 +108,6 @@ LessonPage.propTypes = {
 
   // mapStateToProps
   t: PropTypes.func.isRequired,
-  isHydrated: PropTypes.bool.isRequired,
 
   // mapDispatchToProps
   setLastLesson: PropTypes.func.isRequired
@@ -114,7 +115,6 @@ LessonPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   t: getTranslator(state),
-  isHydrated: state.hydration,
 });
 
 const mapDispatchToProps = {

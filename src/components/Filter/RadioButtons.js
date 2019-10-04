@@ -8,13 +8,12 @@ import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButton = ({checked, onChange, text}) => {
-  return (
-    <label className={styles.label}>
-      <input type='radio' name='radioGroup' {...{checked, onChange}}/>
-      <span className={styles.marginLeft}>{text}</span>
-    </label>);
-};
+const RadioButton = ({checked, onChange, text}) => (
+  <label className={styles.label}>
+    <input type='radio' name='radioGroup' {...{checked, onChange}}/>
+    <span className={styles.marginLeft}>{text}</span>
+  </label>
+);
 
 const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
   useStyles(styles);

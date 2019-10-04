@@ -12,17 +12,18 @@ import {setCheckbox, removeCheckbox} from '../../reducers/checkboxes';
 import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 
 const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox}) => {
+  useStyles(styles);
   useEffect(() => {
     if (isHydrated) {
-      setCheckboxesInDoc(getLessonPath(course, lesson, language, isReadme), checkboxes, setCheckbox, removeCheckbox);
-      if (course === 'microbit') { renderMicrobit(language); }
+      const path = getLessonPath(course, lesson, language, isReadme);
+      setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
     }
+    if (course === 'microbit') { renderMicrobit(language); }
   }, [course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox]);
 
-  useStyles(styles);
-  return <div dangerouslySetInnerHTML={
-    {__html: processContent(getLessonContent(course, lesson, language, isReadme), styles, isHydrated)}
-  }/>;
+  const lessonContent = getLessonContent(course, lesson, language, isReadme);
+
+  return <div dangerouslySetInnerHTML={{__html: processContent(lessonContent, styles, isHydrated)}}/>;
 };
 
 Content.propTypes = {
