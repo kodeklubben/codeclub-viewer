@@ -1,10 +1,9 @@
 /* eslint-env node */
-/* eslint react-hooks/rules-of-hooks: 0 */
 /* global IS_HOT */
 
 import React from 'react';
 import {render, hydrate} from 'react-dom';
-import {Router, useRouterHistory } from 'react-router';
+import {Router, useRouterHistory as createHistory} from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import {Provider} from 'react-redux';
 import routes from './routes';
@@ -20,7 +19,7 @@ const insertCss = (...styles) => {
 const renderDynamic = () => {
   const basename = process.env.PUBLICPATH_WITHOUT_SLASH;	
   const historyOptions = basename === '/' ? {} : {basename};	
-  const history = useRouterHistory(createBrowserHistory )({historyOptions});
+  const history = createHistory(createBrowserHistory )({historyOptions});
 
   const callback = () => {
     updateStoreFromLocalStorage();

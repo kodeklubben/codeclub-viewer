@@ -3,11 +3,9 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import ReactDOM from 'react-dom';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
-import ToggleButton from '../components/LessonPage/ToggleButton';
 import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import {getTranslator} from '../selectors/translate';
 import {setLastLesson} from '../reducers/lastLesson';
@@ -21,47 +19,12 @@ import {getLevel, getLicense} from '../resources/lessons';
 import Head from '../components/Head';
 import PrintInfo from '../components/LessonPage/PrintInfo';
 
-const renderToggleButtons = () => {
-  const nodes = [...document.getElementsByClassName('togglebutton')];
-  for (let node of nodes) {
-    const strongNode = node.getElementsByTagName('strong')[0];
-    const buttonText = strongNode ? strongNode.textContent : 'Hint';
-    const hiddenNode = node.getElementsByTagName('hide')[0];
-    const hiddenHTML = hiddenNode ? hiddenNode.innerHTML : '';
-    ReactDOM.render(<ToggleButton {...{buttonText, hiddenHTML}}/>, node);
-  }
-};
-
-const renderSpinner = course => {
-  if (course === 'microbit') {
-    const pres = [...document.getElementsByTagName('pre')];
-    for (let pre of pres) {
-      if ([...pre.childNodes][0].className === 'python') return;
-      pre.style.display = 'none';
-      let img = document.createElement('img');
-      img.id = 'spinner';
-      img.src = require('../assets/graphics/spinner.gif');
-      img.alt = 'Spinner';
-      img.width = '50';
-      img.height = '50';
-      img.style.maxWidth = '100%';
-      img.style.display = 'block';
-      img.style.margin = '0 auto 15px';
-      pre.parentElement.insertBefore(img, pre);
-    }
-  }
-};
 
 const LessonPage = ({course, lesson, language, isReadme, t, setLastLesson}) => {
   useEffect(() => {
     const path = getLessonPath(course, lesson, language, isReadme);
     setLastLesson(path);
-    renderToggleButtons();
   }, [course, lesson, language, isReadme, setLastLesson]);
-
-  useEffect(() => {
-    renderSpinner(course);
-  }, [course]);
 
   useStyles(styles);
   const title = getLessonTitle(course, lesson, language, isReadme);
