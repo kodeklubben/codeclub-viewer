@@ -54,7 +54,7 @@ const LessonItem = ({
     <div className={styles.flag}><Flag language={language}/></div> : null;
 
   const instructionButton = isStudentMode ? null :
-    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
+    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true}} />;
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>

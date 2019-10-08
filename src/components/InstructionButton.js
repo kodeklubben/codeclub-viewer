@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
 import Button from 'react-bootstrap/lib/Button';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './InstructionButton.scss';
@@ -10,18 +9,16 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
 
-const InstructionButton = ({isReadme, onlyIcon, insideLink, router, path, buttonText}) => {
+const InstructionButton = ({isReadme, onlyIcon, path, buttonText}) => {
   useStyles(styles);
   const options = {
     className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
     bsStyle: 'guide',
     bsSize: onlyIcon ? 'xs' : 'small',
-    componentClass: insideLink ? 'div' : 'a',
     tabIndex: '0',
     'aria-label': buttonText,
-    onKeyPress: () => router.push(path),
-  };
-  return (path ?
+  };          
+  return (path ?    
     <LinkContainer to={path}>
       <Button  {...options}>
         <Glyphicon className={styles.icon} glyph={isReadme ? 'education' : 'pencil'}/>
@@ -39,8 +36,6 @@ InstructionButton.propTypes = {
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
   onlyIcon: PropTypes.bool,
-  insideLink: PropTypes.bool, // set to true if button is nested inside a <a>...</a>
-  router: PropTypes.object.isRequired,
 
   // mapStateToProps
   path: PropTypes.string,
@@ -55,4 +50,4 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
   };
 };
 
-export default connect(mapStateToProps)(withRouter(InstructionButton));
+export default connect(mapStateToProps)(InstructionButton);
