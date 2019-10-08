@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PdfButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
@@ -11,6 +11,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const PdfButton = ({course, lesson, language, isReadme, t}) => {
+  useStyles(styles);
   const path = getLessonPath(course, lesson, language, isReadme);
   const options = {
     href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
@@ -44,6 +45,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state),
 });
 
-export default connect(
-  mapStateToProps,
-)(withStyles(styles)(PdfButton));
+export default connect(mapStateToProps)(PdfButton);

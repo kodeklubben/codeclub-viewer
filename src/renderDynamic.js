@@ -3,45 +3,37 @@
 
 import React from 'react';
 import {render, hydrate} from 'react-dom';
-import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
-import Router from 'react-router/lib/Router';
-import useRouterHistory from 'react-router/lib/useRouterHistory';
+import {Router, useRouterHistory as createHistory} from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
-import useScroll from 'react-router-scroll/lib/useScroll';
 import {Provider} from 'react-redux';
 import routes from './routes';
-import WithStylesContext from './WithStylesContext';
+import StyleContext from 'isomorphic-style-loader/StyleContext';
 import store, {updateStoreFromLocalStorage} from './store';
 import {setHydrationComplete} from './reducers/hydration';
 
-// The following onInsertCss function allows multiple styles as arguments in withStyles().
-// If we only require one style, it would suffice with onInsertCss = style => style._insertCss()
-const onInsertCss = (...styles) => {
+const insertCss = (...styles) => {
   const removeCss = styles.map(style => style._insertCss());
-  return () => {
-    removeCss.forEach(f => f());
-  };
+  return () => removeCss.forEach(dispose => dispose());
 };
 
 const renderDynamic = () => {
-  const basename = process.env.PUBLICPATH_WITHOUT_SLASH;
-  const historyOptions = basename === '/' ? {} : {basename};
-  const browserHistory = useRouterHistory(createBrowserHistory)(historyOptions);
+  const basename = process.env.PUBLICPATH_WITHOUT_SLASH;	
+  const historyOptions = basename === '/' ? {} : {basename};	
+  const history = createHistory(createBrowserHistory )({historyOptions});
 
   const callback = () => {
     updateStoreFromLocalStorage();
     store.dispatch(setHydrationComplete());
   };
 
+  const onUpdate = () => window.scrollTo(0, 0); // Scroll to top of page on every transition
+
   const renderFunc = IS_HOT ? render : hydrate;
   renderFunc(
-    <Provider store={store}>
-      <WithStylesContext onInsertCss={onInsertCss}>
-        <Router routes={routes}
-          history={browserHistory}
-          render={applyRouterMiddleware(useScroll())}
-        />
-      </WithStylesContext>
+    <Provider {...{store}}>
+      <StyleContext.Provider value={{insertCss}}>
+        <Router {...{routes, onUpdate, history}}/>
+      </StyleContext.Provider>
     </Provider>,
 
     document.getElementById('app'),

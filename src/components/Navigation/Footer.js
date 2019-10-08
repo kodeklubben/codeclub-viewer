@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
 import DyslexiaSwitch from './DyslexiaSwitch';
 import DarkModeSwitch from './DarkModeSwitch';
 
 const Footer = ({t, isStudentMode}) => {
+  useStyles(styles);
   const url = {
     wiki: 'https://github.com/kodeklubben/oppgaver/wiki',
     sparebank: 'https://www.sparebank1.no',
@@ -91,6 +92,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state)
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(Footer));
+export default connect(mapStateToProps)(Footer);

@@ -1,30 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './DarkModeSwitch.scss';
 import Switch from 'react-switch';
 import {setShowDarkMode} from '../../reducers/showDarkMode';
 import {getTranslator} from '../../selectors/translate';
 
-class DarkModeSwitch extends React.PureComponent {
-  handleChange = () => this.props.setShowDarkMode(!this.props.showDarkMode);
-
-  render() {
-    const {t, showDarkMode} = this.props;
-    return (
-      <label htmlFor='darkmodeswitch' className={styles.container}>
-        <span className={styles.text}>{t('footer.darkmode')}</span>
-        <Switch
-          onChange={this.handleChange}
-          checked={showDarkMode}
-          id='darkmodeswitch'
-          onColor='#000'
-        />
-      </label>
-    );
-  }
-}
+const DarkModeSwitch = ({t, showDarkMode, setShowDarkMode}) => {
+  useStyles(styles);
+  return (
+    <label htmlFor='darkmodeswitch' className={styles.container}>
+      <span className={styles.text}>{t('footer.darkmode')}</span>
+      <Switch
+        onChange={() => setShowDarkMode(!showDarkMode)}
+        checked={showDarkMode}
+        id='darkmodeswitch'
+        onColor='#000'
+      />
+    </label>
+  );
+};
 
 
 DarkModeSwitch.propTypes = {
@@ -45,7 +41,4 @@ const mapDispatchToProps = {
   setShowDarkMode
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(DarkModeSwitch));
+export default connect(mapStateToProps, mapDispatchToProps)(DarkModeSwitch);

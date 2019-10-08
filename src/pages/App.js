@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import PdfHeader from '../components/PdfHeader';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
@@ -10,6 +10,7 @@ import '../styles/customBootstrapStyles';
 import Head from '../components/Head';
 
 const App = ({params, location, children, showDyslexicFont, showDarkMode}) => {
+  useStyles(styles);
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
   const appStyle = {
@@ -47,6 +48,4 @@ const mapStateToProps = (state) => ({
   showDarkMode: state.showDarkMode,
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(App));
+export default connect(mapStateToProps)(App);

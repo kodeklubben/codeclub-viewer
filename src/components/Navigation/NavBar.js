@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './NavBar.scss';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -64,6 +64,7 @@ MenuToggle.propTypes = {
 };
 
 const NavBar = ({isStudentMode, t, params}) => {
+  useStyles(styles);
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
     <div className={styles.navbarWrapper} role='banner'>
@@ -108,6 +109,4 @@ const mapStateToProps = (state) => ({
   t: getTranslator(state),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(NavBar));
+export default connect(mapStateToProps)(NavBar);

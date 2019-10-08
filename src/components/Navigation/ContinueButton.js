@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Button from 'react-bootstrap/lib/Button';
 import styles from './ContinueButton.scss';
 import {getTranslator} from '../../selectors/translate';
@@ -10,6 +10,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getLessonPath, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
 
 const ContinueButton = ({path, t, lastLesson, isStudentMode}) => {
+  useStyles(styles);
   const hasLastLesson = lastLesson !== '';
   const pathIsNotLastLesson = lastLesson !== path;
   const options = {
@@ -52,6 +53,4 @@ const mapStateToProps = (state, {course, lesson, file}) => {
   };
 };
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(ContinueButton));
+export default connect(mapStateToProps)(ContinueButton);
