@@ -1,43 +1,29 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {Provider} from 'react-redux';
-import createMemoryHistory from 'react-router/lib/createMemoryHistory';
-import RouterContext from 'react-router/lib/RouterContext';
-import match from 'react-router/lib/match';
+import {createMemoryHistory, match, RouterContext} from 'react-router';
 import routes from './routes';
-import WithStylesContext from './WithStylesContext';
+import StyleContext from 'isomorphic-style-loader/StyleContext';
 import {Helmet} from 'react-helmet';
 import store from './store';
-const template = require('./html-template.ejs');
 
+const template = require('./html-template.ejs');
 const faviconTagArray = require('assets/favicon.png');
 const faviconHtml = faviconTagArray.join('');
-
-const getOnInsertCss = (css) => {
-  // The following onInsertCss function allows multiple styles as arguments in withStyles().
-  // If we only require one style, it would suffice with onInsertCss = style => css.push(style._getCss())
-  const onInsertCss = (...styles) => {
-    styles.forEach(style => css.push(style._getCss()));
-  };
-  return onInsertCss;
-};
 
 const renderStatic = (locals, callback) => {
   const history = createMemoryHistory();
   const pathWithoutHtml = locals.path.replace(/\.html$/, '');
   const location = history.createLocation(pathWithoutHtml);
 
-  // console.log('locals.path', locals.path);
-  // console.log('locals.assets', locals.assets);
-
   match({ routes, location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
-    let css = [];
-    const onInsertCss = getOnInsertCss(css);
+    let css = new Set();
+    const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
     const appHtml = ReactDOMServer.renderToString(
-      <Provider store={store}>
-        <WithStylesContext onInsertCss={onInsertCss}>
+      <Provider {...{store}}>
+        <StyleContext.Provider value={{insertCss}}>
           <RouterContext {...renderProps} />
-        </WithStylesContext>
+        </StyleContext.Provider>
       </Provider>
     );
     const helmet = Helmet.renderStatic();

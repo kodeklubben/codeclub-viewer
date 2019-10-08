@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Progress.scss';
 import ProgressBar from 'react-bootstrap/lib/ProgressBar';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 
 const Progress = ({checkedCheckboxes, totalCheckboxes, isReadme}) => {
+  useStyles(styles);
   if (checkedCheckboxes <= 0 || isReadme) { return null; } 
   const now = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
   const active = checkedCheckboxes < totalCheckboxes;
@@ -36,6 +37,4 @@ const mapStateToProps = (state, {course, lesson, language, isReadme}) => ({
   totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, isReadme),
 });
 
-export default connect(
-  mapStateToProps,
-)(withStyles(styles)(Progress));
+export default connect(mapStateToProps)(Progress);

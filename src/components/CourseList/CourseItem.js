@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import styles from './CourseItem.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
@@ -18,6 +18,7 @@ import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getTranslator} from '../../selectors/translate';
 
 const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedMainLanguage, t}) => {
+  useStyles(styles);
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
@@ -76,6 +77,4 @@ const mapStateToProps = (state, {course}) => ({
   t: getTranslator(state),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(CourseItem));
+export default connect(mapStateToProps)(CourseItem);

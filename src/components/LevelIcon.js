@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LevelIcon.scss';
 
 const LevelIcon = ({level}) => {
+  useStyles(styles);
   return level ?
     <img
       className={styles.levelIcon}
@@ -18,4 +19,4 @@ LevelIcon.propTypes = {
   level: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 
-export default withStyles(styles)(LevelIcon);
+export default LevelIcon;

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -17,6 +17,7 @@ import CollapsiblePanel from '../CollapsiblePanel';
 import ClearFilterButton from './ClearFilterButton';
 
 const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
+  useStyles(styles);
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
     <span>
@@ -80,6 +81,4 @@ const mapStateToProps = (state, {course}) => ({
   showFiltergroups: getShowFiltergroups(state, course),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(LessonFilter));
+export default connect(mapStateToProps)(LessonFilter);

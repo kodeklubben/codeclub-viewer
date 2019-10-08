@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Button from 'react-bootstrap/lib/Button';
@@ -47,13 +47,14 @@ const LessonItem = ({
   checkedCheckboxes,
   totalCheckboxes
 }) => {
+  useStyles(styles);
   const level = getLevel(course, lesson);
 
   const flag = !onlyCheckedMainLanguage ?
     <div className={styles.flag}><Flag language={language}/></div> : null;
 
   const instructionButton = isStudentMode ? null :
-    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
+    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true}} />;
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
@@ -123,6 +124,4 @@ const mapStateToProps = (state, {course, lesson, language}) => ({
   totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, false),
 });
 
-export default connect(
-  mapStateToProps
-)(withStyles(styles)(LessonItem));
+export default connect(mapStateToProps)(LessonItem);

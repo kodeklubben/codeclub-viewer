@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './RadioButtons.scss';
 import {getTranslator} from '../../selectors/translate';
 import {setShowPlaylists} from '../../reducers/showPlaylists';
@@ -15,33 +15,29 @@ const RadioButton = ({checked, onChange, text}) => (
   </label>
 );
 
-class RadioButtons extends React.PureComponent {
-  handleChangeToPlaylists = () => {
-    this.props.setShowPlaylists(true);
-    this.props.resetAllFilters('language', this.props.language);
-    this.props.collapseAllFilterGroups(true);
+const RadioButtons = ({showPlaylists, language, t, setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
+  useStyles(styles);
+  const handleChangeToPlaylists = () => {
+    setShowPlaylists(true);
+    resetAllFilters('language', language);
+    collapseAllFilterGroups(true);
   };
 
-  handleChangeToLessons = () => this.props.setShowPlaylists(false);
-
-  render() {
-    const {showPlaylists, t} = this.props;
-    return (
-      <form role='group' aria-label={t('filter.radio.group')}>
-        <RadioButton
-          checked={showPlaylists}
-          onChange={this.handleChangeToPlaylists}
-          text={t('filter.radio.playlists')}
-        />
-        <RadioButton
-          checked={!showPlaylists}
-          onChange={this.handleChangeToLessons}
-          text={t('filter.radio.lessons')}
-        />
-      </form>
-    );
-  }
-}
+  return (
+    <form role='group' aria-label={t('filter.radio.group')}>
+      <RadioButton
+        checked={showPlaylists}
+        onChange={handleChangeToPlaylists}
+        text={t('filter.radio.playlists')}
+      />
+      <RadioButton
+        checked={!showPlaylists}
+        onChange={() => setShowPlaylists(false)}
+        text={t('filter.radio.lessons')}
+      />
+    </form>
+  );
+};
 
 RadioButtons.propTypes = {
   // mapStateToProps
@@ -67,7 +63,4 @@ const mapDispatchToProps = {
   collapseAllFilterGroups,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withStyles(styles)(RadioButtons));
+export default connect(mapStateToProps, mapDispatchToProps)(RadioButtons);

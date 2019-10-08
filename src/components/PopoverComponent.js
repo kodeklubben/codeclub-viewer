@@ -2,41 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import styles from './PopoverComponent.scss';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import {hashCode} from '../utils/util';
 
-class PopoverComponent extends React.PureComponent {
-  createMarkup = () => ({__html: this.props.popoverContent});
-
-  handleClick = event => {
+const PopoverComponent = ({children, popoverContent, showDyslexicFont}) => {
+  useStyles(styles);
+  const handleClick = event => {
     event.stopPropagation();
     event.preventDefault();
   };
 
-  render() {
-    const {children, popoverContent, showDyslexicFont} = this.props;
-    const className = showDyslexicFont ? styles.contentDyslexia : styles.content;
-    const overlay =
-      <Popover id={hashCode(popoverContent)} className={styles.popover}>
-        <div {...{className}} role='region' dangerouslySetInnerHTML={this.createMarkup()}/>
-      </Popover>;
-    const options = {
-      animation: true,
-      rootClose: true,
-      trigger: 'click',
-      placement: 'bottom',
-      onClick: this.handleClick,
-      overlay,
-    };
-    return (
-      <OverlayTrigger {...options}>
-        {children}
-      </OverlayTrigger>
-    );
-  }
-}
+  const className = showDyslexicFont ? styles.contentDyslexia : styles.content;
+  const overlay =
+    <Popover id={hashCode(popoverContent)} className={styles.popover}>
+      <div {...{className}} role='region' dangerouslySetInnerHTML={{__html: popoverContent}}/>
+    </Popover>;
+  const options = {
+    animation: true,
+    rootClose: true,
+    trigger: 'click',
+    placement: 'bottom',
+    onClick: handleClick,
+    overlay,
+  };
+  return (
+    <OverlayTrigger {...options}>
+      {children}
+    </OverlayTrigger>
+  );
+};
 
 PopoverComponent.propTypes = {
   // ownProps
@@ -51,6 +47,4 @@ const mapStateToProps = (state) => ({
   showDyslexicFont: state.showDyslexicFont,
 });
 
-export default connect(
-  mapStateToProps,
-)(withStyles(styles)(PopoverComponent));
+export default connect(mapStateToProps)(PopoverComponent);

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
 import {resetOneFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import useStyles from 'isomorphic-style-loader/useStyles';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import {getAvailableLanguages} from '../../utils/filterUtils';
@@ -30,6 +30,7 @@ const LanguageItem = ({language, onlyFlag}) => (
   </div>
 );
 
+
 LanguageItem.propTypes = {
   // ownProps
   onlyFlag: PropTypes.bool.isRequired,
@@ -38,38 +39,35 @@ LanguageItem.propTypes = {
   language: PropTypes.oneOf(availableLanguages).isRequired,
 };
 
-class LanguageDropdown extends React.PureComponent {
-  handleSelect = eventKey => {
-    this.props.resetOneFilter('language', eventKey);
-    this.props.setLanguage(eventKey);
-    this.props.collapseAllFilterGroups(true);
+const LanguageDropdown = ({isStudentMode, language, resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
+  useStyles(styles);
+  const handleSelect = eventKey => {
+    resetOneFilter('language', eventKey);
+    setLanguage(eventKey);
+    collapseAllFilterGroups(true);
   };
 
-  render() {
-    const {isStudentMode, language} = this.props;
-    const mode = isStudentMode ? 'student' : 'teacher';
-    return (
-      <div className={styles.gadgetContainer}>
-        <DropdownButton id='language-dropdown'
-          noCaret
-          pullRight
-          bsStyle={'language-' + mode}
-          title={<LanguageItem onlyFlag={true} {...{language}}/>}
-          onSelect={this.handleSelect}
-        >
-
-          {
-            availableLanguages.map(key =>
-              <MenuItem {...{key}} eventKey={key} active={language === key}>
-                <LanguageItem onlyFlag={false} language={key}/>
-              </MenuItem>
-            )
-          }
-        </DropdownButton>
-      </div>
-    );
-  }
-}
+  const mode = isStudentMode ? 'student' : 'teacher';
+  return (
+    <div className={styles.gadgetContainer}>
+      <DropdownButton id='language-dropdown'
+        noCaret
+        pullRight
+        bsStyle={'language-' + mode}
+        title={<LanguageItem onlyFlag={true} {...{language}}/>}
+        onSelect={handleSelect}
+      >
+        {
+          availableLanguages.map(key =>
+            <MenuItem {...{key}} eventKey={key} active={language === key}>
+              <LanguageItem onlyFlag={false} language={key}/>
+            </MenuItem>
+          )
+        }
+      </DropdownButton>
+    </div>
+  );
+};
 
 LanguageDropdown.propTypes = {
   // mapStateToProps:
@@ -93,7 +91,4 @@ const mapDispatchToProps = {
   collapseAllFilterGroups,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(LanguageDropdown));
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageDropdown);
