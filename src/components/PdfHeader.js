@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {useParams} from 'react-router-dom';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PdfHeader.scss';
 import {getAvailableLanguages} from '../utils/filterUtils';
 import {getCourseIcon} from '../resources/courseIcon';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 
-const PdfHeader = ({course, language}) => {
+const PdfHeader = ({language}) => {
   useStyles(styles);
+  const {course} = useParams();
   const courseTitle = getCourseTitle(course, language);
   return (
     <div className={styles.container}>
@@ -18,9 +20,6 @@ const PdfHeader = ({course, language}) => {
   );
 };
 PdfHeader.propTypes = {
-  // ownProps
-  course: PropTypes.string.isRequired,
-
   // mapStateToProps
   language: PropTypes.oneOf(getAvailableLanguages()).isRequired,
 };

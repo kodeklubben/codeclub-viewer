@@ -3,36 +3,31 @@
 
 import React from 'react';
 import {render, hydrate} from 'react-dom';
-import {Router, useRouterHistory as createHistory} from 'react-router';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
+import {BrowserRouter, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import routes from './routes';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import store, {updateStoreFromLocalStorage} from './store';
 import {setHydrationComplete} from './reducers/hydration';
-
-const insertCss = (...styles) => {
-  const removeCss = styles.map(style => style._insertCss());
-  return () => removeCss.forEach(dispose => dispose());
-};
+import App from './pages/App';
 
 const renderDynamic = () => {
-  const basename = process.env.PUBLICPATH_WITHOUT_SLASH;	
-  const historyOptions = basename === '/' ? {} : {basename};	
-  const history = createHistory(createBrowserHistory )({historyOptions});
-
   const callback = () => {
     updateStoreFromLocalStorage();
     store.dispatch(setHydrationComplete());
   };
 
-  const onUpdate = () => window.scrollTo(0, 0); // Scroll to top of page on every transition
+  const insertCss = (...styles) => {
+    const removeCss = styles.map(style => style._insertCss());
+    return () => removeCss.forEach(dispose => dispose());
+  };
 
   const renderFunc = IS_HOT ? render : hydrate;
-  renderFunc(
+  return renderFunc(
     <Provider {...{store}}>
       <StyleContext.Provider value={{insertCss}}>
-        <Router {...{routes, onUpdate, history}}/>
+        <BrowserRouter>
+          <Route path='/'><App/></Route>
+        </BrowserRouter>
       </StyleContext.Provider>
     </Provider>,
 

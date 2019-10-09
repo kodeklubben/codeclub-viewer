@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import styles from './CourseItem.scss';
 import useStyles from 'isomorphic-style-loader/useStyles';
-import Link from 'react-router/lib/Link';
+import {Link} from 'react-router-dom';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Button from 'react-bootstrap/lib/Button';
 import PopoverComponent from '../PopoverComponent';

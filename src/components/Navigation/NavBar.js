@@ -63,7 +63,7 @@ MenuToggle.propTypes = {
   t: PropTypes.func.isRequired
 };
 
-const NavBar = ({isStudentMode, t, params}) => {
+const NavBar = ({isStudentMode, t}) => {
   useStyles(styles);
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
@@ -79,9 +79,9 @@ const NavBar = ({isStudentMode, t, params}) => {
           <LkkNav {...{t}}/>
         </Navbar.Collapse>
         <div className={styles.widgets + ' ' + widgetClass}>
-          <BreadCrumb {...params}/>
+          <BreadCrumb/>
           <div className={styles.gadgetGroup}>
-            <ContinueButton {...params}/>
+            <ContinueButton/>
             <LanguageDropdown/>
             <ModeDropdown/>
           </div>
@@ -92,13 +92,6 @@ const NavBar = ({isStudentMode, t, params}) => {
 };
 
 NavBar.propTypes = {
-  // ownProps
-  params: PropTypes.shape({
-    course: PropTypes.string,
-    lesson: PropTypes.string,
-    file: PropTypes.string
-  }),
-
   // mapStateToProps
   isStudentMode: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
