@@ -17,7 +17,6 @@ const ExternalCourseList = ({coursesWithLanguage}) => (
 );
 
 ExternalCourseList.propTypes = {
-  // ownProps
   coursesWithLanguage: PropTypes.arrayOf(PropTypes.shape({
     course: PropTypes.string.isRequired,
     language: PropTypes.string.isRequired,

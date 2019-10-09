@@ -15,7 +15,6 @@ const LevelIcon = ({level}) => {
 };
 
 LevelIcon.propTypes = {
-  // ownProps
   level: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 };
 

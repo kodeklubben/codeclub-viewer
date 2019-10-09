@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import LevelIcon from '../LevelIcon';
@@ -12,8 +12,12 @@ import styles from './LessonList.scss';
 
 export const lessonListId = (level) => 'lessonlist-level-' + level;
 
-const LessonList = ({course, level, lessonsInLevel, t}) => {
+const LessonList = ({course, level}) => {
   useStyles(styles);
+
+  const lessonsInLevel = useSelector(state => getFilteredLessonsInCourseForLevel(state, course, level));
+  const t = useSelector(state => getTranslator(state));
+
   return (
     <div className={styles.list}>
       <h2 className={styles.headerText} id={lessonListId(level)}>
@@ -31,18 +35,8 @@ const LessonList = ({course, level, lessonsInLevel, t}) => {
 };
 
 LessonList.propTypes = {
-  // ownProps
   course: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
-
-  // mapStateToProps
-  lessonsInLevel: PropTypes.arrayOf(PropTypes.string).isRequired,
-  t: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, {course, level}) => ({
-  lessonsInLevel: getFilteredLessonsInCourseForLevel(state, course, level),
-  t: getTranslator(state)
-});
-
-export default connect(mapStateToProps)(LessonList);
+export default LessonList;

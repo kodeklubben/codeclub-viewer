@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -8,7 +7,9 @@ import LessonFilter from '../components/Filter/LessonFilter';
 import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 
-const FrontPage = ({isStudentMode}) => {
+const FrontPage = () => {
+  const isStudentMode = useSelector(state => state.isStudentMode);
+
   return (
     <Grid fluid={true} role='main'>
       {isStudentMode ? null : <TeacherInfobox/>}
@@ -22,15 +23,4 @@ const FrontPage = ({isStudentMode}) => {
   );
 };
 
-FrontPage.propTypes = {
-  // mapStateToProps
-  isStudentMode: PropTypes.bool,
-};
-
-const mapStateToProps = (state) => ({
-  isStudentMode: state.isStudentMode,
-});
-
-export default connect(
-  mapStateToProps,
-)(FrontPage);
+export default FrontPage;

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Switch, Route, useLocation} from 'react-router-dom';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import PdfHeader from '../components/PdfHeader';
@@ -14,12 +13,14 @@ import CoursePage from './CoursePage';
 import LessonPage from './LessonPage';
 import PageNotFound from './PageNotFound';
 
-const App = ({showDyslexicFont}) => {
+const App = () => {
   useStyles(styles);
 
   useEffect(() => {
     window.scrollTo(0, 0); // Scroll to top of page on every transition
   }, []);
+
+  const showDyslexicFont = useSelector(state => state.showDyslexicFont);
 
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = useLocation().search.includes('pdf');
@@ -43,13 +44,4 @@ const App = ({showDyslexicFont}) => {
   );
 };
 
-App.propTypes = {
-  // mapStateToProps
-  showDyslexicFont: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  showDyslexicFont: state.showDyslexicFont,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

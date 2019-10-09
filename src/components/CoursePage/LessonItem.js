@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -34,27 +34,25 @@ const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
     null;
 };
 
-const LessonItem = ({
-  course,
-  lesson,
-  language,
-  title,
-  external,
-  popoverContent,
-  isStudentMode,
-  onlyCheckedMainLanguage,
-  t,
-  checkedCheckboxes,
-  totalCheckboxes
-}) => {
+const LessonItem = ({course, lesson, language}) => {
   useStyles(styles);
-  const level = getLevel(course, lesson);
 
-  const flag = !onlyCheckedMainLanguage ?
+  const isStudentMode = useSelector(state => state.isStudentMode);
+  const isOnlyCheckedMainLanguage = useSelector(state => onlyCheckedMainLanguage(state));
+  const t = useSelector(state => getTranslator(state));
+  const checkedCheckboxes = useSelector(state => getNumberOfCheckedCheckboxes(state, course, lesson, language, false));
+  const totalCheckboxes = useSelector(state => getTotalNumberOfCheckboxes(state, course, lesson, language, false));
+
+  const level = getLevel(course, lesson);
+  const title = getLessonTitle(course, lesson, language, false);
+  const external = getLessonExternal(course, lesson, language, false);
+  const popoverContent = getLessonIntro(course, lesson, language, false);
+
+  const flag = !isOnlyCheckedMainLanguage ?
     <div className={styles.flag}><Flag language={language}/></div> : null;
 
   const instructionButton = isStudentMode ? null :
-    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true}} />;
+    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}} />;
 
   const popoverButton = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
@@ -97,31 +95,9 @@ const LessonItem = ({
 };
 
 LessonItem.propTypes = {
-  // ownProps
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
-
-  // mapStateToProps
-  title: PropTypes.string.isRequired,
-  external: PropTypes.string,
-  popoverContent: PropTypes.string,
-  isStudentMode: PropTypes.bool.isRequired,
-  onlyCheckedMainLanguage: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
-  checkedCheckboxes: PropTypes.number.isRequired,
-  totalCheckboxes: PropTypes.number.isRequired,
 };
 
-const mapStateToProps = (state, {course, lesson, language}) => ({
-  title: getLessonTitle(course, lesson, language, false),
-  external: getLessonExternal(course, lesson, language, false),
-  popoverContent: getLessonIntro(course, lesson, language, false),
-  isStudentMode: state.isStudentMode,
-  onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
-  t: getTranslator(state),
-  checkedCheckboxes: getNumberOfCheckedCheckboxes(state, course, lesson, language, false),
-  totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, false),
-});
-
-export default connect(mapStateToProps)(LessonItem);
+export default LessonItem;

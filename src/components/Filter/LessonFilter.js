@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LessonFilter.scss';
 import Panel from 'react-bootstrap/lib/Panel';
@@ -16,8 +16,15 @@ import PopoverComponent from '../PopoverComponent';
 import CollapsiblePanel from '../CollapsiblePanel';
 import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, showFiltergroups}) => {
+const LessonFilter = ({course}) => {
   useStyles(styles);
+
+  const filterGroupKeys = useSelector(state => Object.keys(state.filter));
+  const isStudentMode = useSelector(state => state.isStudentMode);
+  const t = useSelector(state => getTranslator(state));
+  const showRadiobuttons = useSelector(state => getShowRadiobuttons(course));
+  const showFiltergroups = useSelector(state => getShowFiltergroups(state, course));
+
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
     <span>
@@ -62,23 +69,7 @@ const LessonFilter = ({filterGroupKeys, isStudentMode, t, showRadiobuttons, show
 };
 
 LessonFilter.propTypes = {
-  // ownProps
   course: PropTypes.string,
-
-  // mapStateToProps
-  filterGroupKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
-  showRadiobuttons: PropTypes.bool.isRequired,
-  showFiltergroups: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {course}) => ({
-  filterGroupKeys: Object.keys(state.filter),
-  isStudentMode: state.isStudentMode,
-  t: getTranslator(state),
-  showRadiobuttons: getShowRadiobuttons(course),
-  showFiltergroups: getShowFiltergroups(state, course),
-});
-
-export default connect(mapStateToProps)(LessonFilter);
+export default LessonFilter;
