@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
+import {useHistory, matchPath} from 'react-router-dom';
 import NavLink from './NavLink';
 import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -13,13 +13,19 @@ import {getCourseIcon} from '../../resources/courseIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLevel} from '../../resources/lessons';
 
-const BreadCrumb = ({course, lesson, file}) => {
+const BreadCrumb = () => {
   useStyles(styles);
 
   const {courseLanguage, t} = useSelector(state => ({
     courseLanguage: state.language,
     t: getTranslator(state),
   }));
+
+  const history = useHistory();
+  const matchLesson = matchPath(history.location.pathname, {path: '/:course/:lesson/:file'});
+  const matchCourse = matchPath(history.location.pathname, {path: '/:course'});
+  const {course} = matchCourse != null ? matchCourse.params : '';
+  const {lesson, file} = matchLesson != null ? matchLesson.params : '';
 
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
@@ -52,12 +58,6 @@ const BreadCrumb = ({course, lesson, file}) => {
     {isLesson ? <span> / </span> : null}
     {isLesson ? lessonCrumb : null}
   </div>;
-};
-
-BreadCrumb.propTypes = {
-  course: PropTypes.string,
-  lesson: PropTypes.string,
-  file: PropTypes.string,
 };
 
 export default BreadCrumb;

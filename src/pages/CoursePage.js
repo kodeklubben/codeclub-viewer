@@ -36,7 +36,7 @@ const CoursePage = ({course}) => {
 
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={styles.topMargin}>
-    <LessonFilter course={course}/>
+    <LessonFilter {...{course}}/>
   </Col>;
   const jumpTo = levels.length > 0 ? <div><LevelNavigation {...{levels}}/></div> : null;
   const jumpToAffixed = jumpTo ?

@@ -16,7 +16,7 @@ const renderStatic = (locals, callback) => {
   const appHtml = ReactDOMServer.renderToString(
     <Provider {...{store}}>
       <StyleContext.Provider value={{insertCss}}>
-        <StaticRouter/>
+        <StaticRouter basename={locals.publicPath}/>
       </StyleContext.Provider>
     </Provider>
   );

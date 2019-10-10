@@ -3,7 +3,7 @@
 
 import React from 'react';
 import {render, hydrate} from 'react-dom';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import store, {updateStoreFromLocalStorage} from './store';
@@ -34,6 +34,9 @@ const getLessonPage = ({match}) => {
 };
 
 const renderDynamic = () => {
+  const basename = process.env.PUBLICPATH_WITHOUT_SLASH;	
+  const historyOptions = basename === '/' ? '/' : basename;	
+
   const callback = () => {
     updateStoreFromLocalStorage();
     store.dispatch(setHydrationComplete());
@@ -48,16 +51,16 @@ const renderDynamic = () => {
   return renderFunc(
     <Provider {...{store}}>
       <StyleContext.Provider value={{insertCss}}>
-        <Router>
+        <BrowserRouter basename={historyOptions}>
           <App>
             <Switch>
               <Route exact path='/' component={FrontPage}/>
               <Route exact path='/:course' render={getCoursePage}/>
               <Route exact path='/:course/:lesson/:file' render={getLessonPage}/>
-              <Route path='*' component={PageNotFound}/>
+              <Route component={PageNotFound}/>
             </Switch>
           </App>
-        </Router>
+        </BrowserRouter>
       </StyleContext.Provider>
     </Provider>,
 

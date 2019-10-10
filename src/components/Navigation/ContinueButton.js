@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
+import {useHistory, matchPath} from 'react-router-dom';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import Button from 'react-bootstrap/lib/Button';
 import styles from './ContinueButton.scss';
@@ -9,7 +9,7 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getLessonPath, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
 
-const ContinueButton = ({course, lesson, file}) => {
+const ContinueButton = () => {
   useStyles(styles);
 
   const {t, lastLesson, isStudentMode} = useSelector(state => ({
@@ -17,6 +17,10 @@ const ContinueButton = ({course, lesson, file}) => {
     lastLesson: state.lastLesson,
     isStudentMode: state.isStudentMode,
   }));
+
+  const history = useHistory();
+  const match = matchPath(history.location.pathname, {path: '/:course/:lesson/:file'});
+  const {course, lesson, file} = match != null ? match.params : '';
 
   const isLesson = !!lesson;
   const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
@@ -37,11 +41,5 @@ const ContinueButton = ({course, lesson, file}) => {
     </LinkContainer>
     : null;
 };
-
-ContinueButton.propTypes = {
-  course: PropTypes.string,
-  lesson: PropTypes.string,
-  file: PropTypes.string,
-};  
 
 export default ContinueButton;

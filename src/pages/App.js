@@ -24,7 +24,9 @@ const App = ({children}) => {
       <Head/>
       <div {...{className}}>
         {renderPdf ? <PdfHeader/> : <NavBar/>}
-        <div className={styles.stickyFooter}>{children}</div>
+        <div className={styles.stickyFooter}>
+          {children}
+        </div>
         {renderPdf ? null : <Footer/>}
       </div>
     </div>
