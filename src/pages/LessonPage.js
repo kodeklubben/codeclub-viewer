@@ -2,8 +2,7 @@
 
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {useSelector, useDispatch} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useSelector, connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
@@ -21,19 +20,21 @@ import Head from '../components/Head';
 import PrintInfo from '../components/LessonPage/PrintInfo';
 
 
-const LessonPage = ({language, isReadme}) => {
+const LessonPage = ({course, lesson, language, isReadme, setLastLesson}) => {
   useStyles(styles);
 
-  const {course, lesson} = useParams();
+  const {t} = useSelector(state => ({
+    t: getTranslator(state),
+  }));
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top of page on mount
+  }, []);
 
   useEffect(() => {
     const path = getLessonPath(course, lesson, language, isReadme);
-    dispatch(setLastLesson(path));
-  }, [course, lesson, language, isReadme, dispatch]);
-
-  const t = useSelector(state => getTranslator(state));
+    setLastLesson(path);
+  }, [course, lesson, language, isReadme, setLastLesson]);
 
   const title = getLessonTitle(course, lesson, language, isReadme);
   const author = getLessonAuthor(course, lesson, language, isReadme);
@@ -71,8 +72,14 @@ const LessonPage = ({language, isReadme}) => {
 };
 
 LessonPage.propTypes = {
+  course: PropTypes.string.isRequired,
+  lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
 };
 
-export default LessonPage;
+const mapDispatchToProps = {
+  setLastLesson,
+};
+
+export default connect(null, mapDispatchToProps)(LessonPage);

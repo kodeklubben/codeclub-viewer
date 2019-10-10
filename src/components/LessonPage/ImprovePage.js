@@ -11,8 +11,10 @@ import {getLessonPath} from '../../resources/lessonFrontmatter';
 const ImprovePage = ({course, lesson, language, isReadme}) => {
   useStyles(styles);
 
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const t = useSelector(state => getTranslator(state));
+  const {isStudentMode, t} = useSelector(state => ({
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state),
+  }));
 
   const path = getLessonPath(course, lesson, language, isReadme);
   const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src${path}.md`;

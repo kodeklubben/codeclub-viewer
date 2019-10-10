@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -19,15 +19,20 @@ import {getCourseIntroText} from '../resources/courseContent';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
 import Head from '../components/Head';
 
-const CoursePage = () => {
+const CoursePage = ({course}) => {
   useStyles(styles);
-  const {course} = useParams();
 
-  const courseTitle = useSelector(state => getCourseTitle(course, state.language));
-  const levels = useSelector(state => getFilteredLevelsInCourse(state, course));
-  const t = useSelector(state => getTranslator(state));
-  const showPlaylists = useSelector(state => !getShowFiltergroups(state));
-  const language = useSelector(state => state.language);
+  const {courseTitle, levels, t, showPlaylists, language} = useSelector(state => ({
+    courseTitle: getCourseTitle(course, state.language),
+    levels: getFilteredLevelsInCourse(state, course),
+    t: getTranslator(state),
+    showPlaylists: !getShowFiltergroups(state),
+    language: state.language,
+  }));
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top of page on mount
+  }, []);
 
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={styles.topMargin}>
@@ -69,6 +74,10 @@ const CoursePage = () => {
       </Grid>
     </div>
   );
+};
+
+CoursePage.propTypes = {
+  course: PropTypes.string.isRequired
 };
 
 export default CoursePage;

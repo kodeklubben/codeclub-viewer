@@ -20,8 +20,10 @@ const handleClick = event => {
 const LevelNavigation= ({levels}) => {
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
-  const isStudentMode = useSelector(state => state.isStudentMode);
+  const {t, isStudentMode} = useSelector(state => ({
+    t: getTranslator(state),
+    isStudentMode: state.isStudentMode,
+  }));
 
   const levelListItems = levels.map(level => (
     <ListGroupItem key={level} data-level={level} onClick={handleClick}>

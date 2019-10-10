@@ -5,8 +5,10 @@ import {Helmet} from 'react-helmet';
 import {getTranslator} from '../selectors/translate';
 
 const Head = ({title, description}) => {
-  const language = useSelector(state => state.language);
-  const t = useSelector(state => getTranslator(state));
+  const {language, t} = useSelector(state => ({
+    language: state.language,
+    t: getTranslator(state),
+  }));
 
   const headTitle = title ? title  + ' | ' + t('head.title') : t('head.title');
   const descriptionContent = description ? description : t('head.description');

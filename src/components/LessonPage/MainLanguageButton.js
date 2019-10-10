@@ -12,11 +12,13 @@ import {getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatte
 const MainLanguageButton = ({course, lesson, isReadme}) => {
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
-  const tf = useSelector(state => getTranslateFilter(state));
-  const language = useSelector(state => state.language);
+  const {t, translateFilter, language} = useSelector(state => ({
+    t: getTranslator(state),
+    translateFilter: getTranslateFilter(state),
+    language: state.language,
+  }));
 
-  const lang = tf('language', language); // Name of language, e.g. 'English'
+  const lang = translateFilter('language', language); // Name of language, e.g. 'English'
   const path = getLessonPath(course, lesson, language, isReadme);
   const external = getLessonExternal(course, lesson, language, isReadme);
   const enabled = path && !external;

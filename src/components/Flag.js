@@ -9,8 +9,10 @@ import {getTranslator, getTranslateFilter} from '../selectors/translate';
 const Flag = ({language}) => {
   useStyles(styles);
 
-  const translateFilter = useSelector(state => getTranslateFilter(state));
-  const t = useSelector(state => getTranslator(state));
+  const {translateFilter, t} = useSelector(state => ({
+    translateFilter: getTranslateFilter(state),
+    t: getTranslator(state),
+  }));
 
   return (
     <img

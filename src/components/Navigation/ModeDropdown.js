@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './ModeDropdown.scss';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
@@ -8,14 +8,15 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 import {setModeStudent, setModeTeacher} from '../../reducers/mode';
 
-const ModeDropdown = () => {
+const ModeDropdown = ({setModeTeacher, setModeStudent}) => {
   useStyles(styles);
 
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const t = useSelector(state => getTranslator(state));
+  const {isStudentMode, t} = useSelector(state => ({
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state),
+  }));
 
-  const dispatch = useDispatch();
-  const handleSelect = eventKey => eventKey === 'teacher' ? dispatch(setModeTeacher()) : dispatch(setModeStudent());
+  const handleSelect = eventKey => eventKey === 'teacher' ? setModeTeacher() : setModeStudent();
   
   const modes = ['student', 'teacher'];
   const texts = {'student': t('general.student'), 'teacher': t('general.teacher')};
@@ -44,4 +45,9 @@ const ModeDropdown = () => {
   );
 };
 
-export default ModeDropdown;
+const mapDispatchToProps = {
+  setModeTeacher,
+  setModeStudent
+};
+
+export default connect(null, mapDispatchToProps)(ModeDropdown);

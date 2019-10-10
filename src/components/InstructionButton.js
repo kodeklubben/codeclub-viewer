@@ -13,7 +13,9 @@ import {getLessonPath} from '../resources/lessonFrontmatter';
 const InstructionButton = ({course, lesson, language, isReadme, onlyIcon, insideLink}) => {
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
+  const {t} = useSelector(state => ({
+    t: getTranslator(state),
+  }));
 
   const history = useHistory();
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './ClearFilterButton.scss';
 import Button from 'react-bootstrap/lib/Button';
@@ -8,17 +8,18 @@ import {somethingCheckedInFilter} from '../../selectors/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
-const ClearFilterButton = () => {
+const ClearFilterButton = ({resetAllFilters, collapseAllFilterGroups}) => {
   useStyles(styles);
 
-  const language = useSelector(state => state.language);
-  const t = useSelector(state => getTranslator(state));
-  const somethingChecked = useSelector(state => somethingCheckedInFilter(state));
+  const {language, t, somethingChecked} = useSelector(state => ({
+    language: state.language,
+    t: getTranslator(state),
+    somethingChecked: somethingCheckedInFilter(state),
+  }));
 
-  const dispatch = useDispatch();
   const handleClick = () => {
-    dispatch(resetAllFilters('language', language));
-    dispatch(collapseAllFilterGroups(true));
+    resetAllFilters('language', language);
+    collapseAllFilterGroups(true);
   };
 
   return somethingChecked ?
@@ -28,4 +29,9 @@ const ClearFilterButton = () => {
     : null;
 };
 
-export default ClearFilterButton;
+const mapDispatchToProps = {
+  resetAllFilters,
+  collapseAllFilterGroups,
+};
+
+export default connect(null, mapDispatchToProps)(ClearFilterButton);

@@ -37,11 +37,13 @@ const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
 const LessonItem = ({course, lesson, language}) => {
   useStyles(styles);
 
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const isOnlyCheckedMainLanguage = useSelector(state => onlyCheckedMainLanguage(state));
-  const t = useSelector(state => getTranslator(state));
-  const checkedCheckboxes = useSelector(state => getNumberOfCheckedCheckboxes(state, course, lesson, language, false));
-  const totalCheckboxes = useSelector(state => getTotalNumberOfCheckboxes(state, course, lesson, language, false));
+  const {isStudentMode, isOnlyCheckedMainLanguage, t, checkedCheckboxes, totalCheckboxes} = useSelector(state => ({
+    isStudentMode: state.isStudentMode,
+    isOnlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
+    t: getTranslator(state),
+    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, course, lesson, language, false),
+    totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, false),
+  }));
 
   const level = getLevel(course, lesson);
   const title = getLessonTitle(course, lesson, language, false);

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
@@ -13,11 +13,13 @@ import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 import {renderScratchBlocks} from '../../utils/renderScratchblocks';
 import {renderToggleButtons} from '../../utils/renderToggleButtons';
 
-const Content = ({course, lesson, language, isReadme}) => {
+const Content = ({course, lesson, language, isReadme, setCheckbox, removeCheckbox}) => {
   useStyles(styles);
 
-  const isHydrated = useSelector(state => state.hydration);
-  const checkboxes = useSelector(state => getCheckboxesForLesson(state, course, lesson, language, isReadme));
+  const {isHydrated, checkboxes} = useSelector(state => ({
+    isHydrated: state.hydration,
+    checkboxes: getCheckboxesForLesson(state, course, lesson, language, isReadme),
+  }));
   
   useEffect(() => {
     renderToggleButtons();
@@ -25,13 +27,12 @@ const Content = ({course, lesson, language, isReadme}) => {
 
   // NOTE: Should setCheckboxesInDoc really be in an effect?
   //       Wouldn't it be better to change it so that it processes lessonContent before rendering?
-  const dispatch = useDispatch();
   useEffect(() => {
     if (isHydrated) {
       const path = getLessonPath(course, lesson, language, isReadme);
-      dispatch(setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox));
+      setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
     }
-  }, [isHydrated, course, lesson, language, isReadme, checkboxes, dispatch]);
+  }, [isHydrated, course, lesson, language, isReadme, checkboxes, setCheckbox, removeCheckbox]);
 
   useEffect(() => {
     if (course === 'microbit' && typeof document !== 'undefined' && isHydrated) {
@@ -54,4 +55,9 @@ Content.propTypes = {
   isReadme: PropTypes.bool.isRequired,
 };
 
-export default Content;
+const mapDispatchToProps = {
+  setCheckbox,
+  removeCheckbox,
+};
+
+export default connect(null, mapDispatchToProps)(Content);

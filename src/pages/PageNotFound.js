@@ -9,7 +9,9 @@ import Head from '../components/Head';
 const PageNotFound = () => {
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
+  const {t} = useSelector(state => ({
+    t: getTranslator(state),
+  }));
 
   return (
     <div role='main'>

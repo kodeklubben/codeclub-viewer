@@ -12,9 +12,11 @@ import {getLessonPath, getLanguageAndIsReadme} from '../../resources/lessonFront
 const ContinueButton = ({course, lesson, file}) => {
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
-  const lastLesson = useSelector(state => state.lastLesson);
-  const isStudentMode = useSelector(state => state.isStudentMode);
+  const {t, lastLesson, isStudentMode} = useSelector(state => ({
+    t: getTranslator(state),
+    lastLesson: state.lastLesson,
+    isStudentMode: state.isStudentMode,
+  }));
 
   const isLesson = !!lesson;
   const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};

@@ -9,7 +9,9 @@ import {getCourseTitle} from '../resources/courseFrontmatter';
 const PdfHeader = () => {
   useStyles(styles);
 
-  const language = useSelector(state => state.language);
+  const {language} = useSelector(state => ({
+    language: state.language,
+  }));
 
   const {course} = useParams();
 

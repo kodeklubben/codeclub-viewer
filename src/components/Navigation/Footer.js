@@ -8,8 +8,10 @@ import DyslexiaSwitch from './DyslexiaSwitch';
 const Footer = () => {
   useStyles(styles);
 
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const t = useSelector(state => getTranslator(state));
+  const {isStudentMode, t} = useSelector(state => ({
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state),
+  }));
 
   const url = {
     wiki: 'https://github.com/kodeklubben/oppgaver/wiki',

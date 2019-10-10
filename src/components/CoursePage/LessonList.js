@@ -15,8 +15,10 @@ export const lessonListId = (level) => 'lessonlist-level-' + level;
 const LessonList = ({course, level}) => {
   useStyles(styles);
 
-  const lessonsInLevel = useSelector(state => getFilteredLessonsInCourseForLevel(state, course, level));
-  const t = useSelector(state => getTranslator(state));
+  const {lessonsInLevel, t} = useSelector(state => ({
+    lessonsInLevel: getFilteredLessonsInCourseForLevel(state, course, level),
+    t: getTranslator(state),
+  }));
 
   return (
     <div className={styles.list}>

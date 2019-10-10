@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, connect} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './RadioButtons.scss';
 import {getTranslator} from '../../selectors/translate';
@@ -14,18 +14,19 @@ const RadioButton = ({checked, onChange, text}) => (
   </label>
 );
 
-const RadioButtons = () => {
+const RadioButtons = ({setShowPlaylists, resetAllFilters, collapseAllFilterGroups}) => {
   useStyles(styles);
 
-  const showPlaylists = useSelector(state => state.showPlaylists);
-  const language = useSelector(state => state.language);
-  const t = useSelector(state => getTranslator(state));
+  const {showPlaylists, language, t} = useSelector(state => ({
+    showPlaylists: state.showPlaylists,
+    language: state.language,
+    t: getTranslator(state),
+  }));
 
-  const dispatch = useDispatch();
   const handleChangeToPlaylists = () => {
-    dispatch(setShowPlaylists(true));
-    dispatch(resetAllFilters('language', language));
-    dispatch(collapseAllFilterGroups(true));
+    setShowPlaylists(true);
+    resetAllFilters('language', language);
+    collapseAllFilterGroups(true);
   };
 
   return (
@@ -37,11 +38,17 @@ const RadioButtons = () => {
       />
       <RadioButton
         checked={!showPlaylists}
-        onChange={() => dispatch(setShowPlaylists(false))}
+        onChange={() => setShowPlaylists(false)}
         text={t('filter.radio.lessons')}
       />
     </form>
   );
 };
 
-export default RadioButtons;
+const mapDispatchToProps = {
+  setShowPlaylists,
+  resetAllFilters,
+  collapseAllFilterGroups
+};
+
+export default connect(null, mapDispatchToProps)(RadioButtons);

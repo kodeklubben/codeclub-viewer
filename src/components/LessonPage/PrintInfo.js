@@ -10,8 +10,11 @@ import {getLessonTags} from '../../resources/lessons';
 const PrintInfo = ({course, lesson}) => {
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
-  const translateFilter = useSelector(state => getTranslateFilter(state));
+  const {t, translateFilter} = useSelector(state => ({
+    t: getTranslator(state),
+    translateFilter: getTranslateFilter(state),
+  }));
+
   const tags = getLessonTags(course, lesson);
 
   return (

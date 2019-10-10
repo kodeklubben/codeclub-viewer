@@ -19,11 +19,12 @@ import ClearFilterButton from './ClearFilterButton';
 const LessonFilter = ({course}) => {
   useStyles(styles);
 
-  const filterGroupKeys = useSelector(state => Object.keys(state.filter));
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const t = useSelector(state => getTranslator(state));
-  const showRadiobuttons = useSelector(state => getShowRadiobuttons(course));
-  const showFiltergroups = useSelector(state => getShowFiltergroups(state, course));
+  const {filterGroupKeys, isStudentMode, t, showFiltergroups} = useSelector(state => ({
+    filterGroupKeys: Object.keys(state.filter),
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state),
+    showFiltergroups: getShowFiltergroups(state, course),
+  }));
 
   const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
   const header =
@@ -40,6 +41,7 @@ const LessonFilter = ({course}) => {
       </PopoverComponent>
     </span>;
   const bsStyle = (isStudentMode ? 'student' : 'teacher');
+  const showRadiobuttons = getShowRadiobuttons(course);
   const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
   const groups = showFiltergroups ? filterGroups : null;
   return (

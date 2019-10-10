@@ -13,11 +13,11 @@ import ExternalCourseList from '../CourseList/ExternalCourseList';
 const Courses = () => {
   useStyles(styles);
 
-  const courses = useSelector(state => state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state));
-  const externalCourses = useSelector(state =>
-    state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state)
-  );
-  const t = useSelector(state => getTranslator(state));
+  const {courses, externalCourses, t} = useSelector(state => ({
+    courses: state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state),
+    externalCourses: state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state),
+    t: getTranslator(state),
+  }));
 
   return (
     <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>

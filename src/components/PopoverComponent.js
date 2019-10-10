@@ -10,7 +10,9 @@ import {hashCode} from '../utils/util';
 const PopoverComponent = ({children, popoverContent}) => {
   useStyles(styles);
 
-  const showDyslexicFont = useSelector(state => state.showDyslexicFont);
+  const {showDyslexicFont} = useSelector(state => ({
+    showDyslexicFont: state.showDyslexicFont,
+  }));
 
   const handleClick = event => {
     event.stopPropagation();

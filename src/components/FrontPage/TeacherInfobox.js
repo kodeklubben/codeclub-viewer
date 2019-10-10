@@ -11,7 +11,9 @@ const TeacherInfobox = () => {
   const [showCourseInfo, setShowCourseInfo] = useState(false);
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
+  const {t} = useSelector(state => ({
+    t: getTranslator(state),
+  }));
 
   const url = [
     'http://kidsakoder.no/skole/valgfag/',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
@@ -8,7 +8,13 @@ import Courses from '../components/FrontPage/Courses';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 
 const FrontPage = () => {
-  const isStudentMode = useSelector(state => state.isStudentMode);
+  const {isStudentMode} = useSelector(state => ({
+    isStudentMode: state.isStudentMode,
+  }));
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to top of page on mount
+  }, []);
 
   return (
     <Grid fluid={true} role='main'>

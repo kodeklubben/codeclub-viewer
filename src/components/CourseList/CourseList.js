@@ -6,7 +6,10 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
 const CourseList = ({courses}) => {
-  const language = useSelector(state => state.language);
+  const {language} = useSelector(state => ({
+    language: state.language,
+  }));
+  
   return (
     <Row>
       <div>

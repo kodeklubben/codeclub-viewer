@@ -11,10 +11,12 @@ import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const ButtonRow = ({course, lesson, language, isReadme}) => {
   const path = getLessonPath(course, lesson, language, isReadme);
-  
-  const mainLanguage = useSelector(state => state.language);
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const anyCheckedCheckboxes = useSelector(state => anyCheckboxTrue(state.checkboxes[createCheckboxesKey(path)] || {}));
+
+  const {mainLanguage, isStudentMode, anyCheckedCheckboxes} = useSelector(state => ({
+    mainLanguage: state.language,
+    isStudentMode: state.isStudentMode,
+    anyCheckedCheckboxes: anyCheckboxTrue(state.checkboxes[createCheckboxesKey(path)] || {}),
+  }));
 
   const mainLanguageButton = language !== mainLanguage ?
     <MainLanguageButton {...{course, lesson, isReadme}}/> : null;

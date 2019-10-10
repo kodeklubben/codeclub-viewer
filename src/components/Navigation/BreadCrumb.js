@@ -16,8 +16,10 @@ import {getLevel} from '../../resources/lessons';
 const BreadCrumb = ({course, lesson, file}) => {
   useStyles(styles);
 
-  const courseLanguage = useSelector(state => state.language);
-  const t = useSelector(state => getTranslator(state));
+  const {courseLanguage, t} = useSelector(state => ({
+    courseLanguage: state.language,
+    t: getTranslator(state),
+  }));
 
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;

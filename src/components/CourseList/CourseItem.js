@@ -20,9 +20,11 @@ import {getTranslator} from '../../selectors/translate';
 const CourseItem = ({course, language}) => {
   useStyles(styles);
 
-  const showLessonCount = useSelector(state => getShowFiltergroups(state));
-  const isOnlyCheckedMainLanguage = useSelector(state => onlyCheckedMainLanguage(state));
-  const t = useSelector(state => getTranslator(state));
+  const {showLessonCount, isOnlyCheckedMainLanguage, t} = useSelector(state => ({
+    showLessonCount: getShowFiltergroups(state),
+    isOnlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
+    t: getTranslator(state),
+  }));
 
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);

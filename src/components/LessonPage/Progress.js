@@ -9,10 +9,10 @@ import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../se
 const Progress = ({course, lesson, language, isReadme}) => {
   useStyles(styles);
 
-  const checkedCheckboxes = useSelector(state =>
-    getNumberOfCheckedCheckboxes(state, course, lesson, language, isReadme)
-  );
-  const totalCheckboxes = useSelector(state => getTotalNumberOfCheckboxes(state, course, lesson, language, isReadme));
+  const {checkedCheckboxes, totalCheckboxes} = useSelector(state => ({
+    checkedCheckboxes: getNumberOfCheckedCheckboxes(state, course, lesson, language, isReadme),
+    totalCheckboxes: getTotalNumberOfCheckboxes(state, course, lesson, language, isReadme),
+  }));
 
   if (checkedCheckboxes <= 0 || isReadme) { return null; } 
   const now = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;

@@ -10,10 +10,12 @@ import {onlyCheckedMainLanguage} from '../../selectors/filter';
 
 const LessonCount = ({course}) => {
   useStyles(styles);
-
-  const lessonsPerLanguage = useSelector(state => getFilteredLessonsInCourseCountPerLanguage(state, course));
-  const showFlag = useSelector(state => !onlyCheckedMainLanguage(state));
-  const t = useSelector(state => getTranslator(state));
+  
+  const {lessonsPerLanguage, showFlag, t} = useSelector(state => ({
+    lessonsPerLanguage: getFilteredLessonsInCourseCountPerLanguage(state, course),
+    showFlag: !onlyCheckedMainLanguage(state),
+    t: getTranslator(state),
+  }));
 
   const totalNumberOfLessons = Object.keys(lessonsPerLanguage).reduce((sum, n) => sum + lessonsPerLanguage[n], 0);
   return (

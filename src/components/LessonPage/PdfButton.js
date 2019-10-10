@@ -13,7 +13,9 @@ import {getLessonPath} from '../../resources/lessonFrontmatter';
 const PdfButton = ({course, lesson, language, isReadme}) => {
   useStyles(styles);
 
-  const t = useSelector(state => getTranslator(state));
+  const {t} = useSelector(state => ({
+    t: getTranslator(state),
+  }));
 
   const path = getLessonPath(course, lesson, language, isReadme);
   const options = {

@@ -9,9 +9,11 @@ import {processCourseInfo} from '../../utils/processCourseInfo';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 
 const CourseInfo = ({courseName}) => {
-  const t = useSelector(state => getTranslator(state));
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const language =  useSelector(state => state.language);
+  const {t, isStudentMode, language} = useSelector(state => ({
+    t: getTranslator(state),
+    isStudentMode: state.isStudentMode,
+    language: state.language,
+  }));
   
   const courseInfo = {
     __html: processCourseInfo(

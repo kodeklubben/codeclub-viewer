@@ -55,8 +55,10 @@ const MenuToggle = ({t}) => {
 const NavBar = () => {
   useStyles(styles);
 
-  const isStudentMode = useSelector(state => state.isStudentMode);
-  const t = useSelector(state => getTranslator(state));
+  const {isStudentMode, t} = useSelector(state => ({
+    isStudentMode: state.isStudentMode,
+    t: getTranslator(state),
+  }));
 
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (

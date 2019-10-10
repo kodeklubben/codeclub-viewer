@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, connect} from 'react-redux';
 import PanelGroup from 'react-bootstrap/lib/PanelGroup';
 import Panel from 'react-bootstrap/lib/Panel';
 import Badge from 'react-bootstrap/lib/Badge';
@@ -13,15 +13,16 @@ import {setExpandedAccordion} from '../../reducers/expandedAccordion';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
 import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistLessons';
 
-const PlaylistNavigation = ({course}) => {
+const PlaylistNavigation = ({course, setExpandedAccordion}) => {
   useStyles(styles);
 
-  const language = useSelector(state => state.language);
-  const t = useSelector(state => getTranslator(state));
-  const expandedAccordion = useSelector(state => state.expandedAccordion);
+  const {language, t, expandedAccordion} = useSelector(state => ({
+    language: state.language,
+    t: getTranslator(state),
+    expandedAccordion: state.expandedAccordion,
+  }));
 
-  const dispatch = useDispatch();
-  const handleSelect = activeKey => dispatch(setExpandedAccordion(course, activeKey));
+  const handleSelect = activeKey => setExpandedAccordion(course, activeKey);
 
   const playlists = getPlaylistsForCourse(course);
   const playlistListItems = playlists.map((playlist, i) => {
@@ -62,4 +63,8 @@ PlaylistNavigation.propTypes = {
   course: PropTypes.string.isRequired,
 };
 
-export default PlaylistNavigation;
+const mapDispatchToProps = {
+  setExpandedAccordion,
+};
+
+export default connect(null, mapDispatchToProps)(PlaylistNavigation);
