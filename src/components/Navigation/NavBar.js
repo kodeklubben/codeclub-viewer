@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './NavBar.scss';
 import Navbar from 'react-bootstrap/lib/Navbar';
@@ -41,11 +40,6 @@ const LkkNav = ({t}) => {
   </div>;
 };
 
-LkkNav.propTypes = {
-  //mapStateToProps
-  t: PropTypes.func.isRequired
-};
-
 const MenuToggle = ({t}) => {
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
@@ -58,13 +52,12 @@ const MenuToggle = ({t}) => {
   </Navbar.Toggle>;
 };
 
-MenuToggle.propTypes = {
-  // mapStateToProps
-  t: PropTypes.func.isRequired
-};
-
-const NavBar = ({isStudentMode, t}) => {
+const NavBar = () => {
   useStyles(styles);
+
+  const isStudentMode = useSelector(state => state.isStudentMode);
+  const t = useSelector(state => getTranslator(state));
+
   const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
   return (
     <div className={styles.navbarWrapper} role='banner'>
@@ -91,15 +84,4 @@ const NavBar = ({isStudentMode, t}) => {
   );
 };
 
-NavBar.propTypes = {
-  // mapStateToProps
-  isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isStudentMode: state.isStudentMode,
-  t: getTranslator(state),
-});
-
-export default connect(mapStateToProps)(NavBar);
+export default NavBar;

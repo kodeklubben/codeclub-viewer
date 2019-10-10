@@ -3,6 +3,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
+import {useParams} from 'react-router-dom';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './LessonPage.scss';
 import LevelIcon from '../components/LevelIcon';
@@ -20,8 +21,10 @@ import Head from '../components/Head';
 import PrintInfo from '../components/LessonPage/PrintInfo';
 
 
-const LessonPage = ({course, lesson, language, isReadme}) => {
+const LessonPage = ({language, isReadme}) => {
   useStyles(styles);
+
+  const {course, lesson} = useParams();
 
   const dispatch = useDispatch();
 
@@ -68,8 +71,6 @@ const LessonPage = ({course, lesson, language, isReadme}) => {
 };
 
 LessonPage.propTypes = {
-  course: PropTypes.string.isRequired,
-  lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
 };
