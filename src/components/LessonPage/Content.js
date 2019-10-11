@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {useSelector, connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
@@ -8,12 +8,11 @@ import {renderMicrobit} from '../../utils/renderMicrobit';
 import {getLessonContent} from '../../resources/lessonContent';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
-import {setCheckbox, removeCheckbox} from '../../reducers/checkboxes';
 import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 import {renderScratchBlocks} from '../../utils/renderScratchblocks';
 import {renderToggleButtons} from '../../utils/renderToggleButtons';
 
-const Content = ({course, lesson, language, isReadme, setCheckbox, removeCheckbox}) => {
+const Content = ({course, lesson, language, isReadme}) => {
   useStyles(styles);
 
   const {isHydrated, checkboxes} = useSelector(state => ({
@@ -30,9 +29,9 @@ const Content = ({course, lesson, language, isReadme, setCheckbox, removeCheckbo
   useEffect(() => {
     if (isHydrated) {
       const path = getLessonPath(course, lesson, language, isReadme);
-      setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
+      setCheckboxesInDoc(path, checkboxes);
     }
-  }, [isHydrated, course, lesson, language, isReadme, checkboxes, setCheckbox, removeCheckbox]);
+  }, [isHydrated, course, lesson, language, isReadme, checkboxes]);
 
   useEffect(() => {
     if (course === 'microbit' && typeof document !== 'undefined' && isHydrated) {
@@ -55,9 +54,4 @@ Content.propTypes = {
   isReadme: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = {
-  setCheckbox,
-  removeCheckbox,
-};
-
-export default connect(null, mapDispatchToProps)(Content);
+export default Content;

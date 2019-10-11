@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -31,6 +32,10 @@ const App = ({children}) => {
       </div>
     </div>
   );
+};
+
+App.propTypes = {
+  children: PropTypes.object,
 };
 
 export default App;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useSelector, connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
@@ -11,7 +11,7 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
-const FilterGroup = ({groupKey, collapseFilterGroup}) => {
+const FilterGroup = ({groupKey}) => {
   useStyles(styles);
 
   const {filterTags, filterGroupsCollapsed, somethingChecked, translateFilter} = useSelector(state => ({
@@ -21,10 +21,11 @@ const FilterGroup = ({groupKey, collapseFilterGroup}) => {
     translateFilter: getTranslateFilter(state),
   }));
 
+  const dispatch = useDispatch();
   const handleClick = () => {
     const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
     if (!somethingChecked) {
-      collapseFilterGroup(groupKey, !isCollapsed);
+      dispatch(collapseFilterGroup(groupKey, !isCollapsed));
     }
   };
 
@@ -78,8 +79,4 @@ FilterGroup.propTypes = {
   groupKey: PropTypes.string,
 };
 
-const mapDispatchToProps = {
-  collapseFilterGroup,
-};
-
-export default connect(null, mapDispatchToProps)(FilterGroup);
+export default FilterGroup;

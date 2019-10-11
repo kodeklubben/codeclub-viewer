@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector, connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
 import {resetOneFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
@@ -29,7 +29,7 @@ const LanguageItem = ({language, onlyFlag}) => (
   </div>
 );
 
-const LanguageDropdown = ({resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
+const LanguageDropdown = () => {
   useStyles(styles);
 
   const {language, isStudentMode} = useSelector(state => ({
@@ -37,10 +37,11 @@ const LanguageDropdown = ({resetOneFilter, setLanguage, collapseAllFilterGroups}
     isStudentMode: state.isStudentMode,
   }));
 
+  const dispatch = useDispatch();
   const handleSelect = eventKey => {
-    resetOneFilter('language', eventKey);
-    setLanguage(eventKey);
-    collapseAllFilterGroups(true);
+    dispatch(resetOneFilter('language', eventKey));
+    dispatch(setLanguage(eventKey));
+    dispatch(collapseAllFilterGroups(true));
   };
 
   const mode = isStudentMode ? 'student' : 'teacher';
@@ -65,10 +66,4 @@ const LanguageDropdown = ({resetOneFilter, setLanguage, collapseAllFilterGroups}
   );
 };
 
-const mapDispatchToProps = {
-  resetOneFilter,
-  setLanguage,
-  collapseAllFilterGroups,
-};
-
-export default connect(null, mapDispatchToProps)(LanguageDropdown);
+export default LanguageDropdown;
