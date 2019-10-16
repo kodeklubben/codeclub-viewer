@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
@@ -8,13 +8,15 @@ import {renderMicrobit} from '../../utils/renderMicrobit';
 import {getLessonContent} from '../../resources/lessonContent';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
-import {setCheckbox, removeCheckbox} from '../../reducers/checkboxes';
 import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 import {renderScratchBlocks} from '../../utils/renderScratchblocks';
 import {renderToggleButtons} from '../../utils/renderToggleButtons';
 
-const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, setCheckbox, removeCheckbox}) => {
+const Content = ({course, lesson, language, isReadme}) => {
   useStyles(styles);
+
+  const isHydrated = useSelector(state => state.hydration);
+  const checkboxes = useSelector(state => getCheckboxesForLesson(state, course, lesson, language, isReadme));
   
   useEffect(() => {
     renderToggleButtons();
@@ -25,9 +27,9 @@ const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, se
   useEffect(() => {
     if (isHydrated) {
       const path = getLessonPath(course, lesson, language, isReadme);
-      setCheckboxesInDoc(path, checkboxes, setCheckbox, removeCheckbox);
+      setCheckboxesInDoc(path, checkboxes);
     }
-  }, [isHydrated, course, lesson, language, isReadme, checkboxes, setCheckbox, removeCheckbox]);
+  }, [isHydrated, course, lesson, language, isReadme, checkboxes]);
 
   useEffect(() => {
     if (course === 'microbit' && typeof document !== 'undefined' && isHydrated) {
@@ -48,24 +50,6 @@ Content.propTypes = {
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
-
-  // mapStateToProps
-  isHydrated: PropTypes.bool.isRequired, // require isHydrated as a prop to force rerender when it changes
-  checkboxes: PropTypes.object,
-
-  // mapDispatchToProps
-  setCheckbox: PropTypes.func.isRequired,
-  removeCheckbox: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, {course, lesson, language, isReadme}) => ({
-  isHydrated: state.hydration,
-  checkboxes: getCheckboxesForLesson(state, course, lesson, language, isReadme),
-});
-
-const mapDispatchToProps = {
-  setCheckbox,
-  removeCheckbox,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Content);
+export default Content;
