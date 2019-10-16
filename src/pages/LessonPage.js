@@ -63,7 +63,6 @@ const LessonPage = ({course, lesson, language, isReadme, t, setLastLesson}) => {
 };
 
 LessonPage.propTypes = {
-  // ownProps
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,

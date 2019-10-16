@@ -27,7 +27,6 @@ const CollapsiblePanel = ({initiallyExpanded, header, bsStyle, children}) => {
 };
 
 CollapsiblePanel.propTypes = {
-  // ownProps
   initiallyExpanded: PropTypes.bool,
   header: PropTypes.oneOfType([
     PropTypes.string,

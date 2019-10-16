@@ -53,7 +53,6 @@ const PlaylistNavigation = ({course, language, t, expandedAccordion, setExpanded
 };
 
 PlaylistNavigation.propTypes = {
-  // ownProps
   course: PropTypes.string.isRequired,
 
   // mapStateToProps

@@ -71,7 +71,6 @@ const FilterGroup = ({
 };
 
 FilterGroup.propTypes = {
-  // ownProps:
   groupKey: PropTypes.string,
 
   // mapStateToProps:

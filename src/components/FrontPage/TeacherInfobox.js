@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './TeacherInfobox.scss';
 import Button from 'react-bootstrap/lib/Button';
@@ -8,9 +7,11 @@ import Collapse from 'react-bootstrap/lib/Collapse';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getTranslator} from '../../selectors/translate';
 
-const TeacherInfobox = ({t}) => {
+const TeacherInfobox = () => {
   const [showCourseInfo, setShowCourseInfo] = useState(false);
   useStyles(styles);
+
+  const t = useSelector(state => getTranslator(state));
 
   const url = [
     'http://kidsakoder.no/skole/valgfag/',
@@ -55,14 +56,5 @@ const TeacherInfobox = ({t}) => {
   );
 };
 
-TeacherInfobox.propTypes = {
-  // mapStateToProps
-  t: PropTypes.func.isRequired
-};
 
-const mapStateToProps = (state) => ({
-  t: getTranslator(state)
-});
-
-
-export default connect(mapStateToProps)(TeacherInfobox);
+export default TeacherInfobox;

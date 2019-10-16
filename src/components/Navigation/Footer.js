@@ -1,13 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import {getTranslator} from '../../selectors/translate';
 import styles from './Footer.scss';
 import DyslexiaSwitch from './DyslexiaSwitch';
 
-const Footer = ({t, isStudentMode}) => {
+const Footer = () => {
   useStyles(styles);
+
+  const t = useSelector(state => getTranslator(state));
+  const isStudentMode = useSelector(state => state.isStudentMode);
+
   const url = {
     wiki: 'https://github.com/kodeklubben/oppgaver/wiki',
     sparebank: 'https://www.sparebank1.no',
@@ -77,15 +80,4 @@ const Footer = ({t, isStudentMode}) => {
     </div>);
 };
 
-Footer.propTypes = {
-  // mapStateToProps
-  isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  isStudentMode: state.isStudentMode,
-  t: getTranslator(state)
-});
-
-export default connect(mapStateToProps)(Footer);
+export default Footer;

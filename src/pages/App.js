@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import PdfHeader from '../components/PdfHeader';
 import NavBar from '../components/Navigation/NavBar';
@@ -9,8 +9,10 @@ import styles from './App.scss';
 import '../styles/customBootstrapStyles';
 import Head from '../components/Head';
 
-const App = ({params, location, children, showDyslexicFont}) => {
+const App = ({params, location, children}) => {
   useStyles(styles);
+
+  const showDyslexicFont = useSelector(state => state.showDyslexicFont);
 
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
@@ -28,19 +30,11 @@ const App = ({params, location, children, showDyslexicFont}) => {
 };
 
 App.propTypes = {
-  // ownProps
   params: PropTypes.object,
   location: PropTypes.shape({
     query: PropTypes.object.isRequired,
   }).isRequired,
   children: PropTypes.object,
-
-  // mapStateToProps
-  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  showDyslexicFont: state.showDyslexicFont,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

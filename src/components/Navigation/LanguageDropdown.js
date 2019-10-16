@@ -32,7 +32,6 @@ const LanguageItem = ({language, onlyFlag}) => (
 
 
 LanguageItem.propTypes = {
-  // ownProps
   onlyFlag: PropTypes.bool.isRequired,
 
   // mapStateToProps

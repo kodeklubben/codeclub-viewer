@@ -44,7 +44,6 @@ const Content = ({course, lesson, language, isReadme, isHydrated, checkboxes, se
 };
 
 Content.propTypes = {
-  // ownProps
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,

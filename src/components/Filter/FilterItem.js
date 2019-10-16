@@ -32,7 +32,6 @@ const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent, t, fil
 };
 
 FilterItem.propTypes = {
-  // ownProps
   itemKey: PropTypes.string.isRequired,
   groupKey: PropTypes.string.isRequired,
   tagName: PropTypes.string.isRequired,

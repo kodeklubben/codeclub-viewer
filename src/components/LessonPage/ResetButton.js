@@ -28,7 +28,6 @@ const ResetButton = ({path, t, setCheckbox}) => {
 };
 
 ResetButton.propTypes = {
-  // ownProps
   path: PropTypes.string.isRequired,
 
   // mapStateToProps

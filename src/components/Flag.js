@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Flag.scss';
 import {getAvailableLanguages} from '../utils/filterUtils';
 import {getTranslator, getTranslateFilter} from '../selectors/translate';
 
-const Flag = ({language, translateFilter, t}) => {
+const Flag = ({language}) => {
   useStyles(styles);
+
+  const translateFilter = useSelector(state => getTranslateFilter(state));
+  const t = useSelector(state => getTranslator(state));
+
   return (
     <img
       className={styles.flag}
@@ -17,17 +21,7 @@ const Flag = ({language, translateFilter, t}) => {
 };
 
 Flag.propTypes = {
-  // ownProps
   language: PropTypes.oneOf(getAvailableLanguages()).isRequired,
-
-  // mapStateToProps
-  translateFilter: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  translateFilter: getTranslateFilter(state),
-  t: getTranslator(state),
-});
-
-export default connect(mapStateToProps)(Flag);
+export default Flag;
