@@ -21,7 +21,7 @@ const App = ({params, location, children}) => {
     <div>
       <Head/>
       <div {...{className}}>
-        {renderPdf ? <PdfHeader  {...{params}}/> : <NavBar {...{params}}/>}
+        {renderPdf ? <PdfHeader course={params.course}/> : <NavBar {...{params}}/>}
         <div className={styles.stickyFooter}>{children}</div>
         {renderPdf ? null : <Footer/>}
       </div>
