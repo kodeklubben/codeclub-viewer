@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
 import {makeStyles} from '@material-ui/core/styles';
-import {AppBar, Breadcrumbs, Drawer, IconButton, Link, Toolbar} from '@material-ui/core';
+import {AppBar, Breadcrumbs, Drawer, IconButton, Link, List, Toolbar, Divider} from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import LevelIcon from '../LevelIcon';
 import ContinueButton from './ContinueButton';
+import DyslexiaSwitch from './DyslexiaSwitch';
+import DarkModeSwitch from './DarkModeSwitch';
 import {getTranslator} from '../../selectors/translate';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageAndIsReadme, getLessonTitle, getLessonPath} from '../../resources/lessonFrontmatter';
 import {getCourseIcon} from '../../resources/courseIcon';
 import {getLevel} from '../../resources/lessons';
+import LanguageList from './LanguageList';
+import ModeList from './ModeList';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -89,7 +93,15 @@ const NavBar = ({params}) => {
           <MenuIcon/>
         </IconButton>
         <Drawer open={showDrawer} anchor='right' onClose={toggleDrawer()}>
-          Language and mode
+          <List>
+            <LanguageList/>
+            <Divider/>
+            <ModeList/>
+            <Divider/>
+            <DyslexiaSwitch/>
+            <Divider/>
+            <DarkModeSwitch/>
+          </List>
         </Drawer>
       </Toolbar>
     </AppBar>

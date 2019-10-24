@@ -1,46 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-import {CssBaseline} from '@material-ui/core';
+import {useSelector} from 'react-redux';
+import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
+import {CssBaseline, Toolbar} from '@material-ui/core';
 import Head from '../components/Head';
 import NavBar from '../components/Navigation/NavBar';
+import Footer from '../components/Navigation/Footer';
+import OpenDyslexic from '../assets/fonts/OpenDyslexic-Regular.ttf';
 
-const theme = createMuiTheme({
-  '@font-face': [
-    {
-      fontFamily: 'Roboto',
-      src: 'url("../assets/fonts/Roboto-Regular.ttf") format("truetype")',
-      fontWeight: 'normal',
-      fontStyle: 'normal',
-      fontDisplay: 'swap',
+const openDyslexic = {
+  fontFamily: 'OpenDyslexic',
+  fontStyle: 'normal',
+  fontDisplay: 'swap',
+  fontWeight: 400,
+  src: `url(${OpenDyslexic})`,
+};
+
+const dyslexicTheme = createMuiTheme({
+  typography: {
+    fontFamily: ['OpenDyslexic', 'Helvetica', 'Arial', 'sans-serif'],
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [openDyslexic],
+      },
     },
-    {
-      fontFamily: 'Roboto',
-      src: 'url("../assets/fonts/Roboto-Light.ttf") format("truetype")',
-      fontWeight: 100,
-      fontStyle: 'normal',
-      fontDisplay: 'swap',
-    },
-    {
-      fontFamily: 'Roboto',
-      src: 'url("../assets/fonts/Roboto-Medium.ttf") format("truetype")',
-      fontWeight: 300,
-      fontStyle: 'normal',
-      fontDisplay: 'swap',
-    }
-  ],
+  },
 });
 
+const theme = createMuiTheme({
+  
+});
+
+const useStyles = makeStyles(theme => ({
+  footer: {
+    minHeight: '100vh',
+    flexDirection: 'column',
+  },
+}));
+
 const App = ({params, location, children}) => {
+  const classes = useStyles();
+
+  const showDyslexicFont = useSelector(state => state.showDyslexicFont);
 
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
   return (
-    <ThemeProvider {...{theme}}>
+    <ThemeProvider theme={showDyslexicFont ? dyslexicTheme : theme}>
       <CssBaseline/>
       <Head/>
       {renderPdf ? null : <NavBar {...{params}}/>}
-      {children}
+      <Toolbar/>
+      <div className={classes.footer}>{children}</div>
+      {renderPdf ? null : <Footer/>}
     </ThemeProvider>
   );
 };

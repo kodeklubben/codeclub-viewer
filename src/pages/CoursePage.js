@@ -1,8 +1,13 @@
 import React from 'react';
+import {Box, Container} from '@material-ui/core';
 
 const CoursePage = () => {
   return (
-    <div>CoursePage</div>
+    <Container>
+      <Box my={2}>
+        CoursePage
+      </Box>
+    </Container>
   );
 };
 
