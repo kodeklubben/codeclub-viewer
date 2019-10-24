@@ -1,112 +1,107 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './NavBar.scss';
-import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
-import Clearfix from 'react-bootstrap/lib/Clearfix';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import {getTranslator} from '../../selectors/translate';
-import BreadCrumb from './BreadCrumb';
-import LanguageDropdown from './LanguageDropdown';
-import ModeDropdown from './ModeDropdown';
+import {useSelector} from 'react-redux';
+import {Link as RouterLink} from 'react-router';
+import {makeStyles} from '@material-ui/core/styles';
+import {AppBar, Breadcrumbs, Drawer, IconButton, Link, Toolbar} from '@material-ui/core';
+import HomeIcon from '@material-ui/icons/Home';
+import MenuIcon from '@material-ui/icons/Menu';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import LevelIcon from '../LevelIcon';
 import ContinueButton from './ContinueButton';
+import {getTranslator} from '../../selectors/translate';
+import {getLanguageIndependentCoursePath} from '../../resources/courses';
+import {getCourseTitle} from '../../resources/courseFrontmatter';
+import {getLanguageAndIsReadme, getLessonTitle, getLessonPath} from '../../resources/lessonFrontmatter';
+import {getCourseIcon} from '../../resources/courseIcon';
+import {getLevel} from '../../resources/lessons';
 
-const LkkBrand = () => {
-  return <Navbar.Brand>
-    <a href="http://kidsakoder.no" className={styles.logo}>
-      <img src={require('../../assets/graphics/LKK_small.png')} alt={'LKK logo'}/>
-    </a>
-  </Navbar.Brand>;
-};
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
+  link: {
+    display: 'flex',
+  },
+  icon: {
+    marginRight: theme.spacing(0.5),
+    width: 20,
+    height: 20,
+  },
+  courseIcon : {
+    marginRight: theme.spacing(0.5),
+    width: '15px',
+    height: 'auto',
+    alignSelf: 'center',
+  },
+}));
 
-const LkkNav = ({t}) => {
-  return <div className={styles.navContainer}>
-    <Nav>
-      <NavItem href="http://kidsakoder.no/om-lkk/">{t('navbar.lkknav.aboutlkk')}</NavItem>
-      <NavItem href="http://kidsakoder.no/nyheter/">{t('navbar.lkknav.news')}</NavItem>
-      <LinkContainer to='/'>
-        <NavItem>{t('navbar.lkknav.lessons')}</NavItem>
-      </LinkContainer>
-      <NavItem href="http://kidsakoder.no/kodeklubben/kodeklubboversikt/">
-        {t('navbar.lkknav.findcodeclub')}
-      </NavItem>
-      <NavItem href="http://kidsakoder.no/kodeklubben/">{t('navbar.lkknav.codeclub')}</NavItem>
-      <NavItem href="http://kidsakoder.no/skole/">{t('navbar.lkknav.school')}</NavItem>
-      <NavItem href="http://kidsakoder.no/kodetimen/">{t('navbar.lkknav.codehour')}</NavItem>
-      <NavItem href="http://kidsakoder.no/bidra/">{t('navbar.lkknav.contribute')}</NavItem>
-    </Nav>
-  </div>;
-};
+const NavBar = ({params}) => {
+  const classes = useStyles();
+  const [showDrawer, setShowDrawer] = React.useState(false);
 
-LkkNav.propTypes = {
-  //mapStateToProps
-  t: PropTypes.func.isRequired
-};
+  const toggleDrawer = () => event => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setShowDrawer(!showDrawer);
+  };
 
-const MenuToggle = ({t}) => {
-  return <Navbar.Toggle>
-    <span className="sr-only">Toggle navigation</span>
-    <span className={styles.toggleContent}>
-      <span className="icon-bar"/>
-      <span className="icon-bar"/>
-      <span className="icon-bar"/>
-    </span>
-    <span className={styles.toggleContent}>{t('navbar.menu')}</span>
-  </Navbar.Toggle>;
-};
+  const courseLanguage = useSelector(state => state.language);
+  const t = useSelector(state => getTranslator(state));
 
-MenuToggle.propTypes = {
-  // mapStateToProps
-  t: PropTypes.func.isRequired
-};
+  const {course, lesson, file} = params;
+  const isLesson = !!lesson;
+  const isCourse = course && !isLesson;
+  const {language:lessonLanguage, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
+  const lessonTitle = getLessonTitle(course, lesson, lessonLanguage, isReadme);
+  const lessonPath = getLessonPath(course, lesson, lessonLanguage, isReadme);
+  const courseTitle = getCourseTitle(course, courseLanguage);
+  const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';
 
-const NavBar = ({isStudentMode, t, params}) => {
-  useStyles(styles);
-  const widgetClass = isStudentMode ? styles.widgetStudent : styles.widgetTeacher;
+  const courseCrumb = (
+    <Link component={RouterLink} className={classes.link} color='primary' to={coursePath}>
+      <img className={classes.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
+      {courseTitle}
+    </Link>
+  );
+
+  const lessonCrumb = (
+    <Link component={RouterLink} className={classes.link} aria-label={lessonTitle} color='primary' to={lessonPath}>
+      <LevelIcon level={getLevel(course, lesson)}/>
+      {lessonTitle}
+    </Link>
+  );
+
   return (
-    <div className={styles.navbarWrapper} role='banner'>
-      <Navbar fluid={true} staticTop>
-        <Navbar.Header>
-          <LkkBrand/>
-          <Clearfix visibleXsBlock/>
-          <MenuToggle {...{t}}/>
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <div className={styles.spacing}/>
-          <LkkNav {...{t}}/>
-        </Navbar.Collapse>
-        <div className={styles.widgets + ' ' + widgetClass}>
-          <BreadCrumb {...params}/>
-          <div className={styles.gadgetGroup}>
-            <ContinueButton {...params}/>
-            <LanguageDropdown/>
-            <ModeDropdown/>
-          </div>
-        </div>
-      </Navbar>
-    </div>
+    <AppBar color='inherit'>
+      <Toolbar className={classes.root} >
+        <Breadcrumbs separator={<NavigateNextIcon color='primary' fontSize='small'/>}>
+          <Link component={RouterLink} aria-label={t('general.home')} className={classes.link} color='primary' to={'/'}>
+            <HomeIcon className={classes.icon}/>
+          </Link>
+          {coursePath ? courseCrumb : null}
+          {isLesson ? lessonCrumb : null}
+        </Breadcrumbs>
+        <ContinueButton {...{course}}/>
+        <IconButton onClick={toggleDrawer()} color='primary' aria-label='menu'>
+          <MenuIcon/>
+        </IconButton>
+        <Drawer open={showDrawer} anchor='right' onClose={toggleDrawer()}>
+          Language and mode
+        </Drawer>
+      </Toolbar>
+    </AppBar>
   );
 };
 
 NavBar.propTypes = {
-  // ownProps
   params: PropTypes.shape({
     course: PropTypes.string,
     lesson: PropTypes.string,
     file: PropTypes.string
   }),
-
-  // mapStateToProps
-  isStudentMode: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  isStudentMode: state.isStudentMode,
-  t: getTranslator(state),
-});
-
-export default connect(mapStateToProps)(NavBar);
+export default NavBar;

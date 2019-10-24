@@ -1,56 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import Button from 'react-bootstrap/lib/Button';
-import styles from './ContinueButton.scss';
+import {useSelector} from 'react-redux';
+import {Link as RouterLink} from 'react-router';
+import {Button, Link} from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {getTranslator} from '../../selectors/translate';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import {getLessonPath, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
 
-const ContinueButton = ({path, t, lastLesson, isStudentMode}) => {
-  useStyles(styles);
+const ContinueButton = ({course}) => {
+  const t = useSelector(state => getTranslator(state));
+  const lastLesson = useSelector(state => state.lastLesson);
+
   const hasLastLesson = lastLesson !== '';
-  const pathIsNotLastLesson = lastLesson !== path;
-  const options = {
-    'aria-label': t('frontpage.continueButton'),
-    className: styles.container,
-    bsStyle: isStudentMode ? 'language-student' : 'language-teacher'
-  };
-  return hasLastLesson && pathIsNotLastLesson ?
-    <LinkContainer active={false} to={lastLesson}>
-      <Button {...options}>
-        <Glyphicon glyph={'arrow-right'}/>
-        <span className={styles.textMargin}>{t('frontpage.continueButton')}</span>
+
+  return hasLastLesson && !course ?
+    <Link component={RouterLink} to={lastLesson}>
+      <Button variant='outlined' size='small' color='inherit' aria-label={t('frontpage.continueButton')}>
+        <ArrowForwardIcon/>
+        {t('frontpage.continueButton')}
       </Button>
-    </LinkContainer>
+    </Link>
     : null;
 };
 
 ContinueButton.propTypes = {
-  // ownProps
   course: PropTypes.string,
-  lesson: PropTypes.string,
-  file: PropTypes.string,
-
-  // mapStateToProps
-  path: PropTypes.string,
-  t: PropTypes.func.isRequired,
-  lastLesson: PropTypes.string.isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {course, lesson, file}) => {
-  const isLesson = !!lesson;
-  const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const path = getLessonPath(course, lesson, language, isReadme);
-  return {
-    path,
-    t: getTranslator(state),
-    lastLesson: state.lastLesson,
-    isStudentMode: state.isStudentMode,
-  };
-};
-
-export default connect(mapStateToProps)(ContinueButton);
+export default ContinueButton;

@@ -1,36 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import LessonFilter from '../components/Filter/LessonFilter';
-import Courses from '../components/FrontPage/Courses';
-import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 
-const FrontPage = ({isStudentMode}) => {
+const FrontPage = () => {
   return (
-    <Grid fluid={true} role='main'>
-      {isStudentMode ? null : <TeacherInfobox/>}
-      <Row>
-        <Col sm={4} md={3} lg={2}>
-          <LessonFilter/>
-        </Col>
-        <Courses/>
-      </Row>
-    </Grid>
+    <div>FrontPage</div>
   );
 };
 
-FrontPage.propTypes = {
-  // mapStateToProps
-  isStudentMode: PropTypes.bool,
-};
-
-const mapStateToProps = (state) => ({
-  isStudentMode: state.isStudentMode,
-});
-
-export default connect(
-  mapStateToProps,
-)(FrontPage);
+export default FrontPage;

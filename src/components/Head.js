@@ -12,6 +12,7 @@ const Head = ({title, description, language, t}) => {
       <html lang={language}/>
       <title>{headTitle}</title>
       <meta charSet='utf-8'/>
+      <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"/>
       <meta name='description' content={descriptionContent}/>
     </Helmet>
   );

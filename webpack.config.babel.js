@@ -2,23 +2,6 @@
  *  The webpack config file
  *  ------------------------------
  *
- *  BOOTSTRAP:
- *  To adjust which parts of bootstrap to include in the build, adjust options in .bootstraprc.
- *  The more you include, the bigger the final build will be.
- *  Also, to get smaller builds, do
- *    import Button from 'react-bootstrap/lib/Button';  // YES
- *  rather than
- *    import {Button} from 'react-bootstrap'; // NO
- *
- *
- *  Regarding CSS extraction:
- *  CSS is not extracted for hot reloading (i.e. when isHot is true).
- *  We never extract css from the 'main' entry, since we want this CSS to override CSS from vendors,
- *  e.g. override bootstrap. By not extracting it, it will become inline in the <head>.
- *  (i.e. don't use ExtractTextPlugin.extract() in the css and scss loaders.)
- *  Bootstrap has its own extract-methods (activated f.ex. by using bootstrap-loader/extractStyles)
- *
- *
  *  StaticSiteGeneratorPlugin:
  *  Writes index.html files for all courses and all lessons, so that search engines can reach them,
  *  and as an alternative to server side rendering (static html files is possible since we don't
@@ -55,7 +38,6 @@ import WebappWebpackPlugin from 'webapp-webpack-plugin';
 
 import {
   assets,
-  bootstrapStyles,
   buildBaseDir,
   buildDir,
   filenameBase,
@@ -100,7 +82,6 @@ const createConfig = (env = {}, argv) => {
   if (env.verbose) {
     console.log('Build constants:');
     console.log('  assets:', assets);
-    console.log('  bootstrapStyles:', bootstrapStyles);
     console.log('  buildBaseDir:', buildBaseDir);
     console.log('  buildDir:', buildDir);
     console.log('  filenameBase:', filenameBase);
@@ -125,10 +106,7 @@ const createConfig = (env = {}, argv) => {
     context: __dirname,
 
     entry: {
-      main: [
-        isHot ? 'bootstrap-loader' : 'bootstrap-loader/extractStyles',
-        './src/index.js',
-      ],
+      main: './src/index.js',
     },
 
     output: {
@@ -152,7 +130,6 @@ const createConfig = (env = {}, argv) => {
         lessonSrc,
         lessonFiltertags,
         assets,
-        bootstrapStyles,
       }
     },
 
@@ -195,7 +172,6 @@ const createConfig = (env = {}, argv) => {
               options: {
                 modules: true,
                 importLoaders: 2,
-                localIdentName: '[name]__[local]__[hash:base64:5]',
               }
             },
             'postcss-loader',
