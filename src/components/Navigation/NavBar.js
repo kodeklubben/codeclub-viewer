@@ -19,6 +19,7 @@ import {getCourseIcon} from '../../resources/courseIcon';
 import {getLevel} from '../../resources/lessons';
 import LanguageList from './LanguageList';
 import ModeList from './ModeList';
+import GithubLink from './GithubLink';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -101,6 +102,8 @@ const NavBar = ({params}) => {
             <DyslexiaSwitch/>
             <Divider/>
             <DarkModeSwitch/>
+            <Divider/>
+            <GithubLink/>
           </List>
         </Drawer>
       </Toolbar>
