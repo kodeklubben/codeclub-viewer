@@ -9,7 +9,7 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   paper: {
     maxWidth: 700,
-    margin: '30px 0',
+    marginBottom: theme.spacing(5),
     padding: 15,
   },
   moreInfo: {
@@ -57,7 +57,13 @@ const TeacherInfobox = () => {
               <Typography component='p'>
                 {t('frontpage.teacherinfobox.info1')}
               </Typography>
-              <Link href={'https://kidsakoder.no/skole/valgfag/'} target='_blank' rel='noopener'>
+              <Link
+                color='inherit'
+                underline='none'
+                href={'https://kidsakoder.no/skole/valgfag/'}
+                target='_blank'
+                rel='noopener'
+              >
                 {t('frontpage.teacherinfobox.link1')}
               </Link>
             </Grid>
@@ -70,7 +76,13 @@ const TeacherInfobox = () => {
               <Typography component='p'>
                 {t('frontpage.teacherinfobox.info2')}
               </Typography>
-              <Link href={'https://kidsakoder.no/kodeklubben/'} target='_blank' rel='noopener'>
+              <Link 
+                color='inherit'
+                underline='none'
+                href={'https://kidsakoder.no/kodeklubben/'}
+                target='_blank'
+                rel='noopener'
+              >
                 {t('frontpage.teacherinfobox.link2')}
               </Link>
             </Grid>

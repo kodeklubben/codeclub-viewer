@@ -31,7 +31,7 @@ const ModeList = () => {
           {isStudentMode ? <CreateIcon/> : <SchoolIcon/>}
         </ListItemIcon>
         <ListItemText primary={isStudentMode ? t('general.student') : t('general.teacher')}/>
-        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        {open ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
       </ListItem>
       <Collapse in={open} timeout='auto' unmountOnExit>
         <List disablePadding>

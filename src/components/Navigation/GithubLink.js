@@ -13,7 +13,13 @@ const GithubLink = () => {
         <GitHubIcon/>
       </ListItemIcon>
       <ListItemText primary={
-        <Link href={'https://github.com/kodeklubben/oppgaver/wiki'} target='_blank' rel='noopener'>
+        <Link
+          color='inherit'
+          underline='none'
+          href={'https://github.com/kodeklubben/oppgaver/wiki'}
+          target='_blank'
+          rel='noopener'
+        >
           {t('footer.contribute')}
         </Link>
       }/>

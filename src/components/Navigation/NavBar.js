@@ -66,14 +66,27 @@ const NavBar = ({params}) => {
   const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';
 
   const courseCrumb = (
-    <Link component={RouterLink} className={classes.link} color='primary' to={coursePath}>
+    <Link
+      color='inherit'
+      underline='none'
+      component={RouterLink}
+      className={classes.link}
+      to={coursePath}
+    >
       <img className={classes.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
       {courseTitle}
     </Link>
   );
 
   const lessonCrumb = (
-    <Link component={RouterLink} className={classes.link} aria-label={lessonTitle} color='primary' to={lessonPath}>
+    <Link
+      color='inherit'
+      underline='none'
+      component={RouterLink}
+      className={classes.link}
+      aria-label={lessonTitle}
+      to={lessonPath}
+    >
       <LevelIcon level={getLevel(course, lesson)}/>
       {lessonTitle}
     </Link>
@@ -82,15 +95,21 @@ const NavBar = ({params}) => {
   return (
     <AppBar color='inherit'>
       <Toolbar className={classes.root} >
-        <Breadcrumbs separator={<NavigateNextIcon color='primary' fontSize='small'/>}>
-          <Link component={RouterLink} aria-label={t('general.home')} className={classes.link} color='primary' to={'/'}>
+        <Breadcrumbs separator={<NavigateNextIcon color='inherit' fontSize='small'/>}>
+          <Link
+            color='inherit'
+            component={RouterLink}
+            aria-label={t('general.home')}
+            className={classes.link}
+            to={'/'}
+          >
             <HomeIcon className={classes.icon}/>
           </Link>
           {coursePath ? courseCrumb : null}
           {isLesson ? lessonCrumb : null}
         </Breadcrumbs>
         <ContinueButton {...{course}}/>
-        <IconButton onClick={toggleDrawer()} color='primary' aria-label='menu'>
+        <IconButton onClick={toggleDrawer()} color='inherit' aria-label='menu'>
           <MenuIcon/>
         </IconButton>
         <Drawer open={showDrawer} anchor='right' onClose={toggleDrawer()}>
