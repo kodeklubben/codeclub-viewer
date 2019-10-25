@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {Provider} from 'react-redux';
-import {createMemoryHistory, match} from 'react-router';
-import App from './pages/App';
+import {ServerStyleSheets} from '@material-ui/core/styles';
+import {createMemoryHistory, match, RouterContext} from 'react-router';
+import routes from './routes';
 import {Helmet} from 'react-helmet';
 import store from './store';
 
@@ -15,19 +16,22 @@ const renderStatic = (locals, callback) => {
   const pathWithoutHtml = locals.path.replace(/\.html$/, '');
   const location = history.createLocation(pathWithoutHtml);
 
-  match({ location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
-    const appHtml = ReactDOMServer.renderToString(
+  match({ routes, location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
+    const sheets = new ServerStyleSheets();
+    const appHtml = ReactDOMServer.renderToString(sheets.collect(
       <Provider {...{store}}>
-        <App/>
+        <RouterContext {...renderProps} />
       </Provider>
-    );
+    ));
     const helmet = Helmet.renderStatic();
+    const cssString = sheets.toString(); 
+    const appCss = `<style id="jss-server-side">${cssString}</style>`;
     const webpackAssets = locals.webpackStats.compilation.assets;
     const assets = Object.keys(webpackAssets);
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
     const jsAssets = assets.filter(p => /\.js$/.test(p)).map(p => locals.publicPath + p);
 
-    const html = template({ cssAssets, jsAssets, appHtml, faviconHtml, helmet });
+    const html = template({ cssAssets, jsAssets, appCss, appHtml, faviconHtml, helmet });
 
     callback(null, html);
   });

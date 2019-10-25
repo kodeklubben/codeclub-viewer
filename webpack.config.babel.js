@@ -162,22 +162,6 @@ const createConfig = (env = {}, argv) => {
           exclude: /node_modules/,
           loader: 'babel-loader'
         },
-        {
-          test: inCurrentRepo('scss'),
-          exclude: /node_modules/,
-          use: [
-            'isomorphic-style-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                importLoaders: 2,
-              }
-            },
-            'postcss-loader',
-            'sass-loader'
-          ],
-        },
         webappWebpackPlugin.rule(), // must come before any other image rules
         {
           test: inCurrentRepo('(png|jpg|jpeg|gif)'),
