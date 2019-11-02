@@ -23,7 +23,10 @@ export const getFilteredCourses = createSelector(
       const courseObj = filteredLessonCount[course];
       courseCount[course] = Object.keys(courseObj).reduce((sum, n) => sum + courseObj[n], 0);
     }
-    const sortFunc = (courseA, courseB) => courseCount[courseB] - courseCount[courseA];
+    const sortFunc = (courseA, courseB) => {
+      const diff = courseCount[courseB] - courseCount[courseA];
+      return diff !== 0 ? diff : courseA.localeCompare(courseB);
+    };
     filteredCourses.sort(sortFunc);
     return filteredCourses;
   }
