@@ -16,8 +16,6 @@ export const createCheckboxesKey = (path = 'undefined') => {
  * Finds every checkbox in the lesson and updates the state of it.
  * @param {string} path path for the lesson
  * @param {object} checkboxes checkbox object in state
- * @param {function} setCheckbox function for updating the state and localstorage
- * @param {function} removeCheckbox function for updating the state and localstorage
  */
 export const setCheckboxesInDoc = (path, checkboxes) => {
   const hashes = new Set(Object.keys(checkboxes));
