@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './Courses.scss';
 import Col from 'react-bootstrap/lib/Col';
@@ -11,8 +10,15 @@ import {getCoursesWithPlaylists} from '../../resources/playlists';
 import CourseList from '../CourseList/CourseList';
 import ExternalCourseList from '../CourseList/ExternalCourseList';
 
-const Courses = ({t, courses, externalCourses}) => {
+const Courses = () => {
   useStyles(styles);
+
+  const courses = useSelector(state => state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state));
+  const externalCourses = useSelector(state =>
+    state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state)
+  );
+  const t = useSelector(state => getTranslator(state));
+
   return (
     <Col xs={12} sm={8} md={9} lg={8} lgOffset={1}>
       {courses.length > 0 ?
@@ -37,20 +43,4 @@ const Courses = ({t, courses, externalCourses}) => {
   );
 };
 
-Courses.propTypes = {
-  // mapStateToProps
-  courses: PropTypes.arrayOf(PropTypes.string).isRequired,
-  externalCourses: PropTypes.arrayOf(PropTypes.shape({
-    course: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired,
-  })).isRequired,
-  t: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  courses: state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state),
-  externalCourses: state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state),
-  t: getTranslator(state),
-});
-
-export default connect(mapStateToProps)(Courses);
+export default Courses;

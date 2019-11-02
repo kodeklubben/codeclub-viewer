@@ -1,4 +1,6 @@
 import {hashCode} from './util';
+import store from '../store';
+import {setCheckbox, removeCheckbox} from '../reducers/checkboxes';
 
 /**
  * Get a string used to store checkboxes in localstorage
@@ -17,7 +19,7 @@ export const createCheckboxesKey = (path = 'undefined') => {
  * @param {function} setCheckbox function for updating the state and localstorage
  * @param {function} removeCheckbox function for updating the state and localstorage
  */
-export const setCheckboxesInDoc = (path, checkboxes, setCheckbox, removeCheckbox) => {
+export const setCheckboxesInDoc = (path, checkboxes) => {
   const hashes = new Set(Object.keys(checkboxes));
   const labels = [...document.getElementsByTagName('label')];
   for (let label of labels) {
@@ -29,15 +31,16 @@ export const setCheckboxesInDoc = (path, checkboxes, setCheckbox, removeCheckbox
         hashes.delete(hash);
       } else {
         input.checked = false;
-        setCheckbox(path, hash, false);
+        store.dispatch(setCheckbox(path, hash, false));
       }
       input.onclick = (e) => {
-        setCheckbox(path, hash, !!e.target.checked);
+        store.dispatch(setCheckbox(path, hash, !!e.target.checked));
       };
     }
   }
   for (let hash of hashes) {
-    removeCheckbox(path, hash); // Remove any stored checkboxes that don't exist anymore, e.g. because content changed
+    // Remove any stored checkboxes that don't exist anymore, e.g. because content changed
+    store.dispatch(removeCheckbox(path, hash));
   }
 };
 

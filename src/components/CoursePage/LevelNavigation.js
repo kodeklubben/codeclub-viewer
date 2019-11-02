@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Panel from 'react-bootstrap/lib/Panel';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
@@ -17,8 +17,12 @@ const handleClick = event => {
   scrollToComponent(document.getElementById(lessonListId(event.currentTarget.dataset.level)), {align: 'top'});
 };
 
-const LevelNavigation= ({t, levels, isStudentMode}) => {
+const LevelNavigation= ({levels}) => {
   useStyles(styles);
+
+  const t = useSelector(state => getTranslator(state));
+  const isStudentMode = useSelector(state => state.isStudentMode);
+
   const levelListItems = levels.map(level => (
     <ListGroupItem key={level} data-level={level} onClick={handleClick}>
       <span className={styles.name}>
@@ -50,17 +54,7 @@ const LevelNavigation= ({t, levels, isStudentMode}) => {
 };
 
 LevelNavigation.propTypes = {
-  // ownProps
   levels: PropTypes.array,
-
-  // mapStateToProps
-  t: PropTypes.func.isRequired,
-  isStudentMode: PropTypes.bool.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  t: getTranslator(state),
-  isStudentMode: state.isStudentMode
-});
-
-export default connect(mapStateToProps)(LevelNavigation);
+export default LevelNavigation;

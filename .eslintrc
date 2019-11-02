@@ -21,6 +21,11 @@
     "jsx-a11y",
     "babel"
   ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "rules": {
     "babel/semi": "error",
     "eol-last": ["error"],
@@ -28,6 +33,7 @@
     "quotes": ["error", "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
     "semi": ["error", "always"],
     "max-len": ["error", 120],
+    "no-prototype-builtins": "off",
     "no-console": ["off"], // we automatically strip console.log from production code, and we want to keep console.warn and console.error
     "no-unused-vars": ["error", { "vars": "all", "args": "none" }], // only warn of unused args and vars
     "react-hooks/rules-of-hooks": "error",

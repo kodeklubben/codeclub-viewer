@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {getTranslator} from '../../selectors/translate';
 import styles from './FilterItem.scss';
 import useStyles from 'isomorphic-style-loader/useStyles';
@@ -9,9 +9,13 @@ import Button from 'react-bootstrap/lib/Button';
 import PopoverComponent from '../PopoverComponent';
 import {filterChecked} from '../../reducers/filter';
 
-const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent, t, filterChecked}) => {
+const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent}) => {
   useStyles(styles);
-  const handleChange = () => filterChecked(groupKey, itemKey);
+
+  const t = useSelector(state => getTranslator(state));
+
+  const dispatch = useDispatch();
+  const handleChange = () => dispatch(filterChecked(groupKey, itemKey));
 
   const popover = popoverContent ?
     <PopoverComponent {...{popoverContent}}>
@@ -32,26 +36,11 @@ const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent, t, fil
 };
 
 FilterItem.propTypes = {
-  // ownProps
   itemKey: PropTypes.string.isRequired,
   groupKey: PropTypes.string.isRequired,
   tagName: PropTypes.string.isRequired,
   checked: PropTypes.bool,
   popoverContent: PropTypes.string.isRequired,
-
-  // mapStateToProps
-  t: PropTypes.func.isRequired,
-
-  // mapDispatchToProps:
-  filterChecked: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  t: getTranslator(state),
-});
-
-const mapDispatchToProps = {
-  filterChecked,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterItem);
+export default FilterItem;

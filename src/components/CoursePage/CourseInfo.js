@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Panel from 'react-bootstrap/lib/Panel';
 import CollapsiblePanel from '../CollapsiblePanel';
 import {getCourseInfo} from '../../resources/courseContent';
@@ -8,7 +8,17 @@ import {getTranslator} from '../../selectors/translate';
 import {processCourseInfo} from '../../utils/processCourseInfo';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 
-const CourseInfo = ({t, isStudentMode, courseInfo}) => {
+const CourseInfo = ({courseName}) => {
+  const t = useSelector(state => getTranslator(state));
+  const language = useSelector(state => state.language);
+  const isStudentMode = useSelector(state => state.isStudentMode);
+
+  const courseInfo = {
+    __html: processCourseInfo(
+      getCourseInfo(courseName, language),
+      {baseurl: getLanguageIndependentCoursePath(courseName)},
+    ),
+  };
   const bsStyle = isStudentMode ? 'student' : 'teacher';
   return (
     <CollapsiblePanel initiallyExpanded={false} header={t('coursepage.courseinfo')} {...{bsStyle}}>
@@ -22,23 +32,7 @@ const CourseInfo = ({t, isStudentMode, courseInfo}) => {
 };
 
 CourseInfo.propTypes = {
-  // mapStateToProps
-  t: PropTypes.func.isRequired,
-  courseInfo: PropTypes.shape({__html: PropTypes.string}).isRequired,
-  isStudentMode: PropTypes.bool.isRequired
+  courseName: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, {courseName}) => ({
-  t: getTranslator(state),
-  courseInfo: {
-    __html: processCourseInfo(
-      getCourseInfo(courseName, state.language),
-      {baseurl: getLanguageIndependentCoursePath(courseName)},
-    ),
-  },
-  isStudentMode: state.isStudentMode
-});
-
-export default connect(
-  mapStateToProps
-)(CourseInfo);
+export default CourseInfo;

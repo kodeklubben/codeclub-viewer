@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import Col from 'react-bootstrap/lib/Col';
 import Grid from 'react-bootstrap/lib/Grid';
@@ -19,9 +19,17 @@ import {getCourseIntroText} from '../resources/courseContent';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
 import Head from '../components/Head';
 
-const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) => {
+const CoursePage = ({params}) => {
   useStyles(styles);
+
   const {course} = params;
+  
+  const courseTitle = useSelector(state => getCourseTitle(course, state.language));
+  const levels = useSelector(state => getFilteredLevelsInCourse(state, course));
+  const t = useSelector(state => getTranslator(state));
+  const showPlaylists = useSelector(state => !getShowFiltergroups(state));
+  const language = useSelector(state => state.language);
+
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
   const filter = <Col xs={12} sm={3} className={styles.topMargin}>
     <LessonFilter course={course}/>
@@ -65,25 +73,9 @@ const CoursePage = ({params, courseTitle, levels, t, showPlaylists, language}) =
 };
 
 CoursePage.propTypes = {
-  // ownProps
   params: PropTypes.shape({
     course: PropTypes.string.isRequired
   }).isRequired,
-
-  // mapStateToProps
-  courseTitle: PropTypes.string.isRequired,
-  levels: PropTypes.arrayOf(PropTypes.number).isRequired,
-  t: PropTypes.func.isRequired,
-  showPlaylists: PropTypes.bool.isRequired,
-  language: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, {params}) => ({
-  courseTitle: getCourseTitle(params.course, state.language),
-  levels: getFilteredLevelsInCourse(state, params.course),
-  t: getTranslator(state),
-  showPlaylists: !getShowFiltergroups(state),
-  language: state.language,
-});
-
-export default connect(mapStateToProps)(CoursePage);
+export default CoursePage;

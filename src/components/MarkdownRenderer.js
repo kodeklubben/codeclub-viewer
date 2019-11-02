@@ -15,7 +15,6 @@ const MarkdownRenderer = ({src, inline}) => {
 };
 
 MarkdownRenderer.propTypes = {
-  // ownProps
   src: PropTypes.string,
   inline: PropTypes.bool
 };

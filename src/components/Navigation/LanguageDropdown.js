@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {setLanguage} from '../../reducers/language';
 import {resetOneFilter} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
@@ -30,21 +29,17 @@ const LanguageItem = ({language, onlyFlag}) => (
   </div>
 );
 
-
-LanguageItem.propTypes = {
-  // ownProps
-  onlyFlag: PropTypes.bool.isRequired,
-
-  // mapStateToProps
-  language: PropTypes.oneOf(availableLanguages).isRequired,
-};
-
-const LanguageDropdown = ({isStudentMode, language, resetOneFilter, setLanguage, collapseAllFilterGroups}) => {
+const LanguageDropdown = () => {
   useStyles(styles);
+
+  const isStudentMode = useSelector(state => state.isStudentMode);
+  const language = useSelector(state => state.language);
+
+  const dispatch = useDispatch();
   const handleSelect = eventKey => {
-    resetOneFilter('language', eventKey);
-    setLanguage(eventKey);
-    collapseAllFilterGroups(true);
+    dispatch(resetOneFilter('language', eventKey));
+    dispatch(setLanguage(eventKey));
+    dispatch(collapseAllFilterGroups(true));
   };
 
   const mode = isStudentMode ? 'student' : 'teacher';
@@ -69,26 +64,4 @@ const LanguageDropdown = ({isStudentMode, language, resetOneFilter, setLanguage,
   );
 };
 
-LanguageDropdown.propTypes = {
-  // mapStateToProps:
-  language: PropTypes.oneOf(availableLanguages).isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
-
-  // mapDispatchToProps:
-  setLanguage: PropTypes.func.isRequired,
-  resetOneFilter: PropTypes.func.isRequired,
-  collapseAllFilterGroups: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  language: state.language,
-  isStudentMode: state.isStudentMode,
-});
-
-const mapDispatchToProps = {
-  setLanguage,
-  resetOneFilter,
-  collapseAllFilterGroups,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LanguageDropdown);
+export default LanguageDropdown;

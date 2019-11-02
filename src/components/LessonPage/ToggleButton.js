@@ -35,7 +35,6 @@ const ToggleButton = ({buttonText, hiddenHTML}) => {
 };
 
 ToggleButton.propTypes = {
-  // ownProps
   buttonText: PropTypes.string,
   hiddenHTML: PropTypes.string
 };

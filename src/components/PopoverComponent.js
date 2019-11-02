@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import styles from './PopoverComponent.scss';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import {hashCode} from '../utils/util';
 
-const PopoverComponent = ({children, popoverContent, showDyslexicFont}) => {
+const PopoverComponent = ({children, popoverContent}) => {
   useStyles(styles);
+
+  const showDyslexicFont = useSelector(state => state.showDyslexicFont);
+
   const handleClick = event => {
     event.stopPropagation();
     event.preventDefault();
@@ -35,16 +38,8 @@ const PopoverComponent = ({children, popoverContent, showDyslexicFont}) => {
 };
 
 PopoverComponent.propTypes = {
-  // ownProps
   children: PropTypes.node,
   popoverContent: PropTypes.string,
-
-  // mapStateToProps
-  showDyslexicFont: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  showDyslexicFont: state.showDyslexicFont,
-});
-
-export default connect(mapStateToProps)(PopoverComponent);
+export default PopoverComponent;

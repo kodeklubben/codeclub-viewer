@@ -1,14 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import Link from 'react-router/lib/Link';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PageNotFound.scss';
 import {getTranslator} from '../selectors/translate';
 import Head from '../components/Head';
 
-const PageNotFound = ({t}) => {
+const PageNotFound = () => {
   useStyles(styles);
+
+  const t = useSelector(state => getTranslator(state));
+
   return (
     <div role='main'>
       <Head title={'404'}/>
@@ -21,13 +23,4 @@ const PageNotFound = ({t}) => {
   );
 };
 
-PageNotFound.propTypes = {
-  // mapStateToProps
-  t: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  t: getTranslator(state)
-});
-
-export default connect(mapStateToProps)(PageNotFound);
+export default PageNotFound;

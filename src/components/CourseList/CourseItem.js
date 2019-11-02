@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import styles from './CourseItem.scss';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import Link from 'react-router/lib/Link';
@@ -17,8 +17,13 @@ import {getCourseExternalLink, getCourseTitle} from '../../resources/courseFront
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getTranslator} from '../../selectors/translate';
 
-const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedMainLanguage, t}) => {
+const CourseItem = ({course, language}) => {
   useStyles(styles);
+
+  const showLessonCount = useSelector(state => getShowFiltergroups(state));
+  const isOnlyCheckedMainLanguage = useSelector(state => onlyCheckedMainLanguage(state));
+  const t = useSelector(state => getTranslator(state));
+
   const courseTitle = getCourseTitle(course, language);
   const externalLink = getCourseExternalLink(course, language);
   const popoverContent = getCourseIntro(course, language);
@@ -46,10 +51,10 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
             {popoverButton}
             <Glyphicon className={styles.externalGlyph} glyph='new-window'/>
           </span>
-          {!onlyCheckedMainLanguage ? <span><Flag language={language}/></span> : null}
+          {!isOnlyCheckedMainLanguage ? <span><Flag language={language}/></span> : null}
         </a>
         :
-        <Link className={styles.courseItem} to={coursePath}>
+        <Link className={styles.courseItem} to={getLanguageIndependentCoursePath(course)}>
           {courseIcon}
           <span className={styles.courseName}>{courseTitle}{popoverButton}</span>
           {showLessonCount ? <LessonCount {...{course}}/> : null}
@@ -59,22 +64,8 @@ const CourseItem = ({course, language, showLessonCount, coursePath, onlyCheckedM
 };
 
 CourseItem.propTypes = {
-  // ownProps
   course: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
-
-  // mapStateToProps
-  showLessonCount: PropTypes.bool.isRequired,
-  coursePath: PropTypes.string,
-  onlyCheckedMainLanguage: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, {course}) => ({
-  showLessonCount: getShowFiltergroups(state),
-  coursePath: getLanguageIndependentCoursePath(course),
-  onlyCheckedMainLanguage: onlyCheckedMainLanguage(state),
-  t: getTranslator(state),
-});
-
-export default connect(mapStateToProps)(CourseItem);
+export default CourseItem;

@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './ClearFilterButton.scss';
 import Button from 'react-bootstrap/lib/Button';
@@ -9,11 +8,17 @@ import {somethingCheckedInFilter} from '../../selectors/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 import {resetAllFilters} from '../../reducers/filter';
 
-const ClearFilterButton = ({t, language, somethingChecked, resetAllFilters, collapseAllFilterGroups}) => {
+const ClearFilterButton = () => {
   useStyles(styles);
+
+  const language = useSelector(state => state.language);
+  const t = useSelector(state => getTranslator(state));
+  const somethingChecked = useSelector(state => somethingCheckedInFilter(state));
+
+  const dispatch = useDispatch();
   const handleClick = () => {
-    resetAllFilters('language', language);
-    collapseAllFilterGroups(true);
+    dispatch(resetAllFilters('language', language));
+    dispatch(collapseAllFilterGroups(true));
   };
 
   return somethingChecked ?
@@ -23,26 +28,4 @@ const ClearFilterButton = ({t, language, somethingChecked, resetAllFilters, coll
     : null;
 };
 
-ClearFilterButton.propTypes = {
-  // mapStateToProps
-  language: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired,
-
-  // mapDispatchToProps
-  resetAllFilters: PropTypes.func.isRequired,
-  collapseAllFilterGroups: PropTypes.func.isRequired,
-  somethingChecked: PropTypes.bool.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  language: state.language,
-  t: getTranslator(state),
-  somethingChecked: somethingCheckedInFilter(state)
-});
-
-const mapDispatchToProps = {
-  resetAllFilters,
-  collapseAllFilterGroups,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClearFilterButton);
+export default ClearFilterButton;

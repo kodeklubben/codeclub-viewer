@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import Button from 'react-bootstrap/lib/Button';
 import styles from './ContinueButton.scss';
@@ -9,8 +9,16 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import {getLessonPath, getLanguageAndIsReadme} from '../../resources/lessonFrontmatter';
 
-const ContinueButton = ({path, t, lastLesson, isStudentMode}) => {
+const ContinueButton = ({course, lesson, file}) => {
   useStyles(styles);
+
+  const t = useSelector(state => getTranslator(state));
+  const lastLesson = useSelector(state => state.lastLesson);
+  const isStudentMode = useSelector(state => state.isStudentMode);
+
+  const isLesson = !!lesson;
+  const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
+  const path = getLessonPath(course, lesson, language, isReadme);
   const hasLastLesson = lastLesson !== '';
   const pathIsNotLastLesson = lastLesson !== path;
   const options = {
@@ -29,28 +37,9 @@ const ContinueButton = ({path, t, lastLesson, isStudentMode}) => {
 };
 
 ContinueButton.propTypes = {
-  // ownProps
   course: PropTypes.string,
   lesson: PropTypes.string,
   file: PropTypes.string,
-
-  // mapStateToProps
-  path: PropTypes.string,
-  t: PropTypes.func.isRequired,
-  lastLesson: PropTypes.string.isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {course, lesson, file}) => {
-  const isLesson = !!lesson;
-  const {language, isReadme} = isLesson ? getLanguageAndIsReadme(course, lesson, file) || {} : {};
-  const path = getLessonPath(course, lesson, language, isReadme);
-  return {
-    path,
-    t: getTranslator(state),
-    lastLesson: state.lastLesson,
-    isStudentMode: state.isStudentMode,
-  };
-};
-
-export default connect(mapStateToProps)(ContinueButton);
+export default ContinueButton;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {anyCheckboxTrue, createCheckboxesKey} from '../../utils/checkboxUtils';
 import MainLanguageButton from './MainLanguageButton';
 import ResetButton from './ResetButton';
@@ -9,11 +9,12 @@ import PdfButton from './PdfButton';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 
-const ButtonRow = ({
-  course, lesson, language, isReadme,
-  path,
-  mainLanguage, isStudentMode, anyCheckedCheckboxes,
-}) => {
+const ButtonRow = ({course, lesson, language, isReadme,}) => {
+  const path = getLessonPath(course, lesson, language, isReadme);
+  const mainLanguage = useSelector(state => state.language);
+  const isStudentMode = useSelector(state => state.isStudentMode);
+  const anyCheckedCheckboxes = useSelector(state => anyCheckboxTrue(state.checkboxes[createCheckboxesKey(path)] || {}));
+
   const mainLanguageButton = language !== mainLanguage ?
     <MainLanguageButton {...{course, lesson, isReadme}}/> : null;
 
@@ -34,29 +35,10 @@ const ButtonRow = ({
 };
 
 ButtonRow.propTypes = {
-  // ownProps
   course: PropTypes.string.isRequired,
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
-
-  // mapStateToProps
-  path: PropTypes.string.isRequired,
-  mainLanguage: PropTypes.string.isRequired,
-  isStudentMode: PropTypes.bool.isRequired,
-  anyCheckedCheckboxes: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, {course, lesson, language, isReadme}) => {
-  const path = getLessonPath(course, lesson, language, isReadme);
-  return {
-    path,
-    mainLanguage: state.language,
-    isStudentMode: state.isStudentMode,
-    anyCheckedCheckboxes: anyCheckboxTrue(state.checkboxes[createCheckboxesKey(path)] || {}),
-  };
-};
-
-export default connect(
-  mapStateToProps,
-)(ButtonRow);
+export default ButtonRow;

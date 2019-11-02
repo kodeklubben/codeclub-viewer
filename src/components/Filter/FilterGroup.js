@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
 import FilterItem from './FilterItem';
 import styles from './FilterGroup.scss';
@@ -11,16 +11,19 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 import {getTranslateFilter} from '../../selectors/translate';
 
-const FilterGroup = ({
-  groupKey,
-  filterTags, filterGroupsCollapsed, somethingChecked, translateFilter,
-  collapseFilterGroup
-}) => {
+const FilterGroup = ({groupKey}) => {
   useStyles(styles);
+
+  const filterTags = useSelector(state => state.filter[groupKey]);
+  const filterGroupsCollapsed = useSelector(state => state.filterGroupsCollapsed);
+  const somethingChecked = useSelector(state => somethingCheckedInGroup(state, groupKey));
+  const translateFilter = useSelector(state => getTranslateFilter(state));
+
+  const dispatch = useDispatch();
   const handleClick = () => {
     const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
     if (!somethingChecked) {
-      collapseFilterGroup(groupKey, !isCollapsed);
+      dispatch(collapseFilterGroup(groupKey, !isCollapsed));
     }
   };
 
@@ -71,28 +74,7 @@ const FilterGroup = ({
 };
 
 FilterGroup.propTypes = {
-  // ownProps:
   groupKey: PropTypes.string,
-
-  // mapStateToProps:
-  filterTags: PropTypes.object.isRequired,
-  filterGroupsCollapsed: PropTypes.object.isRequired,
-  somethingChecked: PropTypes.bool.isRequired,
-  translateFilter: PropTypes.func.isRequired,
-
-  // mapDispatchToProps:
-  collapseFilterGroup: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, {groupKey}) => ({
-  filterTags: state.filter[groupKey],
-  filterGroupsCollapsed: state.filterGroupsCollapsed,
-  somethingChecked: somethingCheckedInGroup(state, groupKey),
-  translateFilter: getTranslateFilter(state),
-});
-
-const mapDispatchToProps = {
-  collapseFilterGroup,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterGroup);
+export default FilterGroup;

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import NavLink from './NavLink';
 import LevelIcon from '../LevelIcon';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import styles from './BreadCrumb.scss';
 import useStyles from 'isomorphic-style-loader/useStyles';
-import {getAvailableLanguages} from '../../utils/filterUtils';
 import {getLanguageIndependentCoursePath} from '../../resources/courses';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
 import {getLanguageAndIsReadme, getLessonTitle, getLessonPath} from '../../resources/lessonFrontmatter';
@@ -14,8 +13,12 @@ import {getCourseIcon} from '../../resources/courseIcon';
 import {getTranslator} from '../../selectors/translate';
 import {getLevel} from '../../resources/lessons';
 
-const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
+const BreadCrumb = ({course, lesson, file}) => {
   useStyles(styles);
+
+  const courseLanguage = useSelector(state => state.language);
+  const t = useSelector(state => getTranslator(state));
+
   const isLesson = !!lesson;
   const isCourse = course && !isLesson;
 
@@ -50,19 +53,9 @@ const BreadCrumb = ({course, lesson, file, courseLanguage, t}) => {
 };
 
 BreadCrumb.propTypes = {
-  // ownProps
   course: PropTypes.string,
   lesson: PropTypes.string,
   file: PropTypes.string,
-  t: PropTypes.func.isRequired,
-
-  // mapStateToProps
-  courseLanguage: PropTypes.oneOf(getAvailableLanguages()).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  courseLanguage: state.language,
-  t: getTranslator(state),
-});
-
-export default connect(mapStateToProps)(BreadCrumb);
+export default BreadCrumb;
