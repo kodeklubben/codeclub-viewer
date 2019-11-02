@@ -41,6 +41,10 @@ const LkkNav = ({t}) => {
   </div>;
 };
 
+LkkNav.propTypes = {
+  t: PropTypes.func.isRequired,
+};
+
 const MenuToggle = ({t}) => {
   return <Navbar.Toggle>
     <span className="sr-only">Toggle navigation</span>
@@ -51,6 +55,10 @@ const MenuToggle = ({t}) => {
     </span>
     <span className={styles.toggleContent}>{t('navbar.menu')}</span>
   </Navbar.Toggle>;
+};
+
+MenuToggle.propTypes = {
+  t: PropTypes.func.isRequired,
 };
 
 const NavBar = ({params}) => {
