@@ -42,7 +42,7 @@ const Content = ({course, lesson, language, isReadme}) => {
   if (course === 'scratch' && typeof document !== 'undefined' && isHydrated) {
     lessonContent = renderScratchBlocks(lessonContent, styles);
   }
-  return <div dangerouslySetInnerHTML={{__html: lessonContent}}/>;
+  return <div className={styles.lessonContent} dangerouslySetInnerHTML={{__html: lessonContent}}/>;
 };
 
 Content.propTypes = {
