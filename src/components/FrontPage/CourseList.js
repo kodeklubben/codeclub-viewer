@@ -17,7 +17,7 @@ import LessonCount from './LessonCount';
 
 const useStyles = makeStyles(theme => ({
   card: {
-    width: 300,
+    minWidth: 250,
   },
   image: {
     maxHeight: 120,
@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const CourseItem = ({course}) => {
+const CourseList = ({course}) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -78,9 +78,8 @@ const CourseItem = ({course}) => {
   );
 };
 
-CourseItem.propTypes = {
-  course: PropTypes.string.isRequired,
+CourseList.propTypes = {
+  course: PropTypes.string,
 };
 
-
-export default CourseItem;
+export default CourseList;

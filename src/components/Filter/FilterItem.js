@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
-import {ListItem, ListItemIcon, ListItemText, Checkbox} from '@material-ui/core';
+import {ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import {filterChecked} from '../../reducers/filter';
@@ -11,19 +11,9 @@ const FilterItem = ({itemKey, groupKey, tagName, checked}) => {
   const handleChange = () => dispatch(filterChecked(groupKey, itemKey));
 
   return (
-    <ListItem dense>
+    <ListItem dense button onClick={handleChange}>
       <ListItemIcon>
-        <Checkbox
-          icon={<CheckBoxOutlineBlankIcon fontSize='small' />}
-          checkedIcon={<CheckBoxIcon fontSize='small' />}
-          edge='start'
-          color='default'
-          {...{checked}}
-          disableRipple
-          onChange={handleChange}
-          inputProps={{ 'aria-labelledby': itemKey }}
-          value={itemKey}
-        />
+        {checked ? <CheckBoxIcon fontSize='small'/> : <CheckBoxOutlineBlankIcon fontSize='small'/>}
       </ListItemIcon>
       <ListItemText id={itemKey} primary={tagName}/>
     </ListItem>

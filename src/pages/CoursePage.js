@@ -2,6 +2,7 @@ import React from 'react';
 import {Grid, Container} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import LessonFilter from '../components/Filter/LessonFilter';
+import LessonList from '../components/CoursePage/LessonList';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -15,12 +16,14 @@ const CoursePage = () => {
 
   return (
     <Container className={classes.container} maxWidth='xl'>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={2}>
+      <Grid container justify='center' spacing={2}>
+        <Grid item xs={12} sm={3}>
           <LessonFilter/>
         </Grid>
-        <Grid item xs={12} sm={10}>
-          KURS
+        <Grid item xs={12} sm={9}>
+          <Grid container justify='center' spacing={2}>
+            <LessonList/>
+          </Grid>
         </Grid>
       </Grid>
     </Container>

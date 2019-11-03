@@ -67,8 +67,7 @@ const NavBar = ({params}) => {
 
   const courseCrumb = (
     <Link
-      color='inherit'
-      underline='none'
+      color='textPrimary'
       component={RouterLink}
       className={classes.link}
       to={coursePath}
@@ -80,8 +79,7 @@ const NavBar = ({params}) => {
 
   const lessonCrumb = (
     <Link
-      color='inherit'
-      underline='none'
+      color='textPrimary'
       component={RouterLink}
       className={classes.link}
       aria-label={lessonTitle}
@@ -97,7 +95,7 @@ const NavBar = ({params}) => {
       <Toolbar className={classes.root} >
         <Breadcrumbs separator={<NavigateNextIcon color='inherit' fontSize='small'/>}>
           <Link
-            color='inherit'
+            color='textPrimary'
             component={RouterLink}
             aria-label={t('general.home')}
             className={classes.link}

@@ -6,7 +6,8 @@ import LessonFilter from '../components/Filter/LessonFilter';
 import {getFilteredCourses} from '../selectors/course';
 import {getCoursesWithPlaylists} from '../resources/playlists';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
-import CourseItem from '../components/FrontPage/CourseItem';
+import CourseList from '../components/FrontPage/CourseList';
+import ExternalCourseList from '../components/FrontPage/ExternalCourseList';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -26,13 +27,16 @@ const FrontPage = () => {
       <Grid container justify='center'>
         {isStudentMode ? null : <TeacherInfobox/>}
       </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={4} md={3} lg={2}>
+      <Grid container justify='center' spacing={2}>
+        <Grid item xs={12} sm={3}>
           <LessonFilter/>
         </Grid>
-        <Grid item xs={12} sm={8} md={9} lg={10}>
-          <Grid container justify='center' spacing={3}>
-            {courses.map(course => <CourseItem key={course} {...{course}}/>)}
+        <Grid item xs={12} sm={9}>
+          <Grid container justify='center' spacing={2}>
+            {courses.map(course => <CourseList key={course} {...{course}}/>)}
+          </Grid>
+          <Grid container justify='center' spacing={2}>
+            <ExternalCourseList/>
           </Grid>
         </Grid>
       </Grid>
