@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Helmet} from 'react-helmet';
 import {getTranslator} from '../selectors/translate';
 
-const Head = ({title, description, language, t}) => {
+const Head = ({title, description}) => {
+  const language = useSelector(state => state.language);
+  const t = useSelector(state => getTranslator(state));
+
   const headTitle = title ? title  + ' | ' + t('head.title') : t('head.title');
   const descriptionContent = description ? description : t('head.description');
   return (
@@ -19,20 +22,8 @@ const Head = ({title, description, language, t}) => {
 };
 
 Head.propTypes = {
-  // ownProps
   title: PropTypes.string,
   description: PropTypes.string,
-
-  // mapStateToProps
-  language: PropTypes.string.isRequired,
-  t: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  language: state.language,
-  t: getTranslator(state),
-});
-
-export default connect(
-  mapStateToProps
-)(Head);
+export default Head;

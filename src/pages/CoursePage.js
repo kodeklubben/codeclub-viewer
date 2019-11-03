@@ -29,4 +29,5 @@ const CoursePage = () => {
     </Container>
   );
 };
+
 export default CoursePage;

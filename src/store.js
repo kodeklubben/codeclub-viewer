@@ -1,5 +1,3 @@
-/* global IS_HOT */
-
 import {createStore} from 'redux';
 import {createCheckboxesKey} from './utils/checkboxUtils';
 import {getInitialFilter} from './utils/filterUtils';
@@ -22,16 +20,11 @@ import {getCoursesWithPlaylists} from './resources/playlists';
 const initialState = {};
 let store;
 
-if (!IS_HOT) {
-  store = createStore(reducer, initialState);
-} else {
-  //Only use the DevTools extension when in development
-  const devTools = typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ?
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() :
-    f => f;
+const devTools = typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ?
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() :
+  f => f;
 
-  store = createStore(reducer, initialState, devTools);
-}
+store = createStore(reducer, initialState, devTools);
 
 const defaultMode = true;
 const defaultLanguage = 'nb';
