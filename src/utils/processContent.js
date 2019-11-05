@@ -77,7 +77,7 @@ const insertHeaderIcons = (obj) => {
 const replaceClass = (obj, styles) => {
   let newObj = {};
   for (let k in obj) {
-    if (obj.hasOwnProperty(k)) {
+    if (Object.prototype.hasOwnProperty.call(obj, k)) {
       if (k === 'class' && obj[k] in styles) {
         newObj[k] = styles[obj[k]];
       } else {

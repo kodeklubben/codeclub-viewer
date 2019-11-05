@@ -87,7 +87,9 @@ function handleCheckFilter(state, groupKey, tagKey){
 
   // Check if state contains the filterItem that was checked
   // This should always be false, but it's better to be safe than sorry
-  if(!state.hasOwnProperty(groupKey) || !state[groupKey].hasOwnProperty(tagKey)) {
+  if(!Object.prototype.hasOwnProperty.call(state, groupKey) ||
+    !Object.prototype.hasOwnProperty.call(state[groupKey], tagKey)
+  ) {
     return state;
   }
 

@@ -16,7 +16,7 @@ const Static = require('node-static');
 function length (obj) {
   let size = 0;
   for (let key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
+    if (Object.prototype.hasOwnProperty.call(obj, key)) size++;
   }
   return size;
 }
