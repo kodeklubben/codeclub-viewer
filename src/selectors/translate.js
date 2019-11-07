@@ -27,11 +27,9 @@ export const getTranslator = (state) => {
 
     // Replace {{key}} with replacements[key] in caption
     if (cap && replacements) {
-      for (let repKey in replacements) {
-        if (Object.prototype.hasOwnProperty.call(replacements, repKey)) {
-          const pattern = new RegExp('{{' + repKey + '}}', 'gm'); // g=global, m=multiline
-          cap = cap.replace(pattern, replacements[repKey]);
-        }
+      for (let repKey of Object.keys(replacements)) {
+        const pattern = new RegExp('{{' + repKey + '}}', 'gm'); // g=global, m=multiline
+        cap = cap.replace(pattern, replacements[repKey]);
       }
     }
     return cap;
