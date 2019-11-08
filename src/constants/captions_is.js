@@ -118,6 +118,7 @@ export default {
       contribute: 'Legga til',
     },
     menu: 'Valmynd',
+    darkmode: 'Næturstillingu',
   },
   search: {
     placeholder: 'Leita',

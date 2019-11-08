@@ -52,13 +52,10 @@ const App = ({params, location, children}) => {
   const showDyslexicFont = useSelector(state => state.showDyslexicFont);
   const showDarkMode = useSelector(state => state.showDarkMode);
 
-
+  // Fix for both true
   let theme = defaultTheme;
   if (showDarkMode && !showDyslexicFont) { theme = darkModeTheme; }
   if (showDyslexicFont && !showDarkMode) { theme = dyslexicTheme; }
-  if (showDyslexicFont && showDarkMode) { theme = {...darkModeTheme, ...dyslexicTheme}; }
-
-  console.log(theme);
 
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');

@@ -39,6 +39,7 @@ const CourseList = ({course}) => {
 
   const showLessonCount = useSelector(state => getShowFiltergroups(state));
   const language = useSelector(state => state.language);
+  const showDarkMode = useSelector(state => state.showDarkMode);
 
   return (
     <Grid item>
@@ -56,7 +57,7 @@ const CourseList = ({course}) => {
                 className={classes.image}
                 component='img'
                 alt={course}
-                src={getCourseIcon(course)}
+                src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
                 title={course}
               />
             </Grid>

@@ -55,6 +55,7 @@ const NavBar = ({params}) => {
 
   const courseLanguage = useSelector(state => state.language);
   const t = useSelector(state => getTranslator(state));
+  const showDarkMode = useSelector(state => state.showDarkMode);
 
   const {course, lesson, file} = params;
   const isLesson = !!lesson;
@@ -68,11 +69,16 @@ const NavBar = ({params}) => {
   const courseCrumb = (
     <Link
       color='textPrimary'
+      underline='none'
       component={RouterLink}
       className={classes.link}
       to={coursePath}
     >
-      <img className={classes.courseIcon} src={getCourseIcon(course)} alt={t('general.picture', {title: courseTitle})}/>
+      <img
+        className={classes.courseIcon}
+        src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
+        alt={t('general.picture', {title: courseTitle})}
+      />
       {courseTitle}
     </Link>
   );
@@ -80,6 +86,7 @@ const NavBar = ({params}) => {
   const lessonCrumb = (
     <Link
       color='textPrimary'
+      underline='none'
       component={RouterLink}
       className={classes.link}
       aria-label={lessonTitle}
@@ -96,7 +103,6 @@ const NavBar = ({params}) => {
         <Breadcrumbs separator={<NavigateNextIcon color='inherit' fontSize='small'/>}>
           <Link
             color='textPrimary'
-            underline='none'
             component={RouterLink}
             aria-label={t('general.home')}
             className={classes.link}

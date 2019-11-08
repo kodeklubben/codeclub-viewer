@@ -4,18 +4,10 @@ import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
 import {Button, Link} from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import {makeStyles} from '@material-ui/core/styles';
 import {getTranslator} from '../../selectors/translate';
 
-const useStyles = makeStyles(theme => ({
-  icon: {
-    marginRight: theme.spacing(0.5),
-  },
-}));
 
 const ContinueButton = ({course}) => {
-  const classes = useStyles();
-
   const t = useSelector(state => getTranslator(state));
   const lastLesson = useSelector(state => state.lastLesson);
 
@@ -23,8 +15,13 @@ const ContinueButton = ({course}) => {
 
   return hasLastLesson && !course ?
     <Link underline='none' component={RouterLink} to={lastLesson}>
-      <Button variant='contained' color='inherit' size='small' aria-label={t('frontpage.continueButton')}>
-        <ArrowForwardIcon className={classes.icon}/>
+      <Button
+        variant='contained'
+        color='inherit'
+        size='small'
+        aria-label={t('frontpage.continueButton')}
+        startIcon={<ArrowForwardIcon/>}
+      >
         {t('frontpage.continueButton')}
       </Button>
     </Link>

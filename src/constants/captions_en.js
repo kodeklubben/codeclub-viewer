@@ -110,6 +110,7 @@ export default {
       contribute: 'Contribute?',
     },
     menu: 'Menu',
+    darkmode: 'Dark mode',
   },
   search: {
     placeholder: 'Search',

@@ -19,8 +19,13 @@ const ClearFilterButton = () => {
   };
 
   return somethingChecked ?
-    <Button variant='contained' color='inherit' onClick={handleClick}>
-      <DeleteIcon/>
+    <Button
+      variant='outlined'
+      color='inherit'
+      size='small'
+      onClick={handleClick}
+      startIcon={<DeleteIcon/>}
+    >
       {t('filter.removefilter')}
     </Button>
     : null;

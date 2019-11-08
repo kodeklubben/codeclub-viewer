@@ -3,9 +3,12 @@ import {useSelector, useDispatch} from 'react-redux';
 import {setShowDarkMode} from '../../reducers/showDarkMode';
 import {ListItemSecondaryAction, Switch, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import {getTranslator} from '../../selectors/translate';
 
 const DarkModeSwitch = () => {
   const showDarkMode = useSelector(state => state.showDarkMode);
+  const t = useSelector(state => getTranslator(state));
+
   const dispatch = useDispatch();
 
   return (
@@ -13,7 +16,7 @@ const DarkModeSwitch = () => {
       <ListItemIcon>
         <Brightness4Icon/>
       </ListItemIcon>
-      <ListItemText id='dark-mode-switch' primary='Dark mode'/>
+      <ListItemText id='dark-mode-switch' primary={t('navbar.darkmode')}/>
       <ListItemSecondaryAction>
         <Switch
           color='default'

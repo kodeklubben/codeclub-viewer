@@ -111,6 +111,7 @@ export default {
       contribute: 'Bidra?',
     },
     menu: 'Meny',
+    darkmode: 'Nattmodus',
   },
   search: {
     placeholder: 'Søk',
