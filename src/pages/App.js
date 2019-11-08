@@ -29,8 +29,14 @@ const dyslexicTheme = createMuiTheme({
   },
 });
 
-const theme = createMuiTheme({
-  
+const darkModeTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
+
+const defaultTheme = createMuiTheme({
+
 });
 
 const useStyles = makeStyles(theme => ({
@@ -44,11 +50,20 @@ const App = ({params, location, children}) => {
   const classes = useStyles();
 
   const showDyslexicFont = useSelector(state => state.showDyslexicFont);
+  const showDarkMode = useSelector(state => state.showDarkMode);
+
+
+  let theme = defaultTheme;
+  if (showDarkMode && !showDyslexicFont) { theme = darkModeTheme; }
+  if (showDyslexicFont && !showDarkMode) { theme = dyslexicTheme; }
+  if (showDyslexicFont && showDarkMode) { theme = {...darkModeTheme, ...dyslexicTheme}; }
+
+  console.log(theme);
 
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');
   return (
-    <ThemeProvider theme={showDyslexicFont ? dyslexicTheme : theme}>
+    <ThemeProvider {...{theme}}>
       <CssBaseline/>
       <Head/>
       {renderPdf ? null : <NavBar {...{params}}/>}

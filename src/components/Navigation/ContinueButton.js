@@ -22,8 +22,8 @@ const ContinueButton = ({course}) => {
   const hasLastLesson = lastLesson !== '';
 
   return hasLastLesson && !course ?
-    <Link color='inherit' underline='none' component={RouterLink} to={lastLesson}>
-      <Button variant='outlined' size='small' aria-label={t('frontpage.continueButton')}>
+    <Link underline='none' component={RouterLink} to={lastLesson}>
+      <Button variant='contained' color='inherit' size='small' aria-label={t('frontpage.continueButton')}>
         <ArrowForwardIcon className={classes.icon}/>
         {t('frontpage.continueButton')}
       </Button>

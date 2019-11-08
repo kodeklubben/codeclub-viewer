@@ -96,6 +96,7 @@ const NavBar = ({params}) => {
         <Breadcrumbs separator={<NavigateNextIcon color='inherit' fontSize='small'/>}>
           <Link
             color='textPrimary'
+            underline='none'
             component={RouterLink}
             aria-label={t('general.home')}
             className={classes.link}
