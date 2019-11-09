@@ -5,6 +5,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
 import ClearFilterButton from './ClearFilterButton';
+import RadioButtons from './RadioButtons';
+import PopoverComponent from '../PopoverComponent';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -18,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 const LessonFilter = () => {
   const classes = useStyles();
 
+  const showPlaylists = useSelector(state => state.showPlaylists);
   const t = useSelector(state => getTranslator(state));
   const filterGroupKeys = useSelector(state => Object.keys(state.filter));
 
@@ -25,13 +28,22 @@ const LessonFilter = () => {
     <Grid container direction='column' spacing={2} wrap='nowrap' alignItems='center'>
       <Grid item>
         <Paper className={classes.paper}>
-          <Typography className={classes.header} variant='h5' component='h3'>
-            {t('filter.header')}
-          </Typography>
+          <Grid container alignItems='center' justify='space-between'>
+            <Typography className={classes.header} variant='h5' component='h3'>
+              {t('filter.header')}
+            </Typography>
+            <PopoverComponent popoverContent={t('filter.tooltip')}/>
+          </Grid>
           <Divider/>
-          <List>
-            {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
-          </List>
+          <RadioButtons/>
+          {showPlaylists ? null :
+            <React.Fragment>
+              <Divider/>
+              <List>
+                {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
+              </List>
+            </React.Fragment>
+          }
         </Paper>
       </Grid>
       <Grid item>

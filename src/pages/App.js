@@ -8,22 +8,36 @@ import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
 import OpenDyslexic from '../assets/fonts/OpenDyslexic-Regular.ttf';
 
-const openDyslexic = {
-  fontFamily: 'OpenDyslexic',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
-  fontWeight: 400,
-  src: `url(${OpenDyslexic})`,
-};
-
 const dyslexicTheme = createMuiTheme({
   typography: {
-    fontFamily: ['OpenDyslexic', 'Helvetica', 'Arial', 'sans-serif'],
+    fontFamily: ['OpenDyslexic', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   },
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '@font-face': [openDyslexic],
+        '@font-face': {
+          fontFamily: 'OpenDyslexic',
+          src: `url(${OpenDyslexic})`,
+        },
+      },
+    },
+  },
+});
+
+const darkDyslexicTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+  typography: {
+    fontFamily: ['OpenDyslexic', 'Helvetica', 'Arial', 'sans-serif'].join(','),
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': {
+          fontFamily: 'OpenDyslexic',
+          src: `url(${OpenDyslexic})`,
+        },
       },
     },
   },
@@ -36,7 +50,9 @@ const darkModeTheme = createMuiTheme({
 });
 
 const defaultTheme = createMuiTheme({
-
+  palette: {
+    type: 'light',
+  },
 });
 
 const useStyles = makeStyles(theme => ({
@@ -52,10 +68,10 @@ const App = ({params, location, children}) => {
   const showDyslexicFont = useSelector(state => state.showDyslexicFont);
   const showDarkMode = useSelector(state => state.showDarkMode);
 
-  // Fix for both true
   let theme = defaultTheme;
-  if (showDarkMode && !showDyslexicFont) { theme = darkModeTheme; }
-  if (showDyslexicFont && !showDarkMode) { theme = dyslexicTheme; }
+  if (showDyslexicFont && !showDarkMode) { theme = dyslexicTheme; };
+  if (!showDyslexicFont && showDarkMode) { theme = darkModeTheme; };
+  if (showDyslexicFont && showDarkMode) { theme = darkDyslexicTheme; };
 
   // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
   const renderPdf = Object.keys(location.query).includes('pdf');

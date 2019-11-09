@@ -33,6 +33,7 @@ const FilterGroup = ({groupKey}) => {
         tagName,
         itemKey: key,
         checked: filterTags[key],
+        popoverContent: translateFilter(groupKey, key, true),
       };
       return tagName ? <FilterItem {...options}/> : null;
     }).filter(item => !!item); // filter out null-values;
