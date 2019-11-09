@@ -1,29 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles} from '@material-ui/core/styles';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import ChangeHistoryIcon from '@material-ui/icons/ChangeHistory';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import FilterVintageIcon from '@material-ui/icons/FilterVintage';
 
-const useStyles = makeStyles(theme => ({
-  levelIcon: {
-    marginRight: theme.spacing(0.5),
-    width: '0.75em',
-    height: '0.75em',
-    alignSelf: 'center',
+const LevelIcon = ({level, fontSize}) => {
+  if (level === 1 || level === '1') {
+    return <RadioButtonUncheckedIcon {...{fontSize}}/>;
   }
-}));
-
-const LevelIcon = ({level}) => {
-  const classes = useStyles();
-  return level ?
-    <img
-      className={classes.levelIcon}
-      src={require('../assets/graphics/level-' + level + '.svg')}
-      alt={'Level ' + level}
-    />
-    : null;
+  if (level === 2 || level === '2') {
+    return <ChangeHistoryIcon {...{fontSize}}/>;
+  }
+  if (level === 3 || level === '3') {
+    return <CheckBoxOutlineBlankIcon {...{fontSize}}/>;
+  }
+  if (level === 4 || level === '4') {
+    return <FilterVintageIcon {...{fontSize}}/>;
+  }
 };
 
 LevelIcon.propTypes = {
-  level: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+  level: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  fontSize: PropTypes.string,
 };
 
 export default LevelIcon;

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Card, CardContent, IconButton, Popover, Typography} from '@material-ui/core';
+import {IconButton, Popover, Typography} from '@material-ui/core';
 import HelpIcon from '@material-ui/icons/Help';
-import {hashCode} from '../utils/util';
 import {makeStyles} from '@material-ui/core/styles';
+import {hashCode} from '../utils/util';
 
 const useStyles = makeStyles(theme => ({
-  popover: {
+  text: {
+    padding: theme.spacing(2),
     maxWidth: 600,
   },
   icon: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const PopoverComponent = ({popoverContent, size}) => {
+const PopoverComponent = ({popoverContent}) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,11 +33,10 @@ const PopoverComponent = ({popoverContent, size}) => {
 
   return (
     <React.Fragment>
-      <IconButton className={classes.icon}  aria-describedby={id} {...{size}} onClick={handleClick}>
+      <IconButton className={classes.icon} aria-describedby={id} size='small' onClick={handleClick}>
         <HelpIcon/>
       </IconButton>
       <Popover
-        className={classes.popover}
         {...{id, open, anchorEl}}
         onClose={handleClose}
         anchorOrigin={{
@@ -48,7 +48,7 @@ const PopoverComponent = ({popoverContent, size}) => {
           horizontal: 'center',
         }}
       >
-        <Card><CardContent><Typography dangerouslySetInnerHTML={{__html: popoverContent}}/></CardContent></Card>
+        <Typography className={classes.text} dangerouslySetInnerHTML={{__html: popoverContent}}/>
       </Popover>
     </React.Fragment>
   );
@@ -56,7 +56,6 @@ const PopoverComponent = ({popoverContent, size}) => {
 
 PopoverComponent.propTypes = {
   popoverContent: PropTypes.string,
-  size: PropTypes.string,
 };
 
 export default PopoverComponent;

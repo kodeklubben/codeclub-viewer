@@ -4,6 +4,9 @@ import {AppBar, Link, Grid, Toolbar} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
+  footer: {
+    marginTop: theme.spacing(5),
+  },
   img: {
     margin: '20px 7px 10px',
     width: 'auto',
@@ -15,7 +18,7 @@ const Footer = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position='static' color='inherit'>
+    <AppBar position='static' color='inherit' className={classes.footer}>
       <Toolbar>
         <Grid container justify='center'>
           <Link href={'https://www.sparebank1.no'} target='_blank' rel='noopener'>

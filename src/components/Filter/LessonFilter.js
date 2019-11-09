@@ -4,16 +4,15 @@ import {Grid, Paper, Typography, List, Divider} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
-import ClearFilterButton from './ClearFilterButton';
 import RadioButtons from './RadioButtons';
 import PopoverComponent from '../PopoverComponent';
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    maxWidth: 250,
+    marginTop: theme.spacing(8.5),
   },
   header: {
-    padding: 15,
+    padding: theme.spacing(2),
   },
 }));
 
@@ -25,31 +24,24 @@ const LessonFilter = () => {
   const filterGroupKeys = useSelector(state => Object.keys(state.filter));
 
   return (
-    <Grid container direction='column' spacing={2} wrap='nowrap' alignItems='center'>
-      <Grid item>
-        <Paper className={classes.paper}>
-          <Grid container alignItems='center' justify='space-between'>
-            <Typography className={classes.header} variant='h5' component='h3'>
-              {t('filter.header')}
-            </Typography>
-            <PopoverComponent popoverContent={t('filter.tooltip')}/>
-          </Grid>
+    <Paper className={classes.paper}>
+      <Grid container alignItems='center' justify='space-between'>
+        <Typography className={classes.header} variant='h5' component='h3'>
+          {t('filter.header')}
+        </Typography>
+        <PopoverComponent popoverContent={t('filter.tooltip')}/>
+      </Grid>
+      <Divider/>
+      <RadioButtons/>
+      {showPlaylists ? null :
+        <React.Fragment>
           <Divider/>
-          <RadioButtons/>
-          {showPlaylists ? null :
-            <React.Fragment>
-              <Divider/>
-              <List>
-                {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
-              </List>
-            </React.Fragment>
-          }
-        </Paper>
-      </Grid>
-      <Grid item>
-        <ClearFilterButton/>
-      </Grid>
-    </Grid>
+          <List>
+            {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
+          </List>
+        </React.Fragment>
+      }
+    </Paper>
   );
 };
 

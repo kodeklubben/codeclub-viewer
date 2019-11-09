@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
 import {makeStyles} from '@material-ui/core/styles';
-import {AppBar, Breadcrumbs, Drawer, IconButton, Link, List, Toolbar, Divider} from '@material-ui/core';
+import {AppBar, Grid, Breadcrumbs, Drawer, IconButton, Link, List, Toolbar, Divider, Typography} from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -29,16 +29,18 @@ const useStyles = makeStyles(theme => ({
   link: {
     display: 'flex',
   },
-  icon: {
-    marginRight: theme.spacing(0.5),
+  homeIcon: {
     width: 20,
     height: 20,
   },
-  courseIcon : {
-    marginRight: theme.spacing(0.5),
-    width: '15px',
+  icon : {
+    marginRight: theme.spacing(1),
+    width: 16,
     height: 'auto',
     alignSelf: 'center',
+  },
+  lessonMargin: {
+    marginLeft: theme.spacing(1),
   },
 }));
 
@@ -75,11 +77,11 @@ const NavBar = ({params}) => {
       to={coursePath}
     >
       <img
-        className={classes.courseIcon}
+        className={classes.icon}
         src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
         alt={t('general.picture', {title: courseTitle})}
       />
-      {courseTitle}
+      <Typography>{courseTitle}</Typography>
     </Link>
   );
 
@@ -92,15 +94,17 @@ const NavBar = ({params}) => {
       aria-label={lessonTitle}
       to={lessonPath}
     >
-      <LevelIcon level={getLevel(course, lesson)}/>
-      {lessonTitle}
+      <Grid container alignItems='center'>
+        <LevelIcon level={getLevel(course, lesson)} fontSize='inherit'/>
+        <Typography className={classes.lessonMargin}>{lessonTitle}</Typography>
+      </Grid>
     </Link>
   );
 
   return (
     <AppBar color='inherit'>
       <Toolbar className={classes.root} >
-        <Breadcrumbs separator={<NavigateNextIcon color='inherit' fontSize='small'/>}>
+        <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
           <Link
             color='textPrimary'
             component={RouterLink}
@@ -108,13 +112,13 @@ const NavBar = ({params}) => {
             className={classes.link}
             to={'/'}
           >
-            <HomeIcon className={classes.icon}/>
+            <HomeIcon className={classes.homeIcon}/>
           </Link>
           {coursePath ? courseCrumb : null}
           {isLesson ? lessonCrumb : null}
         </Breadcrumbs>
         <ContinueButton {...{course}}/>
-        <IconButton onClick={toggleDrawer()} color='inherit' aria-label='menu'>
+        <IconButton onClick={toggleDrawer()} aria-label='menu'>
           <MenuIcon/>
         </IconButton>
         <Drawer open={showDrawer} anchor='right' onClose={toggleDrawer()}>

@@ -10,10 +10,10 @@ const useStyles = makeStyles(theme => ({
   paper: {
     maxWidth: 700,
     marginBottom: theme.spacing(5),
-    padding: 15,
+    padding: theme.spacing(2),
   },
   moreInfo: {
-    padding: 15,
+    padding: theme.spacing(2),
   }
 }));
 
@@ -59,7 +59,6 @@ const TeacherInfobox = () => {
               </Typography>
               <Link
                 color='inherit'
-                underline='none'
                 href={'https://kidsakoder.no/skole/valgfag/'}
                 target='_blank'
                 rel='noopener'
@@ -78,7 +77,6 @@ const TeacherInfobox = () => {
               </Typography>
               <Link 
                 color='inherit'
-                underline='none'
                 href={'https://kidsakoder.no/kodeklubben/'}
                 target='_blank'
                 rel='noopener'
