@@ -9,14 +9,17 @@ const LevelIcon = ({level, fontSize}) => {
   if (level === 1 || level === '1') {
     return <RadioButtonUncheckedIcon {...{fontSize}}/>;
   }
-  if (level === 2 || level === '2') {
+  else if (level === 2 || level === '2') {
     return <ChangeHistoryIcon {...{fontSize}}/>;
   }
-  if (level === 3 || level === '3') {
+  else if (level === 3 || level === '3') {
     return <CheckBoxOutlineBlankIcon {...{fontSize}}/>;
   }
-  if (level === 4 || level === '4') {
+  else if (level === 4 || level === '4') {
     return <FilterVintageIcon {...{fontSize}}/>;
+  }
+  else {
+    return null;
   }
 };
 
