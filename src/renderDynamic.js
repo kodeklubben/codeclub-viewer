@@ -10,28 +10,35 @@ import routes from './routes';
 import store, {updateStoreFromLocalStorage} from './store';
 import {setHydrationComplete} from './reducers/hydration';
 
-const renderDynamic = () => {
+const Main = () => {
+  React.useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }, []);
+
   const basename = process.env.PUBLICPATH_WITHOUT_SLASH;	
   const historyOptions = basename === '/' ? {} : {basename};	
   const history = createHistory(createBrowserHistory )({historyOptions});
 
+  const onUpdate = () => window.scrollTo(0, 0); // Scroll to top of page on every transition
+
+  return (
+    <Provider {...{store}}>
+      <Router {...{routes, onUpdate, history}}/>
+    </Provider>
+  );
+};
+
+const renderDynamic = () => {
   const callback = () => {
     updateStoreFromLocalStorage();
     store.dispatch(setHydrationComplete());
   };
 
-  const onUpdate = () => window.scrollTo(0, 0); // Scroll to top of page on every transition
-
   const renderFunc = IS_HOT ? render : hydrate;
-  renderFunc(
-    <Provider {...{store}}>
-      <Router {...{routes, onUpdate, history}}/>
-    </Provider>,
-
-    document.getElementById('app'),
-
-    callback,
-  );
+  renderFunc(<Main/>, document.getElementById('app'), callback);
 };
 
 export default renderDynamic;
