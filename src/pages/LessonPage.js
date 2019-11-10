@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {Container, Grid, Typography, Link} from '@material-ui/core';
@@ -23,13 +23,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
+
 const LessonPage = ({course, lesson, language, isReadme}) => {
   const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
 
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEnhancedEffect(() => {
     const path = getLessonPath(course, lesson, language, isReadme);
     dispatch(setLastLesson(path));
   }, [course, lesson, language, isReadme, dispatch]);

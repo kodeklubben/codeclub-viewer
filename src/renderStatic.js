@@ -25,7 +25,7 @@ const renderStatic = (locals, callback) => {
     ));
     const helmet = Helmet.renderStatic();
     const cssString = sheets.toString(); 
-    const appCss = `<style id="jss-server-side">${cssString}</style>`;
+    const appCss = `<style id='jss-server-side'>${cssString}</style>`;
     const webpackAssets = locals.webpackStats.compilation.assets;
     const assets = Object.keys(webpackAssets);
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);

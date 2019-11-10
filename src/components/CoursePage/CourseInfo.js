@@ -38,7 +38,7 @@ const CourseInfo = ({course}) => {
       <Divider/>
       <ExpansionPanelDetails>
         {courseInfo.__html ?
-          <Typography dangerouslySetInnerHTML={courseInfo}/>
+          <div dangerouslySetInnerHTML={courseInfo}/>
           :
           <Typography>{t('coursepage.courseinfonotfound')}</Typography>
         }
