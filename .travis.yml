@@ -12,7 +12,7 @@ script:
   - yarn build:travis
 deploy:
   provider: pages
-  github-token: $GITHUB_TOKEN
+  github-token: $GITHUB_TOKEN_BETA_SKAGEVANG
   skip-cleanup: true
   keep-history: true
   local-dir: dist
