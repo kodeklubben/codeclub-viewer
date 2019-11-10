@@ -5,6 +5,8 @@ stages:
 
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
+install:
+  - git config --add diff.renamelimit 9999
 cache: yarn
 script:
   - yarn eslint
@@ -16,7 +18,7 @@ deploy:
   skip-cleanup: true
   keep-history: true
   local-dir: dist
-  repo: repo:kodeklubben/beta
+  repo: kodeklubben/beta
   target-branch: gh-pages
   fqdn: oppgaver.kidsakoder.no
   on:
