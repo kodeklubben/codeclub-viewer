@@ -7,10 +7,21 @@ import {hashCode} from '../utils/util';
 
 const useStyles = makeStyles(theme => ({
   text: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: theme.spacing(2),
     maxWidth: 600,
+    '& img': {
+      width: '100%',
+      height: '100%',
+      maxWidth: 200,
+      maxHeight: 250,
+      marginRight: theme.spacing(2),
+    },
   },
   icon: {
+    
     marginRight: theme.spacing(1.5),
   },
 }));

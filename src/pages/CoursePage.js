@@ -5,6 +5,7 @@ import {Grid, Container, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../selectors/course';
 import {getTranslator} from '../selectors/translate';
+import {getShowFiltergroups} from '../selectors/playlist';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
 import {getCoursesWithPlaylists} from '../resources/playlists';
 import {getCourseTitle} from '../resources/courseFrontmatter';
@@ -13,6 +14,7 @@ import LessonFilter from '../components/Filter/LessonFilter';
 import ClearFilterButton from '../components/Filter/ClearFilterButton';
 import LessonList from '../components/CoursePage/LessonList';
 import Head from '../components/Head';
+import CourseInfo from '../components/CoursePage/CourseInfo';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -37,6 +39,7 @@ const CoursePage = ({params}) => {
   const levels = useSelector(state => getFilteredLevelsInCourse(state, course));
   const courseTitle = useSelector(state => getCourseTitle(course, state.language));
   const language = useSelector(state => state.language);
+  const showPlaylists = useSelector(state => !getShowFiltergroups(state));
 
   const noLessons = courses.length + externalCourses.length !== 0;
 
@@ -45,6 +48,9 @@ const CoursePage = ({params}) => {
   return (
     <Container className={classes.container} maxWidth='lg'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
+      <Grid container justify='center'>
+        <CourseInfo {...{course}}/>
+      </Grid>
       <Grid container spacing={4}>
         <Grid item>
           <Grid container direction='column' alignItems='center'>
@@ -54,7 +60,7 @@ const CoursePage = ({params}) => {
         </Grid>
         <Grid item className={classes.list}>
           {noLessons ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
-          {lessonLists}
+          {showPlaylists ? null : lessonLists}
         </Grid>
       </Grid>
     </Container>

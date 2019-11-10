@@ -51,7 +51,7 @@ export default {
     showhidefilter: 'Vis/skjul filter',
   },
   coursepage: {
-    courseinfo: 'Informasjon om kurset',
+    courseinfo: 'Informasjon om',
     courseinfonotfound: 'Oops, her har nokon gløymt å skrive kursinformasjon!',
     instructionbutton: 'Lærarrettleiing',
     levelnavigation: 'Hopp til',

@@ -78,7 +78,9 @@ const LessonPage = ({course, lesson, language, isReadme}) => {
       <ButtonRow {...{course, lesson, language, isReadme}}/>
       <Content {...{course, lesson, language, isReadme}}/>
       {licenseRow}
-      <ImprovePage {...{course, lesson, language, isReadme}}/>
+      <Grid container justify='center'>
+        <ImprovePage {...{course, lesson, language, isReadme}}/>
+      </Grid>
     </Container>
   );
 };
