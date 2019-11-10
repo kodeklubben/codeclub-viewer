@@ -6,6 +6,7 @@ import {CssBaseline, Toolbar} from '@material-ui/core';
 import Head from '../components/Head';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
+import PdfHeader from '../components/PdfHeader';
 import OpenDyslexic from '../assets/fonts/OpenDyslexic-Regular.ttf';
 
 const dyslexicTheme = createMuiTheme({
@@ -79,8 +80,8 @@ const App = ({params, location, children}) => {
     <ThemeProvider {...{theme}}>
       <CssBaseline/>
       <Head/>
-      {renderPdf ? null : <NavBar {...{params}}/>}
-      <Toolbar/>
+      {renderPdf ? <PdfHeader course={params.course}/> : <NavBar {...{params}}/>}
+      {renderPdf ? null : <Toolbar/>}
       <div className={classes.footer}>{children}</div>
       {renderPdf ? null : <Footer/>}
     </ThemeProvider>

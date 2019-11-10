@@ -12,8 +12,7 @@ import {getCourseTitle} from '../../resources/courseFrontmatter';
 
 const useStyles = makeStyles(theme => ({
   panel: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(4),
   },
 }));
 

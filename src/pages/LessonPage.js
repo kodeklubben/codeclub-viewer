@@ -13,6 +13,7 @@ import ButtonRow from '../components/LessonPage/ButtonRow';
 import Head from '../components/Head';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import ImprovePage from '../components/LessonPage/ImprovePage';
+import PrintInfo from '../components/LessonPage/PrintInfo';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -75,6 +76,7 @@ const LessonPage = ({course, lesson, language, isReadme}) => {
       </Grid>
       {authorNode}
       {translatorNode}
+      <PrintInfo {...{course, lesson}}/>
       <ButtonRow {...{course, lesson, language, isReadme}}/>
       <Content {...{course, lesson, language, isReadme}}/>
       {licenseRow}

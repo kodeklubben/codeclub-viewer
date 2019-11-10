@@ -13,6 +13,9 @@ const useStyles = makeStyles(theme => ({
   buttonMargin: {
     marginTop: theme.spacing(2),
     marginRight: theme.spacing(2),
+    '@media print': {
+      display: 'none',
+    },
   },
 }));
 
