@@ -32,7 +32,6 @@ const ClearFilterButton = () => {
     <Button
       className={classes.button}
       variant='outlined'
-      size='small'
       onClick={handleClick}
       startIcon={<DeleteIcon/>}
     >

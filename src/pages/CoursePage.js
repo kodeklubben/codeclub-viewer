@@ -15,6 +15,7 @@ import ClearFilterButton from '../components/Filter/ClearFilterButton';
 import LessonList from '../components/CoursePage/LessonList';
 import Head from '../components/Head';
 import CourseInfo from '../components/CoursePage/CourseInfo';
+import PlaylistNavigation from '../components/CoursePage/PlaylistNavigation';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -52,7 +53,7 @@ const CoursePage = ({params}) => {
         <CourseInfo {...{course}}/>
       </Grid>
       <Grid container spacing={4}>
-        <Grid item>
+        <Grid item >
           <Grid container direction='column' alignItems='center'>
             <LessonFilter/>
             <ClearFilterButton/>
@@ -60,7 +61,7 @@ const CoursePage = ({params}) => {
         </Grid>
         <Grid item className={classes.list}>
           {noLessons ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
-          {showPlaylists ? null : lessonLists}
+          {showPlaylists ? <PlaylistNavigation {...{course}}/> : lessonLists}
         </Grid>
       </Grid>
     </Container>

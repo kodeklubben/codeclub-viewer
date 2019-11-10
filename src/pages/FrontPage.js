@@ -4,6 +4,7 @@ import {Grid, Container, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../selectors/course';
 import {getTranslator} from '../selectors/translate';
+import {getShowFiltergroups} from '../selectors/playlist';
 import {getCoursesWithPlaylists} from '../resources/playlists';
 import LessonFilter from '../components/Filter/LessonFilter';
 import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
@@ -30,6 +31,7 @@ const FrontPage = () => {
   const externalCourses = useSelector(state =>
     state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state)
   );
+  const showPlaylists = useSelector(state => !getShowFiltergroups(state));
 
   const noLessons = courses.length + externalCourses.length !== 0;
 
@@ -47,7 +49,7 @@ const FrontPage = () => {
         </Grid>
         <Grid item xs={12} sm={8}>
           {noLessons ? null : <Typography variant='h3'>{t('coursepage.nomatchinglessons')}</Typography>}
-          {courses.length > 0 ?
+          {courses.length > 0 && !showPlaylists ?
             <Typography gutterBottom variant='h3'>{t('frontpage.courses')}</Typography>
             : null}
           <Grid container justify='center' spacing={2}>

@@ -8,9 +8,6 @@ import RadioButtons from './RadioButtons';
 import PopoverComponent from '../PopoverComponent';
 
 const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8.5),
-  },
   header: {
     padding: theme.spacing(2),
   },
@@ -24,7 +21,7 @@ const LessonFilter = () => {
   const filterGroupKeys = useSelector(state => Object.keys(state.filter));
 
   return (
-    <Paper className={classes.paper}>
+    <Paper>
       <Grid container alignItems='center' justify='space-between'>
         <Typography className={classes.header} variant='h5' component='h3'>
           {t('filter.header')}
