@@ -16,7 +16,7 @@ deploy:
   skip-cleanup: true
   keep-history: true
   local-dir: dist
-  repo: repo:kodeklubben/beta
+  repo: kodeklubben/beta
   target-branch: gh-pages
   fqdn: oppgaver.kidsakoder.no
   on:
