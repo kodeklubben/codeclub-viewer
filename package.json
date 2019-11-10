@@ -12,7 +12,6 @@
     "build:travis": "webpack --mode=production -p",
     "serve": "node server.js",
     "test": "mocha \"test/**/*@(.js|.jsx)\"",
-    "test:links": "node test-links.js",
     "test:watch": "yarn test -- --watch",
     "eslint": "eslint *.js src/ test/ --ext .js,.jsx",
     "testall": "yarn eslint && yarn test"

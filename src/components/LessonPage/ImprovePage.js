@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 700,
     marginTop: theme.spacing(5),
     padding: theme.spacing(2),
+    '@media print': {
+      display: 'none',
+    },
   },
   button: {
     margin: theme.spacing(1),
