@@ -1,23 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './Flag.scss';
 import {getAvailableLanguages} from '../utils/filterUtils';
 import {getTranslator, getTranslateFilter} from '../selectors/translate';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  flag: {
+    width: '30px',
+    height: '20px',
+  },
+}));
 
 const Flag = ({language}) => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const translateFilter = useSelector(state => getTranslateFilter(state));
   const t = useSelector(state => getTranslator(state));
 
   return (
     <img
-      className={styles.flag}
+      className={classes.flag}
       src={require(`../assets/graphics/flag_${language}.svg`)}
       alt={t('general.picture', {title: translateFilter('language', language)})}
-    />);
+    />
+  );
 };
 
 Flag.propTypes = {

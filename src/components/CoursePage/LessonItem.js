@@ -1,45 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import Button from 'react-bootstrap/lib/Button';
-import LevelIcon from '../LevelIcon';
-import PopoverComponent from '../PopoverComponent';
-import InstructionButton from '../InstructionButton';
-import Flag from '../Flag';
+import {Link as RouterLink} from 'react-router';
+import {ListItem, ListItemText, ListItemIcon, Grid} from '@material-ui/core';
+import LinkIcon from '@material-ui/icons/Link';
+import StarIcon from '@material-ui/icons/Star';
 import {getLessonTitle, getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatter';
 import {getLevel} from '../../resources/lessons';
 import {getLessonIntro} from '../../resources/lessonContent';
-import {getTranslator} from '../../selectors/translate';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
-import styles from './LessonItem.scss';
-
-
-const Progress = ({checkedCheckboxes, totalCheckboxes}) => {
-  return checkedCheckboxes > 0 ?
-    <div className={styles.progress}>
-      {`(${checkedCheckboxes}/${totalCheckboxes})`}
-    </div> :
-    null;
-};
-
-const Progressbar = ({checkedCheckboxes, totalCheckboxes, level}) => {
-  const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
-  return level > 0 ?
-    <span className={styles['progressBarLevel' + level]} style={{width: progressPercent + '%'}}/> :
-    null;
-};
+import PopoverComponent from '../PopoverComponent';
+import Flag from '../Flag';
+import InstructionButton from '../InstructionButton';
 
 const LessonItem = ({course, lesson, language}) => {
-  useStyles(styles);
-
-  const isStudentMode = useSelector(state => state.isStudentMode);
   const isOnlyCheckedMainLanguage = useSelector(state => onlyCheckedMainLanguage(state));
-  const t = useSelector(state => getTranslator(state));
+  const isStudentMode = useSelector(state => state.isStudentMode);
   const checkedCheckboxes = useSelector(state => getNumberOfCheckedCheckboxes(state, course, lesson, language, false));
   const totalCheckboxes = useSelector(state => getTotalNumberOfCheckboxes(state, course, lesson, language, false));
 
@@ -47,50 +24,54 @@ const LessonItem = ({course, lesson, language}) => {
   const external = getLessonExternal(course, lesson, language, false);
   const popoverContent = getLessonIntro(course, lesson, language, false);
   const level = getLevel(course, lesson);
-
-  const flag = !isOnlyCheckedMainLanguage ?
-    <div className={styles.flag}><Flag language={language}/></div> : null;
-
-  const instructionButton = isStudentMode ? null :
-    <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true}} />;
-
-  const popoverButton = popoverContent ?
-    <PopoverComponent {...{popoverContent}}>
-      <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: lesson})}>
-        <Glyphicon className={styles.popoverGlyph} glyph='info-sign'/>
-      </Button>
-    </PopoverComponent>
-    : null;
+  const progress = checkedCheckboxes && level > 0 ? `(${checkedCheckboxes}/${totalCheckboxes})` : null;
+  const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
 
   return (
-    <div>
+    <Grid container wrap='nowrap' alignItems='center'>
       {external ?
-        <ListGroupItem href={external} target='_blank' rel='noopener' className={styles.row}>
-          {flag}
-          <LevelIcon level={level}/>
-          <div className={styles.title}>{title}</div>
-          <Glyphicon glyph="new-window"/>
-          <span className={styles.rightSide}>
-            {instructionButton}
-            {popoverButton}
-          </span>
-        </ListGroupItem>
+        <React.Fragment>
+          <ListItem component={RouterLink} target='_blank' rel='noopener' href={external} button>
+            {isOnlyCheckedMainLanguage ? null :
+              <ListItemIcon>
+                <Flag {...{language}}/>
+              </ListItemIcon>
+            }
+            <ListItemText primary={title}/>
+          </ListItem>
+          <ListItemIcon>
+            <LinkIcon/>
+          </ListItemIcon>
+          <ListItemIcon>
+            <PopoverComponent  {...{popoverContent}}/>
+          </ListItemIcon>
+        </React.Fragment>
         :
-        <LinkContainer to={getLessonPath(course, lesson, language, false)}>
-          <ListGroupItem className={styles.row}>
-            {flag}
-            <Progressbar {...{checkedCheckboxes, totalCheckboxes, level}}/>
-            <LevelIcon level={level}/>
-            <div className={styles.title}>{title}</div>
-            <Progress {...{checkedCheckboxes, totalCheckboxes}}/>
-            <span className={styles.rightSide}>
-              {instructionButton}
-              {popoverButton}
-            </span>
-          </ListGroupItem>
-        </LinkContainer>
+        <React.Fragment>
+          <ListItem component={RouterLink} to={getLessonPath(course, lesson, language, false)} button>
+            {!isOnlyCheckedMainLanguage ?
+              <ListItemIcon>  
+                {isOnlyCheckedMainLanguage ? null :
+                  <ListItemIcon>  
+                    <Flag {...{language}}/>
+                  </ListItemIcon>
+                }
+              </ListItemIcon>
+              : null}
+            <ListItemText primary={title} secondary={progress}/>
+          </ListItem>
+          {progressPercent === 100 ? <ListItemIcon><StarIcon/></ListItemIcon> : null}
+          {isStudentMode ? null :
+            <ListItemIcon>
+              <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}}/>
+            </ListItemIcon>
+          }
+          <ListItemIcon>
+            <PopoverComponent  {...{popoverContent}}/>
+          </ListItemIcon>
+        </React.Fragment>
       }
-    </div>
+    </Grid>
   );
 };
 

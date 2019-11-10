@@ -1,37 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useSelector, useDispatch} from 'react-redux';
-import {getTranslator} from '../../selectors/translate';
-import styles from './FilterItem.scss';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import Button from 'react-bootstrap/lib/Button';
-import PopoverComponent from '../PopoverComponent';
+import {useDispatch} from 'react-redux';
+import {Grid, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import {filterChecked} from '../../reducers/filter';
+import Flag from '../Flag';
+import PopoverComponent from '../PopoverComponent';
 
 const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent}) => {
-  useStyles(styles);
-
-  const t = useSelector(state => getTranslator(state));
-
   const dispatch = useDispatch();
   const handleChange = () => dispatch(filterChecked(groupKey, itemKey));
 
-  const popover = popoverContent ?
-    <PopoverComponent {...{popoverContent}}>
-      <Button bsSize='xs' className={styles.popButton} aria-label={t('general.glyphicon', {title: tagName})}>
-        <span className={styles.tagInfo}><Glyphicon className={styles.glyph} glyph="info-sign"/></span>
-      </Button>
-    </PopoverComponent>
-    : null;
+  const popover = popoverContent ? <PopoverComponent {...{popoverContent}}/> : null;
+
   return (
-    <div className={styles.container}>
-      <label className={styles.label}>
-        <input type='checkbox' onChange={handleChange} {...{checked}}/>
-        <span className={styles.labelText}>{tagName}</span>
-      </label>
+    <Grid container alignItems='center' wrap='nowrap'>
+      <ListItem dense button onClick={handleChange}>
+        <ListItemIcon>
+          {checked ? <CheckBoxIcon fontSize='small'/> : <CheckBoxOutlineBlankIcon fontSize='small'/>}
+        </ListItemIcon>
+        <ListItemText id={itemKey} primary={tagName}/>
+        {groupKey === 'language' ? <Flag language={itemKey}/> : null}
+      </ListItem>
       {popover}
-    </div>
+    </Grid>
   );
 };
 
@@ -40,7 +33,7 @@ FilterItem.propTypes = {
   groupKey: PropTypes.string.isRequired,
   tagName: PropTypes.string.isRequired,
   checked: PropTypes.bool,
-  popoverContent: PropTypes.string.isRequired,
+  popoverContent: PropTypes.string,
 };
 
 export default FilterItem;

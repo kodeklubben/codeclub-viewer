@@ -1,8 +1,6 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './Content.scss';
 import {processContent} from '../../utils/processContent';
 import {renderMicrobit} from '../../utils/renderMicrobit';
 import {getLessonContent} from '../../resources/lessonContent';
@@ -11,27 +9,34 @@ import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
 import {getCheckboxesForLesson} from '../../selectors/checkboxes';
 import {renderScratchBlocks} from '../../utils/renderScratchblocks';
 import {renderToggleButtons} from '../../utils/renderToggleButtons';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  
+}));
+
+const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 const Content = ({course, lesson, language, isReadme}) => {
-  useStyles(styles);
+  const styles = useStyles();
 
   const isHydrated = useSelector(state => state.hydration);
   const checkboxes = useSelector(state => getCheckboxesForLesson(state, course, lesson, language, isReadme));
   
-  useEffect(() => {
+  useEnhancedEffect(() => {
     renderToggleButtons();
   }, []);
 
   // NOTE: Should setCheckboxesInDoc really be in an effect?
   //       Wouldn't it be better to change it so that it processes lessonContent before rendering?
-  useEffect(() => {
+  useEnhancedEffect(() => {
     if (isHydrated) {
       const path = getLessonPath(course, lesson, language, isReadme);
       setCheckboxesInDoc(path, checkboxes);
     }
   }, [isHydrated, course, lesson, language, isReadme, checkboxes]);
 
-  useEffect(() => {
+  useEnhancedEffect(() => {
     if (course === 'microbit' && typeof document !== 'undefined' && isHydrated) {
       renderMicrobit(language);
     }

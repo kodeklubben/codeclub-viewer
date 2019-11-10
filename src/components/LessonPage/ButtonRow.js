@@ -8,7 +8,6 @@ import InstructionButton from '../InstructionButton';
 import PdfButton from './PdfButton';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 
-
 const ButtonRow = ({course, lesson, language, isReadme,}) => {
   const path = getLessonPath(course, lesson, language, isReadme);
   const mainLanguage = useSelector(state => state.language);
@@ -25,12 +24,12 @@ const ButtonRow = ({course, lesson, language, isReadme,}) => {
     <InstructionButton {...{course, lesson, language, isReadme: !isReadme}}/> : null;
 
   return (
-    <div>
+    <React.Fragment>
       {mainLanguageButton}
       {resetButton}
       {lessonOrReadmeButton}
-      {<PdfButton {...{course, lesson, language, isReadme}}/>}
-    </div>
+      <PdfButton {...{course, lesson, language, isReadme}}/>
+    </React.Fragment>
   );
 };
 

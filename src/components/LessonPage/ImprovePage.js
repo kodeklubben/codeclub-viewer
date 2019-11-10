@@ -1,18 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link as RouterLink} from 'react-router';
 import {useSelector} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './ImprovePage.scss';
+import {Button, Grid, Typography, Paper} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import ComputerIcon from '@material-ui/icons/Computer';
 import {capitalize} from '../../utils/stringUtils';
 import {getTranslator} from '../../selectors/translate';
-import Button from 'react-bootstrap/lib/Button';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 
+const useStyles = makeStyles(theme => ({
+  paper: {
+    maxWidth: 700,
+    marginTop: theme.spacing(5),
+    padding: theme.spacing(2),
+  },
+  button: {
+    margin: theme.spacing(1),
+  }
+}));
+
 const ImprovePage = ({course, lesson, language, isReadme}) => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
-  const isStudentMode = useSelector(state => state.isStudentMode);
 
   const path = getLessonPath(course, lesson, language, isReadme);
   const linkToSourceCode = `https://github.com/kodeklubben/oppgaver/tree/master/src${path}.md`;
@@ -31,32 +43,34 @@ const ImprovePage = ({course, lesson, language, isReadme}) => {
     //Link to forum
     forum: 'https://forum.kidsakoder.no/c/oppgaver'
   };
+
+  const ButtonComponent = ({href, icon, text}) => (
+    <Button
+      className={classes.button}
+      variant='outlined'
+      component={RouterLink}
+      href={href}
+      target='_blank'
+      rel='noopener'
+      startIcon={icon}
+    >
+      {text}
+    </Button>
+  );
+
   return (
-    <div className={styles.container}>
-      <div className={isStudentMode ? styles.student : styles.teacher}>
-        <div className={styles.improvePageBox}>
-          <div className={isStudentMode ? styles.textRowStudent : styles.textRowTeacher}>
-            <h2>{t('lessons.improvepage.header')}</h2>
-            <p>{t('lessons.improvepage.textline1')} <br/>
-              {t('lessons.improvepage.textline2')}</p>
-          </div>
-          <div className={styles.linkRow}>
-            <div>
-              <Button href={url.newIssue} bsStyle='white-grey' target='_blank' rel='noopener'>
-                {t('lessons.improvepage.newissuebutton')}</Button>
-            </div>
-            <div>
-              <Button href={url.forum} bsStyle='guide' target='_blank' rel='noopener'>
-                {t('lessons.improvepage.forumbutton')}</Button>
-            </div>
-            <div>
-              <Button href={url.showCode} bsStyle='orange' target='_blank' rel='noopener'>
-                {t('lessons.improvepage.showcodebutton')}</Button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Paper className={classes.paper}>
+      <Grid container alignItems='center' direction='column' spacing={1}>
+        <Grid item><Typography variant='h4' component='h2'>{t('lessons.improvepage.header')}</Typography></Grid>
+        <Grid item><Typography >{t('lessons.improvepage.textline1')}</Typography></Grid>
+        <Grid item><Typography>{t('lessons.improvepage.textline2')}</Typography></Grid>
+        <Grid container justify='center'>
+          <ButtonComponent href={url.newIssue} text={t('lessons.improvepage.newissuebutton')} icon={<GitHubIcon/>}/>
+          <ButtonComponent href={url.forum} text={t('lessons.improvepage.forumbutton')} icon={<ComputerIcon/>}/>
+          <ButtonComponent href={url.showCode} text={t('lessons.improvepage.showcodebutton')} icon={<GitHubIcon/>}/>
+        </Grid>
+      </Grid>
+    </Paper>
   );
 };
 

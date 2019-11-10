@@ -1,29 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import Button from 'react-bootstrap/lib/Button';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './ResetButton.scss';
+import {Button} from '@material-ui/core';
 import {getTranslator} from '../../selectors/translate';
 import {setCheckboxesInDoc} from '../../utils/checkboxUtils';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ClearIcon from '@material-ui/icons/Clear';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  buttonMargin: {
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    '@media print': {
+      display: 'none',
+    },
+  },
+}));
 
 const ResetButton = ({path}) => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
 
-  const options = {
-    bsStyle: 'warning',
-    bsSize: 'small',
-    className: styles.container,
-    'aria-label': t('lessons.reset'),
-    onClick: () => setCheckboxesInDoc(path, {}),
-  };
   return (
-    <Button {...options}>
-      <Glyphicon className={styles.icon} glyph={'remove'}/>
-      <span className={styles.textMargin}>{t('lessons.reset')}</span>
+    <Button
+      variant='outlined'
+      className={classes.buttonMargin}
+      onClick={() => setCheckboxesInDoc(path, {})}
+      startIcon={<ClearIcon/>}
+    >
+      {t('lessons.reset')}
     </Button>
   );
 };

@@ -1,68 +1,91 @@
-/* eslint-env node */
-
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './LessonPage.scss';
+import {Container, Grid, Typography, Link} from '@material-ui/core';
 import LevelIcon from '../components/LevelIcon';
-import ImprovePage from '../components/LessonPage/ImprovePage.js';
 import {getTranslator} from '../selectors/translate';
 import {setLastLesson} from '../reducers/lastLesson';
-import MarkdownRenderer from '../components/MarkdownRenderer';
-import Progress from '../components/LessonPage/Progress';
-import ButtonRow from '../components/LessonPage/ButtonRow';
 import Content from '../components/LessonPage/Content';
 import {getLessonTitle, getLessonAuthor, getLessonTranslator, getLessonPath} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
 import {getLevel, getLicense} from '../resources/lessons';
+import ButtonRow from '../components/LessonPage/ButtonRow';
 import Head from '../components/Head';
+import MarkdownRenderer from '../components/MarkdownRenderer';
+import ImprovePage from '../components/LessonPage/ImprovePage';
 import PrintInfo from '../components/LessonPage/PrintInfo';
+import {makeStyles} from '@material-ui/core/styles';
 
+const useStyles = makeStyles(theme => ({
+  container: {
+    marginTop: theme.spacing(5),
+    marginBottom: theme.spacing(5),
+  },
+}));
+
+const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
 
 const LessonPage = ({course, lesson, language, isReadme}) => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
 
   const dispatch = useDispatch();
-  useEffect(() => {
+  useEnhancedEffect(() => {
     const path = getLessonPath(course, lesson, language, isReadme);
     dispatch(setLastLesson(path));
   }, [course, lesson, language, isReadme, dispatch]);
 
   const title = getLessonTitle(course, lesson, language, isReadme);
+
   const author = getLessonAuthor(course, lesson, language, isReadme);
-  const translator = getLessonTranslator(course, lesson, language, isReadme);
-  const license = getLicense(course, lesson);
   const authorNode = author ?
-    <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true} /></i></p> : null;
+    <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true}/></i></p> : null;
+
+  const translator = getLessonTranslator(course, lesson, language, isReadme);
   const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
-  const licenseRow = <div className={styles.license}>
-    {t('lessons.license')}
-    {license ?
-      <MarkdownRenderer src={license} inline={true}/> :
-      <a href='http://creativecommons.org/licenses/by-sa/4.0/deed' target='_blank' rel='noopener'>CC BY-SA 4.0</a>
-    }
-  </div>;
+
+  const license = getLicense(course, lesson);
+  const licenseRow = <Grid container spacing={1}>
+    <Grid item>
+      {t('lessons.license')}
+    </Grid>
+    <Grid item>
+      {license ?
+        <MarkdownRenderer src={license} inline={true}/> :
+        <Link
+          color='inherit'
+          href='http://creativecommons.org/licenses/by-sa/4.0/deed'
+          target='_blank'
+          rel='noopener'
+        >
+          CC BY-SA 4.0
+        </Link>
+      }
+    </Grid>
+  </Grid>;
+
   return (
-    <div role='main'>
+    <Container className={classes.container} maxWidth='md'>
       <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
-      <div className={styles.container}>
-        <h1>
-          <LevelIcon level={getLevel(course, lesson)}/>
-          {title}
-        </h1>
-        {authorNode}
-        {translatorNode}
-        <PrintInfo {...{course, lesson}}/>
-        <ButtonRow {...{course, lesson, language, isReadme}}/>
-        <Progress {...{course, lesson, language, isReadme}}/>
-        <Content {...{course, lesson, language, isReadme}}/>
-        {licenseRow}
+      <Grid container spacing={2} wrap='nowrap' alignItems='center'>
+        <Grid item>
+          <LevelIcon fontSize='large' level={getLevel(course, lesson)}/>
+        </Grid>
+        <Grid item>
+          <Typography variant='h3' component='h1'>{title}</Typography>
+        </Grid>
+      </Grid>
+      {authorNode}
+      {translatorNode}
+      <PrintInfo {...{course, lesson}}/>
+      <ButtonRow {...{course, lesson, language, isReadme}}/>
+      <Content {...{course, lesson, language, isReadme}}/>
+      {licenseRow}
+      <Grid container justify='center'>
         <ImprovePage {...{course, lesson, language, isReadme}}/>
-      </div>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 

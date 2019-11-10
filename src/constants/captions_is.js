@@ -54,7 +54,7 @@ export default {
     forumbutton: 'Spjallborð',
   },
   coursepage: {
-    courseinfo: 'Upplýsingar um námskeiðið',
+    courseinfo: 'Upplýsingar um',
     courseinfonotfound: 'Úbs, einhver gleymdi að skrifa inn námskeiðsupplýsingar!',
     instructionbutton: 'Leiðbeiningar fyrir kennara',
     levelnavigation: 'Flýtileiðir',
@@ -118,6 +118,7 @@ export default {
       contribute: 'Legga til',
     },
     menu: 'Valmynd',
+    darkmode: 'Næturstillingu',
   },
   search: {
     placeholder: 'Leita',

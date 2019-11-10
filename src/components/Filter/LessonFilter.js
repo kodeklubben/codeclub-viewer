@@ -1,75 +1,45 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './LessonFilter.scss';
-import Panel from 'react-bootstrap/lib/Panel';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import Col from 'react-bootstrap/lib/Col';
-import Button from 'react-bootstrap/lib/Button';
+import {Grid, Paper, Typography, List, Divider} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
 import {getTranslator} from '../../selectors/translate';
-import {getShowRadiobuttons, getShowFiltergroups} from '../../selectors/playlist';
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
 import PopoverComponent from '../PopoverComponent';
-import CollapsiblePanel from '../CollapsiblePanel';
-import ClearFilterButton from './ClearFilterButton';
 
-const LessonFilter = ({course}) => {
-  useStyles(styles);
+const useStyles = makeStyles(theme => ({
+  header: {
+    padding: theme.spacing(2),
+  },
+}));
 
-  const filterGroupKeys = useSelector(state => Object.keys(state.filter));
-  const isStudentMode = useSelector(state => state.isStudentMode);
+const LessonFilter = () => {
+  const classes = useStyles();
+
+  const showPlaylists = useSelector(state => state.showPlaylists);
   const t = useSelector(state => getTranslator(state));
-  const showFiltergroups = useSelector(state => getShowFiltergroups(state, course));
+  const filterGroupKeys = useSelector(state => Object.keys(state.filter));
 
-  const showRadiobuttons = getShowRadiobuttons(course);
-  const filterGroups = filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{t, groupKey}}/>);
-  const header =
-    <span>
-      {t('filter.header')}
-      <PopoverComponent popoverContent={t('filter.tooltip')}>
-        <Button
-          bsSize='xs'
-          className={styles.popButton}
-          aria-label={t('general.glyphicon', {title: t('filter.header')})}
-        >
-          <span className={styles.filterInfo}><Glyphicon glyph="info-sign"/></span>
-        </Button>
-      </PopoverComponent>
-    </span>;
-  const bsStyle = (isStudentMode ? 'student' : 'teacher');
-  const radioButtons = showRadiobuttons ? <RadioButtons/> : null;
-  const groups = showFiltergroups ? filterGroups : null;
   return (
-    <div>
-      {/*Filter desktop*/}
-      <Col xsHidden>
-        <Panel {...{bsStyle}}>
-          <Panel.Heading><Panel.Title>{header}</Panel.Title></Panel.Heading>
-          <ListGroup>
-            {radioButtons}
-            {groups}
-          </ListGroup>
-        </Panel>
-      </Col>
-      {/*Filter mobile*/}
-      <Col smHidden mdHidden lgHidden>
-        <CollapsiblePanel initiallyExpanded={true} {...{header, bsStyle}}>
-          <ListGroup>
-            {radioButtons}
-            {groups}
-          </ListGroup>
-        </CollapsiblePanel>
-      </Col>
-      <ClearFilterButton/>
-    </div>
+    <Paper>
+      <Grid container alignItems='center' justify='space-between'>
+        <Typography className={classes.header} variant='h5' component='h3'>
+          {t('filter.header')}
+        </Typography>
+        <PopoverComponent popoverContent={t('filter.tooltip')}/>
+      </Grid>
+      <Divider/>
+      <RadioButtons/>
+      {showPlaylists ? null :
+        <React.Fragment>
+          <Divider/>
+          <List>
+            {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
+          </List>
+        </React.Fragment>
+      }
+    </Paper>
   );
-};
-
-LessonFilter.propTypes = {
-  course: PropTypes.string,
 };
 
 export default LessonFilter;

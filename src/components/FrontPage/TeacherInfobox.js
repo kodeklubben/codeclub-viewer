@@ -1,60 +1,94 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './TeacherInfobox.scss';
-import Button from 'react-bootstrap/lib/Button';
-import Collapse from 'react-bootstrap/lib/Collapse';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {Paper, Collapse, Typography, Grid, IconButton, Link} from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import {getTranslator} from '../../selectors/translate';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  paper: {
+    maxWidth: 700,
+    marginBottom: theme.spacing(5),
+    padding: theme.spacing(2),
+  },
+  moreInfo: {
+    padding: theme.spacing(2),
+  }
+}));
 
 const TeacherInfobox = () => {
-  const [showCourseInfo, setShowCourseInfo] = useState(false);
-  useStyles(styles);
+  const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
 
   const t = useSelector(state => getTranslator(state));
 
-  const url = [
-    'http://kidsakoder.no/skole/valgfag/',
-    'http://kidsakoder.no/kodeklubben/'
-  ];
-  const ariaLabel = showCourseInfo ? t('frontpage.teacherinfobox.minus') : t('frontpage.teacherinfobox.plus');
   return (
-    <div className={styles.center}>
-      <div className={styles.infoBox}>
-        <h1 className={styles.center}>{t('frontpage.teacherinfobox.header')}</h1>
-        <br />
-        {t('frontpage.teacherinfobox.changemode')}
-        <br />
-        <div className={styles.center}>
-          <Button
-            className={styles.plusSign}
-            onClick={() => setShowCourseInfo(!showCourseInfo)}
-            aria-label={ariaLabel}
-          >
-            <Glyphicon glyph={!showCourseInfo ? 'plus-sign' : 'minus-sign'}/>
-          </Button>
-        </div>
-        <Collapse in={showCourseInfo}>
-          <div>
-            <h2 className={styles.headers}>{t('frontpage.teacherinfobox.teacher')}</h2>
-            {t('frontpage.teacherinfobox.info1')}
-            <br />
-            <a className={styles.link} href={url[0]} target='_blank' rel='noopener'>
-              {t('frontpage.teacherinfobox.link1')}
-            </a>
-            <br />
-            <h2 className={styles.headers}>{t('frontpage.teacherinfobox.assistant')}</h2>
-            {t('frontpage.teacherinfobox.info2')}
-            <br />
-            <a className={styles.link} href={url[1]} target='_blank' rel='noopener'>
-              {t('frontpage.teacherinfobox.link2')}
-            </a>
-          </div>
+    <Paper className={classes.paper}>
+      <Grid container justify='center' spacing={4}>
+        <Grid item>
+          <Typography variant='h4' component='h1'>
+            {t('frontpage.teacherinfobox.header')}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography component='p'>
+            {t('frontpage.teacherinfobox.changemode')}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <IconButton aria-label='plus-sign' onClick={handleOpen}>
+            {open ? <RemoveCircleIcon fontSize='large'/> : <AddCircleIcon fontSize='large'/>}
+          </IconButton>
+        </Grid>
+        <Collapse in={open} timeout='auto' unmountOnExit>
+          <Grid className={classes.moreInfo} container spacing={1}>
+            <Grid item>
+              <Typography variant='h5' component='h2'>
+                {t('frontpage.teacherinfobox.teacher')}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography component='p'>
+                {t('frontpage.teacherinfobox.info1')}
+              </Typography>
+              <Link
+                color='inherit'
+                href={'https://kidsakoder.no/skole/valgfag/'}
+                target='_blank'
+                rel='noopener'
+              >
+                {t('frontpage.teacherinfobox.link1')}
+              </Link>
+            </Grid>
+            <Grid item>
+              <Typography variant='h5' component='h2'>
+                {t('frontpage.teacherinfobox.assistant')}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography component='p'>
+                {t('frontpage.teacherinfobox.info2')}
+              </Typography>
+              <Link 
+                color='inherit'
+                href={'https://kidsakoder.no/kodeklubben/'}
+                target='_blank'
+                rel='noopener'
+              >
+                {t('frontpage.teacherinfobox.link2')}
+              </Link>
+            </Grid>
+          </Grid>
         </Collapse>
-      </div>
-    </div>
+      </Grid>
+    </Paper>
   );
 };
-
 
 export default TeacherInfobox;

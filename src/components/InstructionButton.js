@@ -1,37 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import Button from 'react-bootstrap/lib/Button';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './InstructionButton.scss';
-import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {Link as RouterLink} from 'react-router';
+import {IconButton, Button} from '@material-ui/core';
+import SchoolIcon from '@material-ui/icons/School';
+import CreateIcon from '@material-ui/icons/Create';
 import {getTranslator} from '../selectors/translate';
 import {getLessonPath} from '../resources/lessonFrontmatter';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  buttonMargin: {
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    '@media print': {
+      display: 'none',
+    },
+  },
+}));
 
 const InstructionButton = ({course, lesson, language, isReadme, onlyIcon}) => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
+  const isStudentMode = useSelector(state => state.isStudentMode);
 
   const path = getLessonPath(course, lesson, language, isReadme);
   const buttonText = t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson');
-  const options = {
-    className: onlyIcon ? styles.buttonOnlyIcon : styles.button,
-    bsStyle: 'guide',
-    bsSize: onlyIcon ? 'xs' : 'small',
-    tabIndex: '0',
-    'aria-label': buttonText,
-  };          
-  return (path ?    
-    <LinkContainer to={path}>
-      <Button  {...options}>
-        <Glyphicon className={styles.icon} glyph={isReadme ? 'education' : 'pencil'}/>
-        <span className={onlyIcon ? '' : styles.textMargin}>{onlyIcon ? '' : buttonText}</span>
-      </Button>
-    </LinkContainer> :
-    null
-  );
+
+  return onlyIcon ?
+    <IconButton size='small' component={RouterLink} to={path} aria-label={buttonText}>
+      <SchoolIcon/>
+    </IconButton>
+    :
+    <Button
+      className={classes.buttonMargin}
+      component={RouterLink}
+      variant='outlined'
+      startIcon={isStudentMode ? <CreateIcon/> : <SchoolIcon/>}
+      to={path}
+    >
+      {buttonText}
+    </Button>;
 };
 
 InstructionButton.propTypes = {

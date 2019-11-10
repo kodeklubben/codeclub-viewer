@@ -1,28 +1,40 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './DyslexiaSwitch.scss';
-import Switch from 'react-switch';
+import {ListItemSecondaryAction, Switch, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import AccessibilityIcon from '@material-ui/icons/Accessibility';
+import {makeStyles} from '@material-ui/core/styles';
 import {setShowDyslexicFont} from '../../reducers/showDyslexicFont';
 import {getTranslator} from '../../selectors/translate';
 
+const useStyles = makeStyles(theme => ({
+  space: {
+    marginRight: theme.spacing(2.5),
+  },
+}));
+
 const DyslexiaSwitch = () => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
   const showDyslexicFont = useSelector(state => state.showDyslexicFont);
 
   const dispatch = useDispatch();
   return (
-    <label htmlFor='switch' className={styles.container}>
-      <span className={styles.text}>{t('footer.dyslexia')}</span>
-      <Switch
-        onChange={() => dispatch(setShowDyslexicFont(!showDyslexicFont))}
-        checked={showDyslexicFont}
-        id='switch'
-        onColor='#000'
-      />
-    </label>
+    <ListItem>
+      <ListItemIcon>
+        <AccessibilityIcon/>
+      </ListItemIcon>
+      <ListItemText className={classes.space} id='dyxlexic-font-switch' primary={t('footer.dyslexia')}/>
+      <ListItemSecondaryAction>
+        <Switch
+          color='default'
+          edge='end'
+          checked={showDyslexicFont}
+          onChange={() => dispatch(setShowDyslexicFont(!showDyslexicFont))}
+          inputProps={{'aria-labelledby': 'dyxlexic-font-switch'}}
+        />
+      </ListItemSecondaryAction>
+    </ListItem>
   );
 };
 

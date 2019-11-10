@@ -49,7 +49,7 @@ export default {
     forumbutton: 'Go to forum',
   },
   coursepage: {
-    courseinfo: 'Information about the course',
+    courseinfo: 'Information about',
     courseinfonotfound: 'Oops, someone forgot to write course information!',
     instructionbutton: 'Teacher Instructions',
     levelnavigation: 'Navigate to',
@@ -110,6 +110,7 @@ export default {
       contribute: 'Contribute?',
     },
     menu: 'Menu',
+    darkmode: 'Dark mode',
   },
   search: {
     placeholder: 'Search',

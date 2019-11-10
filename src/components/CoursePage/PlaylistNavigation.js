@@ -1,61 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
-import PanelGroup from 'react-bootstrap/lib/PanelGroup';
-import Panel from 'react-bootstrap/lib/Panel';
-import Badge from 'react-bootstrap/lib/Badge';
-import ListGroup from 'react-bootstrap/lib/ListGroup';
-import LessonItem from './LessonItem';
+import {
+  ExpansionPanel, ExpansionPanelSummary, Typography, Divider, List
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {getTranslator} from '../../selectors/translate';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './PlaylistNavigation.scss';
 import {setExpandedAccordion} from '../../reducers/expandedAccordion';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
 import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistLessons';
+import LessonItem from './LessonItem';
 
 const PlaylistNavigation = ({course}) => {
-  useStyles(styles);
-
   const language = useSelector(state => state.language);
   const t = useSelector(state => getTranslator(state));
   const expandedAccordion = useSelector(state => state.expandedAccordion);
 
   const dispatch = useDispatch();
-  const handleSelect = activeKey => dispatch(setExpandedAccordion(course, activeKey));
+  const handleChange = panel => {
+    if (expandedAccordion[course] === panel) {
+      panel = null;
+    }
+    dispatch(setExpandedAccordion(course, panel));
+  };
 
   const playlists = getPlaylistsForCourse(course);
   const playlistListItems = playlists.map((playlist, i) => {
     const lessons = getPlaylistLessons(course, playlist);
     const title = getPlaylistTitle(course, playlist, language) || t('coursepage.missingtitle');
     return (
-      <Panel key={playlist} eventKey={i}>
-        <Panel.Heading>
-          <Panel.Title toggle>
-            <Badge pullRight>{lessons.length}</Badge>
-            <span className={styles.link}>{title}</span>
-          </Panel.Title>
-        </Panel.Heading>
-        <Panel.Collapse role='tab'>
-          <ListGroup>
-            {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
-              lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
-              <span>{t('coursepage.lessonsnottranslated')}</span>
-            }
-          </ListGroup>
-        </Panel.Collapse>
-      </Panel>
+      <ExpansionPanel
+        key={playlist}
+        onChange={() => handleChange(i)}
+        expanded={expandedAccordion[course] === i}
+      >
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <Typography>{title}</Typography>
+        </ExpansionPanelSummary>
+        <Divider/>
+        <List>
+          {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
+            lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
+            <span>{t('coursepage.lessonsnottranslated')}</span>
+          }
+        </List>
+      </ExpansionPanel>
     );
   });
-  return (
-    playlists.length > 0 ?
-      <div className={styles.container}>
-        <h2 className={styles.headerText}>{t('coursepage.lessoncollections')}</h2>
-        <PanelGroup accordion id='PanelGroup' onSelect={handleSelect} activeKey={expandedAccordion[course]}>
-          {playlistListItems}
-        </PanelGroup>
-      </div> :
-      null
-  );
+
+  return playlists.length > 0 ? playlistListItems : null;
 };
 
 PlaylistNavigation.propTypes = {

@@ -1,44 +1,71 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useSelector} from 'react-redux';
-import styles from './PopoverComponent.scss';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import Popover from 'react-bootstrap/lib/Popover';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import {IconButton, Popover, Typography} from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/Help';
+import {makeStyles} from '@material-ui/core/styles';
 import {hashCode} from '../utils/util';
 
-const PopoverComponent = ({children, popoverContent}) => {
-  useStyles(styles);
+const useStyles = makeStyles(theme => ({
+  text: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: theme.spacing(2),
+    maxWidth: 600,
+    '& img': {
+      width: '100%',
+      height: '100%',
+      maxWidth: 200,
+      maxHeight: 250,
+      marginRight: theme.spacing(2),
+    },
+  },
+  icon: {
+    
+    marginRight: theme.spacing(1.5),
+  },
+}));
 
-  const showDyslexicFont = useSelector(state => state.showDyslexicFont);
+const PopoverComponent = ({popoverContent}) => {
+  const classes = useStyles();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = event => {
-    event.stopPropagation();
-    event.preventDefault();
+    setAnchorEl(event.currentTarget);
   };
 
-  const className = showDyslexicFont ? styles.contentDyslexia : styles.content;
-  const overlay =
-    <Popover id={hashCode(popoverContent)} className={styles.popover}>
-      <div {...{className}} role='region' dangerouslySetInnerHTML={{__html: popoverContent}}/>
-    </Popover>;
-  const options = {
-    animation: true,
-    rootClose: true,
-    trigger: 'click',
-    placement: 'bottom',
-    onClick: handleClick,
-    overlay,
+  const handleClose = () => {
+    setAnchorEl(null);
   };
+
+  const open = Boolean(anchorEl);
+  const id = open ? hashCode(popoverContent) : undefined;
+
   return (
-    <OverlayTrigger {...options}>
-      {children}
-    </OverlayTrigger>
+    <React.Fragment>
+      <IconButton className={classes.icon} aria-describedby={id} size='small' onClick={handleClick}>
+        <HelpIcon/>
+      </IconButton>
+      <Popover
+        {...{id, open, anchorEl}}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+      >
+        <Typography className={classes.text} dangerouslySetInnerHTML={{__html: popoverContent}}/>
+      </Popover>
+    </React.Fragment>
   );
 };
 
 PopoverComponent.propTypes = {
-  children: PropTypes.node,
   popoverContent: PropTypes.string,
 };
 

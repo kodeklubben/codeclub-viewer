@@ -1,22 +1,14 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './RadioButtons.scss';
+import {List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import {getTranslator} from '../../selectors/translate';
 import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButton = ({checked, onChange, text}) => (
-  <label className={styles.label}>
-    <input type='radio' name='radioGroup' {...{checked, onChange}}/>
-    <span className={styles.marginLeft}>{text}</span>
-  </label>
-);
-
 const RadioButtons = () => {
-  useStyles(styles);
-
   const showPlaylists = useSelector(state => state.showPlaylists);
   const language = useSelector(state => state.language);
   const t = useSelector(state => getTranslator(state));
@@ -29,18 +21,20 @@ const RadioButtons = () => {
   };
 
   return (
-    <form role='group' aria-label={t('filter.radio.group')}>
-      <RadioButton
-        checked={showPlaylists}
-        onChange={handleChangeToPlaylists}
-        text={t('filter.radio.playlists')}
-      />
-      <RadioButton
-        checked={!showPlaylists}
-        onChange={() => dispatch(setShowPlaylists(false))}
-        text={t('filter.radio.lessons')}
-      />
-    </form>
+    <List>
+      <ListItem button onClick={handleChangeToPlaylists}>
+        <ListItemIcon>
+          {!showPlaylists ? <RadioButtonUncheckedIcon fontSize='small'/> : <RadioButtonCheckedIcon fontSize='small'/>}
+        </ListItemIcon>
+        <ListItemText primary={t('filter.radio.playlists')}/>
+      </ListItem>
+      <ListItem button onClick={() => dispatch(setShowPlaylists(false))}>
+        <ListItemIcon>
+          {showPlaylists ? <RadioButtonUncheckedIcon fontSize='small'/> : <RadioButtonCheckedIcon fontSize='small'/>}
+        </ListItemIcon>
+        <ListItemText primary={t('filter.radio.lessons')}/>
+      </ListItem>
+    </List>
   );
 };
 

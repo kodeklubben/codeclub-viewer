@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import {Provider} from 'react-redux';
+import {ServerStyleSheets} from '@material-ui/core/styles';
 import {createMemoryHistory, match, RouterContext} from 'react-router';
 import routes from './routes';
-import StyleContext from 'isomorphic-style-loader/StyleContext';
 import {Helmet} from 'react-helmet';
 import store from './store';
 
@@ -17,18 +17,15 @@ const renderStatic = (locals, callback) => {
   const location = history.createLocation(pathWithoutHtml);
 
   match({ routes, location, basename: locals.publicPath }, (error, redirectLocation, renderProps) => {
-    let css = new Set();
-    const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
-    const appHtml = ReactDOMServer.renderToString(
+    const sheets = new ServerStyleSheets();
+    const appHtml = ReactDOMServer.renderToString(sheets.collect(
       <Provider {...{store}}>
-        <StyleContext.Provider value={{insertCss}}>
-          <RouterContext {...renderProps} />
-        </StyleContext.Provider>
+        <RouterContext {...renderProps} />
       </Provider>
-    );
+    ));
     const helmet = Helmet.renderStatic();
-    css = [...new Set(css)]; // make array unique
-    const appCss = css.length ? `<style type="text/css">${css.join('')}</style>` : '';
+    const cssString = sheets.toString(); 
+    const appCss = `<style id='jss-server-side'>${cssString}</style>`;
     const webpackAssets = locals.webpackStats.compilation.assets;
     const assets = Object.keys(webpackAssets);
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);

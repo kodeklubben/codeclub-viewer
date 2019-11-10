@@ -1,14 +1,13 @@
 language: node_js
 stages:
   - name: deploy
-    if: branch = master AND type = push AND fork = false
+    if: branch = beta AND type = push AND fork = false
 
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
 cache: yarn
 script:
   - yarn eslint
-  - yarn stylelint
   - yarn test
   - yarn build:travis
 deploy:
@@ -17,8 +16,8 @@ deploy:
   skip-cleanup: true
   keep-history: true
   local-dir: dist
-  repo: kodeklubben/kodeklubben.github.io
-  target-branch: master
+  repo: repo:kodeklubben/beta
+  target-branch: gh-pages
   fqdn: oppgaver.kidsakoder.no
   on:
-    branch: master
+    branch: beta

@@ -1,14 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './PrintInfo.scss';
 import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import {capitalize} from '../../utils/stringUtils';
 import {getLessonTags} from '../../resources/lessons';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'none',
+    fontStyle: 'italic',
+    fontSize: '0.75em',
+  
+    '@media print': {
+      display: 'block',
+    },
+  },
+}));
 
 const PrintInfo = ({course, lesson}) => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
   const translateFilter = useSelector(state => getTranslateFilter(state));
@@ -16,7 +27,7 @@ const PrintInfo = ({course, lesson}) => {
   const tags = getLessonTags(course, lesson);
 
   return (
-    <div className={styles.container}>
+    <div className={classes.container}>
       <div>{t('lessons.course')} {capitalize(course)}</div>
       {tags ? Object.keys(tags).map(group =>
         <div key={group}>

@@ -3,32 +3,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './PdfButton.scss';
+import {Link as RouterLink} from 'react-router';
 import {getTranslator} from '../../selectors/translate';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {Button} from '@material-ui/core';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  buttonMargin: {
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    '@media print': {
+      display: 'none',
+    },
+  },
+}));
 
 const PdfButton = ({course, lesson, language, isReadme}) => {
-  useStyles(styles);
-  
+  const classes = useStyles();
+
   const t = useSelector(state => getTranslator(state));
 
   const path = getLessonPath(course, lesson, language, isReadme);
-  const options = {
-    href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
-    bsStyle: 'pdf',
-    bsSize: 'small',
-    className: styles.container,
-    download: true,
-  };
-  // Note that we need to use href in button, and not LinkContainer,
-  // since we don't want to go through React Router when getting the pdf.
+
   return (
-    <Button {...options} aria-label={t('lessons.pdf')}>
-      <Glyphicon className={styles.icon} glyph={'cloud-download'}/>
-      <span className={styles.textMargin}>{t('lessons.pdf')}</span>
+    <Button
+      className={classes.buttonMargin}
+      component={RouterLink}
+      variant='outlined'
+      href={`${process.env.PUBLICPATH}${path.slice(1)}.pdf`}
+      download={true}
+      startIcon={<GetAppIcon/>}
+    >
+      {t('lessons.pdf')}
     </Button>
   );
 };

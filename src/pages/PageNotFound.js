@@ -1,25 +1,31 @@
 import React from 'react';
+import {Container, Typography, Grid} from '@material-ui/core';
 import {useSelector} from 'react-redux';
-import Link from 'react-router/lib/Link';
-import useStyles from 'isomorphic-style-loader/useStyles';
-import styles from './PageNotFound.scss';
+import {Link as RouterLink} from 'react-router';
 import {getTranslator} from '../selectors/translate';
 import Head from '../components/Head';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  topMargin: {
+    marginTop: theme.spacing(10),
+  },
+}));
 
 const PageNotFound = () => {
-  useStyles(styles);
+  const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
 
   return (
-    <div role='main'>
+    <Container>
       <Head title={'404'}/>
-      <div className={styles.center}>
-        <h3>{t('404.header')}</h3>
-        <p>{t('404.textline')}</p>
-        <p><Link to="/">{t('404.tofrontpage')}</Link></p>
-      </div>
-    </div>
+      <Grid className={classes.topMargin} container direction='column' alignItems='center'>
+        <Typography variant='h4'>{t('404.header')}</Typography>
+        <Typography>{t('404.textline')}</Typography>
+        <Typography component={RouterLink} to='/'>{t('404.tofrontpage')}</Typography>
+      </Grid>
+    </Container>
   );
 };
 

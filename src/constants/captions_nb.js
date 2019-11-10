@@ -51,7 +51,7 @@ export default {
     showhidefilter: 'Vis/skjul filter',
   },
   coursepage: {
-    courseinfo: 'Informasjon om kurset',
+    courseinfo: 'Informasjon om',
     courseinfonotfound: 'Oops, her har noen glemt å skrive kursinformasjon!',
     levelnavigation: 'Hopp til',
     lessoncollections: 'Oppgavesamlinger',
@@ -111,6 +111,7 @@ export default {
       contribute: 'Bidra?',
     },
     menu: 'Meny',
+    darkmode: 'Nattmodus',
   },
   search: {
     placeholder: 'Søk',
