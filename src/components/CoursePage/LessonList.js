@@ -7,7 +7,7 @@ import {getFilteredLessonsInCourseForLevel} from '../../selectors/lesson';
 import {isLessonIndexed} from '../../resources/lessons';
 import LevelIcon from '../LevelIcon';
 import LessonWrapper from './LessonWrapper';
-import {makeStyles} from '@material-ui/core/styles'
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   text: {
@@ -37,7 +37,7 @@ const LessonList = ({level, course}) => {
           {lessonsInLevel.map(lesson => 
             isLessonIndexed(course, lesson) ?
               <LessonWrapper key={lesson} {...{course, lesson}}/>
-            : null
+              : null
           )}
         </List>
       </Paper>

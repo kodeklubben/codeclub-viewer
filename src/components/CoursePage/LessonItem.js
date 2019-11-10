@@ -46,7 +46,7 @@ const LessonItem = ({course, lesson, language}) => {
             <PopoverComponent  {...{popoverContent}}/>
           </ListItemIcon>
         </React.Fragment>
-      :
+        :
         <React.Fragment>
           <ListItem component={RouterLink} to={getLessonPath(course, lesson, language, false)} button>
             {!isOnlyCheckedMainLanguage ?
@@ -57,7 +57,7 @@ const LessonItem = ({course, lesson, language}) => {
                   </ListItemIcon>
                 }
               </ListItemIcon>
-            : null}
+              : null}
             <ListItemText primary={title} secondary={progress}/>
           </ListItem>
           {progressPercent === 100 ? <ListItemIcon><StarIcon/></ListItemIcon> : null}

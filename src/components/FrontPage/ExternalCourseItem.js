@@ -32,7 +32,12 @@ const ExternalCourseList = ({course, language}) => {
   return (
     <Grid item>
       <Card className={classes.card}>
-        <CardActionArea component={RouterLink} target='_blank' rel='noopener' href={getCourseExternalLink(course, language)}> 
+        <CardActionArea
+          component={RouterLink}
+          target='_blank'
+          rel='noopener'
+          href={getCourseExternalLink(course, language)}
+        > 
           <Grid container alignItems='center' direction='column'>
             <CardHeader title={getCourseTitle(course, language)}/>
             <CardMedia
@@ -47,7 +52,7 @@ const ExternalCourseList = ({course, language}) => {
             <Grid container justify='center' spacing={1}>
               <Grid item><Flag key={language} {...{language}}/></Grid>
             </Grid>
-          : null}
+            : null}
         </CardActionArea>
         <Grid container alignItems='center' wrap='nowrap'>
           <ListItem>

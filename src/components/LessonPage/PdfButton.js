@@ -2,7 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useSelector} from 'react-redux';;
+import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
 import {getTranslator} from '../../selectors/translate';
 import {Button} from '@material-ui/core';

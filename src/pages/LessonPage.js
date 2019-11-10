@@ -6,12 +6,13 @@ import LevelIcon from '../components/LevelIcon';
 import {getTranslator} from '../selectors/translate';
 import {setLastLesson} from '../reducers/lastLesson';
 import Content from '../components/LessonPage/Content';
-import {getLessonTitle, getLessonPath} from '../resources/lessonFrontmatter';
+import {getLessonTitle, getLessonAuthor, getLessonTranslator, getLessonPath} from '../resources/lessonFrontmatter';
 import {getLessonIntroText} from '../resources/lessonContent';
 import {getLevel, getLicense} from '../resources/lessons';
 import ButtonRow from '../components/LessonPage/ButtonRow';
 import Head from '../components/Head';
 import MarkdownRenderer from '../components/MarkdownRenderer';
+import ImprovePage from '../components/LessonPage/ImprovePage';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -33,6 +34,13 @@ const LessonPage = ({course, lesson, language, isReadme}) => {
   }, [course, lesson, language, isReadme, dispatch]);
 
   const title = getLessonTitle(course, lesson, language, isReadme);
+
+  const author = getLessonAuthor(course, lesson, language, isReadme);
+  const authorNode = author ?
+    <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true}/></i></p> : null;
+
+  const translator = getLessonTranslator(course, lesson, language, isReadme);
+  const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
 
   const license = getLicense(course, lesson);
   const licenseRow = <Grid container spacing={1}>
@@ -65,9 +73,12 @@ const LessonPage = ({course, lesson, language, isReadme}) => {
           <Typography variant='h3' component='h1'>{title}</Typography>
         </Grid>
       </Grid>
+      {authorNode}
+      {translatorNode}
       <ButtonRow {...{course, lesson, language, isReadme}}/>
       <Content {...{course, lesson, language, isReadme}}/>
       {licenseRow}
+      <ImprovePage {...{course, lesson, language, isReadme}}/>
     </Container>
   );
 };

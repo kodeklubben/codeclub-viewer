@@ -8,13 +8,6 @@ import {setShowPlaylists} from '../../reducers/showPlaylists';
 import {resetAllFilters} from '../../reducers/filter';
 import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
-const RadioButton = ({checked, onChange, text}) => (
-  <label>
-    <input type='radio' name='radioGroup' {...{checked, onChange}}/>
-    <span>{text}</span>
-  </label>
-);
-
 const RadioButtons = () => {
   const showPlaylists = useSelector(state => state.showPlaylists);
   const language = useSelector(state => state.language);

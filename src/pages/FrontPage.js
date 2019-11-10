@@ -27,7 +27,9 @@ const FrontPage = () => {
   const t = useSelector(state => getTranslator(state));
   const isStudentMode = useSelector(state => state.isStudentMode);
   const courses = useSelector(state => state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state));
-  const externalCourses = useSelector(state => state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state));
+  const externalCourses = useSelector(state =>
+    state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state)
+  );
 
   const noLessons = courses.length + externalCourses.length !== 0;
 
@@ -47,7 +49,7 @@ const FrontPage = () => {
           {noLessons ? null : <Typography variant='h3'>{t('coursepage.nomatchinglessons')}</Typography>}
           {courses.length > 0 ?
             <Typography gutterBottom variant='h3'>{t('frontpage.courses')}</Typography>
-          : null}
+            : null}
           <Grid container justify='center' spacing={2}>
             {courses.map(course => (
               <Grid item key={course}>
@@ -59,7 +61,7 @@ const FrontPage = () => {
             <Typography className={classes.externalText} gutterBottom variant='h3'>
               {t('frontpage.otherwebsitecourses')}
             </Typography>
-          : null}
+            : null}
           <Grid container justify='center' spacing={2}>
             {externalCourses.map(({course, language}) => (
               <ExternalCourseItem key={`${course}_${language}`} {...{course, language}}/>

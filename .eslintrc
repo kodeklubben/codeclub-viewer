@@ -42,14 +42,6 @@
     "react/jsx-uses-react": ["warn"],     // avoid no-unused-vars for importing React
     "react/jsx-no-bind": ["error", {"allowArrowFunctions": true}], // See https://stackoverflow.com/a/53177820
     "react/react-in-jsx-scope": ["warn"], // make sure React is in scope when writing jsx
-    "no-var": ["error"],
-    "jsx-a11y/label-has-for": [ "error", {
-      "components": [ "Label" ],
-      "required": {
-        "every": [ "nesting", "id" ]
-      },
-      "allowChildren": true
-      }
-    ]
+    "no-var": ["error"]
   }
 }

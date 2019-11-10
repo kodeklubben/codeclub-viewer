@@ -1,5 +1,4 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
 import {AppBar, Link, Grid, Toolbar} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 

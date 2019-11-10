@@ -38,7 +38,7 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon}) => {
       to={path}
     >
       {buttonText}
-    </Button>
+    </Button>;
 };
 
 InstructionButton.propTypes = {

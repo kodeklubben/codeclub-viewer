@@ -31,7 +31,9 @@ const CoursePage = ({params}) => {
 
   const t = useSelector(state => getTranslator(state));
   const courses = useSelector(state => state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state));
-  const externalCourses = useSelector(state => state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state));
+  const externalCourses = useSelector(state => 
+    state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state)
+  );
   const levels = useSelector(state => getFilteredLevelsInCourse(state, course));
   const courseTitle = useSelector(state => getCourseTitle(course, state.language));
   const language = useSelector(state => state.language);

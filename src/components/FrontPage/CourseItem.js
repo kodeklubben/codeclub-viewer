@@ -57,11 +57,11 @@ const CourseItem = ({course}) => {
               </Grid>
             )}
           </Grid>
-        : null}
+          : null}
       </CardActionArea>
       <Grid container alignItems='center' wrap='nowrap'>
         <ListItem>
-            {showLessonCount ? <ListItemText primary={<LessonCount {...{course}}/>}/> : <ListIcon size='small'/>}
+          {showLessonCount ? <ListItemText primary={<LessonCount {...{course}}/>}/> : <ListIcon size='small'/>}
         </ListItem>
         <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
       </Grid>
