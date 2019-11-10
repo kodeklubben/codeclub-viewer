@@ -6,7 +6,8 @@ stages:
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
 install:
-  - git config --add diff.renamelimit 9999
+  - git config diff.renamelimit 999999
+  - git config merge.renameLimit 999999
 cache: yarn
 script:
   - yarn eslint
