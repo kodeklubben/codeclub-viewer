@@ -22,4 +22,3 @@ deploy:
   fqdn: oppgaver.kidsakoder.no
   on:
     branch: beta
-  
