@@ -13,7 +13,7 @@ import createCachedSelector from 're-reselect';
  * @returns {boolean}
  */
 const isSomethingCheckedInGroup = (filter = {}, language, groupKey) => {
-  if (!filter.hasOwnProperty(groupKey)) {
+  if (!Object.prototype.hasOwnProperty.call(filter, groupKey)) {
     return false;
   }
   const group = filter[groupKey];

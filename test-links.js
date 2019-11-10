@@ -9,18 +9,6 @@ const packageFile = require('./package.json');
 const Spider = require('node-spider');
 const Static = require('node-static');
 
-/**
- * Get number of keys in object.
- * @param {object} obj
- */
-function length (obj) {
-  let size = 0;
-  for (let key in obj) {
-    if (obj.hasOwnProperty(key)) size++;
-  }
-  return size;
-}
-
 const PORT = 3000;
 const start = 'http://localhost:' + PORT;
 const buildRoot = 'dist';
@@ -212,7 +200,7 @@ function crawl () {
       });
     });
 
-    assert.equal(ok + broken, length(resources));
+    assert.equal(ok + broken, Object.getOwnPropertyNames(resources).length);
 
     if (webserver) {
       webserver.close();
