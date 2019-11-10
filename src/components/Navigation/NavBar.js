@@ -24,6 +24,11 @@ import ModeList from './ModeList';
 import GithubLink from './GithubLink';
 
 const useStyles = makeStyles(theme => ({
+  hide: {
+    '@media print': {
+      display: 'none',
+    },
+  },
   root: {
     flexGrow: 1,
     justifyContent: 'space-between',
@@ -104,8 +109,8 @@ const NavBar = ({params}) => {
   );
 
   return (
-    <AppBar color='inherit'>
-      <Toolbar className={classes.root} >
+    <AppBar color='inherit' className={classes.hide}>
+      <Toolbar className={classes.root}> 
         <Breadcrumbs separator={<NavigateNextIcon fontSize='small'/>}>
           <Link
             color='textPrimary'

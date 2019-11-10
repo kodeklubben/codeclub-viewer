@@ -33,7 +33,6 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
-import WebpackShellPluginAlt from 'webpack-shell-plugin-alt';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
 
 import {
@@ -93,7 +92,6 @@ const createConfig = (env = {}, argv) => {
     console.log();
 
     console.log('  env.NODE_ENV:', env.NODE_ENV);
-    console.log('  env.BUILD_PDF:', env.BUILD_PDF);
     console.log();
   }
 
@@ -248,22 +246,6 @@ const createConfig = (env = {}, argv) => {
       ]),
 
       new CaseSensitivePathsPlugin(),
-
-      ...(env.BUILD_PDF ? [
-        new WebpackShellPluginAlt({onBuildEnd:['node createLessonPdfs.js']})
-      ] : [
-        // copy FakeLessonPDF.pdf to all the lessons
-        // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
-        new CopyWebpackPlugin(lessonPaths('.pdf', env.verbose).map(pdfPath => ({
-          from: 'src/assets/pdfs/FakeLessonPDF.pdf',
-          to: path.join(buildDir, pdfPath),
-        })), {
-          // Must include copyUnmodified:true since we always copy from same file,
-          // otherwise only the first path is copied to.
-          // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
-          copyUnmodified: true,
-        })
-      ]),
 
       ...(isHot ? [
         // Create the root index.html

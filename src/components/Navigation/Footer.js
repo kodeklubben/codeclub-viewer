@@ -5,6 +5,9 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   footer: {
     marginTop: theme.spacing(5),
+    '@media print': {
+      display: 'none',
+    },
   },
   img: {
     margin: '20px 7px 10px',
