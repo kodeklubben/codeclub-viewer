@@ -6,7 +6,6 @@ import {CssBaseline, Toolbar} from '@material-ui/core';
 import Head from '../components/Head';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
-import PdfHeader from '../components/PdfHeader';
 import OpenDyslexic from '../assets/fonts/OpenDyslexic-Regular.ttf';
 
 const dyslexicTheme = createMuiTheme({
@@ -57,6 +56,11 @@ const defaultTheme = createMuiTheme({
 });
 
 const useStyles = makeStyles(theme => ({
+  hide: {
+    '@media print': {
+      display: 'none',
+    },
+  },
   footer: {
     minHeight: '100vh',
     flexDirection: 'column',
@@ -74,16 +78,14 @@ const App = ({params, location, children}) => {
   if (!showDyslexicFont && showDarkMode) { theme = darkModeTheme; }
   if (showDyslexicFont && showDarkMode) { theme = darkDyslexicTheme; }
 
-  // renderPdf is true if 'pdf' is a query-param, regardless of value, e.g. "...?pdf" or "...?a=1&pdf=0"
-  const renderPdf = Object.keys(location.query).includes('pdf');
   return (
     <ThemeProvider {...{theme}}>
       <CssBaseline/>
       <Head/>
-      {renderPdf ? <PdfHeader course={params.course}/> : <NavBar {...{params}}/>}
-      {renderPdf ? null : <Toolbar/>}
+      <NavBar className={classes.hide} {...{params}}/>
+      <Toolbar className={classes.hide}/>
       <div className={classes.footer}>{children}</div>
-      {renderPdf ? null : <Footer/>}
+      <Footer className={classes.hide}/>
     </ThemeProvider>
   );
 };
