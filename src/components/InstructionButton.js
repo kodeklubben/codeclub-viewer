@@ -30,15 +30,16 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon}) => {
 
   return onlyIcon ?
     <IconButton size='small' component={RouterLink} to={path} aria-label={buttonText}>
-      <SchoolIcon/>
+      <SchoolIcon color='primary'/>
     </IconButton>
     :
     <Button
       className={classes.buttonMargin}
       component={RouterLink}
-      variant='outlined'
-      startIcon={isStudentMode ? <CreateIcon/> : <SchoolIcon/>}
       to={path}
+      color='primary'
+      variant='outlined'
+      startIcon={isStudentMode ? <CreateIcon color='primary'/> : <SchoolIcon color='primary'/>}
     >
       {buttonText}
     </Button>;

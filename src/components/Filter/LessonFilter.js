@@ -1,13 +1,16 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {Grid, Paper, Typography, List, Divider} from '@material-ui/core';
+import {Paper, Typography, List, ListItem, ListItemText, Divider} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
-import PopoverComponent from '../PopoverComponent';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    background: theme.palette.secondary.main,
+  },
   header: {
     padding: theme.spacing(2),
   },
@@ -21,13 +24,16 @@ const LessonFilter = () => {
   const filterGroupKeys = useSelector(state => Object.keys(state.filter));
 
   return (
-    <Paper>
-      <Grid container alignItems='center' justify='space-between'>
-        <Typography className={classes.header} variant='h5' component='h3'>
-          {t('filter.header')}
-        </Typography>
-        <PopoverComponent popoverContent={t('filter.tooltip')}/>
-      </Grid>
+    <Paper classes={{ root: classes.root }}>
+      <List>
+        <ListItem>
+          <ListItemText>
+            <Typography variant='h5'>
+              {t('filter.header')}
+            </Typography>
+          </ListItemText>
+        </ListItem>
+      </List>
       <Divider/>
       <RadioButtons/>
       {showPlaylists ? null :

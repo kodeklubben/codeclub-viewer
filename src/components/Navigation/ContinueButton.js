@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
-import {Button, Link} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {getTranslator} from '../../selectors/translate';
 
@@ -14,15 +14,17 @@ const ContinueButton = ({course}) => {
   const hasLastLesson = lastLesson !== '';
 
   return hasLastLesson && !course ?
-    <Link underline='none' component={RouterLink} to={lastLesson}>
-      <Button
-        variant='outlined'
-        aria-label={t('frontpage.continueButton')}
-        startIcon={<ArrowForwardIcon/>}
-      >
-        {t('frontpage.continueButton')}
-      </Button>
-    </Link>
+    <Button
+      size='small'
+      component={RouterLink}
+      to={lastLesson}
+      color='primary'
+      variant='outlined'
+      aria-label={t('frontpage.continueButton')}
+      startIcon={<ArrowForwardIcon color='primary'/>}
+    >
+      {t('frontpage.continueButton')}
+    </Button>
     : null;
 };
 

@@ -6,6 +6,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import {hashCode} from '../utils/util';
 
 const useStyles = makeStyles(theme => ({
+  paper: {
+    background: theme.palette.secondary.main,
+  },
   text: {
     display: 'flex',
     flexDirection: 'column',
@@ -21,7 +24,6 @@ const useStyles = makeStyles(theme => ({
     },
   },
   icon: {
-    
     marginRight: theme.spacing(1.5),
   },
 }));
@@ -45,9 +47,10 @@ const PopoverComponent = ({popoverContent}) => {
   return (
     <React.Fragment>
       <IconButton className={classes.icon} aria-describedby={id} size='small' onClick={handleClick}>
-        <HelpIcon/>
+        <HelpIcon color='primary'/>
       </IconButton>
       <Popover
+        classes={{ paper: classes.paper }}
         {...{id, open, anchorEl}}
         onClose={handleClose}
         anchorOrigin={{

@@ -24,10 +24,11 @@ const ResetButton = ({path}) => {
 
   return (
     <Button
+      color='primary'
       variant='outlined'
       className={classes.buttonMargin}
       onClick={() => setCheckboxesInDoc(path, {})}
-      startIcon={<ClearIcon/>}
+      startIcon={<ClearIcon color='primary'/>}
     >
       {t('lessons.reset')}
     </Button>

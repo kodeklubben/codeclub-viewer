@@ -10,7 +10,7 @@ const GithubLink = () => {
   return (
     <ListItem>
       <ListItemIcon>
-        <GitHubIcon/>
+        <GitHubIcon color='primary'/>
       </ListItemIcon>
       <ListItemText primary={
         <Link

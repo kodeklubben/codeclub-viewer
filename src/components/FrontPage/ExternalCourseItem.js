@@ -13,8 +13,9 @@ import PopoverComponent from '../PopoverComponent';
 import Flag from '../Flag';
 
 const useStyles = makeStyles(theme => ({
-  card: {
+  root: {
     width: 240,
+    background: theme.palette.secondary.main,
   },
   image: {
     maxHeight: 120,
@@ -30,38 +31,35 @@ const ExternalCourseList = ({course, language}) => {
   const showFlag = useSelector(state => !onlyCheckedMainLanguage(state));
 
   return (
-    <Grid item>
-      <Card className={classes.card}>
-        <CardActionArea
-          component={RouterLink}
-          target='_blank'
-          rel='noopener'
-          href={getCourseExternalLink(course, language)}
-        > 
-          <Grid container alignItems='center' direction='column'>
-            <CardHeader title={getCourseTitle(course, language)}/>
-            <CardMedia
-              className={classes.image}
-              component='img'
-              alt={course}
-              src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
-              title={course}
-            />
-          </Grid>
-          {showFlag ?
-            <Grid container justify='center' spacing={1}>
-              <Grid item><Flag key={language} {...{language}}/></Grid>
-            </Grid>
-            : null}
-        </CardActionArea>
-        <Grid container alignItems='center' wrap='nowrap'>
-          <ListItem>
-            <LinkIcon size='small'/>
-          </ListItem>
-          <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
+    <Card classes={{ root: classes.root }}>
+      <CardActionArea
+        component={RouterLink}
+        href={getCourseExternalLink(course, language)}
+        target='_blank' rel='noopener'
+      > 
+        <Grid container alignItems='center' direction='column'>
+          <CardHeader title={getCourseTitle(course, language)}/>
+          <CardMedia
+            className={classes.image}
+            component='img'
+            alt={course}
+            src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
+            title={course}
+          />
         </Grid>
-      </Card>
-    </Grid>
+        {showFlag ?
+          <Grid container justify='center' spacing={1}>
+            <Grid item><Flag key={language} {...{language}}/></Grid>
+          </Grid>
+          : null}
+      </CardActionArea>
+      <Grid container alignItems='center' wrap='nowrap'>
+        <ListItem>
+          <LinkIcon color='primary' size='small'/>
+        </ListItem>
+        <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
+      </Grid>
+    </Card>
   );
 };
 

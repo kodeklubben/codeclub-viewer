@@ -25,19 +25,15 @@ import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 import MarkdownItKatex from 'markdown-it-katex';
 import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
 import highlight from './src/highlighting';
-
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
-
 import {
   assets,
-  buildBaseDir,
   buildDir,
   filenameBase,
   isHot,
@@ -45,7 +41,6 @@ import {
   lessonRepo,
   lessonSrc,
   publicPath,
-  publicPathWithoutSlash,
 } from './buildconstants';
 import {getStaticSitePaths, lessonPaths, coursePaths} from './pathlists';
 
@@ -81,14 +76,12 @@ const createConfig = (env = {}, argv) => {
   if (env.verbose) {
     console.log('Build constants:');
     console.log('  assets:', assets);
-    console.log('  buildBaseDir:', buildBaseDir);
     console.log('  buildDir:', buildDir);
     console.log('  filenameBase:', filenameBase);
     console.log('  isHot:', isHot);
     console.log('  lessonFiltertags:', lessonFiltertags);
     console.log('  lessonSrc:', lessonSrc);
     console.log('  publicPath:', publicPath);
-    console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
     console.log();
 
     console.log('  env.NODE_ENV:', env.NODE_ENV);
@@ -109,7 +102,7 @@ const createConfig = (env = {}, argv) => {
 
     output: {
       path: buildDir,
-      publicPath: isHot ? publicPathWithoutSlash : publicPath,
+      publicPath: publicPath,
       filename: `${filenameBase}.js`,
       chunkFilename: `${filenameBase}.js`,
 
@@ -128,28 +121,6 @@ const createConfig = (env = {}, argv) => {
         lessonSrc,
         lessonFiltertags,
         assets,
-      }
-    },
-
-    resolveLoader: {
-      // Since webpack v2, loaders are resolved relative to file. Use abs path so loaders can be used on md-files
-      // in lessonSrc as well.
-      modules: [path.join(__dirname, 'node_modules')],
-      alias: {
-        //frontmatter: 'json-loader!front-matter-loader?onlyAttributes',
-        // // Markdown-files are parsed only through one of these three aliases, and are
-        // // not parsed automatically by adding a loader with test /\.md$/ for two reasons:
-        // // 1) We don't want to use '!!' in the requires in the modules, and
-        // // 2) Since the lessons create a lot of data, we want to be sure that we only load
-        // //    what we need by being explicit in the requires, e.g. require('onlyFrontmatter!./file.md')
-        // //    It is even more important when using in require.context('onlyFrontmatter!./path', ....)
-        // onlyFrontmatter: 'combine-loader?' + JSON.stringify({frontmatter: frontmatterLoaders}),
-        // onlyContent: 'combine?' + JSON.stringify({content: contentLoaders}),
-        // frontAndContent: 'combine?' + JSON.stringify({
-        //   frontmatter: frontmatterLoaders,
-        //   content: contentLoaders
-        // }),
-        // bundleLessons: 'bundle-loader?name=[path][name]&context=' + lessonSrc,
       }
     },
 
@@ -207,7 +178,6 @@ const createConfig = (env = {}, argv) => {
     plugins: [
       new webpack.DefinePlugin({
         'process.env.PUBLICPATH': JSON.stringify(publicPath),
-        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
         'IS_HOT': JSON.stringify(isHot),
       }),
 
@@ -255,8 +225,7 @@ const createConfig = (env = {}, argv) => {
           chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
         }),
       ] : [
-        new CleanWebpackPlugin(buildBaseDir),
-        new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
+        new CleanWebpackPlugin(buildDir),
         new StaticSiteGeneratorPlugin({
           entry: 'main',
           paths: staticSitePaths,

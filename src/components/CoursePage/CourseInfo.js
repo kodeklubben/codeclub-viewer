@@ -11,8 +11,10 @@ import {makeStyles} from '@material-ui/core/styles';
 import {getCourseTitle} from '../../resources/courseFrontmatter';
 
 const useStyles = makeStyles(theme => ({
-  panel: {
+  root: {
     marginBottom: theme.spacing(4),
+    background: theme.palette.secondary.main,
+    flexGrow: 1,
   },
 }));
 
@@ -31,8 +33,8 @@ const CourseInfo = ({course}) => {
   };
 
   return (
-    <ExpansionPanel className={classes.panel}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+    <ExpansionPanel classes={{ root: classes.root }}>
+      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon color='primary'/>}>
         <Typography variant='h5'>{t('coursepage.courseinfo')} {courseTitle}</Typography>
       </ExpansionPanelSummary>
       <Divider/>

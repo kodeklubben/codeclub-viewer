@@ -7,16 +7,16 @@ import FilterVintageIcon from '@material-ui/icons/FilterVintage';
 
 const LevelIcon = ({level, fontSize}) => {
   if (level === 1 || level === '1') {
-    return <RadioButtonUncheckedIcon {...{fontSize}}/>;
+    return <RadioButtonUncheckedIcon color='primary' {...{fontSize}}/>;
   }
   else if (level === 2 || level === '2') {
-    return <ChangeHistoryIcon {...{fontSize}}/>;
+    return <ChangeHistoryIcon color='primary' {...{fontSize}}/>;
   }
   else if (level === 3 || level === '3') {
-    return <CheckBoxOutlineBlankIcon {...{fontSize}}/>;
+    return <CheckBoxOutlineBlankIcon color='primary' {...{fontSize}}/>;
   }
   else if (level === 4 || level === '4') {
-    return <FilterVintageIcon {...{fontSize}}/>;
+    return <FilterVintageIcon color='primary' {...{fontSize}}/>;
   }
   else {
     return null;

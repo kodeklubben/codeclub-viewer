@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
-import {Button, Link} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import {getTranslator, getTranslateFilter} from '../../selectors/translate';
 import Flag from '../Flag';
 import {getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatter';
@@ -30,21 +30,20 @@ const MainLanguageButton = ({course, lesson, isReadme}) => {
   const external = getLessonExternal(course, lesson, language, isReadme);
   const enabled = path && !external;
   const buttonText = t(enabled ? 'lessons.tomainlanguage' : 'lessons.nottranslated', {lang});
-  const button = (
+
+  return (
     <Button
       className={classes.buttonMargin}
+      component={RouterLink}
+      to={path}
       disabled={!enabled}
+      color='primary'
       variant='outlined'
       startIcon={<Flag {...{language}}/>}
     >
       {buttonText}
     </Button>
   );
-  return enabled ?
-    <Link underline='none' component={RouterLink} to={path}>
-      {button}
-    </Link>
-    : button;
 };
 
 MainLanguageButton.propTypes = {

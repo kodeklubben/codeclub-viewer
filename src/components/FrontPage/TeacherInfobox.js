@@ -7,10 +7,11 @@ import {getTranslator} from '../../selectors/translate';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  paper: {
+  root: {
     maxWidth: 700,
     marginBottom: theme.spacing(5),
     padding: theme.spacing(2),
+    background: theme.palette.secondary.main,
   },
   moreInfo: {
     padding: theme.spacing(2),
@@ -29,7 +30,7 @@ const TeacherInfobox = () => {
   const t = useSelector(state => getTranslator(state));
 
   return (
-    <Paper className={classes.paper}>
+    <Paper classes={{ root: classes.root }}>
       <Grid container justify='center' spacing={4}>
         <Grid item>
           <Typography variant='h4' component='h1'>
@@ -43,7 +44,11 @@ const TeacherInfobox = () => {
         </Grid>
         <Grid item>
           <IconButton aria-label='plus-sign' onClick={handleOpen}>
-            {open ? <RemoveCircleIcon fontSize='large'/> : <AddCircleIcon fontSize='large'/>}
+            {open ?
+              <RemoveCircleIcon color='primary' fontSize='large'/>
+              :
+              <AddCircleIcon color='primary' fontSize='large'/>
+            }
           </IconButton>
         </Grid>
         <Collapse in={open} timeout='auto' unmountOnExit>

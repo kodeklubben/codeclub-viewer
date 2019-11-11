@@ -22,12 +22,12 @@ const DyslexiaSwitch = () => {
   return (
     <ListItem>
       <ListItemIcon>
-        <AccessibilityIcon/>
+        <AccessibilityIcon color='primary'/>
       </ListItemIcon>
       <ListItemText className={classes.space} id='dyxlexic-font-switch' primary={t('footer.dyslexia')}/>
       <ListItemSecondaryAction>
         <Switch
-          color='default'
+          color='primary'
           edge='end'
           checked={showDyslexicFont}
           onChange={() => dispatch(setShowDyslexicFont(!showDyslexicFont))}
