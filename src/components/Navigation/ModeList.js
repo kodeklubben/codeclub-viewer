@@ -28,16 +28,16 @@ const ModeList = () => {
     <React.Fragment>
       <ListItem button divider={open} onClick={handleOpen}>
         <ListItemIcon>
-          {isStudentMode ? <CreateIcon/> : <SchoolIcon/>}
+          {isStudentMode ? <CreateIcon color='primary'/> : <SchoolIcon color='primary'/>}
         </ListItemIcon>
         <ListItemText primary={isStudentMode ? t('general.student') : t('general.teacher')}/>
-        {open ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+        {open ? <ExpandLessIcon color='primary'/> : <ExpandMoreIcon color='primary'/>}
       </ListItem>
       <Collapse in={open} timeout='auto' unmountOnExit>
         <List disablePadding>
           <ListItem button onClick={handleSelect}>
             <ListItemIcon>
-              {isStudentMode ? <SchoolIcon/> : <CreateIcon/>}
+              {isStudentMode ? <SchoolIcon color='primary'/> : <CreateIcon color='primary'/>}
             </ListItemIcon>
             <ListItemText primary={isStudentMode ? t('general.teacher') : t('general.student')}/>
           </ListItem>

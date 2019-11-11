@@ -17,8 +17,9 @@ import PopoverComponent from '../PopoverComponent';
 import Flag from '../Flag';
 
 const useStyles = makeStyles(theme => ({
-  card: {
+  root: {
     width: 240,
+    background: theme.palette.secondary.main,
   },
   image: {
     maxHeight: 120,
@@ -37,7 +38,7 @@ const CourseItem = ({course}) => {
   const showFlag = useSelector(state => !onlyCheckedMainLanguage(state));
 
   return (
-    <Card className={classes.card}>
+    <Card classes={{ root: classes.root }}>
       <CardActionArea component={RouterLink} to={getLanguageIndependentCoursePath(course)}> 
         <Grid container alignItems='center' direction='column'>
           <CardHeader title={getCourseTitle(course, language)}/>
@@ -61,7 +62,9 @@ const CourseItem = ({course}) => {
       </CardActionArea>
       <Grid container alignItems='center' wrap='nowrap'>
         <ListItem>
-          {showLessonCount ? <ListItemText primary={<LessonCount {...{course}}/>}/> : <ListIcon size='small'/>}
+          {showLessonCount ? <ListItemText primary={
+            <LessonCount {...{course}}/>
+          }/> : <ListIcon color='primary' size='small'/>}
         </ListItem>
         <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
       </Grid>

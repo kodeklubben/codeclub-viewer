@@ -10,8 +10,17 @@ import {setExpandedAccordion} from '../../reducers/expandedAccordion';
 import {getPlaylistsForCourse, getPlaylistLessons, getPlaylistTitle} from '../../resources/playlists';
 import {areAllLessonsInPlaylistTranslated} from '../../resources/utils/playlistLessons';
 import LessonItem from './LessonItem';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    background: theme.palette.secondary.main,
+  },
+}));
 
 const PlaylistNavigation = ({course}) => {
+  const classes =  useStyles();
+
   const language = useSelector(state => state.language);
   const t = useSelector(state => getTranslator(state));
   const expandedAccordion = useSelector(state => state.expandedAccordion);
@@ -31,11 +40,12 @@ const PlaylistNavigation = ({course}) => {
     return (
       <ExpansionPanel
         key={playlist}
+        classes={{ root: classes.root }}
         onChange={() => handleChange(i)}
         expanded={expandedAccordion[course] === i}
       >
-        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>{title}</Typography>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon color='primary'/>}>
+          <Typography variant='h5'>{title}</Typography>
         </ExpansionPanelSummary>
         <Divider/>
         <List>

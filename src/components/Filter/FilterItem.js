@@ -18,7 +18,11 @@ const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent}) => {
     <Grid container alignItems='center' wrap='nowrap'>
       <ListItem dense button onClick={handleChange}>
         <ListItemIcon>
-          {checked ? <CheckBoxIcon fontSize='small'/> : <CheckBoxOutlineBlankIcon fontSize='small'/>}
+          {checked ?
+            <CheckBoxIcon color='primary' fontSize='small'/>
+            :
+            <CheckBoxOutlineBlankIcon color='primary' fontSize='small'/>
+          }
         </ListItemIcon>
         <ListItemText id={itemKey} primary={tagName}/>
         {groupKey === 'language' ? <Flag language={itemKey}/> : null}

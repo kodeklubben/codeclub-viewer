@@ -50,6 +50,7 @@ const ImprovePage = ({course, lesson, language, isReadme}) => {
   const ButtonComponent = ({href, icon, text}) => (
     <Button
       className={classes.button}
+      color='primary'
       variant='outlined'
       component={RouterLink}
       href={href}
@@ -68,9 +69,15 @@ const ImprovePage = ({course, lesson, language, isReadme}) => {
         <Grid item><Typography >{t('lessons.improvepage.textline1')}</Typography></Grid>
         <Grid item><Typography>{t('lessons.improvepage.textline2')}</Typography></Grid>
         <Grid container justify='center'>
-          <ButtonComponent href={url.newIssue} text={t('lessons.improvepage.newissuebutton')} icon={<GitHubIcon/>}/>
-          <ButtonComponent href={url.forum} text={t('lessons.improvepage.forumbutton')} icon={<ComputerIcon/>}/>
-          <ButtonComponent href={url.showCode} text={t('lessons.improvepage.showcodebutton')} icon={<GitHubIcon/>}/>
+          <ButtonComponent href={url.newIssue} text={t('lessons.improvepage.newissuebutton')} icon={
+            <GitHubIcon color='primary'/>
+          }/>
+          <ButtonComponent href={url.forum} text={t('lessons.improvepage.forumbutton')} icon={
+            <ComputerIcon color='primary'/>
+          }/>
+          <ButtonComponent href={url.showCode} text={t('lessons.improvepage.showcodebutton')} icon={
+            <GitHubIcon color='primary'/>
+          }/>
         </Grid>
       </Grid>
     </Paper>

@@ -10,6 +10,7 @@ import {resetAllFilters} from '../../reducers/filter';
 
 const useStyles = makeStyles(theme => ({
   button: {
+    width: '100%',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
@@ -31,9 +32,10 @@ const ClearFilterButton = () => {
   return somethingChecked ?
     <Button
       className={classes.button}
+      color='primary'
       variant='outlined'
       onClick={handleClick}
-      startIcon={<DeleteIcon/>}
+      startIcon={<DeleteIcon color='primary'/>}
     >
       {t('filter.removefilter')}
     </Button>

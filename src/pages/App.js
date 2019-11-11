@@ -7,8 +7,41 @@ import Head from '../components/Head';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
 import OpenDyslexic from '../assets/fonts/OpenDyslexic-Regular.ttf';
+import grey from '@material-ui/core/colors/grey';
+import lightGreen from '@material-ui/core/colors/lightGreen';
+
+const darkTheme= {
+  palette: {
+    type: 'dark',
+    primary: {
+      main: grey[50],
+    },
+    secondary: {
+      main: grey[800],
+    }
+  },
+  typography: {
+    fontSize: 16,
+  },
+};
+
+const lightTheme= {
+  palette: {
+    type: 'light',
+    primary: {
+      main: grey[900],
+    },
+    secondary: {
+      main: lightGreen[100], //should be lightBlue for teachermode...
+    },
+  },
+  typography: {
+    fontSize: 16,
+  },
+};
 
 const dyslexicTheme = createMuiTheme({
+  ...lightTheme,
   typography: {
     fontFamily: ['OpenDyslexic', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   },
@@ -25,9 +58,7 @@ const dyslexicTheme = createMuiTheme({
 });
 
 const darkDyslexicTheme = createMuiTheme({
-  palette: {
-    type: 'dark',
-  },
+  ...darkTheme,
   typography: {
     fontFamily: ['OpenDyslexic', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   },
@@ -44,15 +75,11 @@ const darkDyslexicTheme = createMuiTheme({
 });
 
 const darkModeTheme = createMuiTheme({
-  palette: {
-    type: 'dark',
-  },
+  ...darkTheme,
 });
 
 const defaultTheme = createMuiTheme({
-  palette: {
-    type: 'light',
-  },
+  ...lightTheme,
 });
 
 const useStyles = makeStyles(theme => ({

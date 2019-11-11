@@ -13,6 +13,9 @@ const useStyles = makeStyles(theme => ({
   text: {
     fontSize: theme.typography.h5.fontSize,
   },
+  root: {
+    background: theme.palette.secondary.main,
+  },
 }));
 
 const LessonList = ({level, course}) => {
@@ -32,7 +35,7 @@ const LessonList = ({level, course}) => {
           primary={t('general.levels.' + level) + ' - ' + t('general.level') + ' ' + level}
         />
       </ListItem>
-      <Paper>
+      <Paper classes={{ root: classes.root }}>
         <List>
           {lessonsInLevel.map(lesson => 
             isLessonIndexed(course, lesson) ?

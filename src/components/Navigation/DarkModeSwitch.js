@@ -14,12 +14,12 @@ const DarkModeSwitch = () => {
   return (
     <ListItem>
       <ListItemIcon>
-        <Brightness4Icon/>
+        <Brightness4Icon color='primary'/>
       </ListItemIcon>
       <ListItemText id='dark-mode-switch' primary={t('navbar.darkmode')}/>
       <ListItemSecondaryAction>
         <Switch
-          color='default'
+          color='primary'
           edge='end'
           checked={showDarkMode}
           onChange={() => dispatch(setShowDarkMode(!showDarkMode))}

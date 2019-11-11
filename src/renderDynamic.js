@@ -18,7 +18,7 @@ const Main = () => {
     }
   }, []);
 
-  const basename = process.env.PUBLICPATH_WITHOUT_SLASH;	
+  const basename = process.env.PUBLICPATH;	
   const historyOptions = basename === '/' ? {} : {basename};	
   const history = createHistory(createBrowserHistory )({historyOptions});
 

@@ -20,7 +20,7 @@ const Footer = () => {
   const classes = useStyles();
 
   return (
-    <AppBar position='static' color='inherit' className={classes.footer}>
+    <AppBar color='secondary' position='static' className={classes.footer}>
       <Toolbar>
         <Grid container justify='center'>
           <Link href={'https://www.sparebank1.no'} target='_blank' rel='noopener'>

@@ -24,13 +24,21 @@ const RadioButtons = () => {
     <List>
       <ListItem button onClick={handleChangeToPlaylists}>
         <ListItemIcon>
-          {!showPlaylists ? <RadioButtonUncheckedIcon fontSize='small'/> : <RadioButtonCheckedIcon fontSize='small'/>}
+          {!showPlaylists ?
+            <RadioButtonUncheckedIcon color='primary' fontSize='small'/>
+            :
+            <RadioButtonCheckedIcon color='primary' fontSize='small'/>
+          }
         </ListItemIcon>
         <ListItemText primary={t('filter.radio.playlists')}/>
       </ListItem>
       <ListItem button onClick={() => dispatch(setShowPlaylists(false))}>
         <ListItemIcon>
-          {showPlaylists ? <RadioButtonUncheckedIcon fontSize='small'/> : <RadioButtonCheckedIcon fontSize='small'/>}
+          {showPlaylists ?
+            <RadioButtonUncheckedIcon color='primary' fontSize='small'/>
+            :
+            <RadioButtonCheckedIcon color='primary' fontSize='small'/>
+          }
         </ListItemIcon>
         <ListItemText primary={t('filter.radio.lessons')}/>
       </ListItem>

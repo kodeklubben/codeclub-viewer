@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import {Grid, Container, Typography} from '@material-ui/core';
+import {Grid, Container, Typography, Hidden} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../selectors/course';
 import {getTranslator} from '../selectors/translate';
@@ -11,6 +11,7 @@ import {getCoursesWithPlaylists} from '../resources/playlists';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 import {getCourseIntroText} from '../resources/courseContent';
 import LessonFilter from '../components/Filter/LessonFilter';
+import CollapsibleLessonFiler from '../components/Filter/CollapsibleLessonFilter';
 import ClearFilterButton from '../components/Filter/ClearFilterButton';
 import LessonList from '../components/CoursePage/LessonList';
 import Head from '../components/Head';
@@ -47,19 +48,20 @@ const CoursePage = ({params}) => {
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
 
   return (
-    <Container className={classes.container} maxWidth='lg'>
+    <Container className={classes.container} maxWidth='xl'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
       <Grid container justify='center'>
         <CourseInfo {...{course}}/>
       </Grid>
       <Grid container spacing={4}>
-        <Grid item >
+        <Grid item xs={12} sm={5} md={3} lg={3}>
           <Grid container direction='column' alignItems='center'>
-            <LessonFilter/>
+            <Hidden xsDown><LessonFilter/></Hidden>
+            <Hidden smUp><CollapsibleLessonFiler/></Hidden>
             <ClearFilterButton/>
           </Grid>
         </Grid>
-        <Grid item className={classes.list}>
+        <Grid item xs={12} sm={7} md={9} lg={9} className={classes.list}>
           {noLessons ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
           {showPlaylists ? <PlaylistNavigation {...{course}}/> : lessonLists}
         </Grid>

@@ -40,7 +40,7 @@ const LanguageList = () => {
       <ListItem button divider={open} onClick={handleOpen}>
         <ListItemIcon><Flag {...{language}}/></ListItemIcon>
         <ListItemText primary={languages[language] || language}/>
-        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        {open ? <ExpandLessIcon color='primary'/> : <ExpandMoreIcon color='primary'/>}
       </ListItem>
       <Collapse in={open} timeout='auto' unmountOnExit>
         <List disablePadding>

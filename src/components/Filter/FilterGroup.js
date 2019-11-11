@@ -49,7 +49,7 @@ const FilterGroup = ({groupKey}) => {
       <React.Fragment>
         <ListItem dense button disabled={somethingChecked} onClick={handleClick}>
           <ListItemText primary={groupName}/>
-          {!isCollapsed ? <ExpandLessIcon/> : <ExpandMoreIcon/>}
+          {!isCollapsed ? <ExpandLessIcon color='primary'/> : <ExpandMoreIcon color='primary'/>}
         </ListItem>
         <Collapse in={!isCollapsed}>
           {filterItems}

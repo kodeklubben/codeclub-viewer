@@ -6,7 +6,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const compression = require('compression');
-const { buildBaseDir, buildDir, publicPathWithoutSlash } = require('./buildconstants');
+const {buildDir, publicPath} = require('./buildconstants');
 
 // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
 const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
@@ -17,21 +17,21 @@ app.use(compression());
 
 
 // serve our static stuff (i.e. urls that match files that exists)
-app.use(publicPathWithoutSlash, express.static(path.normalize(buildDir), {redirect: false}));
+app.use(publicPath, express.static(path.normalize(buildDir), {redirect: false}));
 
 // send all requests other requests here
 app.get('*', function (req, res) {
   const url = req.params[0];
   //console.log('url', url);
-  if (!url.startsWith(publicPathWithoutSlash)) {
-    console.log('Redirecting to', publicPathWithoutSlash);
-    res.redirect(publicPathWithoutSlash);
+  if (!url.startsWith(publicPath)) {
+    console.log('Redirecting to', publicPath);
+    res.redirect(publicPath);
   } else {
     let filepath;
-    if (url === publicPathWithoutSlash || url === publicPathWithoutSlash + '/') {
+    if (url === publicPath || url === publicPath + '/') {
       filepath = path.join(buildDir, 'index.html');
     } else {
-      filepath = path.join(buildBaseDir, url, url.endsWith('/') ? 'index.html' : '');
+      filepath = path.join(buildDir, url, url.endsWith('/') ? 'index.html' : '');
       if (new RegExp(`^(.*${slash}[^.${slash}]+)$`).test(filepath)) { // if urlpath has no extension...
         filepath = filepath + '.html';  // ... add .html extension
       }

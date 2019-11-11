@@ -26,10 +26,10 @@ const PdfButton = ({course, lesson, language, isReadme}) => {
     <Button
       className={classes.buttonMargin}
       component={RouterLink}
+      href='https://pdf-ace.com/pdfme?print_media=1'
+      color='primary'
       variant='outlined'
-      href='http://pdf-ace.com/pdfme?print_media=1'
-      download={true}
-      startIcon={<GetAppIcon/>}
+      startIcon={<GetAppIcon color='primary'/>}
     >
       {t('lessons.pdf')}
     </Button>
