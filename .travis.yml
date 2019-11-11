@@ -1,26 +1,30 @@
 language: node_js
+
 stages:
   - name: deploy
     if: branch = beta AND type = push AND fork = false
 
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
-install:
-  - git config diff.renamelimit 999999
-  - git config merge.renameLimit 999999
+
 cache: yarn
+
 script:
   - yarn eslint
   - yarn test
   - yarn build:travis
+
+#before_deploy:
+#  - git config diff.renamelimit 9999 # merge.renameLimit defaults to diff.renameLimit
+
 deploy:
   provider: pages
-  github-token: $GITHUB_TOKEN_BETA_SKAGEVANG
-  skip-cleanup: true
-  keep-history: true
-  local-dir: dist
+  github_token: $GITHUB_TOKEN_BETA_SKAGEVANG
+  skip_cleanup: true # Don't delete artifacts created during build
+  keep_history: true # Disable "force push"
+  local_dir: dist
   repo: kodeklubben/beta
-  target-branch: gh-pages
-  fqdn: oppgaver.kidsakoder.no
+  target_branch: gh-pages
+  fqdn: beta.oppgaver.kidsakoder.no #CNAME
   on:
     branch: beta
