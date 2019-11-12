@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
-import {ListItem, ListItemText, Collapse} from '@material-ui/core';
+import {List, ListItem, ListItemText, Collapse} from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {getTranslateFilter} from '../../selectors/translate';
@@ -52,7 +52,9 @@ const FilterGroup = ({groupKey}) => {
           {!isCollapsed ? <ExpandLessIcon color='primary'/> : <ExpandMoreIcon color='primary'/>}
         </ListItem>
         <Collapse in={!isCollapsed}>
-          {filterItems}
+          <List dense>
+            {filterItems}
+          </List>
         </Collapse>
       </React.Fragment>
     );

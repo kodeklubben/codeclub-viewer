@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
-import {Card, CardActionArea, CardMedia, CardHeader, Grid, ListItem} from '@material-ui/core';
+import {
+  Card, CardActionArea, CardMedia, CardHeader, Grid, List, ListItem, ListItemSecondaryAction
+} from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 import {makeStyles} from '@material-ui/core/styles';
 import {onlyCheckedMainLanguage} from '../../selectors/filter';
@@ -14,8 +16,11 @@ import Flag from '../Flag';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: 240,
+    height: '100%',
     background: theme.palette.secondary.main,
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   image: {
     maxHeight: 120,
@@ -53,12 +58,14 @@ const ExternalCourseList = ({course, language}) => {
           </Grid>
           : null}
       </CardActionArea>
-      <Grid container alignItems='center' wrap='nowrap'>
+      <List>
         <ListItem>
           <LinkIcon color='primary' size='small'/>
+          <ListItemSecondaryAction>
+            <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
+          </ListItemSecondaryAction>
         </ListItem>
-        <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
-      </Grid>
+      </List>
     </Card>
   );
 };

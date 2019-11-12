@@ -12,7 +12,6 @@ import {getCourseTitle} from '../../resources/courseFrontmatter';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    marginBottom: theme.spacing(4),
     background: theme.palette.secondary.main,
     flexGrow: 1,
   },

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
-import {Card, CardActionArea, CardMedia, CardHeader, Grid, ListItem, ListItemText} from '@material-ui/core';
+import {
+  Card, CardActionArea, CardMedia, CardHeader, Grid, List, ListItem, ListItemText, ListItemSecondaryAction
+} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import ListIcon from '@material-ui/icons/List';
 import {getShowFiltergroups} from '../../selectors/playlist';
@@ -18,13 +20,16 @@ import Flag from '../Flag';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: 240,
+    height: '100%',
     background: theme.palette.secondary.main,
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   image: {
     maxHeight: 120,
     width: 'auto',
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
 }));
 
@@ -60,14 +65,16 @@ const CourseItem = ({course}) => {
           </Grid>
           : null}
       </CardActionArea>
-      <Grid container alignItems='center' wrap='nowrap'>
+      <List>
         <ListItem>
           {showLessonCount ? <ListItemText primary={
             <LessonCount {...{course}}/>
           }/> : <ListIcon color='primary' size='small'/>}
+          <ListItemSecondaryAction>
+            <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
+          </ListItemSecondaryAction>
         </ListItem>
-        <PopoverComponent popoverContent={getCourseIntro(course, language)}/>
-      </Grid>
+      </List>
     </Card>
   );
 };

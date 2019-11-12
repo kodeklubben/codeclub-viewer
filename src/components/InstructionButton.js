@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
-import {IconButton, Button} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import SchoolIcon from '@material-ui/icons/School';
 import CreateIcon from '@material-ui/icons/Create';
 import {getTranslator} from '../selectors/translate';
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const InstructionButton = ({course, lesson, language, isReadme, onlyIcon}) => {
+const InstructionButton = ({course, lesson, language, isReadme}) => {
   const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
@@ -28,11 +28,7 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon}) => {
   const path = getLessonPath(course, lesson, language, isReadme);
   const buttonText = t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson');
 
-  return onlyIcon ?
-    <IconButton size='small' component={RouterLink} to={path} aria-label={buttonText}>
-      <SchoolIcon color='primary'/>
-    </IconButton>
-    :
+  return (
     <Button
       className={classes.buttonMargin}
       component={RouterLink}
@@ -42,7 +38,8 @@ const InstructionButton = ({course, lesson, language, isReadme, onlyIcon}) => {
       startIcon={isStudentMode ? <CreateIcon color='primary'/> : <SchoolIcon color='primary'/>}
     >
       {buttonText}
-    </Button>;
+    </Button>
+  );
 };
 
 InstructionButton.propTypes = {
@@ -50,7 +47,6 @@ InstructionButton.propTypes = {
   lesson: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
   isReadme: PropTypes.bool.isRequired,
-  onlyIcon: PropTypes.bool,
 };
 
 export default InstructionButton;

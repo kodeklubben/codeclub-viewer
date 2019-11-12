@@ -23,6 +23,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),
   },
+  gridRoot: {
+    marginBottom: theme.spacing(4),
+  },
   list: {
     flexGrow: 1,
   },
@@ -50,18 +53,18 @@ const CoursePage = ({params}) => {
   return (
     <Container className={classes.container} maxWidth='xl'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
-      <Grid container justify='center'>
+      <Grid container classes={{ root: classes.gridRoot }} justify='center'>
         <CourseInfo {...{course}}/>
       </Grid>
       <Grid container spacing={4}>
-        <Grid item xs={12} sm={5} md={3} lg={3}>
+        <Grid item xs={12} md={3} lg={3}>
           <Grid container direction='column' alignItems='center'>
-            <Hidden xsDown><LessonFilter/></Hidden>
-            <Hidden smUp><CollapsibleLessonFiler/></Hidden>
+            <Hidden smDown><LessonFilter {...{course}}/></Hidden>
+            <Hidden mdUp><CollapsibleLessonFiler/></Hidden>
             <ClearFilterButton/>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={7} md={9} lg={9} className={classes.list}>
+        <Grid item xs={12} md={9} lg={9} className={classes.list}>
           {noLessons ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
           {showPlaylists ? <PlaylistNavigation {...{course}}/> : lessonLists}
         </Grid>

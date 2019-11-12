@@ -32,7 +32,7 @@ const lightTheme= {
       main: grey[900],
     },
     secondary: {
-      main: lightGreen[100], //should be lightBlue for teachermode...
+      main: lightGreen[100],
     },
   },
   typography: {

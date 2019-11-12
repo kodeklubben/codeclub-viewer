@@ -21,7 +21,7 @@ const RadioButtons = () => {
   };
 
   return (
-    <List>
+    <List dense>
       <ListItem button onClick={handleChangeToPlaylists}>
         <ListItemIcon>
           {!showPlaylists ?
