@@ -43,25 +43,25 @@ const FrontPage = () => {
         {isStudentMode ? null : <TeacherInfobox/>}
       </Grid>
       <Grid container spacing={4}>
-        <Grid item xs={12} sm={5} md={3} lg={3}>
+        <Grid item xs={12} md={3} lg={3}>
           <Grid container direction='column' alignItems='center'>
-            <Hidden xsDown><LessonFilter/></Hidden>
-            <Hidden smUp><CollapsibleLessonFiler/></Hidden>
+            <Hidden smDown><LessonFilter/></Hidden>
+            <Hidden mdUp><CollapsibleLessonFiler/></Hidden>
             <ClearFilterButton/>
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={7} md={9} lg={9}>
+        <Grid item xs={12} md={9} lg={9}>
           {noLessons ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
-          <Grid container justify='center' spacing={2}>
+          <Grid container spacing={4}>
             {courses.map(course => (
-              <Grid item key={course}>
+              <Grid item xs={6} sm={6} md={4} lg={3} key={course}>
                 <CourseItem {...{course}}/>
               </Grid>
             ))}
           </Grid>
-          <Grid container justify='center' spacing={3}>
+          <Grid container spacing={4}>
             {externalCourses.map(({course, language}) => (
-              <Grid item key={`${course}_${language}`}>
+              <Grid item xs={6} sm={6} md={4} lg={3} key={`${course}_${language}`}>
                 <ExternalCourseItem {...{course, language}}/>
               </Grid>
             ))}

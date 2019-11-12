@@ -11,10 +11,11 @@ import {getTranslator} from '../../selectors/translate';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 
 const useStyles = makeStyles(theme => ({
-  paper: {
+  root: {
     maxWidth: 700,
     marginTop: theme.spacing(5),
     padding: theme.spacing(2),
+    background: theme.palette.secondary.main,
     '@media print': {
       display: 'none',
     },
@@ -63,7 +64,7 @@ const ImprovePage = ({course, lesson, language, isReadme}) => {
   );
 
   return (
-    <Paper className={classes.paper}>
+    <Paper classes={{ root: classes.root }}>
       <Grid container alignItems='center' direction='column' spacing={1}>
         <Grid item><Typography variant='h4' component='h2'>{t('lessons.improvepage.header')}</Typography></Grid>
         <Grid item><Typography >{t('lessons.improvepage.textline1')}</Typography></Grid>

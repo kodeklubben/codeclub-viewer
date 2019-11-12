@@ -23,9 +23,6 @@ const useStyles = makeStyles(theme => ({
       marginRight: theme.spacing(2),
     },
   },
-  icon: {
-    marginRight: theme.spacing(1.5),
-  },
 }));
 
 const PopoverComponent = ({popoverContent}) => {
@@ -46,7 +43,7 @@ const PopoverComponent = ({popoverContent}) => {
 
   return (
     <React.Fragment>
-      <IconButton className={classes.icon} aria-describedby={id} size='small' onClick={handleClick}>
+      <IconButton aria-describedby={id} size='small' onClick={handleClick}>
         <HelpIcon color='primary'/>
       </IconButton>
       <Popover

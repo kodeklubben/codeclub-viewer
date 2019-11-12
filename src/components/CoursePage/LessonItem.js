@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
-import {ListItem, ListItemText, ListItemIcon, Grid} from '@material-ui/core';
+import {ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction} from '@material-ui/core';
 import LinkIcon from '@material-ui/icons/Link';
 import StarIcon from '@material-ui/icons/Star';
 import {getLessonTitle, getLessonPath, getLessonExternal} from '../../resources/lessonFrontmatter';
@@ -12,11 +12,9 @@ import {onlyCheckedMainLanguage} from '../../selectors/filter';
 import {getNumberOfCheckedCheckboxes, getTotalNumberOfCheckboxes} from '../../selectors/checkboxes';
 import PopoverComponent from '../PopoverComponent';
 import Flag from '../Flag';
-import InstructionButton from '../InstructionButton';
 
 const LessonItem = ({course, lesson, language}) => {
   const isOnlyCheckedMainLanguage = useSelector(state => onlyCheckedMainLanguage(state));
-  const isStudentMode = useSelector(state => state.isStudentMode);
   const checkedCheckboxes = useSelector(state => getNumberOfCheckedCheckboxes(state, course, lesson, language, false));
   const totalCheckboxes = useSelector(state => getTotalNumberOfCheckboxes(state, course, lesson, language, false));
 
@@ -27,48 +25,36 @@ const LessonItem = ({course, lesson, language}) => {
   const progress = checkedCheckboxes && level > 0 ? `(${checkedCheckboxes}/${totalCheckboxes})` : null;
   const progressPercent = totalCheckboxes > 0 ? 100 * checkedCheckboxes / totalCheckboxes : 0;
 
-  return (
-    <Grid container wrap='nowrap' alignItems='center'>
-      {external ?
-        <React.Fragment>
-          <ListItem component={RouterLink} target='_blank' rel='noopener' href={external} button>
-            {isOnlyCheckedMainLanguage ? null :
-              <ListItemIcon>
-                <Flag {...{language}}/>
-              </ListItemIcon>
-            }
-            <ListItemText primary={title}/>
-          </ListItem>
-          <ListItemIcon>
-            <LinkIcon color='primary'/>
-          </ListItemIcon>
-          <ListItemIcon>
-            <PopoverComponent  {...{popoverContent}}/>
-          </ListItemIcon>
-        </React.Fragment>
-        :
-        <React.Fragment>
-          <ListItem component={RouterLink} to={getLessonPath(course, lesson, language, false)} button> 
-            {isOnlyCheckedMainLanguage ? null :
-              <ListItemIcon>  
-                <Flag {...{language}}/>
-              </ListItemIcon>
-            }
-            <ListItemText primary={title} secondary={progress}/>
-          </ListItem>
-          {progressPercent === 100 ? <ListItemIcon><StarIcon color='primary'/></ListItemIcon> : null}
-          {isStudentMode ? null :
-            <ListItemIcon>
-              <InstructionButton {...{course, lesson, language, isReadme: true, onlyIcon: true, insideLink: true}}/>
-            </ListItemIcon>
-          }
-          <ListItemIcon>
-            <PopoverComponent  {...{popoverContent}}/>
-          </ListItemIcon>
-        </React.Fragment>
+  return external ?
+    <ListItem component={RouterLink} target='_blank' rel='noopener' href={external} button>
+      {isOnlyCheckedMainLanguage ? null :
+        <ListItemIcon>
+          <Flag {...{language}}/>
+        </ListItemIcon>
       }
-    </Grid>
-  );
+      <ListItemText primary={title}/>
+      <ListItemIcon>
+        <LinkIcon color='primary'/>
+      </ListItemIcon>
+      <ListItemSecondaryAction>
+        <PopoverComponent {...{popoverContent}}/>
+      </ListItemSecondaryAction>
+    </ListItem>
+    :
+    <React.Fragment>
+      <ListItem component={RouterLink} to={getLessonPath(course, lesson, language, false)} button> 
+        {isOnlyCheckedMainLanguage ? null :
+          <ListItemIcon>  
+            <Flag {...{language}}/>
+          </ListItemIcon>
+        }
+        <ListItemText primary={title} secondary={progress}/>
+        {progressPercent === 100 ? <ListItemIcon><StarIcon color='primary'/></ListItemIcon> : null}
+        <ListItemSecondaryAction>
+          <PopoverComponent {...{popoverContent}}/>
+        </ListItemSecondaryAction>
+      </ListItem>
+    </React.Fragment>;
 };
 
 LessonItem.propTypes = {

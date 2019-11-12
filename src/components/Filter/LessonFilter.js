@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Paper, Typography, List, ListItem, ListItemText, Divider} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
@@ -11,12 +12,17 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     background: theme.palette.secondary.main,
   },
+  rootMargin: {
+    width: '100%',
+    background: theme.palette.secondary.main,
+    marginTop: theme.spacing(9),
+  },
   header: {
     padding: theme.spacing(2),
   },
 }));
 
-const LessonFilter = () => {
+const LessonFilter = ({course}) => {
   const classes = useStyles();
 
   const showPlaylists = useSelector(state => state.showPlaylists);
@@ -24,7 +30,7 @@ const LessonFilter = () => {
   const filterGroupKeys = useSelector(state => Object.keys(state.filter));
 
   return (
-    <Paper classes={{ root: classes.root }}>
+    <Paper classes={showPlaylists || course == null ? { root: classes.root } : { root: classes.rootMargin }}>
       <List>
         <ListItem>
           <ListItemText>
@@ -46,6 +52,10 @@ const LessonFilter = () => {
       }
     </Paper>
   );
+};
+
+LessonFilter.propTypes = {
+  course: PropTypes.string,
 };
 
 export default LessonFilter;
