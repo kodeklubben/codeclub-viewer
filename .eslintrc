@@ -27,7 +27,6 @@
     }
   },
   "rules": {
-    "babel/semi": "error",
     "eol-last": ["error"],
     "indent": ["error", 2, {"SwitchCase": 1}],
     "quotes": ["error", "single", {"avoidEscape": true, "allowTemplateLiterals": true}],

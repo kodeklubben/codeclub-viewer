@@ -31,6 +31,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
+import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
 import {
   assets,
@@ -254,6 +255,10 @@ const createConfig = (env = {}, argv) => {
       ]),
 
       webappWebpackPlugin,
+
+      new ServiceWorkerWebpackPlugin({
+        entry: path.join(__dirname, 'src/sw.js'),
+      }),
 
     ],
 
