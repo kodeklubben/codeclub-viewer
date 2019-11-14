@@ -8,6 +8,8 @@ import {hashCode} from '../utils/util';
 const useStyles = makeStyles(theme => ({
   paper: {
     background: theme.palette.secondary.main,
+    boxShadow: theme.shadows[10],
+    border: '1px solid #fff',
   },
   text: {
     display: 'flex',
@@ -21,6 +23,9 @@ const useStyles = makeStyles(theme => ({
       maxWidth: 200,
       maxHeight: 250,
       marginRight: theme.spacing(2),
+    },
+    '& a': {
+      color: theme.palette.primary.main,
     },
   },
 }));

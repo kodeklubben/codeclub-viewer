@@ -6,7 +6,6 @@ import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../se
 import {getTranslator} from '../selectors/translate';
 import {getCoursesWithPlaylists} from '../resources/playlists';
 import LessonFilter from '../components/Filter/LessonFilter';
-import TeacherInfobox from '../components/FrontPage/TeacherInfobox';
 import CourseItem from '../components/FrontPage/CourseItem';
 import ExternalCourseItem from '../components/FrontPage/ExternalCourseItem';
 import ClearFilterButton from '../components/Filter/ClearFilterButton';
@@ -29,7 +28,6 @@ const FrontPage = () => {
   const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
-  const isStudentMode = useSelector(state => state.isStudentMode);
   const courses = useSelector(state => state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state));
   const externalCourses = useSelector(state =>
     state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state)
@@ -39,9 +37,6 @@ const FrontPage = () => {
 
   return (
     <Container className={classes.container} maxWidth='xl'>
-      <Grid container justify='center'>
-        {isStudentMode ? null : <TeacherInfobox/>}
-      </Grid>
       <Grid container spacing={4}>
         <Grid item xs={12} md={3} lg={3}>
           <Grid container direction='column' alignItems='center'>

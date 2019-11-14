@@ -7,7 +7,6 @@ import ContinueButton from './ContinueButton';
 import DyslexiaSwitch from './DyslexiaSwitch';
 import DarkModeSwitch from './DarkModeSwitch';
 import LanguageList from './LanguageList';
-import ModeList from './ModeList';
 import GithubLink from './GithubLink';
 import BreadCrumbs from './BreadCrumbs';
 
@@ -50,8 +49,6 @@ const NavBar = ({params}) => {
         <Drawer classes={{ paper: classes.paper }} open={showDrawer} anchor='right' onClose={toggleDrawer()}>
           <List>
             <LanguageList/>
-            <Divider/>
-            <ModeList/>
             <Divider/>
             <DyslexiaSwitch/>
             <Divider/>

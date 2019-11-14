@@ -23,7 +23,6 @@ const InstructionButton = ({course, lesson, language, isReadme}) => {
   const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
-  const isStudentMode = useSelector(state => state.isStudentMode);
 
   const path = getLessonPath(course, lesson, language, isReadme);
   const buttonText = t(isReadme ? 'lessons.toteacherinstruction' : 'lessons.tolesson');
@@ -35,7 +34,7 @@ const InstructionButton = ({course, lesson, language, isReadme}) => {
       to={path}
       color='primary'
       variant='outlined'
-      startIcon={isStudentMode ? <CreateIcon color='primary'/> : <SchoolIcon color='primary'/>}
+      startIcon={isReadme ? <SchoolIcon color='primary'/> : <CreateIcon color='primary'/>}
     >
       {buttonText}
     </Button>

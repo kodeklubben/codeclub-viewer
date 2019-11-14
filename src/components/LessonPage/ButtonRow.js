@@ -11,23 +11,13 @@ import {getLessonPath} from '../../resources/lessonFrontmatter';
 const ButtonRow = ({course, lesson, language, isReadme,}) => {
   const path = getLessonPath(course, lesson, language, isReadme);
   const mainLanguage = useSelector(state => state.language);
-  const isStudentMode = useSelector(state => state.isStudentMode);
   const anyCheckedCheckboxes = useSelector(state => anyCheckboxTrue(state.checkboxes[createCheckboxesKey(path)] || {}));
-
-  const mainLanguageButton = language !== mainLanguage ?
-    <MainLanguageButton {...{course, lesson, isReadme}}/> : null;
-
-  const resetButton = anyCheckedCheckboxes ?
-    <ResetButton {...{path}}/> : null;
-
-  const lessonOrReadmeButton = isReadme || !isStudentMode ?
-    <InstructionButton {...{course, lesson, language, isReadme: !isReadme}}/> : null;
 
   return (
     <React.Fragment>
-      {mainLanguageButton}
-      {resetButton}
-      {lessonOrReadmeButton}
+      {language !== mainLanguage ? <MainLanguageButton {...{course, lesson, isReadme}}/> : null}
+      {anyCheckedCheckboxes ? <ResetButton {...{path}}/> : null}
+      <InstructionButton {...{course, lesson, language, isReadme: !isReadme}}/>
       <PdfButton {...{course, lesson, language, isReadme}}/>
     </React.Fragment>
   );

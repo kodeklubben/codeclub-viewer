@@ -5,8 +5,8 @@ import {Typography} from '@material-ui/core';
 import {getTranslator} from '../../selectors/translate';
 import {getFilteredLessonsInCourseCountPerLanguage} from '../../selectors/lesson';
 
-
 const LessonCount = ({course}) => {
+
   const lessonsPerLanguage = useSelector(state => getFilteredLessonsInCourseCountPerLanguage(state, course));
   const t = useSelector(state => getTranslator(state));
 

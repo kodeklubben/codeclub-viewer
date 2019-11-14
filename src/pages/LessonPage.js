@@ -21,6 +21,12 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),
   },
+  link: {
+    marginTop: theme.spacing(2),
+    '& a': {
+      color: theme.palette.primary.main,
+    },
+  },
 }));
 
 const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
@@ -40,41 +46,34 @@ const LessonPage = ({course, lesson, language, isReadme}) => {
 
   const author = getLessonAuthor(course, lesson, language, isReadme);
   const authorNode = author ?
-    <p><i>{t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true}/></i></p> : null;
+    <Typography className={classes.link}>
+      {t('lessons.writtenby')} <MarkdownRenderer src={author} inline={true}/>
+    </Typography> : null;
 
   const translator = getLessonTranslator(course, lesson, language, isReadme);
-  const translatorNode = translator ? <p><i>{t('lessons.translatedby')} {translator}</i></p> : null;
+  const translatorNode = translator ? 
+    <Typography className={classes.link}>{t('lessons.translatedby')} {translator}</Typography> : null;
 
   const license = getLicense(course, lesson);
-  const licenseRow = <Grid container spacing={1}>
-    <Grid item>
-      {t('lessons.license')}
-    </Grid>
-    <Grid item>
-      {license ?
-        <MarkdownRenderer src={license} inline={true}/> :
-        <Link
-          color='inherit'
-          href='http://creativecommons.org/licenses/by-sa/4.0/deed'
-          target='_blank'
-          rel='noopener'
-        >
-          CC BY-SA 4.0
-        </Link>
-      }
-    </Grid>
-  </Grid>;
+  const licenseRow = <Typography className={classes.link}>{t('lessons.license')} {license ?
+    <MarkdownRenderer src={license} inline={true}/>
+    :
+    <Link
+      color='inherit'
+      href='http://creativecommons.org/licenses/by-sa/4.0/deed'
+      target='_blank'
+      rel='noopener'
+    >
+      CC BY-SA 4.0
+    </Link>}
+  </Typography>;
 
   return (
     <Container className={classes.container} maxWidth='md'>
       <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
-      <Grid container spacing={2} wrap='nowrap' alignItems='center'>
-        <Grid item>
-          <LevelIcon fontSize='large' level={getLevel(course, lesson)}/>
-        </Grid>
-        <Grid item>
-          <Typography variant='h3' component='h1'>{title}</Typography>
-        </Grid>
+      <Grid container alignItems='center' wrap='nowrap'>
+        <LevelIcon fontSize='large' level={getLevel(course, lesson)}/>
+        <Typography variant='h3' component='h1'>{title}</Typography>
       </Grid>
       {authorNode}
       {translatorNode}

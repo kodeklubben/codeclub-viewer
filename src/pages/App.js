@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
+import {createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import {CssBaseline, Toolbar} from '@material-ui/core';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import registerEvents from 'serviceworker-webpack-plugin/lib/browser/registerEvents';
@@ -16,6 +16,9 @@ import lightGreen from '@material-ui/core/colors/lightGreen';
 const darkTheme= {
   palette: {
     type: 'dark',
+    background: {
+      default: grey[900],
+    },
     primary: {
       main: grey[50],
     },
@@ -116,7 +119,7 @@ const App = ({params, children}) => {
  
 
   return (
-    <ThemeProvider {...{theme}}>
+    <ThemeProvider theme={responsiveFontSizes(theme)}>
       <CssBaseline/>
       <Head/>
       <NavBar className={classes.hide} {...{params}}/>

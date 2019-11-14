@@ -31,6 +31,13 @@ const useStyles = makeStyles(theme => ({
     width: 'auto',
     marginBottom: theme.spacing(2),
   },
+  cardActionArea: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexGrow: 1,
+  },
 }));
 
 const CourseItem = ({course}) => {
@@ -44,17 +51,19 @@ const CourseItem = ({course}) => {
 
   return (
     <Card classes={{ root: classes.root }}>
-      <CardActionArea component={RouterLink} to={getLanguageIndependentCoursePath(course)}> 
-        <Grid container alignItems='center' direction='column'>
-          <CardHeader title={getCourseTitle(course, language)}/>
-          <CardMedia
-            className={classes.image}
-            component='img'
-            alt={course}
-            src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
-            title={course}
-          />
-        </Grid>
+      <CardActionArea
+        classes={{ root: classes.cardActionArea }}
+        component={RouterLink}
+        to={getLanguageIndependentCoursePath(course)}
+      > 
+        <CardHeader title={getCourseTitle(course, language)}/>
+        <CardMedia
+          className={classes.image}
+          component='img'
+          alt={course}
+          src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
+          title={course}
+        />
         {showFlag ?
           <Grid container justify='center' spacing={1}>
             {Object.keys(lessonsPerLanguage).map(language =>
