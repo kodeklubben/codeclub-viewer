@@ -21,11 +21,19 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     flexDirection: 'column',
+    marginTop: theme.spacing(2),
   },
   image: {
     maxHeight: 120,
     width: 'auto',
     marginBottom: theme.spacing(1),
+  },
+  cardActionArea: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'column',
+    alignItems: 'center',
+    flexGrow: 1,
   },
 }));
 
@@ -38,20 +46,20 @@ const ExternalCourseList = ({course, language}) => {
   return (
     <Card classes={{ root: classes.root }}>
       <CardActionArea
+        classes={{ root: classes.cardActionArea }}
         component={RouterLink}
         href={getCourseExternalLink(course, language)}
-        target='_blank' rel='noopener'
+        target='_blank'
+        rel='noopener'
       > 
-        <Grid container alignItems='center' direction='column'>
-          <CardHeader title={getCourseTitle(course, language)}/>
-          <CardMedia
-            className={classes.image}
-            component='img'
-            alt={course}
-            src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
-            title={course}
-          />
-        </Grid>
+        <CardHeader title={getCourseTitle(course, language)}/>
+        <CardMedia
+          className={classes.image}
+          component='img'
+          alt={course}
+          src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
+          title={course}
+        />
         {showFlag ?
           <Grid container justify='center' spacing={1}>
             <Grid item><Flag key={language} {...{language}}/></Grid>

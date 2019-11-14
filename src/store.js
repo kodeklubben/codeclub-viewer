@@ -7,7 +7,6 @@ import {setFilter, resetOneFilter} from './reducers/filter';
 import {collapseFilterGroup} from './reducers/filterGroupsCollapsed';
 import {setLanguage} from './reducers/language';
 import {setLastLesson} from './reducers/lastLesson';
-import {setMode} from './reducers/mode';
 import {setShowPlaylists} from './reducers/showPlaylists';
 import {setShowDyslexicFont} from './reducers/showDyslexicFont';
 import {setExpandedAccordion} from './reducers/expandedAccordion';
@@ -27,7 +26,6 @@ const devTools = typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EX
 
 store = createStore(reducer, initialState, devTools);
 
-const defaultMode = true;
 const defaultLanguage = 'nb';
 const defaultLastLesson = '';
 const defaultCheckboxes = {};
@@ -44,7 +42,6 @@ for (let groupKey of Object.keys(filter)) {
 }
 
 export const updateStoreFromLocalStorage = () => {
-  const initialMode = loadFromLocalStorage('isStudentMode', defaultMode);
   const initialLanguage = loadFromLocalStorage('language', defaultLanguage);
   const initialLastLesson = loadFromLocalStorage('lastLesson', defaultLastLesson);
   const initialPlaylists = loadFromLocalStorage('showPlaylists', defaultShowPlaylists);
@@ -52,7 +49,6 @@ export const updateStoreFromLocalStorage = () => {
   const initialExpandedAccordion = loadFromLocalStorage('expandedAccordion', defaultExpandedAccordion);
   const initialShowDarkMode = loadFromLocalStorage('showDarkMode', defaultShowDarkMode);
 
-  store.dispatch(setMode(initialMode));
   store.dispatch(setLanguage(initialLanguage));
   store.dispatch(setLastLesson(initialLastLesson));
   store.dispatch(setShowPlaylists(initialPlaylists));

@@ -26,9 +26,8 @@ const BreadCrumbs = ({course, lesson, file}) => {
   const courseTitle = getCourseTitle(course, courseLanguage);
   const coursePath = isCourse || isLesson ? getLanguageIndependentCoursePath(course) : '';
 
-  const CourseImg = ({width}) => <img
-    {...{width}}
-    height='auto'
+  const CourseImg = ({height}) => <img
+    {...{height}}
     src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
     alt={t('general.picture', {title: courseTitle})}
   />;
@@ -42,14 +41,14 @@ const BreadCrumbs = ({course, lesson, file}) => {
         <div>
           <Hidden xsDown>
             <Button color='primary' size='small' component={RouterLink} to={coursePath} startIcon={
-              <CourseImg width={16}/>
+              <CourseImg height={16}/>
             }>
               {courseTitle}
             </Button>
           </Hidden>
           <Hidden smUp>
             <IconButton size='small' component={RouterLink} to={coursePath}>
-              <CourseImg width={22}/>
+              <CourseImg height={22}/>
             </IconButton>
           </Hidden>
         </div>

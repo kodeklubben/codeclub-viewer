@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {
-  ExpansionPanel, ExpansionPanelSummary, Typography, Divider, List
+  ExpansionPanel, ExpansionPanelSummary, Typography, Divider, List, ListItem
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {getTranslator} from '../../selectors/translate';
@@ -51,7 +51,7 @@ const PlaylistNavigation = ({course}) => {
         <List>
           {areAllLessonsInPlaylistTranslated(course, playlist, language) ?
             lessons.map(lesson => <LessonItem key={lesson} {...{course, lesson, language}}/>) :
-            <span>{t('coursepage.lessonsnottranslated')}</span>
+            <ListItem>{t('coursepage.lessonsnottranslated')}</ListItem>
           }
         </List>
       </ExpansionPanel>

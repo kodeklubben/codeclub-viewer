@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   rootMargin: {
     width: '100%',
     background: theme.palette.secondary.main,
-    marginTop: theme.spacing(9),
+    marginTop: theme.spacing(8),
   },
   header: {
     padding: theme.spacing(2),

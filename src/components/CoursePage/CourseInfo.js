@@ -15,6 +15,11 @@ const useStyles = makeStyles(theme => ({
     background: theme.palette.secondary.main,
     flexGrow: 1,
   },
+  details: {
+    '& a': {
+      color: theme.palette.primary.main,
+    },
+  },
 }));
 
 const CourseInfo = ({course}) => {
@@ -39,7 +44,7 @@ const CourseInfo = ({course}) => {
       <Divider/>
       <ExpansionPanelDetails>
         {courseInfo.__html ?
-          <div dangerouslySetInnerHTML={courseInfo}/>
+          <div className={classes.details} dangerouslySetInnerHTML={courseInfo}/>
           :
           <Typography>{t('coursepage.courseinfonotfound')}</Typography>
         }
