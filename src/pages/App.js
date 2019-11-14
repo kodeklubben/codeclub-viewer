@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {createMuiTheme, makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import {CssBaseline, Toolbar} from '@material-ui/core';
+import runtime from 'serviceworker-webpack-plugin/lib/runtime';
+import registerEvents from 'serviceworker-webpack-plugin/lib/browser/registerEvents';
 import Head from '../components/Head';
 import NavBar from '../components/Navigation/NavBar';
 import Footer from '../components/Navigation/Footer';
+import RefreshButton from '../components/RefreshButton';
 import OpenDyslexic from '../assets/fonts/OpenDyslexic-Regular.ttf';
 import grey from '@material-ui/core/colors/grey';
 import lightGreen from '@material-ui/core/colors/lightGreen';
@@ -94,8 +97,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const App = ({params, location, children}) => {
+const App = ({params, children}) => {
   const classes = useStyles();
+
+  const [refreshStatus, setRefreshStatus] = React.useState(false);
 
   const showDyslexicFont = useSelector(state => state.showDyslexicFont);
   const showDarkMode = useSelector(state => state.showDarkMode);
@@ -105,12 +110,18 @@ const App = ({params, location, children}) => {
   if (!showDyslexicFont && showDarkMode) { theme = darkModeTheme; }
   if (showDyslexicFont && showDarkMode) { theme = darkDyslexicTheme; }
 
+  React.useEffect(() => {
+    registerEvents(runtime.register(), {onUpdateReady: () => setRefreshStatus(true)});
+  }, []);
+ 
+
   return (
     <ThemeProvider {...{theme}}>
       <CssBaseline/>
       <Head/>
       <NavBar className={classes.hide} {...{params}}/>
       <Toolbar className={classes.hide}/>
+      {refreshStatus ? <RefreshButton open={refreshStatus}/> : null}
       <div className={classes.footer}>{children}</div>
       <Footer className={classes.hide}/>
     </ThemeProvider>
@@ -119,9 +130,6 @@ const App = ({params, location, children}) => {
 
 App.propTypes = {
   params: PropTypes.object,
-  location: PropTypes.shape({
-    query: PropTypes.object.isRequired,
-  }).isRequired,
   children: PropTypes.object,
 };
 
