@@ -29,15 +29,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const useEnhancedEffect = typeof window !== 'undefined' ? React.useLayoutEffect : React.useEffect;
-
 const LessonPage = ({course, lesson, language, isReadme}) => {
   const classes = useStyles();
 
   const t = useSelector(state => getTranslator(state));
 
   const dispatch = useDispatch();
-  useEnhancedEffect(() => {
+  React.useEffect(() => {
     const path = getLessonPath(course, lesson, language, isReadme);
     dispatch(setLastLesson(path));
   }, [course, lesson, language, isReadme, dispatch]);
