@@ -100,11 +100,13 @@ export default {
   navbar: {
     mode: 'Mode',
     lkknav: {
-      aboutlkk: 'About LKK',
+      aboutlkk: 'About Lær Kidsa Koding',
+      contact: 'Contact',
+      privacy: 'Privacy in Lær Kidsa Koding and Kodeklubben',
       news: 'News',
       lessons: 'Lessons',
-      findcodeclub: 'Find kodeklubb',
-      codeclub: 'Kodeklubben',
+      forum: 'Forum',
+      codeclub: 'Code clubs',
       school: 'School',
       codehour: 'Kodetimen',
       contribute: 'Contribute?',

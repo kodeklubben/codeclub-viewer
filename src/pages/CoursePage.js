@@ -11,7 +11,7 @@ import {getCoursesWithPlaylists} from '../resources/playlists';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 import {getCourseIntroText} from '../resources/courseContent';
 import LessonFilter from '../components/Filter/LessonFilter';
-import CollapsibleLessonFiler from '../components/Filter/CollapsibleLessonFilter';
+import CollapsibleLessonFilter from '../components/Filter/CollapsibleLessonFilter';
 import ClearFilterButton from '../components/Filter/ClearFilterButton';
 import LessonList from '../components/CoursePage/LessonList';
 import Head from '../components/Head';
@@ -59,8 +59,8 @@ const CoursePage = ({params}) => {
       <Grid container spacing={4}>
         <Grid item xs={12} md={3} lg={3}>
           <Grid container direction='column' alignItems='center'>
-            <Hidden smDown><LessonFilter {...{course}}/></Hidden>
-            <Hidden mdUp><CollapsibleLessonFiler/></Hidden>
+            <Hidden initialWidth='md' smDown><LessonFilter {...{course}}/></Hidden>
+            <Hidden initialWidth='sm' mdUp><CollapsibleLessonFilter/></Hidden>
             <ClearFilterButton/>
           </Grid>
         </Grid>
