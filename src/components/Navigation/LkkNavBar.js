@@ -2,9 +2,10 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {Link as RouterLink} from 'react-router';
 import {
-  Slide, useScrollTrigger, Link, Hidden, Drawer, List, IconButton, ListItem, Paper
+  Slide, useScrollTrigger, Link, Hidden, Drawer, List, IconButton, ListItem, Paper, DialogTitle
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
 import {makeStyles} from '@material-ui/core/styles';
 import {getTranslator} from '../../selectors/translate';
 
@@ -33,7 +34,6 @@ const useStyles = makeStyles(theme => ({
     maxWidth: 160,
     boxShadow: theme.shadows[5],
     zIndex: 9999,
-    padding: theme.spacing(2),
     '&:hover': {
       display: 'block',
     },
@@ -45,6 +45,10 @@ const useStyles = makeStyles(theme => ({
     '&:hover + $dropdownContent': {
       display: 'block',
     },
+  },
+  closeButton: {
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 }));
 
@@ -81,17 +85,21 @@ const LkkNavBar = () => {
             }/>
         </Link>
         <div>
-          <Hidden initialWidth='lg' mdDown>
+          <Hidden implementation='css' mdDown>
             <Link className={classes.dropdown} href='https://kidsakoder.no/om-lkk'>{t('navbar.lkknav.aboutlkk')}</Link>
             <Paper className={classes.dropdownContent}>
-              <Link href='https://kidsakoder.no/kontakt'>
-                {t('navbar.lkknav.contact')}
-              </Link>
-              <br/>
-              <br/>
-              <Link href='https://www.kidsakoder.no/om-lkk/personvern-i-laer-kidsa-koding-og-kodeklubben'>
-                {t('navbar.lkknav.privacy')}
-              </Link>
+              <List>
+                <ListItem button component={Link} href='https://kidsakoder.no/kontakt'>
+                  {t('navbar.lkknav.contact')}
+                </ListItem>
+                <ListItem
+                  button
+                  component={Link}
+                  href='https://www.kidsakoder.no/om-lkk/personvern-i-laer-kidsa-koding-og-kodeklubben'
+                >
+                  {t('navbar.lkknav.privacy')}
+                </ListItem>
+              </List>
             </Paper>
             <Link className={classes.link} href='https://kidsakoder.no/nyheter'>{t('navbar.lkknav.news')}</Link>
             <Link className={classes.link} component={RouterLink} to='/'>{t('navbar.lkknav.lessons')}</Link>
@@ -101,7 +109,7 @@ const LkkNavBar = () => {
             <Link className={classes.link} href='https://kidsakoder.no/kodetimen'>{t('navbar.lkknav.codehour')}</Link>
             <Link className={classes.link} href='https://kidsakoder.no/bidra'>{t('navbar.lkknav.contribute')}</Link>
           </Hidden>
-          <Hidden initialWidth='xs' lgUp>
+          <Hidden implementation='css' lgUp>
             <IconButton className={classes.button} size='small' onClick={toggleDrawer()} aria-label='menu'>
               <MenuIcon color='primary'/>
             </IconButton>
@@ -112,51 +120,45 @@ const LkkNavBar = () => {
               anchor='right'
               onClose={toggleDrawer()}
             >
+              <DialogTitle className={classes.closeButton}>
+                <IconButton size='small' onClick={handleClose}>
+                  <CloseIcon color='primary'/>
+                </IconButton>
+              </DialogTitle>
               <List>
-                <ListItem>
-                  <Link className={classes.link} href='https://kidsakoder.no/om-lkk'>
-                    {t('navbar.lkknav.aboutlkk')}
-                  </Link>
+                <ListItem button component={Link} href='https://kidsakoder.no/om-lkk'>
+                  {t('navbar.lkknav.aboutlkk')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} href='https://kidsakoder.no/kontakt'>
-                    {t('navbar.lkknav.contact')}
-                  </Link>
+                <ListItem button component={Link} href='https://kidsakoder.no/kontakt'>
+                  {t('navbar.lkknav.contact')}
                 </ListItem>
-                <ListItem>
-                  <Link
-                    className={classes.link}
-                    href='https://www.kidsakoder.no/om-lkk/personvern-i-laer-kidsa-koding-og-kodeklubben'
-                  >
-                    {t('navbar.lkknav.privacy')}
-                  </Link>
+                <ListItem
+                  button
+                  component={Link}
+                  href='https://www.kidsakoder.no/om-lkk/personvern-i-laer-kidsa-koding-og-kodeklubben'
+                >
+                  {t('navbar.lkknav.privacy')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} href='https://kidsakoder.no/nyheter'>{t('navbar.lkknav.news')}</Link>
+                <ListItem button component={Link} href='https://kidsakoder.no/nyheter'>
+                  {t('navbar.lkknav.news')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} component={RouterLink} to='/'>{t('navbar.lkknav.lessons')}</Link>
+                <ListItem button component={RouterLink} to='/'>
+                  {t('navbar.lkknav.lessons')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} href='https://forum.kidsakoder.no'>{t('navbar.lkknav.forum')}</Link>
+                <ListItem button component={Link} href='https://forum.kidsakoder.no'>
+                  {t('navbar.lkknav.forum')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} href='https://kidsakoder.no/kodeklubben'>
-                    {t('navbar.lkknav.codeclub')}
-                  </Link>
+                <ListItem button component={Link} href='https://kidsakoder.no/kodeklubben'>
+                  {t('navbar.lkknav.codeclub')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} href='https://kidsakoder.no/skole'>{t('navbar.lkknav.school')}</Link>
+                <ListItem button component={Link} href='https://kidsakoder.no/skole'>
+                  {t('navbar.lkknav.school')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} href='https://kidsakoder.no/kodetimen'>
-                    {t('navbar.lkknav.codehour')}
-                  </Link>
+                <ListItem button component={Link} href='https://kidsakoder.no/kodetimen'>
+                  {t('navbar.lkknav.codehour')}
                 </ListItem>
-                <ListItem>
-                  <Link className={classes.link} href='https://kidsakoder.no/bidra'>
-                    {t('navbar.lkknav.contribute')}
-                  </Link>
+                <ListItem button component={Link} href='https://kidsakoder.no/bidra'>
+                  {t('navbar.lkknav.contribute')}
                 </ListItem>
               </List>
             </Drawer>

@@ -37,7 +37,7 @@ const CourseInfo = ({course}) => {
   };
 
   return (
-    <ExpansionPanel classes={{ root: classes.root }}>
+    <ExpansionPanel TransitionProps={{ unmountOnExit: true }} classes={{ root: classes.root }}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon color='primary'/>}>
         <Typography variant='h5'>{t('coursepage.courseinfo')} {courseTitle}</Typography>
       </ExpansionPanelSummary>

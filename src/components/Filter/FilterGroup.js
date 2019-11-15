@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
-import {List, ListItem, ListItemText, Collapse} from '@material-ui/core';
+import {List, ListItem, ListItemText, Collapse, ListItemIcon} from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import LanguageIcon from '@material-ui/icons/Language';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import SubjectIcon from '@material-ui/icons/Subject';
+import HomeWorkIcon from '@material-ui/icons/HomeWork';
 import {getTranslateFilter} from '../../selectors/translate';
 import {somethingCheckedInGroup} from '../../selectors/filter';
 import {collapseFilterGroup} from '../../reducers/filterGroupsCollapsed';
@@ -45,9 +49,17 @@ const FilterGroup = ({groupKey}) => {
 
     const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];
 
+    const icons = {
+      language: <LanguageIcon color='primary' />,
+      topic: <MenuBookIcon color='primary' />,
+      subject: <SubjectIcon color='primary' />,
+      grade: <HomeWorkIcon color='primary' />,
+    };
+
     return (
       <React.Fragment>
         <ListItem dense button disabled={somethingChecked} onClick={handleClick}>
+          {groupKey ? <ListItemIcon>{icons[groupKey]}</ListItemIcon> : null}
           <ListItemText primary={groupName}/>
           {!isCollapsed ? <ExpandLessIcon color='primary'/> : <ExpandMoreIcon color='primary'/>}
         </ListItem>

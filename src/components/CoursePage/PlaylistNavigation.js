@@ -40,6 +40,7 @@ const PlaylistNavigation = ({course}) => {
     return (
       <ExpansionPanel
         key={playlist}
+        TransitionProps={{ unmountOnExit: true }}
         classes={{ root: classes.root }}
         onChange={() => handleChange(i)}
         expanded={expandedAccordion[course] === i}

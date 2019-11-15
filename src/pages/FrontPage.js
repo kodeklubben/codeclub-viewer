@@ -8,7 +8,6 @@ import {getCoursesWithPlaylists} from '../resources/playlists';
 import LessonFilter from '../components/Filter/LessonFilter';
 import CourseItem from '../components/FrontPage/CourseItem';
 import ExternalCourseItem from '../components/FrontPage/ExternalCourseItem';
-import ClearFilterButton from '../components/Filter/ClearFilterButton';
 import CollapsibleLessonFilter from '../components/Filter/CollapsibleLessonFilter';
 
 const useStyles = makeStyles(theme => ({
@@ -37,15 +36,12 @@ const FrontPage = () => {
 
   return (
     <Container className={classes.container} maxWidth='xl'>
+      <Hidden implementation='css' mdUp><CollapsibleLessonFilter /></Hidden>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={3} lg={3}>
-          <Grid container direction='column' alignItems='center'>
-            <Hidden initialWidth='md' smDown><LessonFilter/></Hidden>
-            <Hidden initialWidth='sm' mdUp><CollapsibleLessonFilter/></Hidden>
-            <ClearFilterButton/>
-          </Grid>
+        <Grid item md={3}>
+          <Hidden implementation='css' smDown><LessonFilter/></Hidden>
         </Grid>
-        <Grid item xs={12} md={9} lg={9}>
+        <Grid item xs={12} md={9}>
           {noLessons ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
           <Grid container spacing={4}>
             {courses.map(course => (

@@ -27,7 +27,7 @@ const darkTheme= {
     }
   },
   typography: {
-    fontSize: 15,
+    fontSize: 16,
   },
 };
 
@@ -42,7 +42,7 @@ const lightTheme= {
     },
   },
   typography: {
-    fontSize: 15,
+    fontSize: 16,
   },
 };
 
