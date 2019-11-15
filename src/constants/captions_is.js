@@ -108,10 +108,12 @@ export default {
   navbar: {
     mode: 'Máti',
     lkknav: {
-      aboutlkk: 'Um LKK',
+      aboutlkk: 'Um Lær Kidsa Koding',
+      contact: 'Hafðu samband',
+      privacy: 'Persónuvernd i Lær Kidsa Koding og Kodeklubben',
       news: 'Fréttir',
       lessons: 'Verkefni',
-      findcodeclub: 'Finndu kóðaklúbb',
+      forum: 'Forum',
       codeclub: 'Kóðaklúbbur',
       school: 'Skóli',
       codehour: 'Klukkustund kóðunar',

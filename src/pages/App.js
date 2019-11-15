@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
-import {CssBaseline, Toolbar} from '@material-ui/core';
+import {CssBaseline} from '@material-ui/core';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import registerEvents from 'serviceworker-webpack-plugin/lib/browser/registerEvents';
 import Head from '../components/Head';
@@ -27,7 +27,7 @@ const darkTheme= {
     }
   },
   typography: {
-    fontSize: 16,
+    fontSize: 15,
   },
 };
 
@@ -42,7 +42,7 @@ const lightTheme= {
     },
   },
   typography: {
-    fontSize: 16,
+    fontSize: 15,
   },
 };
 
@@ -123,7 +123,6 @@ const App = ({params, children}) => {
       <CssBaseline/>
       <Head/>
       <NavBar className={classes.hide} {...{params}}/>
-      <Toolbar className={classes.hide}/>
       {refreshStatus ? <RefreshButton open={refreshStatus}/> : null}
       <div className={classes.footer}>{children}</div>
       <Footer className={classes.hide}/>

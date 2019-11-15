@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
-import {AppBar, Drawer, IconButton, List, Toolbar, Divider} from '@material-ui/core';
+import {AppBar, Drawer, IconButton, List, Divider} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ContinueButton from './ContinueButton';
 import DyslexiaSwitch from './DyslexiaSwitch';
@@ -9,6 +9,7 @@ import DarkModeSwitch from './DarkModeSwitch';
 import LanguageList from './LanguageList';
 import GithubLink from './GithubLink';
 import BreadCrumbs from './BreadCrumbs';
+import LkkNavBar from './LkkNavBar';
 
 const useStyles = makeStyles(theme => ({
   hide: {
@@ -17,8 +18,9 @@ const useStyles = makeStyles(theme => ({
     },
   },
   root: {
-    flexGrow: 1,
+    display: 'flex',
     justifyContent: 'space-between',
+    padding: theme.spacing(1, 2),
   },
   paper: {
     background: theme.palette.secondary.main,
@@ -35,30 +37,44 @@ const NavBar = ({params}) => {
     }
     setShowDrawer(!showDrawer);
   };
+  
+  const handleClose = () => {
+    setShowDrawer(false);
+  };
+
 
   const {course, lesson, file} = params;
 
   return (
-    <AppBar color='secondary' className={classes.hide}>
-      <Toolbar className={classes.root}> 
-        <BreadCrumbs {...{course, lesson, file}}/>
-        <ContinueButton {...{course}}/>
-        <IconButton size='small' onClick={toggleDrawer()} aria-label='menu'>
-          <MenuIcon color='primary'/>
-        </IconButton>
-        <Drawer classes={{ paper: classes.paper }} open={showDrawer} anchor='right' onClose={toggleDrawer()}>
-          <List>
-            <LanguageList/>
-            <Divider/>
-            <DyslexiaSwitch/>
-            <Divider/>
-            <DarkModeSwitch/>
-            <Divider/>
-            <GithubLink/>
-          </List>
-        </Drawer>
-      </Toolbar>
-    </AppBar>
+    <React.Fragment>
+      <LkkNavBar/>
+      <AppBar position='sticky' color='secondary' className={classes.hide}>
+        <div className={classes.root}> 
+          <BreadCrumbs {...{course, lesson, file}}/>
+          <ContinueButton {...{course}}/>
+          <IconButton size='small' onClick={toggleDrawer()} aria-label='menu'>
+            <MenuIcon color='primary'/>
+          </IconButton>
+          <Drawer
+            classes={{ paper: classes.paper }}
+            open={showDrawer}
+            onClick={handleClose}
+            anchor='right'
+            onClose={toggleDrawer()}
+          >
+            <List>
+              <LanguageList/>
+              <Divider/>
+              <DyslexiaSwitch/>
+              <Divider/>
+              <DarkModeSwitch/>
+              <Divider/>
+              <GithubLink/>
+            </List>
+          </Drawer>
+        </div>
+      </AppBar>
+    </React.Fragment>
   );
 };
 

@@ -9,7 +9,7 @@ import LessonFilter from '../components/Filter/LessonFilter';
 import CourseItem from '../components/FrontPage/CourseItem';
 import ExternalCourseItem from '../components/FrontPage/ExternalCourseItem';
 import ClearFilterButton from '../components/Filter/ClearFilterButton';
-import CollapsibleLessonFiler from '../components/Filter/CollapsibleLessonFilter';
+import CollapsibleLessonFilter from '../components/Filter/CollapsibleLessonFilter';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -40,8 +40,8 @@ const FrontPage = () => {
       <Grid container spacing={4}>
         <Grid item xs={12} md={3} lg={3}>
           <Grid container direction='column' alignItems='center'>
-            <Hidden smDown><LessonFilter/></Hidden>
-            <Hidden mdUp><CollapsibleLessonFiler/></Hidden>
+            <Hidden initialWidth='md' smDown><LessonFilter/></Hidden>
+            <Hidden initialWidth='sm' mdUp><CollapsibleLessonFilter/></Hidden>
             <ClearFilterButton/>
           </Grid>
         </Grid>
