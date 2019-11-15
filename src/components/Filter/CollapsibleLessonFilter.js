@@ -1,24 +1,29 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {
-  Typography, List, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider, Grid
+  List, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Divider, Grid, Typography
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import FilterListIcon from '@material-ui/icons/FilterList';
 import {getTranslator} from '../../selectors/translate';
 import FilterGroup from './FilterGroup';
 import RadioButtons from './RadioButtons';
+import ClearFilterButton from './ClearFilterButton';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
+  panel: {
+    flexGrow: 1,
     background: theme.palette.secondary.main,
   },
-  detailsRoot: {
+  panelSummary: {
+    paddingLeft: theme.spacing(2),
+  },
+  panelDetails: {
     padding: 0,
   },
   header: {
-    padding: theme.spacing(2),
+    marginLeft: theme.spacing(4),
   },
 }));
 
@@ -30,29 +35,31 @@ const LessonFilter = () => {
   const filterGroupKeys = useSelector(state => Object.keys(state.filter));
 
   return (
-    <ExpansionPanel classes={{ root: classes.root }}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon color='primary'/>}>
-        <Grid container justify='space-between'>
-          <Typography variant='h5'>
+    <React.Fragment>
+      <ExpansionPanel TransitionProps={{ unmountOnExit: true }} classes={{ root: classes.panel }}>
+        <ExpansionPanelSummary classes={{ root: classes.panelSummary }} expandIcon={<ExpandMoreIcon color='primary'/>}>
+          <FilterListIcon color='primary' />
+          <Typography className={classes.header} variant='h5'>
             {t('filter.header')}
           </Typography>
-        </Grid>
-      </ExpansionPanelSummary>
-      <Divider/>
-      <ExpansionPanelDetails classes={{ root: classes.detailsRoot }}>
-        <Grid container direction='column'>
-          <RadioButtons/>
-          {showPlaylists ? null :
-            <React.Fragment>
-              <Divider/>
-              <List>
-                {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
-              </List>
-            </React.Fragment>
-          }
-        </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+        </ExpansionPanelSummary>
+        <Divider/>
+        <ExpansionPanelDetails classes={{ root: classes.panelDetails }}>
+          <Grid container direction='column'>
+            <RadioButtons/>
+            {showPlaylists ? null :
+              <React.Fragment>
+                <Divider/>
+                <List>
+                  {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
+                </List>
+              </React.Fragment>
+            }
+          </Grid>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      <ClearFilterButton/>
+    </React.Fragment>
   );
 };
 

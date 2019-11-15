@@ -3,16 +3,13 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {Grid, Container, Typography, Hidden} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-import {getFilteredCourses, getFilteredExternalCoursesWithLanguages} from '../selectors/course';
 import {getTranslator} from '../selectors/translate';
 import {getShowFiltergroups} from '../selectors/playlist';
 import {getFilteredLevelsInCourse} from '../selectors/lesson';
-import {getCoursesWithPlaylists} from '../resources/playlists';
 import {getCourseTitle} from '../resources/courseFrontmatter';
 import {getCourseIntroText} from '../resources/courseContent';
 import LessonFilter from '../components/Filter/LessonFilter';
 import CollapsibleLessonFilter from '../components/Filter/CollapsibleLessonFilter';
-import ClearFilterButton from '../components/Filter/ClearFilterButton';
 import LessonList from '../components/CoursePage/LessonList';
 import Head from '../components/Head';
 import CourseInfo from '../components/CoursePage/CourseInfo';
@@ -24,10 +21,8 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(5),
   },
   gridRoot: {
-    marginBottom: theme.spacing(4),
-  },
-  list: {
     flexGrow: 1,
+    marginBottom: theme.spacing(4),
   },
 }));
 
@@ -37,16 +32,11 @@ const CoursePage = ({params}) => {
   const {course} = params;
 
   const t = useSelector(state => getTranslator(state));
-  const courses = useSelector(state => state.showPlaylists ? getCoursesWithPlaylists() : getFilteredCourses(state));
-  const externalCourses = useSelector(state => 
-    state.showPlaylists ? [] : getFilteredExternalCoursesWithLanguages(state)
-  );
+
   const levels = useSelector(state => getFilteredLevelsInCourse(state, course));
   const courseTitle = useSelector(state => getCourseTitle(course, state.language));
   const language = useSelector(state => state.language);
   const showPlaylists = useSelector(state => !getShowFiltergroups(state));
-
-  const noLessons = courses.length + externalCourses.length !== 0;
 
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
 
@@ -56,16 +46,13 @@ const CoursePage = ({params}) => {
       <Grid container classes={{ root: classes.gridRoot }} justify='center'>
         <CourseInfo {...{course}}/>
       </Grid>
+      <Hidden implementation='css' mdUp><CollapsibleLessonFilter /></Hidden>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={3} lg={3}>
-          <Grid container direction='column' alignItems='center'>
-            <Hidden initialWidth='md' smDown><LessonFilter {...{course}}/></Hidden>
-            <Hidden initialWidth='sm' mdUp><CollapsibleLessonFilter/></Hidden>
-            <ClearFilterButton/>
-          </Grid>
+        <Grid item md={3}>
+          <Hidden implementation='css' smDown><LessonFilter {...{course}}/></Hidden>
         </Grid>
-        <Grid item xs={12} md={9} lg={9} className={classes.list}>
-          {noLessons ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
+        <Grid item xs={12} md={9}>
+          {lessonLists.length ? null : <Typography variant='h4'>{t('coursepage.nomatchinglessons')}</Typography>}
           {showPlaylists ? <PlaylistNavigation {...{course}}/> : lessonLists}
         </Grid>
       </Grid>

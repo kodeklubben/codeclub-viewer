@@ -39,14 +39,14 @@ const BreadCrumbs = ({course, lesson, file}) => {
       </IconButton>
       {coursePath ?
         <div>
-          <Hidden xsDown>
+          <Hidden implementation='css' xsDown>
             <Button color='primary' size='small' component={RouterLink} to={coursePath} startIcon={
               <CourseImg height={16}/>
             }>
               {courseTitle}
             </Button>
           </Hidden>
-          <Hidden smUp>
+          <Hidden implementation='css' smUp>
             <IconButton size='small' component={RouterLink} to={coursePath}>
               <CourseImg height={22}/>
             </IconButton>
@@ -55,14 +55,14 @@ const BreadCrumbs = ({course, lesson, file}) => {
         : null}
       {isLesson ?
         <div>
-          <Hidden xsDown>
+          <Hidden implementation='css' xsDown>
             <Button color='primary' size='small' component={RouterLink} to={lessonPath} startIcon={
               <LevelIcon level={getLevel(course, lesson)}/>
             }>
               {lessonTitle}
             </Button>
           </Hidden>
-          <Hidden smUp>
+          <Hidden implementation='css' smUp>
             <IconButton size='small' component={RouterLink} to={lessonPath}>
               <LevelIcon level={getLevel(course, lesson)}/>
             </IconButton>

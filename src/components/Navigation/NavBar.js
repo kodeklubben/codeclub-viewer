@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles} from '@material-ui/core/styles';
-import {AppBar, Drawer, IconButton, List, Divider} from '@material-ui/core';
+import {AppBar, Drawer, IconButton, List, Divider, DialogTitle} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
 import ContinueButton from './ContinueButton';
 import DyslexiaSwitch from './DyslexiaSwitch';
 import DarkModeSwitch from './DarkModeSwitch';
@@ -25,6 +26,10 @@ const useStyles = makeStyles(theme => ({
   paper: {
     background: theme.palette.secondary.main,
   },
+  closeButton: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 }));
 
 const NavBar = ({params}) => {
@@ -42,7 +47,6 @@ const NavBar = ({params}) => {
     setShowDrawer(false);
   };
 
-
   const {course, lesson, file} = params;
 
   return (
@@ -58,10 +62,14 @@ const NavBar = ({params}) => {
           <Drawer
             classes={{ paper: classes.paper }}
             open={showDrawer}
-            onClick={handleClose}
             anchor='right'
             onClose={toggleDrawer()}
           >
+            <DialogTitle className={classes.closeButton}>
+              <IconButton size='small' onClick={handleClose}>
+                <CloseIcon color='primary'/>
+              </IconButton>
+            </DialogTitle>
             <List>
               <LanguageList/>
               <Divider/>

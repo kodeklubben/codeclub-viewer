@@ -47,7 +47,7 @@ const PopoverComponent = ({popoverContent}) => {
   const id = open ? hashCode(popoverContent) : undefined;
 
   return (
-    <React.Fragment>
+    <div>
       <IconButton aria-describedby={id} size='small' onClick={handleClick}>
         <HelpIcon color='primary'/>
       </IconButton>
@@ -66,7 +66,7 @@ const PopoverComponent = ({popoverContent}) => {
       >
         <Typography className={classes.text} dangerouslySetInnerHTML={{__html: popoverContent}}/>
       </Popover>
-    </React.Fragment>
+    </div>
   );
 };
 

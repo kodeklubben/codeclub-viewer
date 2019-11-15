@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import {createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
+import {create} from 'jss';
+import jssExtend from 'jss-plugin-extend';
+import {
+  createMuiTheme, makeStyles, ThemeProvider, StylesProvider, responsiveFontSizes, jssPreset
+} from '@material-ui/core/styles';
 import {CssBaseline} from '@material-ui/core';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
 import registerEvents from 'serviceworker-webpack-plugin/lib/browser/registerEvents';
@@ -12,6 +16,10 @@ import RefreshButton from '../components/RefreshButton';
 import OpenDyslexic from '../assets/fonts/OpenDyslexic-Regular.ttf';
 import grey from '@material-ui/core/colors/grey';
 import lightGreen from '@material-ui/core/colors/lightGreen';
+
+const jss = create({
+  plugins: [jssExtend(), ...jssPreset().plugins]
+});
 
 const darkTheme= {
   palette: {
@@ -27,7 +35,7 @@ const darkTheme= {
     }
   },
   typography: {
-    fontSize: 15,
+    fontSize: 16,
   },
 };
 
@@ -42,7 +50,7 @@ const lightTheme= {
     },
   },
   typography: {
-    fontSize: 15,
+    fontSize: 16,
   },
 };
 
@@ -119,14 +127,16 @@ const App = ({params, children}) => {
  
 
   return (
-    <ThemeProvider theme={responsiveFontSizes(theme)}>
-      <CssBaseline/>
-      <Head/>
-      <NavBar className={classes.hide} {...{params}}/>
-      {refreshStatus ? <RefreshButton open={refreshStatus}/> : null}
-      <div className={classes.footer}>{children}</div>
-      <Footer className={classes.hide}/>
-    </ThemeProvider>
+    <StylesProvider {...{jss}}>
+      <ThemeProvider theme={responsiveFontSizes(theme)}>
+        <CssBaseline/>
+        <Head/>
+        <NavBar className={classes.hide} {...{params}}/>
+        {refreshStatus ? <RefreshButton open={refreshStatus}/> : null}
+        <div className={classes.footer}>{children}</div>
+        <Footer className={classes.hide}/>
+      </ThemeProvider>
+    </StylesProvider>
   );
 };
 

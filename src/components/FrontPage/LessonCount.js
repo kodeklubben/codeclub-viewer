@@ -12,7 +12,7 @@ const LessonCount = ({course}) => {
 
   const totalNumberOfLessons = Object.keys(lessonsPerLanguage).reduce((sum, n) => sum + lessonsPerLanguage[n], 0);
 
-  return <Typography>{t('frontpage.lessoncount', {count: totalNumberOfLessons})}</Typography>;
+  return <Typography variant='caption'>{t('frontpage.lessoncount', {count: totalNumberOfLessons})}</Typography>;
 };
 
 LessonCount.propTypes = {
