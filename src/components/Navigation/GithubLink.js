@@ -12,17 +12,12 @@ const GithubLink = () => {
       <ListItemIcon>
         <GitHubIcon color='primary'/>
       </ListItemIcon>
-      <ListItemText primary={
-        <Link
-          color='inherit'
-          underline='none'
-          href={'https://github.com/kodeklubben/oppgaver/wiki'}
-          target='_blank'
-          rel='noopener'
-        >
-          {t('footer.contribute')}
-        </Link>
-      }/>
+      <ListItemText
+        component={Link}
+        href={'https://github.com/kodeklubben/oppgaver/wiki'}
+        target='_blank'
+        rel='noopener'
+        primary={t('footer.contribute')}/>
     </ListItem>
   );
 };

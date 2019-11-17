@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Spinner from '../components/LessonPage/Spinner';
+
 const microbitIframeId = 'makecoderenderer'; 
 const getMicrobitSnippets = () => Array.from(document.getElementsByClassName('microbit'));
 
@@ -6,16 +10,9 @@ const renderSpinner = () => {
   for (let pre of pres) {
     if ([...pre.childNodes][0].className === 'python') return;
     pre.style.display = 'none';
-    let img = document.createElement('img');
-    img.id = 'spinner';
-    img.src = require('../assets/graphics/spinner.gif');
-    img.alt = 'Spinner';
-    img.width = '50';
-    img.height = '50';
-    img.style.maxWidth = '100%';
-    img.style.display = 'block';
-    img.style.margin = '0 auto 15px';
-    pre.parentElement.insertBefore(img, pre);
+    let div = document.createElement('div');
+    ReactDOM.render(<Spinner/>, div);
+    pre.insertAdjacentElement('beforebegin', div);
   }
 };
 
