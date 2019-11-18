@@ -11,7 +11,7 @@ const ToggleButton = ({buttonText, hiddenHTML}) => {
 
   return (
     <React.Fragment>
-      <Button color='primary' variant='outlined' onClick={handleClick}>
+      <Button color='inherit' variant='outlined' onClick={handleClick}>
         {buttonText}
       </Button>
       <Collapse in={open} timeout='auto' unmountOnExit>
