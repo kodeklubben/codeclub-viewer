@@ -4,7 +4,6 @@ import {Provider} from 'react-redux';
 import {ServerStyleSheets} from '@material-ui/core/styles';
 import {createMemoryHistory, match, RouterContext} from 'react-router';
 import routes from './routes';
-import {Helmet} from 'react-helmet';
 import store from './store';
 
 const template = require('./html-template.ejs');
@@ -20,10 +19,9 @@ const renderStatic = (locals, callback) => {
     const sheets = new ServerStyleSheets();
     const appHtml = ReactDOMServer.renderToString(sheets.collect(
       <Provider {...{store}}>
-        <RouterContext {...renderProps} />
+        <RouterContext {...renderProps}/>
       </Provider>
     ));
-    const helmet = Helmet.renderStatic();
     const cssString = sheets.toString(); 
     const appCss = `<style id='jss-server-side'>${cssString}</style>`;
     const webpackAssets = locals.webpackStats.compilation.assets;
@@ -31,7 +29,7 @@ const renderStatic = (locals, callback) => {
     const cssAssets = assets.filter(p => /\.css$/.test(p)).map(p => locals.publicPath + p);
     const jsAssets = assets.filter(p => /\.js$/.test(p)).map(p => locals.publicPath + p);
 
-    const html = template({ cssAssets, jsAssets, appCss, appHtml, faviconHtml, helmet });
+    const html = template({ cssAssets, jsAssets, appCss, appHtml, faviconHtml });
 
     callback(null, html);
   });

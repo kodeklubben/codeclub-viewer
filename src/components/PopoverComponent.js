@@ -48,7 +48,7 @@ const PopoverComponent = ({popoverContent}) => {
 
   return (
     <div>
-      <IconButton aria-describedby={id} size='small' onClick={handleClick}>
+      <IconButton aria-label='Info' size='small' onClick={handleClick}>
         <HelpIcon color='primary'/>
       </IconButton>
       <Popover

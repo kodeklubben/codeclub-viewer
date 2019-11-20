@@ -67,7 +67,7 @@ const LessonPage = ({course, lesson, language, isReadme}) => {
   </Typography>;
 
   return (
-    <Container className={classes.container} maxWidth='md'>
+    <Container role='main' className={classes.container} maxWidth='md'>
       <Head {...{title}} description={getLessonIntroText(course, lesson, language, isReadme)}/>
       <Grid container alignItems='center' wrap='nowrap'>
         <LevelIcon fontSize='large' level={getLevel(course, lesson)}/>

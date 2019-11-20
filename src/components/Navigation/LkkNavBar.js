@@ -117,7 +117,7 @@ const LkkNavBar = () => {
           onClose={toggleDrawer()}
         >
           <DialogTitle className={classes.closeButton}>
-            <IconButton size='small' onClick={handleClose}>
+            <IconButton size='small' aria-label='close' onClick={handleClose}>
               <CloseIcon color='primary'/>
             </IconButton>
           </DialogTitle>

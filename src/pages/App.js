@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
+import {HelmetProvider} from 'react-helmet-async';
 import {createMuiTheme, makeStyles, ThemeProvider, responsiveFontSizes} from '@material-ui/core/styles';
 import {CssBaseline} from '@material-ui/core';
 import runtime from 'serviceworker-webpack-plugin/lib/runtime';
@@ -70,14 +71,16 @@ const App = ({params, children}) => {
   }, []);
  
   return (
-    <ThemeProvider theme={responsiveFontSizes(theme)}>
-      <CssBaseline/>
-      <Head/>
-      <NavBar className={classes.hide} {...{params}}/>
-      {refreshStatus ? <RefreshButton open={refreshStatus}/> : null}
-      <div className={classes.footer}>{children}</div>
-      <Footer className={classes.hide}/>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={responsiveFontSizes(theme)}>
+        <CssBaseline/>
+        <Head/>
+        <NavBar className={classes.hide} {...{params}}/>
+        {refreshStatus ? <RefreshButton open={refreshStatus}/> : null}
+        <div className={classes.footer}>{children}</div>
+        <Footer className={classes.hide}/>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 };
 

@@ -6,6 +6,7 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import {filterChecked} from '../../reducers/filter';
 import Flag from '../Flag';
+import {hashCode} from '../../utils/util';
 import PopoverComponent from '../PopoverComponent';
 import {makeStyles} from  '@material-ui/core/styles';
 
@@ -29,7 +30,7 @@ const FilterItem = ({itemKey, groupKey, tagName, checked, popoverContent}) => {
           <CheckBoxOutlineBlankIcon color='primary' fontSize='small'/>
         }
       </ListItemIcon>
-      <ListItemText id={itemKey} primary={tagName}/>
+      <ListItemText id={hashCode(itemKey)} primary={tagName}/>
       {groupKey === 'language' ?
         <ListItemIcon classes={{ root: classes.root }}>
           <Flag language={itemKey}/>

@@ -52,18 +52,13 @@ const webappWebpackPlugin = new WebappWebpackPlugin({
   inject: 'force',
   prefix: 'icons-[hash:5]/',
   favicons: {
-    appName: 'Lær Kidsa Koding',
-    appShortName: 'LKK',
+    appName: 'Kodeklubben',
+    appShortName: 'Kodeklubben',
     appDescription: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
                     'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
                     'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
-    developerName: null,
-    developerURL: null,
     lang: 'nb',
-    background: '#fff',
-    theme_color: '#fff',
-    display: 'standalone',
-    orientation: 'any',
+    appleStatusBarStyle: 'default',
     start_url: '/',
     icons: {
       coast: false,
