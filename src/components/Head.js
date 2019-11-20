@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
-import {Helmet} from 'react-helmet';
+import {Helmet} from 'react-helmet-async';
 import {getTranslator} from '../selectors/translate';
 
 const Head = ({title, description}) => {

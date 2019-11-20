@@ -26,7 +26,7 @@ const Main = () => {
 
   return (
     <Provider {...{store}}>
-      <Router {...{routes, onUpdate, history}}/>
+      <Router {...{ routes, onUpdate, history }}/>
     </Provider>
   );
 };
