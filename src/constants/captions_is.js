@@ -10,8 +10,6 @@ export default {
       3: 'Með reynslu',
       4: 'Sérfræðingur',
     },
-    picture: 'Mynd af {{title}}',
-    glyphicon: 'Upplýsingar um {{title}}',
   },
   head: {
     title: 'Kóðaklúbburinn',

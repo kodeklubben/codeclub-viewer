@@ -42,7 +42,7 @@ const LessonFilter = ({course}) => {
               <FilterListIcon color='primary'/>
             </ListItemIcon>
             <ListItemText>
-              <Typography variant='h5'>
+              <Typography variant='h5' component='h1'>
                 {t('filter.header')}
               </Typography>
             </ListItemText>
@@ -53,7 +53,7 @@ const LessonFilter = ({course}) => {
         {showPlaylists ? null :
           <React.Fragment>
             <Divider/>
-            <List>
+            <List component='div'>
               {filterGroupKeys.map(groupKey => <FilterGroup key={groupKey} {...{groupKey}}/>)}
             </List>
           </React.Fragment>

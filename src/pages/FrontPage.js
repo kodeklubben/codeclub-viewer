@@ -35,7 +35,7 @@ const FrontPage = () => {
   const noLessons = courses.length + externalCourses.length !== 0;
 
   return (
-    <Container className={classes.container} maxWidth='xl'>
+    <Container role='main' className={classes.container} maxWidth='xl'>
       <Hidden implementation='css' mdUp><CollapsibleLessonFilter /></Hidden>
       <Grid container spacing={4}>
         <Grid item md={3}>

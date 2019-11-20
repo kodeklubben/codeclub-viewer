@@ -50,7 +50,7 @@ const NavBar = ({params}) => {
   const {course, lesson, file} = params;
 
   return (
-    <React.Fragment>
+    <div>
       <LkkNavBar/>
       <AppBar position='sticky' color='secondary' className={classes.hide}>
         <div className={classes.root}> 
@@ -66,7 +66,7 @@ const NavBar = ({params}) => {
             onClose={toggleDrawer()}
           >
             <DialogTitle className={classes.closeButton}>
-              <IconButton size='small' onClick={handleClose}>
+              <IconButton size='small' aria-label='close' onClick={handleClose}>
                 <CloseIcon color='primary'/>
               </IconButton>
             </DialogTitle>
@@ -82,7 +82,7 @@ const NavBar = ({params}) => {
           </Drawer>
         </div>
       </AppBar>
-    </React.Fragment>
+    </div>
   );
 };
 

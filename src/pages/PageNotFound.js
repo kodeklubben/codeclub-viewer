@@ -18,7 +18,7 @@ const PageNotFound = () => {
   const t = useSelector(state => getTranslator(state));
 
   return (
-    <Container>
+    <Container role='main'>
       <Head title={'404'}/>
       <Grid className={classes.topMargin} container direction='column' alignItems='center'>
         <Typography variant='h4'>{t('404.header')}</Typography>

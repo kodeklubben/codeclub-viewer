@@ -55,14 +55,15 @@ const CourseItem = ({course}) => {
         classes={{ root: classes.cardActionArea }}
         component={RouterLink}
         to={getLanguageIndependentCoursePath(course)}
-      > 
+        role='link'
+      >
         <CardHeader title={getCourseTitle(course, language)}/>
         <CardMedia
           className={classes.image}
           component='img'
-          alt={course}
+          alt=''
+          title={getCourseTitle(course, language)}
           src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
-          title={course}
         />
         {showFlag ?
           <Grid container justify='center' spacing={1}>

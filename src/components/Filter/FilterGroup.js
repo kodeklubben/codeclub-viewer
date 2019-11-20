@@ -44,7 +44,7 @@ const FilterGroup = ({groupKey}) => {
 
     // Sort filterItems alphabetically except grades
     if (groupKey !== 'grade') {
-      filterItems.sort((a, b) => a.props.tagName.localeCompare(b.props.tagName));
+      filterItems.sort((a, b) => (a.props.tagName > b.props.tagName) - (a.props.tagName < b.props.tagName));
     }
 
     const isCollapsed = !somethingChecked && filterGroupsCollapsed[groupKey];

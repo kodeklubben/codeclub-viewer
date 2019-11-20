@@ -41,7 +41,7 @@ const CoursePage = ({params}) => {
   const lessonLists = levels.map(level => <LessonList key={level} {...{course, level}} />);
 
   return (
-    <Container className={classes.container} maxWidth='xl'>
+    <Container role='main' className={classes.container} maxWidth='xl'>
       <Head title={courseTitle} description={getCourseIntroText(course, language)}/>
       <Grid container classes={{ root: classes.gridRoot }} justify='center'>
         <CourseInfo {...{course}}/>

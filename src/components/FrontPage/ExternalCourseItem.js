@@ -49,6 +49,7 @@ const ExternalCourseList = ({course, language}) => {
         classes={{ root: classes.cardActionArea }}
         component={RouterLink}
         href={getCourseExternalLink(course, language)}
+        role='link'
         target='_blank'
         rel='noopener'
       > 
@@ -56,9 +57,9 @@ const ExternalCourseList = ({course, language}) => {
         <CardMedia
           className={classes.image}
           component='img'
-          alt={course}
+          title={getCourseTitle(course, language)}
+          alt=''
           src={getCourseIcon(course, showDarkMode ? 'white' : 'black')}
-          title={course}
         />
         {showFlag ?
           <Grid container justify='center' spacing={1}>

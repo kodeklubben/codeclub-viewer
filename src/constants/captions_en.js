@@ -10,8 +10,6 @@ export default {
       3: 'Experienced',
       4: 'Expert',
     },
-    picture: 'Picture of {{title}}',
-    glyphicon: 'Info for {{title}}',
   },
   head: {
     title: 'Code club',
