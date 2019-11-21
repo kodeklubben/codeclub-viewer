@@ -24,7 +24,7 @@ const DyslexiaSwitch = () => {
       <ListItemIcon>
         <AccessibilityIcon color='primary'/>
       </ListItemIcon>
-      <ListItemText className={classes.space} id='dyxlexic-font-switch' primary={t('footer.dyslexia')}/>
+      <ListItemText className={classes.space} id='dyxlexic-font-switch' primary={t('navbar.dyslexia')}/>
       <ListItemSecondaryAction>
         <Switch
           color='primary'

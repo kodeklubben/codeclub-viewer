@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link as RouterLink} from 'react-router';
+import {useSelector} from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
-import {AppBar, Drawer, IconButton, List, Divider, DialogTitle} from '@material-ui/core';
+import {AppBar, Drawer, Hidden, IconButton, Link, List, ListItem, Divider, DialogTitle} from '@material-ui/core';
+import {getTranslator} from '../../selectors/translate';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import ContinueButton from './ContinueButton';
@@ -30,11 +33,16 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  spacer: {
+    marginBottom: theme.spacing(5),
+  },
 }));
 
 const NavBar = ({params}) => {
   const classes = useStyles();
   const [showDrawer, setShowDrawer] = React.useState(false);
+
+  const t = useSelector(state => getTranslator(state));
 
   const toggleDrawer = () => event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -50,13 +58,13 @@ const NavBar = ({params}) => {
   const {course, lesson, file} = params;
 
   return (
-    <div>
+    <React.Fragment>
       <LkkNavBar/>
       <AppBar position='sticky' color='secondary' className={classes.hide}>
         <div className={classes.root}> 
           <BreadCrumbs {...{course, lesson, file}}/>
           <ContinueButton {...{course}}/>
-          <IconButton size='small' onClick={toggleDrawer()} aria-label='menu'>
+          <IconButton size='small' onClick={toggleDrawer()} aria-label={t('navbar.menu')}>
             <MenuIcon color='primary'/>
           </IconButton>
           <Drawer
@@ -66,11 +74,48 @@ const NavBar = ({params}) => {
             onClose={toggleDrawer()}
           >
             <DialogTitle className={classes.closeButton}>
-              <IconButton size='small' aria-label='close' onClick={handleClose}>
+              <IconButton size='small' aria-label={t('navbar.close')} onClick={handleClose}>
                 <CloseIcon color='primary'/>
               </IconButton>
             </DialogTitle>
             <List>
+              <Hidden implementation='css' lgUp>
+                <ListItem button component={Link} href='https://kidsakoder.no/om-lkk'>
+                  {t('navbar.lkknav.aboutlkk')}
+                </ListItem>
+                <ListItem button component={Link} href='https://kidsakoder.no/kontakt'>
+                  {t('navbar.lkknav.contact')}
+                </ListItem>
+                <ListItem
+                  button
+                  component={Link}
+                  href='https://www.kidsakoder.no/om-lkk/personvern-i-laer-kidsa-koding-og-kodeklubben'
+                >
+                  {t('navbar.lkknav.privacy')}
+                </ListItem>
+                <ListItem button component={Link} href='https://kidsakoder.no/nyheter'>
+                  {t('navbar.lkknav.news')}
+                </ListItem>
+                <ListItem button component={RouterLink} to='/'>
+                  {t('navbar.lkknav.lessons')}
+                </ListItem>
+                <ListItem button component={Link} href='https://forum.kidsakoder.no'>
+                  {t('navbar.lkknav.forum')}
+                </ListItem>
+                <ListItem button component={Link} href='https://kidsakoder.no/kodeklubben'>
+                  {t('navbar.lkknav.codeclub')}
+                </ListItem>
+                <ListItem button component={Link} href='https://kidsakoder.no/skole'>
+                  {t('navbar.lkknav.school')}
+                </ListItem>
+                <ListItem button component={Link} href='https://kidsakoder.no/kodetimen'>
+                  {t('navbar.lkknav.codehour')}
+                </ListItem>
+                <ListItem button component={Link} href='https://kidsakoder.no/bidra'>
+                  {t('navbar.lkknav.contribute')}
+                </ListItem>
+                <div className={classes.spacer}/>
+              </Hidden>
               <LanguageList/>
               <Divider/>
               <DyslexiaSwitch/>
@@ -82,7 +127,7 @@ const NavBar = ({params}) => {
           </Drawer>
         </div>
       </AppBar>
-    </div>
+    </React.Fragment>
   );
 };
 
