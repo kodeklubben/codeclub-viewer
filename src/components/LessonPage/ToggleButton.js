@@ -1,8 +1,26 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Collapse} from '@material-ui/core';
+import {Collapse} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    border: '1px solid',
+    borderRadius: 4,
+    padding: '0 16px',
+    minWidth: 64,
+    height: 36,
+    textTransform: 'uppercase',
+    cursor: 'pointer',
+    backgroundColor: '#fafafa',
+    fontWeight: 500,
+    fontSize: '1rem',
+  },
+}));
 
 const ToggleButton = ({buttonText, hiddenHTML}) => {
+  const classes = useStyles();
+
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
@@ -11,9 +29,9 @@ const ToggleButton = ({buttonText, hiddenHTML}) => {
 
   return (
     <React.Fragment>
-      <Button color='inherit' variant='outlined' onClick={handleClick}>
+      <button className={classes.root} onClick={handleClick}>
         {buttonText}
-      </Button>
+      </button>
       <Collapse in={open} timeout='auto' unmountOnExit>
         <div dangerouslySetInnerHTML={{__html: hiddenHTML}}/>
       </Collapse>
