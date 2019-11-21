@@ -3,8 +3,6 @@ const softHyphen = '\u00ad';
 export default {
   general: {
     home: 'Heim',
-    student: 'Elev',
-    teacher: 'Lærar',
     level: 'Nivå',
     levels: {
       1: 'Introduksjon',
@@ -20,40 +18,13 @@ export default {
                   'og blir ofte brukt i kodeklubbar og programmeringsfag i skulen.',
   },
   frontpage: {
-    courses: 'Kurs',
     lessoncount: 'Oppgåver: {{count}}',
-    otherwebsitecourses: 'Kurs på andre nettsider',
     continueButton: 'Sist besøkt',
-    teacherinfobox: {
-      header: 'Hei! Du er no i lærarmodus',
-      changemode: 'Er du ikkje lærar eller rettleiar? Klikk elev/lærar-knappen i navigasjonsmenyen ' +
-                  'for å byte modus. Du kan få meir informasjon ved å trykkje på plussteiknet under.',
-      teacher: 'Lærar',
-      info1: 'Sjekk ut filtera og oppgåverettleiingane våre. På venstre side kan du filtrere på ulike skulefag, ' +
-              'for å finne relevante oppgåver til undervisninga di. Når du har huka av for fag så vil du berre ' +
-              'sjå dei oppgåvene som våre lærarar har vurdert som relevante, og du kan velje kva språk du ' +
-              'vil undervise i. Kvart oppgåvesett har ei rettleiing, og der finn du mellom anna konkrete ' +
-              'kompetansemål elevane dine kan jobbe med i dei ulike faga.',
-      link1: 'Lær meir om programmering i undervisninga',
-      assistant: 'Rettleiar',
-      info2: 'Oppgåvesetta våre legg opp til at borna jobbar mykje på eiga hand med ulike prosjekt, ' +
-              'men me anbefaler å starte kvar øykt med 10-15 minutt intro til kva dei skal gjere og kva ' +
-              'som eventuelt er nytt denne gongen. No kan du enkelt filtrere oppgåver på tema, ' +
-              'og alle oppgåvesetta har rettleiingar du kan sjekke ut som førebuing til øyktene. ' +
-              'For nybegynnarar anbefaler me blokkbasert programmering, der Python, Web eller Processing ' +
-              'er dei vanlegaste å gå vidare med etterpå.',
-      link2: 'Lær meir om å drive ein kodeklubb',
-      plus: 'Vis meir informasjon',
-      minus: 'Vis mindre informasjon',
-    },
-    showhidefilter: 'Vis/skjul filter',
   },
   coursepage: {
-    courseinfo: 'Informasjon om',
+    courseinfo: 'Informasjon om  {{title}}',
     courseinfonotfound: 'Oops, her har nokon gløymt å skrive kursinformasjon!',
     instructionbutton: 'Lærarrettleiing',
-    levelnavigation: 'Hopp til',
-    lessoncollections: 'Oppgåvesamlingar',
     nomatchinglessons: 'Ingen oppgåver passar til filteret',
     missingtitle: 'Oppgåvesamling',
     lessonsnottranslated: 'Oppgåvene i denne oppgåvesamlinga har ikkje blitt omsett til nynorsk endå.',
@@ -89,16 +60,13 @@ export default {
   },
   filter: {
     header: 'Filter',
-    tooltip: 'I filteret kan du sortere ut dei oppgåvene du vil løyse etter kva tema du vil jobbe med.',
     radio: {
       playlists: `Oppgåve${softHyphen}samlingar`,
       lessons: 'Alle oppgåver',
-      group: 'Gruppe med to val',
     },
     removefilter: 'Nullstill filter',
   },
   navbar: {
-    mode: 'Modus',
     lkknav: {
       aboutlkk: 'Om Lær Kidsa Koding',
       contact: 'Kontakt',
@@ -112,12 +80,8 @@ export default {
       contribute: 'Bidra?',
     },
     menu: 'Meny',
+    close: 'Lukke',
     darkmode: 'Nattmodus',
-  },
-  search: {
-    placeholder: 'Søk',
-  },
-  footer: {
     contribute: 'Lag eigne oppgåver',
     dyslexia: 'Skrift for dyslektikarar',
   },

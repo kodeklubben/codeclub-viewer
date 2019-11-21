@@ -17,7 +17,7 @@ const GithubLink = () => {
         href={'https://github.com/kodeklubben/oppgaver/wiki'}
         target='_blank'
         rel='noopener'
-        primary={t('footer.contribute')}/>
+        primary={t('navbar.contribute')}/>
     </ListItem>
   );
 };

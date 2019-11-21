@@ -33,6 +33,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
+  spacer: {
+    marginBottom: theme.spacing(5),
+  },
 }));
 
 const NavBar = ({params}) => {
@@ -61,7 +64,7 @@ const NavBar = ({params}) => {
         <div className={classes.root}> 
           <BreadCrumbs {...{course, lesson, file}}/>
           <ContinueButton {...{course}}/>
-          <IconButton size='small' onClick={toggleDrawer()} aria-label='menu'>
+          <IconButton size='small' onClick={toggleDrawer()} aria-label={t('navbar.menu')}>
             <MenuIcon color='primary'/>
           </IconButton>
           <Drawer
@@ -71,7 +74,7 @@ const NavBar = ({params}) => {
             onClose={toggleDrawer()}
           >
             <DialogTitle className={classes.closeButton}>
-              <IconButton size='small' aria-label='close' onClick={handleClose}>
+              <IconButton size='small' aria-label={t('navbar.close')} onClick={handleClose}>
                 <CloseIcon color='primary'/>
               </IconButton>
             </DialogTitle>
@@ -111,7 +114,7 @@ const NavBar = ({params}) => {
                 <ListItem button component={Link} href='https://kidsakoder.no/bidra'>
                   {t('navbar.lkknav.contribute')}
                 </ListItem>
-                <Divider/>
+                <div className={classes.spacer}/>
               </Hidden>
               <LanguageList/>
               <Divider/>
