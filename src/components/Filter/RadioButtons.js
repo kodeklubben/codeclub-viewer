@@ -1,12 +1,12 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import {useSelector, useDispatch} from 'react-redux';
+import {List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import { getTranslator } from '../../selectors/translate';
-import { setShowPlaylists } from '../../reducers/showPlaylists';
-import { resetAllFilters } from '../../reducers/filter';
-import { collapseAllFilterGroups } from '../../reducers/filterGroupsCollapsed';
+import {getTranslator} from '../../selectors/translate';
+import {setShowPlaylists} from '../../reducers/showPlaylists';
+import {resetAllFilters} from '../../reducers/filter';
+import {collapseAllFilterGroups} from '../../reducers/filterGroupsCollapsed';
 
 const RadioButtons = () => {
   const showPlaylists = useSelector(state => state.showPlaylists);
@@ -25,22 +25,22 @@ const RadioButtons = () => {
       <ListItem button onClick={handleChangeToPlaylists}>
         <ListItemIcon>
           {!showPlaylists ?
-            <RadioButtonUncheckedIcon color='primary' fontSize='small' />
+            <RadioButtonUncheckedIcon color='primary' fontSize='small'/>
             :
-            <RadioButtonCheckedIcon color='primary' fontSize='small' />
+            <RadioButtonCheckedIcon color='primary' fontSize='small'/>
           }
         </ListItemIcon>
-        <ListItemText primary={t('filter.radio.playlists')} />
+        <ListItemText primary={t('filter.radio.playlists')}/>
       </ListItem>
       <ListItem button onClick={() => dispatch(setShowPlaylists(false))}>
         <ListItemIcon>
           {showPlaylists ?
-            <RadioButtonUncheckedIcon color='primary' fontSize='small' />
+            <RadioButtonUncheckedIcon color='primary' fontSize='small'/>
             :
-            <RadioButtonCheckedIcon color='primary' fontSize='small' />
+            <RadioButtonCheckedIcon color='primary' fontSize='small'/>
           }
         </ListItemIcon>
-        <ListItemText primary={t('filter.radio.lessons')} />
+        <ListItemText primary={t('filter.radio.lessons')}/>
       </ListItem>
     </List>
   );
