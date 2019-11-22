@@ -8,6 +8,7 @@ export default {
       3: 'Með reynslu',
       4: 'Sérfræðingur',
     },
+    refresh: 'Síðan hefur verið uppfærð',
   },
   head: {
     title: 'Kóðaklúbburinn',

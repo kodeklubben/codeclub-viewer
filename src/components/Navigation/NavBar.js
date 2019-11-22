@@ -14,6 +14,7 @@ import LanguageList from './LanguageList';
 import GithubLink from './GithubLink';
 import BreadCrumbs from './BreadCrumbs';
 import LkkNavBar from './LkkNavBar';
+import RefreshButton from '../RefreshButton';
 
 const useStyles = makeStyles(theme => ({
   hide: {
@@ -126,6 +127,7 @@ const NavBar = ({params}) => {
             </List>
           </Drawer>
         </div>
+        <RefreshButton/>
       </AppBar>
     </React.Fragment>
   );

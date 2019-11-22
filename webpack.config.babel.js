@@ -31,8 +31,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
-import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
+import WorkboxWebpackPlugin from 'workbox-webpack-plugin';
 import {
   assets,
   buildDir,
@@ -251,8 +251,10 @@ const createConfig = (env = {}, argv) => {
 
       webappWebpackPlugin,
 
-      new ServiceWorkerWebpackPlugin({
-        entry: path.join(__dirname, 'src/sw.js'),
+      new WorkboxWebpackPlugin.InjectManifest({
+        swSrc: './src/src-sw.js',
+        swDest: 'sw.js',
+        exclude: [/\.nojekyll$/],
       }),
 
     ],
