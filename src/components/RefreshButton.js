@@ -7,7 +7,7 @@ import yellow from '@material-ui/core/colors/yellow';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'block',
+    display: 'none',
     backgroundColor: yellow[500],
     '&:hover': {
       backgroundColor: yellow[600],
