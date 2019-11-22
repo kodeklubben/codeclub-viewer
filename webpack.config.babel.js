@@ -32,7 +32,7 @@ import CleanWebpackPlugin from 'clean-webpack-plugin';
 import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin';
 import SitemapPlugin from 'sitemap-webpack-plugin';
 import WebappWebpackPlugin from 'webapp-webpack-plugin';
-import workboxPlugin from 'workbox-webpack-plugin';
+import WorkboxWebpackPlugin from 'workbox-webpack-plugin';
 import {
   assets,
   buildDir,
@@ -251,11 +251,10 @@ const createConfig = (env = {}, argv) => {
 
       webappWebpackPlugin,
 
-      new workboxPlugin.GenerateSW({
+      new WorkboxWebpackPlugin.InjectManifest({
+        swSrc: './src/src-sw.js',
         swDest: 'sw.js',
-        clientsClaim: true,
-        skipWaiting: true,
-        exclude: [/\.nojekyll$/]
+        exclude: [/\.nojekyll$/],
       }),
 
     ],

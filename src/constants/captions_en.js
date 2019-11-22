@@ -8,6 +8,7 @@ export default {
       3: 'Experienced',
       4: 'Expert',
     },
+    refresh: 'Site has been updated',
   },
   head: {
     title: 'Code club',

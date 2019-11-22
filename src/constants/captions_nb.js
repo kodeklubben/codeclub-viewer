@@ -10,6 +10,7 @@ export default {
       3: 'Erfaren',
       4: 'Ekspert',
     },
+    refresh: 'Siden har blitt oppdatert',
   },
   head: {
     title: 'Kodeklubben',
