@@ -36,8 +36,8 @@ const createIframe = language => {
     is: 'is', // Icelandic
     it: 'it', // Italian
     nl: 'nl', // Dutch
-    nb: 'no', // Norwegian
-    nn: 'no', // Norwegian
+    nb: 'nb', // Norwegian
+    nn: 'nn-NO', // Norwegian
     sv: 'sv-SE', // Swedish
     tr: 'tr', // Turkish
   };
