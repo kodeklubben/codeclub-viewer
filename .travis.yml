@@ -1,8 +1,5 @@
 language: node_js
-
-stages:
-  - name: deploy
-    if: branch = master AND type = push AND fork = false
+os: linux
 
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
@@ -17,7 +14,8 @@ script:
 
 deploy:
   provider: pages # github pages
-  github_token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
+  token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
+  strategy: git
   cleanup: true # Don't delete artifacts created during build
   keep_history: true # Don't allow force push
   local_dir: dist
@@ -26,3 +24,4 @@ deploy:
   fqdn: oppgaver.kidsakoder.no #CNAME
   on:
     branch: master
+    condition: type = push AND fork = false
