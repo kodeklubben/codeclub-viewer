@@ -1,17 +1,14 @@
 language: node_js
 os: linux
-
+dist: xenial
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
-
 cache: yarn
-
 script:
   - yarn eslint
   - yarn stylelint
   - yarn test
   - yarn build:travis
-
 deploy:
   provider: pages # github pages
   token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
