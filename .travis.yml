@@ -1,24 +1,19 @@
 language: node_js
-
-stages:
-  - name: deploy
-    if: branch = master AND type = push AND fork = false
-
+os: linux
+dist: xenial
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
-
 cache: yarn
-
 script:
   - yarn eslint
   - yarn stylelint
   - yarn test
   - yarn build:travis
-
 deploy:
   provider: pages # github pages
-  github_token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
-  skip_cleanup: true # Don't delete artifacts created during build
+  token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
+  strategy: git
+  cleanup: true # Don't delete artifacts created during build
   keep_history: true # Don't allow force push
   local_dir: dist
   repo: kodeklubben/kodeklubben.github.io
@@ -26,3 +21,4 @@ deploy:
   fqdn: oppgaver.kidsakoder.no #CNAME
   on:
     branch: master
+    condition: type = push AND fork = false
