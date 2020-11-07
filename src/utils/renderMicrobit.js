@@ -8,7 +8,7 @@ const renderSpinner = () => {
     if ([...pre.childNodes][0].className === 'python') return;
     pre.style.display = 'none';
     let img = document.createElement('img');
-    img.className = "spinner";
+    img.className = 'spinner';
     img.src = require('../assets/graphics/spinner.gif');
     img.alt = 'Spinner';
     img.width = '50';
@@ -100,15 +100,15 @@ const createImage = msg => {
   img.style.margin = '0 auto 15px';
   img.style.maxWidth = '100%';
   getMicrobitSnippets().forEach((codeBlock) => {
-      if (codeBlock.className === "microbit") {
-        Array.from(
-          codeBlock.parentElement.getElementsByClassName("spinner")
-        ).forEach((element) => {
-          element.remove();
-        });
-        codeBlock.parentElement.insertBefore(img, codeBlock);
-        codeBlock.parentElement.removeChild(codeBlock);
-      }
+    if (codeBlock.className === 'microbit') {
+      Array.from(
+        codeBlock.parentElement.getElementsByClassName('spinner')
+      ).forEach((element) => {
+        element.remove();
+      });
+      codeBlock.parentElement.insertBefore(img, codeBlock);
+      codeBlock.parentElement.removeChild(codeBlock);
+    }
   });
 };
 
@@ -121,7 +121,7 @@ const processIframeMessage = e => {
     else if (msg.type === 'renderblocks') { 
       createImage(msg); 
       removeIframe(); 
-      if(document.getElementsByClassName("spinner").length > 0){
+      if(document.getElementsByClassName('spinner').length > 0){
         createIframe(language);}
     }
   }
