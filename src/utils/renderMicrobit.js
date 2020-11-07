@@ -1,4 +1,5 @@
 const microbitIframeId = 'makecoderenderer'; 
+let language;
 const getMicrobitSnippets = () => Array.from(document.getElementsByClassName('microbit'));
 
 const renderSpinner = () => {
@@ -7,7 +8,7 @@ const renderSpinner = () => {
     if ([...pre.childNodes][0].className === 'python') return;
     pre.style.display = 'none';
     let img = document.createElement('img');
-    img.id = 'spinner';
+    img.className = "spinner";
     img.src = require('../assets/graphics/spinner.gif');
     img.alt = 'Spinner';
     img.width = '50';
@@ -42,7 +43,9 @@ const createIframe = language => {
     tr: 'tr', // Turkish
   };
   const f = document.createElement('iframe');
-  //f.addEventListener('load', (e) => { console.log('microbit iframe loaded.'); });
+  f.addEventListener('load', (e) => { 
+    //console.log('microbit iframe loaded.'); 
+  });
   f.id = microbitIframeId;
   f.style.position = 'absolute';
   f.style.left = 0;
@@ -65,7 +68,7 @@ const createIframe = language => {
 const removeIframe = () => {
   window.removeEventListener('message', processIframeMessage);
   document.getElementById(microbitIframeId).remove();
-  //console.log('Microbit iframe removed');
+  // console.log('Microbit iframe removed');
 };
 
 
@@ -96,22 +99,17 @@ const createImage = msg => {
   img.style.display = 'block';
   img.style.margin = '0 auto 15px';
   img.style.maxWidth = '100%';
-  let code = document.getElementsByTagName('pre')[0];
-  let spinner = document.getElementById('spinner');
-  if (document.body.contains(spinner)) {spinner.remove();}
-  if (typeof code === 'undefined') return;
-  if (code.className === 'microbit') {
-    code.parentElement.insertBefore(img, code);
-    code.parentElement.removeChild(code);
-  }
-
-  // Check to see if this was the last image. If so, remove iframe.
-  const f = document.getElementById(microbitIframeId);
-  f.dataset.rendering = +f.dataset.rendering - 1; // unary "+" to force string to number
-  //console.log('createImage(), snippets currently rendering:', f.dataset.rendering);
-  if (f.dataset.rendering <= 0) {
-    removeIframe();
-  }
+  getMicrobitSnippets().forEach((codeBlock) => {
+      if (codeBlock.className === "microbit") {
+        Array.from(
+          codeBlock.parentElement.getElementsByClassName("spinner")
+        ).forEach((element) => {
+          element.remove();
+        });
+        codeBlock.parentElement.insertBefore(img, codeBlock);
+        codeBlock.parentElement.removeChild(codeBlock);
+      }
+  });
 };
 
 
@@ -120,14 +118,20 @@ const processIframeMessage = e => {
   if (msg.source === 'makecode') {
     //console.log('processIframeMessage, e.data.type:', msg.type);
     if (msg.type === 'renderready') { renderSnippets(); }
-    else if (msg.type === 'renderblocks') { createImage(msg); }
+    else if (msg.type === 'renderblocks') { 
+      createImage(msg); 
+      removeIframe(); 
+      if(document.getElementsByClassName("spinner").length > 0){
+        createIframe(language);}
+    }
   }
 };
 
 
-export const renderMicrobit = language => {
+export const renderMicrobit = lang => {
+  language=lang;
   if (getMicrobitSnippets().length > 0) {
     renderSpinner();
-    createIframe(language);
+    createIframe(lang);
   }
 };
