@@ -1,25 +1,28 @@
 language: node_js
-os: linux
-dist: xenial
+
+stages:
+  - name: deploy
+    if: branch = master AND type = push AND fork = false
+
 before_install:
   - git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
+
 cache: yarn
+
 script:
   - yarn eslint
   - yarn stylelint
   - yarn test
   - yarn build:travis
+
 deploy:
-  provider: pages # Github pages
-  edge: true # Travis deploy v2
-  token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
-  strategy: git # GitHub Pages deployment strategy
-  cleanup: true # Clean up build artifacts from the Git working directory before the deployment
-  keep_history: true # Create incremental commit instead of doing push force
-  local_dir: dist # Directory to push to GitHub Pages
+  provider: pages # github pages
+  github_token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
+  skip_cleanup: true # Don't delete artifacts created during build
+  keep_history: true # Don't allow force push
+  local_dir: dist
   repo: kodeklubben/kodeklubben.github.io
-  target_branch: master # Branch to push force to
-  fqdn: oppgaver.kidsakoder.no # Write the given domain name to the CNAME file
+  target_branch: master
+  fqdn: oppgaver.kidsakoder.no #CNAME
   on:
     branch: master
-    condition: type = push AND fork = false
