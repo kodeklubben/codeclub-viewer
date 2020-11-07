@@ -10,7 +10,7 @@ script:
   - yarn test
   - yarn build:travis
 deploy:
-  provider: pages:git # Github pages
+  provider: pages # Github pages
   edge: true # Travis deploy v2
   token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
   strategy: git # GitHub Pages deployment strategy
