@@ -99,17 +99,13 @@ const createImage = msg => {
   img.style.display = 'block';
   img.style.margin = '0 auto 15px';
   img.style.maxWidth = '100%';
-  getMicrobitSnippets().forEach((codeBlock) => {
-    if (codeBlock.className === 'microbit') {
-      Array.from(
-        codeBlock.parentElement.getElementsByClassName('spinner')
-      ).forEach((element) => {
-        element.remove();
-      });
-      codeBlock.parentElement.insertBefore(img, codeBlock);
-      codeBlock.parentElement.removeChild(codeBlock);
-    }
-  });
+  let code = document.getElementsByTagName('pre')[0];
+  code.parentElement.querySelectorAll('.spinner').forEach((element) => element.remove());
+  if (typeof code === 'undefined') return;
+  if (code.className === 'microbit') {
+    code.parentElement.insertBefore(img, code);
+    code.parentElement.removeChild(code);
+  }
 };
 
 
