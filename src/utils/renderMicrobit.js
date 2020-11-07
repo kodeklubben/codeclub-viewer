@@ -43,9 +43,6 @@ const createIframe = language => {
     tr: 'tr', // Turkish
   };
   const f = document.createElement('iframe');
-  f.addEventListener('load', (e) => { 
-    //console.log('microbit iframe loaded.'); 
-  });
   f.id = microbitIframeId;
   f.style.position = 'absolute';
   f.style.left = 0;
