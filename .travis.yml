@@ -10,15 +10,16 @@ script:
   - yarn test
   - yarn build:travis
 deploy:
-  provider: pages # github pages
+  provider: pages:git # Github pages
+  edge: true # Travis deploy v2
   token: $GITHUB_TOKEN_MASTER_NORWEGIANKIWI # Defined in github, added as travis env variable
-  strategy: git
-  cleanup: true # Don't delete artifacts created during build
-  keep_history: true # Don't allow force push
-  local_dir: dist
+  strategy: git # GitHub Pages deployment strategy
+  cleanup: true # Clean up build artifacts from the Git working directory before the deployment
+  keep_history: true # Create incremental commit instead of doing push force
+  local_dir: dist # Directory to push to GitHub Pages
   repo: kodeklubben/kodeklubben.github.io
-  target_branch: master
-  fqdn: oppgaver.kidsakoder.no #CNAME
+  target_branch: master # Branch to push force to
+  fqdn: oppgaver.kidsakoder.no # Write the given domain name to the CNAME file
   on:
     branch: master
     condition: type = push AND fork = false
