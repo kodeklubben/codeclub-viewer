@@ -13,8 +13,15 @@ const PdfButton = () => {
   
   const t = useSelector(state => getTranslator(state));
 
+  const handleClick = () => {
+    const result = window.confirm(t('lessons.pdfstyling'));
+    if (result) {
+      window.print();
+    }
+  };
+
   const options = {
-    onClick: () => window.print(),
+    onClick: handleClick,
     bsStyle: 'pdf',
     bsSize: 'small',
     className: styles.container,

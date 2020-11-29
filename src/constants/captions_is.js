@@ -68,6 +68,8 @@ export default {
     translatedby: 'Þýðandi:',
     course: 'Námskeið:',
     pdf: 'Sækja PDF',
+    pdfstyling: 'Veldu Vista sem PDF. Síðan er hægt að velja Fleiri stillingar og athuga ' +
+      'Bakgrunnsgrafík til að fá fleiri liti.',
     print: 'Prenta',
     toteacherinstruction: 'Leiðbeiningar fyrir kennara',
     tolesson: 'Til verkefnis',
