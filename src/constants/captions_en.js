@@ -63,6 +63,8 @@ export default {
     translatedby: 'Translated by:',
     course: 'Course:',
     pdf: 'Download PDF',
+    pdfstyling: 'Select Save as PDF. Then you can select More settings and check ' +
+      'Background graphics to get more colors.',
     print: 'Print',
     toteacherinstruction: 'To Teacher Instructions',
     tolesson: 'To Lesson',
