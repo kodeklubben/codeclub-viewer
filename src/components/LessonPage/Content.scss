@@ -42,8 +42,8 @@ $checkbox-blue: #abdbea;
 }
 
 @mixin headingStyle {
-  color: #fff;
-  background: #349946;
+  color: #fff !important;
+  background: #349946 !important;
   padding: 10px;
   border-radius: 5px;
 }
@@ -97,12 +97,12 @@ $checkbox-blue: #abdbea;
   }
 
   section.try {
-    background: #abdbea;
+    background: #abdbea !important;
     border-radius: 10px;
     padding: 1px 20px 10px;
     code {
-      background-color: #fff;
-      color: #007cc9;
+      background-color: #fff !important;
+      color: #007cc9 !important;
     }
     li::before {
       border: 3px solid #fff;
@@ -112,7 +112,7 @@ $checkbox-blue: #abdbea;
   section.protip,
   section.tip {
     border: 3px solid #ff7f00;
-    background: #fff99d;
+    background: #fff99d !important;
     border-radius: 12px;
     padding: 0 20px 20px;
     margin-top: 20px;
@@ -125,7 +125,7 @@ $checkbox-blue: #abdbea;
     margin-top: 20px;
     margin-bottom: 20px;
     h2 {
-      color: rgb(54, 161, 55);
+      color: rgb(54, 161, 55) !important;
       margin-top: 10px;
       margin-bottom: 10px;
       padding-top: 15px;
@@ -143,7 +143,7 @@ $checkbox-blue: #abdbea;
     border-top: 3px solid rgb(36, 90, 154);
     margin: 20px 0;
     h2 {
-      color: rgb(36, 90, 154);
+      color: rgb(36, 90, 154) !important;
       margin: 0;
       padding-top: 10px;
       padding-bottom: 20px;
@@ -163,16 +163,12 @@ $checkbox-blue: #abdbea;
     margin-top: 20px;
     margin-bottom: 20px;
     h2 {
-      color: #fff;
-      background: #00b1da;
+      color: #fff !important;
+      background: #00b1da !important;
       padding-left: 20px;
       padding-top: 10px;
       padding-bottom: 10px;
       margin-top: 0;
-
-      @media print {
-        border-bottom: 2px #00b1da solid;
-      }
     }
     > * {
       padding: 0 20px;
@@ -239,7 +235,7 @@ $checkbox-blue: #abdbea;
     &.microbitpins,
     &.microbitserial,
     &.microbitcontrol {
-      color: #fff;
+      color: #fff !important;
     }
   }
 
