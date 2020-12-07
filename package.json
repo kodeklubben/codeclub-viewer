@@ -39,7 +39,7 @@
   "dependencies": {
     "core-js": "^3.3.2",
     "fast-memoize": "^2.5.1",
-    "highlight.js": "^10.1.2",
+    "highlight.js": "^10.4.1",
     "history": "^2.1.2",
     "markdown-it": "^10.0.0",
     "posthtml-parser": "^0.4.1",
