@@ -9,7 +9,7 @@
     "build": "webpack --mode=development --progress",
     "build:prod": "webpack --mode=production -p --progress --env.BUILD_PDF",
     "build:analyse": "webpack --mode=production --progress --profile --json > stats.json",
-    "build:travis": "webpack --mode=production -p",
+    "build:travis": "webpack --mode=production -p --env.BUILD_PDF",
     "serve": "node server.js",
     "test": "mocha \"test/**/*@(.js|.jsx)\"",
     "test:links": "node test-links.js",

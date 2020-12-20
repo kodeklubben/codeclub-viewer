@@ -1,27 +1,22 @@
 /* eslint-env node */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import useStyles from 'isomorphic-style-loader/useStyles';
 import styles from './PdfButton.scss';
 import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import {getLessonPath} from '../../resources/lessonFrontmatter';
 
-const PdfButton = () => {
+const PdfButton = ({course, lesson, language, isReadme}) => {
   useStyles(styles);
   
   const t = useSelector(state => getTranslator(state));
-
-  const handleClick = () => {
-    const result = window.confirm(t('lessons.pdfstyling'));
-    if (result) {
-      window.print();
-    }
-  };
-
+  const path = getLessonPath(course, lesson, language, isReadme);	
   const options = {
-    onClick: handleClick,
+    href: `${process.env.PUBLICPATH}${path.slice(1)}.pdf`,
     bsStyle: 'pdf',
     bsSize: 'small',
     className: styles.container,
@@ -34,6 +29,13 @@ const PdfButton = () => {
       <span className={styles.textMargin}>{t('lessons.pdf')}</span>
     </Button>
   );
+};
+
+PdfButton.propTypes = {	
+  course: PropTypes.string.isRequired,	
+  lesson: PropTypes.string.isRequired,	
+  language: PropTypes.string.isRequired,	
+  isReadme: PropTypes.bool.isRequired,	
 };
 
 export default PdfButton;

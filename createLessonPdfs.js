@@ -57,10 +57,10 @@ const convertUrl = async (browser, lesson) => {
     page = idlePages.pop();
   } else {
     page = await browser.newPage();
-    page.setDefaultNavigationTimeout(60000); // Increase from 30s to 60s
-    page.on('console', consoleMsg => {
-      console.log(`[Puppeteer console] ${consoleMsg.type()}: ${consoleMsg.text()} [[${page.url()}]]`);
-    });
+    page.setDefaultNavigationTimeout(120000); // Increase from 30s to 120s
+    // page.on('console', consoleMsg => {
+    //   console.log(`[Puppeteer console] ${consoleMsg.type()}: ${consoleMsg.text()} [[${page.url()}]]`);
+    // });
     page.on('error', (err) => {
       console.log(`[Puppeteer error] Page crashed: ${err} [[${page.url()}]]`);
     });

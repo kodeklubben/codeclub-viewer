@@ -64,8 +64,6 @@ export default {
     translatedby: 'Oversatt av:',
     course: 'Kurs:',
     pdf: 'Last ned PDF',
-    pdfstyling: 'Velg Lagre som PDF. Så kan man velge ' +
-      'Flere innstillinger og huke av Bakgrunnsgrafikk for å få med flere farger',
     print: 'Skriv ut',
     toteacherinstruction: 'Til lærerveiledning',
     tolesson: 'Til oppgave',
