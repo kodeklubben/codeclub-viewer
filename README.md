@@ -55,7 +55,7 @@ yarn testall
 This will run the three commands `yarn eslint`, `yarn stylelint` and `yarn test`, each of which can be run individually.
 
 ## Publish website (to beta)
-To publish the website to the [beta repository](https://github.com/kodeklubben/beta),
+You can publish to the [beta repository](https://github.com/kodeklubben/beta),
 first make sure you have a [fork of it](https://help.github.com/articles/fork-a-repo/).
 Then make a local clone of the `beta` fork next to `codeclub-viewer` and `oppgaver`
 ([using SSH URL](https://help.github.com/articles/which-remote-url-should-i-use/)).
