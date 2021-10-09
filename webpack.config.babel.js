@@ -276,6 +276,7 @@ const createConfig = (env = {}, argv) => {
               MarkdownItImplicitFigures,
               MarkdownItKatex,
               [MarkdownItTaskCheckbox, { disabled: false }],
+
               [
                 MarkdownCustomContainer,
                 'video',
@@ -327,80 +328,80 @@ const createConfig = (env = {}, argv) => {
 
       ...(env.BUILD_PDF
         ? [
-            new WebpackShellPluginAlt({
-              onBuildEnd: ['node createLessonPdfs.js'],
-            }),
-          ]
+          new WebpackShellPluginAlt({
+            onBuildEnd: ['node createLessonPdfs.js'],
+          }),
+        ]
         : [
-            // copy FakeLessonPDF.pdf to all the lessons
-            // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
-            new CopyWebpackPlugin(
-              lessonPaths('.pdf', env.verbose).map((pdfPath) => ({
-                from: 'src/assets/pdfs/FakeLessonPDF.pdf',
-                to: path.join(buildDir, pdfPath),
-              })),
-              {
-                // Must include copyUnmodified:true since we always copy from same file,
-                // otherwise only the first path is copied to.
-                // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
-                copyUnmodified: true,
-              }
-            ),
-          ]),
+          // copy FakeLessonPDF.pdf to all the lessons
+          // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
+          new CopyWebpackPlugin(
+            lessonPaths('.pdf', env.verbose).map((pdfPath) => ({
+              from: 'src/assets/pdfs/FakeLessonPDF.pdf',
+              to: path.join(buildDir, pdfPath),
+            })),
+            {
+              // Must include copyUnmodified:true since we always copy from same file,
+              // otherwise only the first path is copied to.
+              // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+              copyUnmodified: true,
+            }
+          ),
+        ]),
 
       ...(isHot
         ? [
-            // Create the root index.html
-            new HtmlWebpackPlugin({
-              template: 'src/index-template.ejs',
-              inject: false,
-              chunksSortMode: 'dependency', // Make sure they are loaded in the right order in index.html
-            }),
-          ]
+          // Create the root index.html
+          new HtmlWebpackPlugin({
+            template: 'src/index-template.ejs',
+            inject: false,
+            chunksSortMode: 'dependency', // Make sure they are loaded in the right order in index.html
+          }),
+        ]
         : [
-            new CleanWebpackPlugin(buildBaseDir),
-            new ExtractTextPlugin({
-              filename: filenameBase + '.css',
-              allChunks: false,
-            }),
-            new StaticSiteGeneratorPlugin({
-              entry: 'main',
-              paths: staticSitePaths,
-              locals: {
-                publicPath,
-              },
-              globals: {
-                window: {},
-              },
-            }),
-            new SitemapPlugin(
-              'https://oppgaver.kidsakoder.no' + publicPath,
-              staticSitePaths
-            ),
-            // Insert index.html-files with redirects for all courses, e.g. /scratch/index.html redirects to /scratch
-            // This is because on github, an url with a slash at the end,
-            // e.g. scratch/, is interpreted as scratch.index.html
-            new CopyWebpackPlugin(
-              coursePaths()
-                .concat(lessonPaths())
-                .map((p) => ({
-                  from: 'src/redirect-template.ejs',
-                  to: path.join(buildDir, p, 'index.html'),
-                  // split + join to replace all occurrances
-                  transform: (content) =>
-                    content
-                      .toString('utf8')
-                      .split('<%-REDIRECT-URL%>')
-                      .join(publicPath + p),
-                })),
-              {
-                // Must include copyUnmodified:true since we always copy from same file,
-                // otherwise only the first path is copied to.
-                // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
-                copyUnmodified: true,
-              }
-            ),
-          ]),
+          new CleanWebpackPlugin(buildBaseDir),
+          new ExtractTextPlugin({
+            filename: filenameBase + '.css',
+            allChunks: false,
+          }),
+          new StaticSiteGeneratorPlugin({
+            entry: 'main',
+            paths: staticSitePaths,
+            locals: {
+              publicPath,
+            },
+            globals: {
+              window: {},
+            },
+          }),
+          new SitemapPlugin(
+            'https://oppgaver.kidsakoder.no' + publicPath,
+            staticSitePaths
+          ),
+          // Insert index.html-files with redirects for all courses, e.g. /scratch/index.html redirects to /scratch
+          // This is because on github, an url with a slash at the end,
+          // e.g. scratch/, is interpreted as scratch.index.html
+          new CopyWebpackPlugin(
+            coursePaths()
+              .concat(lessonPaths())
+              .map((p) => ({
+                from: 'src/redirect-template.ejs',
+                to: path.join(buildDir, p, 'index.html'),
+                // split + join to replace all occurrances
+                transform: (content) =>
+                  content
+                    .toString('utf8')
+                    .split('<%-REDIRECT-URL%>')
+                    .join(publicPath + p),
+              })),
+            {
+              // Must include copyUnmodified:true since we always copy from same file,
+              // otherwise only the first path is copied to.
+              // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+              copyUnmodified: true,
+            }
+          ),
+        ]),
 
       webappWebpackPlugin,
     ],

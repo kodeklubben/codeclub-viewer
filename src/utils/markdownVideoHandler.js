@@ -1,7 +1,7 @@
 export function getVideoIframeMarkup(url) {
   const providerAndVideoID = getVideoId(url);
-  const videoId = Object.values(providerAndVideoID)[0];
-  const provider = Object.keys(providerAndVideoID)[0];
+  const [videoId] = Object.values(providerAndVideoID);
+  const [provider] = Object.keys(providerAndVideoID);
 
   if (!videoId) {
     return '';
@@ -26,12 +26,12 @@ function getVideoId(url) {
   const isYoutube = url.url.match(youtubeRegEx);
   const isVimeo = url.url.match(vimeoRegEx);
 
-  const match = isYoutube || isVimeo;
-
   if (isYoutube) {
-    return match && match[2].length === 11 ? { youtube: match[2] } : null;
+    return isYoutube && isYoutube[2].length === 11
+      ? { youtube: isYoutube[2] }
+      : null;
   } else if (isVimeo) {
-    return match ? { vimeo: match[match.length - 1] } : null;
+    return isVimeo ? { vimeo: isVimeo[isVimeo.length - 1] } : null;
   } else {
     console.error('RegEx validate error');
   }
