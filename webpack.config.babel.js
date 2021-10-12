@@ -113,7 +113,6 @@ const createConfig = (env = {}, argv) => {
     console.log('  publicPath:', publicPath);
     console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
     console.log();
-
     console.log('  env.NODE_ENV:', env.NODE_ENV);
     console.log('  env.BUILD_PDF:', env.BUILD_PDF);
     console.log();
