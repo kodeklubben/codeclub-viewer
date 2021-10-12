@@ -57,4 +57,4 @@ jobs:
           publish_dir: ./dist
           cname: oppgaver.kidsakoder.no
           external_repository: kodeklubben/kodeklubben.github.io
-          publish_branch: master  # default: gh-pages
+          publish_branch: master
