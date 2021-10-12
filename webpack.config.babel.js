@@ -276,7 +276,6 @@ const createConfig = (env = {}, argv) => {
               MarkdownItImplicitFigures,
               MarkdownItKatex,
               [MarkdownItTaskCheckbox, { disabled: false }],
-
               [
                 MarkdownCustomContainer,
                 'video',
