@@ -1,9 +1,6 @@
 name: Codeclub-viewer
 
 on:
-  push:
-    branches:
-      - '*'
   pull_request:
     branches:
       - master
@@ -59,7 +56,8 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.MANGO }}
+          deploy_key: ${{ secrets.NORWEGIANMANGO }}
           publish_branch: master
           publish_dir: ./dist
-          external_repository: sagatun/sagatun.github.io
+          cname: oppgaver.kidsakoder.no
+          external_repository: kodeklubben/kodeklubben.github.io
