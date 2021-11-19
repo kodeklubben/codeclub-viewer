@@ -1,9 +1,8 @@
 name: Codeclub-viewer
 on:
-  push:
+  pull_request:
     branches:
       - '*'
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,24 +39,24 @@ on:
   pull_request:
     branches:
       - 'master'
-      
-  jobs:
-    deploy:
-      needs: build
-      name: GitPages Deploy
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v2
-        - name: Restoring Dist Folder
-          uses: actions/cache@v2
-          with:
-            path: ./dist
-            key: cache-dist-${{ github.sha }}
-        - name: Deploy
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-            deploy_key: ${{ secrets.MANGO }}
-            publish_branch: master
-            publish_dir: ./dist
-            external_repository: sagatun/sagatun.github.io
+
+jobs:
+  deploy:
+    needs: build
+    name: GitPages Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Restoring Dist Folder
+        uses: actions/cache@v2
+        with:
+          path: ./dist
+          key: cache-dist-${{ github.sha }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.MANGO }}
+          publish_branch: master
+          publish_dir: ./dist
+          external_repository: sagatun/sagatun.github.io
