@@ -41,6 +41,8 @@ import MarkdownItHeaderSections from 'markdown-it-header-sections';
 import MarkdownItImplicitFigures from 'markdown-it-implicit-figures';
 import MarkdownItKatex from 'markdown-it-katex';
 import MarkdownItTaskCheckbox from 'markdown-it-task-checkbox';
+import MarkdownItEmoji from 'markdown-it-emoji';
+import MarkdownCustomContainer from 'markdown-it-container';
 import highlight from './src/highlighting';
 
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
@@ -66,7 +68,8 @@ import {
   publicPath,
   publicPathWithoutSlash,
 } from './buildconstants';
-import {getStaticSitePaths, lessonPaths, coursePaths} from './pathlists';
+import { getStaticSitePaths, lessonPaths, coursePaths } from './pathlists';
+import { getVideoIframeMarkup } from './src/utils/markdownVideoHandler';
 
 const staticSitePaths = getStaticSitePaths();
 
@@ -77,9 +80,10 @@ const webappWebpackPlugin = new WebappWebpackPlugin({
   favicons: {
     appName: 'Lær Kidsa Koding',
     appShortName: 'LKK',
-    appDescription: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
-                    'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
-                    'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
+    appDescription:
+      'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker ' +
+      'å lære programmering. Alt innholdet på siden er gratis å bruke, ' +
+      'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
     developerName: null,
     developerURL: null,
     lang: 'nb',
@@ -96,7 +100,6 @@ const webappWebpackPlugin = new WebappWebpackPlugin({
 });
 
 const createConfig = (env = {}, argv) => {
-
   if (env.verbose) {
     console.log('Build constants:');
     console.log('  assets:', assets);
@@ -110,7 +113,6 @@ const createConfig = (env = {}, argv) => {
     console.log('  publicPath:', publicPath);
     console.log('  publicPathWithoutSlash:', publicPathWithoutSlash);
     console.log();
-
     console.log('  env.NODE_ENV:', env.NODE_ENV);
     console.log('  env.BUILD_PDF:', env.BUILD_PDF);
     console.log();
@@ -118,8 +120,10 @@ const createConfig = (env = {}, argv) => {
 
   // All RegExps that involve paths must have the path parts surrounded by regexpCompPath
   const regexpCompPath = (str) => path.normalize(str).replace(/\\/g, '\\\\');
-  const inCurrentRepo = (extRegexp) => new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
-  const inLessonRepo = (extRegexp) => new RegExp('^' + regexpCompPath(lessonRepo) + '.*\\.' + extRegexp + '$');
+  const inCurrentRepo = (extRegexp) =>
+    new RegExp('^' + regexpCompPath(__dirname) + '.*\\.' + extRegexp + '$');
+  const inLessonRepo = (extRegexp) =>
+    new RegExp('^' + regexpCompPath(lessonRepo) + '.*\\.' + extRegexp + '$');
 
   const config = {
     context: __dirname,
@@ -153,7 +157,7 @@ const createConfig = (env = {}, argv) => {
         lessonFiltertags,
         assets,
         bootstrapStyles,
-      }
+      },
     },
 
     resolveLoader: {
@@ -175,7 +179,7 @@ const createConfig = (env = {}, argv) => {
         //   content: contentLoaders
         // }),
         // bundleLessons: 'bundle-loader?name=[path][name]&context=' + lessonSrc,
-      }
+      },
     },
 
     module: {
@@ -183,7 +187,7 @@ const createConfig = (env = {}, argv) => {
         {
           test: inCurrentRepo('js'),
           exclude: /node_modules/,
-          loader: 'babel-loader'
+          loader: 'babel-loader',
         },
         {
           test: inCurrentRepo('scss'),
@@ -196,27 +200,27 @@ const createConfig = (env = {}, argv) => {
                 modules: true,
                 importLoaders: 2,
                 localIdentName: '[name]__[local]__[hash:base64:5]',
-              }
+              },
             },
             'postcss-loader',
-            'sass-loader'
+            'sass-loader',
           ],
         },
         webappWebpackPlugin.rule(), // must come before any other image rules
         {
           test: inCurrentRepo('(png|jpg|jpeg|gif)'),
           loader: 'file-loader',
-          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
+          options: { name: 'CCV-assets/[name].[hash:6].[ext]' },
         },
         {
           test: inCurrentRepo('woff2?(\\?v=[0-9]\\.[0-9]\\.[0-9])?'),
           loader: 'file-loader',
-          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
+          options: { name: 'CCV-assets/[name].[hash:6].[ext]' },
         },
         {
           test: inCurrentRepo('(ttf|eot|svg)(\\?[\\s\\S]+)?'),
           loader: 'file-loader',
-          options: {name: 'CCV-assets/[name].[hash:6].[ext]'},
+          options: { name: 'CCV-assets/[name].[hash:6].[ext]' },
         },
         {
           test: inCurrentRepo('ejs'),
@@ -241,7 +245,7 @@ const createConfig = (env = {}, argv) => {
         {
           test: inLessonRepo('png'),
           loader: 'file-loader',
-          options: {name: '[path][name].[hash:6].[ext]'},
+          options: { name: '[path][name].[hash:6].[ext]' },
         },
       ],
     },
@@ -249,107 +253,162 @@ const createConfig = (env = {}, argv) => {
     plugins: [
       new webpack.DefinePlugin({
         'process.env.PUBLICPATH': JSON.stringify(publicPath),
-        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(publicPathWithoutSlash),
-        'IS_HOT': JSON.stringify(isHot),
+        'process.env.PUBLICPATH_WITHOUT_SLASH': JSON.stringify(
+          publicPathWithoutSlash
+        ),
+        IS_HOT: JSON.stringify(isHot),
       }),
 
       new webpack.LoaderOptionsPlugin({
         options: {
-          context: __dirname,   // needed for bootstrap-loader
+          context: __dirname, // needed for bootstrap-loader
           output: {
-            path: buildDir,     // needed for bootstrap-loader
+            path: buildDir, // needed for bootstrap-loader
           },
           'markdown-it': {
-            html: true,  // allow html in source
-            langPrefix: '',  // no prefix in class for code blocks
+            html: true, // allow html in source
+            langPrefix: '', // no prefix in class for code blocks
             use: [
               MarkdownItAttrs,
+              MarkdownItEmoji,
               MarkdownItHeaderSections,
               MarkdownItImplicitFigures,
               MarkdownItKatex,
-              [MarkdownItTaskCheckbox, {disabled: false}],
+              [MarkdownItTaskCheckbox, { disabled: false }],
+              [
+                MarkdownCustomContainer,
+                'video',
+                {
+                  validate: function (params) {
+                    return params.trim().match(/^video\s*\[(.*)]$/);
+                  },
+
+                  render: function (tokens, idx) {
+                    if (tokens[idx].type === 'container_video_open') {
+                      const matches = tokens[idx].info
+                        .trim()
+                        .match(/^video\s*\[(.*)]$/);
+
+                      if (matches && matches[1]) {
+                        return (
+                          '<div class="video-container">' +
+                          getVideoIframeMarkup({ url: matches[1].trim() })
+                        );
+                      }
+                    } else if (tokens[idx].type === 'container_video_close') {
+                      return '</div>';
+                    }
+                  },
+                },
+              ],
             ],
             highlight,
           },
-        }
+        },
       }),
 
       new CopyWebpackPlugin([
-        { // Copy all resource files (i.e. all files not included via javascript)
+        {
+          // Copy all resource files (i.e. all files not included via javascript)
           context: lessonSrc,
           from: lessonSrc + '/**/*',
           ignore: ['*.md', '*.yml'],
-          to: buildDir + '/[path][name].[ext]'
+          to: buildDir + '/[path][name].[ext]',
         },
-        { // Copy extra files that need to be included
+        {
+          // Copy extra files that need to be included
           from: './src/assets/deploy/',
-          to: buildDir
-        }
+          to: buildDir,
+        },
       ]),
 
       new CaseSensitivePathsPlugin(),
 
-      ...(env.BUILD_PDF ? [
-        new WebpackShellPluginAlt({onBuildEnd:['node createLessonPdfs.js']})
-      ] : [
-        // copy FakeLessonPDF.pdf to all the lessons
-        // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
-        new CopyWebpackPlugin(lessonPaths('.pdf', env.verbose).map(pdfPath => ({
-          from: 'src/assets/pdfs/FakeLessonPDF.pdf',
-          to: path.join(buildDir, pdfPath),
-        })), {
-          // Must include copyUnmodified:true since we always copy from same file,
-          // otherwise only the first path is copied to.
-          // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
-          copyUnmodified: true,
-        })
-      ]),
+      ...(env.BUILD_PDF
+        ? [
+          new WebpackShellPluginAlt({
+            onBuildEnd: ['node createLessonPdfs.js'],
+          }),
+        ]
+        : [
+          // copy FakeLessonPDF.pdf to all the lessons
+          // (with the same name as the .md-file, e.g. astrokatt.md --> astrokatt.pdf)
+          new CopyWebpackPlugin(
+            lessonPaths('.pdf', env.verbose).map((pdfPath) => ({
+              from: 'src/assets/pdfs/FakeLessonPDF.pdf',
+              to: path.join(buildDir, pdfPath),
+            })),
+            {
+              // Must include copyUnmodified:true since we always copy from same file,
+              // otherwise only the first path is copied to.
+              // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+              copyUnmodified: true,
+            }
+          ),
+        ]),
 
-      ...(isHot ? [
-        // Create the root index.html
-        new HtmlWebpackPlugin({
-          template: 'src/index-template.ejs',
-          inject: false,
-          chunksSortMode: 'dependency' // Make sure they are loaded in the right order in index.html
-        }),
-      ] : [
-        new CleanWebpackPlugin(buildBaseDir),
-        new ExtractTextPlugin({filename: filenameBase + '.css', allChunks: false}),
-        new StaticSiteGeneratorPlugin({
-          entry: 'main',
-          paths: staticSitePaths,
-          locals: {
-            publicPath
-          },
-          globals: {
-            window: {}
-          }
-        }),
-        new SitemapPlugin('https://oppgaver.kidsakoder.no' + publicPath, staticSitePaths),
-        // Insert index.html-files with redirects for all courses, e.g. /scratch/index.html redirects to /scratch
-        // This is because on github, an url with a slash at the end,
-        // e.g. scratch/, is interpreted as scratch.index.html
-        new CopyWebpackPlugin(coursePaths().concat(lessonPaths()).map(p => ({
-          from: 'src/redirect-template.ejs',
-          to: path.join(buildDir, p, 'index.html'),
-          // split + join to replace all occurrances
-          transform: (content) => content.toString('utf8').split('<%-REDIRECT-URL%>').join(publicPath + p)
-        })), {
-          // Must include copyUnmodified:true since we always copy from same file,
-          // otherwise only the first path is copied to.
-          // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
-          copyUnmodified: true,
-        }),
-      ]),
+      ...(isHot
+        ? [
+          // Create the root index.html
+          new HtmlWebpackPlugin({
+            template: 'src/index-template.ejs',
+            inject: false,
+            chunksSortMode: 'dependency', // Make sure they are loaded in the right order in index.html
+          }),
+        ]
+        : [
+          new CleanWebpackPlugin(buildBaseDir),
+          new ExtractTextPlugin({
+            filename: filenameBase + '.css',
+            allChunks: false,
+          }),
+          new StaticSiteGeneratorPlugin({
+            entry: 'main',
+            paths: staticSitePaths,
+            locals: {
+              publicPath,
+            },
+            globals: {
+              window: {},
+            },
+          }),
+          new SitemapPlugin(
+            'https://oppgaver.kidsakoder.no' + publicPath,
+            staticSitePaths
+          ),
+          // Insert index.html-files with redirects for all courses, e.g. /scratch/index.html redirects to /scratch
+          // This is because on github, an url with a slash at the end,
+          // e.g. scratch/, is interpreted as scratch.index.html
+          new CopyWebpackPlugin(
+            coursePaths()
+              .concat(lessonPaths())
+              .map((p) => ({
+                from: 'src/redirect-template.ejs',
+                to: path.join(buildDir, p, 'index.html'),
+                // split + join to replace all occurrances
+                transform: (content) =>
+                  content
+                    .toString('utf8')
+                    .split('<%-REDIRECT-URL%>')
+                    .join(publicPath + p),
+              })),
+            {
+              // Must include copyUnmodified:true since we always copy from same file,
+              // otherwise only the first path is copied to.
+              // See https://github.com/webpack-contrib/copy-webpack-plugin/issues/99
+              copyUnmodified: true,
+            }
+          ),
+        ]),
 
       webappWebpackPlugin,
-
     ],
 
     devServer: {
-      historyApiFallback: { // needed when using browserHistory (instead of hashHistory)
+      historyApiFallback: {
+        // needed when using browserHistory (instead of hashHistory)
         index: `${publicPath}index.html`,
-        disableDotRule: true
+        disableDotRule: true,
       },
     },
   };

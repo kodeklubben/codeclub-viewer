@@ -1,6 +1,7 @@
-const microbitIframeId = 'makecoderenderer'; 
+const microbitIframeId = 'makecoderenderer';
 let language;
-const getMicrobitSnippets = () => Array.from(document.getElementsByClassName('microbit'));
+const getMicrobitSnippets = () =>
+  Array.from(document.getElementsByClassName('microbit'));
 
 const renderSpinner = () => {
   const pres = [...document.getElementsByTagName('pre')];
@@ -24,8 +25,9 @@ const renderSpinner = () => {
  * Creates an iframe that is being used to render the code
  * @param {object} language Lesson language
  */
-const createIframe = language => {
-  const microbitLanguages = { // Taken from https://support.crowdin.com/api/language-codes/
+const createIframe = (language) => {
+  const microbitLanguages = {
+    // Taken from https://support.crowdin.com/api/language-codes/
     da: 'da', // Danish
     de: 'de', // German
     el: 'el', // Greek
@@ -50,10 +52,11 @@ const createIframe = language => {
   f.style.width = '1px';
   f.style.height = '1px';
   if (language in microbitLanguages) {
-    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=' + microbitLanguages[language];
-  }
-  else {
-    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=en';
+    f.src =
+      'https://makecode.microbit.org/--docs?render=1&lang=' +
+      microbitLanguages[language];
+  } else {
+    f.src = 'https://makecode.microbit.org/--docs?render=1&lang=nb';
   }
   document.body.appendChild(f);
   //console.log('iframe created and appended to body');
@@ -61,34 +64,34 @@ const createIframe = language => {
   window.addEventListener('message', processIframeMessage);
 };
 
-
 const removeIframe = () => {
   window.removeEventListener('message', processIframeMessage);
   document.getElementById(microbitIframeId).remove();
   // console.log('Microbit iframe removed');
 };
 
-
 // Taken from https://makecode.microbit.org/blocks-embed
 const renderSnippets = () => {
-  getMicrobitSnippets().forEach(pre => {
+  getMicrobitSnippets().forEach((pre) => {
     const f = document.getElementById(microbitIframeId);
     f.dataset.rendering = +(f.dataset.rendering || 0) + 1; // unary "+" to force string to number
     //console.log('renderSnippets(), snippets currently rendering:', f.dataset.rendering);
-    f.contentWindow.postMessage({
-      type: 'renderblocks',
-      id: pre.id,
-      code: pre.innerText
-    }, 'https://makecode.microbit.org/');
+    f.contentWindow.postMessage(
+      {
+        type: 'renderblocks',
+        id: pre.id,
+        code: pre.innerText,
+      },
+      'https://makecode.microbit.org/'
+    );
   });
 };
 
-
 /**
  * Creates an image from the rendered microbit code
- * @param {object} msg 
+ * @param {object} msg
  */
-const createImage = msg => {
+const createImage = (msg) => {
   let img = document.createElement('img');
   img.src = msg.uri;
   img.width = msg.width;
@@ -97,7 +100,9 @@ const createImage = msg => {
   img.style.margin = '0 auto 15px';
   img.style.maxWidth = '100%';
   let code = document.getElementsByTagName('pre')[0];
-  code.parentElement.querySelectorAll('.spinner').forEach((element) => element.remove());
+  code.parentElement
+    .querySelectorAll('.spinner')
+    .forEach((element) => element.remove());
   if (typeof code === 'undefined') return;
   if (code.className === 'microbit') {
     code.parentElement.insertBefore(img, code);
@@ -105,24 +110,32 @@ const createImage = msg => {
   }
 };
 
-
-const processIframeMessage = e => {
+const processIframeMessage = (e) => {
   let msg = e.data;
   if (msg.source === 'makecode') {
     //console.log('processIframeMessage, e.data.type:', msg.type);
-    if (msg.type === 'renderready') { renderSnippets(); }
-    else if (msg.type === 'renderblocks') { 
-      createImage(msg); 
-      removeIframe(); 
-      if(document.getElementsByClassName('spinner').length > 0){
-        createIframe(language);}
+    if (msg.type === 'renderready') {
+      renderSnippets();
+    } else if (msg.type === 'renderblocks') {
+      createImage(msg);
+
+      // Check to see if this was the last image. If so, remove iframe.
+      const f = document.getElementById(microbitIframeId);
+      f.dataset.rendering = +f.dataset.rendering - 1; // unary "+" to force string to number
+
+      if (f.dataset.rendering <= 0) {
+        removeIframe();
+      }
+
+      if (document.getElementsByClassName('spinner').length > 0) {
+        createIframe(language);
+      }
     }
   }
 };
 
-
-export const renderMicrobit = lang => {
-  language=lang;
+export const renderMicrobit = (lang) => {
+  language = lang;
   if (getMicrobitSnippets().length > 0) {
     renderSpinner();
     createIframe(lang);
