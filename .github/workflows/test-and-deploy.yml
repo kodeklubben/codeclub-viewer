@@ -13,8 +13,8 @@ jobs:
         run: git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
       - name: Install Dependencies
         run: |
-        nvm install
-        yarn install
+          nvm install
+          yarn install
       - name: Run tests
         run: |
           yarn eslint
