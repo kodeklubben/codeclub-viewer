@@ -1,19 +1,30 @@
 name: Codeclub-viewer
+
 on:
-  push:
-    branches: [master]
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
+    name: Run tests
+    timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '10'
+          node-version: '10.16.0'
+      - name: Cache Node Modules
+        id: cache-node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node-modules-${{ hashFiles('yarn.lock') }}
       - name: Clone exercises
-        run: git clone --depth=1 --branch=master https://github.com/sagatun/oppgaver ../oppgaver
+        run: git clone --depth=1 --branch=master https://github.com/kodeklubben/oppgaver.git ../oppgaver
       - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install
       - name: Run tests
         run: |
@@ -21,7 +32,7 @@ jobs:
           yarn stylelint
           yarn test
       - name: Build
-        run: yarn build
+        run: yarn build:travis
       - name: Caching Dist Folder
         uses: actions/cache@v2
         with:
@@ -29,8 +40,10 @@ jobs:
           key: cache-dist-${{ github.sha }}
 
   deploy:
+    name: Deploy to GithubPages
+    timeout-minutes: 3
     needs: build
-    name: GitPages Deploy
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
