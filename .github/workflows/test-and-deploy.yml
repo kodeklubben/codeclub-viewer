@@ -1,10 +1,17 @@
 name: Codeclub-viewer
+
 on:
-  pull_request:
+  push:
     branches:
       - '*'
+  pull_request:
+    branches:
+      - master
+
 jobs:
   build:
+    name: Run tests
+    timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -35,15 +42,11 @@ jobs:
           path: ./dist
           key: cache-dist-${{ github.sha }}
 
-on:
-  pull_request:
-    branches:
-      - 'master'
-
-jobs:
   deploy:
+    name: Deploy to GithubPages
+    timeout-minutes: 3
     needs: build
-    name: GitPages Deploy
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
