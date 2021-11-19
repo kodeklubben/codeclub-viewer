@@ -28,7 +28,7 @@ jobs:
           yarn stylelint
           yarn test
       - name: Build
-        run: yarn build:travis
+        run: yarn build
       - name: Caching Dist Folder
         uses: actions/cache@v2
         with:
