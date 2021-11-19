@@ -4,17 +4,15 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-
+    
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.16.0]
-
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '10'
       - name: Cache Node Modules
         id: cache-node-modules
         uses: actions/cache@v2
@@ -27,9 +25,10 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install
       - name: Run tests
-        run: yarn eslint
-        run: yarn stylelint
-        run: yarn test
+        run: | 
+          yarn eslint
+          yarn stylelint
+          yarn test
       - name: Build
         run: yarn build
       - name: Caching Dist Folder
@@ -53,8 +52,6 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.GITHUB_TOKEN_MASTER_NORWEGIANKIWI }}
+          deploy_key: ${{ secrets.DEPLOYKEY }}
           publish_dir: ./dist
-          cname: oppgaver.kidsakoder.no
-          external_repository: kodeklubben/kodeklubben.github.io
-          publish_branch: master
+          external_repository: sagatun/sagatun.github.io
