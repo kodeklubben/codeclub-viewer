@@ -3,14 +3,10 @@ name: Codeclub-viewer
 on:
   push:
     branches:
-      - '*'
+      - master
   pull_request:
     branches:
       - master
-
-concurrency:
-  group: ${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   build:
