@@ -27,7 +27,7 @@ $checkbox-blue: #abdbea;
     margin-left: 45px;
   }
   li::before {
-    content: " ";
+    content: ' ';
     border-radius: 20px;
     border: 3px solid $checkbox-blue;
     padding: 8px;
@@ -49,7 +49,6 @@ $checkbox-blue: #abdbea;
 }
 
 .lessonContent {
-
   .check,
   .activity,
   .save {
@@ -69,7 +68,24 @@ $checkbox-blue: #abdbea;
     background-color: transparent;
   }
 
+  ul > li {
+    list-style-type: none;
+  }
+
   // sections
+
+  section {
+    ul {
+      margin-left: 7px;
+    }
+  }
+
+  section.intro {
+    ul > li {
+      list-style-type: initial;
+    }
+  }
+
   section.activity {
     // activities, "Step 1: Bla bla"
     h1 {
@@ -80,6 +96,10 @@ $checkbox-blue: #abdbea;
       @include headingStyle;
       font-weight: 300;
     }
+  }
+
+  section.task-list {
+    margin-left: 50px;
   }
 
   section.check {
@@ -137,6 +157,10 @@ $checkbox-blue: #abdbea;
         padding-right: 10px;
       }
     }
+
+    ul {
+      margin-left: 5px;
+    }
   }
 
   section.save {
@@ -173,40 +197,97 @@ $checkbox-blue: #abdbea;
     > * {
       padding: 0 20px;
     }
+    ul {
+      margin: 10px 40px;
+    }
   }
 
   // manual colors for scratch and microbit code
   // example: Press `motion`{.blockmotion} ...  They must be !important
   // to override the bootstrap print style sheet
   code {
-    &.blockmotion { background-color: #4c97ff !important; }
-    &.blocklooks { background-color: #96f !important; }
-    &.blocksound { background-color: #cf63cf !important; }
-    &.blockpen { background-color: #0fbd8c !important; }
-    &.blockdata { background-color: #ff8c1a !important; }
-    &.blockevents { background-color: #ffbf00 !important; }
-    &.blockcontrol { background-color: #ffab19 !important; }
-    &.blocksensing { background-color: #5cb1d6 !important; }
-    &.blockoperators { background-color: #59c059 !important; }
-    &.blockmoreblocks { background-color: #ff6680 !important; }
+    &.blockmotion {
+      background-color: #4c97ff !important;
+    }
+    &.blocklooks {
+      background-color: #96f !important;
+    }
+    &.blocksound {
+      background-color: #cf63cf !important;
+    }
+    &.blockpen {
+      background-color: #0fbd8c !important;
+    }
+    &.blockdata {
+      background-color: #ff8c1a !important;
+    }
+    &.blockevents {
+      background-color: #ffbf00 !important;
+    }
+    &.blockcontrol {
+      background-color: #ffab19 !important;
+    }
+    &.blocksensing {
+      background-color: #5cb1d6 !important;
+    }
+    &.blockoperators {
+      background-color: #59c059 !important;
+    }
+    &.blockmoreblocks {
+      background-color: #ff6680 !important;
+    }
 
-    &.microbitbasic { background-color: #1e90ff !important; }
-    &.microbitinput { background-color: #d400d4 !important; }
-    &.microbitmusic { background-color: #e63022 !important; }
-    &.microbitled { background-color: #5c2d91 !important; }
-    &.microbitradio { background-color: #e3008c !important; }
-    &.microbitloops { background-color: #0a0 !important; }
-    &.microbitlogic { background-color: #00a4a6 !important; }
-    &.microbitvariables { background-color: #dc143c !important; }
-    &.microbitmath { background-color: #9400d3 !important; }
-    &.microbitfunctions { background-color: #3455db !important; }
-    &.microbitarrays { background-color: #e65722 !important; }
-    &.microbittext { background-color: #b8860b !important; }
-    &.microbitgame { background-color: #007a4b !important; }
-    &.microbitimages { background-color: #7600a8 !important; }
-    &.microbitpins { background-color: #b22222 !important; }
-    &.microbitserial { background-color: #002050 !important; }
-    &.microbitcontrol { background-color: #333 !important; }
+    &.microbitbasic {
+      background-color: #1e90ff !important;
+    }
+    &.microbitinput {
+      background-color: #d400d4 !important;
+    }
+    &.microbitmusic {
+      background-color: #e63022 !important;
+    }
+    &.microbitled {
+      background-color: #5c2d91 !important;
+    }
+    &.microbitradio {
+      background-color: #e3008c !important;
+    }
+    &.microbitloops {
+      background-color: #0a0 !important;
+    }
+    &.microbitlogic {
+      background-color: #00a4a6 !important;
+    }
+    &.microbitvariables {
+      background-color: #dc143c !important;
+    }
+    &.microbitmath {
+      background-color: #9400d3 !important;
+    }
+    &.microbitfunctions {
+      background-color: #3455db !important;
+    }
+    &.microbitarrays {
+      background-color: #e65722 !important;
+    }
+    &.microbittext {
+      background-color: #b8860b !important;
+    }
+    &.microbitgame {
+      background-color: #007a4b !important;
+    }
+    &.microbitimages {
+      background-color: #7600a8 !important;
+    }
+    &.microbitpins {
+      background-color: #b22222 !important;
+    }
+    &.microbitserial {
+      background-color: #002050 !important;
+    }
+    &.microbitcontrol {
+      background-color: #333 !important;
+    }
 
     &.blockmotion,
     &.blocklooks,
@@ -272,18 +353,18 @@ $checkbox-blue: #abdbea;
     }
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     position: absolute;
     opacity: 0;
   }
 
-  input[type="checkbox"] + label {
+  input[type='checkbox'] + label {
     position: relative;
     font-weight: normal;
     margin-left: 0;
   }
 
-  input[type="checkbox"] + label::before {
+  input[type='checkbox'] + label::before {
     content: '\a0'; // non-breaking space
     display: inline-block;
     visibility: visible;
@@ -295,14 +376,14 @@ $checkbox-blue: #abdbea;
     border-radius: 3px;
   }
 
-  input[type="checkbox"]:checked + label::before {
+  input[type='checkbox']:checked + label::before {
     content: '\2714'; // checkmark
     line-height: 1.1em;
     padding-left: 0.1em;
   }
 
-  input[type="checkbox"]:active + label::before,
-  input[type="checkbox"]:focus + label::before {
+  input[type='checkbox']:active + label::before,
+  input[type='checkbox']:focus + label::before {
     background: darken($checkbox-blue, 20%);
   }
 }
