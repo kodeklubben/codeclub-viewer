@@ -36,72 +36,71 @@ export default {
               'ви побачите тільки ті завдання, які наші вчителі оцінили як відповідні. Ви можете обрати мову, ' +
               'якою будете викладати. Кожен набір завдань має настанову, у якій, зокрема, зазначені конкретні ' +
               'навчальні цілі, над якими можна працювати в різних предметах.',
-      link1: 'Lær mer om programmering i undervisningen',
-      assistant: 'Veileder',
-      info2: 'Våre oppgavesett legger opp til at barna jobber mye på egenhånd med ulike prosjekter, ' +
-              'men vi anbefaler å starte hver økt med 10-15 min intro til hva man skal gjøre og hva ' +
-              'som eventuelt er nytt denne gangen. Nå kan du enkelt filtrere oppgaver på temaer, ' +
-              'og alle oppgavesett har veiledninger du kan sjekke ut som forberedelse til øktene. ' +
-              'For nybegynnere så anbefaler vi blokkbasert programmering, hvor Python / Web / Processing ' +
-              'er de vanligste å gå videre med etterpå.',
-      link2: 'Lær mer om å drive en kodeklubb',
-      plus: 'Vis mer informasjon',
-      minus: 'Vis mindre informasjon',
+      link1: 'Дізнайтеся більше про програмування у навчанні',
+      assistant: 'Інструктор',
+      info2: 'Наші набори завдань розраховані на те, що діти працюватимуть над різними проєктами здебільшого самостійно, ' +
+              'але ми рекомендуємо розпочинати кожне заняття з 10-15-хвилинної вступної частини про те, що робити ' +
+              'та що буде новим цього разу. Тепер ви можете легко фільтрувати завдання за темами, ' +
+              'і всі набори завдань мають інструкції, які ви можете переглянути, щоб підготуватися до занять. ' +
+              'Для початківців ми рекомендуємо блокове програмування, а далі продовжувати з Python / Web / Processing. ',
+      link2: 'Дізнайтеся більше про управління клубом програмування',
+      plus: 'Показати більше інформації',
+      minus: 'Показати менше інформації',
     },
-    showhidefilter: 'Vis/skjul filter',
+    showhidefilter: 'Показати/сховати фільтр',
   },
   coursepage: {
-    courseinfo: 'Informasjon om kurset',
-    courseinfonotfound: 'Oops, her har noen glemt å skrive kursinformasjon!',
-    levelnavigation: 'Hopp til',
-    lessoncollections: 'Oppgavesamlinger',
-    nomatchinglessons: 'Ingen oppgaver passer til filteret',
-    missingtitle: 'Oppgavesamling',
-    lessonsnottranslated: 'Oppgavene i denne oppgavesamlingen har ikke blitt oversatt til bokmål ennå.',
+    courseinfo: 'Інформація про курс',
+    courseinfonotfound: 'Упс, хтось забув написати інформацію про курс!',
+    levelnavigation: 'Перейти до',
+    lessoncollections: 'Збірки завдань',
+    nomatchinglessons: 'Жодне завдання не відповідає фільтру',
+    missingtitle: 'Збірка завдань',
+    lessonsnottranslated: 'Завдання в цій збірці ще не були перекладені на українську.',
   },
   lessons: {
-    writtenby: 'Skrevet av:',
-    translatedby: 'Oversatt av:',
-    course: 'Kurs:',
-    pdf: 'Last ned PDF',
-    pdfstyling: 'Velg Lagre som PDF. Så kan man velge ' +
-      'Flere innstillinger og huke av Bakgrunnsgrafikk for å få med flere farger',
-    print: 'Skriv ut',
-    toteacherinstruction: 'Til lærerveiledning',
-    tolesson: 'Til oppgave',
-    reset: 'Fjern avkrysninger',
-    tomainlanguage: 'På {{lang}}',
-    nottranslated: 'Denne siden finnes ikke på {{lang}}',
-    license: 'Lisens: ',
+    writtenby: 'Автор:',
+    translatedby: 'Переклав:',
+    course: 'Курс:',
+    pdf: 'Завантажити PDF',
+    pdfstyling: 'Оберіть Зберегти як PDF. Потім можна обрати ' +
+      'Додаткові налаштування та відзначити Фонову графіку, щоб додати більше кольорів.',
+    print: 'Друк',
+    toteacherinstruction: 'До інструкції для вчителя',
+    tolesson: 'До завдання',
+    reset: 'Скинути відмітки',
+    tomainlanguage: 'На {{lang}}',
+    nottranslated: 'Ця сторінка недоступна на {{lang}}',
+    license: 'Ліцензія: ',
     improvepage: {
-      header: 'Forbedre denne siden',
-      textline1: 'Funnet en feil? Kunne noe vært bedre?',
-      textline2: 'Hvis ja, vennligst gi oss tilbakemelding ved å lage en sak på Github ' +
-                  'eller fiks feilen selv om du kan. Vi er takknemlige for enhver tilbakemelding!',
-      newissuebutton: 'Rapporter et problem',
+      header: 'Покращити цю сторінку',
+      textline1: 'Знайшли помилку? Щось можна покращити?',
+      textline2: 'Якщо так, будь ласка, залиште нам відгук, створивши проблему на GitHub ' +
+                  'або виправте помилку самі, якщо можете. Ми вдячні за будь-який зворотний зв'язок!',
+      newissuebutton: 'Повідомити про проблему',
       newissuelink: {
-        title: 'Problem med',
-        lesson: 'Oppgave',
-        sourcecode: 'Oppgavens kildekode',
-        info: 'Beskriv ditt problem her. Ta gjerne med operativsystem, nettleser og eventuell kode du har skrevet.'
+        title: 'Проблема з',
+        lesson: 'Завдання',
+        sourcecode: 'Вихідний код завдання',
+        info: 'Описати вашу проблему тут. Будь ласка, вкажіть операційну систему, браузер та будь-який код, який ви написали.'
       },
-      showcodebutton: 'Vis koden og fiks selv',
-      forumbutton: 'Gå til forumet',
+      showcodebutton: 'Показати код і виправити самостійно',
+      forumbutton: 'Перейти до форуму',
     },
   },
   filter: {
-    header: 'Filter',
-    tooltip: 'Dersom man velger "Alle oppgaver", ' +
-      'så kan man i filteret sortere ut de oppgavene man vil løse etter hvilke tema man vil jobbe med.',
+    header: 'Фільтр',
+    tooltip: 'Якщо обрати "Усі завдання", ' +
+      'у фільтрі можна відсортувати завдання за темами, над якими хочете працювати.',
     radio: {
-      playlists: `Oppgave${softHyphen}samlinger`,
-      lessons: 'Alle oppgaver',
-      group: 'Gruppe med to valg',
+      playlists: `Збірки${softHyphen}завдань`,
+      lessons: 'Усі завдання',
+      group: 'Група з двома варіантами',
     },
-    removefilter: 'Nullstill filter',
+    removefilter: 'Скинути фільтр',
   },
   navbar: {
-    mode: 'Modus',
+    mode: 'Режим',
     lkknav: {
       aboutlkk: 'Om LKK',
       news: 'Nyheter',
