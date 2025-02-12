@@ -2,40 +2,40 @@ const softHyphen = '\u00ad';
 
 export default {
   general: {
-    home: 'Hjem',
-    student: 'Elev',
-    teacher: 'Lærer',
-    level: 'Nivå',
+    home: 'Головна',
+    student: 'Учень',
+    teacher: 'Вчитель',
+    level: 'Рівень',
     levels: {
-      1: 'Introduksjon',
-      2: 'Nybegynner',
-      3: 'Erfaren',
-      4: 'Ekspert',
+      1: 'Вступ',
+      2: 'Початківець',
+      3: 'Досвідчений',
+      4: 'Експерт',
     },
-    picture: 'Bilde av {{title}}',
-    glyphicon: 'Info for {{title}}',
+    picture: 'Зображення {{title}}',
+    glyphicon: 'Інформація про {{title}}',
   },
   head: {
-    title: 'Kodeklubben',
-    description: 'På denne siden finner du oppgaver for barn og unge i alle aldre som ønsker å lære programmering. ' +
-                  'Alt innholdet på siden er gratis å bruke, ' +
-                  'og er ofte benyttet på kodeklubben og programmeringsfag i skolen.',
+    title: 'Клуб програмування',
+    description: 'На цій сторінці ви знайдете завдання для дітей та підлітків будь-якого віку, які бажають навчитися програмуванню. ' +
+                  'Увесь вміст на сайті безкоштовний для використання, ' +
+                  'і часто використовується в клубах програмування та на уроках програмування в школах.',
   },
   frontpage: {
-    courses: 'Kurs',
-    lessoncount: 'Oppgaver: {{count}}',
-    otherwebsitecourses: 'Kurs på andre nettsider',
-    continueButton: 'Sist besøkt',
+    courses: 'Курси',
+    lessoncount: 'Завдань: {{count}}',
+    otherwebsitecourses: 'Курси на інших сайтах',
+    continueButton: 'Останній відвідуваний',
     teacherinfobox: {
-      header: 'Hei! Du er nå i lærermodus',
-      changemode: 'Er du ikke er en lærer eller veileder? Klikk elev / lærer-knappen i navigasjonsmenyen ' +
-                  'for å bytte modus. Du kan få mer informasjon ved å trykke på plusstegnet under',
-      teacher: 'Lærer',
-      info1: 'Sjekk ut våre filtre og oppgaveveiledninger. På venstre side kan du filtrere på ulike skole-fag, ' +
-              'for å finne relevante oppgaver til din undervisning. Når du har huket av for fag så vil du kun ' +
-              'se kun de oppgavene som våre lærere har vurdert som relevante, og du kan velge hvilket språk du ' +
-              'vil undervise i. Hvert oppgavesett har en veiledning, og der finner du bl.a. hvilke konkrete ' +
-              'læreplanmål man kan jobbe med i de ulike fagene.',
+      header: 'Привіт! Ви зараз у режимі вчителя',
+      changemode: 'Ви не вчитель або інструктор? Натисніть кнопку учень/вчитель у навігаційному меню, ' +
+                  'щоб змінити режим. Ви можете отримати більше інформації, натиснувши на значок плюс нижче',
+      teacher: 'Вчитель',
+      info1: 'Перегляньте наші фільтри та настанови щодо завдань. Ліворуч можна фільтрувати завдання за різними шкільними предметами, ' +
+              'щоб знайти відповідні завдання для вашого навчання. Коли ви виберете предмети, ' +
+              'ви побачите тільки ті завдання, які наші вчителі оцінили як відповідні. Ви можете обрати мову, ' +
+              'якою будете викладати. Кожен набір завдань має настанову, у якій, зокрема, зазначені конкретні ' +
+              'навчальні цілі, над якими можна працювати в різних предметах.',
       link1: 'Lær mer om programmering i undervisningen',
       assistant: 'Veileder',
       info2: 'Våre oppgavesett legger opp til at barna jobber mye på egenhånd med ulike prosjekter, ' +
