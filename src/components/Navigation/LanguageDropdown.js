@@ -17,6 +17,7 @@ const languages = {
   en: 'English',
   nn: 'Nynorsk',
   is: 'Íslenska',
+  ua: 'український',
 };
 
 const LanguageItem = ({language, onlyFlag}) => (
