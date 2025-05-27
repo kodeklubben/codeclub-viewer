@@ -19,6 +19,7 @@ export const renderScratchBlocks = (content, styles) => {
     nb: require('scratchblocks/locales/nb.json'),
     nn: require('scratchblocks/locales/nn.json'),
     is: require('scratchblocks/locales/is.json'),
+    ua: require('scratchblocks/locales/ua.json'),
   });
 
   let replace = [];
