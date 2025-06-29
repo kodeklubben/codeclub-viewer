@@ -109,7 +109,7 @@
     "mock-local-storage": "^1.1.8",
     "mock-require": "^3.0.3",
     "node-cleanup": "^2.1.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "node-spider": "^1.4.1",
     "node-static": "^0.7.11",
     "p-queue": "^2.4.2",
