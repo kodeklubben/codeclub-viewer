@@ -88,6 +88,8 @@ export default {
               'og eventuell kode du har skrive.',
       },
       showcodebutton: 'Vis koden og fiks det sjølv',
+      editbutton: 'Rediger oppgåva',
+      editbuttontitle: 'Lag din eigen kopi i Tekstbehandlar og send endringane som eit forslag',
       forumbutton: 'Gå til forumet',
     },
   },

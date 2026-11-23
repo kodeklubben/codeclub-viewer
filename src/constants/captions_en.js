@@ -85,6 +85,8 @@ export default {
         info: 'Describe the problem. Adding your operating system, browser and any code you have written will help.',
       },
       showcodebutton: 'Show code and fix yourself',
+      editbutton: 'Edit the lesson',
+      editbuttontitle: 'Make your own copy in the lesson editor and send your changes as a suggestion',
       forumbutton: 'Go to forum',
     },
   },
