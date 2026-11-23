@@ -93,6 +93,8 @@ export default {
           'endilega fylgja með líka.',
       },
       showcodebutton: 'Sýna kóða og laga sjálf/ur',
+      editbutton: 'Breyta verkefninu',
+      editbuttontitle: 'Búðu til þitt eigið afrit í ritlinum og sendu breytingarnar sem tillögu',
       forumbutton: 'Spjallborð',
     },
   },

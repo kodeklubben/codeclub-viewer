@@ -86,6 +86,8 @@ export default {
         info: 'Beskriv ditt problem her. Ta gjerne med operativsystem, nettleser og eventuell kode du har skrevet.'
       },
       showcodebutton: 'Vis koden og fiks selv',
+      editbutton: 'Rediger oppgaven',
+      editbuttontitle: 'Lag din egen kopi i Tekstbehandler og send endringene som et forslag',
       forumbutton: 'Gå til forumet',
     },
   },

@@ -8,6 +8,10 @@ import {getTranslator} from '../../selectors/translate';
 import Button from 'react-bootstrap/lib/Button';
 import {getLessonPath} from '../../resources/lessonFrontmatter';
 
+// Lessoneditor: makes the user's own copy of the lesson, and sends the changes back to
+// kodeklubben/oppgaver as a pull request.
+const LESSON_EDITOR = 'https://lessoneditor.ew.r.appspot.com';
+
 const ImprovePage = ({course, lesson, language, isReadme}) => {
   useStyles(styles);
 
@@ -29,7 +33,9 @@ const ImprovePage = ({course, lesson, language, isReadme}) => {
     // Link to source code
     showCode: linkToSourceCode,
     //Link to forum
-    forum: 'https://forum.kidsakoder.no/c/oppgaver'
+    forum: 'https://forum.kidsakoder.no/c/oppgaver',
+    // Link to editing a copy of the lesson in lessoneditor
+    edit: `${LESSON_EDITOR}/rediger/${encodeURIComponent(course)}/${encodeURIComponent(lesson)}`,
   };
   return (
     <div className={styles.container}>
@@ -52,6 +58,11 @@ const ImprovePage = ({course, lesson, language, isReadme}) => {
             <div>
               <Button href={url.showCode} bsStyle='orange' target='_blank' rel='noopener'>
                 {t('lessons.improvepage.showcodebutton')}</Button>
+            </div>
+            <div>
+              <Button href={url.edit} bsStyle='student' target='_blank' rel='noopener'
+                title={t('lessons.improvepage.editbuttontitle')}>
+                {t('lessons.improvepage.editbutton')}</Button>
             </div>
           </div>
         </div>
